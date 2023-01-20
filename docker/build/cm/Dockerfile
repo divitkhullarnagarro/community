@@ -13,3 +13,5 @@ WORKDIR C:\inetpub\wwwroot
 
 # Copy developer tools and entrypoint
 COPY --from=tools C:\tools C:\tools
+
+RUN icacls 'C:\inetpub\wwwroot' /grant 'IIS_IUSRS:(F)' /t

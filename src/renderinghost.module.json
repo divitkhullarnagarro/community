@@ -7,7 +7,27 @@
                 "name": "DefaultRenderingHost",
                 "path": "/sitecore/system/Settings/Services/Rendering Hosts/Default",
                 "scope": "singleItem"
-            }
+            },
+			{
+				
+  "name": "contentRoot",
+  "path": "/sitecore/content",
+  "allowedPushOperations": "CreateUpdateAndDelete",
+	"scope": "singleItem"
+			},
+			{
+				
+  "name": "Templates",
+  "path": "/sitecore/templates/Accelerator",
+  "allowedPushOperations": "CreateUpdateAndDelete"
+			},
+			{
+				
+  "name": "Renderings",
+  "path": "/sitecore/layout/Renderings/Accelerator",
+  "allowedPushOperations": "CreateUpdateAndDelete"
+
+			},
         ]
     }
 }
