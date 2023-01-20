@@ -4,6 +4,7 @@ try {
   if ($LASTEXITCODE -ne 0) {
     Write-Error "Container down failed, see errors above."
   }
+  
 }
 finally {
 }
