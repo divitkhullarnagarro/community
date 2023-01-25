@@ -1,9 +1,9 @@
-import CdpPageView from 'components/CdpPageView';
+// import CdpPageView from 'components/CdpPageView';
 
 const Scripts = (): JSX.Element => {
   return (
     <>
-      <CdpPageView />
+      `<>{/*·<CdpPageView·/>·*/}</>`
     </>
   );
 };
