@@ -9,11 +9,6 @@
     <PlatformVersion>1.*</PlatformVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Update="Sitecore.XmCloud.Kernel" Version="$(PlatformVersion)" />
-    <PackageReference Update="Sitecore.XmCloud.ContentSearch" Version="$(PlatformVersion)" />
-    <PackageReference Update="Sitecore.XmCloud.ContentSearch.Linq" Version="$(PlatformVersion)" />
-    <PackageReference Update="Sitecore.XmCloud.LayoutService" Version="$(PlatformVersion)" />
-    <PackageReference Update="Sitecore.XmCloud.Assemblies" Version="$(PlatformVersion)" />
     <PackageReference Update="Sitecore.Assemblies.SitecoreHeadlessServicesServer" Version="19.*" />
   </ItemGroup>
 </Project>
