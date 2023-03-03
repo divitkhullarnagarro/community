@@ -3,7 +3,6 @@ import Router from 'next/router';
 import { I18nProvider } from 'next-localization';
 import NProgress from 'nprogress';
 import { SitecorePageProps } from 'lib/page-props';
-import '../assets/login.css';
 
 // Using bootstrap and nprogress are completely optional.
 //  bootstrap is used here to provide a clean layout for samples, without needing extra CSS in the sample app
