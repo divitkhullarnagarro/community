@@ -11,7 +11,7 @@ type LoginProps = ComponentProps & {
 };
 
 const Login = (props: LoginProps): JSX.Element => {
-  props;
+  console.log(props);
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
   let [isLoggedIn, setIsLoggedIn] = useState(false);
