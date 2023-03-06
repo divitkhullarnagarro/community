@@ -1,8 +1,9 @@
 import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import Link from 'next/link';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import WebContext from '../Context/WebContext';
+import { useRouter } from 'next/router';
 
 type ProfileProps = ComponentProps & {
   fields: {
@@ -12,6 +13,13 @@ type ProfileProps = ComponentProps & {
 
 const Profile = (props: ProfileProps): JSX.Element => {
   const { isLoggedIn, userToken, setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
+  const router = useRouter();
+
+  useEffect(() => {
+    if (userToken == '') {
+      router.push('/login');
+    }
+  }, []);
 
   isLoggedIn;
   setIsLoggedIn;

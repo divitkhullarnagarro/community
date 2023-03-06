@@ -1,6 +1,9 @@
 import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
+import React, { useContext, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import WebContext from '../Context/WebContext';
 
 type DashboardProps = ComponentProps & {
   fields: {
@@ -9,7 +12,21 @@ type DashboardProps = ComponentProps & {
 };
 
 const Dashboard = (props: DashboardProps): JSX.Element => {
-  props;
+  const { isLoggedIn, userToken, setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
+  const router = useRouter();
+
+  props; //delete me
+  isLoggedIn;
+  userToken;
+  setIsLoggedIn;
+  setUserToken;
+
+  useEffect(() => {
+    if (userToken == '') {
+      router.push('/login');
+    }
+  }, []);
+
   return (
     <>
       <nav className="navBar">
