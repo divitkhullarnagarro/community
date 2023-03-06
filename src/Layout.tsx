@@ -6,7 +6,6 @@ import {
   getPublicUrl,
   LayoutServiceData,
 } from '@sitecore-jss/sitecore-jss-nextjs';
-import Navigation from 'src/Navigation';
 
 // Prefix public assets with a public URL to enable compatibility with Sitecore editors.
 // If you're not supporting Sitecore editors, you can remove this.
@@ -34,10 +33,10 @@ const Layout = ({ layoutData }: LayoutProps): JSX.Element => {
         VI detection only runs once for a given analytics ID, so this is not a recurring operation once cookies are established.
       */}
       <VisitorIdentification />
-
-      <Navigation />
       {/* root placeholder for the app, which we add components to using route data */}
+      <div>{route && <Placeholder name="jss-header" rendering={route} />}</div>
       <div className="container">{route && <Placeholder name="jss-main" rendering={route} />}</div>
+      <div>{route && <Placeholder name="jss-footer" rendering={route} />}</div>
     </>
   );
 };
