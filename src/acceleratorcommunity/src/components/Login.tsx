@@ -1,8 +1,10 @@
 import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import loginUserCall from '../API/loginUserCall';
+import WebContext from '../Context/WebContext';
+import { useRouter } from 'next/router';
 
 type LoginProps = ComponentProps & {
   fields: {
@@ -11,10 +13,13 @@ type LoginProps = ComponentProps & {
 };
 
 const Login = (props: LoginProps): JSX.Element => {
-  props;
+  props; //delete Me
+
+  const router = useRouter();
+  const { isLoggedIn, setIsLoggedIn, setUserToken, userToken } = { ...useContext(WebContext) };
+
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
-  let [isLoggedIn, setIsLoggedIn] = useState(false);
 
   function setEmailValue(val: any) {
     setEmail(val);
@@ -27,10 +32,14 @@ const Login = (props: LoginProps): JSX.Element => {
   const onSubmitHandler = async (e: any) => {
     e.preventDefault();
     let response = await loginUserCall(email, password);
-    if (response?.status == 200) {
+    if (response?.status == 200 && setIsLoggedIn != undefined && setUserToken != undefined) {
       setIsLoggedIn(true);
+      setUserToken(response?.data?.access_token);
+      router.push('/dashboard');
     }
   };
+
+  console.log('userToken', userToken);
 
   return (
     <>

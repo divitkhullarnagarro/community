@@ -1,17 +1,26 @@
 import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
-import React, { useState } from 'react';
 import Link from 'next/link';
-import registerUserCall from '../API/registerUserCall';
+import { useState, useContext } from 'react';
+import WebContext from '../Context/WebContext';
 
-type RegisterProps = ComponentProps & {
+type ProfileProps = ComponentProps & {
   fields: {
     heading: Field<string>;
   };
 };
 
-const Register = (props: RegisterProps): JSX.Element => {
+const Profile = (props: ProfileProps): JSX.Element => {
+  const { isLoggedIn, userToken, setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
+
+  isLoggedIn;
+  setIsLoggedIn;
+  setUserToken;
   props;
+  userToken;
+  console.log('User Token At Profile Page', userToken);
+
+  const [isDisabled, setIsDisabled] = useState(true);
   let [firstName, setFirstName] = useState('');
   let [lastName, setLastName] = useState('');
   let [email, setEmail] = useState('');
@@ -60,21 +69,37 @@ const Register = (props: RegisterProps): JSX.Element => {
     }
   }
 
-  const onSubmitHandler = async (e: any) => {
+  function onSubmitHandler(e: any) {
     e.preventDefault();
-    let userData = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      phoneNumber: phoneNumber,
-    };
-    let resp = await registerUserCall(userData);
-    console.log('Register Response', resp);
-  };
+
+    if (isDisabled == true) {
+      setIsDisabled(false);
+    } else if (isDisabled == false) {
+      console.log('EditValues', email, firstName, lastName, password, confirmPassword, phoneNumber);
+    }
+  }
 
   return (
     <>
+      <nav className="navBar">
+        <div>
+          <a href="/">
+            <img
+              className="dashboardIcon"
+              src="https://cdn-icons-png.flaticon.com/512/1384/1384053.png"
+              alt="FacebookImg"
+            ></img>
+          </a>
+        </div>
+        <div>
+          <h3>Welcome To Community Dashboard</h3>
+        </div>
+        <div className="navBaroptions">
+          <Link className="navBaroptions" href="/dashboard">
+            Dashboard
+          </Link>
+        </div>
+      </nav>
       <div className="container">
         <div className="screen">
           <div className="screen__content">
@@ -87,6 +112,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   value={firstName}
                   className="login__input"
                   placeholder="First Name"
+                  disabled={isDisabled}
                 />
               </div>
               <div className="login__field">
@@ -97,6 +123,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   value={lastName}
                   className="login__input"
                   placeholder="Last Name"
+                  disabled={isDisabled}
                 />
               </div>
               <div className="login__field">
@@ -107,6 +134,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   value={email}
                   className="login__input"
                   placeholder="Email"
+                  disabled={isDisabled}
                 />
               </div>
               <div className="login__field">
@@ -117,6 +145,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   value={phoneNumber}
                   className="login__input"
                   placeholder="Phone No."
+                  disabled={isDisabled}
                 />
               </div>
               <div className="login__field">
@@ -128,6 +157,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   className="login__input"
                   placeholder="Password"
                   required
+                  disabled={isDisabled}
                 />
               </div>
               <div className="login__field">
@@ -139,13 +169,14 @@ const Register = (props: RegisterProps): JSX.Element => {
                   className="login__input"
                   placeholder="Confirm Password"
                   required
+                  disabled={isDisabled}
                 />
               </div>
               <button
                 className="button login__submit"
                 style={!error ? {} : { borderColor: 'red', borderWidth: '2px' }}
               >
-                <span className="button__text">Register</span>
+                <span className="button__text">{isDisabled ? 'Edit' : 'Save Changes'}</span>
                 <i className="button__icon fas fa-chevron-right"></i>
               </button>
               {!error ? (
@@ -157,10 +188,10 @@ const Register = (props: RegisterProps): JSX.Element => {
               )}
             </form>
             <div className="social-login">
-              <h6>Have Account ?</h6>
-              <button className="registerButton">
-                <Link href={'/login'}>Goto Login</Link>
-              </button>
+              {/* <h6>Have Account ?</h6>
+            <button className="registerButton">
+              <Link href={'/login'}>Goto Login</Link>
+            </button> */}
               <div className="social-icons">
                 <a href="#" className="social-login__icon fab fa-instagram"></a>
                 <a href="#" className="social-login__icon fab fa-facebook"></a>
@@ -180,5 +211,4 @@ const Register = (props: RegisterProps): JSX.Element => {
   );
 };
 
-// export default withDatasourceCheck()<RegisterProps>(Register);
-export default Register;
+export default Profile;
