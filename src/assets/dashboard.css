@@ -1,0 +1,23 @@
+.navBar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: blueviolet;
+    color: white;
+}
+
+.dashboardIcon {
+    width: 40px;
+}
+
+.navBar .navBaroptions {
+    width: 5%;
+}
+
+
+.navBar .navBaroptions a {
+    font-size: 28px;
+    text-decoration: none;
+    color: white;
+    float: right;
+}
