@@ -14,6 +14,9 @@ import WebProvider from '../Context/WebProvider';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'nprogress/nprogress.css';
 import 'assets/app.css';
+import 'assets/logo.css';
+import 'assets/grid.css';
+import 'assets/rte.css';
 
 NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
 
