@@ -1,0 +1,37 @@
+.ProfileSection {
+    display: flex;
+    /* justify-content: center; */
+    max-width: 100%;
+    /* max-height: 50%; */
+    min-height: 720px;
+    background-color: white;
+    margin: 60px;
+    border-radius: 20px;
+}
+
+.ProfileLeft {
+    width: 30%;
+    padding: 20px;
+}
+
+.ProfileRight {
+    width: 70%;
+    padding: 20px;
+}
+
+.ProfileRight .PRSection {
+    margin-left: 20px;
+}
+
+.Profileusername {
+    font-weight: 1000;
+}
+
+
+.PRSegment {
+    margin: 20px 0px;
+}
+
+.PRSegment .segmentHeading {
+    font-weight: 1000;
+}

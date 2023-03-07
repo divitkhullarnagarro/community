@@ -4,6 +4,9 @@ import Link from 'next/link';
 import { useState, useContext, useEffect } from 'react';
 import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 
 type ProfileProps = ComponentProps & {
   fields: {
@@ -36,6 +39,53 @@ const Profile = (props: ProfileProps): JSX.Element => {
   let [password, setPassword] = useState('');
   let [confirmPassword, setConfirmPassword] = useState('');
   let [error, isError] = useState(false);
+  const [username, setUsername] = useState('Username');
+  const [profession, setprofession] = useState('Profession');
+  const [experience, setExperience] = useState('Experience');
+  const [designation, setDesignation] = useState('Designation Name');
+  const [domain, setDomain] = useState('Domain Name');
+  const [location, setLocation] = useState('Location Name');
+  const [summary, setSummary] = useState(
+    'You can write about your speciality, areas of practice, expertise. You may even mention about your achievements, publication and interests.'
+  );
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const [show1, setShow1] = useState(false);
+
+  const handleClose1 = () => setShow1(false);
+  const handleShow1 = () => setShow1(true);
+
+  const [showFrom2, setShowForm2] = useState(false);
+
+  const handleCloseForm2 = () => setShowForm2(false);
+  const handleShowForm2 = () => setShowForm2(true);
+
+  function setUsernameValue(val: any) {
+    setUsername(val);
+  }
+  function setProfessionValue(val: any) {
+    setprofession(val);
+  }
+  function setExperienceValue(val: any) {
+    setExperience(val);
+  }
+  function setDesignationValue(val: any) {
+    setDesignation(val);
+  }
+  function setDomainValue(val: any) {
+    setDomain(val);
+  }
+  function setLocationValue(val: any) {
+    setLocation(val);
+  }
+
+  function setSumaryValue(val: any) {
+    setSummary(val);
+  }
 
   function setFirstNameValue(val: any) {
     setFirstName(val);
@@ -108,7 +158,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
           </Link>
         </div>
       </nav>
-      <div className="container">
+      <div className="container" style={{ display: 'none' }}>
         <div className="screen">
           <div className="screen__content">
             <form className="login" onSubmit={(e) => onSubmitHandler(e)}>
@@ -212,6 +262,208 @@ const Profile = (props: ProfileProps): JSX.Element => {
             <span className="screen__background__shape screen__background__shape3"></span>
             <span className="screen__background__shape screen__background__shape2"></span>
             <span className="screen__background__shape screen__background__shape1"></span>
+          </div>
+        </div>
+      </div>
+      <div className="ProfileSection">
+        <div className="ProfileLeft">
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" width="70%"></img>
+        </div>
+        <div className="ProfileRight">
+          <div className="PRSection">
+            <Button
+              style={{ float: 'right', border: 'none', backgroundColor: 'white' }}
+              onClick={handleShow1}
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
+                alt="edit"
+                width="30px"
+                style={{ marginRight: '20px' }}
+              />
+            </Button>
+
+            <Modal show={show1} onHide={handleClose1}>
+              <Modal.Header closeButton>
+                <Modal.Title>Modal heading</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                      onChange={(e) => setUsernameValue(e.target.value)}
+                      value={username}
+                      type="text"
+                      placeholder="Username"
+                      autoFocus
+                    />
+                  </Form.Group>
+                  {/* <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Example textarea</Form.Label>
+                    <Form.Control as="textarea" rows={3} />
+                  </Form.Group> */}
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Profession</Form.Label>
+                    <Form.Control
+                      onChange={(e) => setProfessionValue(e.target.value)}
+                      value={profession}
+                      type="text"
+                      placeholder="Profession"
+                      autoFocus
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Experience</Form.Label>
+                    <Form.Control
+                      onChange={(e) => setExperienceValue(e.target.value)}
+                      value={experience}
+                      type="text"
+                      placeholder="Experience"
+                      autoFocus
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Designation</Form.Label>
+                    <Form.Control
+                      onChange={(e) => setDesignationValue(e.target.value)}
+                      value={designation}
+                      type="text"
+                      placeholder="Designation"
+                      autoFocus
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Domain</Form.Label>
+                    <Form.Control
+                      onChange={(e) => setDomainValue(e.target.value)}
+                      value={domain}
+                      type="text"
+                      placeholder="Domain"
+                      autoFocus
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Location</Form.Label>
+                    <Form.Control
+                      onChange={(e) => setLocationValue(e.target.value)}
+                      value={location}
+                      type="text"
+                      placeholder="Location"
+                      autoFocus
+                    />
+                  </Form.Group>
+                </Form>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose1}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={handleClose1}>
+                  Save Changes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+            <h2 className="Profileusername">{username}</h2>
+            <div className="PRSegment">
+              <h4>{profession}</h4>
+              <h5>{experience}</h5>
+            </div>
+            <div className="PRSegment">
+              <h5 className="segmentHeading">Designation :</h5>
+              <h5>{designation}</h5>
+            </div>
+            <div className="PRSegment">
+              <h5 className="segmentHeading">Domain :</h5>
+              <h5>{domain}</h5>
+            </div>
+            <div className="PRSegment">
+              <h5 className="segmentHeading">{location}</h5>
+            </div>
+          </div>
+          <hr />
+          <div className="PRSection">
+            <Button
+              style={{ float: 'right', border: 'none', backgroundColor: 'white' }}
+              onClick={handleShow}
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
+                alt="edit"
+                width="30px"
+                style={{ marginRight: '20px' }}
+              />
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Modal heading</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control type="email" placeholder="name@example.com" autoFocus />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Example textarea</Form.Label>
+                    <Form.Control as="textarea" rows={3} />
+                  </Form.Group>
+                </Form>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                  Save Changes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+            <h3 className="Profileusername">Summary</h3>
+            <p>{summary}</p>
+          </div>
+          <hr />
+          <div className="PRSection">
+            <Button
+              style={{ float: 'right', border: 'none', backgroundColor: 'white' }}
+              onClick={handleShow}
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
+                alt="edit"
+                width="30px"
+                style={{ marginRight: '20px' }}
+              />
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Modal heading</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control type="email" placeholder="name@example.com" autoFocus />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Example textarea</Form.Label>
+                    <Form.Control as="textarea" rows={3} />
+                  </Form.Group>
+                </Form>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                  Save Changes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+            <h3 className="Profileusername">Personal details</h3>
+            <p>Write Here You personal details</p>
           </div>
         </div>
       </div>
