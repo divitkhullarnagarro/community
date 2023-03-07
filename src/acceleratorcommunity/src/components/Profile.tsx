@@ -1,4 +1,5 @@
 import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
+import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import Link from 'next/link';
 import { useState, useContext, useEffect } from 'react';
@@ -14,12 +15,15 @@ type ProfileProps = ComponentProps & {
   };
 };
 
-const Profile = (props: ProfileProps): JSX.Element => {
+const Profile = (props: ProfileProps | any): JSX.Element => {
   const { isLoggedIn, userToken, setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
   const router = useRouter();
 
+  let isExpEditorActive = props?.sitecoreContext?.pageEditing;
+  console.log('ProfilePageProps', isExpEditorActive);
+
   useEffect(() => {
-    if (userToken == '') {
+    if (userToken == '' && !isExpEditorActive) {
       router.push('/login');
     }
   }, []);
@@ -34,35 +38,50 @@ const Profile = (props: ProfileProps): JSX.Element => {
   const [isDisabled, setIsDisabled] = useState(true);
   let [firstName, setFirstName] = useState('');
   let [lastName, setLastName] = useState('');
-  let [email, setEmail] = useState('');
+  let [email, setEmail] = useState('tempUser@gmail.com');
   let [phoneNumber, setPhoneNumber] = useState('');
   let [password, setPassword] = useState('');
   let [confirmPassword, setConfirmPassword] = useState('');
   let [error, isError] = useState(false);
-  const [username, setUsername] = useState('Username');
-  const [profession, setprofession] = useState('Profession');
-  const [experience, setExperience] = useState('Experience');
-  const [designation, setDesignation] = useState('Designation Name');
-  const [domain, setDomain] = useState('Domain Name');
-  const [location, setLocation] = useState('Location Name');
+  const [username, setUsername] = useState('John Doe');
+  const [profession, setprofession] = useState('Software Engineer');
+  const [experience, setExperience] = useState(3);
+  const [designation, setDesignation] = useState('Senior Developer');
+  const [domain, setDomain] = useState('Development');
+  const [location, setLocation] = useState('Gurugram');
   const [summary, setSummary] = useState(
     'You can write about your speciality, areas of practice, expertise. You may even mention about your achievements, publication and interests.'
   );
 
-  const [show, setShow] = useState(false);
+  const [phoneNo, setPhoneNo] = useState('8964875242');
+  const [altEmail, setAltEmail] = useState('tempUser2@gmail.com');
+  const [dob, setDob] = useState('2022-03-25');
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  //Modal Variables
+  const [showForm1, setShowForm1] = useState(false);
+  const [showForm2, setShowForm2] = useState(false);
+  const [showForm3, setShowForm3] = useState(false);
 
-  const [show1, setShow1] = useState(false);
-
-  const handleClose1 = () => setShow1(false);
-  const handleShow1 = () => setShow1(true);
-
-  const [showFrom2, setShowForm2] = useState(false);
+  const handleClose1 = () => setShowForm1(false);
+  const handleShow1 = () => setShowForm1(true);
 
   const handleCloseForm2 = () => setShowForm2(false);
   const handleShowForm2 = () => setShowForm2(true);
+
+  const handleCloseForm3 = () => setShowForm3(false);
+  const handleShowForm3 = () => setShowForm3(true);
+  //Modal Variable End
+
+  function setPhoneNoValue(val: any) {
+    setPhoneNo(val);
+  }
+  function setAltEmailValue(val: any) {
+    setAltEmail(val);
+  }
+
+  function setDobValue(val: any) {
+    setDob(val);
+  }
 
   function setUsernameValue(val: any) {
     setUsername(val);
@@ -83,7 +102,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
     setLocation(val);
   }
 
-  function setSumaryValue(val: any) {
+  function setSummaryValue(val: any) {
     setSummary(val);
   }
 
@@ -270,7 +289,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
           <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" width="70%"></img>
         </div>
         <div className="ProfileRight">
-          <div className="PRSection">
+          <div className="PRSection mt-3">
             <Button
               style={{ float: 'right', border: 'none', backgroundColor: 'white' }}
               onClick={handleShow1}
@@ -283,7 +302,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
               />
             </Button>
 
-            <Modal show={show1} onHide={handleClose1}>
+            <Modal show={showForm1} onHide={handleClose1}>
               <Modal.Header closeButton>
                 <Modal.Title>Modal heading</Modal.Title>
               </Modal.Header>
@@ -299,10 +318,6 @@ const Profile = (props: ProfileProps): JSX.Element => {
                       autoFocus
                     />
                   </Form.Group>
-                  {/* <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Example textarea</Form.Label>
-                    <Form.Control as="textarea" rows={3} />
-                  </Form.Group> */}
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Profession</Form.Label>
                     <Form.Control
@@ -318,7 +333,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
                     <Form.Control
                       onChange={(e) => setExperienceValue(e.target.value)}
                       value={experience}
-                      type="text"
+                      type="number"
                       placeholder="Experience"
                       autoFocus
                     />
@@ -367,7 +382,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
             <h2 className="Profileusername">{username}</h2>
             <div className="PRSegment">
               <h4>{profession}</h4>
-              <h5>{experience}</h5>
+              <h5>{experience} Years</h5>
             </div>
             <div className="PRSegment">
               <h5 className="segmentHeading">Designation :</h5>
@@ -385,7 +400,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
           <div className="PRSection">
             <Button
               style={{ float: 'right', border: 'none', backgroundColor: 'white' }}
-              onClick={handleShow}
+              onClick={handleShowForm2}
             >
               <img
                 src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
@@ -395,27 +410,28 @@ const Profile = (props: ProfileProps): JSX.Element => {
               />
             </Button>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={showForm2} onHide={handleCloseForm2}>
               <Modal.Header closeButton>
                 <Modal.Title>Modal heading</Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <Form>
-                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="name@example.com" autoFocus />
-                  </Form.Group>
                   <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Example textarea</Form.Label>
-                    <Form.Control as="textarea" rows={3} />
+                    <Form.Label>Summary</Form.Label>
+                    <Form.Control
+                      onChange={(e) => setSummaryValue(e.target.value)}
+                      value={summary}
+                      as="textarea"
+                      rows={5}
+                    />
                   </Form.Group>
                 </Form>
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
+                <Button variant="secondary" onClick={handleCloseForm2}>
                   Close
                 </Button>
-                <Button variant="primary" onClick={handleClose}>
+                <Button variant="primary" onClick={handleCloseForm2}>
                   Save Changes
                 </Button>
               </Modal.Footer>
@@ -427,7 +443,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
           <div className="PRSection">
             <Button
               style={{ float: 'right', border: 'none', backgroundColor: 'white' }}
-              onClick={handleShow}
+              onClick={handleShowForm3}
             >
               <img
                 src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
@@ -437,33 +453,82 @@ const Profile = (props: ProfileProps): JSX.Element => {
               />
             </Button>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={showForm3} onHide={handleCloseForm3}>
               <Modal.Header closeButton>
                 <Modal.Title>Modal heading</Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <Form>
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="name@example.com" autoFocus />
+                    <Form.Label>Phone No.</Form.Label>
+                    <Form.Control
+                      onChange={(e) => setPhoneNoValue(e.target.value)}
+                      value={phoneNo}
+                      type="number"
+                      placeholder="Phone No."
+                      autoFocus
+                    />
                   </Form.Group>
-                  <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Example textarea</Form.Label>
-                    <Form.Control as="textarea" rows={3} />
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control
+                      onChange={(e) => setEmailValue(e.target.value)}
+                      value={email}
+                      type="email"
+                      placeholder="Email"
+                      autoFocus
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Alternate Email address</Form.Label>
+                    <Form.Control
+                      onChange={(e) => setAltEmailValue(e.target.value)}
+                      value={altEmail}
+                      type="email"
+                      placeholder="Alternate Email"
+                      autoFocus
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Date Of Birth</Form.Label>
+                    <Form.Control
+                      onChange={(e) => setDobValue(e.target.value)}
+                      value={dob}
+                      type="date"
+                      placeholder="Date Of Birth"
+                      autoFocus
+                    />
                   </Form.Group>
                 </Form>
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
+                <Button variant="secondary" onClick={handleCloseForm3}>
                   Close
                 </Button>
-                <Button variant="primary" onClick={handleClose}>
+                <Button variant="primary" onClick={handleCloseForm3}>
                   Save Changes
                 </Button>
               </Modal.Footer>
             </Modal>
             <h3 className="Profileusername">Personal details</h3>
-            <p>Write Here You personal details</p>
+            <div className="ProfilePersonalDetails">
+              <div className="PRSegment">
+                <h5 className="segmentHeading">Phone No. :</h5>
+                <h5>{phoneNo}</h5>
+              </div>
+              <div className="PRSegment">
+                <h5 className="segmentHeading">Email :</h5>
+                <h5>{email}</h5>
+              </div>
+              <div className="PRSegment">
+                <h5 className="segmentHeading">Alternate Email :</h5>
+                <h5>{altEmail}</h5>
+              </div>
+              <div className="PRSegment">
+                <h5 className="segmentHeading">Date Of Birth :</h5>
+                <h5>{dob}</h5>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -471,4 +536,4 @@ const Profile = (props: ProfileProps): JSX.Element => {
   );
 };
 
-export default Profile;
+export default withSitecoreContext()(Profile);
