@@ -9,6 +9,9 @@ const publicUrl = getPublicUrl();
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   // Set assetPrefix to our public URL
   assetPrefix: publicUrl,
 
