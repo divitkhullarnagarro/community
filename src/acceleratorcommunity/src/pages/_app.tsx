@@ -6,6 +6,7 @@ import { SitecorePageProps } from 'lib/page-props';
 import '../assets/login.css';
 import '../assets/dashboard.css';
 import '../assets/profile.css';
+import '../assets/addPost.css';
 import WebProvider from '../Context/WebProvider';
 
 // Using bootstrap and nprogress are completely optional.
