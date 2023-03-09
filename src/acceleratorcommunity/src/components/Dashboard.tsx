@@ -4,7 +4,7 @@ import React, { useContext, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import WebContext from '../Context/WebContext';
-
+import FollowUnfollowButton from './FollowUnfollowButton';
 type DashboardProps = ComponentProps & {
   fields: {
     heading: Field<string>;
@@ -46,6 +46,7 @@ const Dashboard = (props: DashboardProps): JSX.Element => {
           <Link className="navBaroptions" href="/profile">
             Profile
           </Link>
+          <FollowUnfollowButton/>
         </div>
       </nav>
     </>
