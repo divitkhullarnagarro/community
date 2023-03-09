@@ -27,7 +27,7 @@ const Login = (props: LoginProps): JSX.Element => {
   const onSubmitHandler = async (e: any) => {
     e.preventDefault();
     let response = await loginUserCall(email, password);
-    if (response.status == 200) {
+    if (response?.status == 200) {
       setIsLoggedIn(true);
     }
   };
