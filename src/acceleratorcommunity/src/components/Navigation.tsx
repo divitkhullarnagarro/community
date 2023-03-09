@@ -9,6 +9,7 @@ import support from '../assets/images/Signout.png';
 import signout from '../assets/images/Support.png';
 import collection from '../assets/images/myCollection.png';
 import notification from '../assets/images/Notification.jpg'
+import dropdown from '../assets/images/DownArrowimage.png'
 
 
 type NavigationProps = ComponentProps & {
@@ -23,7 +24,7 @@ const Navigation = (props: NavigationProps): JSX.Element => (
   <nav className={Navigationcss.navbar}>
     <div className={Navigationcss.search_form}>
       <NextImage
-        className={Navigationcss.img}
+        className={Navigationcss.searchImage}
         field={searchImage}
         editable={true}
         height={20}
@@ -47,6 +48,12 @@ const Navigation = (props: NavigationProps): JSX.Element => (
     <div className={Navigationcss.dropdown}>
       <a href="#" className={Navigationcss.dropdown_value}>
         {name}
+        <NextImage
+        field={dropdown}
+        editable={true}
+        height={14}
+        width={20}
+      />
       </a>
       <div className={Navigationcss.dropdown_content}>
         <a href="#">
