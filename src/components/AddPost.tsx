@@ -1,9 +1,11 @@
 import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
-import { ReactElement, useState } from 'react';
+import { ReactElement, useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import WebContext from '../Context/WebContext';
+import { useRouter } from 'next/router';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -13,9 +15,17 @@ type AddPostProps = ComponentProps & {
 
 const AddPost = (props: AddPostProps): JSX.Element => {
   props;
+  const { userToken } = { ...useContext(WebContext) };
+  const router = useRouter();
   const [showForm1, setShowForm1] = useState(false);
   const handleClose1 = () => setShowForm1(false);
   const handleShow1 = () => setShowForm1(true);
+
+  useEffect(() => {
+    if (userToken == '') {
+      router.push('/');
+    }
+  }, []);
 
   let myPostArray: ReactElement<any, any>[] = [];
   myPostArray.push(postStructCreate('Default Heading', 'Default Post'));
