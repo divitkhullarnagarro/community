@@ -2,6 +2,7 @@ import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import registerUserCall from '../API/registerUserCall';
 
 type RegisterProps = ComponentProps & {
   fields: {
@@ -10,14 +11,25 @@ type RegisterProps = ComponentProps & {
 };
 
 const Register = (props: RegisterProps): JSX.Element => {
+  props;
+  let [firstName, setFirstName] = useState('');
+  let [lastName, setLastName] = useState('');
   let [email, setEmail] = useState('');
-  let [name, setName] = useState('');
+  let [phoneNumber, setPhoneNumber] = useState('');
   let [password, setPassword] = useState('');
   let [confirmPassword, setConfirmPassword] = useState('');
   let [error, isError] = useState(false);
 
-  function setNameValue(val: any) {
-    setName(val);
+  function setFirstNameValue(val: any) {
+    setFirstName(val);
+  }
+
+  function setPhoneNumberValue(val: any) {
+    setPhoneNumber(val);
+  }
+
+  function setLastNameValue(val: any) {
+    setLastName(val);
   }
 
   function setEmailValue(val: any) {
@@ -26,7 +38,6 @@ const Register = (props: RegisterProps): JSX.Element => {
 
   function setPasswordValue(val: any) {
     setPassword(val);
-    console.log('pass', val, confirmPassword);
     if (confirmPassword != '') {
       if (val !== confirmPassword) {
         isError(true);
@@ -39,7 +50,6 @@ const Register = (props: RegisterProps): JSX.Element => {
   }
   function setConfirmPasswordValue(val: any) {
     setConfirmPassword(val);
-    console.log('conf', password, val);
     if (password != '') {
       if (password != val) isError(true);
       else if (password === val) {
@@ -50,23 +60,21 @@ const Register = (props: RegisterProps): JSX.Element => {
     }
   }
 
-  const onSubmitHandler = (e: any) => {
+  const onSubmitHandler = async (e: any) => {
     e.preventDefault();
-    console.log(
-      'Register Form Submit Values : ',
-      name,
-      ' ',
-      email,
-      ' ',
-      password,
-      ' ',
-      confirmPassword
-    );
+    let userData = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      phoneNumber: phoneNumber,
+    };
+    let resp = await registerUserCall(userData);
+    console.log('Register Response', resp);
   };
 
   return (
     <>
-      {console.log(props)}
       <div className="container">
         <div className="screen">
           <div className="screen__content">
@@ -75,10 +83,20 @@ const Register = (props: RegisterProps): JSX.Element => {
                 <i className="login__icon fas fa-user"></i>
                 <input
                   type="text"
-                  onChange={(e) => setNameValue(e.target.value)}
-                  value={name}
+                  onChange={(e) => setFirstNameValue(e.target.value)}
+                  value={firstName}
                   className="login__input"
-                  placeholder="Full Name"
+                  placeholder="First Name"
+                />
+              </div>
+              <div className="login__field">
+                <i className="login__icon fas fa-user"></i>
+                <input
+                  type="text"
+                  onChange={(e) => setLastNameValue(e.target.value)}
+                  value={lastName}
+                  className="login__input"
+                  placeholder="Last Name"
                 />
               </div>
               <div className="login__field">
@@ -88,7 +106,17 @@ const Register = (props: RegisterProps): JSX.Element => {
                   onChange={(e) => setEmailValue(e.target.value)}
                   value={email}
                   className="login__input"
-                  placeholder="User name / Email"
+                  placeholder="Email"
+                />
+              </div>
+              <div className="login__field">
+                <i className="login__icon fas fa-user"></i>
+                <input
+                  type="text"
+                  onChange={(e) => setPhoneNumberValue(e.target.value)}
+                  value={phoneNumber}
+                  className="login__input"
+                  placeholder="Phone No."
                 />
               </div>
               <div className="login__field">

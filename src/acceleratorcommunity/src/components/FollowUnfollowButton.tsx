@@ -1,7 +1,7 @@
 import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
-import React ,{ useState } from 'react';
-
+import React, { useContext ,useState} from 'react';
+import WebContext from '../Context/WebContext';
 
 type FollowUnfollowButtonProps = ComponentProps & {
   fields: {
@@ -10,23 +10,20 @@ type FollowUnfollowButtonProps = ComponentProps & {
 };
 
 const FollowUnfollowButton = (): JSX.Element => {
+  const { isLoggedIn } = { ...useContext(WebContext) };
   const [followButtonText, setButtonText] = useState("Follow"); //same as creating your state variable where "Next" is the default value for buttonText and setButtonText is the setter function for your state variable instead of setState
 const changeText = (text:string) => setButtonText(text);
-const [loginButtonText, setLoginButtonText] = useState("Login"); //same as creating your state variable where "Next" is the default value for buttonText and setButtonText is the setter function for your state variable instead of setState
-const changeLoginText = (text:string) => setLoginButtonText(text);
-if (followButtonText=='Follow' && loginButtonText=='Logout')
+if (followButtonText=='Follow' && isLoggedIn)
 {
   return(
     <div>
-    <button type="button" className='followUnfollowButton' onClick={() => changeLoginText("Login")}>{loginButtonText}</button>
     <button type="button" className='followUnfollowButton' onClick={() => changeText("Unfollow")}>{followButtonText}</button>
     </div>
       );
 }
-else if (followButtonText=='Unfollow' && loginButtonText=='Logout'){
+else if (followButtonText=='Unfollow' && isLoggedIn){
   return(
     <div>
-    <button type="button" className='followUnfollowButton' onClick={() => changeLoginText("Login")}>{loginButtonText}</button>
 <button type="button" className='followUnfollowButton' onClick={() => changeText("Follow")}>{followButtonText}</button>
  </div>
  );
@@ -34,7 +31,6 @@ else if (followButtonText=='Unfollow' && loginButtonText=='Logout'){
 else{
 return( 
   <div>
-  <button type="button" className='followUnfollowButton' onClick={() => changeLoginText("Logout")}>{loginButtonText}</button>
   <button type="button" className='followUnfollowButton' onClick={()=>window.location.href='/login'}>Follow</button>
   </div>
    );
