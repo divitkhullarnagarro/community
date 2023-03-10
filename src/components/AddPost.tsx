@@ -23,7 +23,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
 
   useEffect(() => {
     if (userToken == '') {
-      router.push('/');
+      router.push('/login');
     }
   }, []);
 
