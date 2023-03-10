@@ -1,0 +1,38 @@
+.navwrapper {
+  margin: 0;
+  padding: 0;
+  width: 7.5rem;
+  background: linear-gradient(#001850, #003999);
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  border: 2px solid black;
+  font-family: Inter, monospace;
+}
+
+.navwrapper a {
+  color: #fff;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.9375rem 0.3125rem;
+  font-size: 0.75rem;
+}
+
+.sidebar:first-child {
+  margin-top: 7.5rem;
+}
+
+.sidebar:hover:not(.active) {
+  background-color: #0351d6;
+}
+
+.img {
+  filter: invert(1);
+}
