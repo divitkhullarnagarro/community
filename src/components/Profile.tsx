@@ -20,7 +20,6 @@ const Profile = (props: ProfileProps | any): JSX.Element => {
   const router = useRouter();
 
   let isExpEditorActive = props?.sitecoreContext?.pageEditing;
-  console.log('ProfilePageProps', isExpEditorActive);
 
   useEffect(() => {
     if (userToken == '' && !isExpEditorActive) {
