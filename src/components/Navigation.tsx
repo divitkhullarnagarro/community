@@ -9,7 +9,7 @@ import support from '../assets/images/Signout.png';
 import signout from '../assets/images/Support.png';
 import collection from '../assets/images/myCollection.png';
 import notification from '../assets/images/Notification.jpg';
-import dropdown from '../assets/images/DownArrowimage.png';
+import dropdown from '../assets/images/DownArrowImage.png';
 
 type NavigationProps = ComponentProps & {
   fields: {
