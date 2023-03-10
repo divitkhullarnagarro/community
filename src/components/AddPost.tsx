@@ -1,6 +1,7 @@
 import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { ReactElement, useContext, useEffect, useState } from 'react';
+import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -13,7 +14,7 @@ type AddPostProps = ComponentProps & {
   };
 };
 
-const AddPost = (props: AddPostProps): JSX.Element => {
+const AddPost = (props: AddPostProps | any): JSX.Element => {
   props;
   const { userToken } = { ...useContext(WebContext) };
   const router = useRouter();
@@ -21,8 +22,10 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   const handleClose1 = () => setShowForm1(false);
   const handleShow1 = () => setShowForm1(true);
 
+  let isExpEditorActive = props?.sitecoreContext?.pageEditing;
+
   useEffect(() => {
-    if (userToken == '') {
+    if (userToken == '' && !isExpEditorActive) {
       router.push('/');
     }
   }, []);
@@ -235,4 +238,4 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   );
 };
 
-export default AddPost;
+export default withSitecoreContext()(AddPost);
