@@ -14,6 +14,10 @@
     padding: 20px;
 }
 
+.ProfileLeft img {
+    margin: 20px 0px 0px 20px;
+}
+
 .ProfileRight {
     width: 70%;
     padding: 20px;
@@ -34,4 +38,11 @@
 
 .PRSegment .segmentHeading {
     font-weight: 1000;
+}
+
+.ProfilePersonalDetails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    max-width: 600px;
 }
