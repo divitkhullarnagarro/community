@@ -32,47 +32,13 @@ Languages:
           <d
             id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
             <r
-              uid="{995DC1DD-0063-4F39-8A27-B0EF6A67CBFC}"
-              p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
-              s:ds="{51C495B6-E2B7-469E-9C25-87E8E1775FC9}"
-              s:id="{68246E75-76CA-4836-8930-D47E7D0909A0}"
-              s:par=""
-              s:ph="/jss-main/col2-{4D9B0A44-86B7-47F8-B799-9B5852C03FEA}-0"
-              s:ccb="Clear on publish" />
-            <r
-              uid="{3F80779A-E620-4848-9ECA-2F5360B5C530}"
-              p:after="r[@uid='{995DC1DD-0063-4F39-8A27-B0EF6A67CBFC}']"
-              s:ds="{04AA5574-E632-41E4-A395-DD03EA10D8FC}"
-              s:id="{2F9862DC-667C-41D3-B574-FCC07F2DEE7A}"
-              s:par="RenderingView=ImageonLeft"
-              s:ph="/jss-main/col2-{4D9B0A44-86B7-47F8-B799-9B5852C03FEA}-0"
-              s:ccb="Clear on publish" />
-            <r
-              uid="{FC8C1444-BD97-4426-8861-84DEEF910015}"
-              p:after="r[@uid='{3F80779A-E620-4848-9ECA-2F5360B5C530}']"
-              s:ds="{04AA5574-E632-41E4-A395-DD03EA10D8FC}"
-              s:id="{2F9862DC-667C-41D3-B574-FCC07F2DEE7A}"
-              s:par="RenderingView=ImageonTop"
-              s:ph="/jss-main/col2-{4D9B0A44-86B7-47F8-B799-9B5852C03FEA}-0" />
-            <r
-              uid="{2CCE3FF8-0CD6-4E06-B375-5068E5200CD4}"
-              p:after="r[@uid='{FC8C1444-BD97-4426-8861-84DEEF910015}']"
-              s:ds="{04AA5574-E632-41E4-A395-DD03EA10D8FC}"
-              s:id="{2F9862DC-667C-41D3-B574-FCC07F2DEE7A}"
-              s:par="RenderingView=ImageonRight"
-              s:ph="/jss-main/col2-{4D9B0A44-86B7-47F8-B799-9B5852C03FEA}-0" />
-            <r
               uid="{ED7FD035-E57A-463A-B074-9FC1F2E986C5}"
-              p:after="r[@uid='{2CCE3FF8-0CD6-4E06-B375-5068E5200CD4}']"
+              p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
               s:ds="{C4E858B6-EE9A-4AD1-B4CD-771955027017}"
               s:id="{0EC34140-EA61-443B-B50B-08B7664B8606}"
-              s:ph="/jss-main/col1-{4D9B0A44-86B7-47F8-B799-9B5852C03FEA}-0" />
-            <r
-              uid="{4D9B0A44-86B7-47F8-B799-9B5852C03FEA}"
-              p:after="r[@uid='{ED7FD035-E57A-463A-B074-9FC1F2E986C5}']"
-              s:ds="{C79255F3-31A1-4FB8-B570-E7DB12DAC7EF}"
-              s:id="{44F40912-35E3-43E6-8C36-6488DC75421E}"
-              s:ph="jss-main" />
+              s:par=""
+              s:ph="jss-main"
+              s:ccb="Clear on publish" />
             <r
               uid="{11A2A6DE-D211-453C-B4B3-29B55A8EDEA5}"
               p:after="*[1=2]" />
@@ -89,11 +55,11 @@ Languages:
       Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "f10286b8-3825-49d8-a3c4-3f368ca33908"
+      Value: "9bf69255-0496-495e-83e2-216a96ffb92b"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230310T062320Z
+      Value: 20230310T111501Z
