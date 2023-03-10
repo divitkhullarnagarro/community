@@ -26,7 +26,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   useEffect(() => {
     if (userToken == '' && !isExpEditorActive) {
-      router.push('/');
+      router.push('/login');
     }
   }, []);
 
