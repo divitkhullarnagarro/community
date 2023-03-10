@@ -5,6 +5,8 @@ import NProgress from 'nprogress';
 import { SitecorePageProps } from 'lib/page-props';
 import '../assets/login.css';
 import '../assets/dashboard.css';
+import '../assets/profile.css';
+import '../assets/addPost.css';
 import WebProvider from '../Context/WebProvider';
 
 // Using bootstrap and nprogress are completely optional.
@@ -14,9 +16,6 @@ import WebProvider from '../Context/WebProvider';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'nprogress/nprogress.css';
 import 'assets/app.css';
-import 'assets/logo.css';
-import 'assets/grid.css';
-import 'assets/rte.css';
 
 NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
 
