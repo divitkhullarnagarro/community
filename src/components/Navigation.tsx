@@ -1,4 +1,4 @@
-import { Field, NextImage, withDatasourceCheck } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import Navigationcss from '../assets/Navigation.module.css';
 import searchImage from '../assets/images/searchImage.png';
@@ -118,4 +118,4 @@ const Navigation = (props: NavigationProps): JSX.Element => {
   );
 };
 
-export default withDatasourceCheck()<NavigationProps>(Navigation);
+export default Navigation;
