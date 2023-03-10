@@ -1,0 +1,141 @@
+.imagetext-container-responsive {
+  margin-bottom: 1.25rem;
+}
+
+.image-card-container {
+  overflow: auto;
+}
+
+.float-layout {
+  padding: 10px 10px;
+  float: left;
+  width: 50%;
+  height: auto;
+  margin: 0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 10px;
+  border: 2px solid #c9c6c6;
+}
+.card {
+  padding: 15px;
+  color: black;
+  min-height: 100%;
+  width: 30%;
+  border: none;
+  float: right;
+  justify-content: center;
+}
+
+.margin-l {
+  padding-left: 0px !important;
+  padding-right: 200px;
+  width: 100%;
+}
+
+.image-card-title {
+  font-weight: 600;
+  font-size: 60px;
+  line-height: 39.42px;
+  padding-left: 74px;
+  margin-bottom: 24px;
+  color: #005ba6;
+}
+
+.image-card-desc {
+  padding-left: 74px;
+  text-align: left;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+.image-card-image {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.imagetext-container-responsive div.image-card-image img {
+  width: 45%;
+  height: auto;
+  max-height: 600px;
+  max-width: 567px;
+  width: 567px;
+  object-fit: contain;
+  border-radius: 20px;
+}
+
+.imagetext-container-responsive div.image-card-image {
+  margin-left: 15px;
+}
+
+.imagetext-container-responsive div.image-card-image img {
+  width: 100%;
+  height: 262.5px;
+  max-height: 262.5px;
+  max-width: 391px;
+  margin-bottom: 24px;
+}
+
+.image-card-title {
+  font-size: 24px;
+  line-height: 30px;
+  padding-left: 0px;
+  color: #005ba6;
+}
+
+.imagetext-container-responsive .image-card-desc {
+  font-size: 14px;
+  line-height: 21px;
+  padding: 0px;
+}
+
+.imagetext-container-responsive .image-card-image {
+  display: flex;
+  flex-direction: row;
+}
+
+.imagetext-container-responsive .margin-l {
+  margin-bottom: 24px;
+}
+
+.imagetext-container-responsive .card {
+  width: 100%;
+  margin-top: -4px;
+}
+
+.image-text-top-image {
+  display: grid;
+  grid-template-columns: auto;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  padding: 0px 48px;
+}
+.image-text-top-image .image-text-top-image-image {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+}
+.image-text-top-image .image-text-top-image-text .image-text-top-image-text-title {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 60px;
+  letter-spacing: 0.03em;
+  color: #3e4146;
+  text-align: center;
+  color: #005ba6;
+  margin-bottom: 13.79px;
+}
+
+.image-text-top-image .image-text-top-image-text .image-text-top-image-text-description {
+  display: flex;
+  flex-wrap: wrap;
+  font-weight: 200;
+  overflow-wrap: normal;
+  font-size: 20px;
+  color: #696b6f;
+  text-align: center;
+}
