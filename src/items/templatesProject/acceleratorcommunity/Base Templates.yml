@@ -1,0 +1,23 @@
+﻿---
+ID: "dcc16bba-fbe7-4d91-b7e8-c0153c47cab0"
+Parent: "a1f55e18-841c-5ddf-9d21-aae15e41ea42"
+Template: "0437fee2-44c9-46a6-abe9-28858d9fee8c"
+Path: /sitecore/templates/Project/acceleratorcommunity/Base Templates
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230309T065619Z
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "2b68cb9f-3cc4-4837-94bf-67fb460df312"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230309T065619Z

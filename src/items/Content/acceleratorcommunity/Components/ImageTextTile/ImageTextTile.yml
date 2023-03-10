@@ -1,0 +1,43 @@
+﻿---
+ID: "04aa5574-e632-41e4-a395-dd03ea10d8fc"
+Parent: "97d8d9fe-5bbf-4d7f-b2f5-ac663617094f"
+Template: "9169121d-4917-4b99-8398-19ff579f8d8a"
+Path: /sitecore/content/acceleratorcommunity/Components/ImageTextTile/ImageTextTile
+SharedFields:
+- ID: "e4671ffa-ecb0-49f5-8951-fe87aecd58fc"
+  Hint: Thumbnail
+  Value: |
+    <image mediaid="{26770C9A-00BF-4E55-A6C2-D92D738B0F56}" />
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230309T111418Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "ace8eb7c-5baa-43a3-a2fc-ca23746213fa"
+    - ID: "98baa03b-24f1-47d1-9f44-30316aad3c6d"
+      Hint: Title
+      Value: Community Solution
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230309T111540Z
+    - ID: "f12a010f-9e92-442c-b241-f2171d23a2b8"
+      Hint: Description
+      Value: |
+        <span style="color: #000000; background-color: #ffffff; text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel interdum orci. Pellentesque placerat tellus quis vestibulum varius. Ut dictum tellus tempus nisi ultrices dignissim. Nullam mollis leo lectus, a rhoncus orci interdum ac. Donec eget mollis libero, eu ornare est. Aliquam erat volutpat. Donec eu ligula et nisi malesuada malesuada. Aenean gravida vulputate metus, sit amet malesuada nibh tristique vitae.</span>

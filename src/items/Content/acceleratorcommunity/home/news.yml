@@ -1,0 +1,45 @@
+﻿---
+ID: "b687c946-e903-44d4-b479-e5e137e130a3"
+Parent: "9b2f2c61-b700-51dd-8f47-7600fc865200"
+Template: "0a24b14e-bbdd-4d84-8139-7d40e3b356fa"
+Path: /sitecore/content/acceleratorcommunity/home/news
+SharedFields:
+- ID: "9621fdf3-7179-4ac3-a3ec-fda713baa1f5"
+  Hint: Show In Header
+  Value: 1
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{6C59AE29-D0A1-4B77-9305-0ABAB21D5FE5}"
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 50
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "001dd393-96c5-490b-924a-b0f25cd9efd8"
+      Hint: __Lock
+      Value: <r />
+    - ID: "03897511-7b06-4331-8ca0-1929bc3047ce"
+      Hint: Navigation Title
+      Value: News
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230309T071323Z
+    - ID: "263d7202-9941-5327-aeda-534621fa7b2d"
+      Hint: pageTitle
+      Value: News
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "39462ceb-36b7-4eef-9eb9-93ccb7c76770"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230309T073110Z

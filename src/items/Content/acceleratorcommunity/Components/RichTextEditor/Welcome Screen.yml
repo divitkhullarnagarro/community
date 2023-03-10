@@ -1,0 +1,29 @@
+﻿---
+ID: "37091f88-27d6-4793-945c-0dadd5d7f74d"
+Parent: "682286dd-174d-4c08-aea9-9b54c79dc95c"
+Template: "7f815d22-82f6-4241-9c84-f2292a9e93eb"
+Path: /sitecore/content/acceleratorcommunity/Components/RichTextEditor/Welcome Screen
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "001dd393-96c5-490b-924a-b0f25cd9efd8"
+      Hint: __Lock
+      Value: <r />
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230307T134313Z
+    - ID: "3cf18f70-532e-442f-a66c-e72d58f276eb"
+      Hint: RichText
+      Value: <h1>Welcome to Community Accelerator</h1>
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "e6a401c1-442e-4c82-b9c0-13a0820a4235"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230307T134359Z

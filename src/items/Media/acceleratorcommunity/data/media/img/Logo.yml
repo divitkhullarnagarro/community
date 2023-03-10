@@ -1,0 +1,23 @@
+﻿---
+ID: "10c76ae0-44b8-41aa-ad09-c152875633d1"
+Parent: "ce3e1970-30ec-5052-9fb8-2f2047e5ec57"
+Template: "fe5dd826-48c6-436d-b87a-7c4210c7413b"
+Path: /sitecore/media library/acceleratorcommunity/data/media/img/Logo
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230306T162059Z
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "0450c3d4-4d91-49a8-9098-7d726999eaf2"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230306T162059Z

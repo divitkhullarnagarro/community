@@ -1,0 +1,23 @@
+﻿---
+ID: "a5d1cdcb-2b55-403c-a635-bbdec511658f"
+Parent: "9169121d-4917-4b99-8398-19ff579f8d8a"
+Template: "e269fbb5-3750-427a-9149-7aa950b49301"
+Path: /sitecore/templates/Feature/acceleratorcommunity/ImageTextTile/data
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230309T111341Z
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "c745fb22-7a17-45c5-aa1d-206926a0c877"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230309T111345Z
