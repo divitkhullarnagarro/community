@@ -1,4 +1,4 @@
-import { Field, NextImage, withDatasourceCheck } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import Navigationcss from '../assets/Navigation.module.css';
 import searchImage from '../assets/images/searchImage.png';
@@ -9,7 +9,7 @@ import support from '../assets/images/Signout.png';
 import signout from '../assets/images/Support.png';
 import collection from '../assets/images/myCollection.png';
 import notification from '../assets/images/Notification.jpg';
-import dropdown from '../assets/images/DownArrowimage.png';
+import dropdown from '../assets/images/DownArrowImage.png';
 
 type NavigationProps = ComponentProps & {
   fields: {
@@ -118,4 +118,4 @@ const Navigation = (props: NavigationProps): JSX.Element => {
   );
 };
 
-export default withDatasourceCheck()<NavigationProps>(Navigation);
+export default Navigation;

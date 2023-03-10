@@ -1,4 +1,4 @@
-import { Field, withDatasourceCheck, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import Link from 'next/link';
 import styles from '../assets/sidenav.module.css';
@@ -56,4 +56,4 @@ const SideNav = (props: SideNavProps): JSX.Element => {
   );
 };
 
-export default withDatasourceCheck()<SideNavProps>(SideNav);
+export default SideNav;
