@@ -2,7 +2,7 @@ import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import React, { useContext, useEffect } from 'react';
 import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
-import Link from 'next/link';
+// import Link from 'next/link';
 import { useRouter } from 'next/router';
 import WebContext from '../Context/WebContext';
 type DashboardProps = ComponentProps & {
