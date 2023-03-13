@@ -1,0 +1,54 @@
+﻿---
+ID: "85442646-9588-4cc9-a98a-db19df67b50f"
+Parent: "c477536d-feb6-47d5-9237-eb73d420e962"
+Template: "173b90ce-4ec9-4d9d-8193-3e2b63f80aee"
+Path: /sitecore/content/acceleratorcommunity/Components/ArticleList/ArticlesList
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230313T062518Z
+    - ID: "7fd7efe7-f393-4125-9a22-707338dc9836"
+      Hint: ArticlesList
+      Value: |
+        {A37E43A9-EB4C-4A05-BCC0-DD7E753C77A9}
+        {0885A14F-0F9E-4DCB-AD93-58B80CC845DD}
+        {E3683213-4298-4238-9491-2DBF1715EDB4}
+        {404328CD-4367-4BE2-88B1-368BE0986B6D}
+        {832A2E37-065F-4F9A-87D0-F3845621D1A5}
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "39567df4-31c2-4641-aac8-981303efbde6"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230313T063551Z
+  - Version: 2
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230313T062518Z
+    - ID: "7fd7efe7-f393-4125-9a22-707338dc9836"
+      Hint: ArticlesList
+      Value: |
+        {A37E43A9-EB4C-4A05-BCC0-DD7E753C77A9}
+        {0885A14F-0F9E-4DCB-AD93-58B80CC845DD}
+        {E3683213-4298-4238-9491-2DBF1715EDB4}
+        {404328CD-4367-4BE2-88B1-368BE0986B6D}
+        {832A2E37-065F-4F9A-87D0-F3845621D1A5}
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "39567df4-31c2-4641-aac8-981303efbde6"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230313T063551Z
