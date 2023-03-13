@@ -1,21 +1,24 @@
 import Axios, { AxiosResponse } from "axios";
-import qs from "qs";
 
 const loginUserCall = async (email: string, password: string
 ) => {
-    var data = qs.stringify({
-        client_id: "api-client",
-        client_secret: "UJGyGkpVaplPHXYAyD4nBatcoSNT7Src",
-        grant_type: "password",
-        username: email,
+    // var data = qs.stringify({
+    //     // client_id: "api-client",
+    //     // client_secret: "UJGyGkpVaplPHXYAyD4nBatcoSNT7Src",
+    //     // grant_type: "password",
+    //     objectId: email,
+    //     password: password
+    // });
+    var data = {
+        objectId: email,
         password: password
-    });
-    let logURL = "http://accelerator-auth-service-dev.eastus.cloudapp.azure.com:8080/realms/accelerator-realm/protocol/openid-connect/token";
+    };
+    let logURL = "http://accelerator-user-service-dev.eastus.cloudapp.azure.com:8080/api/v1/login";
     var config = {
         // method: "post",
         url: logURL,
         headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
+            "Content-Type": "application/json",
         },
         data: data,
     };

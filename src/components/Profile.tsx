@@ -20,6 +20,7 @@ const Profile = (props: ProfileProps | any): JSX.Element => {
   const router = useRouter();
 
   let isExpEditorActive = props?.sitecoreContext?.pageEditing;
+  console.log('ProfilePageProps', isExpEditorActive);
 
   useEffect(() => {
     if (userToken == '' && !isExpEditorActive) {
@@ -157,7 +158,7 @@ const Profile = (props: ProfileProps | any): JSX.Element => {
 
   return (
     <>
-      <nav className="navBar">
+      {/* <nav className="navBar">
         <div>
           <a href="/">
             <img
@@ -175,7 +176,7 @@ const Profile = (props: ProfileProps | any): JSX.Element => {
             Dashboard
           </Link>
         </div>
-      </nav>
+      </nav> */}
       <div className="container" style={{ display: 'none' }}>
         <div className="screen">
           <div className="screen__content">
