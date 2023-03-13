@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import WebContext from '../Context/WebContext';
-
+import styles from '../assets/followunfollowbutton.module.css';
 // type FollowUnfollowButtonProps = ComponentProps & {
 //   fields: {
 //     heading: Field<string>;
@@ -16,7 +16,7 @@ const FollowUnfollowButton = (): JSX.Element => {
       <div>
         <button
           type="button"
-          className="followUnfollowButton"
+          className={styles.followUnfollowButton}
           onClick={() => changeText('Unfollow')}
         >
           {followButtonText}
@@ -26,7 +26,11 @@ const FollowUnfollowButton = (): JSX.Element => {
   } else if (followButtonText == 'Unfollow' && isLoggedIn) {
     return (
       <div>
-        <button type="button" className="followUnfollowButton" onClick={() => changeText('Follow')}>
+        <button
+          type="button"
+          className={styles.followingButton}
+          onClick={() => changeText('Follow')}
+        >
           {followButtonText}
         </button>
       </div>
@@ -36,7 +40,7 @@ const FollowUnfollowButton = (): JSX.Element => {
       <div>
         <button
           type="button"
-          className="followUnfollowButton"
+          className={styles.followUnfollowButton}
           onClick={() => (window.location.href = '/login')}
         >
           Follow
