@@ -2,10 +2,9 @@ import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import React, { useContext, useEffect } from 'react';
 import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
-import Link from 'next/link';
+// import Link from 'next/link';
 import { useRouter } from 'next/router';
 import WebContext from '../Context/WebContext';
-
 type DashboardProps = ComponentProps & {
   fields: {
     heading: Field<string>;
@@ -26,13 +25,13 @@ const Dashboard = (props: DashboardProps | any): JSX.Element => {
 
   useEffect(() => {
     if (userToken == '' && !isExpEditorActive) {
-      router.push('/');
+      router.push('/login');
     }
   }, []);
 
   return (
     <>
-      <nav className="navBar">
+      {/* <nav className="navBar">
         <div>
           <a href="/">
             <img
@@ -49,8 +48,9 @@ const Dashboard = (props: DashboardProps | any): JSX.Element => {
           <Link className="navBaroptions" href="/profile">
             Profile
           </Link>
+          <FollowUnfollowButton/>
         </div>
-      </nav>
+      </nav> */}
     </>
   );
 };
