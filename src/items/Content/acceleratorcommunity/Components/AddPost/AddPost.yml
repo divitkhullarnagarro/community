@@ -1,0 +1,41 @@
+﻿---
+ID: "c4e858b6-ee9a-4ad1-b4cd-771955027017"
+Parent: "813ef419-b0b7-4ea5-a173-810aab9641c3"
+Template: "d490ed36-6dc5-4d2f-95e0-854a21c9b254"
+Path: /sitecore/content/acceleratorcommunity/Components/AddPost/AddPost
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230309T090702Z
+    - ID: "3f65ab62-a77e-4abd-ac59-c55ebec86fa9"
+      Hint: PlaceholderText
+      Value: Share your medical query, case or success story
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "64000582-c80a-4c92-a5f2-af08c40f1512"
+      Hint: PostType
+      Value: |
+        {C459391D-70C1-4DC8-A4E5-AA8A791851EA}
+        {18D4EE5F-F88B-49D0-B3B0-00DFEDF2CA37}
+        {8D64D8F9-E034-49B7-B737-C4369DCAC8AE}
+        {223680A4-51C4-4404-A6F1-21E4664F4618}
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "b389d302-c0bd-4f41-8179-ae4496309611"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230309T112728Z

@@ -1,0 +1,70 @@
+{
+    
+    "namespace": "AcceleratorCommunity",
+	"description": "Community Solution Accelerator",
+    "items": {
+      "includes": [
+        {
+          "name": "templatesFoundation",
+          "path": "/sitecore/templates/Foundation/acceleratorcommunity",
+          "allowedPushOperations": "CreateUpdateAndDelete",
+		  "scope": "itemAndDescendants"
+        },
+        {
+          "name": "templatesProject",
+          "path": "/sitecore/templates/Project/acceleratorcommunity",
+          "allowedPushOperations": "CreateUpdateAndDelete",
+		  "scope": "itemAndDescendants"
+        },
+		{
+          "name": "templatesFeature",
+          "path": "/sitecore/templates/Feature/acceleratorcommunity",
+          "allowedPushOperations": "CreateUpdateAndDelete",
+		  "scope": "itemAndDescendants"
+        },
+	    {
+          "name": "ApiKey",
+          "path": "/sitecore/system/Settings/Services/API Keys/nextjs",
+          "allowedPushOperations": "CreateUpdateAndDelete",
+		  "scope": "itemAndDescendants"
+        },
+	    {
+          "name": "Media",
+          "path": "/sitecore/media library/acceleratorcommunity",
+          "allowedPushOperations": "CreateUpdateAndDelete",
+		  "scope": "itemAndDescendants"
+        },
+	    {
+          "name": "Layout",
+          "path": "/sitecore/layout/Layouts/Project/acceleratorcommunity",
+          "allowedPushOperations": "CreateUpdateAndDelete",
+		  "scope": "itemAndDescendants"
+        },
+			    {
+          "name": "PlaceholderSettings",
+          "path": "/sitecore/layout/Placeholder Settings/Project/acceleratorcommunity",
+          "allowedPushOperations": "CreateUpdateAndDelete",
+		  "scope": "itemAndDescendants"
+        },
+	    {
+          "name": "ProjectRendering",
+          "path": "/sitecore/layout/Renderings/Project/acceleratorcommunity",
+          "allowedPushOperations": "CreateUpdateAndDelete",
+		  "scope": "itemAndDescendants"
+        },
+	    {
+          "name": "FeatureRendering",
+          "path": "/sitecore/layout/Renderings/Feature/acceleratorcommunity",
+          "allowedPushOperations": "CreateUpdateAndDelete",
+		  "scope": "itemAndDescendants"
+        },
+		{
+          "name": "Content",
+          "path": "/sitecore/content/acceleratorcommunity",
+          "allowedPushOperations": "CreateUpdateAndDelete",
+		  "scope": "itemAndDescendants"
+        }
+		
+      ]
+    }
+}

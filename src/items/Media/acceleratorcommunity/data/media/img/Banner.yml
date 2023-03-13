@@ -1,0 +1,23 @@
+﻿---
+ID: "d2e688f6-9ebe-4f9d-9d2b-c003630b5a2c"
+Parent: "ce3e1970-30ec-5052-9fb8-2f2047e5ec57"
+Template: "fe5dd826-48c6-436d-b87a-7c4210c7413b"
+Path: /sitecore/media library/acceleratorcommunity/data/media/img/Banner
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230307T050828Z
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "025bce5b-e86b-4a06-985f-98b148d4c182"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230307T050828Z

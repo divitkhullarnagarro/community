@@ -1,0 +1,35 @@
+﻿---
+ID: "ebd7f70d-1306-4223-b174-8ed08a00da01"
+Parent: "2f475a7f-4b49-47f1-90f3-c094e49a4ac7"
+Template: "2f475a7f-4b49-47f1-90f3-c094e49a4ac7"
+Path: /sitecore/templates/Foundation/acceleratorcommunity/Common/Data/DataHeading/__Standard Values
+SharedFields:
+- ID: "ce3f2a84-75bf-4554-9781-049e2f251cd3"
+  Hint: heading
+  Value: $name
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230306T153756Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "882ef32e-a4c8-475d-b1ba-4432395c3bee"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230306T153802Z

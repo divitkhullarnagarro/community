@@ -1,0 +1,38 @@
+﻿---
+ID: "c3523759-12ba-4710-8d90-3ad838a8b493"
+Parent: "682286dd-174d-4c08-aea9-9b54c79dc95c"
+Template: "7f815d22-82f6-4241-9c84-f2292a9e93eb"
+Path: /sitecore/content/acceleratorcommunity/Components/RichTextEditor/Lorem Ipsum
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230306T124047Z
+    - ID: "3cf18f70-532e-442f-a66c-e72d58f276eb"
+      Hint: RichText
+      Value: |
+        <h1 style="color: #000000; background-color: #ffffff; margin: 0px; padding: 0px; text-align: center; line-height: 90px;">Lorem Ipsum</h1>
+        <h4 style="color: #000000; background-color: #ffffff; margin: 10px 10px 5px; padding: 0px; text-align: center; line-height: 18px;">"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."</h4>
+        <h5 style="color: #000000; background-color: #ffffff; margin: 5px 10px 20px; padding: 0px; text-align: center; line-height: 14px;">"There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."</h5>
+        <hr style="color: #000000; background-color: #ffffff; height: 1px; margin: 0px; padding: 0px; border: 0px; text-align: center;" />
+        <div id="Content" style="color: #000000; background-color: #ffffff; margin: 0px; padding: 0px; text-align: center;">
+        <div class="boxed" style="margin: 10px 28.7917px; padding: 0px;">
+        <div id="lipsum" style="margin: 0px; padding: 0px; text-align: justify;">
+        <p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dictum elit quis finibus ultrices. Morbi nec tristique magna. Phasellus ut semper erat. Aenean eget enim vel neque consequat ultrices. Nulla suscipit vestibulum orci, et semper turpis. Sed mollis neque vel congue interdum. Mauris eu egestas odio. Fusce et eros convallis, efficitur quam quis, vulputate magna. Nam rhoncus justo vehicula tincidunt tempor. Suspendisse sit amet lacus sed mi vestibulum aliquam non sit amet nisi. Mauris porta non est non vestibulum. Morbi auctor ante sed neque condimentum, sit amet elementum ipsum viverra. Suspendisse vitae nulla ut lacus accumsan pharetra. Ut id dictum eros. Proin risus urna, pharetra et nibh eget, commodo auctor mi. Mauris imperdiet lorem sed tortor maximus, a placerat nunc volutpat.</p>
+        <p style="margin: 0px 0px 15px; padding: 0px;">Integer blandit enim mi, in pulvinar tellus auctor a. Maecenas vitae euismod diam. Proin dictum, neque nec finibus fringilla, erat tortor tincidunt urna, sed facilisis mauris dui et lacus. Aliquam erat volutpat. Fusce a ante vitae orci ornare elementum. Sed lobortis elit feugiat commodo venenatis. Nulla placerat ante ac rhoncus porta. Suspendisse vel imperdiet dui. Ut sed diam consequat, tristique erat non, condimentum ligula. Vestibulum lobortis metus non condimentum fringilla. Sed vel erat sed ipsum commodo congue. Nunc et suscipit ante.</p>
+        </div>
+        </div>
+        </div>
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "096e0f80-4f76-45f6-95b2-74332461aad3"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230306T161036Z

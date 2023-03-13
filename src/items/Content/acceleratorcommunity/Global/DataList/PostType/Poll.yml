@@ -1,0 +1,30 @@
+﻿---
+ID: "8d64d8f9-e034-49b7-b737-c4369dcac8ae"
+Parent: "f263b145-76f6-446d-b80e-cb1d8451e54a"
+Template: "ce7ca1be-b6ba-4085-8f04-34d60ea9dfce"
+Path: /sitecore/content/acceleratorcommunity/Global/DataList/PostType/Poll
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230309T090615Z
+    - ID: "760b15b4-30a9-4c3a-9315-90088b88380a"
+      Hint: Title
+      Value: Poll
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "7c345d4c-976a-4bbf-a844-d95d87f08459"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230309T120930Z
+    - ID: "f299247a-a62a-4fea-b0f6-a83c8f2d4621"
+      Hint: Image
+      Value: |
+        <image mediaid="{46B16EFA-3385-4223-8715-9060C7BEAC98}" />

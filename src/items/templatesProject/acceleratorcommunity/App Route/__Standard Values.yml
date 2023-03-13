@@ -1,0 +1,75 @@
+﻿---
+ID: "9e5964d7-2a00-5a65-ae26-705a70bc7622"
+Parent: "38575b09-58db-5d8d-8edd-ec585f1df64c"
+Template: "38575b09-58db-5d8d-8edd-ec585f1df64c"
+Path: /sitecore/templates/Project/acceleratorcommunity/App Route/__Standard Values
+SharedFields:
+- ID: "1172f251-dad4-4efb-a329-0c63500e4f1e"
+  Hint: __Masters
+  Value: "{38575B09-58DB-5D8D-8EDD-EC585F1DF64C}"
+- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
+  Hint: __Default workflow
+  Value: "{6C59AE29-D0A1-4B77-9305-0ABAB21D5FE5}"
+- ID: "f1a1fe9e-a60c-4ddb-a3a0-bb5b29fe732e"
+  Hint: __Renderings
+  Value: |
+    <r xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <d
+        id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"
+        l="{FAC86026-4D6D-5E85-820A-83ECF739EA8B}">
+        <p
+          uid="{010482DF-5D96-5755-9411-F8F4351C1A92}"
+          key="jss-main"
+          md="{9C59198D-9ACF-5C40-9AAF-E27D3EB089D3}" />
+        <p
+          uid="{BBF8F796-EADB-56BC-8850-A50E0BB04995}"
+          key="jss-tabs"
+          md="{BF14D71B-0202-5541-97DC-57D8F65B6935}" />
+        <p
+          uid="{6147F9B9-C475-50B2-8FD6-25A2CFD247EA}"
+          key="jss-graphql-layout"
+          md="{6B5388DD-3B87-5A76-B184-A509CC81B08F}" />
+        <p
+          uid="{AC64CAC7-B013-5B1D-AFC5-B46CFDDD61B8}"
+          key="jss-styleguide-layout"
+          md="{8C92C4BD-7D7C-5741-AF34-4825322F24C0}" />
+        <p
+          uid="{9D768275-7689-5FAC-B118-965A0B3BC5E6}"
+          key="jss-styleguide-section"
+          md="{BBD4805D-3FD6-5841-B865-D5B250AF11CA}" />
+        <p
+          uid="{61F850E8-8A0A-5CA5-932C-E6949C131097}"
+          key="jss-header"
+          md="{0DA1C2DA-F4B3-57CB-BAD4-9C1641123D49}" />
+        <p
+          uid="{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}"
+          key="jss-reuse-example"
+          md="{CB03B152-9946-5C67-BEAA-6355819C3AB6}" />
+      </d>
+    </r>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230301T081841Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\JssImport
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\JssImport
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "5491f388-2278-4730-9b0e-7b07df1e362b"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\JssImport
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230301T081847Z

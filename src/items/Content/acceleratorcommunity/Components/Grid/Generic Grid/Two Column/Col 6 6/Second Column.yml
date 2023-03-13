@@ -1,0 +1,47 @@
+﻿---
+ID: "0c23d93f-cc29-4bd6-9c2d-6e1307d35a27"
+Parent: "2218474e-0d9a-400a-bdf5-fce8915c943b"
+Template: "610a1783-8bda-4081-ad39-ee25be74707c"
+Path: /sitecore/content/acceleratorcommunity/Components/Grid/Generic Grid/Two Column/Col 6 6/Second Column
+SharedFields:
+- ID: "124f077d-5fd3-4ac1-8f81-b980f2f1c6f1"
+  Hint: colLG
+  Value: 6
+- ID: "1691ea75-1b5e-4720-a604-c8a8ac525069"
+  Hint: heading
+  Value: Second Column
+- ID: "4e6e411d-1780-42de-9ce1-45794a93c9be"
+  Hint: colSM
+  Value: 12
+- ID: "9c5b7024-ed1d-4755-80cc-8a46ca50bfdb"
+  Hint: colMD
+  Value: 12
+- ID: "a1365dd8-b09f-4915-9faf-c659b2d182ea"
+  Hint: colXS
+  Value: 12
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230306T154752Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "aa0399be-25d1-472a-9b48-ee0906558a52"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230306T155146Z

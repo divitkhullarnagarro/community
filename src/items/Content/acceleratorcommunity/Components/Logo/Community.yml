@@ -1,0 +1,32 @@
+﻿---
+ID: "d8b49499-193a-4e04-aeae-bdd5f68a6189"
+Parent: "56d66a0d-1408-4f50-9bee-814c902806a2"
+Template: "53dec80a-ee9d-4bcb-b577-d37b695473b0"
+Path: /sitecore/content/acceleratorcommunity/Components/Logo/Community
+SharedFields:
+- ID: "921fd759-f9c0-48bb-a9b2-5cd54b151dc1"
+  Hint: LogoURL
+  Value: |
+    <link text="" anchor="" linktype="internal" class="" title=""  querystring="" id="{9B2F2C61-B700-51DD-8F47-7600FC865200}" />
+- ID: "b1db66ee-da88-4a5d-9b48-3c33751eb7e6"
+  Hint: Image
+  Value: |
+    <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230306T161848Z
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "c8e1c3f8-b1ce-4f91-b0c6-08e83c7de996"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230306T162350Z

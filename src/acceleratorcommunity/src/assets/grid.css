@@ -1,0 +1,7 @@
+.gridcontainer .no-padding > [class*='col-'] {
+  display: flex;
+}
+
+.gridcontainer .no-padding .related-content {
+  display: flex;
+}
