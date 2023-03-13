@@ -1,6 +1,7 @@
 import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import React, { useContext, useEffect } from 'react';
+import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import WebContext from '../Context/WebContext';
@@ -11,7 +12,7 @@ type DashboardProps = ComponentProps & {
   };
 };
 
-const Dashboard = (props: DashboardProps): JSX.Element => {
+const Dashboard = (props: DashboardProps | any): JSX.Element => {
   const { isLoggedIn, userToken, setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
   const router = useRouter();
 
@@ -21,15 +22,17 @@ const Dashboard = (props: DashboardProps): JSX.Element => {
   setIsLoggedIn;
   setUserToken;
 
+  let isExpEditorActive = props?.sitecoreContext?.pageEditing;
+
   useEffect(() => {
-    if (userToken == '') {
+    if (userToken == '' && !isExpEditorActive) {
       router.push('/login');
     }
   }, []);
 
   return (
     <>
-      <nav className="navBar">
+      {/* <nav className="navBar">
         <div>
           <a href="/">
             <img
@@ -47,9 +50,9 @@ const Dashboard = (props: DashboardProps): JSX.Element => {
             Profile
           </Link>
         </div>
-      </nav>
+      </nav> */}
     </>
   );
 };
 
-export default Dashboard;
+export default withSitecoreContext()(Dashboard);
