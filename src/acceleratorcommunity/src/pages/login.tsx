@@ -2,9 +2,16 @@ import React from 'react';
 import Login from '../components/Login';
 
 function login() {
+  let tempVar: any;
   return (
     <>
-      <Login />
+      <Login
+        rendering={tempVar}
+        params={tempVar}
+        fields={{
+          heading: tempVar,
+        }}
+      />
     </>
   );
 }

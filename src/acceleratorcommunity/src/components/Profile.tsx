@@ -1,7 +1,7 @@
 import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
-import Link from 'next/link';
+// import Link from 'next/link';
 import { useState, useContext, useEffect } from 'react';
 import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';

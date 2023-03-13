@@ -37,7 +37,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   let [postText, setPostText] = useState('');
   let [postHeading, setPostHeading] = useState('');
   //let initVar: any = '';
-  let [postImage, setPostImage] = useState<any>('');
+  // let [postImage, setPostImage] = useState<any>('');
 
   // async function ConvertToB64(e: any) {
   //   let temp = e?.target?.files[0];
@@ -50,9 +50,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   //   reader?.readAsDataURL(temp);
   // }
 
-  function setPostImageValue(e: any) {
-    setPostImage(e);
-  }
+  // function setPostImageValue(e: any) {
+  //   setPostImage(e);
+  // }
 
   function setPostTextValue(e: any) {
     setPostText(e);
@@ -140,7 +140,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setPosts(tempArr);
     setPostText('');
     setPostHeading('');
-    setPostImage('');
+    // setPostImage('');
     setShowForm1(false);
   };
 
