@@ -17,10 +17,10 @@ const registerUserCall = async (registerData: any) => {
         firstName: registerData.firstName,
         lastName: registerData.lastName,
         email: registerData.email,
-        phoneNo: registerData.phoneNo,
+        phoneNo: registerData.phoneNumber,
         speciality: 'Ortho',
-        isEmployeeIDVerifiedByEmailOTP: 'Y',
-        // objectId: 'postman-5736',
+        isEmployeeIDVerifiedByEmailOTP: 'N',
+        // objectId: 'postman-57363',
         role: 'DOCTOR',
         password: registerData.password
     };
