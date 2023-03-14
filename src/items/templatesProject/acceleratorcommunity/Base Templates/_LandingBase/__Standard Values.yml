@@ -3,11 +3,76 @@ ID: "d8d2fe9f-f68e-4c1f-9f8d-b580eb92c1cc"
 Parent: "52e28ba5-3a3f-4227-88fc-0812e42cd12d"
 Template: "52e28ba5-3a3f-4227-88fc-0812e42cd12d"
 Path: /sitecore/templates/Project/acceleratorcommunity/Base Templates/_LandingBase/__Standard Values
+SharedFields:
+- ID: "f1a1fe9e-a60c-4ddb-a3a0-bb5b29fe732e"
+  Hint: __Renderings
+  Value: |
+    <r xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <d
+        id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"
+        l="{FAC86026-4D6D-5E85-820A-83ECF739EA8B}">
+        <p
+          uid="{010482DF-5D96-5755-9411-F8F4351C1A92}"
+          key="jss-main"
+          md="{9C59198D-9ACF-5C40-9AAF-E27D3EB089D3}" />
+        <p
+          uid="{BBF8F796-EADB-56BC-8850-A50E0BB04995}"
+          key="jss-tabs"
+          md="{BF14D71B-0202-5541-97DC-57D8F65B6935}" />
+        <p
+          uid="{6147F9B9-C475-50B2-8FD6-25A2CFD247EA}"
+          key="jss-graphql-layout"
+          md="{6B5388DD-3B87-5A76-B184-A509CC81B08F}" />
+        <p
+          uid="{AC64CAC7-B013-5B1D-AFC5-B46CFDDD61B8}"
+          key="jss-styleguide-layout"
+          md="{8C92C4BD-7D7C-5741-AF34-4825322F24C0}" />
+        <p
+          uid="{9D768275-7689-5FAC-B118-965A0B3BC5E6}"
+          key="jss-styleguide-section"
+          md="{BBD4805D-3FD6-5841-B865-D5B250AF11CA}" />
+        <p
+          uid="{61F850E8-8A0A-5CA5-932C-E6949C131097}"
+          key="jss-header"
+          md="{0DA1C2DA-F4B3-57CB-BAD4-9C1641123D49}" />
+        <p
+          uid="{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}"
+          key="jss-reuse-example"
+          md="{CB03B152-9946-5C67-BEAA-6355819C3AB6}" />
+      </d>
+    </r>
 Languages:
 - Language: en
   Versions:
   - Version: 1
     Fields:
+    - ID: "04bf00db-f5fb-41f7-8ab7-22408372a981"
+      Hint: __Final Renderings
+      Value: |
+        <r xmlns:p="p" xmlns:s="s"
+          p:p="1">
+          <d
+            id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
+            <r
+              uid="{11A2A6DE-D211-453C-B4B3-29B55A8EDEA5}"
+              p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
+              s:ds=""
+              s:id="{6148B772-D1ED-4A1C-AD43-82FE99B70CBB}"
+              s:par=""
+              s:ph="jss-header"
+              s:ccb="Clear on publish" />
+            <r
+              uid="{944FE220-AD22-49BC-90B8-6BCD2AC89E4B}"
+              p:after="r[@uid='{11A2A6DE-D211-453C-B4B3-29B55A8EDEA5}']"
+              s:id="{44F40912-35E3-43E6-8C36-6488DC75421E}"
+              s:ph="jss-main" />
+            <r
+              uid="{EC86E15A-6151-40CE-92C0-73D9B9FB0E10}"
+              p:after="*[1=2]"
+              s:id="{6148B772-D1ED-4A1C-AD43-82FE99B70CBB}"
+              s:ph="jss-footer" />
+          </d>
+        </r>
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230313T102541Z
@@ -21,11 +86,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "51a7cc23-3bc4-45c4-bcce-1ef8eaa0ed06"
+      Value: "f48319d6-7084-4d29-a40b-a54ae3a97719"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230313T102541Z
+      Value: 20230314T071606Z
