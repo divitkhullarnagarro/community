@@ -13,6 +13,9 @@ Languages:
   Versions:
   - Version: 1
     Fields:
+    - ID: "001dd393-96c5-490b-924a-b0f25cd9efd8"
+      Hint: __Lock
+      Value: <r />
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230309T111418Z
@@ -26,18 +29,17 @@ Languages:
         sitecore\admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "ace8eb7c-5baa-43a3-a2fc-ca23746213fa"
+      Value: "25db4eb7-3c34-4776-8183-c63073a7ca08"
     - ID: "98baa03b-24f1-47d1-9f44-30316aad3c6d"
       Hint: Title
       Value: Community Solution
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230309T111540Z
+      Value: 20230310T123713Z
     - ID: "f12a010f-9e92-442c-b241-f2171d23a2b8"
       Hint: Description
-      Value: |
-        <span style="color: #000000; background-color: #ffffff; text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel interdum orci. Pellentesque placerat tellus quis vestibulum varius. Ut dictum tellus tempus nisi ultrices dignissim. Nullam mollis leo lectus, a rhoncus orci interdum ac. Donec eget mollis libero, eu ornare est. Aliquam erat volutpat. Donec eu ligula et nisi malesuada malesuada. Aenean gravida vulputate metus, sit amet malesuada nibh tristique vitae.</span>
+      Value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel interdum orci. Pellentesque placerat tellus quis vestibulum varius. Ut dictum tellus tempus nisi ultrices dignissim. Nullam mollis leo lectus, a rhoncus orci interdum ac. Donec eget mollis libero, eu ornare est. Aliquam erat volutpat. Donec eu ligula et nisi malesuada malesuada. Aenean gravida vulputate metus, sit amet malesuada nibh tristique vitae.

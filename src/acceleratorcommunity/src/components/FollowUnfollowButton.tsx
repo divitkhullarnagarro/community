@@ -1,5 +1,3 @@
-// import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
-// import { ComponentProps } from 'lib/component-props';
 import React, { useContext, useState } from 'react';
 import WebContext from '../Context/WebContext';
 

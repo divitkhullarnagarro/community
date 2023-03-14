@@ -1,6 +1,7 @@
 import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { ReactElement, useContext, useEffect, useState } from 'react';
+import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -291,4 +292,4 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   );
 };
 
-export default AddPost;
+export default withSitecoreContext()(AddPost);

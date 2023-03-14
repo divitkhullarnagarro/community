@@ -1,0 +1,111 @@
+﻿---
+ID: "404328cd-4367-4be2-88b1-368be0986b6d"
+Parent: "b687c946-e903-44d4-b479-e5e137e130a3"
+Template: "05e694d6-3f26-40c0-8cc0-0396ffb7acbc"
+Path: /sitecore/content/acceleratorcommunity/home/news/Atrial fibrillation after surgery
+SharedFields:
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{6C59AE29-D0A1-4B77-9305-0ABAB21D5FE5}"
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 200
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "001dd393-96c5-490b-924a-b0f25cd9efd8"
+      Hint: __Lock
+      Value: <r />
+    - ID: "03897511-7b06-4331-8ca0-1929bc3047ce"
+      Hint: Navigation Title
+      Value: Atrial fibrillation after surgery
+    - ID: "1592c783-bd58-4410-93cf-05285c4e31e3"
+      Hint: ContentType
+      Value: "{0DD1A34E-654B-436F-B2FD-4A358EA75F7C}"
+    - ID: "20effcd6-ba5f-47e5-8003-9b0ce2a49335"
+      Hint: Author
+      Value: European Heart Journal
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230313T062335Z
+    - ID: "31bceb62-c1e4-4109-80b9-172aae293942"
+      Hint: Description
+      Value: People who develop an abnormal heart rhythm after surgery have an increased risk of subsequently being admitted to the hospital with heart
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
+    - ID: "6bd9a76c-1bc6-4517-b646-e06a5580fc32"
+      Hint: Date
+      Value: 20220627T183000Z
+    - ID: "6f5167c5-117b-47c1-8305-45e8e7b37ae3"
+      Hint: Image
+      Value: |
+        <image mediaid="{C635B9C4-D90A-4784-9665-7D0F58BE4866}" />
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "18df45bd-883f-4430-a3ea-fe06ddf303cd"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "bf0d55a4-c617-4ce5-91c1-40913f07b123"
+      Hint: Tags
+      Value: |
+        {05BA8938-576F-4EB2-A895-94FFCA67DC14}
+        {A4D64509-7714-4A87-AC9E-DB90A4B65EBE}
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230313T063519Z
+    - ID: "fdf92769-8768-4460-bbad-818073f23d1f"
+      Hint: Title
+      Value: Atrial fibrillation after surgery is linked to an increased risk of hospitalization
+  - Version: 2
+    Fields:
+    - ID: "001dd393-96c5-490b-924a-b0f25cd9efd8"
+      Hint: __Lock
+      Value: <r />
+    - ID: "03897511-7b06-4331-8ca0-1929bc3047ce"
+      Hint: Navigation Title
+      Value: Atrial fibrillation after surgery
+    - ID: "1592c783-bd58-4410-93cf-05285c4e31e3"
+      Hint: ContentType
+      Value: "{0DD1A34E-654B-436F-B2FD-4A358EA75F7C}"
+    - ID: "20effcd6-ba5f-47e5-8003-9b0ce2a49335"
+      Hint: Author
+      Value: European Heart Journal
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230313T062335Z
+    - ID: "31bceb62-c1e4-4109-80b9-172aae293942"
+      Hint: Description
+      Value: People who develop an abnormal heart rhythm after surgery have an increased risk of subsequently being admitted to the hospital with heart
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
+    - ID: "6bd9a76c-1bc6-4517-b646-e06a5580fc32"
+      Hint: Date
+      Value: 20220627T183000Z
+    - ID: "6f5167c5-117b-47c1-8305-45e8e7b37ae3"
+      Hint: Image
+      Value: |
+        <image mediaid="{C635B9C4-D90A-4784-9665-7D0F58BE4866}" />
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "80d7134d-23e0-45ae-b47d-f77261530a93"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "bf0d55a4-c617-4ce5-91c1-40913f07b123"
+      Hint: Tags
+      Value: |
+        {05BA8938-576F-4EB2-A895-94FFCA67DC14}
+        {A4D64509-7714-4A87-AC9E-DB90A4B65EBE}
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230313T092609Z
+    - ID: "fdf92769-8768-4460-bbad-818073f23d1f"
+      Hint: Title
+      Value: Atrial fibrillation after surgery is linked to an increased risk of hospitalization

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Icons / Feeds / Bookmar Active</title>
-    <g id="Icons-/-Feeds-/-Bookmar-Active" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <rect id="Rectangle_1183" fill-rule="nonzero" x="0" y="0" width="36" height="36"></rect>
-        <path d="M21.8707045,9.77961606 L13.9508565,9.77933333 C12.6203963,9.81559257 11.5870493,10.9054565 11.620808,12.2153841 L11.6205591,25.5293333 L11.6277108,25.6356659 C11.7029974,26.1870424 12.3566146,26.4787671 12.8217759,26.1284188 L17.9,22.302 L22.9803088,26.1284188 C23.4745657,26.5006813 24.1815256,26.1480349 24.1815256,25.5292706 L24.1804104,12.1959992 C24.2139202,10.9054565 23.1805731,9.81559257 21.8707045,9.77961606 Z" id="Icon_feather-bookmark" fill="#0048F0" fill-rule="nonzero"></path>
-    </g>
-</svg>
