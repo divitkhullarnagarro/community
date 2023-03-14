@@ -23,8 +23,6 @@ const Image = (props: ImageProps): JSX.Element => {
       <NextImage
         field={datasource?.image?.jsonValue?.value}
         editable={true}
-        width={50}
-        height={50}
       />
     </div>
   );
