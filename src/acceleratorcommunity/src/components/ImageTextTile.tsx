@@ -39,8 +39,6 @@ const ImageTextTileWithTopImage = (props: ImageTextTileProps) => {
             <NextImage
               field={thumbnail?.jsonValue?.value}
               editable={true}
-              width={130}
-              height={130}
             />
             <div className={styles['image-text-top-image-text']}>
               <div className={styles['image-text-top-image-text-title']}>
