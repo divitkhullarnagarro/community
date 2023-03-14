@@ -15,15 +15,16 @@ const registerUserCall = async (registerData: any) => {
     // objectId: "postman-5735",
     // role: "DOCTOR"
     firstName: registerData.firstName,
-    lastName: registerData.firstName,
-    email: registerData.firstName,
-    phoneNo: registerData.firstName,
+    lastName: registerData.lastName,
+    email: registerData.email,
+    phoneNo: registerData.phoneNumber,
     speciality: 'Ortho',
-    isEmployeeIDVerifiedByEmailOTP: 'Y',
-    objectId: 'postman-5736',
+    isEmployeeIDVerifiedByEmailOTP: 'N',
+    // objectId: 'postman-57363',
     role: 'DOCTOR',
+    password: registerData.password
   };
-  let regURL = 'http://accelerator-user-service-dev.eastus.cloudapp.azure.com:8080/api/v1/users';
+  let regURL = 'https://accelerator-api-management.azure-api.net/user-service/api/v1/users';
   var config = {
     // method: "post",
     url: regURL,

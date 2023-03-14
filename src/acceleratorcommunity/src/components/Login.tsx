@@ -35,7 +35,7 @@ const Login = (props: LoginProps): JSX.Element => {
     if (response?.status == 200 && setIsLoggedIn != undefined && setUserToken != undefined) {
       setIsLoggedIn(true);
       setUserToken(response?.data?.access_token);
-      router.push('/dashboard');
+      router.push('/');
     }
   };
 

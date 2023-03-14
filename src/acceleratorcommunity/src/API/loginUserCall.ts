@@ -13,7 +13,7 @@ const loginUserCall = async (email: string, password: string
         objectId: email,
         password: password
     };
-    let logURL = "http://accelerator-user-service-dev.eastus.cloudapp.azure.com:8080/api/v1/login";
+    let logURL = "https://accelerator-api-management.azure-api.net/user-service/api/v1/login";
     var config = {
         // method: "post",
         url: logURL,
