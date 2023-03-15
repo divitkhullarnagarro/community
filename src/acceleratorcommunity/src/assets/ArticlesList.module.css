@@ -119,24 +119,8 @@
     align-items: center;
     padding: 5px;
 }
-/* .buttonDescription{
-    display: none;
-} */
-/* .button:hover +  */
 
 .button img[title]{
-    /* display: block;
-     background-color: black;
-    color: white;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    
-     position: absolute; 
-    top: 73%;
-    right: 0%;
-    border-radius:6px ; */
     color: blue;
 } 
 
