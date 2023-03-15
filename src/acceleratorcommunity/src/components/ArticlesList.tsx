@@ -27,7 +27,7 @@ type Item = {
     jsonValue: ImageField;
   };
   date: {
-    jsonValue: Date;
+    jsonValue: Field<string>;
   };
   author: {
     jsonValue: Field<string>;
@@ -48,14 +48,33 @@ type Item = {
   };
 };
 type DataSource = {
-  articleList: {
+  articlesList: {
     targetItems: Item[];
   };
 };
 
+const getFormatedDate = (stringDate: string) => {
+  const date = new Date(stringDate);
+
+  // Get month abbreviation
+  const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date);
+
+  // Get day with leading zero if necessary
+  const day = String(date.getDate()).padStart(2, '0');
+
+  // Get full year
+  const year = date.getFullYear();
+
+  // Combine into formatted string
+  const formattedDate = `${month} ${day} ${year}`;
+
+  return formattedDate;
+};
+
 const ArticlesList = (props: ArticlesListProps): JSX.Element => {
-  const { targetItems } = props?.fields?.data?.datasource.articleList;
+  const { targetItems } = props?.fields?.data?.datasource.articlesList;
   console.log('props', props);
+
   return (
     <div>
       {targetItems.map((l, i) => {
@@ -72,7 +91,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
               <div className={ArticlesListCss.title}>{l.title.jsonValue.value}</div>
               <div className={ArticlesListCss.cardDescription}>
                 <p>
-                  {l.description}
+                  {l.description.jsonValue.value}
                   <Link href="/readMorePage">Read More </Link>
                 </p>
               </div>
@@ -105,7 +124,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                   editable={true}
                 />
                 <div className={ArticlesListCss.infoWrapperTagData}>
-                  {`${l.date.jsonValue.getMonth} ${l.date.jsonValue.getDay} ${l.date.jsonValue.getFullYear}`}{' '}
+                  {getFormatedDate(l.date.jsonValue.value)}
                 </div>
               </div>
             </div>
