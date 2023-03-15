@@ -1,4 +1,4 @@
-import {  Field, ImageField, NextImage, RichTextField } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, ImageField, NextImage, RichTextField } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import Link from 'next/link';
 import ArticlesListCss from '../assets/ArticlesList.module.css';
@@ -20,111 +20,107 @@ type Item = {
   title: {
     jsonValue: Field<string>;
   };
-  description:{
-    jsonValue: RichTextField
+  description: {
+    jsonValue: RichTextField;
   };
-  image:{
+  image: {
     jsonValue: ImageField;
   };
-  date:{
+  date: {
     jsonValue: Date;
   };
-  author:{
+  author: {
     jsonValue: Field<string>;
   };
-  tags:{
-    targetItems:[
+  tags: {
+    targetItems: [
       {
-        name:Field<string>
+        name: Field<string>;
       }
-    ]
+    ];
   };
-  contentType:{
-    targetItems:[
+  contentType: {
+    targetItems: [
       {
-        name:Field<string>
+        name: Field<string>;
       }
-    ]
+    ];
   };
-}
+};
 type DataSource = {
-  chooseArticles: {
-    targetItems:Item[]
-      
-      
-  }
-}
+  articleList: {
+    targetItems: Item[];
+  };
+};
 
 const ArticlesList = (props: ArticlesListProps): JSX.Element => {
-  const { targetItems } = props?.fields?.data?.datasource.chooseArticles;
+  const { targetItems } = props?.fields?.data?.datasource.articleList;
   console.log('props', props);
-
-  
-
   return (
     <div>
-    {targetItems.map((l, i) => {
-      return (
-        <div key={i} className={ArticlesListCss.wrapper}>
-        <div className={ArticlesListCss.leftSection}>
-          <NextImage className={ArticlesListCss.leftSectionImage} field={l.image} editable={true} />
-        </div>
-        <div className={ArticlesListCss.rightSection}>
-          <div className={ArticlesListCss.title}>
-            {l.title}
+      {targetItems.map((l, i) => {
+        return (
+          <div key={i} className={ArticlesListCss.wrapper}>
+            <div className={ArticlesListCss.leftSection}>
+              <NextImage
+                className={ArticlesListCss.leftSectionImage}
+                field={l.image.jsonValue.value}
+                editable={true}
+              />
+            </div>
+            <div className={ArticlesListCss.rightSection}>
+              <div className={ArticlesListCss.title}>{l.title.jsonValue.value}</div>
+              <div className={ArticlesListCss.cardDescription}>
+                <p>
+                  {l.description}
+                  <Link href="/readMorePage">Read More </Link>
+                </p>
+              </div>
+              <div className={ArticlesListCss.cardTags}>
+                {l.tags.targetItems.map((m, j) => {
+                  return (
+                    <div key={j} className={ArticlesListCss.cardTag}>
+                      <Link key={j} href={'/#'}>
+                        {m.name}
+                      </Link>
                     </div>
-          <div className={ArticlesListCss.cardDescription}>
-            <p>
-              {l.description}
-              <Link href="/readMorePage">Read More </Link>
-            </p>
-          </div>
-          <div className={ArticlesListCss.cardTags}>
-            {l.tags.targetItems.map((m, j) => {
-              return (
-                <div key={j} className={ArticlesListCss.cardTag}>
-                  <Link key={j} href={"/#"}>
-                    {m.name}
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
-          <div className={ArticlesListCss.infoWrapper}>
-            
-            <div className={ArticlesListCss.infoWrapperTag}>
+                  );
+                })}
+              </div>
+              <div className={ArticlesListCss.infoWrapper}>
+                <div className={ArticlesListCss.infoWrapperTag}>
                   <NextImage
                     className={ArticlesListCss.infowrapperImage}
                     field={sourceImage}
                     editable={true}
                   />
                   <div className={ArticlesListCss.infoWrapperTagData}>
-                    {l.author}{' '}
+                    {l.author.jsonValue.value}{' '}
                   </div>
                 </div>
-  
+
                 <NextImage
-                    className={ArticlesListCss.infowrapperImage}
-                    field={calendarImage}
-                    editable={true}
-                  />
-                  <div className={ArticlesListCss.infoWrapperTagData}>
-                    {l.date}{' '}
-                  </div>
+                  className={ArticlesListCss.infowrapperImage}
+                  field={calendarImage}
+                  editable={true}
+                />
+                <div className={ArticlesListCss.infoWrapperTagData}>
+                  {`${l.date.jsonValue.getMonth} ${l.date.jsonValue.getDay} ${l.date.jsonValue.getFullYear}`}{' '}
                 </div>
-  
+              </div>
+            </div>
+            <div className={ArticlesListCss.buttons}>
+              <button className={ArticlesListCss.button}>
+                <NextImage field={bookmarkImage} editable={true} title="Add To My Collection" />
+              </button>
+              <button className={ArticlesListCss.button}>
+                <NextImage field={shareImage} editable={true} title="Share" />
+              </button>
+            </div>
           </div>
-          <div className={ArticlesListCss.buttons}>
-            <button className={ArticlesListCss.button}>
-            <NextImage field={bookmarkImage} editable={true} title="Add To My Collection"/>
-            </button>
-            <button className={ArticlesListCss.button}>
-              <NextImage field={shareImage} editable={true} title="Share"/>
-            </button>
-          </div>
-        </div>
-      )})}
-      </div>
+        );
+      })}
+    </div>
   );
 };
 
