@@ -1,8 +1,8 @@
 ﻿---
-ID: "6c7991a6-d276-450c-889c-fb23a20efd77"
-Parent: "5baee7f4-dec7-4f1b-b5d1-e4dea6f45788"
+ID: "f183e359-a872-4b54-945e-ea8c7a84e445"
+Parent: "ff8adb09-e568-4bb2-9910-edcf928f65f3"
 Template: "c90d9ec6-e34d-4dbb-a884-180f53fea130"
-Path: /sitecore/content/acceleratorcommunity/Components/ArticleTags/Research
+Path: /sitecore/content/acceleratorcommunity/Global/ArticleContentType/Journal
 Languages:
 - Language: en
   Versions:
@@ -10,35 +10,35 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230313T061818Z
+      Value: 20230313T061634Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "91d82eff-276b-42e7-856a-8885a6ac5685"
+      Value: "fb59abc8-ea8f-4248-be8a-c939c82874c1"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230313T061824Z
+      Value: 20230313T061634Z
     - ID: "f18b1a9a-d1ff-4c13-ad60-80a2f710e438"
       Hint: Name
-      Value: Research/study
+      Value: Journal
   - Version: 2
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230313T061818Z
+      Value: 20230313T061634Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "91d82eff-276b-42e7-856a-8885a6ac5685"
+      Value: "fb59abc8-ea8f-4248-be8a-c939c82874c1"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230313T061824Z
+      Value: 20230313T061634Z
     - ID: "f18b1a9a-d1ff-4c13-ad60-80a2f710e438"
       Hint: Name
-      Value: Research/study
+      Value: Journal

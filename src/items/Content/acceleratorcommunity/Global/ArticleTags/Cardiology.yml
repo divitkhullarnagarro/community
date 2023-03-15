@@ -1,8 +1,8 @@
 ﻿---
-ID: "0c9ae58a-add0-411f-9771-a5c15b19f0a8"
-Parent: "ff8adb09-e568-4bb2-9910-edcf928f65f3"
+ID: "05ba8938-576f-4eb2-a895-94ffca67dc14"
+Parent: "5baee7f4-dec7-4f1b-b5d1-e4dea6f45788"
 Template: "c90d9ec6-e34d-4dbb-a884-180f53fea130"
-Path: /sitecore/content/acceleratorcommunity/Components/ArticleContentType/Case Study
+Path: /sitecore/content/acceleratorcommunity/Global/ArticleTags/Cardiology
 Languages:
 - Language: en
   Versions:
@@ -10,35 +10,35 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230313T061713Z
+      Value: 20230313T061737Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "262f888c-672f-4671-a743-44a3f5f08805"
+      Value: "223682cb-c508-4c7b-aca4-7fc8afb8d72a"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230313T061713Z
+      Value: 20230313T061737Z
     - ID: "f18b1a9a-d1ff-4c13-ad60-80a2f710e438"
       Hint: Name
-      Value: Case Study
+      Value: Cardiology
   - Version: 2
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230313T061713Z
+      Value: 20230313T061737Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "262f888c-672f-4671-a743-44a3f5f08805"
+      Value: "223682cb-c508-4c7b-aca4-7fc8afb8d72a"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230313T061713Z
+      Value: 20230313T061737Z
     - ID: "f18b1a9a-d1ff-4c13-ad60-80a2f710e438"
       Hint: Name
-      Value: Case Study
+      Value: Cardiology

@@ -2,7 +2,7 @@
 ID: "77a039e2-1b13-41c1-9e33-7180cf8101fe"
 Parent: "5baee7f4-dec7-4f1b-b5d1-e4dea6f45788"
 Template: "c90d9ec6-e34d-4dbb-a884-180f53fea130"
-Path: /sitecore/content/acceleratorcommunity/Components/ArticleTags/Covid
+Path: /sitecore/content/acceleratorcommunity/Global/ArticleTags/Covid
 Languages:
 - Language: en
   Versions:
