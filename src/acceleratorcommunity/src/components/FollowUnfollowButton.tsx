@@ -37,7 +37,7 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
 
   const onFollow = async (e: any) => {
     e.preventDefault();
-    let response = await followCall(props.userName, userToken);
+    let response = await followCall(props?.userName, userToken);
     if (response?.success) {
       changeText('Unfollow');
     }
@@ -51,7 +51,7 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
   const onUnfollow = async (e: any) => {
     e.preventDefault();
     modalConfirmationDialog();
-    let response = await UnfollowCall(props.userName, userToken);
+    let response = await UnfollowCall(props?.userName, userToken);
     if (response?.success) {
       changeText('Follow');
       setShowForm(false);
