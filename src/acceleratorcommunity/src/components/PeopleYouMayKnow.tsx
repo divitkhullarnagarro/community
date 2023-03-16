@@ -1,93 +1,68 @@
-import { Field, ImageField, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import Profile from '../assets/images/profile.png';
 import styles from '../assets/peopleyoumayknow.module.css';
 import FollowUnfollowButton from './FollowUnfollowButton';
 import Link from 'next/link';
+import { useState, useContext, useEffect } from 'react';
+import WebContext from '../Context/WebContext';
+import peopleYouMayKnowCall from 'src/API/peopleYouMayKnowCall';
+import Image from 'next/image';
 
 type PeopleYouMayKnowProps = ComponentProps & {
   fields: {
-    data: {
-      datasource: DataSource;
-    };
+    data: {};
   };
 };
 
-type DataSource = {
-  name: {
-    jsonValue: Field<string>;
-  };
-  profileImage: {
-    jsonValue: ImageField;
-  };
-  speciality: {
-    jsonValue: Field<string>;
-  };
-  location: {
-    jsonValue: Field<string>;
-  };
+type peopleYouMayKnowFields = {
+  objectId: Field<string>;
+  firstName: Field<string>;
+  lastName: Field<string>;
+  imageData: Field<string>;
+  speciality: Field<string>;
+  city: Field<string>;
 };
 
 const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   console.log('PeopleYouMayKnow', props);
-  const peopleYouMayKnowList = [
-    {
-      name: ' Dr. Mayank Thakur',
-      speciality: 'Cardiology',
-      profileImage: Profile,
-      location: 'Kolkata',
-    },
-    { name: ' Dr. John Doe', speciality: 'Nephrology', profileImage: Profile, location: 'Lucknow' },
-    {
-      name: ' Dr. Samuel Lazar',
-      speciality: 'Endocrinology',
-      profileImage: Profile,
-      location: 'Kolkata',
-    },
-    {
-      name: ' Dr. Ashok Singh',
-      speciality: 'Nephrology',
-      profileImage: Profile,
-      location: 'Gujrat',
-    },
-    {
-      name: ' Dr. H Singh',
-      speciality: 'Endocrinology',
-      profileImage: Profile,
-      location: 'Punjab',
-    },
-    {
-      name: ' Dr. H Singh',
-      speciality: 'Endocrinology',
-      profileImage: Profile,
-      location: 'Punjab',
-    },
-  ];
+  const [peopleYouMayKnowList, setPeopleYouMayKnowList] = useState<peopleYouMayKnowFields[]>([]);
+  const { userToken } = { ...useContext(WebContext) };
+
+  const getPeopleYouMayKnowList = async (userToken: string | undefined) => {
+    let response = await peopleYouMayKnowCall('test1@test1.com', userToken);
+    setPeopleYouMayKnowList(response?.data?.data);
+  };
+
+  useEffect(() => {
+    getPeopleYouMayKnowList(userToken);
+  }, []);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <div className={styles.heading}>People You May Know</div>
         <Link href="">See All</Link>
       </div>
-      {peopleYouMayKnowList.map((l, i) => {
+      {peopleYouMayKnowList.slice(0, 9).map((l) => {
         return (
-          <div key={i} className={styles.item}>
-            <NextImage
+          <div key={l.objectId?.value} className={styles.item}>
+            <Image
+              contentEditable={true}
               className={styles.img}
-              field={l.profileImage}
-              editable={true}
+              src={Profile ?? l.imageData?.value}
               height={50}
               width={50}
-            />
-            <div>
-              <div className={styles.name}>{l.name}</div>
+            ></Image>
+            <div className={styles.detailsContainer}>
+              <div className={styles.name}>{l.firstName + ' ' + l.lastName}</div>
               <div className={styles.details}>
-                <div>{l.speciality}.</div>
-                <div>{l.location}</div>
+                <div className={styles.speciality}>{l.speciality}.</div>
+                <div>{l.city}</div>
               </div>
             </div>
             <div className={styles.button}>
-              <FollowUnfollowButton />
+              <FollowUnfollowButton userName={l.objectId} />
             </div>
           </div>
         );

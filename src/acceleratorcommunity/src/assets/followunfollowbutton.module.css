@@ -1,5 +1,6 @@
-.followUnfollowButton {
+.followButton {
   background-color: #0048f0;
+  border-color: #2d64e4;
   color: #fff;
   font-size: 12px;
   font-weight: bold;

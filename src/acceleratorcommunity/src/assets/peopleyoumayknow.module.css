@@ -1,5 +1,7 @@
 .wrapper {
-  width: 530px;
+  width: 31%;
+  max-height: 560px;
+  overflow-y: auto;
   margin: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
@@ -29,6 +31,7 @@
   display: flex;
   justify-content: space-between;
   padding: 10px 40px;
+  width: 98%;
 }
 
 .heading {
@@ -48,4 +51,12 @@
   display: flex;
   flex-direction: row;
   margin: 0 auto;
+}
+
+.detailsContainer {
+  margin-left: 10px;
+}
+
+.speciality {
+  padding-right: 5px;
 }
