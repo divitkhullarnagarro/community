@@ -1,0 +1,38 @@
+﻿---
+ID: "94ca6bb7-7875-43bf-8c0d-1ec89d695984"
+Parent: "469d1bf8-5c9b-4129-8160-e70110d9fdef"
+Template: "f4665c2a-f9fb-49ab-a392-af2255f4bac6"
+Path: /sitecore/content/acceleratorcommunity/Components/SocialShareFolder/whatsapp
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230315T101303Z
+    - ID: "4c398ba8-7b53-4d98-9def-4ac034d43f51"
+      Hint: Title
+      Value: whatsapp
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "a66a2ed8-24ae-409d-9452-6c9be17a306a"
+    - ID: "9b00d7b3-2c5f-4525-bd9b-4aebce1a17a6"
+      Hint: Link
+      Value: |
+        <link linktype="external" url="https://twitter.com/intent/tweet" />
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230315T104326Z
