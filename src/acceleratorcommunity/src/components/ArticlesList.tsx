@@ -5,7 +5,14 @@ import ArticlesListCss from '../assets/ArticlesList.module.css';
 import sourceImage from '../assets/images/source.svg';
 import calendarImage from '../assets/images/calendar.svg';
 import bookmarkImage from '../assets/images/bookmark.svg';
+import activeBookmarkImage from '../assets/images/BookmarActive.svg';
 import shareImage from '../assets/images/share.svg';
+import linkedin from '../assets/images/linkedin.png';
+import twitter from '../assets/images/twitter.png';
+import whatsapp from '../assets/images/whatsapp.png';
+import bookmark from '../../src/API/bookmarks';
+import { useContext, useState } from 'react';
+import WebContext from 'src/Context/WebContext';
 
 type ArticlesListProps = ComponentProps & {
   fields: {
@@ -72,8 +79,60 @@ const getFormatedDate = (stringDate: string) => {
 };
 
 const ArticlesList = (props: ArticlesListProps): JSX.Element => {
+  const userIdTemp = 'test1@test1.com';
+
+  const { userToken } = { ...useContext(WebContext) };
+
   const { targetItems } = props?.fields?.data?.datasource.articlesList;
-  console.log('props', props);
+
+  // Change the bookmark image with active bookmark image
+  const [withoutClicked, setField] = useState(bookmarkImage);
+  const [clicked, setClicked] = useState(false);
+  const handleClick = () => {
+    if (clicked) {
+      setField(bookmarkImage);
+    } else {
+      // update field to a new value when button is clicked for the first time
+      setField(activeBookmarkImage);
+    }
+    // toggle the clicked state
+    setClicked(!clicked);
+  };
+
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleShareClick = () => {
+    if (clicked) {
+      setShowPopup(false);
+    } else {
+      setShowPopup(true);
+    }
+    setClicked(!clicked);
+  };
+
+  const submitBookmark = (
+    contentId: string,
+    // url: string,
+    title: string,
+    comment: string | undefined
+  ) => {
+    bookmarkApi(userIdTemp, contentId,  title, comment, userToken);
+    // , url:string
+    handleClick();
+  };
+
+  const bookmarkApi = async (
+    userIdTemp: string,
+    contentId: string,
+    // url: string,
+    title: string,
+    comment: string | undefined,
+    userToken: string | undefined
+  ) => {
+    let response = await bookmark(userIdTemp, contentId,  title, comment, userToken);
+    // url,
+    console.log(response);
+  };
 
   return (
     <div>
@@ -117,24 +176,83 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                     {l.author.jsonValue.value}{' '}
                   </div>
                 </div>
-
-                <NextImage
-                  className={ArticlesListCss.infowrapperImage}
-                  field={calendarImage}
-                  editable={true}
-                />
-                <div className={ArticlesListCss.infoWrapperTagData}>
-                  {getFormatedDate(l.date.jsonValue.value)}
+                <div className={ArticlesListCss.infoWrapperTag}>
+                  <NextImage
+                    className={ArticlesListCss.infowrapperImage}
+                    field={calendarImage}
+                    editable={true}
+                  />
+                  <div className={ArticlesListCss.infoWrapperTagData}>
+                    {getFormatedDate(l.date.jsonValue.value)}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={ArticlesListCss.buttons}>
-              <button className={ArticlesListCss.button}>
-                <NextImage field={bookmarkImage} editable={true} title="Add To My Collection" />
-              </button>
-              <button className={ArticlesListCss.button}>
-                <NextImage field={shareImage} editable={true} title="Share" />
-              </button>
+
+              <div className={ArticlesListCss.buttons}>
+                <button
+                  className={ArticlesListCss.button}
+                  onClick={() =>
+                    submitBookmark(
+                      l.id,
+                      // l.title?.jsonValue.value, //This is for URL or Image value
+                      l.title?.jsonValue?.value,
+                      l.description?.jsonValue?.value
+                    )
+                  }
+                >
+                  <NextImage
+                    field={withoutClicked}
+                    id="bookamrksImage"
+                    editable={true}
+                    title="Add To My Collection"
+                  />
+                </button>
+                <button className={ArticlesListCss.button} onClick={handleShareClick}>
+                  <NextImage field={shareImage} editable={true} title="Share" />
+                </button>
+              </div>
+              {showPopup && (
+                <div className={ArticlesListCss.sharePopups}>
+                  <div className={ArticlesListCss.sharePopup}>
+                    <NextImage
+                      className={ArticlesListCss.whatsappImage}
+                      field={whatsapp}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link href="https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20[ARTICLE_LINK]">
+                      WhatsApp
+                    </Link>
+                  </div>
+
+                  <div className={ArticlesListCss.sharePopup}>
+                    <NextImage
+                      className={ArticlesListCss.whatsappImage}
+                      field={twitter}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link href="https://twitter.com/intent/tweet?url=[ARTICLE_LINK]&text=[ARTICLE_TITLE]">
+                      Twitter
+                    </Link>
+                  </div>
+
+                  <div className={ArticlesListCss.sharePopup}>
+                    <NextImage
+                      className={ArticlesListCss.whatsappImage}
+                      field={linkedin}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link href="https://www.linkedin.com/sharing/share-offsite/?url=[ARTICLE_LINK">
+                    LinkedIn
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         );
