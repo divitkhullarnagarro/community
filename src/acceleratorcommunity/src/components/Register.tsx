@@ -159,7 +159,7 @@ const Register = (props: RegisterProps): JSX.Element => {
             <div className="social-login">
               <h6>Have Account ?</h6>
               <button className="registerButton">
-                <Link href={'/'}>Goto Login</Link>
+                <Link href={'/login'}>Goto Login</Link>
               </button>
               <div className="social-icons">
                 <a href="#" className="social-login__icon fab fa-instagram"></a>

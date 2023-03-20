@@ -80,6 +80,9 @@ const Login = (props: LoginProps): JSX.Element => {
               ) : (
                 ''
               )}
+              <div className="forgot-password">
+                <Link href={'/forgotPassword'}>Forgot Your Password?</Link>
+              </div>
             </form>
             <div className="social-login">
               <h6>Don't have Account ?</h6>
