@@ -25,7 +25,7 @@ type peopleYouMayKnowFields = {
 };
 
 const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
-  console.log('PeopleYouMayKnow', props);
+  const { Title, LinkLabel } = props?.params;
   const [peopleYouMayKnowList, setPeopleYouMayKnowList] = useState<peopleYouMayKnowFields[]>([]);
   const { userToken } = { ...useContext(WebContext) };
 
@@ -41,28 +41,28 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <div className={styles.heading}>People You May Know</div>
-        <Link href="">See All</Link>
+        <div className={styles.heading}>{Title}</div>
+        <Link href="">{LinkLabel}</Link>
       </div>
       {peopleYouMayKnowList.slice(0, 9).map((l) => {
         return (
-          <div key={l.objectId?.value} className={styles.item}>
+          <div key={l?.objectId?.value} className={styles.item}>
             <Image
               contentEditable={true}
               className={styles.img}
-              src={Profile ?? l.imageData?.value}
+              src={Profile ?? l?.imageData?.value}
               height={50}
               width={50}
             ></Image>
             <div className={styles.detailsContainer}>
-              <div className={styles.name}>{l.firstName + ' ' + l.lastName}</div>
+              <div className={styles.name}>{l?.firstName + ' ' + l?.lastName}</div>
               <div className={styles.details}>
-                <div className={styles.speciality}>{l.speciality}.</div>
-                <div>{l.city}</div>
+                <div className={styles.speciality}>{l?.speciality}.</div>
+                <div>{l?.city}</div>
               </div>
             </div>
             <div className={styles.button}>
-              <FollowUnfollowButton userName={l.objectId} />
+              <FollowUnfollowButton userName={l?.objectId} />
             </div>
           </div>
         );
