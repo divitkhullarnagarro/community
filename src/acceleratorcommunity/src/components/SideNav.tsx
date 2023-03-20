@@ -38,13 +38,7 @@ const SideNav = (props: SideNavProps): JSX.Element => {
         {navItems.map((l, i) => {
           return (
             <div key={i} className={styles.sidebar}>
-              <NextImage
-                className={styles.img}
-                field={l.imgSrc}
-                editable={true}
-                height={20}
-                width={20}
-              />
+              <NextImage className={styles.img} field={l.imgSrc} editable={true} />
               <Link key={i} href={l.path}>
                 {l.label}
               </Link>
