@@ -7,6 +7,27 @@ SharedFields:
 - ID: "037fe404-dd19-4bf7-8e30-4dadf68b27b0"
   Hint: componentName
   Value: FactOfTheDay
+- ID: "17bb046a-a32a-41b3-8315-81217947611b"
+  Hint: ComponentQuery
+  Value: |
+    # Editing here does not save the query on the item; copy it back when done!
+    
+    # Editing here does not save the query on the item; copy it back when done!
+    query Title($datasource: String!, $language: String!) {
+      datasource: item(path: $datasource, language: $language) {
+       ... on Title{
+        title{
+          jsonValue
+        }
+      }
+      }
+    }
+- ID: "1a7c85e5-dc0b-490d-9187-bb1dbcb4c72f"
+  Hint: Datasource Template
+  Value: /sitecore/templates/Feature/acceleratorcommunity/Title
+- ID: "b5b27af1-25ef-405c-87ce-369b3a004016"
+  Hint: Datasource Location
+  Value: /sitecore/content/acceleratorcommunity/Components/Title
 Languages:
 - Language: en
   Versions:
@@ -25,11 +46,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "dfac85bb-de13-4b6b-9b32-b55bf6386c10"
+      Value: "a6cfe7b8-6b87-4ec8-91f4-a2b3b1d838cb"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230316T104622Z
+      Value: 20230320T065556Z
