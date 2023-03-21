@@ -109,7 +109,9 @@
   flex-direction: column;
   align-items: center;
 }
-
+.forgotPassword{
+  text-align: end;
+}
 /* media queries */
 
 @media screen and (max-width: 62.4375rem) {

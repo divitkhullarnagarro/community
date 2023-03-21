@@ -197,7 +197,7 @@ const Register = (props: RegisterProps): JSX.Element => {
             ) : (
               ''
             )}
-            <div className="social-login">
+            <div className={RegisterCss.formContainerBottom}>
               <h6>Have Account ?</h6>
               <button className={RegisterCss.btn}>
                 <Link href={'/login'}>Goto Login</Link>

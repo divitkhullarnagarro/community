@@ -72,7 +72,7 @@ const Login = (props: LoginProps): JSX.Element => {
             <form className={loginCss.login} onSubmit={(e) => onSubmitHandler(e)}>
               <div className={loginCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
-                <label className={loginCss.label} >User name / Email</label>
+                <label className={loginCss.label}>User name / Email</label>
                 <input
                   onChange={(e) => setEmailValue(e.target.value)}
                   value={email}
@@ -83,7 +83,7 @@ const Login = (props: LoginProps): JSX.Element => {
               </div>
               <div className={loginCss.loginField}>
                 <i className="login__icon fas fa-lock"></i>
-                <label className={loginCss.label} >Password</label>
+                <label className={loginCss.label}>Password</label>
                 <input
                   onChange={(e) => setPasswordValue(e.target.value)}
                   value={password}
@@ -91,6 +91,9 @@ const Login = (props: LoginProps): JSX.Element => {
                   className={loginCss.loginInput}
                   placeholder="Password"
                 />
+                <div className={loginCss.forgotPassword}>
+                  <Link href={'/forgotPassword'}>Forgot Your Password?</Link>
+                </div>
               </div>
               <button className={loginCss.formButton}>
                 Sign In
@@ -105,30 +108,27 @@ const Login = (props: LoginProps): JSX.Element => {
               ) : (
                 ''
               )}
-              <div className="forgot-password">
-                <Link href={'/forgotPassword'}>Forgot Your Password?</Link>
-              </div>
             </form>
             <div className={loginCss.formContainerBottom}>
-              <h6 className={loginCss.text} >Don't have Account ?</h6>
+              <h6 className={loginCss.text}>Don't have Account ?</h6>
               <button className={loginCss.btn}>
                 <Link href={'/register'}>Register Here</Link>
               </button>
-              </div>
-              {/* <div className="social-icons">
+            </div>
+            {/* <div className="social-icons">
                 <a href="#" className="social-login__icon fab fa-instagram"></a>
                 <a href="#" className="social-login__icon fab fa-facebook"></a>
                 <a href="#" className="social-login__icon fab fa-twitter"></a>
               </div> */}
-            </div>
           </div>
-          {/* <div className="screen__background">
+        </div>
+        {/* <div className="screen__background">
             <span className="screen__background__shape screen__background__shape4"></span>
             <span className="screen__background__shape screen__background__shape3"></span>
             <span className="screen__background__shape screen__background__shape2"></span>
             <span className="screen__background__shape screen__background__shape1"></span>
           </div> */}
-        </div>
+      </div>
     </>
   );
 };
