@@ -1,14 +1,15 @@
 .wrapper {
   display: flex;
-  position: absolute;
+  /* position: absolute; */
   background-color: aliceblue;
   width: 45rem;
   height: 22rem;
   border-radius: 8px;
+  margin: 30px;
 }
 .leftSection {
   display: flex;
-  position: relative;
+  /* position: relative; */
   width: 20rem;
 }
 
@@ -127,7 +128,7 @@
   border-radius: 8px;
   height: 141px;
   width: 169px;
-  position: absolute;
+  /* position: absolute; */
   top: 8rem;
   left: 11rem;
   flex-direction: column;
