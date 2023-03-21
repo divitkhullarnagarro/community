@@ -13,6 +13,7 @@ import whatsapp from '../assets/images/whatsapp.png';
 import bookmark from '../../src/API/bookmarks';
 import { useContext, useState } from 'react';
 import WebContext from 'src/Context/WebContext';
+import ghj from '../assets/images/Notification.jpg'
 
 type ArticlesListProps = ComponentProps & {
   fields: {
@@ -134,10 +135,15 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     console.log(response);
   };
 
+  console.log("===================================", targetItems);
   return (
-    <div>
+    <div className={ArticlesListCss.mainwrapper}>
+
       {targetItems.map((l, i) => {
+        console.log("-------------------------------------",l);
         return (
+         
+          
           <div key={i} className={ArticlesListCss.wrapper}>
             <div className={ArticlesListCss.leftSection}>
               <NextImage
@@ -255,6 +261,8 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
               )}
             </div>
           </div>
+          
+          
         );
       })}
     </div>
