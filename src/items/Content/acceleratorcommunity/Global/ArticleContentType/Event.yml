@@ -1,0 +1,44 @@
+﻿---
+ID: "757e18a7-d46f-422d-9df3-7a4e6aa33f40"
+Parent: "ff8adb09-e568-4bb2-9910-edcf928f65f3"
+Template: "c90d9ec6-e34d-4dbb-a884-180f53fea130"
+Path: /sitecore/content/acceleratorcommunity/Global/ArticleContentType/Event
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230313T061652Z
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "789419ec-3809-4167-82f9-6a30dbad3764"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230313T061652Z
+    - ID: "f18b1a9a-d1ff-4c13-ad60-80a2f710e438"
+      Hint: Name
+      Value: Event
+  - Version: 2
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230313T061652Z
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "789419ec-3809-4167-82f9-6a30dbad3764"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230313T061652Z
+    - ID: "f18b1a9a-d1ff-4c13-ad60-80a2f710e438"
+      Hint: Name
+      Value: Event

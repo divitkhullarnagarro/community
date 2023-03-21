@@ -24,6 +24,36 @@ Languages:
     - ID: "03897511-7b06-4331-8ca0-1929bc3047ce"
       Hint: Navigation Title
       Value: News
+    - ID: "04bf00db-f5fb-41f7-8ab7-22408372a981"
+      Hint: __Final Renderings
+      Value: |
+        <r xmlns:p="p" xmlns:s="s"
+          p:p="1">
+          <d
+            id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
+            <r
+              uid="{4BDC6A25-D864-4BDA-A164-4921415B1553}"
+              p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
+              s:id="{1E9900E6-2ACC-4456-A9EA-15BBE2C948AB}"
+              s:par="Title=People%20You%20May%20Know&amp;LinkLabel=See%20all&amp;Link"
+              s:ph="/jss-main/col2-{D7BC190E-FC15-445E-AA76-FF347ED12A72}-0" />
+            <r
+              uid="{0AD8AF13-B449-411A-8936-1C50499613AD}"
+              p:after="r[@uid='{4BDC6A25-D864-4BDA-A164-4921415B1553}']"
+              s:ds="{85442646-9588-4CC9-A98A-DB19DF67B50F}"
+              s:id="{AA7421F4-8B23-48B9-AAB7-BDEE1D1AE03A}"
+              s:ph="/jss-main/col1-{D7BC190E-FC15-445E-AA76-FF347ED12A72}-0" />
+            <r
+              uid="{D7BC190E-FC15-445E-AA76-FF347ED12A72}"
+              p:after="r[@uid='{0AD8AF13-B449-411A-8936-1C50499613AD}']"
+              s:ds="{4FF4E41A-9D33-45CC-9179-41230230F951}"
+              s:id="{44F40912-35E3-43E6-8C36-6488DC75421E}"
+              s:ph="jss-main" />
+            <r
+              uid="{11A2A6DE-D211-453C-B4B3-29B55A8EDEA5}"
+              p:after="*[1=2]" />
+          </d>
+        </r>
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230309T071323Z
@@ -35,11 +65,11 @@ Languages:
       Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "39462ceb-36b7-4eef-9eb9-93ccb7c76770"
+      Value: "918af102-a5aa-4941-aa4c-25d4d53af00c"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230309T073110Z
+      Value: 20230315T110711Z

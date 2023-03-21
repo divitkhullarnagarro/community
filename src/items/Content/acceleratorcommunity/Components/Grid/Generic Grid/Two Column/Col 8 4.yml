@@ -1,0 +1,27 @@
+﻿---
+ID: "4ff4e41a-9d33-45cc-9179-41230230f951"
+Parent: "c6dfee4e-010b-4433-ac98-ceba4f93e9ad"
+Template: "260ab92e-b8dc-467d-b1bf-e0ec47163461"
+Path: /sitecore/content/acceleratorcommunity/Components/Grid/Generic Grid/Two Column/Col 8 4
+SharedFields:
+- ID: "fceb2f6c-667b-449c-8352-cecbe931db17"
+  Hint: heading
+  Value: Col 8 4
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230306T154738Z
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "dae3c64a-07ff-4f26-9ccb-196a36dda34c"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230315T110015Z

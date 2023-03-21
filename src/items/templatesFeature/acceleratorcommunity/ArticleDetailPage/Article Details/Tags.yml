@@ -6,7 +6,7 @@ Path: /sitecore/templates/Feature/acceleratorcommunity/ArticleDetailPage/Article
 SharedFields:
 - ID: "1eb8ae32-e190-44a6-968d-ed904c794ebf"
   Hint: Source
-  Value: /sitecore/content/acceleratorcommunity/Components/ArticleTags
+  Value: /sitecore/content/acceleratorcommunity/Global/ArticleTags
 - ID: "ab162cc0-dc80-4abf-8871-998ee5d7ba32"
   Hint: Type
   Value: Multilist
@@ -31,11 +31,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "3946433a-7d74-4e6e-a2da-fde8ed38cc22"
+      Value: "b92c8e50-cdfa-472b-9297-6f29139935c0"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230313T061531Z
+      Value: 20230315T105816Z

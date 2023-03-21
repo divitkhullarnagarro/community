@@ -1,0 +1,46 @@
+﻿---
+ID: "49b51f1d-2414-462a-911e-3299c7f6a851"
+Parent: "dcc16bba-fbe7-4d91-b7e8-c0153c47cab0"
+Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
+Path: /sitecore/templates/Project/acceleratorcommunity/Base Templates/_Page
+SharedFields:
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: Applications/16x16/form_green.png
+- ID: "12c33f3f-86c5-43a5-aeb4-5598cec45116"
+  Hint: __Base template
+  Value: |
+    {1930BBEB-7805-471A-A3BE-4858AC7CF696}
+    {922ACCE2-0033-45B9-A3AD-69DC6B019564}
+    {18AD9B38-D7F9-4D08-B99D-C49D17433690}
+    {52E28BA5-3A3F-4227-88FC-0812E42CD12D}
+    {B36BA9FD-0DC0-49C8-BEA2-E55D70E6AF28}
+- ID: "f7d48a55-2158-4f02-9356-756654404f73"
+  Hint: __Standard values
+  Value: "{6B53E568-04C4-4A31-90B0-B1A99C00165A}"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230313T101911Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "106b5b05-6b2d-413a-87ac-e23086fd5a9d"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230313T102920Z
