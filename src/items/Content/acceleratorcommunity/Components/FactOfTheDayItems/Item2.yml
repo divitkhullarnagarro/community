@@ -1,0 +1,26 @@
+﻿---
+ID: "ae3c41ad-12f4-4865-9df4-7cb33f1f27ae"
+Parent: "88fd8092-f195-4207-9310-ff67a9af0206"
+Template: "0d9a4816-dacf-4725-8d2b-2bca674010ba"
+Path: /sitecore/content/acceleratorcommunity/Components/FactOfTheDayItems/Item2
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230321T115839Z
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "d1b3c9e1-6df5-47ca-9af0-14f4b01d2bba"
+    - ID: "a2aa183b-216e-4db9-9198-aea2b6493acc"
+      Hint: Date
+      Value: 20230321Z
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230321T115839Z

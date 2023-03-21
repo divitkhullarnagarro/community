@@ -2,7 +2,7 @@
 ID: "683b66a4-77ff-4f81-9bb9-f876db0a5905"
 Parent: "88fd8092-f195-4207-9310-ff67a9af0206"
 Template: "0d9a4816-dacf-4725-8d2b-2bca674010ba"
-Path: /sitecore/content/acceleratorcommunity/Components/Title/FactOfTheDayTitle
+Path: /sitecore/content/acceleratorcommunity/Components/FactOfTheDayItems/FactOfTheDayTitle
 SharedFields:
 - ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
   Hint: __Icon
