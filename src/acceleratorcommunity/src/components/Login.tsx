@@ -39,7 +39,7 @@ const Login = (props: LoginProps): JSX.Element => {
     if (response?.status == 200 && setIsLoggedIn != undefined && setUserToken != undefined) {
       setIsLoggedIn(true);
       setUserToken(response?.data?.access_token);
-      router.push('/dashboard');
+      router.push('/');
     }
   };
 
@@ -105,6 +105,9 @@ const Login = (props: LoginProps): JSX.Element => {
               ) : (
                 ''
               )}
+              <div className="forgot-password">
+                <Link href={'/forgotPassword'}>Forgot Your Password?</Link>
+              </div>
             </form>
             <div className={loginCss.formContainerBottom}>
               <h6 className={loginCss.text} >Don't have Account ?</h6>

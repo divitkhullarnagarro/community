@@ -3,9 +3,11 @@ import { ComponentProps } from 'lib/component-props';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import registerUserCall from '../API/registerUserCall';
+import { useRouter } from 'next/router';
 import RegisterCss from '../assets/register.module.css';
 import starImage from '../assets/images/star.png';
 import imageNotFound from '../assets/images/imageNot.png';
+
 
 type RegisterProps = ComponentProps & {
   fields: {
@@ -22,6 +24,8 @@ const Register = (props: RegisterProps): JSX.Element => {
   let [password, setPassword] = useState('');
   let [confirmPassword, setConfirmPassword] = useState('');
   let [error, isError] = useState(false);
+  let [isRegistered, setIsRegistered] = useState(false);
+  const router = useRouter();
 
   function setFirstNameValue(val: any) {
     setFirstName(val);
@@ -73,6 +77,12 @@ const Register = (props: RegisterProps): JSX.Element => {
       phoneNumber: phoneNumber,
     };
     let resp = await registerUserCall(userData);
+    if (resp?.data?.success == true) {
+      setIsRegistered(true);
+      setTimeout(() => {
+        router.push('/login');
+      }, 2000);
+    }
     console.log('Register Response', resp);
   };
 
@@ -180,10 +190,17 @@ const Register = (props: RegisterProps): JSX.Element => {
                 </span>
               )}
             </form>
-            <div className={RegisterCss.formContainerBottom}>
+            {isRegistered ? (
+              <span style={{ fontWeight: 1000, color: 'white', fontSize: '18px', padding: '10px' }}>
+                * User Registered Successfully
+              </span>
+            ) : (
+              ''
+            )}
+            <div className="social-login">
               <h6>Have Account ?</h6>
               <button className={RegisterCss.btn}>
-                <Link href={'/'}>Goto Login</Link>
+                <Link href={'/login'}>Goto Login</Link>
               </button>
             </div>
           </div>
