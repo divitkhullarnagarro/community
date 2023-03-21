@@ -1,8 +1,11 @@
-import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import registerUserCall from '../API/registerUserCall';
+import RegisterCss from '../assets/register.module.css';
+import starImage from '../assets/images/star.png';
+import imageNotFound from '../assets/images/imageNot.png';
 
 type RegisterProps = ComponentProps & {
   fields: {
@@ -75,104 +78,114 @@ const Register = (props: RegisterProps): JSX.Element => {
 
   return (
     <>
-      <div className="container">
-        <div className="screen">
-          <div className="screen__content">
-            <form className="login" onSubmit={(e) => onSubmitHandler(e)}>
-              <div className="login__field">
+      <div className={RegisterCss.container}>
+        <div className={RegisterCss.leftContainer}>
+          <div className={RegisterCss.welcomeText}>
+            <div className={RegisterCss.welcomeTextImage}>
+              <NextImage field={starImage} editable={true} width={30} height={30} />
+            </div>
+            <h2 className={RegisterCss.welcomeTextHeading}>
+              Welcome,<div> Please Sign Up</div>
+            </h2>
+            <div className={RegisterCss.welcomeTextDescription}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi illum ad, facere placeat
+              quos recusandae reprehenderit nihil minima possimus, quod adipisci, porro quibusdam
+              obcaecati.
+            </div>
+          </div>
+          <div className={RegisterCss.img}>
+            <NextImage field={imageNotFound} editable={true} />
+          </div>
+        </div>
+        <div className={RegisterCss.rightContainer}>
+          <div className={RegisterCss.formContainer}>
+            <form className={RegisterCss.login} onSubmit={(e) => onSubmitHandler(e)}>
+              <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
+                <label className={RegisterCss.label}>First Name</label>
                 <input
                   type="text"
                   onChange={(e) => setFirstNameValue(e.target.value)}
                   value={firstName}
-                  className="login__input"
+                  className={RegisterCss.loginInput}
                   placeholder="First Name"
                 />
               </div>
-              <div className="login__field">
+              <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
+                <label className={RegisterCss.label}>Last Name</label>
                 <input
                   type="text"
                   onChange={(e) => setLastNameValue(e.target.value)}
                   value={lastName}
-                  className="login__input"
+                  className={RegisterCss.loginInput}
                   placeholder="Last Name"
                 />
               </div>
-              <div className="login__field">
+              <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
+                <label className={RegisterCss.label}>Email</label>
                 <input
                   type="text"
                   onChange={(e) => setEmailValue(e.target.value)}
                   value={email}
-                  className="login__input"
+                  className={RegisterCss.loginInput}
                   placeholder="Email"
                 />
               </div>
-              <div className="login__field">
+              <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
+                <label className={RegisterCss.label}>Phone No.</label>
                 <input
                   type="text"
                   onChange={(e) => setPhoneNumberValue(e.target.value)}
                   value={phoneNumber}
-                  className="login__input"
+                  className={RegisterCss.loginInput}
                   placeholder="Phone No."
                 />
               </div>
-              <div className="login__field">
+              <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
+                <label className={RegisterCss.label}>Password</label>
                 <input
                   type="password"
                   onChange={(e) => setPasswordValue(e.target.value)}
                   value={password}
-                  className="login__input"
+                  className={RegisterCss.loginInput}
                   placeholder="Password"
                   required
                 />
               </div>
-              <div className="login__field">
+              <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-lock"></i>
+                <label className={RegisterCss.label}>Confirm Password</label>
                 <input
                   type="password"
                   onChange={(e) => setConfirmPasswordValue(e.target.value)}
                   value={confirmPassword}
-                  className="login__input"
+                  className={RegisterCss.loginInput}
                   placeholder="Confirm Password"
                   required
                 />
               </div>
-              <button
-                className="button login__submit"
-                style={!error ? {} : { borderColor: 'red', borderWidth: '2px' }}
-              >
-                <span className="button__text">Register</span>
+              <button className={RegisterCss.formButton}>
+                Register
                 <i className="button__icon fas fa-chevron-right"></i>
               </button>
               {!error ? (
                 ''
               ) : (
-                <span className="passwordMismatchWarning">
+                <span className={RegisterCss.passwordMismatchWarning}>
                   * Please match Password and Confirm Password
                 </span>
               )}
             </form>
-            <div className="social-login">
+            <div className={RegisterCss.formContainerBottom}>
               <h6>Have Account ?</h6>
-              <button className="registerButton">
+              <button className={RegisterCss.btn}>
                 <Link href={'/'}>Goto Login</Link>
               </button>
-              <div className="social-icons">
-                <a href="#" className="social-login__icon fab fa-instagram"></a>
-                <a href="#" className="social-login__icon fab fa-facebook"></a>
-                <a href="#" className="social-login__icon fab fa-twitter"></a>
-              </div>
             </div>
-          </div>
-          <div className="screen__background">
-            <span className="screen__background__shape screen__background__shape4"></span>
-            <span className="screen__background__shape screen__background__shape3"></span>
-            <span className="screen__background__shape screen__background__shape2"></span>
-            <span className="screen__background__shape screen__background__shape1"></span>
           </div>
         </div>
       </div>
