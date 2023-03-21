@@ -3,11 +3,11 @@ import Router from 'next/router';
 import { I18nProvider } from 'next-localization';
 import NProgress from 'nprogress';
 import { SitecorePageProps } from 'lib/page-props';
+import WebProvider from '../Context/WebProvider';
 import '../assets/login.css';
 import '../assets/dashboard.css';
 import '../assets/profile.css';
 import '../assets/addPost.css';
-import WebProvider from '../Context/WebProvider';
 
 // Using bootstrap and nprogress are completely optional.
 //  bootstrap is used here to provide a clean layout for samples, without needing extra CSS in the sample app
