@@ -4,7 +4,6 @@ import { I18nProvider } from 'next-localization';
 import NProgress from 'nprogress';
 import { SitecorePageProps } from 'lib/page-props';
 import WebProvider from '../Context/WebProvider';
-import '../assets/login.css';
 import '../assets/dashboard.css';
 import '../assets/profile.css';
 import '../assets/addPost.css';

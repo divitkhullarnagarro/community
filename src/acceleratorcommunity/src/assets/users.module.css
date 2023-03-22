@@ -1,0 +1,21 @@
+.usersContainer {
+  margin: 10px;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  font-weight: bold;
+}
+
+.item {
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px;
+  width: 150px;
+  border: 1px solid black;
+}

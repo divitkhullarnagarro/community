@@ -135,9 +135,12 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
   };
 
   return (
-    <div>
+    <div className={ArticlesListCss.mainwrapper}>
+
       {targetItems.map((l, i) => {
         return (
+         
+          
           <div key={i} className={ArticlesListCss.wrapper}>
             <div className={ArticlesListCss.leftSection}>
               <NextImage
@@ -255,6 +258,8 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
               )}
             </div>
           </div>
+          
+          
         );
       })}
     </div>

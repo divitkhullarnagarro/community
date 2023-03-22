@@ -30,9 +30,6 @@ Languages:
               p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
               s:id="{DB5E2CC5-002A-46AA-B15C-D6527D5A99F2}"
               s:ph="jss-main" />
-            <r
-              uid="{11A2A6DE-D211-453C-B4B3-29B55A8EDEA5}"
-              p:after="*[1=2]" />
           </d>
         </r>
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
@@ -54,11 +51,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "d356fd65-a703-42fe-abd6-5af6fcc6e81a"
+      Value: "905ff7f9-aa0c-4425-b857-da2c045a5aad"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230314T045517Z
+      Value: 20230321T111329Z
