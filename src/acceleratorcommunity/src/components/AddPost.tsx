@@ -33,7 +33,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   let myPostArray: ReactElement<any, any>[] = [];
   let [posts, setPosts] = useState(myPostArray);
-  let postItems: ReactElement<any, any>[] = [];
+  let [postItems, setPostItems] = useState<any>('');
 
   let [postText, setPostText] = useState('');
   let [postHeading, setPostHeading] = useState('');
@@ -427,14 +427,15 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   };
 
   useEffect(() => {
-    if (props?.data?.postType?.targetItems?.length != 0) {
-      props?.data?.postType?.targetItems.map((item: any) => {
-        postItems.push(
+    if (props?.fields?.data?.datasource?.postType?.targetItems?.delete?.me) {
+      let arr: any[] = [];
+      props?.fields?.data?.datasource?.postType?.targetItems?.map((item: any) => {
+        arr?.push(
           <div>
             <button>
               <span>{item?.title?.jsonValue?.value}</span>
               <img
-                src={item?.image?.jsonValue?.value?.src}
+                src={`https://9977-182-77-26-98.in.ngrok.io/${item?.image?.jsonValue?.value?.src}`}
                 alt={item?.image?.jsonValue?.value?.alt}
                 width="30px"
               ></img>
@@ -442,8 +443,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           </div>
         );
       });
+      setPostItems(arr);
     }
-  }, []);
+  }, [props]);
 
   function clickmebuttonHandler() {
     if (typeof document !== undefined) {
@@ -579,7 +581,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   return (
     <>
       <div className="AddPostContainer">
-        <h4>Start a post, Mr. John Doe</h4>
+        <h4>
+          {props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value}
+          <span>, Mr. John Doe</span>
+        </h4>
         {/* <img src={postImage} alt="Image"></img> */}
         <div className="AddPostField">
           <img
@@ -832,7 +837,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             </div>
             <hr />
             <div className="AddPostItems">
-              {postItems.length == 0 ? (
+              {postItems?.length == 0 ? (
                 <>
                   <div>
                     <button onClick={clickmebuttonHandler} type="button">
