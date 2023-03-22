@@ -1,31 +1,21 @@
 import Axios, { AxiosResponse } from "axios";
 import loginUserCall from './loginUserCall';
 
-const addPostCall = async (
+const likePostCall = async (id: any
 ) => {
 
     let resp = await loginUserCall('nishantemail@gmail.com', 'Nishant1@');
-    var data = {
-        // id: "post_Id12",
-        description: "First Post",
-        postType: "TEXT_POST",
-        createdBy: "objectId",
-        updatedBy: "objectId",
-        createdOn: 0,
-        updatedOn: 0
-    };
-    let addPostURL = "https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/post";
+    let addPostURL = `https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/post/${id}/likes`;
     var config = {
         url: addPostURL,
         headers: {
             Authorization: `Bearer ${resp?.data?.data?.access_token}`,
             'Content-Type': 'application/json',
         },
-        data: data,
     };
-    const response = await Axios.post<any, AxiosResponse<any>>(addPostURL, data, config)
+    const response = await Axios.post<any, AxiosResponse<any>>(addPostURL, {}, config)
         .then((response: any) => {
-            console.log("AddPost-Response", response);
+            console.log("LikePost-Response", response);
             return response;
         })
         .catch((error: any) => {
@@ -34,4 +24,4 @@ const addPostCall = async (
     return response;
 };
 
-export default addPostCall;
+export default likePostCall;

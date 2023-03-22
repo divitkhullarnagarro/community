@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 import addPostCall from '../API/addPostCall';
+import likePostCall from '../API/likePostCall';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -138,6 +139,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setMyArr(() => {
       return { posts: modPost };
     });
+    likePostCall('3e25ea72-163b-4014-854d-db4fa4d0fae0');
   }
 
   function setOpenComments(id: string, show: boolean) {
