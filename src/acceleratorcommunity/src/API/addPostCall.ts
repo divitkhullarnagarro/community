@@ -7,12 +7,12 @@ const addPostCall = async (
     let resp = await loginUserCall('demouser', '1234');
     var data = {
         // id: "post_Id12",
-        // description: "First Post",
-        // postType: "TEXT_POST",
-        // createdBy: "objectId",
-        // updatedBy: "objectId",
-        // createdOn: 0,
-        // updatedOn: 0
+        description: "First Post",
+        postType: "TEXT_POST",
+        createdBy: "objectId",
+        updatedBy: "objectId",
+        createdOn: 0,
+        updatedOn: 0
     };
     let addPostURL = "https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/post";
     var config = {

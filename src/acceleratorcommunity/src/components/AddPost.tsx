@@ -17,7 +17,6 @@ type AddPostProps = ComponentProps & {
 
 const AddPost = (props: AddPostProps | any): JSX.Element => {
   props; //delete me
-  console.log(addPostCall());
   const { userToken } = { ...useContext(WebContext) };
   const router = useRouter();
   const [showForm1, setShowForm1] = useState(false);
@@ -95,32 +94,32 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     posts: posts[];
   }
 
-  const initialPosts: postsType = {
-    posts: [
-      {
-        id: '1231221',
-        heading: 'Default Post heading',
-        postText: 'Default Post Text',
-        imageArray: [],
-        docArray: [],
-        videoArray: [],
-        likes: 0,
-        disLikes: [],
-        showComments: false,
-        comments: [
-          {
-            id: '',
-            commentToId: '',
-            nameOfCommentor: '',
-            dateAndTime: '',
-            commentString: '',
-          },
-        ],
-      },
-    ],
-  };
+  // const initialPosts: postsType = {
+  //   posts: [
+  //     {
+  //       id: '1231221',
+  //       heading: 'Default Post heading',
+  //       postText: 'Default Post Text',
+  //       imageArray: [],
+  //       docArray: [],
+  //       videoArray: [],
+  //       likes: 0,
+  //       disLikes: [],
+  //       showComments: false,
+  //       comments: [
+  //         {
+  //           id: '',
+  //           commentToId: '',
+  //           nameOfCommentor: '',
+  //           dateAndTime: '',
+  //           commentString: '',
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // };
 
-  let [myArr, setMyArr] = useState<postsType>(initialPosts);
+  let [myArr, setMyArr] = useState<postsType>({ posts: [] });
 
   useEffect(() => {
     postStructCreate();
@@ -156,15 +155,28 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     });
   }
 
-  function postComments(id: string, comment: string) {
-    console.log(id, comment);
-  }
+  function postComments(id: string, e: any) {
+    e.preventDefault();
+    let locArr = myArr.posts;
+    let modPost = locArr.map((post: any) => {
+      if (post.id == id) {
+        post.comments.push({
+          id: 'Unique Id For Each Comment',
+          commentToId: id,
+          nameOfCommentor: 'Will Be Extracted From Token Value',
+          dateAndTime: 'Current Date Time',
+          commentString: e.target[0].value,
+        });
+        return post;
+      } else {
+        return post;
+      }
+    });
+    setMyArr(() => {
+      return { posts: modPost };
+    });
 
-  let [postComment, setPostComment] = useState('');
-
-  function setPostCommentValue(id: any, e: any) {
-    console.log('comment value', e, id);
-    setPostComment(e);
+    e.currentTarget.reset();
   }
 
   function postStructCreate() {
@@ -287,8 +299,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             <Collapse in={post.showComments}>
               <div id="commentsContainer">
                 <Form
-                  onSubmit={() => {
-                    postComments(post.id, post.heading);
+                  onSubmit={(e) => {
+                    postComments(post.id, e);
                   }}
                   style={{ border: '1px', borderColor: 'black' }}
                 >
@@ -300,19 +312,77 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       style={{ marginRight: '10px' }}
                     ></img>
                     <Form.Control
-                      onChange={(e) => setPostCommentValue(post.id, e.target.value)}
-                      value={postComment}
+                      // onChange={(e) => setPostCommentValue(e.target.value)}
                       type="text"
                       placeholder="Add Comments..."
                       required
                       autoFocus
-                      // style={{ border: 'none' }}
+                      style={{ width: '70%' }}
                     />
+                    <button
+                      type="submit"
+                      style={{
+                        float: 'right',
+                        marginLeft: '10px',
+                        borderRadius: '10px',
+                        padding: '5px',
+                        border: 'none',
+                        backgroundColor: '#008CBA',
+                        color: 'white',
+                        width: '30%',
+                      }}
+                    >
+                      PostComment
+                    </button>
                   </Form.Group>
                 </Form>
                 {post.comments.map((comment: any) => {
-                  return <div>{comment.commentString}</div>;
+                  return (
+                    <div
+                      style={{
+                        padding: '10px',
+                        backgroundColor: '#9370db',
+                        color: 'white',
+                        borderRadius: '10px',
+                        marginBottom: '10px',
+                      }}
+                    >
+                      <div>
+                        <span>ID : {comment.id}</span>
+                      </div>
+                      <div>
+                        <span>Comment To ID : {comment.commentToId}</span>
+                      </div>
+                      <div>
+                        <span>Name : {comment.nameOfCommentor}</span>
+                      </div>
+                      <div>
+                        <span>Date : {comment.dateAndTime}</span>
+                      </div>
+                      <div>
+                        <span>Comment : {comment.commentString}</span>
+                      </div>
+                    </div>
+                  );
                 })}
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <button
+                    style={{
+                      padding: '10px',
+                      backgroundColor: '#dcdcdc',
+                      border: 'none',
+                      borderRadius: '20px',
+                    }}
+                    type="button"
+                  >
+                    <span>Load Comments </span>
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/2767/2767294.png"
+                      width="20px"
+                      height="20px"
+                    />
+                  </button>
+                </div>
               </div>
             </Collapse>
           </div>
@@ -340,18 +410,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         likes: 0,
         disLikes: [],
         showComments: false,
-        comments: [
-          {
-            id: '',
-            commentToId: '',
-            nameOfCommentor: '',
-            dateAndTime: '',
-            commentString: '',
-          },
-        ],
+        comments: [],
       };
       return { posts: [...prevPosts.posts, newPost] };
     });
+
+    addPostCall();
 
     // Empty Post Values
     setFile([]);
