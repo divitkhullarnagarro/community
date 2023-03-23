@@ -1,22 +1,27 @@
-import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import React, { useContext, useState } from 'react';
-import loginUserCall from '../API/loginUserCall';
 import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';
+import loginCss from '../assets/login.module.css';
+import star from '../assets/images/star.png';
+import imageNotFound from '../assets/images/imageNot.png';
 import { validateEmailOrPhone } from 'assets/helpers/validations';
-import Link from 'next/link';
-import Axios, { AxiosResponse } from 'axios';
-import { LogoutUrl } from 'assets/helpers/constants';
+// import Axios, { AxiosResponse } from 'axios';
+// import { LogoutUrl } from 'assets/helpers/constants';
+import sendOtpCall, { updatePasswordCall, validateOtpCall } from 'src/API/forgotPasswordCalls';
 
-type LoginProps = ComponentProps & {
+type ForgotPasswordProps = ComponentProps & {
   fields: {
     heading: Field<string>;
   };
 };
-function ForgotPassword(props: LoginProps) {
+
+const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
+  props; //delete Me
+
   const router = useRouter();
-  const { isLoggedIn, setIsLoggedIn, setUserToken, userToken } = { ...useContext(WebContext) };
+  const { setIsLoggedIn, setUserToken, userToken } = { ...useContext(WebContext) };
 
   let [email, setEmail] = useState('');
   let [accountError, setAccountError] = useState(false);
@@ -28,46 +33,43 @@ function ForgotPassword(props: LoginProps) {
   let [otp, setOtp] = useState('');
   let [otpError, setOtpError] = useState(false);
   let [emailValidateError, setEmailValidateError] = useState(false);
+  let [somethingWentWrongError, setSomethingWentWrongError] = useState(false);
 
   function setEmailValue(val: any) {
     setEmail(val);
   }
 
   const onSubmitHandler = async (e: any) => {
-    console.log('clicked on next button');
     e.preventDefault();
-    // if (email !== confirmEmail) {
-    //   setEmailMatchError(true);
-    // } else {
-    // setEmailMatchError(false);
-    //   let response = await loginUserCall(email, confirmEmail);
-    //   if (response?.status == 200 && setIsLoggedIn != undefined && setUserToken != undefined) {
-    // setIsLoggedIn(true);
-    // setUserToken(response?.data?.access_token);
-    if (true) {
-      setOtpFieldVisible(true);
-      if (otp) {
-        if (otp != '12345') {
-          setOtpError(true);
-        } else setPasswordPage(true);
+
+    if (!otpFieldVisible) {
+      const res = await sendOtpCall(email);
+      if (res.data.errorCode != 404) {
+        setOtpFieldVisible(true);
+      } else {
+        setAccountError(true);
       }
     } else {
-      setAccountError(true);
+      const res = await validateOtpCall(email, otp);
+      if (res.data.errorCode != 404) {
+        setPasswordPage(true);
+      } else {
+        setOtpError(true);
+      }
     }
-    // }
   };
   const onSubmitPasswordHandler = async (e: any) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setPasswordMatchError(true);
     } else {
-      setPasswordMatchError(false);
-      //   let response = await loginUserCall(email, confirmEmail);
-      //   if (response?.status == 200 && setIsLoggedIn != undefined && setUserToken != undefined) {
-      // setIsLoggedIn(true);
-      // setUserToken(response?.data?.access_token);
-      alert('password Updated');
-      router.push('/');
+      const res = await updatePasswordCall(email, password);
+      if (!res.data.errorCode) {
+        alert('password Updated Successfully');
+        router.push('/login');
+      } else {
+        setSomethingWentWrongError(true);
+      }
     }
   };
 
@@ -80,82 +82,92 @@ function ForgotPassword(props: LoginProps) {
       }
     }
   };
-  console.log('userToken', userToken);
+  console.log('userToken', userToken, setUserToken, setIsLoggedIn);
 
   //{---------------Logout Start--------------}
-
-  const handleLogout = async (event: any) => {
-    var config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const res = await Axios.post<
-      any,
-      AxiosResponse<{ success: boolean; data: string; code: number; errors: any }>
-    >(LogoutUrl, { accessToken: '', refreshToken: '' }, config);
-    if (
-      res?.data?.code == 200 &&
-      res?.data?.success == true &&
-      setUserToken != undefined &&
-      setIsLoggedIn != undefined
-    ) {
-      setUserToken('');
-      setIsLoggedIn(false);
-      alert('Logged Out Successfully');
-      router.push('/login');
-    }
-  };
+  // do not delete it
+  // const handleLogout = async (event: any) => {
+  //   console.log('handleLogout event', event);
+  //   var config = {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   };
+  //   const res = await Axios.post<
+  //     any,
+  //     AxiosResponse<{ success: boolean; data: string; code: number; errors: any }>
+  //   >(LogoutUrl, { accessToken: '', refreshToken: '' }, config);
+  //   if (
+  //     res?.data?.code == 200 &&
+  //     res?.data?.success == true &&
+  //     setUserToken != undefined &&
+  //     setIsLoggedIn != undefined
+  //   ) {
+  //     setUserToken('');
+  //     setIsLoggedIn(false);
+  //     alert('Logged Out Successfully');
+  //     router.push('/login');
+  //   }
+  // };
   //{---------------Logout End----------------}
 
   return (
     <>
-      <div className="container">
-        <div className="screen">
-          <div className="screen__content">
+      <div className={loginCss.container}>
+        <div className={loginCss.leftContainer}>
+          <div className={loginCss.welcomeText}>
+            <div className={loginCss.welcomeTextImage}>
+              <NextImage field={star} editable={true} width={30} height={30} />
+            </div>
+            <h2>
+              Welcome,<div> Please Update Password</div>
+            </h2>
+            <div className={loginCss.welcomeTextDescription}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi illum ad, facere placeat
+              quos recusandae reprehenderit nihil minima possimus, quod adipisci, porro quibusdam
+              obcaecati.
+            </div>
+          </div>{' '}
+          <div className={loginCss.img}>
+            <NextImage field={imageNotFound} editable={true} />
+          </div>
+        </div>
+
+        <div className={loginCss.rightContainer}>
+          <div className={loginCss.formContainer}>
             {passwordPage ? (
-              <form
-                className="login"
-                onSubmit={(e) => onSubmitPasswordHandler(e)}
-                autoComplete="off"
-              >
-                <div className="login__field">
-                  <i className="login__icon fas fa-user"></i>
+              <form className={loginCss.login} onSubmit={(e) => onSubmitPasswordHandler(e)}>
+                <div className={loginCss.loginField}>
+                  <i className={loginCss['login__icon fas fa-user']}></i>
+                  <label className={loginCss.label}>User Email</label>
                   <input
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
                     type="password"
-                    className="login__input"
+                    className={loginCss.loginInput}
                     placeholder="Enter New Password"
                     minLength={6}
                     required
                   />
                 </div>
-                <div className="login__field">
-                  <i className="login__icon fas fa-lock"></i>
+                <div className={loginCss.loginField}>
+                  <i className={loginCss['login__icon fas fa-lock']}></i>
+                  <label className={loginCss.label}>Password</label>
                   <input
                     onChange={(e) => setConformPassword(e.target.value)}
                     value={confirmPassword}
                     type="password"
-                    className="login__input"
+                    className={loginCss.loginInput}
                     placeholder="Confirm New Password"
                     minLength={6}
                     required
                   />
                 </div>
-                <button className="button login__submit">
-                  <span className="button__text">Update Password</span>
-                  <i className="button__icon fas fa-chevron-right"></i>
+                <button className={loginCss.formButton}>
+                  Update Password
+                  <i className={loginCss['button__icon fas fa-chevron-right']}></i>
                 </button>
-                {accountError ? (
-                  <span
-                    style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
-                  >
-                    * Email/Mobile not Registered
-                  </span>
-                ) : (
-                  ''
-                )}
+
                 {passwordMatchError ? (
                   <span
                     style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
@@ -165,11 +177,21 @@ function ForgotPassword(props: LoginProps) {
                 ) : (
                   ''
                 )}
+                {somethingWentWrongError ? (
+                  <span
+                    style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
+                  >
+                    * Something Went Wrong Please Try Again
+                  </span>
+                ) : (
+                  ''
+                )}
               </form>
             ) : (
-              <form className="login" onSubmit={(e) => onSubmitHandler(e)}>
-                <div className="login__field">
-                  <i className="login__icon fas fa-user"></i>
+              <form className={loginCss.login} onSubmit={(e) => onSubmitHandler(e)}>
+                <div className={loginCss.loginField}>
+                  <i className={loginCss['login__icon fas fa-user']}></i>
+                  <label className={loginCss.label}>User Email</label>
                   <input
                     onChange={(e) => {
                       setEmailValue(e.target.value);
@@ -177,9 +199,8 @@ function ForgotPassword(props: LoginProps) {
                     }}
                     value={email}
                     type="text"
-                    className="login__input"
+                    className={loginCss.loginInput}
                     placeholder="Enter Your Email ID"
-                    //title="Enter Valid Email"
                     disabled={otpFieldVisible}
                     //pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"
                     required
@@ -192,49 +213,39 @@ function ForgotPassword(props: LoginProps) {
                     </div>
                   )}
                 </div>
-                {/* <div className="login__field">
-                  <i className="login__icon fas fa-lock"></i>
-                  <input
-                    onChange={(e) => setConformEmailValue(e.target.value)}
-                    value={confirmEmail}
-                    type="password"
-                    className="login__input"
-                    placeholder="Confirm Email"
-                    required
-                  />
-                </div> */}
                 {otpFieldVisible && (
-                  <div className="login__field">
-                    <i className="login__icon fas fa-lock"></i>
+                  <div className={loginCss.loginField}>
+                    <i className={loginCss['login__icon fas fa-lock']}></i>
+                    <label className={loginCss.label}>Password</label>
                     <input
                       onChange={(e) => setOtp(e.target.value)}
                       value={otp}
                       type="number"
-                      className="login__input"
+                      className={loginCss.loginInput}
                       placeholder="Enter OTP"
                       required
                     />
-                    {otpError ? (
+                    {otpFieldVisible ? (
                       <div
                         style={{
                           fontWeight: 1000,
-                          color: 'red',
+                          color: 'green',
                           fontSize: '12px',
                           padding: '10px',
                         }}
                       >
-                        * Please enter correct OTP
+                        OTP Send to Your Registered Mail ID
                       </div>
                     ) : (
                       ''
                     )}
                   </div>
                 )}
-                <button className="button login__submit">
-                  <span className="button__text">Next</span>
-                  <i className="button__icon fas fa-chevron-right"></i>
+                <button className={loginCss.formButton}>
+                  {!otpFieldVisible ? 'Send OTP' : 'Verify and Submit'}
+                  <i className={loginCss['button__icon fas fa-chevron-right']}></i>
                 </button>
-                {accountError ? (
+                {accountError && !otpFieldVisible ? (
                   <span
                     style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
                   >
@@ -243,34 +254,27 @@ function ForgotPassword(props: LoginProps) {
                 ) : (
                   ''
                 )}
-
-                {/* {emailMatchError ? (
-                  <span
-                    style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
+                {otpError ? (
+                  <div
+                    style={{
+                      fontWeight: 1000,
+                      color: 'red',
+                      fontSize: '12px',
+                      padding: '10px',
+                    }}
                   >
-                    * Email and comfirm Email not matching
-                  </span>
+                    * Please enter correct OTP
+                  </div>
                 ) : (
                   ''
-                )} */}
+                )}
               </form>
             )}
-            <div className="social-login">
-              <button className="registerButton" onClick={handleLogout}>
-                Logout
-              </button>
-            </div>
-          </div>
-          <div className="screen__background">
-            <span className="screen__background__shape screen__background__shape4"></span>
-            <span className="screen__background__shape screen__background__shape3"></span>
-            <span className="screen__background__shape screen__background__shape2"></span>
-            <span className="screen__background__shape screen__background__shape1"></span>
           </div>
         </div>
       </div>
     </>
   );
-}
+};
 
 export default ForgotPassword;
