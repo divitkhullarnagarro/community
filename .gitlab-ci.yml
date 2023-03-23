@@ -1,23 +1,26 @@
-build-job:
-  stage: build
-  script:
-    - echo "Hello, $GITLAB_USER_LOGIN!"
-
-test-job1:
-  stage: test
-  script:
-    - echo "This job tests something"
-
-test-job2:
-  stage: test
-  script:
-    - echo "This job tests something, but takes more time than test-job1."
-    - echo "After the echo commands complete, it runs the sleep command for 20 seconds"
-    - echo "which simulates a test that runs 20 seconds longer than test-job1"
-    - sleep 20
-
-deploy-prod:
+stages:
+  - deploy
+  - test
+deploy-to-vercel:
   stage: deploy
+  image: node:13.10.1-alpine3.10
   script:
-    - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
-  environment: production
+    - npm i -g vercel
+    - DEPLOYMENT_URL=$(vercel -t $VERCEL_TOKEN --confirm)
+    - echo $DEPLOYMENT_URL >vercel_deployment_url.txt
+  artifacts:
+    when: on_success
+    paths:
+      - vercel_deployment_url.txt
+cypress_test:
+  image: cypress/browsers:node12.16.2-chrome81-ff75
+  stage: test
+  script:
+    - DEPLOYMENT_URL=$(cat vercel_deployment_url.txt)
+    - npm ci
+    - $(npm bin)/cypress run --env CYPRESS_BASE_URL=$DEPLOYMENT_URL
+  artifacts:
+    when: on_success
+    paths:
+      - cypress/screenshots
+      - cypress/videos
