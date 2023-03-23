@@ -5,7 +5,7 @@ deploy_production:
  stage: deploy
  image: node:16.16.0
  only:
-  - main
+  - develop
  script:
  - npm install --global vercel
  - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
