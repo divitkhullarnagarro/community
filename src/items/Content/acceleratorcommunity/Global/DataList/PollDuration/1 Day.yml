@@ -1,0 +1,29 @@
+﻿---
+ID: "b99dd4a4-53aa-4fdf-a873-2863ed3dfab5"
+Parent: "ce4ca6a1-b657-4425-966d-cf496396a444"
+Template: "36e19697-5e6d-4098-81d6-fd576d59e5be"
+Path: /sitecore/content/acceleratorcommunity/Global/DataList/PollDuration/1 Day
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230323T062432Z
+    - ID: "5287ba1a-6c53-4da3-bf33-ce30c2401060"
+      Hint: Value
+      Value: 1
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "0e940581-9e96-430c-b65e-eb9cc80fd854"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230323T062503Z
+    - ID: "f3e047e6-5f6b-4839-a5f5-d7eddf1dbcaf"
+      Hint: Title
+      Value: 1 Day
