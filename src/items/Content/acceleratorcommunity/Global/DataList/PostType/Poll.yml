@@ -16,15 +16,15 @@ Languages:
       Value: Poll
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "7c345d4c-976a-4bbf-a844-d95d87f08459"
+      Value: "e2ef37c7-0d25-4b47-a2fc-f223198ae518"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230309T120930Z
+      Value: 20230323T062235Z
     - ID: "f299247a-a62a-4fea-b0f6-a83c8f2d4621"
       Hint: Image
       Value: |
-        <image mediaid="{46B16EFA-3385-4223-8715-9060C7BEAC98}" />
+        <image mediaid="{3317A7F2-2D90-43F7-9059-5A5E2D2C3309}" />
