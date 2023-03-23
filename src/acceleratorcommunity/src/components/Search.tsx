@@ -1,33 +1,51 @@
-import { Text, Field, withDatasourceCheck } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import searchImage from '../assets/images/searchImage.png';
+import star from '../assets/images/star.png'
+import searchCss from '../assets/search.module.css'
 
 
 type SearchProps = ComponentProps & {
   fields: {
-    title: Field<string>;
+    data: {
+      datasource: {
+        title: {
+          jsonValue: Field<string>;
+        };
+      }
   };
 };
+}
 
 const Search = (props: SearchProps): JSX.Element => {
   console.log('Search', props);
   return(
-    <div className="">
+    <div className={searchCss.container}>
+      <div className={searchCss.image}>
+      <NextImage
+          field={star}
+          editable={true}
+          height={30}
+          width={30}
+        /></div>
+        <div className={searchCss.searchBox}>
         <NextImage
-          className=""
+          className={searchCss.img}
           field={searchImage}
           editable={true}
-          height={20}
-          width={20}
+          height={2}
+          width={15}
         />
         <input
           type="text"
-          className=""
-          placeholder="Search"
+          className={searchCss.searchBoxText}
+          placeholder={props.fields.data.datasource.title.jsonValue.value}
+          // placeholder="search"
         />
+        </div>
       </div>
   );
 };
 
-export default withDatasourceCheck()<SearchProps>(Search);
+export default Search;

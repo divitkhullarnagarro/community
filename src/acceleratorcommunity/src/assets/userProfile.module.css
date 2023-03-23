@@ -1,0 +1,10 @@
+.container{
+    display: flex;
+    width: 100%;
+    justify-content: start;
+    padding: 0.25rem;
+    margin: 0.375rem;
+}
+.container img{
+    cursor: pointer;
+}
