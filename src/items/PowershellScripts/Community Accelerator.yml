@@ -1,15 +1,8 @@
 ﻿---
-ID: "a2aa183b-216e-4db9-9198-aea2b6493acc"
-Parent: "67ade776-24c7-4d14-b6a8-298ee0e802ac"
-Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
-Path: /sitecore/templates/Feature/acceleratorcommunity/FactOfTheDay/Data/Date
-SharedFields:
-- ID: "ab162cc0-dc80-4abf-8871-998ee5d7ba32"
-  Hint: Type
-  Value: Date
-- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
-  Hint: __Sortorder
-  Value: 200
+ID: "0a69f28d-8a62-4077-bfab-ffe91196ad5b"
+Parent: "36657c88-3f10-4b16-a3c7-03e011b0f6c2"
+Template: "6d82fcd8-c379-443c-97a9-c6423c71e7d5"
+Path: /sitecore/system/Modules/PowerShell/Script Library/SPE/Community Accelerator
 Languages:
 - Language: en
   Versions:
@@ -17,7 +10,7 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230321T115526Z
+      Value: 20230322T164302Z
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
@@ -28,11 +21,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "2c4a104e-3bae-4243-bf11-cb2d5aef5f1d"
+      Value: "d4751679-c3a4-4f27-8118-675e2094b5a3"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230321T115543Z
+      Value: 20230322T164302Z

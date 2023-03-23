@@ -28,9 +28,6 @@ Languages:
     - ID: "97321436-cdf2-4fb6-8c02-333714f630fb"
       Hint: Description
       Value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dictum elit quis finibus ultrices. Morbi nec tristique magna. Phasellus ut semper erat.
-    - ID: "a2aa183b-216e-4db9-9198-aea2b6493acc"
-      Hint: Date
-      Value: $date
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |

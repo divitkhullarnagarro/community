@@ -28,6 +28,18 @@
           "allowedPushOperations": "CreateUpdateAndDelete",
 		  "scope": "itemAndDescendants"
         },
+		{
+          "name": "PowershellScripts ",
+          "path": "/sitecore/system/Modules/PowerShell/Script Library/SPE/Community Accelerator",
+          "allowedPushOperations": "CreateUpdateAndDelete",
+		  "scope": "itemAndDescendants"
+        },
+		{
+          "name": "Schedules",
+          "path": "/sitecore/system/Tasks/Schedules/Community Accelerator",
+          "allowedPushOperations": "CreateUpdateAndDelete",
+		  "scope": "itemAndDescendants"
+        },
 	    {
           "name": "Media",
           "path": "/sitecore/media library/acceleratorcommunity",
