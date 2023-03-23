@@ -1,8 +1,8 @@
 ﻿---
-ID: "8d64d8f9-e034-49b7-b737-c4369dcac8ae"
+ID: "223680a4-51c4-4404-a6f1-21e4664f4618"
 Parent: "f263b145-76f6-446d-b80e-cb1d8451e54a"
 Template: "ce7ca1be-b6ba-4085-8f04-34d60ea9dfce"
-Path: /sitecore/content/acceleratorcommunity/Global/DataList/PostType/Poll
+Path: /sitecore/content/acceleratorcommunity/Global/DataList/PostType/Video
 Languages:
 - Language: en
   Versions:
@@ -10,21 +10,21 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230309T090615Z
+      Value: 20230309T090625Z
     - ID: "760b15b4-30a9-4c3a-9315-90088b88380a"
       Hint: Title
-      Value: Poll
+      Value: Video
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "e2ef37c7-0d25-4b47-a2fc-f223198ae518"
+      Value: "9087ddbd-c23b-40b7-8f10-c6ac66c2a97a"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230323T062235Z
+      Value: 20230323T062241Z
     - ID: "f299247a-a62a-4fea-b0f6-a83c8f2d4621"
       Hint: Image
       Value: |
-        <image mediaid="{3317A7F2-2D90-43F7-9059-5A5E2D2C3309}" />
+        <image mediaid="{AE6E21DD-285C-4047-B53B-8850E589DF2D}" />

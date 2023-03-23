@@ -16,15 +16,15 @@ Languages:
       Value: Event
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "326be3a0-35e9-4c40-a6fb-6b16272b992b"
+      Value: "d3ea0cb6-0e06-41c2-b678-d677084d561a"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230309T120836Z
+      Value: 20230323T062224Z
     - ID: "f299247a-a62a-4fea-b0f6-a83c8f2d4621"
       Hint: Image
       Value: |
-        <image mediaid="{B234A35F-EFAA-4C52-BAFA-D4F0D7252952}" />
+        <image mediaid="{93EBC3F9-3683-492D-BDB6-C1E2C16CDEB0}" />
