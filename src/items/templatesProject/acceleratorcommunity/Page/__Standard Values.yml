@@ -8,6 +8,9 @@ Languages:
   Versions:
   - Version: 1
     Fields:
+    - ID: "001dd393-96c5-490b-924a-b0f25cd9efd8"
+      Hint: __Lock
+      Value: <r />
     - ID: "03897511-7b06-4331-8ca0-1929bc3047ce"
       Hint: Navigation Title
       Value: $name
@@ -19,9 +22,34 @@ Languages:
           <d
             id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
             <r
-              uid="{11A2A6DE-D211-453C-B4B3-29B55A8EDEA5}"
+              uid="{67200981-7579-4BC4-9F6A-75CB20338B43}"
+              p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
+              s:ds="{94AD1290-B1EA-4C4E-8507-B22B02E68B19}"
+              s:id="{78BAF5D7-D604-454E-B796-8CBB67AA4FE2}"
+              s:par=""
+              s:ph="/jss-header/col2-{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}-0"
+              s:ccb="Clear on publish" />
+            <r
+              uid="{3555FF79-596B-433E-AD70-3747B743E69D}"
+              p:after="r[@uid='{67200981-7579-4BC4-9F6A-75CB20338B43}']"
+              s:ds="{A85E619F-7F82-4795-9E12-85783900263D}"
+              s:id="{66B09AA5-3A20-4FB1-ABC2-D1AE2DF6BE09}"
+              s:par=""
+              s:ph="/jss-header/col2-{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}-0"
+              s:ccb="Clear on publish" />
+            <r
+              uid="{2D3DA198-27F1-491E-832A-8AC684D02D14}"
+              p:after="r[@uid='{3555FF79-596B-433E-AD70-3747B743E69D}']"
+              s:ds="{60828F2C-A954-413B-B5DE-FC77AF7C9F13}"
+              s:id="{67F9F9E6-8533-467F-B7D7-13CC8EE7498F}"
+              s:par=""
+              s:ph="/jss-header/col1-{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}-0"
+              s:ccb="Clear on publish" />
+            <r
+              uid="{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}"
               p:after="*[1=2]"
-              s:id="{6148B772-D1ED-4A1C-AD43-82FE99B70CBB}"
+              s:ds="{AB3AEF4C-1276-4441-83D2-810D05708880}"
+              s:id="{44F40912-35E3-43E6-8C36-6488DC75421E}"
               s:ph="jss-header" />
           </d>
         </r>
@@ -38,11 +66,11 @@ Languages:
         sitecore\admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "7a5e76ef-ca79-4782-a27a-73c3f1732594"
+      Value: "b0393a0d-bf87-4a92-9f1f-458d6a05dba3"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230309T080222Z
+      Value: 20230321T114150Z
