@@ -16,15 +16,15 @@ Languages:
       Value: Image
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "2695a416-54c9-44dc-9080-4ff861d6c2b7"
+      Value: "cfc98b70-01a1-4ec9-9a52-49f5c5e6065f"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230309T120900Z
+      Value: 20230323T062230Z
     - ID: "f299247a-a62a-4fea-b0f6-a83c8f2d4621"
       Hint: Image
       Value: |
-        <image mediaid="{C44EF6B1-D0FD-4BE3-B0F7-DABD3C718602}" />
+        <image mediaid="{EFCC003B-997E-4781-A922-CD4990CACC23}" />
