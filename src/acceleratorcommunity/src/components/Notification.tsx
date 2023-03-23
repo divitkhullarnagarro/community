@@ -23,7 +23,7 @@ const Notification = (props: NotificationProps): JSX.Element => {
   console.log('Notification', props);
 
   // Temporary notification count 
-  const NotificationCount = 12;
+  // const NotificationCount = 12;
   return(
     <div className={notificationCss.container}>
         <NextImage
@@ -34,7 +34,7 @@ const Notification = (props: NotificationProps): JSX.Element => {
           // height={30}
         />
         {/* Notification Count  */}
-        <span className={notificationCss.badge}>{NotificationCount}</span>
+        {/* <span className={notificationCss.badge}>{NotificationCount}</span> */}
       </div>
   );
   };
