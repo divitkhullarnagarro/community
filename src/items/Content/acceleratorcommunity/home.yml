@@ -32,8 +32,14 @@ Languages:
           <d
             id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
             <r
-              uid="{87A3F594-E2BA-4896-9999-78F7DA80E485}"
+              uid="{1ADAAA1F-CDEB-47BE-BF4D-1C30FBE79615}"
               p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
+              s:ds="{D3B3136C-EC96-4B80-8AC6-F9217E1B5B19}"
+              s:id="{3F7262BC-5F91-4156-A610-0C8A596B655D}"
+              s:ph="/jss-main/col2-{CBE041A2-90AE-43AD-846F-003C4DC29955}-0" />
+            <r
+              uid="{87A3F594-E2BA-4896-9999-78F7DA80E485}"
+              p:after="r[@uid='{1ADAAA1F-CDEB-47BE-BF4D-1C30FBE79615}']"
               s:id="{B9C67CBD-E307-4D0A-A06E-1898E050D8A6}"
               s:ph="/jss-main/col1-{E715BB4B-AB97-47E3-9204-4BE77AD1B821}-0" />
             <r
@@ -55,16 +61,23 @@ Languages:
               s:ph="jss-main" />
             <r
               uid="{E715BB4B-AB97-47E3-9204-4BE77AD1B821}"
-              p:after="*[1=2]"
+              p:after="r[@uid='{7130AB5D-EF0A-42FF-80B3-259B9C80AD80}']"
               s:ds="{C79255F3-31A1-4FB8-B570-E7DB12DAC7EF}"
               s:id="{44F40912-35E3-43E6-8C36-6488DC75421E}"
               s:par=""
               s:ph="jss-main"
               s:ccb="Clear on publish" />
             <r
-              uid="{C524EC39-3360-4B01-AD17-27B101B0C35A}"
+              uid="{259F7A97-B68B-4332-9FA6-C492E9B1633A}"
+              p:after="r[@uid='{E715BB4B-AB97-47E3-9204-4BE77AD1B821}']"
+              s:ds="{469D1BF8-5C9B-4129-8160-E70110D9FDEF}"
+              s:id="{BF0ADB60-2A39-421C-BC8B-5E76C58017F7}"
+              s:ph="jss-main" />
+            <r
+              uid="{CBE041A2-90AE-43AD-846F-003C4DC29955}"
               p:after="*[1=2]"
-              s:id="{F370EF88-0216-4D1C-B3DF-D53B5D1FBFC6}"
+              s:ds="{4FF4E41A-9D33-45CC-9179-41230230F951}"
+              s:id="{44F40912-35E3-43E6-8C36-6488DC75421E}"
               s:ph="jss-main" />
           </d>
         </r>
@@ -73,17 +86,17 @@ Languages:
       Value: 20230301T081956Z
     - ID: "263d7202-9941-5327-aeda-534621fa7b2d"
       Hint: pageTitle
-      Value: Home
+      Value: Welcome to Sitecore JSS
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
       Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "84454637-e0f0-4d04-b895-f5a15ac1b6ea"
+      Value: "81e7b7c1-f68c-48f2-a9a9-f7b93493edc3"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230323T080833Z
+      Value: 20230323T131309Z
