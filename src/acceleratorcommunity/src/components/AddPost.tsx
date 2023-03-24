@@ -814,7 +814,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   return (
     <>
-      <div style={{ padding: '10px', backgroundColor: 'darkgrey' }}>
+      <div style={{ padding: '10px', backgroundColor: 'darkgrey', margin: '15px' }}>
         <div className="AddPostContainer" style={{ maxWidth: '60%' }}>
           <h4>
             {props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value

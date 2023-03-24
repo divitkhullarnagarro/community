@@ -7,6 +7,7 @@ import loginUserCall from '../API/loginUserCall';
 import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';
 import loginCss from '../assets/login.module.css';
+import Spinner from 'react-bootstrap/Spinner';
 // import star from '../assets/images/star.png';
 
 type LoginProps = ComponentProps & {
@@ -51,12 +52,14 @@ const Login = (props: LoginProps): JSX.Element => {
   props; //delete Me
 
   const router = useRouter();
-  const { isLoggedIn, setIsLoggedIn, setUserToken, userToken } = { ...useContext(WebContext) };
+  const { setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
 
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
   let [emailError, setEmailError] = useState(false);
   let [passwodError, setPasswordError] = useState(false);
+  let [ifUnAuthorised, setIfUnauthorised] = useState(false);
+  let [isLoggingIn, setIsLoggingIn] = useState(false);
 
   function setEmailValue(val: any) {
     if (val === '') {
@@ -78,6 +81,7 @@ const Login = (props: LoginProps): JSX.Element => {
 
   const onSubmitHandler = async (e: any) => {
     e.preventDefault();
+    setIsLoggingIn(true);
     if (password === '') {
       setPasswordError(true);
     }
@@ -88,13 +92,18 @@ const Login = (props: LoginProps): JSX.Element => {
       let response = await loginUserCall(email, password);
       if (response?.status == 200 && setIsLoggedIn != undefined && setUserToken != undefined) {
         setIsLoggedIn(true);
-        setUserToken(response?.data?.access_token);
+        setUserToken(response?.data?.data?.access_token);
         router.push('/');
+      } else {
+        setIsLoggingIn(false);
+        setIfUnauthorised(true);
+        setTimeout(() => {
+          setIfUnauthorised(false);
+        }, 2000);
       }
     }
   };
 
-  console.log('userToken', userToken);
   const heading = targetItems.title.jsonValue.value.split('<br>');
   return (
     <>
@@ -160,6 +169,15 @@ const Login = (props: LoginProps): JSX.Element => {
                 ) : (
                   ''
                 )}
+                <div style={{ height: '25px' }}>
+                  {ifUnAuthorised ? (
+                    <span style={{ fontWeight: 1000, color: 'red', fontSize: '12px' }}>
+                      * Wrong Email or Password. Try Again !
+                    </span>
+                  ) : (
+                    ''
+                  )}
+                </div>
                 <div className={loginCss.forgotPassword}>
                   <Link href={'/forgotPassword'}>
                     {targetItems.forgotPasswordLabel.jsonValue.value}
@@ -167,18 +185,15 @@ const Login = (props: LoginProps): JSX.Element => {
                 </div>
               </div>
               <button className={loginCss.formButton} disabled={emailError || passwodError}>
-                {targetItems.signInBtn.jsonValue.value}
+                {isLoggingIn ? (
+                  <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
+                    <Spinner style={{ width: '15px', height: '15px' }} animation="border" />
+                  </span>
+                ) : (
+                  targetItems.signInBtn.jsonValue.value
+                )}
                 <i className="button__icon fas fa-chevron-right"></i>
               </button>
-              {isLoggedIn ? (
-                <span
-                  style={{ fontWeight: 1000, color: 'green', fontSize: '12px', padding: '10px' }}
-                >
-                  * User Logged In Successfully
-                </span>
-              ) : (
-                ''
-              )}
             </form>
             <div className={loginCss.loginOptionContainer}>
               or sign in with other accounts?
@@ -197,19 +212,8 @@ const Login = (props: LoginProps): JSX.Element => {
                 <Link href={'/register'}>{targetItems.registerHereLabel.jsonValue.value}</Link>
               </div>
             </div>
-            {/* <div className="social-icons">
-                <a href="#" className="social-login__icon fab fa-instagram"></a>
-                <a href="#" className="social-login__icon fab fa-facebook"></a>
-                <a href="#" className="social-login__icon fab fa-twitter"></a>
-              </div> */}
           </div>
         </div>
-        {/* <div className="screen__background">
-            <span className="screen__background__shape screen__background__shape4"></span>
-            <span className="screen__background__shape screen__background__shape3"></span>
-            <span className="screen__background__shape screen__background__shape2"></span>
-            <span className="screen__background__shape screen__background__shape1"></span>
-          </div> */}
       </div>
     </>
   );
