@@ -3,7 +3,7 @@ import Router from 'next/router';
 import { I18nProvider } from 'next-localization';
 import NProgress from 'nprogress';
 import { SitecorePageProps } from 'lib/page-props';
-import '../assets/login.css';
+// import '../assets/login.css';
 import '../assets/dashboard.css';
 import '../assets/profile.css';
 import '../assets/addPost.css';
