@@ -1,0 +1,37 @@
+﻿---
+ID: "90d91cfb-3c7d-4732-8e32-4409490aded2"
+Parent: "0d9a4816-dacf-4725-8d2b-2bca674010ba"
+Template: "0d9a4816-dacf-4725-8d2b-2bca674010ba"
+Path: /sitecore/templates/Feature/acceleratorcommunity/FactOfTheDay/__Standard Values
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230320T062113Z
+    - ID: "30a44b58-ea42-468b-ac0b-07345b8d3e4a"
+      Hint: Title
+      Value: THIS DAY THAT YEAR
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "2c7320ce-74e2-4c83-9f77-b7b5581bad03"
+    - ID: "97321436-cdf2-4fb6-8c02-333714f630fb"
+      Hint: Description
+      Value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dictum elit quis finibus ultrices. Morbi nec tristique magna. Phasellus ut semper erat.
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230321T115805Z
