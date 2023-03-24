@@ -1,0 +1,9 @@
+{
+  "sitecore": {
+    "instancePath": "",
+    "apiKey": "{79FEE958-BF31-4206-84E8-0A66D488B470}",
+    "deploySecret": "n6uut156izfipoz5hx03fswllvp5taofyymy22bkd3q",
+    "deployUrl": "https://e345-146-196-34-159.in.ngrok.io/sitecore/api/jss/import",
+    "layoutServiceHost": "https://e345-146-196-34-159.in.ngrok.io/"
+  }
+}
