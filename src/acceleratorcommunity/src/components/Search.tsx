@@ -37,8 +37,8 @@ const Search = (props: SearchProps): JSX.Element => {
           // field={searchImage}
           field={props?.fields?.data?.datasource?.image?.jsonValue?.value}
           editable={true}
-          height={30}
-          width={30}
+          height={10}
+          width={15}
         />
         <input
           type="text"
