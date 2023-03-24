@@ -1,24 +1,20 @@
 import Axios, { AxiosResponse } from "axios";
-import loginUserCall from './loginUserCall';
 
-const addPostCall = async (
-) => {
-
-    let resp = await loginUserCall('nishantemail@gmail.com', 'Nishant1@');
+const addPostCall = async (userToken: string | undefined, postObject: any) => {
     var data = {
         // id: "post_Id12",
-        description: "First Post",
+        description: postObject?.description,
         postType: "TEXT_POST",
         createdBy: "objectId",
         updatedBy: "objectId",
-        createdOn: 0,
-        updatedOn: 0
+        createdOn: 23032023,
+        updatedOn: 23032023
     };
     let addPostURL = "https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/post";
     var config = {
         url: addPostURL,
         headers: {
-            Authorization: `Bearer ${resp?.data?.data?.access_token}`,
+            Authorization: `Bearer ${userToken}`,
             'Content-Type': 'application/json',
         },
         data: data,

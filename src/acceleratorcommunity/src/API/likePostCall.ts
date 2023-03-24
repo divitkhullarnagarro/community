@@ -1,15 +1,12 @@
 import Axios, { AxiosResponse } from "axios";
-import loginUserCall from './loginUserCall';
 
-const likePostCall = async (id: any
+const likePostCall = async (userToken: string | undefined, id: string
 ) => {
-
-    let resp = await loginUserCall('nishantemail@gmail.com', 'Nishant1@');
     let addPostURL = `https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/post/${id}/likes`;
     var config = {
         url: addPostURL,
         headers: {
-            Authorization: `Bearer ${resp?.data?.data?.access_token}`,
+            Authorization: `Bearer ${userToken}`,
             'Content-Type': 'application/json',
         },
     };

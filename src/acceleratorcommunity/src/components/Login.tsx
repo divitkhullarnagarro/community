@@ -20,7 +20,7 @@ const Login = (props: LoginProps): JSX.Element => {
   props; //delete Me
 
   const router = useRouter();
-  const { isLoggedIn, setIsLoggedIn, setUserToken, userToken } = { ...useContext(WebContext) };
+  const { isLoggedIn, setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
 
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
@@ -38,12 +38,10 @@ const Login = (props: LoginProps): JSX.Element => {
     let response = await loginUserCall(email, password);
     if (response?.status == 200 && setIsLoggedIn != undefined && setUserToken != undefined) {
       setIsLoggedIn(true);
-      setUserToken(response?.data?.access_token);
+      setUserToken(response?.data?.data?.access_token);
       router.push('/');
     }
   };
-
-  console.log('userToken', userToken);
 
   return (
     <>
