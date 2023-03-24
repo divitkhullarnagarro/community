@@ -46,7 +46,7 @@ Languages:
               uid="{A54E5117-CEA1-4650-95BE-B5602EE16845}"
               p:after="r[@uid='{308914D1-14AF-4E24-A729-076FAB07B6B6}']"
               s:id="{1E9900E6-2ACC-4456-A9EA-15BBE2C948AB}"
-              s:par="Title=People%20You%20May%20Know&amp;LinkLabel=See%20all&amp;Link"
+              s:par="Title=People%20You%20May%20Know&amp;LinkLabel=See%20all&amp;Link=%3Clink%20text%3D%22%22%20anchor%3D%22%22%20linktype%3D%22internal%22%20class%3D%22%22%20title%3D%22%22%20%20querystring%3D%22%22%20id%3D%22%7B23443002-3E34-48EA-BD34-092986320648%7D%22%20%2F%3E&amp;IsFullList"
               s:ph="/jss-main/col2-{E715BB4B-AB97-47E3-9204-4BE77AD1B821}-0" />
             <r
               uid="{7130AB5D-EF0A-42FF-80B3-259B9C80AD80}"
@@ -71,14 +71,14 @@ Languages:
       Value: Home
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
-      Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
+      Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "84454637-e0f0-4d04-b895-f5a15ac1b6ea"
+      Value: "53028c3e-374f-466d-b0d5-ea079151aff2"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230323T080833Z
+      Value: 20230324T062720Z

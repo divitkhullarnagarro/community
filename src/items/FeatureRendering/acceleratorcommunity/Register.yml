@@ -10,6 +10,39 @@ SharedFields:
 - ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
   Hint: __Icon
   Value: Applications/32x32/form_green_edit.png
+- ID: "17bb046a-a32a-41b3-8315-81217947611b"
+  Hint: ComponentQuery
+  Value: |
+    # Editing here does not save the query on the item; copy it back when done!
+    
+    # Editing here does not save the query on the item; copy it back when done!
+    # Editing here does not save the query on the item; copy it back when done!
+    query Login($datasource: String!, $language: String!) {
+      datasource: item(path: $datasource, language: $language) {
+        ... on RegisterUser {
+          title{jsonValue}
+          description{jsonValue}
+          image{jsonValue}
+          firstNameLabel{jsonValue}
+          firstNamePlaceholder{jsonValue}
+          lastNameLabel{jsonValue}
+          lastNamePlaceholder{jsonValue}
+          emailLabel{jsonValue}
+          emailPlaceholder{jsonValue}
+          phoneNoLabel{jsonValue}
+          phoneNoPlaceholder{jsonValue}
+          passwordLabel{jsonValue}
+          passwordPlaceholder{jsonValue}
+          confirmPasswordLabel{jsonValue}
+          confirmPasswordPlaceholder{jsonValue}
+          registerBtn{jsonValue}
+          haveAccountLabel{jsonValue}
+          loginBtn{jsonValue}
+        }
+      }
+    }
+    
+    
 Languages:
 - Language: en
   Versions:
@@ -20,11 +53,11 @@ Languages:
       Value: 20230303T113941Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "7936b62e-fcf2-4515-92ef-11c5405199b7"
+      Value: "d6cf0854-dbf1-4353-87ad-af1ed4c78c66"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230303T114640Z
+      Value: 20230324T025536Z

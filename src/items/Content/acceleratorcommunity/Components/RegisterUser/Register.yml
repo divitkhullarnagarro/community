@@ -1,0 +1,86 @@
+﻿---
+ID: "9489eed3-a3b6-45e6-b99a-353b77fd6a84"
+Parent: "0077d2dc-f263-43cb-ab3b-0bc196c9e35c"
+Template: "ff4dd266-70ee-4654-8eb0-3f9bac5c534c"
+Path: /sitecore/content/acceleratorcommunity/Components/RegisterUser/Register
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230324T024958Z
+    - ID: "335b57b4-da15-4915-8a08-ddd8f5404770"
+      Hint: PasswordPlaceholder
+      Value: Password
+    - ID: "33a3caf2-2460-4957-881e-35adfd9bd710"
+      Hint: PhoneNoPlaceholder
+      Value: Phone No.
+    - ID: "3e08b5dc-4b83-4f02-ae56-d2b92b9c906e"
+      Hint: PasswordLabel
+      Value: Password
+    - ID: "47d86c77-d9ad-4df0-80d8-6b768f3608d8"
+      Hint: LastNamePlaceholder
+      Value: Last Name
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "52a4fc36-0e2e-443e-9196-967542a9dfc5"
+      Hint: EmailLabel
+      Value: Email
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "6b00da12-5c0e-4bd7-9b49-b471356bb073"
+      Hint: ConfirmPasswordPlaceholder
+      Value: Confirm Password
+    - ID: "6daed59a-2142-492d-b946-54a11c45e50c"
+      Hint: Image
+      Value: |
+        <image mediaid="{7C9B274A-47F4-4E03-A770-C41A749FAB3A}" />
+    - ID: "7c7058de-7e4d-40ae-966d-b2cbffb147c9"
+      Hint: RegisterBtn
+      Value: Register
+    - ID: "7d69b3de-ac99-40d0-b029-4cce490616a6"
+      Hint: ConfirmPasswordLabel
+      Value: Confirm Password
+    - ID: "82b818f2-9ff4-4e76-ba2d-5741d7b6eebc"
+      Hint: Description
+      Value: "Welcome to Community Solution! We're glad you're here. To get started, please fill out the form with your information. Once you've submitted the form, you'll redirected to login page. Thank you for choosing Community Solution!"
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "b900c9a3-5176-4221-b7fb-959dcde8fc9b"
+    - ID: "ac4df348-3054-4d3c-8c8f-390472fd4a5b"
+      Hint: EmailPlaceholder
+      Value: Email
+    - ID: "af9627bc-8bfc-4a14-80a5-f006ddd33a5f"
+      Hint: FirstNameLabel
+      Value: First Name
+    - ID: "b8f4a7eb-79aa-4667-a09f-d9a2cadd7ce8"
+      Hint: FirstNamePlaceholder
+      Value: First Name
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "bff4b260-3081-4b87-8b69-c38e882e86f7"
+      Hint: Title
+      Value: Welcome, <br>Please Register Here
+    - ID: "c1916724-12cd-45ed-b6e5-8b87faa325bc"
+      Hint: PhoneNoLabel
+      Value: Phone No.
+    - ID: "cdf17ab5-d49a-4b14-bdf8-b337f083665f"
+      Hint: HaveAccountLabel
+      Value: "Have Account ?"
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230324T065042Z
+    - ID: "f50e7022-746b-4648-8fc5-f49c64efb04a"
+      Hint: LastNameLabel
+      Value: Last Name
+    - ID: "fa0a9e4f-e4fb-4db4-b642-2d1e55000d63"
+      Hint: LoginBtn
+      Value: Goto Login

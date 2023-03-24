@@ -1,0 +1,59 @@
+﻿---
+ID: "c2daa81a-cf48-4c1a-aa83-15bae961eca4"
+Parent: "6d4a706f-95af-4084-91e4-880a700aed2e"
+Template: "1aec4263-d88b-461b-97a0-f880576b6792"
+Path: /sitecore/content/acceleratorcommunity/Components/Login/Login
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "0ccfb30b-15a7-4c0f-a3e4-958f7556d835"
+      Hint: SignInBtn
+      Value: Sign In
+    - ID: "1559ec17-4416-4907-b516-2132835ab226"
+      Hint: ForgotPasswordLabel
+      Value: Forgot Your Password
+    - ID: "1c69fdbc-7cc1-4e27-8000-02b3b39c9661"
+      Hint: Title
+      Value: Welcome, <br>Please Login
+    - ID: "2540abc2-05c9-4e69-adef-c0d85ecdc62e"
+      Hint: RegisterHereLabel
+      Value: Register Here
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230324T023558Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "579d3cc7-3a8c-4dc2-900b-425b0be15b60"
+      Hint: Description
+      Value: "Welcome to community solution! Please enter your username/ email and password to access your account. If you don't have an account yet, you can Register for free by clicking the 'Register Here' button."
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "5eb5bf7f-d856-4dc1-ae4d-fd35acf455f2"
+      Hint: Image
+      Value: |
+        <image mediaid="{7C9B274A-47F4-4E03-A770-C41A749FAB3A}" />
+    - ID: "6c8fbd16-c0e4-4b08-a1e7-612d23d9fbe8"
+      Hint: UserNameLabel
+      Value: User Name / Email
+    - ID: "7ca5e1a5-5d43-4cf6-b277-b21064acc1ae"
+      Hint: DontHaveAccountLabel
+      Value: "Don't have Account ?"
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "2696e8d0-8467-4167-83cc-a315f740fbb3"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "cda5a55c-df69-4e08-8649-81120aace263"
+      Hint: PasswordLabel
+      Value: Password
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230324T065129Z
