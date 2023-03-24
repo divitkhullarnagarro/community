@@ -32,16 +32,8 @@ Languages:
           <d
             id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
             <r
-              uid="{1ADAAA1F-CDEB-47BE-BF4D-1C30FBE79615}"
-              p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
-              s:ds="{88FD8092-F195-4207-9310-FF67A9AF0206}"
-              s:id="{3F7262BC-5F91-4156-A610-0C8A596B655D}"
-              s:par="Automatic=1"
-              s:ph="/jss-main/col2-{CBE041A2-90AE-43AD-846F-003C4DC29955}-0"
-              s:ccb="Clear on publish" />
-            <r
               uid="{87A3F594-E2BA-4896-9999-78F7DA80E485}"
-              p:after="r[@uid='{1ADAAA1F-CDEB-47BE-BF4D-1C30FBE79615}']"
+              p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
               s:id="{B9C67CBD-E307-4D0A-A06E-1898E050D8A6}"
               s:ph="/jss-main/col1-{E715BB4B-AB97-47E3-9204-4BE77AD1B821}-0" />
             <r
@@ -54,7 +46,7 @@ Languages:
               uid="{A54E5117-CEA1-4650-95BE-B5602EE16845}"
               p:after="r[@uid='{308914D1-14AF-4E24-A729-076FAB07B6B6}']"
               s:id="{1E9900E6-2ACC-4456-A9EA-15BBE2C948AB}"
-              s:par="Title=People%20You%20May%20Know&amp;LinkLabel=See%20all&amp;Link"
+              s:par="Title=People%20You%20May%20Know&amp;LinkLabel=See%20all&amp;Link=%3Clink%20text%3D%22%22%20anchor%3D%22%22%20linktype%3D%22internal%22%20class%3D%22%22%20title%3D%22%22%20%20querystring%3D%22%22%20id%3D%22%7B23443002-3E34-48EA-BD34-092986320648%7D%22%20%2F%3E&amp;IsFullList"
               s:ph="/jss-main/col2-{E715BB4B-AB97-47E3-9204-4BE77AD1B821}-0" />
             <r
               uid="{7130AB5D-EF0A-42FF-80B3-259B9C80AD80}"
@@ -63,24 +55,12 @@ Languages:
               s:ph="jss-main" />
             <r
               uid="{E715BB4B-AB97-47E3-9204-4BE77AD1B821}"
-              p:after="r[@uid='{7130AB5D-EF0A-42FF-80B3-259B9C80AD80}']"
+              p:after="*[1=2]"
               s:ds="{C79255F3-31A1-4FB8-B570-E7DB12DAC7EF}"
               s:id="{44F40912-35E3-43E6-8C36-6488DC75421E}"
               s:par=""
               s:ph="jss-main"
               s:ccb="Clear on publish" />
-            <r
-              uid="{259F7A97-B68B-4332-9FA6-C492E9B1633A}"
-              p:after="r[@uid='{E715BB4B-AB97-47E3-9204-4BE77AD1B821}']"
-              s:ds="{469D1BF8-5C9B-4129-8160-E70110D9FDEF}"
-              s:id="{BF0ADB60-2A39-421C-BC8B-5E76C58017F7}"
-              s:ph="jss-main" />
-            <r
-              uid="{CBE041A2-90AE-43AD-846F-003C4DC29955}"
-              p:after="*[1=2]"
-              s:ds="{4FF4E41A-9D33-45CC-9179-41230230F951}"
-              s:id="{44F40912-35E3-43E6-8C36-6488DC75421E}"
-              s:ph="jss-main" />
           </d>
         </r>
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
@@ -88,17 +68,17 @@ Languages:
       Value: 20230301T081956Z
     - ID: "263d7202-9941-5327-aeda-534621fa7b2d"
       Hint: pageTitle
-      Value: Welcome to Sitecore JSS
+      Value: Home
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
-      Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
+      Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "72c87839-ed51-4270-9f12-7c3e9c745c19"
+      Value: "53028c3e-374f-466d-b0d5-ea079151aff2"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230324T073422Z
+      Value: 20230324T062720Z

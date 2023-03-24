@@ -1,4 +1,4 @@
-import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, ImageField, NextImage, RichTextField } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import React, { useContext, useState } from 'react';
 import Link from 'next/link';
@@ -7,24 +7,59 @@ import loginUserCall from '../API/loginUserCall';
 import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';
 import loginCss from '../assets/login.module.css';
-import star from '../assets/images/star.png';
+import Spinner from 'react-bootstrap/Spinner';
+// import star from '../assets/images/star.png';
 
 type LoginProps = ComponentProps & {
   fields: {
-    heading: Field<string>;
+    data: {
+      datasource: DataSource;
+    };
+  };
+};
+type DataSource = {
+  title: {
+    jsonValue: Field<string>;
+  };
+  description: {
+    jsonValue: RichTextField;
+  };
+  image: {
+    jsonValue: ImageField;
+  };
+  userNameLabel: {
+    jsonValue: Field<string>;
+  };
+  passwordLabel: {
+    jsonValue: Field<string>;
+  };
+  forgotPasswordLabel: {
+    jsonValue: Field<string>;
+  };
+  signInBtn: {
+    jsonValue: Field<string>;
+  };
+  dontHaveAccountLabel: {
+    jsonValue: Field<string>;
+  };
+  registerHereLabel: {
+    jsonValue: Field<string>;
   };
 };
 
 const Login = (props: LoginProps): JSX.Element => {
+  const targetItems = props?.fields?.data?.datasource;
   props; //delete Me
 
   const router = useRouter();
-  const { isLoggedIn, setIsLoggedIn, setUserToken, userToken } = { ...useContext(WebContext) };
+  const { setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
 
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
   let [emailError, setEmailError] = useState(false);
   let [passwodError, setPasswordError] = useState(false);
+  let [ifUnAuthorised, setIfUnauthorised] = useState(false);
+  let [isLoggingIn, setIsLoggingIn] = useState(false);
 
   function setEmailValue(val: any) {
     if (val === '') {
@@ -46,6 +81,7 @@ const Login = (props: LoginProps): JSX.Element => {
 
   const onSubmitHandler = async (e: any) => {
     e.preventDefault();
+    setIsLoggingIn(true);
     if (password === '') {
       setPasswordError(true);
     }
@@ -56,29 +92,39 @@ const Login = (props: LoginProps): JSX.Element => {
       let response = await loginUserCall(email, password);
       if (response?.status == 200 && setIsLoggedIn != undefined && setUserToken != undefined) {
         setIsLoggedIn(true);
-        setUserToken(response?.data?.access_token);
+        setUserToken(response?.data?.data?.access_token);
         router.push('/');
+      } else {
+        setIsLoggingIn(false);
+        setIfUnauthorised(true);
+        setTimeout(() => {
+          setIfUnauthorised(false);
+        }, 2000);
       }
     }
   };
 
-  console.log('userToken', userToken);
-
+  const heading = targetItems.title.jsonValue.value.split('<br>');
   return (
     <>
       <div className={loginCss.container}>
         <div className={loginCss.leftContainer}>
           <div className={loginCss.welcomeText}>
             <div className={loginCss.welcomeTextImage}>
-              <NextImage field={star} editable={true} width={30} height={30} />
+              <NextImage
+                field={targetItems.image.jsonValue.value}
+                editable={true}
+                width={30}
+                height={30}
+              />
             </div>
             <h2>
-              Welcome,<div> Please Sign In</div>
+              {heading[0]}
+              <br />
+              {heading[1]}
             </h2>
             <div className={loginCss.welcomeTextDescription}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi illum ad, facere placeat
-              quos recusandae reprehenderit nihil minima possimus, quod adipisci, porro quibusdam
-              obcaecati.
+              {targetItems.description.jsonValue.value}
             </div>
           </div>{' '}
         </div>
@@ -88,7 +134,9 @@ const Login = (props: LoginProps): JSX.Element => {
             <form className={loginCss.login} onSubmit={(e) => onSubmitHandler(e)}>
               <div className={loginCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
-                <label className={loginCss.label}>User name / Email</label>
+                <label className={loginCss.label}>
+                  {targetItems.userNameLabel.jsonValue.value}
+                </label>
                 <input
                   onChange={(e) => setEmailValue(e.target.value)}
                   value={email}
@@ -96,14 +144,18 @@ const Login = (props: LoginProps): JSX.Element => {
                   className={loginCss.loginInput}
                 />
                 {emailError ? (
-                  <span className={loginCss.error}>* User name / Email field is empty</span>
+                  <span className={loginCss.error}>
+                    * {targetItems.userNameLabel.jsonValue.value} Field is empty
+                  </span>
                 ) : (
                   ''
                 )}
               </div>
               <div className={loginCss.loginField}>
                 <i className="login__icon fas fa-lock"></i>
-                <label className={loginCss.label}>Password</label>
+                <label className={loginCss.label}>
+                  {targetItems.passwordLabel.jsonValue.value}
+                </label>
                 <input
                   onChange={(e) => setPasswordValue(e.target.value)}
                   value={password}
@@ -111,27 +163,37 @@ const Login = (props: LoginProps): JSX.Element => {
                   className={loginCss.loginInput}
                 />
                 {passwodError ? (
-                  <span className={loginCss.error}>* Password Field is empty</span>
+                  <span className={loginCss.error}>
+                    * {targetItems.passwordLabel.jsonValue.value} Field is empty
+                  </span>
                 ) : (
                   ''
                 )}
+                <div style={{ height: '25px' }}>
+                  {ifUnAuthorised ? (
+                    <span style={{ fontWeight: 1000, color: 'red', fontSize: '12px' }}>
+                      * Wrong Email or Password. Try Again !
+                    </span>
+                  ) : (
+                    ''
+                  )}
+                </div>
                 <div className={loginCss.forgotPassword}>
-                  <Link href={'/forgotPassword'}>Forgot Your Password?</Link>
+                  <Link href={'/forgotPassword'}>
+                    {targetItems.forgotPasswordLabel.jsonValue.value}
+                  </Link>
                 </div>
               </div>
               <button className={loginCss.formButton} disabled={emailError || passwodError}>
-                Sign In
+                {isLoggingIn ? (
+                  <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
+                    <Spinner style={{ width: '15px', height: '15px' }} animation="border" />
+                  </span>
+                ) : (
+                  targetItems.signInBtn.jsonValue.value
+                )}
                 <i className="button__icon fas fa-chevron-right"></i>
               </button>
-              {isLoggedIn ? (
-                <span
-                  style={{ fontWeight: 1000, color: 'green', fontSize: '12px', padding: '10px' }}
-                >
-                  * User Logged In Successfully
-                </span>
-              ) : (
-                ''
-              )}
             </form>
             <div className={loginCss.loginOptionContainer}>
               or sign in with other accounts?
@@ -143,24 +205,15 @@ const Login = (props: LoginProps): JSX.Element => {
               </div>
             </div>
             <div className={loginCss.formContainerBottom}>
-              <div className={loginCss.text}>Don't have Account?</div>
+              <div className={loginCss.text}>
+                {targetItems.dontHaveAccountLabel.jsonValue.value}
+              </div>
               <div className={loginCss.btn}>
-                <Link href={'/register'}>Register Here</Link>
+                <Link href={'/register'}>{targetItems.registerHereLabel.jsonValue.value}</Link>
               </div>
             </div>
-            {/* <div className="social-icons">
-                <a href="#" className="social-login__icon fab fa-instagram"></a>
-                <a href="#" className="social-login__icon fab fa-facebook"></a>
-                <a href="#" className="social-login__icon fab fa-twitter"></a>
-              </div> */}
           </div>
         </div>
-        {/* <div className="screen__background">
-            <span className="screen__background__shape screen__background__shape4"></span>
-            <span className="screen__background__shape screen__background__shape3"></span>
-            <span className="screen__background__shape screen__background__shape2"></span>
-            <span className="screen__background__shape screen__background__shape1"></span>
-          </div> */}
       </div>
     </>
   );

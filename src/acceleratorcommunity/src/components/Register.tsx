@@ -1,17 +1,75 @@
-import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, ImageField, NextImage, RichTextField } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import registerUserCall from '../API/registerUserCall';
 import { useRouter } from 'next/router';
 import RegisterCss from '../assets/register.module.css';
-import starImage from '../assets/images/star.png';
-import imageNotFound from '../assets/images/imageNot.png';
-
+// import starImage from '../assets/images/star.png';
+// import imageNotFound from '../assets/images/imageNot.png';
 
 type RegisterProps = ComponentProps & {
   fields: {
-    heading: Field<string>;
+    // heading: Field<string>;
+    data: {
+      datasource: DataSource;
+    };
+  };
+};
+type DataSource = {
+  title: {
+    jsonValue: Field<string>;
+  };
+  description: {
+    jsonValue: RichTextField;
+  };
+  image: {
+    jsonValue: ImageField;
+  };
+  firstNameLabel: {
+    jsonValue: Field<string>;
+  };
+  firstNamePlaceholder: {
+    jsonValue: Field<string>;
+  };
+  lastNameLabel: {
+    jsonValue: Field<string>;
+  };
+  lastNamePlaceholder: {
+    jsonValue: Field<string>;
+  };
+  emailLabel: {
+    jsonValue: Field<string>;
+  };
+  emailPlaceholder: {
+    jsonValue: Field<string>;
+  };
+  phoneNoLabel: {
+    jsonValue: Field<string>;
+  };
+  phoneNoPlaceholder: {
+    jsonValue: Field<string>;
+  };
+  passwordLabel: {
+    jsonValue: Field<string>;
+  };
+  passwordPlaceholder: {
+    jsonValue: Field<string>;
+  };
+  confirmPasswordLabel: {
+    jsonValue: Field<string>;
+  };
+  confirmPasswordPlaceholder: {
+    jsonValue: Field<string>;
+  };
+  registerBtn: {
+    jsonValue: Field<string>;
+  };
+  haveAccountLabel: {
+    jsonValue: Field<string>;
+  };
+  loginBtn: {
+    jsonValue: Field<string>;
   };
 };
 
@@ -27,7 +85,6 @@ const Register = (props: RegisterProps): JSX.Element => {
   let [isRegistered, setIsRegistered] = useState(false);
   const router = useRouter();
 
-
   let [firstNameError, setFirstNameError] = useState(false);
   let [lastNameError, setLastNameError] = useState(false);
   let [emailError, setEmailError] = useState(false);
@@ -35,53 +92,50 @@ const Register = (props: RegisterProps): JSX.Element => {
   let [passwordError, setPasswordError] = useState(false);
   // let [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
+  const targetItems = props?.fields?.data?.datasource;
+
   function setFirstNameValue(val: any) {
     setFirstName(val);
-    if(val===""){
+    if (val === '') {
       setFirstNameError(true);
-    }
-    else{
+    } else {
       setFirstNameError(false);
     }
   }
 
   function setPhoneNumberValue(val: any) {
     setPhoneNumber(val);
-    if(val===""){
+    if (val === '') {
       setPhoneError(true);
-    }
-    else{
+    } else {
       setPhoneError(false);
     }
   }
 
   function setLastNameValue(val: any) {
     setLastName(val);
-    if(val===""){
+    if (val === '') {
       setLastNameError(true);
-    }
-    else{
+    } else {
       setLastNameError(false);
     }
   }
 
   function setEmailValue(val: any) {
     setEmail(val);
-    if(val==="")
-      setEmailError(true)
-      else{
-        setEmailError(false);
-      }
+    if (val === '') setEmailError(true);
+    else {
+      setEmailError(false);
+    }
   }
 
   function setPasswordValue(val: any) {
     setPassword(val);
     // if()
-    if(val==="")
-      setPasswordError(true)
-      else{
-        setPasswordError(false);
-      }
+    if (val === '') setPasswordError(true);
+    else {
+      setPasswordError(false);
+    }
     if (confirmPassword != '') {
       if (val !== confirmPassword) {
         isError(true);
@@ -91,7 +145,6 @@ const Register = (props: RegisterProps): JSX.Element => {
     } else if (confirmPassword == '') {
       isError(false);
     }
-    
   }
   function setConfirmPasswordValue(val: any) {
     setConfirmPassword(val);
@@ -106,7 +159,6 @@ const Register = (props: RegisterProps): JSX.Element => {
   }
 
   const onSubmitHandler = async (e: any) => {
-
     e.preventDefault();
     let userData = {
       firstName: firstName,
@@ -116,50 +168,62 @@ const Register = (props: RegisterProps): JSX.Element => {
       phoneNumber: phoneNumber,
     };
 
-    if(firstName ==="" ){
+    if (firstName === '') {
       setFirstNameError(true);
     }
 
-    if(lastName === ""){
+    if (lastName === '') {
       setLastNameError(true);
     }
-    if(email === ""){
+    if (email === '') {
       setEmailError(true);
     }
-    if(phoneNumber == ""){
+    if (phoneNumber == '') {
       setPhoneError(true);
     }
-    if(password === ""){
+    if (password === '') {
       setPasswordError(true);
     }
-    if(firstName !=="" && lastName !=="" && email !=="" && phoneNumber !=="" && password !=="" && password===confirmPassword){
-    let resp = await registerUserCall(userData);
-    if (resp?.data?.success == true) {
-      setIsRegistered(true);
-      // setTimeout(() => {
+    if (
+      firstName !== '' &&
+      lastName !== '' &&
+      email !== '' &&
+      phoneNumber !== '' &&
+      password !== '' &&
+      password === confirmPassword
+    ) {
+      let resp = await registerUserCall(userData);
+      if (resp?.data?.success == true) {
+        setIsRegistered(true);
+        // setTimeout(() => {
         router.push('/login');
-      // }, 2000);
+        // }, 2000);
+      }
+
+      console.log('Register Response', resp);
     }
-  
-    console.log('Register Response', resp);
-  }
+
+    
   };
 
+  const heading = targetItems.title.jsonValue.value.split("<br>")
+    // console.log("ggggggggggggggggg",heading)
   return (
     <>
       <div className={RegisterCss.container}>
         <div className={RegisterCss.leftContainer}>
           <div className={RegisterCss.welcomeText}>
             <div className={RegisterCss.welcomeTextImage}>
-              <NextImage field={starImage} editable={true} width={30} height={30} />
+              <NextImage field={targetItems.image.jsonValue.value} editable={true} width={30} height={30} />
+              {/* <NextImage field={starImage}  editable={true} /> */}
             </div>
             <h2 className={RegisterCss.welcomeTextHeading}>
-              Welcome,<div> Please Register Here</div>
-            </h2>
+              {heading[0]}<br/>
+              {heading[1]}
+              </h2>
             <div className={RegisterCss.welcomeTextDescription}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi illum ad, facere placeat
-              quos recusandae reprehenderit nihil minima possimus, quod adipisci, porro quibusdam
-              obcaecati.
+              {targetItems.description.jsonValue.value}
+
             </div>
           </div>
           {/* <div className={RegisterCss.img}>
@@ -171,121 +235,142 @@ const Register = (props: RegisterProps): JSX.Element => {
             <form className={RegisterCss.login} onSubmit={(e) => onSubmitHandler(e)}>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
-                <label className={RegisterCss.label}>First Name</label>
+                <label className={RegisterCss.label}>
+                  {targetItems.firstNameLabel.jsonValue.value}
+                </label>
                 <input
                   type="text"
                   onChange={(e) => setFirstNameValue(e.target.value)}
                   value={firstName}
                   className={RegisterCss.loginInput}
                   // required
-                  // placeholder="First Name"
+                  // placeholder={targetItems.firstNamePlaceholder.jsonValue.value}
                 />
                 {!firstNameError ? (
-                ''
-              ) : (
-                <span className={RegisterCss.passwordMismatchWarning}>
-                  * This field is mandatory
-                </span>
-              )}
+                  ''
+                ) : (
+                  <span className={RegisterCss.passwordMismatchWarning}>
+                    * This field is mandatory
+                  </span>
+                )}
               </div>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
-                <label className={RegisterCss.label}>Last Name</label>
+                <label className={RegisterCss.label}>
+                  {targetItems.lastNameLabel.jsonValue.value}
+                </label>
                 <input
                   type="text"
                   onChange={(e) => setLastNameValue(e.target.value)}
                   value={lastName}
                   className={RegisterCss.loginInput}
-                  // placeholder="Last Name"
+                  // placeholder={targetItems.lastNamePlaceholder.jsonValue.value}
                 />
                 {!lastNameError ? (
-                ''
-              ) : (
-                <span className={RegisterCss.passwordMismatchWarning}>
-                  * This field is mandatory
-                </span>
-              )}
+                  ''
+                ) : (
+                  <span className={RegisterCss.passwordMismatchWarning}>
+                    * This field is mandatory
+                  </span>
+                )}
               </div>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
-                <label className={RegisterCss.label}>Email</label>
+                <label className={RegisterCss.label}>
+                  {targetItems.emailLabel.jsonValue.value}
+                </label>
                 <input
                   type="email"
                   onChange={(e) => setEmailValue(e.target.value)}
                   value={email}
                   className={RegisterCss.loginInput}
                   title="Use xyz@abc.com formate"
-                  // placeholder="Email"
+                  // placeholder={targetItems.emailPlaceholder.jsonValue.value}
                 />
                 {!emailError ? (
-                ''
-              ) : (
-                <span className={RegisterCss.passwordMismatchWarning}>
-                  * This field is mandatory
-                </span>
-              )}
+                  ''
+                ) : (
+                  <span className={RegisterCss.passwordMismatchWarning}>
+                    * This field is mandatory
+                  </span>
+                )}
               </div>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
-                <label className={RegisterCss.label}>Phone No.</label>
+                <label className={RegisterCss.label}>
+                  {targetItems.phoneNoLabel.jsonValue.value}
+                </label>
                 <input
                   type="text"
                   onChange={(e) => setPhoneNumberValue(e.target.value)}
                   value={phoneNumber}
                   className={RegisterCss.loginInput}
-                  // placeholder="Phone No."
+                  // placeholder={targetItems.phoneNoPlaceholder.jsonValue.value}
                 />
                 {!phoneError ? (
-                ''
-              ) : (
-                <span className={RegisterCss.passwordMismatchWarning}>
-                  * This field is mandatory
-                </span>
-              )}
+                  ''
+                ) : (
+                  <span className={RegisterCss.passwordMismatchWarning}>
+                    * This field is mandatory
+                  </span>
+                )}
               </div>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
-                <label className={RegisterCss.label}>Password</label>
+                <label className={RegisterCss.label}>
+                  {targetItems.passwordLabel.jsonValue.value}
+                </label>
                 <input
                   type="password"
                   onChange={(e) => setPasswordValue(e.target.value)}
                   value={password}
                   className={RegisterCss.loginInput}
-                  // placeholder="Password"
+                  // placeholder={targetItems.passwordPlaceholder.jsonValue.value}
                   // required
                 />
                 {!passwordError ? (
-                ''
-              ) : (
-                <span className={RegisterCss.passwordMismatchWarning}>
-                  * This field is mandatory
-                </span>
-              )}
+                  ''
+                ) : (
+                  <span className={RegisterCss.passwordMismatchWarning}>
+                    * This field is mandatory
+                  </span>
+                )}
               </div>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-lock"></i>
-                <label className={RegisterCss.label}>Confirm Password</label>
+                <label className={RegisterCss.label}>
+                  {targetItems.confirmPasswordLabel.jsonValue.value}
+                </label>
                 <input
                   type="password"
                   onChange={(e) => setConfirmPasswordValue(e.target.value)}
                   value={confirmPassword}
                   className={RegisterCss.loginInput}
-                  // placeholder="Confirm Password"
+                  // placeholder={targetItems.confirmPasswordLabel.jsonValue.value}
                   // required
                 />
                 {!error ? (
-                ''
-              ) : (
-                <span className={RegisterCss.passwordMismatchWarning}>
-                  * Please match Password and Confirm Password
-                </span>
-              )}
+                  ''
+                ) : (
+                  <span className={RegisterCss.passwordMismatchWarning}>
+                    * Please match Password and Confirm Password
+                  </span>
+                )}
               </div>
-              <button className={RegisterCss.formButton} disabled={error || firstNameError || lastNameError || phoneError || emailError || passwordError}>
-                Register
+              <button
+                className={RegisterCss.formButton}
+                disabled={
+                  error ||
+                  firstNameError ||
+                  lastNameError ||
+                  phoneError ||
+                  emailError ||
+                  passwordError
+                }
+              >
+                {targetItems.registerBtn.jsonValue.value}
                 <i className="button__icon fas fa-chevron-right"></i>
               </button>
-              
             </form>
             {isRegistered ? (
               <span style={{ fontWeight: 1000, color: 'white', fontSize: '18px', padding: '10px' }}>
@@ -295,15 +380,11 @@ const Register = (props: RegisterProps): JSX.Element => {
               ''
             )}
             <div className={RegisterCss.formContainerBottom}>
-            <div className={RegisterCss.text}>Have Account ?</div>
+              <div className={RegisterCss.text}>{targetItems.haveAccountLabel.jsonValue.value}</div>
               <div className={RegisterCss.btn}>
-                <Link href={'/login'}>Goto Login</Link>
-              
+                <Link href={'/login'}>{targetItems.loginBtn.jsonValue.value}</Link>
               </div>
             </div>
-
-
-            
           </div>
         </div>
       </div>

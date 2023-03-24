@@ -28,8 +28,11 @@ Languages:
             <r
               uid="{B319DF52-86E7-44D1-A616-54B668F9B807}"
               p:after="*[1=2]"
+              s:ds="{9489EED3-A3B6-45E6-B99A-353B77FD6A84}"
               s:id="{1C0516FA-02EB-4C67-9A47-B42FD2E2B7E7}"
-              s:ph="jss-main" />
+              s:par=""
+              s:ph="jss-main"
+              s:ccb="Clear on publish" />
           </d>
         </r>
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
@@ -40,7 +43,7 @@ Languages:
       Value: Register
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
-      Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
+      Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
@@ -51,11 +54,11 @@ Languages:
         sitecore\admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "af191539-971f-4e66-b2c1-01788e13573f"
+      Value: "88c6d22b-3e75-47b5-a005-81efd8e64d98"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230309T073100Z
+      Value: 20230324T025625Z

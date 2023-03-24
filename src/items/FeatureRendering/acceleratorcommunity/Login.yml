@@ -10,6 +10,28 @@ SharedFields:
 - ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
   Hint: __Icon
   Value: People/32x32/user1_preferences.png
+- ID: "17bb046a-a32a-41b3-8315-81217947611b"
+  Hint: ComponentQuery
+  Value: |
+    # Editing here does not save the query on the item; copy it back when done!
+    # Editing here does not save the query on the item; copy it back when done!
+    query Login($datasource: String!, $language: String!) {
+      datasource: item(path: $datasource, language: $language) {
+        ... on Login {
+          title{jsonValue}
+          description{jsonValue}
+          image{jsonValue}
+          userNameLabel{jsonValue}
+          passwordLabel{jsonValue}
+          forgotPasswordLabel{jsonValue}
+          signInBtn{jsonValue}
+          dontHaveAccountLabel{jsonValue}
+          registerHereLabel{jsonValue}
+        }
+      }
+    }
+    
+    
 Languages:
 - Language: en
   Versions:
@@ -20,11 +42,11 @@ Languages:
       Value: 20230303T113926Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "b962c314-5595-438e-a1cb-7688dfe14538"
+      Value: "3e5c685d-702a-4515-933e-4dca6055f411"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230303T114625Z
+      Value: 20230324T024450Z
