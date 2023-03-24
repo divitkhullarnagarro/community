@@ -1,0 +1,27 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    gap: 0.50rem;
+    padding: 0.25rem;
+    margin: 0.375rem;
+    width: 100%;
+    justify-content: start;
+}
+
+.image{
+    padding: 0.3125rem 0.625rem;
+}
+.searchBox{
+    display: flex;
+    gap: 0.1875rem;
+    padding: 0.3125rem 0.625rem;
+    border: 2px solid rgb(200, 196, 196);
+    width: 100%;
+    border-radius: 4px;
+}
+
+
+.searchBoxText{
+    border: none;
+    
+}

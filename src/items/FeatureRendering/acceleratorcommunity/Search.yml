@@ -7,6 +7,9 @@ SharedFields:
 - ID: "037fe404-dd19-4bf7-8e30-4dadf68b27b0"
   Hint: componentName
   Value: Search
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: applications/32x32/view.png
 - ID: "17bb046a-a32a-41b3-8315-81217947611b"
   Hint: ComponentQuery
   Value: |
@@ -17,6 +20,7 @@ SharedFields:
           title {
             jsonValue
           }
+          image{jsonValue}
         }
       }
     }
@@ -39,11 +43,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "dda67408-eaf3-483d-8b15-656196584ee7"
+      Value: "0d18e4f7-cade-49a5-b349-072f37e0fd66"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230321T112749Z
+      Value: 20230323T124044Z

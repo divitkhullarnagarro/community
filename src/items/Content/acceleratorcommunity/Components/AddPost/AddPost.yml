@@ -11,9 +11,24 @@ Languages:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230309T090702Z
+    - ID: "3bf3af57-96d3-4137-b949-5fe4f3adaa70"
+      Hint: DescriptionLabel
+      Value: Description
     - ID: "3f65ab62-a77e-4abd-ac59-c55ebec86fa9"
       Hint: PlaceholderText
-      Value: Share your medical query, case or success story
+      Value: What's on your mind
+    - ID: "4a5f5869-5232-4da6-b2fb-94eadfe3b1d7"
+      Hint: EventNameLabel
+      Value: Event Name *
+    - ID: "4b92892f-c934-4d31-aa28-c33de7af7c85"
+      Hint: pollDurationLabel
+      Value: Poll Duration
+    - ID: "4d83abba-8b81-47e4-9e2c-a6824ca1341d"
+      Hint: pollDuration
+      Value: |
+        {B99DD4A4-53AA-4FDF-A873-2863ED3DFAB5}
+        {52F07032-4A44-4A74-A436-D82B54B5CA40}
+        {7BD03C74-88D5-45AC-A3EC-B59DBD03D86B}
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
@@ -22,20 +37,48 @@ Languages:
       Hint: __Created by
       Value: |
         sitecore\admin
+    - ID: "5e13cff3-25bc-4239-a44c-9e3b9bec640c"
+      Hint: SpeakersLabel
+      Value: Speakers
     - ID: "64000582-c80a-4c92-a5f2-af08c40f1512"
       Hint: PostType
       Value: |
         {C459391D-70C1-4DC8-A4E5-AA8A791851EA}
+        {CAD5B2AB-79B1-49AA-9D5F-FE831066553F}
+        {223680A4-51C4-4404-A6F1-21E4664F4618}
         {18D4EE5F-F88B-49D0-B3B0-00DFEDF2CA37}
         {8D64D8F9-E034-49B7-B737-C4369DCAC8AE}
-        {223680A4-51C4-4404-A6F1-21E4664F4618}
+    - ID: "657fd635-1890-4c68-a606-8478ee25d6bb"
+      Hint: addPollText
+      Value: Add Poll
+    - ID: "6daab097-d3a2-4ed1-b86c-b7ddc14cc967"
+      Hint: CreateEventText
+      Value: Create Event
+    - ID: "858bf61d-fb8c-43b6-95a0-a6943abc9e04"
+      Hint: questionPlaceholder
+      Value: Enter your poll question
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "b389d302-c0bd-4f41-8179-ae4496309611"
+      Value: "9ec9d3b9-c33c-4418-b41f-639bf6a3e185"
+    - ID: "a2d64968-6a39-425c-920a-413e191d7097"
+      Hint: EventTitlePlaceholder
+      Value: Enter Event Title
+    - ID: "b5ea5211-8de6-4735-8a3a-c47436bd7d6b"
+      Hint: EventLinkLabel
+      Value: Event Link
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\Admin
+    - ID: "d6d64e53-4068-405c-ad5d-dd1c76b66978"
+      Hint: EndDate
+      Value: 20230323T062900Z
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230309T112728Z
+      Value: 20230323T063042Z
+    - ID: "dee2c514-243a-4bde-b8db-117c1cf58297"
+      Hint: addQuestionLabel
+      Value: Add question
+    - ID: "f6153680-cd9c-44cb-953d-c9d0f6ac0470"
+      Hint: StartDate
+      Value: 20230323T062900Z

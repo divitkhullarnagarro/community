@@ -7,6 +7,9 @@ SharedFields:
 - ID: "037fe404-dd19-4bf7-8e30-4dadf68b27b0"
   Hint: componentName
   Value: Notification
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: apps/32x32/news.png
 - ID: "17bb046a-a32a-41b3-8315-81217947611b"
   Hint: ComponentQuery
   Value: |
@@ -40,11 +43,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "77684ffe-5b09-456f-9505-7f5fe3549846"
+      Value: "31ac5d13-2506-4714-a94d-c6d91b496198"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230321T114644Z
+      Value: 20230323T074703Z
