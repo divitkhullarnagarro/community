@@ -1,0 +1,7 @@
+.rightNavigation{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    width: 66% !important;
+
+}

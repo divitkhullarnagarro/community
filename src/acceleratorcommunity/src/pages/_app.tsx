@@ -7,6 +7,8 @@ import WebProvider from '../Context/WebProvider';
 import '../assets/dashboard.css';
 import '../assets/profile.css';
 import '../assets/addPost.css';
+import '../assets/globalNavigation.css';
+
 
 // Using bootstrap and nprogress are completely optional.
 //  bootstrap is used here to provide a clean layout for samples, without needing extra CSS in the sample app

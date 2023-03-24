@@ -8,6 +8,9 @@ import { useState, useContext, useEffect } from 'react';
 import WebContext from '../Context/WebContext';
 import peopleYouMayKnowCall from 'src/API/peopleYouMayKnowCall';
 import Image from 'next/image';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 type PeopleYouMayKnowProps = ComponentProps & {
   fields: {
@@ -25,7 +28,7 @@ type peopleYouMayKnowFields = {
 };
 
 const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
-  const { Title, LinkLabel } = props?.params;
+  const { Title, LinkLabel, IsFullList } = props?.params;
   const [peopleYouMayKnowList, setPeopleYouMayKnowList] = useState<peopleYouMayKnowFields[]>([]);
   const { userToken } = { ...useContext(WebContext) };
 
@@ -34,39 +37,88 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
     setPeopleYouMayKnowList(response?.data?.data);
   };
 
+  const [isFullPage] = useState(IsFullList === '1');
+
+  const sliderSettings = {
+    rows: isFullPage ? 2 : 1,
+    infinite: false,
+    slidesToShow: isFullPage ? 5 : 3,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
+  const PeopleYouMayKnowItem = (item: peopleYouMayKnowFields) => {
+    return (
+      <div key={item?.objectId?.value} className={styles.item}>
+        <Image
+          contentEditable={true}
+          className={styles.img}
+          src={Profile ?? item?.imageData?.value}
+          height={isFullPage ? 400 : 350}
+          width={isFullPage ? 350 : 200}
+        ></Image>
+        <div className={styles.detailsContainer}>
+          <div className={styles.firstRow}>
+            <div className={styles.name}>{item?.firstName + ' ' + item?.lastName}</div>
+            <div className={styles.button}>
+              <FollowUnfollowButton userName={item?.objectId} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   useEffect(() => {
     getPeopleYouMayKnowList(userToken);
   }, []);
 
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={styles.wrapper}
+      style={{
+        maxHeight: isFullPage ? '100%' : '590px',
+        height: isFullPage ? '100%' : 'max-content',
+      }}
+    >
       <div className={styles.header}>
         <div className={styles.heading}>{Title}</div>
-        <Link href="">{LinkLabel}</Link>
+        {isFullPage ? <></> : <Link href={'/peopleyoumayknow'}>{LinkLabel}</Link>}
       </div>
-      {peopleYouMayKnowList.slice(0, 9).map((l) => {
-        return (
-          <div key={l?.objectId?.value} className={styles.item}>
-            <Image
-              contentEditable={true}
-              className={styles.img}
-              src={Profile ?? l?.imageData?.value}
-              height={50}
-              width={50}
-            ></Image>
-            <div className={styles.detailsContainer}>
-              <div className={styles.name}>{l?.firstName + ' ' + l?.lastName}</div>
-              <div className={styles.details}>
-                <div className={styles.speciality}>{l?.speciality}.</div>
-                <div>{l?.city}</div>
-              </div>
-            </div>
-            <div className={styles.button}>
-              <FollowUnfollowButton userName={l?.objectId} />
-            </div>
-          </div>
-        );
-      })}
+      <div className={styles.listWrapper}>
+        {isFullPage ? (
+          <Slider className="slider" {...sliderSettings}>
+            {peopleYouMayKnowList.map((item) => {
+              return <PeopleYouMayKnowItem {...item} />;
+            })}
+            {peopleYouMayKnowList.map((item) => {
+              return <PeopleYouMayKnowItem {...item} />;
+            })}
+            {peopleYouMayKnowList.map((item) => {
+              return <PeopleYouMayKnowItem {...item} />;
+            })}
+          </Slider>
+        ) : (
+          <Slider className="slider" {...sliderSettings}>
+            {peopleYouMayKnowList.slice(0, 9).map((item) => {
+              return <PeopleYouMayKnowItem {...item} />;
+            })}
+          </Slider>
+        )}
+      </div>
     </div>
   );
 };

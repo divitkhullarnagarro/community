@@ -1,28 +1,41 @@
-import { Text, Field, withDatasourceCheck } from '@sitecore-jss/sitecore-jss-nextjs';
+
+import {   ImageField } from '@sitecore-jss/sitecore-jss-nextjs';
+
+ 
 import { ComponentProps } from 'lib/component-props';
-import notification from '../assets/images/Notification.jpg';
+// import notification from '../assets/images/notificationIcon.png';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+import notificationCss from '../assets/notification.module.css';
 
 type NotificationProps = ComponentProps & {
   fields: {
-    heading: Field<string>;
+    data: {
+      datasource: DataSource;
+    };
+  };
+};
+
+type DataSource = {
+  image: {
+    jsonValue: ImageField;
   };
 };
 
 const Notification = (props: NotificationProps): JSX.Element => {
+  const { datasource } = props?.fields?.data;
   console.log('Notification', props);
+
   return(
-    <div className="">
-      Notification
+    <div className={notificationCss.container}>
         <NextImage
-          className=""
-          field={notification}
+          field={datasource?.image?.jsonValue?.value}
+          // field={notification}
           editable={true}
-          height={20}
-          width={20}
+          width={30}
+          height={30}
         />
       </div>
   );
-  };
+};
 
-export default withDatasourceCheck()<NotificationProps>(Notification);
+export default Notification;
