@@ -8,7 +8,6 @@ import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';
 import loginCss from '../assets/login.module.css';
 import star from '../assets/images/star.png';
-import imageNotFound from '../assets/images/imageNot.png';
 
 type LoginProps = ComponentProps & {
   fields: {
@@ -24,22 +23,42 @@ const Login = (props: LoginProps): JSX.Element => {
 
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
+  let [emailError, setEmailError] = useState(false);
+  let [passwodError, setPasswordError] = useState(false);
 
   function setEmailValue(val: any) {
+    if (val === '') {
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+    }
     setEmail(val);
   }
 
   function setPasswordValue(val: any) {
+    if (val === '') {
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
     setPassword(val);
   }
 
   const onSubmitHandler = async (e: any) => {
     e.preventDefault();
-    let response = await loginUserCall(email, password);
-    if (response?.status == 200 && setIsLoggedIn != undefined && setUserToken != undefined) {
-      setIsLoggedIn(true);
-      setUserToken(response?.data?.access_token);
-      router.push('/');
+    if (password === '') {
+      setPasswordError(true);
+    }
+    if (email === '') {
+      setEmailError(true);
+    }
+    if (email !== '' && password !== '') {
+      let response = await loginUserCall(email, password);
+      if (response?.status == 200 && setIsLoggedIn != undefined && setUserToken != undefined) {
+        setIsLoggedIn(true);
+        setUserToken(response?.data?.access_token);
+        router.push('/');
+      }
     }
   };
 
@@ -54,7 +73,7 @@ const Login = (props: LoginProps): JSX.Element => {
               <NextImage field={star} editable={true} width={30} height={30} />
             </div>
             <h2>
-              Welcome,<div> Please Login</div>
+              Welcome,<div> Please Sign In</div>
             </h2>
             <div className={loginCss.welcomeTextDescription}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi illum ad, facere placeat
@@ -62,9 +81,6 @@ const Login = (props: LoginProps): JSX.Element => {
               obcaecati.
             </div>
           </div>{' '}
-          <div className={loginCss.img}>
-            <NextImage field={imageNotFound} editable={true} />
-          </div>
         </div>
 
         <div className={loginCss.rightContainer}>
@@ -78,8 +94,12 @@ const Login = (props: LoginProps): JSX.Element => {
                   value={email}
                   type="text"
                   className={loginCss.loginInput}
-                  placeholder="User name / Email"
                 />
+                {emailError ? (
+                  <span className={loginCss.error}>* User name / Email field is empty</span>
+                ) : (
+                  ''
+                )}
               </div>
               <div className={loginCss.loginField}>
                 <i className="login__icon fas fa-lock"></i>
@@ -89,13 +109,17 @@ const Login = (props: LoginProps): JSX.Element => {
                   value={password}
                   type="password"
                   className={loginCss.loginInput}
-                  placeholder="Password"
                 />
+                {passwodError ? (
+                  <span className={loginCss.error}>* Password Field is empty</span>
+                ) : (
+                  ''
+                )}
                 <div className={loginCss.forgotPassword}>
                   <Link href={'/forgotPassword'}>Forgot Your Password?</Link>
                 </div>
               </div>
-              <button className={loginCss.formButton}>
+              <button className={loginCss.formButton} disabled={emailError || passwodError}>
                 Sign In
                 <i className="button__icon fas fa-chevron-right"></i>
               </button>
@@ -109,11 +133,20 @@ const Login = (props: LoginProps): JSX.Element => {
                 ''
               )}
             </form>
+            <div className={loginCss.loginOptionContainer}>
+              or sign in with other accounts?
+              <div className={loginCss.otherLoginContainer}>
+                <div className={loginCss.otherLogin}>Google</div>
+                <div className={loginCss.otherLogin}>FB</div>
+                <div className={loginCss.otherLogin}>Twitter</div>
+                <div className={loginCss.otherLogin}>Insta</div>
+              </div>
+            </div>
             <div className={loginCss.formContainerBottom}>
-              <h6 className={loginCss.text}>Don't have Account ?</h6>
-              <button className={loginCss.btn}>
+              <div className={loginCss.text}>Don't have Account?</div>
+              <div className={loginCss.btn}>
                 <Link href={'/register'}>Register Here</Link>
-              </button>
+              </div>
             </div>
             {/* <div className="social-icons">
                 <a href="#" className="social-login__icon fab fa-instagram"></a>

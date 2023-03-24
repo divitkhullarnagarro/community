@@ -27,24 +27,61 @@ const Register = (props: RegisterProps): JSX.Element => {
   let [isRegistered, setIsRegistered] = useState(false);
   const router = useRouter();
 
+
+  let [firstNameError, setFirstNameError] = useState(false);
+  let [lastNameError, setLastNameError] = useState(false);
+  let [emailError, setEmailError] = useState(false);
+  let [phoneError, setPhoneError] = useState(false);
+  let [passwordError, setPasswordError] = useState(false);
+  // let [confirmPasswordError, setConfirmPasswordError] = useState(false);
+
   function setFirstNameValue(val: any) {
     setFirstName(val);
+    if(val===""){
+      setFirstNameError(true);
+    }
+    else{
+      setFirstNameError(false);
+    }
   }
 
   function setPhoneNumberValue(val: any) {
     setPhoneNumber(val);
+    if(val===""){
+      setPhoneError(true);
+    }
+    else{
+      setPhoneError(false);
+    }
   }
 
   function setLastNameValue(val: any) {
     setLastName(val);
+    if(val===""){
+      setLastNameError(true);
+    }
+    else{
+      setLastNameError(false);
+    }
   }
 
   function setEmailValue(val: any) {
     setEmail(val);
+    if(val==="")
+      setEmailError(true)
+      else{
+        setEmailError(false);
+      }
   }
 
   function setPasswordValue(val: any) {
     setPassword(val);
+    // if()
+    if(val==="")
+      setPasswordError(true)
+      else{
+        setPasswordError(false);
+      }
     if (confirmPassword != '') {
       if (val !== confirmPassword) {
         isError(true);
@@ -54,6 +91,7 @@ const Register = (props: RegisterProps): JSX.Element => {
     } else if (confirmPassword == '') {
       isError(false);
     }
+    
   }
   function setConfirmPasswordValue(val: any) {
     setConfirmPassword(val);
@@ -68,6 +106,7 @@ const Register = (props: RegisterProps): JSX.Element => {
   }
 
   const onSubmitHandler = async (e: any) => {
+
     e.preventDefault();
     let userData = {
       firstName: firstName,
@@ -76,14 +115,34 @@ const Register = (props: RegisterProps): JSX.Element => {
       password: password,
       phoneNumber: phoneNumber,
     };
+
+    if(firstName ==="" ){
+      setFirstNameError(true);
+    }
+
+    if(lastName === ""){
+      setLastNameError(true);
+    }
+    if(email === ""){
+      setEmailError(true);
+    }
+    if(phoneNumber == ""){
+      setPhoneError(true);
+    }
+    if(password === ""){
+      setPasswordError(true);
+    }
+    if(firstName !=="" && lastName !=="" && email !=="" && phoneNumber !=="" && password !=="" && password===confirmPassword){
     let resp = await registerUserCall(userData);
     if (resp?.data?.success == true) {
       setIsRegistered(true);
-      setTimeout(() => {
+      // setTimeout(() => {
         router.push('/login');
-      }, 2000);
+      // }, 2000);
     }
+  
     console.log('Register Response', resp);
+  }
   };
 
   return (
@@ -95,7 +154,7 @@ const Register = (props: RegisterProps): JSX.Element => {
               <NextImage field={starImage} editable={true} width={30} height={30} />
             </div>
             <h2 className={RegisterCss.welcomeTextHeading}>
-              Welcome,<div> Please Sign Up</div>
+              Welcome,<div> Please Register Here</div>
             </h2>
             <div className={RegisterCss.welcomeTextDescription}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi illum ad, facere placeat
@@ -103,9 +162,9 @@ const Register = (props: RegisterProps): JSX.Element => {
               obcaecati.
             </div>
           </div>
-          <div className={RegisterCss.img}>
+          {/* <div className={RegisterCss.img}>
             <NextImage field={imageNotFound} editable={true} />
-          </div>
+          </div> */}
         </div>
         <div className={RegisterCss.rightContainer}>
           <div className={RegisterCss.formContainer}>
@@ -118,8 +177,16 @@ const Register = (props: RegisterProps): JSX.Element => {
                   onChange={(e) => setFirstNameValue(e.target.value)}
                   value={firstName}
                   className={RegisterCss.loginInput}
-                  placeholder="First Name"
+                  // required
+                  // placeholder="First Name"
                 />
+                {!firstNameError ? (
+                ''
+              ) : (
+                <span className={RegisterCss.passwordMismatchWarning}>
+                  * This field is mandatory
+                </span>
+              )}
               </div>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
@@ -129,19 +196,34 @@ const Register = (props: RegisterProps): JSX.Element => {
                   onChange={(e) => setLastNameValue(e.target.value)}
                   value={lastName}
                   className={RegisterCss.loginInput}
-                  placeholder="Last Name"
+                  // placeholder="Last Name"
                 />
+                {!lastNameError ? (
+                ''
+              ) : (
+                <span className={RegisterCss.passwordMismatchWarning}>
+                  * This field is mandatory
+                </span>
+              )}
               </div>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
                 <label className={RegisterCss.label}>Email</label>
                 <input
-                  type="text"
+                  type="email"
                   onChange={(e) => setEmailValue(e.target.value)}
                   value={email}
                   className={RegisterCss.loginInput}
-                  placeholder="Email"
+                  title="Use xyz@abc.com formate"
+                  // placeholder="Email"
                 />
+                {!emailError ? (
+                ''
+              ) : (
+                <span className={RegisterCss.passwordMismatchWarning}>
+                  * This field is mandatory
+                </span>
+              )}
               </div>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
@@ -151,8 +233,15 @@ const Register = (props: RegisterProps): JSX.Element => {
                   onChange={(e) => setPhoneNumberValue(e.target.value)}
                   value={phoneNumber}
                   className={RegisterCss.loginInput}
-                  placeholder="Phone No."
+                  // placeholder="Phone No."
                 />
+                {!phoneError ? (
+                ''
+              ) : (
+                <span className={RegisterCss.passwordMismatchWarning}>
+                  * This field is mandatory
+                </span>
+              )}
               </div>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
@@ -162,9 +251,16 @@ const Register = (props: RegisterProps): JSX.Element => {
                   onChange={(e) => setPasswordValue(e.target.value)}
                   value={password}
                   className={RegisterCss.loginInput}
-                  placeholder="Password"
-                  required
+                  // placeholder="Password"
+                  // required
                 />
+                {!passwordError ? (
+                ''
+              ) : (
+                <span className={RegisterCss.passwordMismatchWarning}>
+                  * This field is mandatory
+                </span>
+              )}
               </div>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-lock"></i>
@@ -174,21 +270,22 @@ const Register = (props: RegisterProps): JSX.Element => {
                   onChange={(e) => setConfirmPasswordValue(e.target.value)}
                   value={confirmPassword}
                   className={RegisterCss.loginInput}
-                  placeholder="Confirm Password"
-                  required
+                  // placeholder="Confirm Password"
+                  // required
                 />
-              </div>
-              <button className={RegisterCss.formButton}>
-                Register
-                <i className="button__icon fas fa-chevron-right"></i>
-              </button>
-              {!error ? (
+                {!error ? (
                 ''
               ) : (
                 <span className={RegisterCss.passwordMismatchWarning}>
                   * Please match Password and Confirm Password
                 </span>
               )}
+              </div>
+              <button className={RegisterCss.formButton} disabled={error || firstNameError || lastNameError || phoneError || emailError || passwordError}>
+                Register
+                <i className="button__icon fas fa-chevron-right"></i>
+              </button>
+              
             </form>
             {isRegistered ? (
               <span style={{ fontWeight: 1000, color: 'white', fontSize: '18px', padding: '10px' }}>
@@ -198,11 +295,15 @@ const Register = (props: RegisterProps): JSX.Element => {
               ''
             )}
             <div className={RegisterCss.formContainerBottom}>
-              <h6>Have Account ?</h6>
-              <button className={RegisterCss.btn}>
+            <div className={RegisterCss.text}>Have Account ?</div>
+              <div className={RegisterCss.btn}>
                 <Link href={'/login'}>Goto Login</Link>
-              </button>
+              
+              </div>
             </div>
+
+
+            
           </div>
         </div>
       </div>
