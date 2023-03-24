@@ -8,6 +8,9 @@ import { useState, useContext, useEffect } from 'react';
 import WebContext from '../Context/WebContext';
 import peopleYouMayKnowCall from 'src/API/peopleYouMayKnowCall';
 import Image from 'next/image';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 type PeopleYouMayKnowProps = ComponentProps & {
   fields: {
@@ -34,6 +37,26 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
     setPeopleYouMayKnowList(response?.data?.data);
   };
 
+  const sliderSettings = {
+    infinite: false,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
   useEffect(() => {
     getPeopleYouMayKnowList(userToken);
   }, []);
@@ -44,29 +67,31 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
         <div className={styles.heading}>{Title}</div>
         <Link href="">{LinkLabel}</Link>
       </div>
-      {peopleYouMayKnowList.slice(0, 9).map((l) => {
-        return (
-          <div key={l?.objectId?.value} className={styles.item}>
-            <Image
-              contentEditable={true}
-              className={styles.img}
-              src={Profile ?? l?.imageData?.value}
-              height={50}
-              width={50}
-            ></Image>
-            <div className={styles.detailsContainer}>
-              <div className={styles.name}>{l?.firstName + ' ' + l?.lastName}</div>
-              <div className={styles.details}>
-                <div className={styles.speciality}>{l?.speciality}.</div>
-                <div>{l?.city}</div>
+      <div className={styles.listWrapper}>
+        <Slider className="slider" {...sliderSettings}>
+          {peopleYouMayKnowList.slice(0, 9).map((l) => {
+            return (
+              <div key={l?.objectId?.value} className={styles.item}>
+                <Image
+                  contentEditable={true}
+                  className={styles.img}
+                  src={Profile ?? l?.imageData?.value}
+                  height={460}
+                  width={350}
+                ></Image>
+                <div className={styles.detailsContainer}>
+                  <div className={styles.firstRow}>
+                    <div className={styles.name}>{l?.firstName + ' ' + l?.lastName}</div>
+                    <div className={styles.button}>
+                      <FollowUnfollowButton userName={l?.objectId} />
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className={styles.button}>
-              <FollowUnfollowButton userName={l?.objectId} />
-            </div>
-          </div>
-        );
-      })}
+            );
+          })}
+        </Slider>
+      </div>
     </div>
   );
 };
