@@ -49,10 +49,10 @@ Languages:
       Value: Confirm Password
     - ID: "82b818f2-9ff4-4e76-ba2d-5741d7b6eebc"
       Hint: Description
-      Value: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      Value: "Welcome to Community Solution! We're glad you're here. To get started, please fill out the form with your information. Once you've submitted the form, you'll redirected to login page. Thank you for choosing Community Solution!"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "33fadddc-8936-4c04-8b1e-d92500719c76"
+      Value: "b900c9a3-5176-4221-b7fb-959dcde8fc9b"
     - ID: "ac4df348-3054-4d3c-8c8f-390472fd4a5b"
       Hint: EmailPlaceholder
       Value: Email
@@ -77,7 +77,7 @@ Languages:
       Value: "Have Account ?"
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230324T025151Z
+      Value: 20230324T065042Z
     - ID: "f50e7022-746b-4648-8fc5-f49c64efb04a"
       Hint: LastNameLabel
       Value: Last Name

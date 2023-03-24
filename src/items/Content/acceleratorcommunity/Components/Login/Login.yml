@@ -29,7 +29,7 @@ Languages:
         sitecore\Admin
     - ID: "579d3cc7-3a8c-4dc2-900b-425b0be15b60"
       Hint: Description
-      Value: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      Value: "Welcome to community solution! Please enter your username/ email and password to access your account. If you don't have an account yet, you can Register for free by clicking the 'Register Here' button."
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |
@@ -46,7 +46,7 @@ Languages:
       Value: "Don't have Account ?"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "326db8dc-5159-4972-80dd-fc0a3c08e4e6"
+      Value: "2696e8d0-8467-4167-83cc-a315f740fbb3"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
@@ -56,4 +56,4 @@ Languages:
       Value: Password
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230324T025216Z
+      Value: 20230324T065129Z
