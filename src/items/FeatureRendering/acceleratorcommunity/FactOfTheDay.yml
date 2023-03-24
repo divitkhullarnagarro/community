@@ -13,16 +13,25 @@ SharedFields:
 - ID: "17bb046a-a32a-41b3-8315-81217947611b"
   Hint: ComponentQuery
   Value: |
+    # Editing here does not save the query on the item; copy it back when done!
+    
     
     # Editing here does not save the query on the item; copy it back when done!
     query FactOfTheDay($datasource: String!, $language: String!) {
       datasource: item(path: $datasource, language: $language) {
-    ... on FactOfTheDay{
-      title{
-        jsonValue
-      }
-      description{
-        jsonValue
+    children{
+      results{
+        ...on FactOfTheDay{
+          title{
+            jsonValue
+          }
+          description{
+            jsonValue
+          }
+          automatic{
+            jsonValue
+          }
+        }
       }
     }
        
@@ -32,7 +41,7 @@ SharedFields:
     
 - ID: "1a7c85e5-dc0b-490d-9187-bb1dbcb4c72f"
   Hint: Datasource Template
-  Value: "{0D9A4816-DACF-4725-8D2B-2BCA674010BA}"
+  Value: 
 - ID: "a77e8568-1ab3-44f1-a664-b7c37ec7810d"
   Hint: Parameters Template
   Value: "{C2C542EB-D181-4F1C-A4B3-6F7279AFC66E}"
@@ -57,11 +66,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "dad460e5-9c99-4f6b-b7e8-e7aeb6a27cc9"
+      Value: "a753d7f4-517f-49a3-a6bb-b9c466a25fc7"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230323T112547Z
+      Value: 20230324T073333Z

@@ -34,9 +34,11 @@ Languages:
             <r
               uid="{1ADAAA1F-CDEB-47BE-BF4D-1C30FBE79615}"
               p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
-              s:ds="{D3B3136C-EC96-4B80-8AC6-F9217E1B5B19}"
+              s:ds="{88FD8092-F195-4207-9310-FF67A9AF0206}"
               s:id="{3F7262BC-5F91-4156-A610-0C8A596B655D}"
-              s:ph="/jss-main/col2-{CBE041A2-90AE-43AD-846F-003C4DC29955}-0" />
+              s:par="Automatic=1"
+              s:ph="/jss-main/col2-{CBE041A2-90AE-43AD-846F-003C4DC29955}-0"
+              s:ccb="Clear on publish" />
             <r
               uid="{87A3F594-E2BA-4896-9999-78F7DA80E485}"
               p:after="r[@uid='{1ADAAA1F-CDEB-47BE-BF4D-1C30FBE79615}']"
@@ -92,11 +94,11 @@ Languages:
       Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "81e7b7c1-f68c-48f2-a9a9-f7b93493edc3"
+      Value: "72c87839-ed51-4270-9f12-7c3e9c745c19"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230323T131309Z
+      Value: 20230324T073422Z

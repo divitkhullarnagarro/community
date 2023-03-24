@@ -1,8 +1,8 @@
 ﻿---
-ID: "d3b3136c-ec96-4b80-8ac6-f9217e1b5b19"
+ID: "fbbe2532-3435-4e50-9729-116d8e4a5986"
 Parent: "88fd8092-f195-4207-9310-ff67a9af0206"
 Template: "0d9a4816-dacf-4725-8d2b-2bca674010ba"
-Path: /sitecore/content/acceleratorcommunity/Components/FactOfTheDayItems/FactOfTheDay
+Path: /sitecore/content/acceleratorcommunity/Components/FactOfTheDayItems/ManualFactOfTheDay
 Languages:
 - Language: en
   Versions:
@@ -13,17 +13,14 @@ Languages:
       Value: 20230322T170518Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "71f7c713-5a93-4996-8a44-47dcdac3edb4"
+      Value: "755fb3b1-bcbe-42a4-9a49-be8a2761a96e"
     - ID: "97321436-cdf2-4fb6-8c02-333714f630fb"
       Hint: Description
-      Value: Led by Jigme Thinley, the Bhutan Peace and Prosperity Party won 45 of 47 seats in the country's first National Assembly election.
-    - ID: "b66e0a37-c9b9-49fd-9f05-1ff07d1ebc2f"
-      Hint: Automatic
-      Value: 1
+      Value: The Iranian military arrested 15 Royal Navy personnel, claiming that they had entered Iran's territorial waters.
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230324T072959Z
+      Value: 20230324T072533Z

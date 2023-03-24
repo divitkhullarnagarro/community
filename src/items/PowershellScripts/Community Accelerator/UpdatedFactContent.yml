@@ -9,15 +9,9 @@ SharedFields:
   Value: |
     $date = (Get-Date).ToString().split('-')[0]
     $month = (Get-Date).ToString().split('-')[1]
-    $currentItem = Get-Item -Path "master:/sitecore/content/acceleratorcommunity/home"
-    $itemRendering = Get-Rendering -Item $currentItem -FinalLayout -Datasource "{D3B3136C-EC96-4B80-8AC6-F9217E1B5B19}"
-    $itemRenderingParameters = [Sitecore.Web.WebUtil]::ParseQueryString($itemRendering.Parameters)
-    $parameterValue= $itemRenderingParameters["Automatic"]
-    if($parameterValue.Equals("1"))
-    {
-        Set-ItemProperty -Path master:/sitecore/content/acceleratorcommunity/Components/FactOfTheDayItems/FactOfTheDay -Name "Description" -Value (Invoke-RestMethod -Headers $headers -Uri "https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday/all/$month/$date").selected[0].text
-        Publish-Item -Path master:/sitecore/content/acceleratorcommunity/Components/FactOfTheDayItems/FactOfTheDay -PublishMode Smart
-    }
+    Set-ItemProperty -Path master:/sitecore/content/acceleratorcommunity/Components/FactOfTheDayItems/FactOfTheDay -Name "Description" -Value (Invoke-RestMethod -Headers $headers -Uri "https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday/all/$month/$date").selected[0].text
+    Publish-Item -Path master:/sitecore/content/acceleratorcommunity/Components/FactOfTheDayItems/FactOfTheDay -PublishMode Smart
+    
 Languages:
 - Language: en
   Versions:
@@ -36,11 +30,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "f4dfec12-8384-42a0-b481-bb2d3cd5e9f9"
+      Value: "dd45b11d-8249-4398-b2f1-5d4675105236"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230323T101637Z
+      Value: 20230324T061236Z
