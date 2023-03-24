@@ -19,6 +19,7 @@ import 'assets/app.css';
 import 'assets/logo.css';
 import 'assets/grid.css';
 import 'assets/rte.css';
+import '../assets/globalNavigation.css';
 
 NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
 
