@@ -90,3 +90,8 @@
 .docPreviewContainer .openPrevButton button:hover {
     background-color: grey
 }
+
+.AllPostscontainer::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
