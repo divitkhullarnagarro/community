@@ -1,13 +1,10 @@
 .wrapper {
-  width: 45%;
-  max-height: 590px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   border-radius: 10px;
   border: 2px solid #c9c6c6;
-  overflow-x: hidden;
-  background-color: rgb(198, 198, 206);
-  margin: 20px;
+  background-color: lightgray;
+  margin: 10px;
 }
 
 /* .listWrapper {
@@ -34,7 +31,7 @@
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 10px 40px;
+  padding: 10px 20px;
   width: 98%;
 }
 
@@ -44,6 +41,7 @@
 }
 
 .name {
+  font-size: 1.2rem;
   font-weight: bold;
   margin-top: 6px;
 }
