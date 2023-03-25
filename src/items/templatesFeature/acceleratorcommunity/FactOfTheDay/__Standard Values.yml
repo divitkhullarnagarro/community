@@ -13,7 +13,7 @@ Languages:
       Value: 20230320T062113Z
     - ID: "30a44b58-ea42-468b-ac0b-07345b8d3e4a"
       Hint: Title
-      Value: THIS DAY THAT YEAR
+      Value: Fact of The Day
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
@@ -24,7 +24,7 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "2c7320ce-74e2-4c83-9f77-b7b5581bad03"
+      Value: "fa52dbb5-4af2-4628-a053-9f9ae928d278"
     - ID: "97321436-cdf2-4fb6-8c02-333714f630fb"
       Hint: Description
       Value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dictum elit quis finibus ultrices. Morbi nec tristique magna. Phasellus ut semper erat.
@@ -34,4 +34,8 @@ Languages:
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230321T115805Z
+      Value: 20230325T101704Z
+    - ID: "ea5bc781-73db-47cd-bfc0-e6fe07f4b2e7"
+      Hint: Image
+      Value: |
+        <image mediaid="{1FD4EF9F-60B8-405B-A1E9-74CDDC30A069}" />
