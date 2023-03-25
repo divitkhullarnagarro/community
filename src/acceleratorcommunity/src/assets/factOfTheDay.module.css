@@ -1,0 +1,22 @@
+.cardContainer {
+  width: 17rem;
+  background-color: rgb(227, 227, 227);
+  padding: 15px;
+  /* border-radius: 0.3125rem; */
+}
+.cardbody {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  width: 100%;
+}
+
+.cardTitle {
+  padding: 0.5rem 0.3125rem 0.3125rem 0.3125rem;
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.cardDescription {
+  padding: 0rem 0rem 0.3125rem 0.3125rem;
+}
