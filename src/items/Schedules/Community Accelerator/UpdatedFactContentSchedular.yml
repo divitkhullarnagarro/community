@@ -1,0 +1,44 @@
+﻿---
+ID: "cd3b5b5f-2250-4795-aebc-fb2df3b3c2da"
+Parent: "271fb44c-a5db-43e1-89d8-9cf9c9961334"
+Template: "70244923-fa84-477c-8cbd-62f39642c42b"
+Path: /sitecore/system/Tasks/Schedules/Community Accelerator/UpdatedFactContentSchedular
+SharedFields:
+- ID: "50be51f8-746d-4dc2-9c3b-b14abc5ce9b7"
+  Hint: Schedule
+  Value: "20220322 | 99990101 | 127 | 00:05:00 "
+- ID: "62e64dbb-0a39-4dd7-ba05-7bd08c5404e0"
+  Hint: Command
+  Value: "{F5F55071-697B-4769-A992-2A755FC379E5}"
+- ID: "70893ef5-98e6-4721-844a-c364d0d9e48e"
+  Hint: Items
+  Value: /sitecore/system/Modules/PowerShell/Script Library/SPE/Community Accelerator/UpdatedFactContent
+- ID: "b1e16562-f3f9-4ddd-84ca-6e099950ecc0"
+  Hint: Last run
+  Value: 20230323T101547Z
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230322T165148Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "a08db0f8-80d2-4bae-9f2b-60a5cde855f2"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230323T102133Z

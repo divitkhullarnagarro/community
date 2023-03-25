@@ -2,11 +2,11 @@
 ID: "0d9a4816-dacf-4725-8d2b-2bca674010ba"
 Parent: "aaac225e-8dd0-45b7-b66c-4eb824f3a118"
 Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
-Path: /sitecore/templates/Feature/acceleratorcommunity/Title
+Path: /sitecore/templates/Feature/acceleratorcommunity/FactOfTheDay
 SharedFields:
 - ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
   Hint: __Icon
-  Value: Applications/16x16/document_plain.png
+  Value: business/16x16/message.png
 - ID: "12c33f3f-86c5-43a5-aeb4-5598cec45116"
   Hint: __Base template
   Value: "{1930BBEB-7805-471A-A3BE-4858AC7CF696}"
@@ -31,11 +31,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "913ae226-14ce-4be9-9332-a27b20c24704"
+      Value: "5f73b2f1-3d13-49fe-98cb-d7fee9a8b5de"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230320T103442Z
+      Value: 20230321T115540Z
