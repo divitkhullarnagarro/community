@@ -37,19 +37,16 @@ type FactOfTheDay = {
 
 const FactOfTheDay = (props: FactOfTheDayProps): JSX.Element => {
   const targetItems = props?.fields?.data?.datasource?.children?.results;
-  console.log(targetItems);
   var data: any;
 
   if (props['params'] !== undefined) {
-    console.log(targetItems);
-    targetItems.forEach((element) => {
+    targetItems?.forEach((element) => {
       if (element?.automatic?.jsonValue?.value === true) {
         data = element;
       }
-      console.log(data);
     });
   } else {
-    targetItems.forEach((element) => {
+    targetItems?.forEach((element) => {
       if (element?.automatic?.jsonValue?.value === false) {
         data = element;
       }
