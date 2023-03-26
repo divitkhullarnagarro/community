@@ -39,7 +39,7 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
     e.preventDefault();
     let response = await followCall(props?.userName, userToken);
     if (response?.success) {
-      changeText('Unfollow');
+      changeText('Following');
     }
   };
 
@@ -66,7 +66,7 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
         </button>
       </div>
     );
-  } else if (followButtonText == 'Unfollow') {
+  } else if (followButtonText == 'Following') {
     return (
       <div>
         <button
