@@ -1,15 +1,15 @@
 ﻿---
-ID: "5eb5bf7f-d856-4dc1-ae4d-fd35acf455f2"
+ID: "6c8fbd16-c0e4-4b08-a1e7-612d23d9fbe8"
 Parent: "d7c1b3f4-3c84-4dee-9a6a-130d2937d5df"
 Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
-Path: /sitecore/templates/Feature/acceleratorcommunity/Login/Content/Image
+Path: /sitecore/templates/Feature/acceleratorcommunity/UserLogin/Content/UserNameLabel
 SharedFields:
 - ID: "ab162cc0-dc80-4abf-8871-998ee5d7ba32"
   Hint: Type
-  Value: Image
+  Value: "Single-Line Text"
 - ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
   Hint: __Sortorder
-  Value: 300
+  Value: 400
 Languages:
 - Language: en
   Versions:
@@ -28,7 +28,7 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "d5e43293-c099-4b9c-831e-b067cf66ba0a"
+      Value: "9877fe5b-b5ee-4b3f-b834-04746d1bbe5a"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |

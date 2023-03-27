@@ -1,15 +1,15 @@
 ﻿---
-ID: "1559ec17-4416-4907-b516-2132835ab226"
+ID: "7ca5e1a5-5d43-4cf6-b277-b21064acc1ae"
 Parent: "d7c1b3f4-3c84-4dee-9a6a-130d2937d5df"
 Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
-Path: /sitecore/templates/Feature/acceleratorcommunity/Login/Content/ForgotPasswordLabel
+Path: /sitecore/templates/Feature/acceleratorcommunity/UserLogin/Content/DontHaveAccountLabel
 SharedFields:
 - ID: "ab162cc0-dc80-4abf-8871-998ee5d7ba32"
   Hint: Type
   Value: "Single-Line Text"
 - ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
   Hint: __Sortorder
-  Value: 600
+  Value: 800
 Languages:
 - Language: en
   Versions:
@@ -28,7 +28,7 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "490bcc76-4347-4256-b39c-52d7eed097f0"
+      Value: "f0ccaa52-9ee8-4360-9fd6-de1e64f2ad17"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |

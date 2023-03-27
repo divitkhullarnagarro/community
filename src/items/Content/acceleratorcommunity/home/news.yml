@@ -4,6 +4,9 @@ Parent: "9b2f2c61-b700-51dd-8f47-7600fc865200"
 Template: "0a24b14e-bbdd-4d84-8139-7d40e3b356fa"
 Path: /sitecore/content/acceleratorcommunity/home/news
 SharedFields:
+- ID: "1172f251-dad4-4efb-a329-0c63500e4f1e"
+  Hint: __Masters
+  Value: "{05E694D6-3F26-40C0-8CC0-0396FFB7ACBC}"
 - ID: "9621fdf3-7179-4ac3-a3ec-fda713baa1f5"
   Hint: Show In Header
   Value: 1
@@ -62,11 +65,11 @@ Languages:
       Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "7b07c324-f91f-459d-96e7-f2a061d9b2a6"
+      Value: "5bfdce2b-53d8-43b7-bcc8-7a7cbba5149c"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230326T112412Z
+      Value: 20230327T144945Z
