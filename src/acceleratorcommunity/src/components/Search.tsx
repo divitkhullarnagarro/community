@@ -2,8 +2,8 @@ import { Field, ImageField } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 // import searchImage from '../assets/images/searchImage.png';
-import star from '../assets/images/star.png'
-import searchCss from '../assets/search.module.css'
+import star from '../assets/images/star.png';
+import searchCss from '../assets/search.module.css';
 
 type SearchProps = ComponentProps & {
   fields: {
@@ -12,26 +12,22 @@ type SearchProps = ComponentProps & {
         title: {
           jsonValue: Field<string>;
         };
-        image:{
+        image: {
           jsonValue: ImageField;
-        }
-      }
+        };
+      };
+    };
   };
 };
-}
 
 const Search = (props: SearchProps): JSX.Element => {
   console.log('Search', props);
-  return(
+  return (
     <div className={searchCss.container}>
       <div className={searchCss.image}>
-      <NextImage
-          field={star}
-          editable={true}
-          height={30}
-          width={30}
-        /></div>
-        <div className={searchCss.searchBox}>
+        <NextImage field={star} editable={true} height={30} width={30} />
+      </div>
+      <div className={searchCss.searchBox}>
         <NextImage
           className={searchCss.img}
           // field={searchImage}
@@ -46,8 +42,8 @@ const Search = (props: SearchProps): JSX.Element => {
           placeholder={props?.fields?.data?.datasource?.title?.jsonValue?.value}
           // placeholder="search"
         />
-        </div>
       </div>
+    </div>
   );
 };
 

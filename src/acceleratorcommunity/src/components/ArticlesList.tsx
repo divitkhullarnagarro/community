@@ -11,8 +11,9 @@ import linkedin from '../assets/images/linkedin.png';
 import twitter from '../assets/images/twitter.png';
 import whatsapp from '../assets/images/whatsapp.png';
 import bookmark from '../../src/API/bookmarks';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import WebContext from 'src/Context/WebContext';
+import { useRouter } from 'next/router';
 
 type ArticlesListProps = ComponentProps & {
   fields: {
@@ -79,9 +80,19 @@ const getFormatedDate = (stringDate: string) => {
 };
 
 const ArticlesList = (props: ArticlesListProps): JSX.Element => {
-  const userIdTemp = 'test1@test1.com';
 
   const { userToken } = { ...useContext(WebContext) };
+  // useEffect(()=>{
+  //   console.log("aaaaaaaaaaa")
+  //   window.localStorage.setItem("token",userToken!)
+  // },[])
+  const userIdTemp = '';
+
+  const router = useRouter();
+
+
+  
+ 
 
   const { targetItems } = props?.fields?.data?.datasource.articlesList;
 
@@ -110,8 +121,22 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     setClicked(!clicked);
   };
 
-  const submitBookmark = (
+  
+  const bookmarkApi = async (
+    userIdTemp: string,
     contentId: string,
+    title: string,
+    comment: string | undefined,
+    userToken: string | undefined
+  ) => {
+    let response = await bookmark(userIdTemp, contentId,  title, comment, userToken);
+    // url,
+    console.log(response);
+  };
+  
+  const submitBookmark = (
+    userIdTemp:string,
+    contentId: string ,
     // url: string,
     title: string,
     comment: string | undefined
@@ -121,18 +146,6 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     handleClick();
   };
 
-  const bookmarkApi = async (
-    userIdTemp: string,
-    contentId: string,
-    // url: string,
-    title: string,
-    comment: string | undefined,
-    userToken: string | undefined
-  ) => {
-    let response = await bookmark(userIdTemp, contentId,  title, comment, userToken);
-    // url,
-    console.log(response);
-  };
 
   return (
     <div className={ArticlesListCss.mainwrapper}>
@@ -154,7 +167,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
               <div className={ArticlesListCss.cardDescription}>
                 <p>
                   {l.description.jsonValue.value}
-                  <Link href="/readMorePage">Read More </Link>
+                  {/* <Link href="/readMorePage">Read More </Link> */}
                 </p>
               </div>
               <div className={ArticlesListCss.cardTags}>
@@ -196,6 +209,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                   className={ArticlesListCss.button}
                   onClick={() =>
                     submitBookmark(
+                      userIdTemp,
                       l.id,
                       // l.title?.jsonValue.value, //This is for URL or Image value
                       l.title?.jsonValue?.value,
@@ -214,6 +228,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                   <NextImage field={shareImage} editable={true} title="Share" />
                 </button>
               </div>
+
               {showPopup && (
                 <div className={ArticlesListCss.sharePopups}>
                   <div className={ArticlesListCss.sharePopup}>
