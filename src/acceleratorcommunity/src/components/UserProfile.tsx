@@ -6,6 +6,7 @@ import userProfileCss from '../assets/userProfile.module.css';
 import Link from 'next/link';
 import { Url } from 'url';
 import { Button } from 'react-bootstrap';
+import { useRouter } from 'next/router';
 
 type UserProfileProps = ComponentProps & {
   fields: {
@@ -17,11 +18,13 @@ type UserProfileProps = ComponentProps & {
 
 const UserProfile = (props: UserProfileProps): JSX.Element => {
   console.log('profile', props);
+  const router = useRouter();
   return(
     <div className={userProfileCss.container}>
+      <Button onClick={()=> router.push('/')}>Back</Button>
       <Link href={props.fields.LogoURL}  >
       {/* <Link href="/#"> */}
-      <Button onClick={()=> router.push('/')}>Back</Button>
+      
         <NextImage
           field={props.fields.Image.value}
           // field={profile}
