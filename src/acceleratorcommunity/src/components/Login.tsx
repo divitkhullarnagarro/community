@@ -52,7 +52,7 @@ const Login = (props: LoginProps): JSX.Element => {
   props; //delete Me
 
   const router = useRouter();
-  const { setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
+  const { setIsLoggedIn, setUserToken, setObjectId } = { ...useContext(WebContext) };
 
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
@@ -94,6 +94,9 @@ const Login = (props: LoginProps): JSX.Element => {
       if (response?.status == 200 && setIsLoggedIn != undefined && setUserToken != undefined) {
         setIsLoggedIn(true);
         setUserToken(response?.data?.data?.access_token);
+        if (setObjectId != undefined) {
+          setObjectId(email);
+        }
         router.push('/');
       } else {
         setIsLoggingIn(false);
