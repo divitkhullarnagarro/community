@@ -1,12 +1,10 @@
-import { Field, RichTextField, ImageField, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { useContext, useEffect, useState } from 'react';
 import getAllBookmarkCall from 'src/API/getAllBookmarks';
 import WebContext from 'src/Context/WebContext';
 import bookmarkCss from '../assets/bookmarkList.module.css';
 import img1 from '../assets/images/knowledge.jpg';
-import img2 from '../assets/images/book.jpg';
-import img3 from '../assets/images/book.jpg';
 import ActiveBookmark from '../assets/images/BookmarActive.svg';
 
 type BookmarkListProps = ComponentProps & {
@@ -77,26 +75,26 @@ type BookmarkListProps = ComponentProps & {
 //   { label: ' Cardiology', path: '/cardioPage', targetSegment: 'cardioPage' },
 //   { label: ' Atrial Fibrillation (A-Fib)', path: '/atrialPage', targetSegment: 'atrialPage' },
 // ];
-const items = [
-  {
-    contentId: 'News',
-    title: 'Lorem1',
-    comment:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo totam repudiandae eum praesentium delectus!',
-  },
-  {
-    contentId: 'News',
-    title: 'Lorem2',
-    comment:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo totam repudiandae eum praesentium delectus!',
-  },
-  {
-    contentId: 'Cricket',
-    title: 'Lorem13',
-    comment:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo totam repudiandae eum praesentium delectus!',
-  },
-];
+// const items = [
+//   {
+//     contentId: 'News',
+//     title: 'Lorem1',
+//     comment:
+//       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo totam repudiandae eum praesentium delectus!',
+//   },
+//   {
+//     contentId: 'News',
+//     title: 'Lorem2',
+//     comment:
+//       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo totam repudiandae eum praesentium delectus!',
+//   },
+//   {
+//     contentId: 'Cricket',
+//     title: 'Lorem13',
+//     comment:
+//       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo totam repudiandae eum praesentium delectus!',
+//   },
+// ];
 
 type bookmarkFields = {
   objectId: Field<string>;
@@ -108,6 +106,7 @@ type bookmarkFields = {
 };
 
 const BookmarkList = (props: BookmarkListProps): JSX.Element => {
+  console.log("props", props)
   const [bookmarkList, setBookmarkList] = useState<bookmarkFields[]>([]);
   const { userToken } = { ...useContext(WebContext) };
 
