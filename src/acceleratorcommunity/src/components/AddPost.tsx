@@ -1,4 +1,4 @@
-import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { ReactElement, useContext, useEffect, useState } from 'react';
 import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
@@ -15,6 +15,12 @@ import addPostCall from '../API/addPostCall';
 import getUserCall from 'src/API/getUserCall';
 import addPostCommentCall from 'src/API/addPostCommentCall';
 // import loginUserCall from 'src/API/loginUserCall';
+import Link from 'next/link';
+import ArticlesListCss from '../assets/ArticlesList.module.css';
+import shareImage from '../assets/images/share.svg';
+import linkedin from '../assets/images/linkedin.png';
+import twitter from '../assets/images/twitter.png';
+import whatsapp from '../assets/images/whatsapp.png';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -104,6 +110,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         newArr?.map((post: any) => {
           post.isOpenComment = false;
           post.comments = empArr;
+          post.showShare = false;
         });
         setMyAnotherArr(newArr);
       });
@@ -136,6 +143,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         newArr?.map((post: any) => {
           post.isOpenComment = false;
           post.comments = [];
+          post.showShare = false;
         });
         setMyAnotherArr((prevState: any[]) => {
           return [...prevState, ...newArr];
@@ -281,7 +289,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     });
   }
 
-  console.log('asdsad', myAnotherArr);
+
 
   //Function To Handle Open Comments Tray
   function setOpenComments(id: string, show: boolean) {
@@ -310,7 +318,26 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       return modPost;
     });
   }
-
+  function handleShowShare(id: string, val: any) {
+    let locArr = myAnotherArr;
+    console.log('asdsad', myAnotherArr);
+    let modPost = locArr.map((post: any) => {
+      if (post.id == id) {
+        
+       
+          post.showShare = val;
+      
+        return post;
+      } else {
+        return post;
+      }
+    });
+    setMyAnotherArr(() => {
+      console.log('abv', modPost);
+      return modPost;
+    });
+  }
+ 
   //Function To Handle Post Comments
   function postComments(id: string, e: any) {
     e.preventDefault();
@@ -642,13 +669,57 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   alt="actions"
                 />
               </button>
-              <button>
+              <div>
+              <button onClick={()=> handleShowShare(post.id, !post?.showShare)}>
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/2956/2956786.png"
                   width="40px"
                   alt="actions"
                 />
               </button>
+              {post?.showShare && (
+                <div className={ArticlesListCss.sharePopups}>
+                  <div className={ArticlesListCss.sharePopup}>
+                    <NextImage
+                      className={ArticlesListCss.whatsappImage}
+                      field={whatsapp}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link href={"https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20"+post.id}>
+                      WhatsApp
+                    </Link>
+                  </div>
+
+                  <div className={ArticlesListCss.sharePopup}>
+                    <NextImage
+                      className={ArticlesListCss.whatsappImage}
+                      field={twitter}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link href={"https://twitter.com/intent/tweet?url="+post.id}>
+                      Twitter
+                    </Link>
+                  </div>
+
+                  <div className={ArticlesListCss.sharePopup}>
+                    <NextImage
+                      className={ArticlesListCss.whatsappImage}
+                      field={linkedin}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link href={"https://www.linkedin.com/sharing/share-offsite/?url="+post.id}>
+                    LinkedIn
+                    </Link>
+                  </div>
+                </div>
+              )}
+              </div>
             </div>
             <div>
               <span style={{ fontWeight: '600' }}>
