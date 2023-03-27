@@ -1,16 +1,17 @@
-import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
-import Profile from '../assets/images/profile.png';
+import Profile from '../assets/images/ProfilePic.jpeg';
 import styles from '../assets/peopleyoumayknow.module.css';
 import FollowUnfollowButton from './FollowUnfollowButton';
 import Link from 'next/link';
 import { useState, useContext, useEffect } from 'react';
 import WebContext from '../Context/WebContext';
 import peopleYouMayKnowCall from 'src/API/peopleYouMayKnowCall';
-import Image from 'next/image';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { Button } from 'react-bootstrap';
+import { useRouter } from 'next/router';
 
 type PeopleYouMayKnowProps = ComponentProps & {
   fields: {
@@ -19,7 +20,7 @@ type PeopleYouMayKnowProps = ComponentProps & {
 };
 
 type peopleYouMayKnowFields = {
-  objectId: Field<string>;
+  objectId: string;
   firstName: Field<string>;
   lastName: Field<string>;
   imageData: Field<string>;
@@ -28,21 +29,22 @@ type peopleYouMayKnowFields = {
 };
 
 const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
+  console.log('people you may know', props);
+  const router = useRouter();
   const { Title, LinkLabel, IsFullList } = props?.params;
   const [peopleYouMayKnowList, setPeopleYouMayKnowList] = useState<peopleYouMayKnowFields[]>([]);
   const { userToken } = { ...useContext(WebContext) };
 
+  const [isFullPage] = useState(IsFullList === '1');
   const getPeopleYouMayKnowList = async (userToken: string | undefined) => {
-    let response = await peopleYouMayKnowCall('test1@test1.com', userToken);
+    let response = await peopleYouMayKnowCall(userToken);
     setPeopleYouMayKnowList(response?.data?.data);
   };
 
-  const [isFullPage] = useState(IsFullList === '1');
-
   const sliderSettings = {
-    rows: isFullPage ? 2 : 1,
+    rows: 1,
     infinite: false,
-    slidesToShow: isFullPage ? 5 : 3,
+    slidesToShow: 6,
     slidesToScroll: 1,
     responsive: [
       {
@@ -60,16 +62,43 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
     ],
   };
 
-  const PeopleYouMayKnowItem = (item: peopleYouMayKnowFields) => {
+  const HalfPagePeopleYouMayKnow = () => {
     return (
-      <div key={item?.objectId?.value} className={styles.item}>
-        <Image
+      <div
+        className={styles.wrapper}
+        style={{
+          maxHeight: '590px',
+          height: 'max-content',
+        }}
+      >
+        <div className={styles.header}>
+          <div className={styles.heading}>{Title}</div>
+          {LinkLabel ? <Link href={'/peopleyoumayknow'}>{LinkLabel}</Link> : <></>}
+        </div>
+        <div className={styles.listWrapper}>
+          <Slider className="slider" {...sliderSettings}>
+            {peopleYouMayKnowList?.length > 0 ? (
+              peopleYouMayKnowList.slice(0, 9).map((item) => {
+                return <PeopleYouMayKnowHalfPageItem {...item} />;
+              })
+            ) : (
+              <></>
+            )}
+          </Slider>
+        </div>
+      </div>
+    );
+  };
+
+  const PeopleYouMayKnowHalfPageItem = (item: peopleYouMayKnowFields) => {
+    return (
+      <div key={item?.objectId} className={styles.itemHalfPage}>
+        <NextImage
           contentEditable={true}
-          className={styles.img}
-          src={Profile ?? item?.imageData?.value}
-          height={isFullPage ? 400 : 350}
-          width={isFullPage ? 350 : 200}
-        ></Image>
+          field={Profile ?? item?.imageData?.value}
+          height={200}
+          width={100}
+        ></NextImage>
         <div className={styles.detailsContainer}>
           <div className={styles.firstRow}>
             <div className={styles.name}>{item?.firstName + ' ' + item?.lastName}</div>
@@ -82,44 +111,78 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
     );
   };
 
+  const PeopleYouMayKnowFullPageItem = (item: peopleYouMayKnowFields) => {
+    return (
+      <div key={item?.objectId} className={styles.item}>
+        <NextImage
+          contentEditable={true}
+          className={styles.img}
+          field={Profile ?? item?.imageData?.value}
+          height={50}
+          width={50}
+        ></NextImage>
+        <div className={styles.detailsContainer}>
+          <div className={styles.name}>{item?.firstName + ' ' + item?.lastName}</div>
+          <div className={styles.details}>
+            <div className={styles.speciality}>{item?.speciality}.</div>
+            <div>{item?.city}</div>
+          </div>
+        </div>
+        <div className={styles.button}>
+          <FollowUnfollowButton userName={item?.objectId} />
+        </div>
+      </div>
+    );
+  };
+
+  const FullPagePeopleYouMayKnow = () => {
+    return (
+      <div className={styles.mainWrapper}>
+        <div className={styles.backbtn}>
+          <Button onClick={() => router.push('/')}>Back</Button>
+        </div>
+        <div className={styles.flexx}>
+          <div
+            className={styles.wrapper}
+            style={{
+              maxHeight: '100%',
+              height: '80vh',
+              width: '35%',
+              backgroundColor: 'lightgrey',
+            }}
+          >
+            <div className={styles.header}>
+              <div className={styles.heading}>{Title}</div>
+            </div>
+            <div className={styles.listWrapper}>
+              {peopleYouMayKnowList?.length > 0 ? (
+                peopleYouMayKnowList.map((item) => {
+                  return <PeopleYouMayKnowFullPageItem {...item} />;
+                })
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   useEffect(() => {
     getPeopleYouMayKnowList(userToken);
   }, []);
 
   return (
-    <div
-      className={styles.wrapper}
-      style={{
-        maxHeight: isFullPage ? '100%' : '590px',
-        height: isFullPage ? '100%' : 'max-content',
-      }}
-    >
-      <div className={styles.header}>
-        <div className={styles.heading}>{Title}</div>
-        {isFullPage ? <></> : <Link href={'/peopleyoumayknow'}>{LinkLabel}</Link>}
-      </div>
-      <div className={styles.listWrapper}>
-        {isFullPage ? (
-          <Slider className="slider" {...sliderSettings}>
-            {peopleYouMayKnowList.map((item) => {
-              return <PeopleYouMayKnowItem {...item} />;
-            })}
-            {peopleYouMayKnowList.map((item) => {
-              return <PeopleYouMayKnowItem {...item} />;
-            })}
-            {peopleYouMayKnowList.map((item) => {
-              return <PeopleYouMayKnowItem {...item} />;
-            })}
-          </Slider>
-        ) : (
-          <Slider className="slider" {...sliderSettings}>
-            {peopleYouMayKnowList.slice(0, 9).map((item) => {
-              return <PeopleYouMayKnowItem {...item} />;
-            })}
-          </Slider>
-        )}
-      </div>
-    </div>
+    <>
+      {isFullPage ? (
+        <FullPagePeopleYouMayKnow />
+      ) : (
+        <>
+          <HalfPagePeopleYouMayKnow />
+        </>
+      )}
+    </>
   );
 };
 

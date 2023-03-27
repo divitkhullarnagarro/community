@@ -5,6 +5,7 @@ import userProfileCss from '../assets/userProfile.module.css';
 // import profile from '../assets/images/profile.png';
 import Link from 'next/link';
 import { Url } from 'url';
+import { Button } from 'react-bootstrap';
 
 type UserProfileProps = ComponentProps & {
   fields: {
@@ -20,6 +21,7 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
     <div className={userProfileCss.container}>
       <Link href={props.fields.LogoURL}  >
       {/* <Link href="/#"> */}
+      <Button onClick={()=> router.push('/')}>Back</Button>
         <NextImage
           field={props.fields.Image.value}
           // field={profile}

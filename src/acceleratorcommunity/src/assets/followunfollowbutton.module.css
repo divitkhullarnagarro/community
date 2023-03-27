@@ -2,7 +2,7 @@
   background-color: rgb(65, 143, 254);
   border-color: rgb(65, 143, 254);
   color: #fff;
-  font-size: 13px;
+  font-size: 1.0625rem;
   font-weight: bold;
   width: 6rem;
   margin-top: 6px;
@@ -14,7 +14,7 @@
 .followingButton {
   color: #0048f0;
   background-color: #fff;
-  font-size: 13px;
+  font-size: 1.0625rem;
   font-weight: bold;
   width: 6rem;
   padding: 6px;

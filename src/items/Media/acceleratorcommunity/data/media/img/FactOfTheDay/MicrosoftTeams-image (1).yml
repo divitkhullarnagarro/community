@@ -1,0 +1,57 @@
+﻿---
+ID: "1fd4ef9f-60b8-405b-a1e9-74cddc30a069"
+Parent: "87d9c791-9156-40f0-8f5d-4e7ab26a2f02"
+Template: "f1828a2c-7e5d-4bbd-98ca-320474871548"
+Path: "/sitecore/media library/acceleratorcommunity/data/media/img/FactOfTheDay/MicrosoftTeams-image (1)"
+SharedFields:
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: "-/media/1FD4EF9F60B8405BA1E974CDDC30A069.ashx?h=16&thn=1&w=16"
+- ID: "22eac599-f13b-4607-a89d-c091763a467d"
+  Hint: Width
+  Value: 193
+- ID: "40e50ed9-ba07-4702-992e-a912738d32dc"
+  Hint: Blob
+  BlobID: "ebe7f930-aea6-472c-8e83-e2bc5798029b"
+  Value: /9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAIAAwQMBIgACEQEDEQH/xAAbAAEAAwEBAQEAAAAAAAAAAAAAAQQFAwYCB//EADoQAQABAgIECwYDCQAAAAAAAAABAgMEEQUVIVMSFDE0UVJykZLB0RMyQVWToQZhgiIjJDM1cXOB4f/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwD9B2m0AAAAADaAG02gBtNoAbTaAG02gBtNoAbTaAG02gBtM5AE7QAQAAAAAAAAAAAAAAAAAAAAAAACQAQAAAAAAmmmquqKaYmap2REIXdDRE4+jPokHxq/F5fyKu+DV2L3FXfDcxuNowfA4dNVXDzy4Krrqzurv29QZursXuKu+DV2L3FXfDS11Z3V37eprqzurv29QZursXuKu+DV2L3FXfDS11Z3V37eprqzurv29QZursXuKu+DV2L3FXfDS11Z3Vz7eqxg9IW8XcqooorpmIz25A85XRVRVNNdM01RyxKGlp6IjFUZcs0be9mgAAAAAAkAEAAAAAAL2huf09mVFe0Nz+nsyC1+IOSx+ryctEYG3fiq7ejhUxOUU/B1/EHJY/V5K+isfThYm3dieBM5xMfCQX8do2xXZqmzbii5EZxwdkSwG3jdK2fY1U4eZrrqjLPLKIZuBwlWLvREbKKfeq6P+grLeFwFzE2Ll2nZFPux1pW7uh/4mn2dWViZznOdtP5Ni3RTbopooiIpiMoiAeRaegec3Ox5o0zhJtXfb24/Yrn9r8pToHnNzseYGn+dW+x5sxp6f51b7HmzAAAAAAASACAAAAAAF7Q3P6ezKivaG5/T2ZBa/EHJY/V5MuxYrxF2LdqM6p6fg1PxByWP9+S1orB8Ws8KuP3lfL+UdAMS1hL13EewiJprj3s/g9HhsPbw1mLduNkcs9M9LrlTnnlGc/HJIIySAOd61RetVW64zpqjKWXoqzVh8fetV8tNHL0xnytdRtf1i9/igFHT/OrfY82Y09P86t9jzZgAAAAAAJABAAAAAAC9obn9H9pUU0V1W64romYqic4mAekx2DqxVVqqm7FubczMZ0cJz4rjfmE/Sj1ZkaWxcR71PhNbYvrUeAGnxTG/MJ+jHqcVxvzCfpR6szW+L61HgNbYvrUeAGnxXG/MJ+lHqcUxvzCfox6szW2L61HgNb4vrUeAGnxTG/MJ+jHq+sLg7lrEV37uI9rVVTl7mXmytb4vrUeA1ti+tR4AdNPc6t9jzZr7u3K7tya7lXCqnll8AAAAAAAkAEAAIlIAAAAAAAAAAAAAAAAAAAACQAQAAAAhIAAAAAAAAAAAAAAAAAACQAf/2Q==
+- ID: "6954b7c7-2487-423f-8600-436cb3b6dc0e"
+  Hint: Size
+  Value: 1168
+- ID: "6f47a0a5-9c94-4b48-abeb-42d38def6054"
+  Hint: Mime Type
+  Value: image/png
+- ID: "c06867fe-9a43-4c7d-b739-48780492d06f"
+  Hint: Extension
+  Value: png
+- ID: "cb09946f-3218-4823-87d2-d5007c199a96"
+  Hint: Dimensions
+  Value: 193 x 128
+- ID: "de2ca9e4-c117-4c8a-a139-1ff4b199d15a"
+  Hint: Height
+  Value: 128
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230325T101553Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "870be5fc-4ae2-4a30-a419-ee90956ae0e4"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230325T101554Z
