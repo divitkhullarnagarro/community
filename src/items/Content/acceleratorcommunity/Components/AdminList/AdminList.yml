@@ -1,0 +1,40 @@
+﻿---
+ID: "ad6d1721-22b0-4b50-be7b-b11f1828769d"
+Parent: "05a74623-bc5b-4151-b111-bbcf6f4c0ca5"
+Template: "e0d7bc64-235a-4648-89ab-4b785f1d81fb"
+Path: /sitecore/content/acceleratorcommunity/Components/AdminList/AdminList
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "152b5c70-4e35-4f97-b3b2-6715dbf77b27"
+      Hint: MainHeaderLabel
+      Value: Welcome to the Dashboard
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230327T122110Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "0f9f73dc-ae9d-4aac-974d-c57331cdfd80"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "c2aadb5b-85c4-4345-8ad8-11f067edfab0"
+      Hint: UserListLabel
+      Value: Admin User List
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230327T122155Z
+    - ID: "e57d6947-a727-4b58-ae9e-875aaa7e451b"
+      Hint: SideNavHeaderLabel
+      Value: Professional Dashboard
