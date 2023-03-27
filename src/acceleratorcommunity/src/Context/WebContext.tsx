@@ -7,6 +7,10 @@ type contextType = {
   setUserToken: React.Dispatch<React.SetStateAction<string>>;
   userRefreshToken: string;
   setUserRefreshToken: React.Dispatch<React.SetStateAction<string>>;
+  objectId: string;
+  setObjectId: React.Dispatch<React.SetStateAction<string>>;
+  userObject: any;
+  setUserObject: React.Dispatch<React.SetStateAction<any>>;
 };
 const WebContext = React.createContext<contextType | null | undefined>(null);
 

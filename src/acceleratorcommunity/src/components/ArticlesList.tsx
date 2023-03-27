@@ -25,6 +25,9 @@ type ArticlesListProps = ComponentProps & {
 
 type Item = {
   id: string;
+  url: {
+    url: string;
+  };
   title: {
     jsonValue: Field<string>;
   };
@@ -239,7 +242,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       width={25}
                       height={25}
                     />
-                    <Link href="https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20[ARTICLE_LINK]">
+                    <Link href={"https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20"+l.title?.jsonValue?.value}>
                       WhatsApp
                     </Link>
                   </div>
@@ -252,7 +255,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       width={25}
                       height={25}
                     />
-                    <Link href="https://twitter.com/intent/tweet?url=[ARTICLE_LINK]&text=[ARTICLE_TITLE]">
+                    <Link href={"https://twitter.com/intent/tweet?url="+l.url?.url+"&text="+l.title?.jsonValue?.value}>
                       Twitter
                     </Link>
                   </div>
@@ -265,7 +268,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       width={25}
                       height={25}
                     />
-                    <Link href="https://www.linkedin.com/sharing/share-offsite/?url=[ARTICLE_LINK">
+                    <Link href={"https://www.linkedin.com/sharing/share-offsite/?url="+l.url?.url}>
                     LinkedIn
                     </Link>
                   </div>

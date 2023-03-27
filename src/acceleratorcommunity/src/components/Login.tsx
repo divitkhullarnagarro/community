@@ -49,10 +49,9 @@ type DataSource = {
 
 const Login = (props: LoginProps): JSX.Element => {
   const targetItems = props?.fields?.data?.datasource;
-  props; //delete Me
 
   const router = useRouter();
-  const { setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
+  const { setIsLoggedIn, setUserToken, setObjectId, userToken } = { ...useContext(WebContext) };
 
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
@@ -81,18 +80,25 @@ const Login = (props: LoginProps): JSX.Element => {
 
   const onSubmitHandler = async (e: any) => {
     e.preventDefault();
+    if (password === '' || email === '') {
+      if (password === '') setPasswordError(true);
+      if (email === '') {
+        setEmailError(true);
+      }
+      return;
+    }
     setIsLoggingIn(true);
-    if (password === '') {
-      setPasswordError(true);
-    }
-    if (email === '') {
-      setEmailError(true);
-    }
     if (email !== '' && password !== '') {
       let response = await loginUserCall(email, password);
       if (response?.status == 200 && setIsLoggedIn != undefined && setUserToken != undefined) {
         setIsLoggedIn(true);
         setUserToken(response?.data?.data?.access_token);
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('UserToken', response?.data?.data?.access_token);
+        }
+        if (setObjectId != undefined) {
+          setObjectId(email);
+        }
         router.push('/');
       } else {
         setIsLoggingIn(false);
@@ -104,7 +110,8 @@ const Login = (props: LoginProps): JSX.Element => {
     }
   };
 
-  const heading = targetItems.title.jsonValue.value.split('<br>');
+  console.log('userToken', userToken);
+  const heading = targetItems?.title?.jsonValue?.value?.split('<br>');
   return (
     <>
       <div className={loginCss.container}>
@@ -112,19 +119,19 @@ const Login = (props: LoginProps): JSX.Element => {
           <div className={loginCss.welcomeText}>
             <div className={loginCss.welcomeTextImage}>
               <NextImage
-                field={targetItems.image.jsonValue.value}
+                field={targetItems?.image?.jsonValue?.value}
                 editable={true}
                 width={30}
                 height={30}
               />
             </div>
             <h2>
-              {heading[0]}
+              {heading ? heading[0] : 'Welcome,'}
               <br />
-              {heading[1]}
+              {heading ? heading[1] : 'Please Login Here'}
             </h2>
             <div className={loginCss.welcomeTextDescription}>
-              {targetItems.description.jsonValue.value}
+              {targetItems?.description?.jsonValue?.value}
             </div>
           </div>{' '}
         </div>
@@ -135,7 +142,7 @@ const Login = (props: LoginProps): JSX.Element => {
               <div className={loginCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
                 <label className={loginCss.label}>
-                  {targetItems.userNameLabel.jsonValue.value}
+                  {targetItems?.userNameLabel?.jsonValue?.value}
                 </label>
                 <input
                   onChange={(e) => setEmailValue(e.target.value)}
@@ -145,7 +152,7 @@ const Login = (props: LoginProps): JSX.Element => {
                 />
                 {emailError ? (
                   <span className={loginCss.error}>
-                    * {targetItems.userNameLabel.jsonValue.value} Field is empty
+                    * {targetItems?.userNameLabel?.jsonValue?.value} Field is empty
                   </span>
                 ) : (
                   ''
@@ -154,7 +161,7 @@ const Login = (props: LoginProps): JSX.Element => {
               <div className={loginCss.loginField}>
                 <i className="login__icon fas fa-lock"></i>
                 <label className={loginCss.label}>
-                  {targetItems.passwordLabel.jsonValue.value}
+                  {targetItems?.passwordLabel?.jsonValue?.value}
                 </label>
                 <input
                   onChange={(e) => setPasswordValue(e.target.value)}
@@ -164,36 +171,56 @@ const Login = (props: LoginProps): JSX.Element => {
                 />
                 {passwodError ? (
                   <span className={loginCss.error}>
-                    * {targetItems.passwordLabel.jsonValue.value} Field is empty
+                    * {targetItems?.passwordLabel?.jsonValue?.value} Field is empty
                   </span>
                 ) : (
                   ''
                 )}
                 <div style={{ height: '25px' }}>
+                  {' '}
                   {ifUnAuthorised ? (
                     <span style={{ fontWeight: 1000, color: 'red', fontSize: '12px' }}>
-                      * Wrong Email or Password. Try Again !
+                      {' '}
+                      * Wrong Email or Password. Try Again !{' '}
                     </span>
                   ) : (
                     ''
-                  )}
+                  )}{' '}
                 </div>
                 <div className={loginCss.forgotPassword}>
                   <Link href={'/forgotPassword'}>
-                    {targetItems.forgotPasswordLabel.jsonValue.value}
+                    {targetItems?.forgotPasswordLabel?.jsonValue?.value
+                      ? targetItems?.forgotPasswordLabel?.jsonValue?.value
+                      : 'Forgot Password?'}
                   </Link>
                 </div>
               </div>
-              <button className={loginCss.formButton} disabled={emailError || passwodError}>
+              <button
+                type="submit"
+                className={loginCss.formButton}
+                disabled={emailError || passwodError}
+              >
                 {isLoggingIn ? (
                   <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
-                    <Spinner style={{ width: '15px', height: '15px' }} animation="border" />
+                    {' '}
+                    <Spinner style={{ width: '15px', height: '15px' }} animation="border" />{' '}
                   </span>
+                ) : targetItems?.signInBtn?.jsonValue?.value ? (
+                  targetItems?.signInBtn?.jsonValue?.value
                 ) : (
-                  targetItems.signInBtn.jsonValue.value
-                )}
+                  'Sign In'
+                )}{' '}
                 <i className="button__icon fas fa-chevron-right"></i>
               </button>
+              {/* {isLoggedIn ? (
+                <span
+                  style={{ fontWeight: 1000, color: 'green', fontSize: '12px', padding: '10px' }}
+                >
+                  * User Logged In Successfully
+                </span>
+              ) : (
+                ''
+              )} */}
             </form>
             <div className={loginCss.loginOptionContainer}>
               or sign in with other accounts?
@@ -206,14 +233,29 @@ const Login = (props: LoginProps): JSX.Element => {
             </div>
             <div className={loginCss.formContainerBottom}>
               <div className={loginCss.text}>
-                {targetItems.dontHaveAccountLabel.jsonValue.value}
+                {targetItems?.dontHaveAccountLabel?.jsonValue?.value}
               </div>
               <div className={loginCss.btn}>
-                <Link href={'/register'}>{targetItems.registerHereLabel.jsonValue.value}</Link>
+                <Link href={'/register'}>
+                  {targetItems?.registerHereLabel?.jsonValue?.value
+                    ? targetItems?.registerHereLabel?.jsonValue?.value
+                    : 'Register'}
+                </Link>
               </div>
             </div>
+            {/* <div className="social-icons">
+                <a href="#" className="social-login__icon fab fa-instagram"></a>
+                <a href="#" className="social-login__icon fab fa-facebook"></a>
+                <a href="#" className="social-login__icon fab fa-twitter"></a>
+              </div> */}
           </div>
         </div>
+        {/* <div className="screen__background">
+            <span className="screen__background__shape screen__background__shape4"></span>
+            <span className="screen__background__shape screen__background__shape3"></span>
+            <span className="screen__background__shape screen__background__shape2"></span>
+            <span className="screen__background__shape screen__background__shape1"></span>
+          </div> */}
       </div>
     </>
   );
