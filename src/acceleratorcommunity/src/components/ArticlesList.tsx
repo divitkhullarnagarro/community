@@ -13,6 +13,7 @@ import whatsapp from '../assets/images/whatsapp.png';
 import bookmark from '../../src/API/bookmarks';
 import { useContext, useState } from 'react';
 import WebContext from 'src/Context/WebContext';
+// import { useRouter } from 'next/router';
 
 type ArticlesListProps = ComponentProps & {
   fields: {
@@ -81,10 +82,34 @@ const getFormatedDate = (stringDate: string) => {
   return formattedDate;
 };
 
-const ArticlesList = (props: ArticlesListProps): JSX.Element => {
-  const userIdTemp = 'test1@test1.com';
 
-  const { userToken } = { ...useContext(WebContext) };
+  
+
+const ArticlesList = (props: ArticlesListProps): JSX.Element => {
+  const { userToken,setUserToken } = { ...useContext(WebContext)  };
+
+  const setTokenFromLocalStorage = () => {
+    if (userToken === undefined || userToken === '') {
+      if (
+        typeof localStorage !== 'undefined' &&
+        localStorage.getItem('UserToken') != '' &&
+        localStorage.getItem('UserToken') != null
+      ) {
+        let token = localStorage.getItem('UserToken');
+        if (token != null && setUserToken != undefined) {
+          setUserToken(token);
+        }
+      }
+    }
+  };
+
+  // useEffect(()=>{
+  //   console.log("aaaaaaaaaaa")
+  //   window.localStorage.setItem("token",userToken!)
+  // },[])
+  const userIdTemp = 'a@gmail.com';
+
+  // const router = useRouter();
 
   const { targetItems } = props?.fields?.data?.datasource.articlesList;
 
@@ -113,37 +138,35 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     setClicked(!clicked);
   };
 
+  const bookmarkApi = async (
+    userIdTemp: string,
+    contentId: string,
+    title: string,
+    comment: string | undefined,
+    userToken: string | undefined
+  ) => {
+    let response = await bookmark(userIdTemp, contentId, title, comment, userToken);
+    // url,
+    console.log(response);
+  };
+
   const submitBookmark = (
+    userIdTemp: string,
     contentId: string,
     // url: string,
     title: string,
     comment: string | undefined
   ) => {
-    bookmarkApi(userIdTemp, contentId,  title, comment, userToken);
+    setTokenFromLocalStorage();
+    bookmarkApi(userIdTemp, contentId, title, comment, userToken);
     // , url:string
     handleClick();
   };
 
-  const bookmarkApi = async (
-    userIdTemp: string,
-    contentId: string,
-    // url: string,
-    title: string,
-    comment: string | undefined,
-    userToken: string | undefined
-  ) => {
-    let response = await bookmark(userIdTemp, contentId,  title, comment, userToken);
-    // url,
-    console.log(response);
-  };
-
   return (
     <div className={ArticlesListCss.mainwrapper}>
-
       {targetItems.map((l, i) => {
         return (
-         
-          
           <div key={i} className={ArticlesListCss.wrapper}>
             <div className={ArticlesListCss.leftSection}>
               <NextImage
@@ -157,7 +180,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
               <div className={ArticlesListCss.cardDescription}>
                 <p>
                   {l.description.jsonValue.value}
-                  <Link href="/readMorePage">Read More </Link>
+                  {/* <Link href="/readMorePage">Read More </Link> */}
                 </p>
               </div>
               <div className={ArticlesListCss.cardTags}>
@@ -199,6 +222,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                   className={ArticlesListCss.button}
                   onClick={() =>
                     submitBookmark(
+                      userIdTemp,
                       l.id,
                       // l.title?.jsonValue.value, //This is for URL or Image value
                       l.title?.jsonValue?.value,
@@ -217,6 +241,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                   <NextImage field={shareImage} editable={true} title="Share" />
                 </button>
               </div>
+
               {showPopup && (
                 <div className={ArticlesListCss.sharePopups}>
                   <div className={ArticlesListCss.sharePopup}>
@@ -227,7 +252,12 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       width={25}
                       height={25}
                     />
-                    <Link href={"https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20"+l.title?.jsonValue?.value}>
+                    <Link
+                      href={
+                        'https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20' +
+                        l.title?.jsonValue?.value
+                      }
+                    >
                       WhatsApp
                     </Link>
                   </div>
@@ -240,7 +270,14 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       width={25}
                       height={25}
                     />
-                    <Link href={"https://twitter.com/intent/tweet?url="+l.url?.url+"&text="+l.title?.jsonValue?.value}>
+                    <Link
+                      href={
+                        'https://twitter.com/intent/tweet?url=' +
+                        l.url?.url +
+                        '&text=' +
+                        l.title?.jsonValue?.value
+                      }
+                    >
                       Twitter
                     </Link>
                   </div>
@@ -253,16 +290,16 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       width={25}
                       height={25}
                     />
-                    <Link href={"https://www.linkedin.com/sharing/share-offsite/?url="+l.url?.url}>
-                    LinkedIn
+                    <Link
+                      href={'https://www.linkedin.com/sharing/share-offsite/?url=' + l.url?.url}
+                    >
+                      LinkedIn
                     </Link>
                   </div>
                 </div>
               )}
             </div>
           </div>
-          
-          
         );
       })}
     </div>

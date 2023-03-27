@@ -5,7 +5,8 @@ import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';
 import loginCss from '../assets/login.module.css';
 import star from '../assets/images/star.png';
-import imageNotFound from '../assets/images/imageNot.png';
+// import imageNotFound from '../assets/images/imageNot.png';
+import Link from 'next/link';
 import { validateEmailOrPhone } from 'assets/helpers/validations';
 // import Axios, { AxiosResponse } from 'axios';
 // import { LogoutUrl } from 'assets/helpers/constants';
@@ -19,7 +20,7 @@ type ForgotPasswordProps = ComponentProps & {
 
 const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
   props; //delete Me
-
+  console.log('props', props);
   const router = useRouter();
   const { setIsLoggedIn, setUserToken, userToken } = { ...useContext(WebContext) };
 
@@ -128,18 +129,19 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
               obcaecati.
             </div>
           </div>{' '}
-          <div className={loginCss.img}>
+          {/* <div className={loginCss.img}>
             <NextImage field={imageNotFound} editable={true} />
-          </div>
+          </div> */}
         </div>
 
         <div className={loginCss.rightContainer}>
-          <div className={loginCss.formContainer}>
+          <div className={`${loginCss.formContainer} ${loginCss.forgotPasswordCard}`}>
+            <h4 className={loginCss.UpdatePasswordHeading}>Update Your Password</h4>
             {passwordPage ? (
               <form className={loginCss.login} onSubmit={(e) => onSubmitPasswordHandler(e)}>
                 <div className={loginCss.loginField}>
                   <i className={loginCss['login__icon fas fa-user']}></i>
-                  <label className={loginCss.label}>User Email</label>
+                  <label className={loginCss.label}>Password</label>
                   <input
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
@@ -152,7 +154,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                 </div>
                 <div className={loginCss.loginField}>
                   <i className={loginCss['login__icon fas fa-lock']}></i>
-                  <label className={loginCss.label}>Password</label>
+                  <label className={loginCss.label}>Confirm Password</label>
                   <input
                     onChange={(e) => setConformPassword(e.target.value)}
                     value={confirmPassword}
@@ -216,7 +218,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                 {otpFieldVisible && (
                   <div className={loginCss.loginField}>
                     <i className={loginCss['login__icon fas fa-lock']}></i>
-                    <label className={loginCss.label}>Password</label>
+                    <label className={loginCss.label}>OTP</label>
                     <input
                       onChange={(e) => setOtp(e.target.value)}
                       value={otp}
@@ -270,6 +272,12 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                 )}
               </form>
             )}
+            <div className={loginCss.formContainerBottom}>
+              {/* <div className={loginCss.text}>Back to</div> */}
+              <div className={loginCss.btn}>
+                <Link href={'/login'}>Back to Login?</Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
