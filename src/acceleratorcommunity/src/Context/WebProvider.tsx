@@ -5,6 +5,8 @@ function WebProvider(props: any) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userToken, setUserToken] = useState('');
   const [userRefreshToken, setUserRefreshToken] = useState('');
+  const [objectId, setObjectId] = useState('');
+  const [userObject, setUserObject] = useState<any>('');
 
   return (
     <WebContext.Provider
@@ -15,6 +17,10 @@ function WebProvider(props: any) {
         setUserToken,
         userRefreshToken,
         setUserRefreshToken,
+        objectId,
+        setObjectId,
+        userObject,
+        setUserObject,
       }}
     >
       {props?.children}

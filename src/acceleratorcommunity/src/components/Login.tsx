@@ -51,7 +51,7 @@ const Login = (props: LoginProps): JSX.Element => {
   const targetItems = props?.fields?.data?.datasource;
 
   const router = useRouter();
-  const { setIsLoggedIn, setUserToken, userToken } = { ...useContext(WebContext) };
+  const { setIsLoggedIn, setUserToken, setObjectId, userToken } = { ...useContext(WebContext) };
 
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
@@ -95,6 +95,9 @@ const Login = (props: LoginProps): JSX.Element => {
         setUserToken(response?.data?.data?.access_token);
         if (typeof localStorage !== 'undefined') {
           localStorage.setItem('UserToken', response?.data?.data?.access_token);
+        }
+        if (setObjectId != undefined) {
+          setObjectId(email);
         }
         router.push('/');
       } else {
