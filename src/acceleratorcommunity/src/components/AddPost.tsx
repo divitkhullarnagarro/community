@@ -12,6 +12,8 @@ import getAllPostsCall from '../API/getAllPostsCall';
 import Spinner from 'react-bootstrap/Spinner';
 import getPostByIdCall from '../API/getPostByIdCall';
 import addPostCall from '../API/addPostCall';
+import getUserCall from 'src/API/getUserCall';
+import addPostCommentCall from 'src/API/addPostCommentCall';
 // import loginUserCall from 'src/API/loginUserCall';
 
 type AddPostProps = ComponentProps & {
@@ -22,11 +24,16 @@ type AddPostProps = ComponentProps & {
 
 const AddPost = (props: AddPostProps | any): JSX.Element => {
   props; //delete me
-  const { userToken } = { ...useContext(WebContext) };
+  const { userToken, setUserToken, objectId, userObject, setUserObject } = {
+    ...useContext(WebContext),
+  };
 
   // useEffect(() => {
   //   loginUserCall('nishantemail@gmail.com', 'Nishant1@').then((response) => {
-  //     if (setUserToken !== undefined) setUserToken(response?.data?.data?.access_token);
+  //     if (setUserToken !== undefined && typeof localStorage !== 'undefined') {
+  //       setUserToken(response?.data?.data?.access_token);
+  //       localStorage.setItem('UserToken', response?.data?.data?.access_token);
+  //     }
   //   });
   // }, []);
 
@@ -34,7 +41,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const [showForm1, setShowForm1] = useState(false);
   let myPostArray: ReactElement<any, any>[] = [];
   let [posts, setPosts] = useState(myPostArray);
-  let [postItems, setPostItems] = useState<any>('');
+  // let [postItems, setPostItems] = useState<any>('');
 
   let [postText, setPostText] = useState('');
   // let [postHeading, setPostHeading] = useState('');
@@ -49,13 +56,40 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   let [ifReachedEnd, setIfReachedEnd] = useState(false);
   let [ifNoMoreData, setIfNoMoreData] = useState(false);
   let [createNewPostError, setCreateNewPostError] = useState(false);
+  // let [userName, setUserName] = useState('');
 
   let isExpEditorActive = props?.sitecoreContext?.pageEditing;
 
+  // function getNameFromToken(token: any) {
+  //   const [header, payload, signature] = token.split('.');
+  //   header;
+  //   signature;
+  //   const decodedPayload = atob(payload);
+  //   const parsedPayload = JSON.parse(decodedPayload);
+  //   return parsedPayload;
+  // }
+
   useEffect(() => {
     if (userToken == '' && !isExpEditorActive) {
-      router.push('/login');
+      if (
+        typeof localStorage !== 'undefined' &&
+        localStorage.getItem('UserToken') != '' &&
+        localStorage.getItem('UserToken') != null
+      ) {
+        let token = localStorage.getItem('UserToken');
+        if (token != null && setUserToken != undefined) {
+          setUserToken(token);
+        }
+      } else router.push('/login');
     }
+  }, []);
+
+  useEffect(() => {
+    getUserCall(userToken, objectId).then((response) => {
+      if (setUserObject != undefined) {
+        setUserObject(response?.data?.data);
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -65,7 +99,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   useEffect(() => {
     if (userToken != '' && userToken != undefined) {
       getAllPostsCall(userToken, postPageNum).then((response: any) => {
-        setMyAnotherArr(response?.data?.data);
+        let newArr = response?.data?.data;
+        let empArr: any[] = [];
+        newArr?.map((post: any) => {
+          post.isOpenComment = false;
+          post.comments = empArr;
+        });
+        setMyAnotherArr(newArr);
       });
     }
   }, [userToken]);
@@ -91,9 +131,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       return prev + 1;
     });
     getAllPostsCall(userToken, postPageNum + 1).then((response: any) => {
-      if (response?.data?.data.length != 0 && response?.data?.data?.length) {
+      if (response?.data?.data?.length != 0 && response?.data?.data?.length) {
+        let newArr = response?.data?.data;
+        newArr?.map((post: any) => {
+          post.isOpenComment = false;
+          post.comments = [];
+        });
         setMyAnotherArr((prevState: any[]) => {
-          return [...prevState, ...response?.data?.data];
+          return [...prevState, ...newArr];
         });
       } else {
         setIfNoMoreData(true);
@@ -196,6 +241,18 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     // setMyArr(() => {
     //   return { posts: modPost };
     // });
+    let locArr = myAnotherArr;
+    let modPost = locArr.map((post: any) => {
+      if (post.id == id) {
+        post.isLikedByUser = true;
+        return post;
+      } else {
+        return post;
+      }
+    });
+    setMyAnotherArr(() => {
+      return modPost;
+    });
     likePostCall(userToken, id).then((response) => {
       if (response?.data?.success == true) {
         let locArr = myAnotherArr;
@@ -216,27 +273,41 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   //Function To Handle Open Comments Tray
   function setOpenComments(id: string, show: boolean) {
-    let locArr = myArr.posts;
+    // let locArr = myArr.posts;
+    // let modPost = locArr.map((post: any) => {
+    //   if (post.id == id) {
+    //     post.showComments = show;
+    //     return post;
+    //   } else {
+    //     return post;
+    //   }
+    // });
+    // setMyArr(() => {
+    //   return { posts: modPost };
+    // });
+    let locArr = myAnotherArr;
     let modPost = locArr.map((post: any) => {
       if (post.id == id) {
-        post.showComments = show;
+        post.isOpenComment = show;
         return post;
       } else {
         return post;
       }
     });
-    setMyArr(() => {
-      return { posts: modPost };
+    setMyAnotherArr(() => {
+      return modPost;
     });
   }
 
   //Function To Handle Post Comments
   function postComments(id: string, e: any) {
     e.preventDefault();
-    let locArr = myArr.posts;
+
+    let locArr = myAnotherArr;
+    addPostCommentCall(userToken, id, e.target[0].value);
     let modPost = locArr.map((post: any) => {
       if (post.id == id) {
-        post.comments.push({
+        post?.comments.push({
           id: 'Unique Id For Each Comment',
           commentToId: id,
           nameOfCommentor: 'Will Be Extracted From Token Value',
@@ -248,8 +319,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         return post;
       }
     });
-    setMyArr(() => {
-      return { posts: modPost };
+    setMyAnotherArr(() => {
+      return modPost;
     });
 
     e.currentTarget.reset();
@@ -378,7 +449,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               <div id="commentsContainer">
                 <Form
                   onSubmit={(e) => {
-                    postComments(post.id, e);
+                    postComments(post?.id, e);
                   }}
                   style={{ border: '1px', borderColor: 'black' }}
                 >
@@ -390,7 +461,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       style={{ marginRight: '10px' }}
                     ></img>
                     <Form.Control
-                      // onChange={(e) => setPostCommentValue(e.target.value)}
+                      // onChange={(e) => setPostComment(e.target.value)}
                       type="text"
                       placeholder="Add Comments..."
                       required
@@ -398,7 +469,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       style={{ width: '70%' }}
                     />
                     <button
-                      type="submit"
+                      type="button"
+                      // onClick={() => {
+                      //   postComments(post?.id, postComment);
+                      // }}
                       style={{
                         float: 'right',
                         marginLeft: '10px',
@@ -517,7 +591,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           </div>
           <div className="postContent">{post?.description}</div>
           <hr />
-          <div className="postFooter">
+          <div className="postFooter" style={{ marginBottom: '20px' }}>
             <div className="postActions" style={{ marginBottom: '10px' }}>
               <button onClick={() => LikePost(post?.id)}>
                 <img
@@ -540,9 +614,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               />
             </button> */}
               <button
-                onClick={() => setOpenComments(post.id, !post.showComments)}
-                aria-controls="commentsContainer"
-                aria-expanded={post?.showComments}
+                onClick={() => setOpenComments(post.id, !post.isOpenComment)}
+                aria-controls="anotherCommentsContainer"
+                aria-expanded={post?.isOpenComment}
               >
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/1380/1380338.png"
@@ -560,22 +634,28 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </button>
             </div>
             <div>
-              <span style={{ fontWeight: '600' }}>2.5k Likes</span>
+              <span style={{ fontWeight: '600' }}>
+                {post?.postMeasures?.likeCount ? post?.postMeasures?.likeCount : '0'}
+                {' Likes'}
+              </span>
               <span> | </span>
-              <span style={{ fontWeight: '600' }}>350 Comments</span>
+              <span style={{ fontWeight: '600' }}>
+                {post?.postMeasures?.commentCount ? post?.postMeasures?.commentCount : '0'}
+                {' Comments'}
+              </span>
             </div>
           </div>
-          <Collapse in={post?.showComments}>
-            <div id="commentsContainer">
+          <Collapse in={post?.isOpenComment}>
+            <div id="anotherCommentsContainer">
               <Form
                 onSubmit={(e) => {
-                  postComments(post.id, e);
+                  postComments(post?.id, e);
                 }}
                 style={{ border: '1px', borderColor: 'black' }}
               >
                 <Form.Group className="mb-3" controlId="comments" style={{ display: 'flex' }}>
                   <img
-                    src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                    src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
                     alt="User-Pic"
                     width="60px"
                     style={{ marginRight: '10px' }}
@@ -586,7 +666,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     placeholder="Add Comments..."
                     required
                     autoFocus
-                    style={{ width: '70%' }}
+                    style={{ width: '100%' }}
                   />
                   <button
                     type="submit"
@@ -598,14 +678,38 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       border: 'none',
                       backgroundColor: '#008CBA',
                       color: 'white',
-                      width: '30%',
+                      width: '20%',
                     }}
                   >
                     PostComment
                   </button>
                 </Form.Group>
               </Form>
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
+              {post?.comments?.map((comment: any) => {
+                return (
+                  <>
+                    <div
+                      style={{
+                        padding: '20px',
+                        backgroundColor: 'lightgray',
+                        margin: '5px',
+                        borderBottomLeftRadius: '30px',
+                        borderTopRightRadius: '30px',
+                        borderBottomRightRadius: '30px',
+                        marginTop: '20px',
+                      }}
+                    >
+                      <div>
+                        <h4>
+                          {userObject?.firstName} {userObject?.lastName}
+                        </h4>
+                      </div>
+                      <div>{comment?.commentString}</div>
+                    </div>
+                  </>
+                );
+              })}
+              {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <button
                   style={{
                     padding: '10px',
@@ -622,7 +726,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     height="20px"
                   />
                 </button>
-              </div>
+              </div> */}
             </div>
           </Collapse>
         </div>
@@ -723,26 +827,26 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   };
 
   //Function To Handle Post Action Items
-  useEffect(() => {
-    if (props?.fields?.data?.datasource?.postType?.targetItems?.delete?.me) {
-      let arr: any[] = [];
-      props?.fields?.data?.datasource?.postType?.targetItems?.map((item: any) => {
-        arr?.push(
-          <div>
-            <button>
-              <span>{item?.title?.jsonValue?.value}</span>
-              <img
-                src={`https://9977-182-77-26-98.in.ngrok.io/${item?.image?.jsonValue?.value?.src}`}
-                alt={item?.image?.jsonValue?.value?.alt}
-                width="30px"
-              ></img>
-            </button>
-          </div>
-        );
-      });
-      setPostItems(arr);
-    }
-  }, [props]);
+  // useEffect(() => {
+  //   if (props?.fields?.data?.datasource?.postType?.targetItems?.delete?.me) {
+  //     let arr: any[] = [];
+  //     props?.fields?.data?.datasource?.postType?.targetItems?.map((item: any) => {
+  //       arr?.push(
+  //         <div>
+  //           <button>
+  //             <span>{item?.title?.jsonValue?.value}</span>
+  //             <img
+  //               src={`https://9977-182-77-26-98.in.ngrok.io/${item?.image?.jsonValue?.value?.src}`}
+  //               alt={item?.image?.jsonValue?.value?.alt}
+  //               width="30px"
+  //             ></img>
+  //           </button>
+  //         </div>
+  //       );
+  //     });
+  //     setPostItems(arr);
+  //   }
+  // }, [props]);
 
   function clickmebuttonHandler() {
     if (typeof document !== undefined) {
@@ -902,8 +1006,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   {props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
                     ? props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
                     : "What's on your mind"}
-                  ...
-                  {/* <span>, Mr. John Doe</span> */}
+                  {`, `}
+                  <span>
+                    {userObject?.firstName ? userObject?.firstName : 'Mr. John Doe'}{' '}
+                    {userObject?.lastName ? userObject?.lastName : ''}
+                  </span>
                 </h4>
               </button>
               {/* <Modal show={showForm1} onHide={handleClose1}>
@@ -1122,97 +1229,91 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </div>
                   <hr />
                   <div className="AddPostItems">
-                    {postItems?.length == 0 ? (
-                      <>
-                        <div>
-                          <button onClick={clickmebuttonHandler} type="button">
-                            <span>Image</span>
-                            <img
-                              src="https://cdn-icons-png.flaticon.com/512/16/16410.png"
-                              alt="PostItems"
-                              width="30px"
-                            ></img>{' '}
-                            <Form.Group className="mb-3">
-                              <Form.Control
-                                style={{ display: 'none' }}
-                                onChange={(e) => setPostImageValue(e)}
-                                // value={postImage}
-                                type="file"
-                                placeholder="Post Text"
-                                multiple
-                                accept="image/*"
-                                id="clickmebutton"
-                              />
-                            </Form.Group>
-                          </button>
-                        </div>
-                        <div>
-                          <button onClick={clickmebuttonHandler2} type="button">
-                            <span>Doc</span>
-                            <img
-                              src="https://cdn-icons-png.flaticon.com/512/2991/2991106.png"
-                              alt="PostItems"
-                              width="30px"
-                            ></img>{' '}
-                            <Form.Group className="mb-3">
-                              <Form.Control
-                                style={{ display: 'none' }}
-                                onChange={(e) => setPostDocValue(e)}
-                                // value={postImage}
-                                type="file"
-                                placeholder="Post Text"
-                                multiple
-                                accept=".pdf,.doc,.docx,.txt"
-                                id="clickmebutton2"
-                              />
-                            </Form.Group>
-                          </button>
-                        </div>
-                        <div>
-                          <button onClick={clickmebuttonHandler3} type="button">
-                            <span>Video</span>
-                            <img
-                              src="https://cdn-icons-png.flaticon.com/512/711/711245.png"
-                              alt="PostItems"
-                              width="30px"
-                            ></img>
-                            <Form.Group className="mb-3">
-                              <Form.Control
-                                style={{ display: 'none' }}
-                                onChange={(e) => setPostVideoValue(e)}
-                                type="file"
-                                placeholder="Post Video"
-                                // multiple
-                                accept=".mp4"
-                                id="clickmebutton3"
-                              />
-                            </Form.Group>
-                          </button>
-                        </div>
-                        <div>
-                          <button type="button">
-                            <span>Event</span>
-                            <img
-                              src="https://cdn-icons-png.flaticon.com/512/2693/2693507.png"
-                              alt="PostItems"
-                              width="30px"
-                            ></img>
-                          </button>
-                        </div>
-                        <div>
-                          <button type="button">
-                            <span>Poll</span>
-                            <img
-                              src="https://cdn-icons-png.flaticon.com/512/2668/2668889.png"
-                              alt="PostItems"
-                              width="30px"
-                            ></img>
-                          </button>
-                        </div>
-                      </>
-                    ) : (
-                      postItems
-                    )}
+                    <div>
+                      <button onClick={clickmebuttonHandler} type="button">
+                        <span>Image</span>
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/512/16/16410.png"
+                          alt="PostItems"
+                          width="30px"
+                        ></img>{' '}
+                        <Form.Group className="mb-3">
+                          <Form.Control
+                            style={{ display: 'none' }}
+                            onChange={(e) => setPostImageValue(e)}
+                            // value={postImage}
+                            type="file"
+                            placeholder="Post Text"
+                            multiple
+                            accept="image/*"
+                            id="clickmebutton"
+                          />
+                        </Form.Group>
+                      </button>
+                    </div>
+                    <div>
+                      <button onClick={clickmebuttonHandler2} type="button">
+                        <span>Doc</span>
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/512/2991/2991106.png"
+                          alt="PostItems"
+                          width="30px"
+                        ></img>{' '}
+                        <Form.Group className="mb-3">
+                          <Form.Control
+                            style={{ display: 'none' }}
+                            onChange={(e) => setPostDocValue(e)}
+                            // value={postImage}
+                            type="file"
+                            placeholder="Post Text"
+                            multiple
+                            accept=".pdf,.doc,.docx,.txt"
+                            id="clickmebutton2"
+                          />
+                        </Form.Group>
+                      </button>
+                    </div>
+                    <div>
+                      <button onClick={clickmebuttonHandler3} type="button">
+                        <span>Video</span>
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/512/711/711245.png"
+                          alt="PostItems"
+                          width="30px"
+                        ></img>
+                        <Form.Group className="mb-3">
+                          <Form.Control
+                            style={{ display: 'none' }}
+                            onChange={(e) => setPostVideoValue(e)}
+                            type="file"
+                            placeholder="Post Video"
+                            // multiple
+                            accept=".mp4"
+                            id="clickmebutton3"
+                          />
+                        </Form.Group>
+                      </button>
+                    </div>
+                    <div>
+                      <button type="button">
+                        <span>Event</span>
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/512/2693/2693507.png"
+                          alt="PostItems"
+                          width="30px"
+                        ></img>
+                      </button>
+                    </div>
+                    <div>
+                      <button type="button">
+                        <span>Poll</span>
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/512/2668/2668889.png"
+                          alt="PostItems"
+                          width="30px"
+                        ></img>
+                      </button>
+                    </div>
                   </div>
                 </Form>
                 <hr />
