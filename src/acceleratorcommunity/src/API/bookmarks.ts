@@ -1,5 +1,5 @@
 import Axios, { AxiosResponse } from "axios";
-import qs from "qs";
+
 
 const bookmark = async (objectId: string, contentId:string, title:string, comment:string| undefined, userToken : string | undefined
     // , url:string
@@ -7,14 +7,14 @@ const bookmark = async (objectId: string, contentId:string, title:string, commen
 
 
 
-    var data = qs.stringify({
+    var data = {
         objectId: objectId,
         contentId: contentId,
         // url:url,
         title:title,
         comment:comment
         
-    })
+    }
 
     let URL = `https://accelerator-api-management.azure-api.net/user-service/api/v1/bookmarks/save/`;
     var config = {
