@@ -25,7 +25,9 @@ SharedFields:
             targetItems {
               ... on ArticleDetailPage {
                 id
-                url{url}
+                url{
+                  url
+                }
                 title {
                   jsonValue
                 }
@@ -106,11 +108,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "7c7e5e9d-92cb-4cb1-9855-fbda07408279"
+      Value: "128f31c0-c5b8-455f-96b2-d1c68693ad24"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230326T111312Z
+      Value: 20230327T094354Z

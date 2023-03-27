@@ -29,6 +29,7 @@ type peopleYouMayKnowFields = {
 };
 
 const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
+  console.log('people you may know', props);
   const router = useRouter();
   const { Title, LinkLabel, IsFullList } = props?.params;
   const [peopleYouMayKnowList, setPeopleYouMayKnowList] = useState<peopleYouMayKnowFields[]>([]);
@@ -72,13 +73,17 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
       >
         <div className={styles.header}>
           <div className={styles.heading}>{Title}</div>
-          <Link href={'/peopleyoumayknow'}>{LinkLabel}</Link>
+          {LinkLabel ? <Link href={'/peopleyoumayknow'}>{LinkLabel}</Link> : <></>}
         </div>
         <div className={styles.listWrapper}>
           <Slider className="slider" {...sliderSettings}>
-            {peopleYouMayKnowList.slice(0, 9).map((item) => {
-              return <PeopleYouMayKnowHalfPageItem {...item} />;
-            })}
+            {peopleYouMayKnowList?.length > 0 ? (
+              peopleYouMayKnowList.slice(0, 9).map((item) => {
+                return <PeopleYouMayKnowHalfPageItem {...item} />;
+              })
+            ) : (
+              <></>
+            )}
           </Slider>
         </div>
       </div>
@@ -141,7 +146,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
             className={styles.wrapper}
             style={{
               maxHeight: '100%',
-              height: '75vh',
+              height: '80vh',
               width: '35%',
               backgroundColor: 'lightgrey',
             }}
@@ -150,9 +155,13 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
               <div className={styles.heading}>{Title}</div>
             </div>
             <div className={styles.listWrapper}>
-              {peopleYouMayKnowList.map((item) => {
-                return <PeopleYouMayKnowFullPageItem {...item} />;
-              })}
+              {peopleYouMayKnowList?.length > 0 ? (
+                peopleYouMayKnowList.map((item) => {
+                  return <PeopleYouMayKnowFullPageItem {...item} />;
+                })
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </div>
@@ -166,29 +175,11 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
 
   return (
     <>
-      {peopleYouMayKnowList?.length > 0 ? (
-        isFullPage ? (
-          <FullPagePeopleYouMayKnow />
-        ) : (
-          <>
-            <HalfPagePeopleYouMayKnow />
-          </>
-        )
+      {isFullPage ? (
+        <FullPagePeopleYouMayKnow />
       ) : (
         <>
-          <div
-            className={styles.wrapper}
-            style={{
-              maxHeight: isFullPage ? '100%' : '590px',
-              height: isFullPage ? '75vh' : 'max-content',
-              backgroundColor: 'lightgrey',
-            }}
-          >
-            <div className={styles.header}>
-              <div className={styles.heading}>{Title}</div>
-              <Link href={'/peopleyoumayknow'}>{LinkLabel}</Link>
-            </div>
-          </div>
+          <HalfPagePeopleYouMayKnow />
         </>
       )}
     </>
