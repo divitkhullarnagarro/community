@@ -17,7 +17,6 @@ import addPostCommentCall from 'src/API/addPostCommentCall';
 // import loginUserCall from 'src/API/loginUserCall';
 import Link from 'next/link';
 import ArticlesListCss from '../assets/ArticlesList.module.css';
-import shareImage from '../assets/images/share.svg';
 import linkedin from '../assets/images/linkedin.png';
 import twitter from '../assets/images/twitter.png';
 import whatsapp from '../assets/images/whatsapp.png';
