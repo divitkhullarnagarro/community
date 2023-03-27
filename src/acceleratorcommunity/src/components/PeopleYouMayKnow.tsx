@@ -33,7 +33,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   const router = useRouter();
   const { Title, LinkLabel, IsFullList } = props?.params;
   const [peopleYouMayKnowList, setPeopleYouMayKnowList] = useState<peopleYouMayKnowFields[]>([]);
-  const { userToken } = { ...useContext(WebContext) };
+  const { userToken, setUserToken } = { ...useContext(WebContext) };
 
   const [isFullPage] = useState(IsFullList === '1');
   const getPeopleYouMayKnowList = async (userToken: string | undefined) => {
@@ -170,8 +170,25 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   };
 
   useEffect(() => {
-    getPeopleYouMayKnowList(userToken);
+    if (userToken === undefined || userToken === '') {
+      if (
+        typeof localStorage !== 'undefined' &&
+        localStorage.getItem('UserToken') != '' &&
+        localStorage.getItem('UserToken') != null
+      ) {
+        let token = localStorage.getItem('UserToken');
+        if (token != null && setUserToken != undefined) {
+          setUserToken(token);
+        }
+      }
+    }
   }, []);
+
+  useEffect(() => {
+    if (userToken != '' && userToken != undefined) {
+      getPeopleYouMayKnowList(userToken);
+    }
+  }, [userToken]);
 
   return (
     <>
