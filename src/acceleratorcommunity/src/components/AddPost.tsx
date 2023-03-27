@@ -245,6 +245,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     let modPost = locArr.map((post: any) => {
       if (post.id == id) {
         post.isLikedByUser = true;
+        if (typeof post?.postMeasures?.likeCount === 'number') {
+          post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+        } else {
+          post.postMeasures.likeCount = 1;
+        }
         return post;
       } else {
         return post;
@@ -259,6 +264,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         let modPost = locArr.map((post: any) => {
           if (post.id == id) {
             post.isLikedByUser = true;
+            if (typeof post?.postMeasures?.likeCount === 'number') {
+              post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+            } else {
+              post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+            }
             return post;
           } else {
             return post;
@@ -270,6 +280,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       }
     });
   }
+
+  console.log('asdsad', myAnotherArr);
 
   //Function To Handle Open Comments Tray
   function setOpenComments(id: string, show: boolean) {
@@ -307,13 +319,18 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     addPostCommentCall(userToken, id, e.target[0].value);
     let modPost = locArr.map((post: any) => {
       if (post.id == id) {
-        post?.comments.push({
+        post?.comments?.push({
           id: 'Unique Id For Each Comment',
           commentToId: id,
           nameOfCommentor: 'Will Be Extracted From Token Value',
           dateAndTime: 'Current Date Time',
           commentString: e.target[0].value,
         });
+        if (typeof post?.postMeasures?.commentCount === 'number') {
+          post.postMeasures.commentCount = (post.postMeasures.commentCount ?? 0) + 1;
+        } else {
+          post.postMeasures.commentCount = (post.postMeasures.commentCount ?? 0) + 1;
+        }
         return post;
       } else {
         return post;
