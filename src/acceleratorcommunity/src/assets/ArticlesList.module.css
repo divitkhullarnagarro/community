@@ -124,17 +124,16 @@
 }
 .sharePopups {
   display: flex;
-  /* background-color: aqua; */
+  background-color: #f7ffff;
   border-radius: 8px;
   height: 141px;
   width: 169px;
-  /* position: absolute; */
+  position: absolute;
   top: 8rem;
   left: 11rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 7px 8px 7px -2px rgb(0 0 0 / 22%);
 }
 .sharePopup{
   display: flex;
