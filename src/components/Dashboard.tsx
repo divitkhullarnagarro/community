@@ -5,6 +5,7 @@ import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
 // import Link from 'next/link';
 import { useRouter } from 'next/router';
 import WebContext from '../Context/WebContext';
+
 type DashboardProps = ComponentProps & {
   fields: {
     heading: Field<string>;
@@ -48,7 +49,6 @@ const Dashboard = (props: DashboardProps | any): JSX.Element => {
           <Link className="navBaroptions" href="/profile">
             Profile
           </Link>
-          <FollowUnfollowButton/>
         </div>
       </nav> */}
     </>
