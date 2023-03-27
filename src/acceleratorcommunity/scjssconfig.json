@@ -3,7 +3,7 @@
     "instancePath": "",
     "apiKey": "{79FEE958-BF31-4206-84E8-0A66D488B470}",
     "deploySecret": "n6uut156izfipoz5hx03fswllvp5taofyymy22bkd3q",
-    "deployUrl": "https://xmc-nagarro1-communityac5f8a-communityac3796.sitecorecloud.io/sitecore/api/jss/import",
-    "layoutServiceHost": "https://xmc-nagarro1-communityac5f8a-communityac3796.sitecorecloud.io"
+    "deployUrl": "https://81e4-2401-4900-1ca9-2f33-78a8-9320-16c9-6487.in.ngrok.io/sitecore/api/jss/import",
+    "layoutServiceHost": "https://81e4-2401-4900-1ca9-2f33-78a8-9320-16c9-6487.in.ngrok.io"
   }
 }
