@@ -2,7 +2,7 @@
 ID: "67ade776-24c7-4d14-b6a8-298ee0e802ac"
 Parent: "0d9a4816-dacf-4725-8d2b-2bca674010ba"
 Template: "e269fbb5-3750-427a-9149-7aa950b49301"
-Path: /sitecore/templates/Feature/acceleratorcommunity/Title/Data
+Path: /sitecore/templates/Feature/acceleratorcommunity/FactOfTheDay/Data
 Languages:
 - Language: en
   Versions:

@@ -81,13 +81,14 @@ const Login = (props: LoginProps): JSX.Element => {
 
   const onSubmitHandler = async (e: any) => {
     e.preventDefault();
+    if (password === '' || email === '') {
+      if (password === '') setPasswordError(true);
+      if (email === '') {
+        setEmailError(true);
+      }
+      return;
+    }
     setIsLoggingIn(true);
-    if (password === '') {
-      setPasswordError(true);
-    }
-    if (email === '') {
-      setEmailError(true);
-    }
     if (email !== '' && password !== '') {
       let response = await loginUserCall(email, password);
       if (response?.status == 200 && setIsLoggedIn != undefined && setUserToken != undefined) {
@@ -104,7 +105,7 @@ const Login = (props: LoginProps): JSX.Element => {
     }
   };
 
-  const heading = targetItems.title.jsonValue.value.split('<br>');
+  const heading = targetItems?.title?.jsonValue?.value?.split('<br>');
   return (
     <>
       <div className={loginCss.container}>
@@ -112,19 +113,19 @@ const Login = (props: LoginProps): JSX.Element => {
           <div className={loginCss.welcomeText}>
             <div className={loginCss.welcomeTextImage}>
               <NextImage
-                field={targetItems.image.jsonValue.value}
+                field={targetItems?.image?.jsonValue?.value}
                 editable={true}
                 width={30}
                 height={30}
               />
             </div>
             <h2>
-              {heading[0]}
+              {heading ? heading[0] : ''}
               <br />
-              {heading[1]}
+              {heading ? heading[1] : ''}
             </h2>
             <div className={loginCss.welcomeTextDescription}>
-              {targetItems.description.jsonValue.value}
+              {targetItems?.description?.jsonValue?.value}
             </div>
           </div>{' '}
         </div>
@@ -135,7 +136,7 @@ const Login = (props: LoginProps): JSX.Element => {
               <div className={loginCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
                 <label className={loginCss.label}>
-                  {targetItems.userNameLabel.jsonValue.value}
+                  {targetItems?.userNameLabel?.jsonValue?.value}
                 </label>
                 <input
                   onChange={(e) => setEmailValue(e.target.value)}
@@ -154,7 +155,7 @@ const Login = (props: LoginProps): JSX.Element => {
               <div className={loginCss.loginField}>
                 <i className="login__icon fas fa-lock"></i>
                 <label className={loginCss.label}>
-                  {targetItems.passwordLabel.jsonValue.value}
+                  {targetItems?.passwordLabel?.jsonValue?.value}
                 </label>
                 <input
                   onChange={(e) => setPasswordValue(e.target.value)}
@@ -164,7 +165,7 @@ const Login = (props: LoginProps): JSX.Element => {
                 />
                 {passwodError ? (
                   <span className={loginCss.error}>
-                    * {targetItems.passwordLabel.jsonValue.value} Field is empty
+                    * {targetItems?.passwordLabel?.jsonValue?.value} Field is empty
                   </span>
                 ) : (
                   ''
@@ -180,7 +181,7 @@ const Login = (props: LoginProps): JSX.Element => {
                 </div>
                 <div className={loginCss.forgotPassword}>
                   <Link href={'/forgotPassword'}>
-                    {targetItems.forgotPasswordLabel.jsonValue.value}
+                    {targetItems?.forgotPasswordLabel?.jsonValue?.value}
                   </Link>
                 </div>
               </div>
@@ -190,7 +191,7 @@ const Login = (props: LoginProps): JSX.Element => {
                     <Spinner style={{ width: '15px', height: '15px' }} animation="border" />
                   </span>
                 ) : (
-                  targetItems.signInBtn.jsonValue.value
+                  targetItems?.signInBtn?.jsonValue?.value
                 )}
                 <i className="button__icon fas fa-chevron-right"></i>
               </button>
@@ -206,10 +207,10 @@ const Login = (props: LoginProps): JSX.Element => {
             </div>
             <div className={loginCss.formContainerBottom}>
               <div className={loginCss.text}>
-                {targetItems.dontHaveAccountLabel.jsonValue.value}
+                {targetItems?.dontHaveAccountLabel?.jsonValue?.value}
               </div>
               <div className={loginCss.btn}>
-                <Link href={'/register'}>{targetItems.registerHereLabel.jsonValue.value}</Link>
+                <Link href={'/register'}>{targetItems?.registerHereLabel?.jsonValue?.value}</Link>
               </div>
             </div>
           </div>

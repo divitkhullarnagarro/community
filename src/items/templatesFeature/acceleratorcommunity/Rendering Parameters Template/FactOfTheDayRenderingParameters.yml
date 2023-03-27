@@ -1,0 +1,32 @@
+﻿---
+ID: "c2c542eb-d181-4f1c-a4b3-6f7279afc66e"
+Parent: "137dd18a-8398-4b75-a289-3644e1cd2c23"
+Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
+Path: /sitecore/templates/Feature/acceleratorcommunity/Rendering Parameters Template/FactOfTheDayRenderingParameters
+SharedFields:
+- ID: "12c33f3f-86c5-43a5-aeb4-5598cec45116"
+  Hint: __Base template
+  Value: |
+    {1930BBEB-7805-471A-A3BE-4858AC7CF696}
+    {8CA06D6A-B353-44E8-BC31-B528C7306971}
+- ID: "f7d48a55-2158-4f02-9356-756654404f73"
+  Hint: __Standard values
+  Value: "{4EE0A0C4-DD1D-4C7C-B67F-D47C8A1499AB}"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230310T061457Z
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "a0356227-6a02-45d3-9dff-ca7631fe5773"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230323T061446Z

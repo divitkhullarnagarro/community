@@ -1,12 +1,8 @@
 ﻿---
-ID: "683b66a4-77ff-4f81-9bb9-f876db0a5905"
+ID: "d3b3136c-ec96-4b80-8ac6-f9217e1b5b19"
 Parent: "88fd8092-f195-4207-9310-ff67a9af0206"
 Template: "0d9a4816-dacf-4725-8d2b-2bca674010ba"
-Path: /sitecore/content/acceleratorcommunity/Components/Title/FactOfTheDayTitle
-SharedFields:
-- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
-  Hint: __Icon
-  Value: applications/16x16/document_plain.png
+Path: /sitecore/content/acceleratorcommunity/Components/FactOfTheDayItems/FactOfTheDay
 Languages:
 - Language: en
   Versions:
@@ -14,17 +10,23 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230320T062236Z
+      Value: 20230322T170518Z
     - ID: "30a44b58-ea42-468b-ac0b-07345b8d3e4a"
       Hint: Title
-      Value: THIS DAY THAT YEAR
+      Value: Fact Of The Day
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "ab5d1627-afd8-4f76-8123-85379dda68ef"
+      Value: "098ec2d0-ed0c-4fed-8e10-13392a92fa35"
+    - ID: "97321436-cdf2-4fb6-8c02-333714f630fb"
+      Hint: Description
+      Value: King Faisal of Saudi Arabia was shot and killed by his nephew Faisal bin Musaid.
+    - ID: "b66e0a37-c9b9-49fd-9f05-1ff07d1ebc2f"
+      Hint: Automatic
+      Value: 1
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230320T103508Z
+      Value: 20230325T101327Z
