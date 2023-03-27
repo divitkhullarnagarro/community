@@ -139,7 +139,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
               <form className={loginCss.login} onSubmit={(e) => onSubmitPasswordHandler(e)}>
                 <div className={loginCss.loginField}>
                   <i className={loginCss['login__icon fas fa-user']}></i>
-                  <label className={loginCss.label}>User Email</label>
+                  <label className={loginCss.label}>Password</label>
                   <input
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
@@ -152,7 +152,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                 </div>
                 <div className={loginCss.loginField}>
                   <i className={loginCss['login__icon fas fa-lock']}></i>
-                  <label className={loginCss.label}>Password</label>
+                  <label className={loginCss.label}>Confirm Password</label>
                   <input
                     onChange={(e) => setConformPassword(e.target.value)}
                     value={confirmPassword}
@@ -216,7 +216,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                 {otpFieldVisible && (
                   <div className={loginCss.loginField}>
                     <i className={loginCss['login__icon fas fa-lock']}></i>
-                    <label className={loginCss.label}>Password</label>
+                    <label className={loginCss.label}>OTP</label>
                     <input
                       onChange={(e) => setOtp(e.target.value)}
                       value={otp}
