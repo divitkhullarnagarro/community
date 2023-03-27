@@ -1,8 +1,8 @@
 import Axios, { AxiosResponse } from "axios";
 
-const peopleYouMayKnowCall = async (loggedInUserName: string, userToken : string | undefined
+const peopleYouMayKnowCall = async (userToken : string | undefined
 ) => {
-    let URL = `https://accelerator-api-management.azure-api.net/user-service/api/v1/people-you-may-know/${loggedInUserName}`;
+    let URL = `https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/people-you-may-know`;
     var config = {
         url: URL,
         headers: {

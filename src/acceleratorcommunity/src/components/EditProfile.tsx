@@ -4,7 +4,7 @@ import styles from '../assets/editprofile.module.css';
 import Profile from '../assets/images/profile.png';
 import Button from 'react-bootstrap/Button';
 import ProfileCover from '../assets/images/ProfileCover.jpg';
-
+import { useRouter } from 'next/router';
 type HeaderProfileProps = ComponentProps & {
   fields: {
     heading: Field<string>;
@@ -13,6 +13,7 @@ type HeaderProfileProps = ComponentProps & {
 
 const EditProfile = (props: HeaderProfileProps): JSX.Element => {
   console.log('EditProfile', props);
+  const router = useRouter();
   return (
     <div style={{ background: `url(${ProfileCover})` }}>
       <div className={styles.headerWrapper}>
@@ -30,7 +31,11 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
               </div>
             </div>
           </div>
-          <Button className={styles.editProfileBtn} variant="primary">
+          <Button
+            className={styles.editProfileBtn}
+            onClick={() => router.push('/profile')}
+            variant="primary"
+          >
             Edit Profile
           </Button>
         </div>
