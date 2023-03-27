@@ -24,7 +24,6 @@
   color: black;
   font-size: 1.125rem;
   font-size: 1.4375rem;
-
 }
 
 .rightContainer {
@@ -163,6 +162,12 @@
   font-weight: 800;
 }
 
+.forgotPasswordCard {
+  border-radius: 24px;
+}
+.UpdatePasswordHeading {
+  font-family: Georgia, monospace;
+}
 /* media queries */
 
 @media screen and (max-width: 62.4375rem) {
