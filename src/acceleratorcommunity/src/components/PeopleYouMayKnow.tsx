@@ -1,7 +1,7 @@
 import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import Profile from '../assets/images/ProfilePic.jpeg';
-import styles from '../assets/peopleyoumayknow1.module.css';
+import styles from '../assets/peopleyoumayknow.module.css';
 import FollowUnfollowButton from './FollowUnfollowButton';
 import Link from 'next/link';
 import { useState, useContext, useEffect } from 'react';
@@ -20,7 +20,7 @@ type PeopleYouMayKnowProps = ComponentProps & {
 };
 
 type peopleYouMayKnowFields = {
-  objectId: Field<string>;
+  objectId: string;
   firstName: Field<string>;
   lastName: Field<string>;
   imageData: Field<string>;
@@ -87,7 +87,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
 
   const PeopleYouMayKnowHalfPageItem = (item: peopleYouMayKnowFields) => {
     return (
-      <div key={item?.objectId?.value} className={styles.itemHalfPage}>
+      <div key={item?.objectId} className={styles.itemHalfPage}>
         <NextImage
           contentEditable={true}
           field={Profile ?? item?.imageData?.value}
@@ -108,7 +108,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
 
   const PeopleYouMayKnowFullPageItem = (item: peopleYouMayKnowFields) => {
     return (
-      <div key={item?.objectId?.value} className={styles.item}>
+      <div key={item?.objectId} className={styles.item}>
         <NextImage
           contentEditable={true}
           className={styles.img}
@@ -132,7 +132,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
 
   const FullPagePeopleYouMayKnow = () => {
     return (
-      <div className={styles.wrapper1}>
+      <div className={styles.mainWrapper}>
         <div className={styles.backbtn}>
           <Button onClick={() => router.push('/')}>Back</Button>
         </div>
@@ -175,7 +175,21 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
           </>
         )
       ) : (
-        <></>
+        <>
+          <div
+            className={styles.wrapper}
+            style={{
+              maxHeight: isFullPage ? '100%' : '590px',
+              height: isFullPage ? '75vh' : 'max-content',
+              backgroundColor: 'lightgrey',
+            }}
+          >
+            <div className={styles.header}>
+              <div className={styles.heading}>{Title}</div>
+              <Link href={'/peopleyoumayknow'}>{LinkLabel}</Link>
+            </div>
+          </div>
+        </>
       )}
     </>
   );
