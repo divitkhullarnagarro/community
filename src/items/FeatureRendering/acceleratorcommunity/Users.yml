@@ -10,6 +10,22 @@ SharedFields:
 - ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
   Hint: __Icon
   Value: Apps/32x32/Male.png
+- ID: "17bb046a-a32a-41b3-8315-81217947611b"
+  Hint: ComponentQuery
+  Value: |
+    # Editing here does not save the query on the item; copy it back when done!
+    
+    # Editing here does not save the query on the item; copy it back when done!
+    query AdminList($datasource: String!, $language: String!) {
+      datasource: item(path: $datasource, language: $language) {
+        ... on AdminList {
+          mainHeaderLabel{jsonValue}
+          sideNavHeaderLabel{jsonValue}
+          userListLabel{jsonValue}
+        }
+      }
+    }
+    
 Languages:
 - Language: en
   Versions:
@@ -28,11 +44,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "c42b7664-0bb4-455c-8f33-c8eb5a6ce694"
+      Value: "8a4a8746-abe9-4fdd-94e1-da5e1903ecd8"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230314T045424Z
+      Value: 20230327T125239Z
