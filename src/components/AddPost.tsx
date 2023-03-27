@@ -732,7 +732,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             <button>
               <span>{item?.title?.jsonValue?.value}</span>
               <img
-                src={`https://9977-182-77-26-98.in.ngrok.io/${`https://9977-182-77-26-98.in.ngrok.io/${item?.image?.jsonValue?.value?.src}`}`}
+                src={`https://9977-182-77-26-98.in.ngrok.io/${item?.image?.jsonValue?.value?.src}`}
                 alt={item?.image?.jsonValue?.value?.alt}
                 width="30px"
               ></img>
@@ -1321,4 +1321,4 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   );
 };
 
-export default withSitecoreContext()(withSitecoreContext()(AddPost));
+export default withSitecoreContext()(AddPost);

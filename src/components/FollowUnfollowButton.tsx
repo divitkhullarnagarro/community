@@ -13,19 +13,6 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
   const handleClose1 = () => setShowForm(false);
   const [followButtonText, setButtonText] = useState('Follow');
   const changeText = (text: string) => setButtonText(text);
-import styles from '../assets/followunfollowbutton.module.css';
-import followCall, { UnfollowCall } from 'src/API/followUnfollowCall';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-
-const FollowUnfollowButton = (props: any): JSX.Element => {
-  const { isLoggedIn, userToken } = { ...useContext(WebContext) };
-  console.log(isLoggedIn);
-  // state variables
-  const [showForm1, setShowForm] = useState(false);
-  const handleClose1 = () => setShowForm(false);
-  const [followButtonText, setButtonText] = useState('Follow');
-  const changeText = (text: string) => setButtonText(text);
 
   const modalConfirmationDialog = () => {
     return (
@@ -90,7 +77,6 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
           {followButtonText}
         </button>
         {modalConfirmationDialog()}
-        {modalConfirmationDialog()}
       </div>
     );
   } else {
@@ -107,6 +93,5 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
     );
   }
 };
-
 
 export default FollowUnfollowButton;
