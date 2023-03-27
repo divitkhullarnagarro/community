@@ -18,8 +18,14 @@
     border: 2px solid rgb(200, 196, 196);
     width: 100%;
     border-radius: 4px;
+    outline: none;
 }
-
+.searchBoxText{
+    outline: none;
+}
+.searchBox input:active{
+    width: auto;
+}
 
 .searchBoxText{
     border: none;

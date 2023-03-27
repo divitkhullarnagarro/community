@@ -6,7 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
 const FollowUnfollowButton = (props: any): JSX.Element => {
-  const { isLoggedIn, userToken } = { ...useContext(WebContext) };
+  const { isLoggedIn, userToken, setUserToken } = { ...useContext(WebContext) };
   console.log(isLoggedIn);
   // state variables
   const [showForm1, setShowForm] = useState(false);
@@ -35,8 +35,24 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
     );
   };
 
+  const setTokenFromLocalStorage = () => {
+    if (userToken === undefined || userToken === '') {
+      if (
+        typeof localStorage !== 'undefined' &&
+        localStorage.getItem('UserToken') != '' &&
+        localStorage.getItem('UserToken') != null
+      ) {
+        let token = localStorage.getItem('UserToken');
+        if (token != null && setUserToken != undefined) {
+          setUserToken(token);
+        }
+      }
+    }
+  };
+
   const onFollow = async (e: any) => {
     e.preventDefault();
+    setTokenFromLocalStorage();
     let response = await followCall(props?.userName, userToken);
     if (response?.success) {
       changeText('Following');
@@ -51,6 +67,7 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
   const onUnfollow = async (e: any) => {
     e.preventDefault();
     modalConfirmationDialog();
+    setTokenFromLocalStorage();
     let response = await UnfollowCall(props?.userName, userToken);
     if (response?.success) {
       changeText('Follow');
