@@ -13,6 +13,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import getPostByIdCall from '../API/getPostByIdCall';
 import addPostCall from '../API/addPostCall';
 import getUserCall from 'src/API/getUserCall';
+import addPostCommentCall from 'src/API/addPostCommentCall';
 // import loginUserCall from 'src/API/loginUserCall';
 
 type AddPostProps = ComponentProps & {
@@ -303,6 +304,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     e.preventDefault();
 
     let locArr = myAnotherArr;
+    addPostCommentCall(userToken, id, e.target[0].value);
     let modPost = locArr.map((post: any) => {
       if (post.id == id) {
         post?.comments.push({
@@ -589,7 +591,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           </div>
           <div className="postContent">{post?.description}</div>
           <hr />
-          <div className="postFooter">
+          <div className="postFooter" style={{ marginBottom: '20px' }}>
             <div className="postActions" style={{ marginBottom: '10px' }}>
               <button onClick={() => LikePost(post?.id)}>
                 <img
@@ -632,9 +634,15 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </button>
             </div>
             <div>
-              <span style={{ fontWeight: '600' }}>2.5k Likes</span>
+              <span style={{ fontWeight: '600' }}>
+                {post?.postMeasures?.likeCount ? post?.postMeasures?.likeCount : '0'}
+                {' Likes'}
+              </span>
               <span> | </span>
-              <span style={{ fontWeight: '600' }}>350 Comments</span>
+              <span style={{ fontWeight: '600' }}>
+                {post?.postMeasures?.commentCount ? post?.postMeasures?.commentCount : '0'}
+                {' Comments'}
+              </span>
             </div>
           </div>
           <Collapse in={post?.isOpenComment}>
@@ -658,7 +666,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     placeholder="Add Comments..."
                     required
                     autoFocus
-                    style={{ width: '70%' }}
+                    style={{ width: '100%' }}
                   />
                   <button
                     type="submit"
@@ -670,14 +678,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       border: 'none',
                       backgroundColor: '#008CBA',
                       color: 'white',
-                      width: '30%',
+                      width: '20%',
                     }}
                   >
                     PostComment
                   </button>
                 </Form.Group>
               </Form>
-              {post?.comments.map((comment: any) => {
+              {post?.comments?.map((comment: any) => {
                 return (
                   <>
                     <div
@@ -688,6 +696,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         borderBottomLeftRadius: '30px',
                         borderTopRightRadius: '30px',
                         borderBottomRightRadius: '30px',
+                        marginTop: '20px',
                       }}
                     >
                       <div>
