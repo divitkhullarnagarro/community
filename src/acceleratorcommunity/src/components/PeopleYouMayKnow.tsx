@@ -10,8 +10,8 @@ import peopleYouMayKnowCall from 'src/API/peopleYouMayKnowCall';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
+import { Button, Card } from 'react-bootstrap';
 
 type PeopleYouMayKnowProps = ComponentProps & {
   fields: {
@@ -113,23 +113,82 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
 
   const PeopleYouMayKnowFullPageItem = (item: peopleYouMayKnowFields) => {
     return (
-      <div key={item?.objectId} className={styles.item}>
-        <NextImage
-          contentEditable={true}
-          className={styles.img}
-          field={Profile ?? item?.imageData?.value}
-          height={50}
-          width={50}
-        ></NextImage>
-        <div className={styles.detailsContainer}>
-          <div className={styles.name}>{item?.firstName + ' ' + item?.lastName}</div>
-          <div className={styles.details}>
-            <div className={styles.speciality}>{item?.speciality}.</div>
-            <div>{item?.city}</div>
-          </div>
+      <Card className={styles.cardItem}>
+        <div className={styles.imageContainer}>
+          <NextImage contentEditable={true} field={Profile} height={140} width={250}></NextImage>
         </div>
-        <div className={styles.button}>
+        <Card.Body>
+          <Card.Title className={styles.cardTitle}>
+            {item?.firstName + ' ' + item?.lastName}
+          </Card.Title>
+          <Card.Text>{`${item?.speciality} |  ${item?.city}`}</Card.Text>
           <FollowUnfollowButton userName={item?.objectId} />
+        </Card.Body>
+      </Card>
+    );
+  };
+
+  const [numItems, setNumItems] = useState(12);
+
+  const PeopleYouMayKnowList = () => {
+    return (
+      <div className={styles.mainFullPageItemWrapper}>
+        <h2 className={styles.listHeaderLabel}>{Title ?? 'People You May Know'}</h2>
+        <div className={styles.newgrid}>
+          {peopleYouMayKnowList?.length > 0 ? (
+            peopleYouMayKnowList.slice(0, numItems).map((item) => {
+              return <PeopleYouMayKnowFullPageItem {...item} />;
+            })
+          ) : (
+            <></>
+          )}
+        </div>
+        {peopleYouMayKnowList === undefined || numItems >= peopleYouMayKnowList?.length ? null : (
+          <Button
+            className={styles.seeMoreBtn}
+            style={{
+              width: '100%',
+              fontSize: '1.5rem',
+              height: '50px',
+              backgroundColor: 'white',
+              color: 'blue',
+              border: 'none',
+              fontWeight: 'bold',
+              textAlign: 'center',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onClick={() => setNumItems(numItems + 5)}
+          >
+            See more...
+          </Button>
+        )}
+      </div>
+    );
+  };
+
+  const SideNavbar = () => {
+    return (
+      <div className={styles.sidenavbar}>
+        <div className={styles.top}>
+          <span className={styles.logo}>Suggestions</span>
+        </div>
+        <hr />
+        <div className={styles.center}>
+          <ul>
+            <button>
+              <li className={styles.rowItem}>
+                <NextImage
+                  contentEditable={true}
+                  field={Profile}
+                  height={18}
+                  width={18}
+                ></NextImage>
+                <span>{Title ?? 'People You May Know'}</span>
+              </li>
+            </button>
+          </ul>
         </div>
       </div>
     );
@@ -137,32 +196,16 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
 
   const FullPagePeopleYouMayKnow = () => {
     return (
-      <div className={styles.mainWrapper}>
+      <div className={styles.mainContainer}>
         <div className={styles.backbtn}>
           <Button onClick={() => router.push('/')}>Back</Button>
         </div>
-        <div className={styles.flexx}>
-          <div
-            className={styles.wrapper}
-            style={{
-              maxHeight: '100%',
-              height: '80vh',
-              width: '35%',
-              backgroundColor: 'lightgrey',
-            }}
-          >
-            <div className={styles.header}>
-              <div className={styles.heading}>{Title}</div>
-            </div>
-            <div className={styles.listWrapper}>
-              {peopleYouMayKnowList?.length > 0 ? (
-                peopleYouMayKnowList.map((item) => {
-                  return <PeopleYouMayKnowFullPageItem {...item} />;
-                })
-              ) : (
-                <></>
-              )}
-            </div>
+        <div className={styles.container}>
+          <div className={styles.left_column}>
+            <SideNavbar />
+          </div>
+          <div className={styles.right_column}>
+            <PeopleYouMayKnowList />
           </div>
         </div>
       </div>

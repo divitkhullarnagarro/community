@@ -1,0 +1,32 @@
+
+.sharePopups {
+  display: flex;
+  background-color: #f7ffff;
+  border-radius: 8px;
+  height: 141px;
+  width: 169px;
+  position: absolute;
+  top: 8rem;
+  left: 11rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.sharePopup{
+  display: flex;
+  flex-direction: row;
+  /* background-color: bisque; */
+  width: 150px;
+  align-items: center;
+  padding: 4px;
+  margin-left: 4px;
+}
+.sharePopup:hover{
+  background-color: rgb(237 239 245);
+  border-radius: 4px;
+}
+.sharePopup a{
+  text-decoration: none;
+  color: black;
+  margin-left: 6px;
+}

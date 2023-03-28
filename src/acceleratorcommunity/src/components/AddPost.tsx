@@ -16,7 +16,7 @@ import getUserCall from 'src/API/getUserCall';
 import addPostCommentCall from 'src/API/addPostCommentCall';
 // import loginUserCall from 'src/API/loginUserCall';
 import Link from 'next/link';
-import ArticlesListCss from '../assets/ArticlesList.module.css';
+import ShowShareCss from '../assets/ShowShare.module.css';
 import linkedin from '../assets/images/linkedin.png';
 import twitter from '../assets/images/twitter.png';
 import whatsapp from '../assets/images/whatsapp.png';
@@ -677,10 +677,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 />
               </button>
               {post?.showShare && (
-                <div className={ArticlesListCss.sharePopups}>
-                  <div className={ArticlesListCss.sharePopup}>
+                <div className={ShowShareCss.sharePopups} style={{position : "initial"}}>
+                  <div className={ShowShareCss.sharePopup}>
                     <NextImage
-                      className={ArticlesListCss.whatsappImage}
+                      className={ShowShareCss.whatsappImage}
                       field={whatsapp}
                       editable={true}
                       width={25}
@@ -691,9 +691,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     </Link>
                   </div>
 
-                  <div className={ArticlesListCss.sharePopup}>
+                  <div className={ShowShareCss.sharePopup}>
                     <NextImage
-                      className={ArticlesListCss.whatsappImage}
+                      className={ShowShareCss.whatsappImage}
                       field={twitter}
                       editable={true}
                       width={25}
@@ -704,9 +704,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     </Link>
                   </div>
 
-                  <div className={ArticlesListCss.sharePopup}>
+                  <div className={ShowShareCss.sharePopup}>
                     <NextImage
-                      className={ArticlesListCss.whatsappImage}
+                      className={ShowShareCss.whatsappImage}
                       field={linkedin}
                       editable={true}
                       width={25}

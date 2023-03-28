@@ -113,19 +113,37 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
 
   const { targetItems } = props?.fields?.data?.datasource.articlesList;
 
+  const [selectedArticle, setSelectedArticle] = useState<any>([]);
   // Change the bookmark image with active bookmark image
-  const [withoutClicked, setField] = useState(bookmarkImage);
-  const [clicked, setClicked] = useState(false);
-  const handleClick = () => {
-    if (clicked) {
-      setField(bookmarkImage);
-    } else {
-      // update field to a new value when button is clicked for the first time
-      setField(activeBookmarkImage);
+  const handleSelectedArticle = (id: any) => {
+    if (selectedArticle.includes(id)) {
+    
+    const index = selectedArticle.indexOf(id)
+    
+    if(index>-1){
+    
+    selectedArticle.splice(index,1)
+    
     }
-    // toggle the clicked state
-    setClicked(!clicked);
-  };
+    
+     } else {
+    
+    setSelectedArticle([...selectedArticle, id]);
+    
+    }
+    
+   };
+  const [clicked, setClicked] = useState(false);
+  // const handleClick = () => {
+  //   if (clicked) {
+  //     setField(bookmarkImage);
+  //   } else {
+  //     // update field to a new value when button is clicked for the first time
+  //     setField(activeBookmarkImage);
+  //   }
+  //   // toggle the clicked state
+  //   setClicked(!clicked);
+  // };
 
   const [showPopup, setShowPopup] = useState(false);
 
@@ -160,7 +178,8 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     setTokenFromLocalStorage();
     bookmarkApi(userIdTemp, contentId, title, comment, userToken);
     // , url:string
-    handleClick();
+    // handleClick();
+    handleSelectedArticle(contentId);
   };
 
   return (
@@ -231,7 +250,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                   }
                 >
                   <NextImage
-                    field={withoutClicked}
+                    field={selectedArticle?.includes(l.id)?activeBookmarkImage:bookmarkImage}
                     id="bookamrksImage"
                     editable={true}
                     title="Add To My Collection"
