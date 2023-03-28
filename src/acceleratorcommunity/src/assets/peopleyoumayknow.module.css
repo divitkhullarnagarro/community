@@ -1,6 +1,5 @@
 .wrapper {
   font-family: Inter, monospace;
-  background-color: lightgrey;
   /* max-height: 560px; */
   overflow-y: auto;
   margin: 20px;
@@ -38,6 +37,7 @@
 
 .button {
   margin-left: auto;
+  width: 45%;
 }
 
 .header a {
@@ -88,5 +88,225 @@
 
 .backbtn {
   margin-top: 10px;
-  margin-left: 40px;
+  margin-left: 20px;
+  width: 50px;
+}
+
+/* NEW CSS*/
+
+.mainContainer {
+  display: 'flex';
+  flex-direction: 'column';
+}
+
+.container {
+  margin-top: 20px;
+  display: flex;
+  height: 80vh;
+  font-family: 'sans-serif';
+  justify-content: flex-start;
+}
+
+.left_column {
+  flex: 0 0 15%;
+  background-color: white;
+  margin-left: 10px;
+}
+
+.right_column {
+  flex: 0 0 80%;
+  /* background-color: lightgray; */
+  display: flex;
+  flex-direction: column;
+  margin-top: 0px;
+  margin-left: 25px;
+  height: 85vh;
+  justify-content: flex-start;
+  border-radius: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.newgrid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.mainListPageWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboardWrapper {
+  width: 65vw;
+  text-align: center;
+  margin: 10px;
+  padding: 10px;
+}
+
+.right_lower_section {
+  width: 70vw;
+  flex: 0 0 85%;
+}
+
+.sidenavbar {
+  flex: 1;
+  border-radius: 10px;
+  border: 2px solid #c9c6c6;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  height: 85vh;
+  background-color: lightgray;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  font-weight: bold;
+}
+
+.item {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 20px;
+  font-size: 25px;
+  border: 1px solid black;
+}
+
+.title {
+  font-size: 3em;
+}
+
+.userList {
+  display: flex;
+  flex: auto;
+  flex: 0 0 50%;
+  justify-content: flex-end;
+  align-content: center;
+  height: 100%;
+}
+
+.cardItem {
+  width: 17rem;
+  height: 20rem;
+  margin: 10px;
+  border-radius: 6px;
+  border: 2px solid lightgray;
+}
+
+.imageContainer {
+  border-radius: 2px;
+  margin: 10px;
+  background-color: lightgray;
+}
+
+.cardTitle {
+  font-weight: bold;
+}
+
+.sidenavbar .top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  margin-top: 5px;
+  border-bottom: 5px solid white;
+  border-radius: 10px;
+}
+.sidenavbar .top .logo {
+  font-size: 25px;
+  font-weight: bold;
+  color: black;
+}
+.sidenavbar hr {
+  height: 0;
+  border: 0.5px solid #e6e3e3;
+}
+.sidenavbar .center {
+  padding-left: 10px;
+}
+.sidenavbar .center ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sidenavbar .center ul .title {
+  font-size: 17px;
+  font-weight: bold;
+  color: #999;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+.sidenavbar .center ul li {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+  margin: 10px;
+}
+.sidenavbar .center ul button {
+  width: 100%;
+  border: none;
+  background: none;
+}
+.sidenavbar .center ul li:hover {
+  background-color: white;
+  border-radius: 8px;
+}
+.sidenavbar .center ul li:first-child {
+  background-color: white;
+  border-radius: 8px;
+}
+
+.sidenavbar .center ul li .icon {
+  font-size: 22px;
+  color: black;
+}
+.sidenavbar .center ul li span {
+  font-size: 1.275em;
+  font-weight: bold;
+  color: #888;
+  margin-left: 10px;
+}
+.sidenavbar .bottom {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+.sidenavbar .bottom .colorOption {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  border: 1px solid #7451f8;
+  cursor: pointer;
+  margin: 5px;
+}
+.sidenavbar .bottom .colorOption:nth-child(1) {
+  background-color: whitesmoke;
+}
+.sidenavbar .bottom .colorOption:nth-child(2) {
+  background-color: #333;
+}
+.sidenavbar .bottom .colorOption:nth-child(3) {
+  background-color: darkblue;
+}
+
+.mainFullPageItemWrapper {
+  overflow-y: auto;
+}
+
+.listHeaderLabel {
+  padding-left: 20px;
+  font-weight: bold;
+  border-left: 5px solid lightgray;
+  border-right: 5px solid lightgray;
+  border-bottom: 5px solid lightgray;
+  border-radius: 20px;
+  height: 50px;
 }

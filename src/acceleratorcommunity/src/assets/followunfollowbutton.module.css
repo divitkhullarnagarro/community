@@ -4,7 +4,7 @@
   color: #fff;
   font-size: 1.0625rem;
   font-weight: bold;
-  width: 6rem;
+  width: 100%;
   margin-top: 6px;
   padding: 6px;
   border-radius: 10px;
@@ -13,10 +13,11 @@
 
 .followingButton {
   color: #0048f0;
+  border-color: rgb(65, 143, 254);
   background-color: #fff;
   font-size: 1.0625rem;
   font-weight: bold;
-  width: 6rem;
+  width: 100%;
   padding: 6px;
   margin-top: 6px;
   border-radius: 10px;
