@@ -1,10 +1,10 @@
-import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { useContext, useState } from 'react';
 import adminUserListingCall from 'src/API/adminUserListingCall';
 import WebContext from 'src/Context/WebContext';
 import styles from '../assets/users.module.css';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import { DataGrid } from '@mui/x-data-grid';
+import { Table } from 'react-bootstrap';
+import Profile from '../assets/images/ProfilePic.jpeg';
 
 type userFields = {
   objectId: Field<string>;
@@ -17,32 +17,26 @@ type userFields = {
 };
 
 const userColumns = [
-  { field: 'id', headerName: 'Row', width: 70 },
   {
     field: 'name',
     headerName: 'Name',
-    width: 200,
   },
   {
     field: 'gender',
     headerName: 'Gender',
-    width: 200,
   },
   {
     field: 'email',
     headerName: 'Email',
-    width: 200,
   },
 
   {
     field: 'phone',
     headerName: 'Phone',
-    width: 200,
   },
   {
     field: 'role',
     headerName: 'Role',
-    width: 200,
   },
 ];
 
@@ -112,19 +106,34 @@ const Users = (): JSX.Element => {
     }
   };
 
-  const DataGridTable = () => {
-    const [data] = useState(userRows);
+  const UserListTable = () => {
     return (
-      <div className={styles.datatable}>
-        <h3>Admin User List</h3>
-        <DataGrid
-          className={styles.datagrid}
-          rows={data}
-          columns={userColumns}
-          pageSizeOptions={[10]}
-          checkboxSelection
-        />
-      </div>
+      <Table striped hover className={styles.userListTable}>
+        <thead>
+          <tr className={styles.header}>
+            {userColumns.map((item, index) => {
+              return (
+                <td key={index} className={styles.item}>
+                  {item.headerName}
+                </td>
+              );
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {userRows.map((item) => {
+            return (
+              <tr key={item?.id} className={styles.row}>
+                <td className={styles.item}>{item?.name}</td>
+                <td className={styles.item}>{item?.gender}</td>
+                <td className={styles.item}>{item?.email}</td>
+                <td className={styles.item}>{item?.phone}</td>
+                <td className={styles.item}>{item?.role}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
     );
   };
 
@@ -152,7 +161,12 @@ const Users = (): JSX.Element => {
               }}
             >
               <li className={styles.row}>
-                <PersonOutlineIcon className={styles.icon} />
+                <NextImage
+                  contentEditable={true}
+                  field={Profile}
+                  height={20}
+                  width={20}
+                ></NextImage>
                 <span>Users</span>
               </li>
             </button>
@@ -170,7 +184,7 @@ const Users = (): JSX.Element => {
       <div className={styles.right_column}>
         <div className={styles.right_upper_section}>{<Dashboard />}</div>
         <div className={styles.right_lower_section}>
-          {showAdminList ? <DataGridTable /> : <></>}
+          {showAdminList ? <UserListTable /> : <></>}
         </div>
       </div>
     </div>
