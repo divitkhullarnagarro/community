@@ -214,15 +214,15 @@ const Register = (props: RegisterProps): JSX.Element => {
         <div className={RegisterCss.leftContainer}>
           <div className={RegisterCss.welcomeText}>
             <div className={RegisterCss.welcomeTextImage}>
-              <NextImage field={targetItems.image.jsonValue.value} editable={true} width={30} height={30} />
+              <NextImage field={targetItems?.image?.jsonValue?.value} editable={true} width={30} height={30} />
               {/* <NextImage field={starImage}  editable={true} /> */}
             </div>
             <h2 className={RegisterCss.welcomeTextHeading}>
               {heading[0]}<br/>
               {heading[1]}
               </h2>
-            <div className={RegisterCss.welcomeTextDescription}>
-              {targetItems.description.jsonValue.value}
+            <div className={RegisterCss?.welcomeTextDescription}>
+              {targetItems?.description?.jsonValue?.value}
 
             </div>
           </div>
@@ -236,11 +236,11 @@ const Register = (props: RegisterProps): JSX.Element => {
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
                 <label className={RegisterCss.label}>
-                  {targetItems.firstNameLabel.jsonValue.value}
+                  {targetItems?.firstNameLabel?.jsonValue?.value}
                 </label>
                 <input
                   type="text"
-                  onChange={(e) => setFirstNameValue(e.target.value)}
+                  onChange={(e) => setFirstNameValue(e?.target?.value)}
                   value={firstName}
                   className={RegisterCss.loginInput}
                   // required
@@ -257,11 +257,11 @@ const Register = (props: RegisterProps): JSX.Element => {
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
                 <label className={RegisterCss.label}>
-                  {targetItems.lastNameLabel.jsonValue.value}
+                  {targetItems?.lastNameLabel?.jsonValue?.value}
                 </label>
                 <input
                   type="text"
-                  onChange={(e) => setLastNameValue(e.target.value)}
+                  onChange={(e) => setLastNameValue(e?.target?.value)}
                   value={lastName}
                   className={RegisterCss.loginInput}
                   // placeholder={targetItems.lastNamePlaceholder.jsonValue.value}
@@ -277,7 +277,7 @@ const Register = (props: RegisterProps): JSX.Element => {
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
                 <label className={RegisterCss.label}>
-                  {targetItems.emailLabel.jsonValue.value}
+                  {targetItems?.emailLabel?.jsonValue?.value}
                 </label>
                 <input
                   type="email"
@@ -298,11 +298,11 @@ const Register = (props: RegisterProps): JSX.Element => {
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
                 <label className={RegisterCss.label}>
-                  {targetItems.phoneNoLabel.jsonValue.value}
+                  {targetItems?.phoneNoLabel?.jsonValue?.value}
                 </label>
                 <input
                   type="text"
-                  onChange={(e) => setPhoneNumberValue(e.target.value)}
+                  onChange={(e) => setPhoneNumberValue(e?.target?.value)}
                   value={phoneNumber}
                   className={RegisterCss.loginInput}
                   // placeholder={targetItems.phoneNoPlaceholder.jsonValue.value}
@@ -318,11 +318,11 @@ const Register = (props: RegisterProps): JSX.Element => {
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
                 <label className={RegisterCss.label}>
-                  {targetItems.passwordLabel.jsonValue.value}
+                  {targetItems?.passwordLabel?.jsonValue?.value}
                 </label>
                 <input
                   type="password"
-                  onChange={(e) => setPasswordValue(e.target.value)}
+                  onChange={(e) => setPasswordValue(e?.target?.value)}
                   value={password}
                   className={RegisterCss.loginInput}
                   // placeholder={targetItems.passwordPlaceholder.jsonValue.value}
@@ -339,7 +339,7 @@ const Register = (props: RegisterProps): JSX.Element => {
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-lock"></i>
                 <label className={RegisterCss.label}>
-                  {targetItems.confirmPasswordLabel.jsonValue.value}
+                  {targetItems?.confirmPasswordLabel?.jsonValue?.value}
                 </label>
                 <input
                   type="password"
@@ -380,9 +380,9 @@ const Register = (props: RegisterProps): JSX.Element => {
               ''
             )}
             <div className={RegisterCss.formContainerBottom}>
-              <div className={RegisterCss.text}>{targetItems.haveAccountLabel.jsonValue.value}</div>
+              <div className={RegisterCss.text}>{targetItems?.haveAccountLabel?.jsonValue?.value}</div>
               <div className={RegisterCss.btn}>
-                <Link href={'/login'}>{targetItems.loginBtn.jsonValue.value}</Link>
+                <Link href={'/login'}>{targetItems?.loginBtn?.jsonValue?.value}</Link>
               </div>
             </div>
           </div>

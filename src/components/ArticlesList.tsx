@@ -13,6 +13,7 @@ import whatsapp from '../assets/images/whatsapp.png';
 import bookmark from '../../src/API/bookmarks';
 import { useContext, useState } from 'react';
 import WebContext from 'src/Context/WebContext';
+// import { useRouter } from 'next/router';
 
 type ArticlesListProps = ComponentProps & {
   fields: {
@@ -24,6 +25,9 @@ type ArticlesListProps = ComponentProps & {
 
 type Item = {
   id: string;
+  url: {
+    url: string;
+  };
   title: {
     jsonValue: Field<string>;
   };
@@ -78,26 +82,68 @@ const getFormatedDate = (stringDate: string) => {
   return formattedDate;
 };
 
-const ArticlesList = (props: ArticlesListProps): JSX.Element => {
-  const userIdTemp = 'test1@test1.com';
 
-  const { userToken } = { ...useContext(WebContext) };
+  
+
+const ArticlesList = (props: ArticlesListProps): JSX.Element => {
+  const { userToken,setUserToken } = { ...useContext(WebContext)  };
+
+  const setTokenFromLocalStorage = () => {
+    if (userToken === undefined || userToken === '') {
+      if (
+        typeof localStorage !== 'undefined' &&
+        localStorage.getItem('UserToken') != '' &&
+        localStorage.getItem('UserToken') != null
+      ) {
+        let token = localStorage.getItem('UserToken');
+        if (token != null && setUserToken != undefined) {
+          setUserToken(token);
+        }
+      }
+    }
+  };
+
+  // useEffect(()=>{
+  //   console.log("aaaaaaaaaaa")
+  //   window.localStorage.setItem("token",userToken!)
+  // },[])
+  const userIdTemp = 'a@gmail.com';
+
+  // const router = useRouter();
 
   const { targetItems } = props?.fields?.data?.datasource.articlesList;
 
+  const [selectedArticle, setSelectedArticle] = useState<any>([]);
   // Change the bookmark image with active bookmark image
-  const [withoutClicked, setField] = useState(bookmarkImage);
-  const [clicked, setClicked] = useState(false);
-  const handleClick = () => {
-    if (clicked) {
-      setField(bookmarkImage);
-    } else {
-      // update field to a new value when button is clicked for the first time
-      setField(activeBookmarkImage);
+  const handleSelectedArticle = (id: any) => {
+    if (selectedArticle.includes(id)) {
+    
+    const index = selectedArticle.indexOf(id)
+    
+    if(index>-1){
+    
+    selectedArticle.splice(index,1)
+    
     }
-    // toggle the clicked state
-    setClicked(!clicked);
-  };
+    
+     } else {
+    
+    setSelectedArticle([...selectedArticle, id]);
+    
+    }
+    
+   };
+  const [clicked, setClicked] = useState(false);
+  // const handleClick = () => {
+  //   if (clicked) {
+  //     setField(bookmarkImage);
+  //   } else {
+  //     // update field to a new value when button is clicked for the first time
+  //     setField(activeBookmarkImage);
+  //   }
+  //   // toggle the clicked state
+  //   setClicked(!clicked);
+  // };
 
   const [showPopup, setShowPopup] = useState(false);
 
@@ -110,37 +156,36 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     setClicked(!clicked);
   };
 
+  const bookmarkApi = async (
+    userIdTemp: string,
+    contentId: string,
+    title: string,
+    comment: string | undefined,
+    userToken: string | undefined
+  ) => {
+    let response = await bookmark(userIdTemp, contentId, title, comment, userToken);
+    // url,
+    console.log(response);
+  };
+
   const submitBookmark = (
+    userIdTemp: string,
     contentId: string,
     // url: string,
     title: string,
     comment: string | undefined
   ) => {
-    bookmarkApi(userIdTemp, contentId,  title, comment, userToken);
+    setTokenFromLocalStorage();
+    bookmarkApi(userIdTemp, contentId, title, comment, userToken);
     // , url:string
-    handleClick();
-  };
-
-  const bookmarkApi = async (
-    userIdTemp: string,
-    contentId: string,
-    // url: string,
-    title: string,
-    comment: string | undefined,
-    userToken: string | undefined
-  ) => {
-    let response = await bookmark(userIdTemp, contentId,  title, comment, userToken);
-    // url,
-    console.log(response);
+    // handleClick();
+    handleSelectedArticle(contentId);
   };
 
   return (
     <div className={ArticlesListCss.mainwrapper}>
-
       {targetItems.map((l, i) => {
         return (
-         
-          
           <div key={i} className={ArticlesListCss.wrapper}>
             <div className={ArticlesListCss.leftSection}>
               <NextImage
@@ -154,7 +199,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
               <div className={ArticlesListCss.cardDescription}>
                 <p>
                   {l.description.jsonValue.value}
-                  <Link href="/readMorePage">Read More </Link>
+                  {/* <Link href="/readMorePage">Read More </Link> */}
                 </p>
               </div>
               <div className={ArticlesListCss.cardTags}>
@@ -196,6 +241,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                   className={ArticlesListCss.button}
                   onClick={() =>
                     submitBookmark(
+                      userIdTemp,
                       l.id,
                       // l.title?.jsonValue.value, //This is for URL or Image value
                       l.title?.jsonValue?.value,
@@ -204,7 +250,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                   }
                 >
                   <NextImage
-                    field={withoutClicked}
+                    field={selectedArticle?.includes(l.id)?activeBookmarkImage:bookmarkImage}
                     id="bookamrksImage"
                     editable={true}
                     title="Add To My Collection"
@@ -214,6 +260,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                   <NextImage field={shareImage} editable={true} title="Share" />
                 </button>
               </div>
+
               {showPopup && (
                 <div className={ArticlesListCss.sharePopups}>
                   <div className={ArticlesListCss.sharePopup}>
@@ -224,7 +271,12 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       width={25}
                       height={25}
                     />
-                    <Link href="https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20[ARTICLE_LINK]">
+                    <Link
+                      href={
+                        'https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20' +
+                        l.title?.jsonValue?.value
+                      }
+                    >
                       WhatsApp
                     </Link>
                   </div>
@@ -237,7 +289,14 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       width={25}
                       height={25}
                     />
-                    <Link href="https://twitter.com/intent/tweet?url=[ARTICLE_LINK]&text=[ARTICLE_TITLE]">
+                    <Link
+                      href={
+                        'https://twitter.com/intent/tweet?url=' +
+                        l.url?.url +
+                        '&text=' +
+                        l.title?.jsonValue?.value
+                      }
+                    >
                       Twitter
                     </Link>
                   </div>
@@ -250,16 +309,16 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       width={25}
                       height={25}
                     />
-                    <Link href="https://www.linkedin.com/sharing/share-offsite/?url=[ARTICLE_LINK">
-                    LinkedIn
+                    <Link
+                      href={'https://www.linkedin.com/sharing/share-offsite/?url=' + l.url?.url}
+                    >
+                      LinkedIn
                     </Link>
                   </div>
                 </div>
               )}
             </div>
           </div>
-          
-          
         );
       })}
     </div>

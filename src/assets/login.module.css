@@ -23,6 +23,7 @@
 .welcomeTextDescription {
   color: black;
   font-size: 1.125rem;
+  font-size: 1.4375rem;
 }
 
 .rightContainer {
@@ -38,7 +39,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: auto;
+  height: 37.5rem;
   width: 80%;
   background-color: white;
   border: 0.125rem solid rgb(176, 175, 175);
@@ -161,6 +162,12 @@
   font-weight: 800;
 }
 
+.forgotPasswordCard {
+  border-radius: 24px;
+}
+.UpdatePasswordHeading {
+  font-family: Georgia, monospace;
+}
 /* media queries */
 
 @media screen and (max-width: 62.4375rem) {

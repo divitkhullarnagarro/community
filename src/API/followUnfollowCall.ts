@@ -6,11 +6,10 @@ const followCall = async (userName: string, userToken : string | undefined
     var config = {
         url: URL,
         headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
              Authorization: `Bearer ${userToken}`,
         },
     };
-    const response = await Axios.post<any, AxiosResponse<any>>(URL, config)
+    const response = await Axios.post<any, AxiosResponse<any>>(URL, null, config)
         .then((response: any) => {
             console.log("followUnfollow", response);
             return response?.data;
@@ -35,7 +34,7 @@ export const UnfollowCall = async (userName: string, userToken : string | undefi
                  Authorization: `Bearer ${userToken}`,
             },
         };
-        const response = await Axios.post<any, AxiosResponse<any>>(URL, config)
+        const response = await Axios.post<any, AxiosResponse<any>>(URL, null, config)
             .then((response: any) => {
                 console.log("followUnfollow", response);
                 return response;
