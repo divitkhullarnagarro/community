@@ -2,7 +2,7 @@
 ID: "1aec4263-d88b-461b-97a0-f880576b6792"
 Parent: "aaac225e-8dd0-45b7-b66c-4eb824f3a118"
 Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
-Path: /sitecore/templates/Feature/acceleratorcommunity/Login
+Path: /sitecore/templates/Feature/acceleratorcommunity/UserLogin
 SharedFields:
 - ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
   Hint: __Icon
