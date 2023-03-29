@@ -1,8 +1,7 @@
-import { Cookie } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 import getPostByIdCall from 'src/API/getPostByIdCall';
-import WebContext from '../Context/WebContext';
+import WebContext from '../../Context/WebContext';
 
 function viewSinglePost() {
   const { userToken, objectId, userObject, setUserToken } = {
@@ -19,24 +18,17 @@ function viewSinglePost() {
   let [postId, setPostId] = useState('');
   let [post, setPost] = useState<any>([]);
 
-  function getQueryParams(url: string): { [key: string]: string } {
-    const queryString = url.split('?')[1];
-    if (!queryString) {
-      return {};
-    }
-    const params = new URLSearchParams(queryString);
-    const result: { [key: string]: string } = {};
-    params.forEach((value, key) => {
-      result[key] = value;
-    });
+  function getQueryParams(url: string): string {
+    const path = url.split('?')[0]; // Extract the path from the URL
+    const routeSegments = path.split('/'); // Split the path by forward slash
+    const lastRoute = routeSegments[routeSegments.length - 1]; // Get the last route segment
 
-    return result;
+    return lastRoute;
   }
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      let params = getQueryParams(window?.location?.href);
-      setPostId(params?.postId);
+      setPostId(getQueryParams(window?.location?.href));
     }
     if (
       typeof localStorage !== 'undefined' &&
@@ -80,8 +72,6 @@ function viewSinglePost() {
   if (typeof document !== 'undefined') {
     document.cookie = `${'hello'}=${'world'}`;
   }
-
-  console.log('Post', post);
 
   return (
     <>
