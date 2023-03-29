@@ -99,7 +99,12 @@ const Login = (props: LoginProps): JSX.Element => {
         if (setObjectId != undefined) {
           setObjectId(email);
         }
-        router.push('/');
+        if (typeof localStorage !== 'undefined') {
+          let routeToUrl = localStorage.getItem('RouteToPage');
+          if (routeToUrl != '' && routeToUrl != null) {
+            router.push(routeToUrl);
+          } else router.push('/');
+        }
       } else {
         setIsLoggingIn(false);
         setIfUnauthorised(true);
