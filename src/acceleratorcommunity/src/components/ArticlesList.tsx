@@ -14,6 +14,7 @@ import bookmark from '../../src/API/bookmarks';
 import { useContext, useState } from 'react';
 import WebContext from 'src/Context/WebContext';
 // import { useRouter } from 'next/router';
+import facebook from '../assets/images/facebook.svg';
 
 type ArticlesListProps = ComponentProps & {
   fields: {
@@ -300,6 +301,20 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       href={'https://www.linkedin.com/sharing/share-offsite/?url=' + l.url?.url}
                     >
                       LinkedIn
+                    </Link>
+                  </div>
+                  <div className={ArticlesListCss.sharePopup}>
+                    <NextImage
+                      className={ArticlesListCss.whatsappImage}
+                      field={facebook}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link
+                      href={'https://www.facebook.com/sharer/sharer.php?u=' + l.url?.url + '&t='+ l.title?.jsonValue?.value}
+                    >
+                      Facebook
                     </Link>
                   </div>
                 </div>
