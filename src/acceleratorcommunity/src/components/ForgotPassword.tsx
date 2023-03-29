@@ -1,10 +1,10 @@
-import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, ImageField, RichTextField } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import React, { useContext, useState } from 'react';
 import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';
 import loginCss from '../assets/login.module.css';
-import star from '../assets/images/star.png';
+// import star from '../assets/images/star.png';
 // import imageNotFound from '../assets/images/imageNot.png';
 import Link from 'next/link';
 import { validateEmailOrPhone } from 'assets/helpers/validations';
@@ -14,11 +14,113 @@ import sendOtpCall, { updatePasswordCall, validateOtpCall } from 'src/API/forgot
 
 type ForgotPasswordProps = ComponentProps & {
   fields: {
-    heading: Field<string>;
+    data: {
+      datasource: {
+        title: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        description: {
+          jsonValue: {
+            value: RichTextField;
+          };
+        };
+        userEmailLabel: {
+          jsonValue: {
+            value: Field<string>;
+          };
+        };
+        emailPlaceholder: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        image: {
+          jsonValue: ImageField;
+        };
+        oTPLabel: {
+          jsonValue: {
+            value: Field<string>;
+          };
+        };
+        oTPPlaceholder: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        passwordLabel: {
+          jsonValue: {
+            value: Field<string>;
+          };
+        };
+        passwordPlaceholder: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        confirmPasswordLabel: {
+          jsonValue: {
+            value: Field<string>;
+          };
+        };
+        confirmPasswordPlaceholder: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        oTPError: {
+          jsonValue: {
+            value: Field<string>;
+          };
+        };
+        emailRegisterError: {
+          jsonValue: {
+            value: Field<string>;
+          };
+        };
+        oTPSendMsg: {
+          jsonValue: {
+            value: Field<string>;
+          };
+        };
+        emailError: {
+          jsonValue: {
+            value: Field<string>;
+          };
+        };
+        somethingWentError: {
+          jsonValue: {
+            value: Field<string>;
+          };
+        };
+        passwordMatchingError: {
+          jsonValue: {
+            value: Field<string>;
+          };
+        };
+        updatePasswordBtnText: {
+          jsonValue: {
+            value: Field<string>;
+          };
+        };
+        sendOTPPasswordBtnText: {
+          jsonValue: {
+            value: Field<string>;
+          };
+        };
+        submitBtnText: {
+          jsonValue: {
+            value: Field<string>;
+          };
+        };
+      };
+    };
   };
 };
 
 const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
+  const datasource = props?.fields?.data?.datasource;
   props; //delete Me
   console.log('props', props);
   const router = useRouter();
@@ -45,7 +147,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
 
     if (!otpFieldVisible) {
       const res = await sendOtpCall(email);
-      if (res.data.errorCode != 404) {
+      if (res?.data?.errorCode != 404) {
         setOtpFieldVisible(true);
       } else {
         setAccountError(true);
@@ -65,7 +167,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
       setPasswordMatchError(true);
     } else {
       const res = await updatePasswordCall(email, password);
-      if (!res.data.errorCode) {
+      if (!res?.data?.errorCode) {
         alert('password Updated Successfully');
         router.push('/login');
       } else {
@@ -84,7 +186,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
     }
   };
   console.log('userToken', userToken, setUserToken, setIsLoggedIn);
-
+  console.log('Props forgot password', props);
   //{---------------Logout Start--------------}
   // do not delete it
   // const handleLogout = async (event: any) => {
@@ -117,16 +219,16 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
       <div className={loginCss.container}>
         <div className={loginCss.leftContainer}>
           <div className={loginCss.welcomeText}>
-            <div className={loginCss.welcomeTextImage}>
+            {/* <div className={loginCss.welcomeTextImage}>
               <NextImage field={star} editable={true} width={30} height={30} />
-            </div>
+            </div> */}
             <h2>
-              Welcome,<div> Please Update Password</div>
+              {datasource?.title?.jsonValue?.value.split('<br>')[0]}
+              <br />
+              {datasource?.title?.jsonValue?.value.split('<br>')[1]}
             </h2>
             <div className={loginCss.welcomeTextDescription}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi illum ad, facere placeat
-              quos recusandae reprehenderit nihil minima possimus, quod adipisci, porro quibusdam
-              obcaecati.
+              {datasource?.description?.jsonValue?.value}
             </div>
           </div>{' '}
           {/* <div className={loginCss.img}>
@@ -141,32 +243,36 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
               <form className={loginCss.login} onSubmit={(e) => onSubmitPasswordHandler(e)}>
                 <div className={loginCss.loginField}>
                   <i className={loginCss['login__icon fas fa-user']}></i>
-                  <label className={loginCss.label}>Password</label>
+                  <label className={loginCss.label}>
+                    {datasource?.passwordLabel?.jsonValue?.value}
+                  </label>
                   <input
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
                     type="password"
                     className={loginCss.loginInput}
-                    placeholder="Enter New Password"
+                    placeholder={datasource?.passwordPlaceholder?.jsonValue?.value}
                     minLength={6}
                     required
                   />
                 </div>
                 <div className={loginCss.loginField}>
                   <i className={loginCss['login__icon fas fa-lock']}></i>
-                  <label className={loginCss.label}>Confirm Password</label>
+                  <label className={loginCss.label}>
+                    {datasource?.confirmPasswordLabel?.jsonValue?.value}
+                  </label>
                   <input
                     onChange={(e) => setConformPassword(e.target.value)}
                     value={confirmPassword}
                     type="password"
                     className={loginCss.loginInput}
-                    placeholder="Confirm New Password"
+                    placeholder={datasource?.confirmPasswordPlaceholder?.jsonValue?.value}
                     minLength={6}
                     required
                   />
                 </div>
                 <button className={loginCss.formButton}>
-                  Update Password
+                  {datasource?.updatePasswordBtnText?.jsonValue?.value}
                   <i className={loginCss['button__icon fas fa-chevron-right']}></i>
                 </button>
 
@@ -174,7 +280,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                   <span
                     style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
                   >
-                    * Password and Confirm Password not matching
+                    {datasource?.passwordMatchingError?.jsonValue?.value}
                   </span>
                 ) : (
                   ''
@@ -183,7 +289,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                   <span
                     style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
                   >
-                    * Something Went Wrong Please Try Again
+                    {datasource?.somethingWentError?.jsonValue?.value}
                   </span>
                 ) : (
                   ''
@@ -193,7 +299,9 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
               <form className={loginCss.login} onSubmit={(e) => onSubmitHandler(e)}>
                 <div className={loginCss.loginField}>
                   <i className={loginCss['login__icon fas fa-user']}></i>
-                  <label className={loginCss.label}>User Email</label>
+                  <label className={loginCss.label}>
+                    {datasource?.userEmailLabel?.jsonValue?.value}
+                  </label>
                   <input
                     onChange={(e) => {
                       setEmailValue(e.target.value);
@@ -202,7 +310,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                     value={email}
                     type="text"
                     className={loginCss.loginInput}
-                    placeholder="Enter Your Email ID"
+                    placeholder={datasource?.emailPlaceholder?.jsonValue?.value}
                     disabled={otpFieldVisible}
                     //pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"
                     required
@@ -211,20 +319,22 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                     <div
                       style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
                     >
-                      Please Enter Valid Email or Mobile
+                      {datasource?.emailError?.jsonValue?.value}
                     </div>
                   )}
                 </div>
                 {otpFieldVisible && (
                   <div className={loginCss.loginField}>
                     <i className={loginCss['login__icon fas fa-lock']}></i>
-                    <label className={loginCss.label}>OTP</label>
+                    <label className={loginCss.label}>
+                      {datasource?.oTPLabel?.jsonValue?.value}
+                    </label>
                     <input
                       onChange={(e) => setOtp(e.target.value)}
                       value={otp}
                       type="number"
                       className={loginCss.loginInput}
-                      placeholder="Enter OTP"
+                      placeholder={datasource?.oTPPlaceholder?.jsonValue?.value}
                       required
                     />
                     {otpFieldVisible ? (
@@ -236,7 +346,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                           padding: '10px',
                         }}
                       >
-                        OTP Send to Your Registered Mail ID
+                        {datasource?.oTPSendMsg?.jsonValue?.value}
                       </div>
                     ) : (
                       ''
@@ -244,14 +354,16 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                   </div>
                 )}
                 <button className={loginCss.formButton}>
-                  {!otpFieldVisible ? 'Send OTP' : 'Verify and Submit'}
+                  {!otpFieldVisible
+                    ? datasource?.sendOTPPasswordBtnText?.jsonValue?.value
+                    : datasource?.submitBtnText?.jsonValue?.value}
                   <i className={loginCss['button__icon fas fa-chevron-right']}></i>
                 </button>
                 {accountError && !otpFieldVisible ? (
                   <span
                     style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
                   >
-                    * Email/Mobile not Registered
+                    {datasource?.emailRegisterError?.jsonValue?.value}
                   </span>
                 ) : (
                   ''
@@ -265,7 +377,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                       padding: '10px',
                     }}
                   >
-                    * Please enter correct OTP
+                    {datasource?.oTPError?.jsonValue?.value}
                   </div>
                 ) : (
                   ''
@@ -273,7 +385,6 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
               </form>
             )}
             <div className={loginCss.formContainerBottom}>
-              {/* <div className={loginCss.text}>Back to</div> */}
               <div className={loginCss.btn}>
                 <Link href={'/login'}>Back to Login?</Link>
               </div>
