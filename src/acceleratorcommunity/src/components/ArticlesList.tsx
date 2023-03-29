@@ -11,7 +11,7 @@ import linkedin from '../assets/images/linkedin.png';
 import twitter from '../assets/images/twitter.png';
 import whatsapp from '../assets/images/whatsapp.png';
 import bookmark from '../../src/API/bookmarks';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import WebContext from 'src/Context/WebContext';
 // import { useRouter } from 'next/router';
 
@@ -82,11 +82,8 @@ const getFormatedDate = (stringDate: string) => {
   return formattedDate;
 };
 
-
-  
-
 const ArticlesList = (props: ArticlesListProps): JSX.Element => {
-  const { userToken,setUserToken } = { ...useContext(WebContext)  };
+  const { userToken, setUserToken } = { ...useContext(WebContext) };
 
   const setTokenFromLocalStorage = () => {
     if (userToken === undefined || userToken === '') {
@@ -114,26 +111,21 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
   const { targetItems } = props?.fields?.data?.datasource.articlesList;
 
   const [selectedArticle, setSelectedArticle] = useState<any>([]);
+  const [shareArticle, setShareArticle] = useState<any>([]);
+
   // Change the bookmark image with active bookmark image
   const handleSelectedArticle = (id: any) => {
     if (selectedArticle.includes(id)) {
-    
-    const index = selectedArticle.indexOf(id)
-    
-    if(index>-1){
-    
-    selectedArticle.splice(index,1)
-    
+      const index = selectedArticle.indexOf(id);
+
+      if (index > -1) {
+        selectedArticle.splice(index, 1);
+      }
+    } else {
+      setSelectedArticle([...selectedArticle, id]);
     }
-    
-     } else {
-    
-    setSelectedArticle([...selectedArticle, id]);
-    
-    }
-    
-   };
-  const [clicked, setClicked] = useState(false);
+  };
+  // const [clicked, setClicked] = useState(false);
   // const handleClick = () => {
   //   if (clicked) {
   //     setField(bookmarkImage);
@@ -145,16 +137,25 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
   //   setClicked(!clicked);
   // };
 
-  const [showPopup, setShowPopup] = useState(false);
+  // const [showPopup, setShowPopup] = useState(false);
 
-  const handleShareClick = () => {
-    if (clicked) {
-      setShowPopup(false);
+  const handleShareClick = (id: any) => {
+    // if (clicked) {
+    //   setShowPopup(false);
+    // } else {
+    //   setShowPopup(true);
+    // }
+    // setClicked(!clicked);
+    if (shareArticle.includes(id)) {
+      setShareArticle([]);
     } else {
-      setShowPopup(true);
+      setShareArticle(id);
     }
-    setClicked(!clicked);
   };
+
+  useEffect(() => {
+    console.log(shareArticle);
+  }, [shareArticle]);
 
   const bookmarkApi = async (
     userIdTemp: string,
@@ -250,18 +251,18 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                   }
                 >
                   <NextImage
-                    field={selectedArticle?.includes(l.id)?activeBookmarkImage:bookmarkImage}
+                    field={selectedArticle?.includes(l.id) ? activeBookmarkImage : bookmarkImage}
                     id="bookamrksImage"
                     editable={true}
                     title="Add To My Collection"
                   />
                 </button>
-                <button className={ArticlesListCss.button} onClick={handleShareClick}>
+                <button className={ArticlesListCss.button} onClick={() => handleShareClick(l.id)}>
                   <NextImage field={shareImage} editable={true} title="Share" />
                 </button>
               </div>
 
-              {showPopup && (
+              {shareArticle.includes(l.id) && (
                 <div className={ArticlesListCss.sharePopups}>
                   <div className={ArticlesListCss.sharePopup}>
                     <NextImage
