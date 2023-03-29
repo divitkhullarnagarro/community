@@ -10,7 +10,7 @@ deploy_production:
   - develop
  script:
  - cd src/acceleratorcommunity
- - npm install --global vercel
+ - vercel --version
  - vercel pull --yes --environment=production --token=L5Sr6ZrZzYcnkNPW7omJTSnJ
  - vercel build --prod --token=L5Sr6ZrZzYcnkNPW7omJTSnJ
  - vercel deploy --prebuilt --prod --token=L5Sr6ZrZzYcnkNPW7omJTSnJ
