@@ -20,6 +20,7 @@ import ShowShareCss from '../assets/ShowShare.module.css';
 import linkedin from '../assets/images/linkedin.png';
 import twitter from '../assets/images/twitter.png';
 import whatsapp from '../assets/images/whatsapp.png';
+import facebook from '../assets/images/facebook.svg';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -714,6 +715,18 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     />
                     <Link href={"https://www.linkedin.com/sharing/share-offsite/?url="+post.id}>
                     LinkedIn
+                    </Link>
+                  </div>
+                  <div className={ShowShareCss.sharePopup}>
+                    <NextImage
+                      className={ShowShareCss.whatsappImage}
+                      field={facebook}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link href={"https://www.facebook.com/sharer/sharer.php?u="+post.id}>
+                    Facebook
                     </Link>
                   </div>
                 </div>
