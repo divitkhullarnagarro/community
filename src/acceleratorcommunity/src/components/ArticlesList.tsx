@@ -103,10 +103,6 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     }
   };
 
-  // useEffect(()=>{
-  //   console.log("aaaaaaaaaaa")
-  //   window.localStorage.setItem("token",userToken!)
-  // },[])
   const userIdTemp = 'a@gmail.com';
 
   // const router = useRouter();
@@ -134,16 +130,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     
    };
   const [clicked, setClicked] = useState(false);
-  // const handleClick = () => {
-  //   if (clicked) {
-  //     setField(bookmarkImage);
-  //   } else {
-  //     // update field to a new value when button is clicked for the first time
-  //     setField(activeBookmarkImage);
-  //   }
-  //   // toggle the clicked state
-  //   setClicked(!clicked);
-  // };
+  
 
   const [showPopup, setShowPopup] = useState(false);
 
