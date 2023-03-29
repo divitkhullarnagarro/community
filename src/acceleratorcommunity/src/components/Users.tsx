@@ -1,10 +1,11 @@
-import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { useContext, useState } from 'react';
+import { ComponentProps } from 'lib/component-props';
 import adminUserListingCall from 'src/API/adminUserListingCall';
 import WebContext from 'src/Context/WebContext';
 import styles from '../assets/users.module.css';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import { DataGrid } from '@mui/x-data-grid';
+import { Table } from 'react-bootstrap';
+import Profile from '../assets/images/ProfilePic.jpeg';
 
 type userFields = {
   objectId: Field<string>;
@@ -17,32 +18,26 @@ type userFields = {
 };
 
 const userColumns = [
-  { field: 'id', headerName: 'Row', width: 70 },
   {
     field: 'name',
     headerName: 'Name',
-    width: 200,
   },
   {
     field: 'gender',
     headerName: 'Gender',
-    width: 200,
   },
   {
     field: 'email',
     headerName: 'Email',
-    width: 200,
   },
 
   {
     field: 'phone',
     headerName: 'Phone',
-    width: 200,
   },
   {
     field: 'role',
     headerName: 'Role',
-    width: 200,
   },
 ];
 
@@ -97,7 +92,30 @@ const userRows = [
   },
 ];
 
-const Users = (): JSX.Element => {
+const ListLabel = 'Lists';
+
+type UserProps = ComponentProps & {
+  fields: {
+    data: {
+      datasource: DataSource;
+    };
+  };
+};
+
+type DataSource = {
+  mainHeaderLabel: {
+    jsonValue: Field<string>;
+  };
+  sideNavHeaderLabel: {
+    jsonValue: Field<string>;
+  };
+  userListLabel: {
+    jsonValue: Field<string>;
+  };
+};
+
+const Users = (props: UserProps): JSX.Element => {
+  const { data } = props?.fields;
   const [adminUserList, setAdminUserList] = useState<userFields[]>([]);
   const [showAdminList, setShowAdminList] = useState(false);
 
@@ -112,18 +130,38 @@ const Users = (): JSX.Element => {
     }
   };
 
-  const DataGridTable = () => {
-    const [data] = useState(userRows);
+  const UserListTable = () => {
     return (
-      <div className={styles.datatable}>
-        <h3>Admin User List</h3>
-        <DataGrid
-          className={styles.datagrid}
-          rows={data}
-          columns={userColumns}
-          pageSizeOptions={[10]}
-          checkboxSelection
-        />
+      <div>
+        <h3 className={styles.userListHeader}>
+          {data?.datasource?.userListLabel?.jsonValue?.value ?? 'Admin List'}
+        </h3>
+        <Table striped hover className={styles.userListTable}>
+          <thead>
+            <tr className={styles.header}>
+              {userColumns.map((item, index) => {
+                return (
+                  <td key={index} className={styles.item}>
+                    {item.headerName}
+                  </td>
+                );
+              })}
+            </tr>
+          </thead>
+          <tbody>
+            {userRows.map((item) => {
+              return (
+                <tr key={item?.id} className={styles.row}>
+                  <td className={styles.item}>{item?.name}</td>
+                  <td className={styles.item}>{item?.gender}</td>
+                  <td className={styles.item}>{item?.email}</td>
+                  <td className={styles.item}>{item?.phone}</td>
+                  <td className={styles.item}>{item?.role}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
       </div>
     );
   };
@@ -131,7 +169,9 @@ const Users = (): JSX.Element => {
   const Dashboard = () => {
     return (
       <div className={styles.dashboardWrapper}>
-        <h2>Welcome to the Dashboard</h2>
+        <h2 className={styles.mainHeader}>
+          {data?.datasource?.mainHeaderLabel?.jsonValue?.value ?? 'Welcome to the Dashboard'}
+        </h2>
       </div>
     );
   };
@@ -140,20 +180,27 @@ const Users = (): JSX.Element => {
     return (
       <div className={styles.sidenavbar}>
         <div className={styles.top}>
-          <span className={styles.logo}>Professional Dashboard</span>
+          <span className={styles.logo}>
+            {data?.datasource?.sideNavHeaderLabel?.jsonValue?.value ?? 'Professtional Dashboard'}
+          </span>
         </div>
         <hr />
         <div className={styles.center}>
           <ul>
-            <p className={styles.title}>LISTS</p>
+            <p className={styles.title}>{ListLabel}</p>
             <button
               onClick={() => {
                 getAdminUserList();
               }}
             >
               <li className={styles.row}>
-                <PersonOutlineIcon className={styles.icon} />
-                <span>Users</span>
+                <NextImage
+                  contentEditable={true}
+                  field={Profile}
+                  height={20}
+                  width={20}
+                ></NextImage>
+                <span>{data?.datasource?.userListLabel?.jsonValue?.value ?? 'Admin List'}</span>
               </li>
             </button>
           </ul>
@@ -170,7 +217,7 @@ const Users = (): JSX.Element => {
       <div className={styles.right_column}>
         <div className={styles.right_upper_section}>{<Dashboard />}</div>
         <div className={styles.right_lower_section}>
-          {showAdminList ? <DataGridTable /> : <></>}
+          {showAdminList ? <UserListTable /> : <></>}
         </div>
       </div>
     </div>

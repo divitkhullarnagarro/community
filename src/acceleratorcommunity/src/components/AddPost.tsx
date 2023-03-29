@@ -1,4 +1,4 @@
-import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { ReactElement, useContext, useEffect, useState } from 'react';
 import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
@@ -15,6 +15,11 @@ import addPostCall from '../API/addPostCall';
 import getUserCall from 'src/API/getUserCall';
 import addPostCommentCall from 'src/API/addPostCommentCall';
 // import loginUserCall from 'src/API/loginUserCall';
+import Link from 'next/link';
+import ShowShareCss from '../assets/ShowShare.module.css';
+import linkedin from '../assets/images/linkedin.png';
+import twitter from '../assets/images/twitter.png';
+import whatsapp from '../assets/images/whatsapp.png';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -104,6 +109,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         newArr?.map((post: any) => {
           post.isOpenComment = false;
           post.comments = empArr;
+          post.showShare = false;
         });
         setMyAnotherArr(newArr);
       });
@@ -136,6 +142,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         newArr?.map((post: any) => {
           post.isOpenComment = false;
           post.comments = [];
+          post.showShare = false;
         });
         setMyAnotherArr((prevState: any[]) => {
           return [...prevState, ...newArr];
@@ -245,6 +252,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     let modPost = locArr.map((post: any) => {
       if (post.id == id) {
         post.isLikedByUser = true;
+        if (typeof post?.postMeasures?.likeCount === 'number') {
+          post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+        } else {
+          post.postMeasures.likeCount = 1;
+        }
         return post;
       } else {
         return post;
@@ -259,6 +271,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         let modPost = locArr.map((post: any) => {
           if (post.id == id) {
             post.isLikedByUser = true;
+            if (typeof post?.postMeasures?.likeCount === 'number') {
+              post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+            } else {
+              post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+            }
             return post;
           } else {
             return post;
@@ -270,6 +287,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       }
     });
   }
+
+
 
   //Function To Handle Open Comments Tray
   function setOpenComments(id: string, show: boolean) {
@@ -298,7 +317,26 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       return modPost;
     });
   }
-
+  function handleShowShare(id: string, val: any) {
+    let locArr = myAnotherArr;
+    console.log('asdsad', myAnotherArr);
+    let modPost = locArr.map((post: any) => {
+      if (post.id == id) {
+        
+       
+          post.showShare = val;
+      
+        return post;
+      } else {
+        return post;
+      }
+    });
+    setMyAnotherArr(() => {
+      console.log('abv', modPost);
+      return modPost;
+    });
+  }
+ 
   //Function To Handle Post Comments
   function postComments(id: string, e: any) {
     e.preventDefault();
@@ -307,13 +345,18 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     addPostCommentCall(userToken, id, e.target[0].value);
     let modPost = locArr.map((post: any) => {
       if (post.id == id) {
-        post?.comments.push({
+        post?.comments?.push({
           id: 'Unique Id For Each Comment',
           commentToId: id,
           nameOfCommentor: 'Will Be Extracted From Token Value',
           dateAndTime: 'Current Date Time',
           commentString: e.target[0].value,
         });
+        if (typeof post?.postMeasures?.commentCount === 'number') {
+          post.postMeasures.commentCount = (post.postMeasures.commentCount ?? 0) + 1;
+        } else {
+          post.postMeasures.commentCount = (post.postMeasures.commentCount ?? 0) + 1;
+        }
         return post;
       } else {
         return post;
@@ -625,13 +668,57 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   alt="actions"
                 />
               </button>
-              <button>
+              <div>
+              <button onClick={()=> handleShowShare(post.id, !post?.showShare)}>
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/2956/2956786.png"
                   width="40px"
                   alt="actions"
                 />
               </button>
+              {post?.showShare && (
+                <div className={ShowShareCss.sharePopups} style={{position : "initial"}}>
+                  <div className={ShowShareCss.sharePopup}>
+                    <NextImage
+                      className={ShowShareCss.whatsappImage}
+                      field={whatsapp}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link href={"https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20"+post.id}>
+                      WhatsApp
+                    </Link>
+                  </div>
+
+                  <div className={ShowShareCss.sharePopup}>
+                    <NextImage
+                      className={ShowShareCss.whatsappImage}
+                      field={twitter}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link href={"https://twitter.com/intent/tweet?url="+post.id}>
+                      Twitter
+                    </Link>
+                  </div>
+
+                  <div className={ShowShareCss.sharePopup}>
+                    <NextImage
+                      className={ShowShareCss.whatsappImage}
+                      field={linkedin}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link href={"https://www.linkedin.com/sharing/share-offsite/?url="+post.id}>
+                    LinkedIn
+                    </Link>
+                  </div>
+                </div>
+              )}
+              </div>
             </div>
             <div>
               <span style={{ fontWeight: '600' }}>
