@@ -1,5 +1,6 @@
 import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { useContext, useState } from 'react';
+import { ComponentProps } from 'lib/component-props';
 import adminUserListingCall from 'src/API/adminUserListingCall';
 import WebContext from 'src/Context/WebContext';
 import styles from '../assets/users.module.css';
@@ -91,7 +92,31 @@ const userRows = [
   },
 ];
 
-const Users = (): JSX.Element => {
+const ListLabel = 'Lists';
+const UsersLabel = 'Users';
+
+type UserProps = ComponentProps & {
+  fields: {
+    data: {
+      datasource: DataSource;
+    };
+  };
+};
+
+type DataSource = {
+  mainHeaderLabel: {
+    jsonValue: Field<string>;
+  };
+  sideNavHeaderLabel: {
+    jsonValue: Field<string>;
+  };
+  userListLabel: {
+    jsonValue: Field<string>;
+  };
+};
+
+const Users = (props: UserProps): JSX.Element => {
+  const { data } = props?.fields;
   const [adminUserList, setAdminUserList] = useState<userFields[]>([]);
   const [showAdminList, setShowAdminList] = useState(false);
 
@@ -108,39 +133,46 @@ const Users = (): JSX.Element => {
 
   const UserListTable = () => {
     return (
-      <Table striped hover className={styles.userListTable}>
-        <thead>
-          <tr className={styles.header}>
-            {userColumns.map((item, index) => {
+      <div>
+        <h3 className={styles.userListHeader}>
+          {data?.datasource?.userListLabel?.jsonValue?.value ?? 'Admin List'}
+        </h3>
+        <Table striped hover className={styles.userListTable}>
+          <thead>
+            <tr className={styles.header}>
+              {userColumns.map((item, index) => {
+                return (
+                  <td key={index} className={styles.item}>
+                    {item.headerName}
+                  </td>
+                );
+              })}
+            </tr>
+          </thead>
+          <tbody>
+            {userRows.map((item) => {
               return (
-                <td key={index} className={styles.item}>
-                  {item.headerName}
-                </td>
+                <tr key={item?.id} className={styles.row}>
+                  <td className={styles.item}>{item?.name}</td>
+                  <td className={styles.item}>{item?.gender}</td>
+                  <td className={styles.item}>{item?.email}</td>
+                  <td className={styles.item}>{item?.phone}</td>
+                  <td className={styles.item}>{item?.role}</td>
+                </tr>
               );
             })}
-          </tr>
-        </thead>
-        <tbody>
-          {userRows.map((item) => {
-            return (
-              <tr key={item?.id} className={styles.row}>
-                <td className={styles.item}>{item?.name}</td>
-                <td className={styles.item}>{item?.gender}</td>
-                <td className={styles.item}>{item?.email}</td>
-                <td className={styles.item}>{item?.phone}</td>
-                <td className={styles.item}>{item?.role}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+          </tbody>
+        </Table>
+      </div>
     );
   };
 
   const Dashboard = () => {
     return (
       <div className={styles.dashboardWrapper}>
-        <h2>Welcome to the Dashboard</h2>
+        <h2 className={styles.mainHeader}>
+          {data?.datasource?.mainHeaderLabel?.jsonValue?.value ?? 'Welcome to the Dashboard'}
+        </h2>
       </div>
     );
   };
@@ -149,12 +181,14 @@ const Users = (): JSX.Element => {
     return (
       <div className={styles.sidenavbar}>
         <div className={styles.top}>
-          <span className={styles.logo}>Professional Dashboard</span>
+          <span className={styles.logo}>
+            {data?.datasource?.sideNavHeaderLabel?.jsonValue?.value ?? 'Professtional Dashboard'}
+          </span>
         </div>
         <hr />
         <div className={styles.center}>
           <ul>
-            <p className={styles.title}>LISTS</p>
+            <p className={styles.title}>{ListLabel}</p>
             <button
               onClick={() => {
                 getAdminUserList();
@@ -167,7 +201,7 @@ const Users = (): JSX.Element => {
                   height={20}
                   width={20}
                 ></NextImage>
-                <span>Users</span>
+                <span>{UsersLabel}</span>
               </li>
             </button>
           </ul>
