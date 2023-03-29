@@ -121,7 +121,9 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
           <Card.Title className={styles.cardTitle}>
             {item?.firstName + ' ' + item?.lastName}
           </Card.Title>
-          <Card.Text>{`${item?.speciality} |  ${item?.city}`}</Card.Text>
+          <Card.Text>{`${item?.speciality ?? ''} ${item?.speciality ? ' | ' : ''}  ${
+            item?.city ?? ''
+          }`}</Card.Text>
           <FollowUnfollowButton userName={item?.objectId} />
         </Card.Body>
       </Card>
