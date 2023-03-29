@@ -11,7 +11,7 @@ import linkedin from '../assets/images/linkedin.png';
 import twitter from '../assets/images/twitter.png';
 import whatsapp from '../assets/images/whatsapp.png';
 import bookmark from '../../src/API/bookmarks';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import WebContext from 'src/Context/WebContext';
 // import { useRouter } from 'next/router';
 
@@ -81,7 +81,7 @@ const getFormatedDate = (stringDate: string) => {
 
   return formattedDate;
 };
-
+ 
 const ArticlesList = (props: ArticlesListProps): JSX.Element => {
   const { userToken, setUserToken } = { ...useContext(WebContext) };
 
@@ -100,10 +100,6 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     }
   };
 
-  // useEffect(()=>{
-  //   console.log("aaaaaaaaaaa")
-  //   window.localStorage.setItem("token",userToken!)
-  // },[])
   const userIdTemp = 'a@gmail.com';
 
   // const router = useRouter();
@@ -124,20 +120,8 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     } else {
       setSelectedArticle([...selectedArticle, id]);
     }
-  };
-  // const [clicked, setClicked] = useState(false);
-  // const handleClick = () => {
-  //   if (clicked) {
-  //     setField(bookmarkImage);
-  //   } else {
-  //     // update field to a new value when button is clicked for the first time
-  //     setField(activeBookmarkImage);
-  //   }
-  //   // toggle the clicked state
-  //   setClicked(!clicked);
-  // };
-
-  // const [showPopup, setShowPopup] = useState(false);
+    
+   };
 
   const handleShareClick = (id: any) => {
     // if (clicked) {
@@ -152,10 +136,6 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
       setShareArticle(id);
     }
   };
-
-  useEffect(() => {
-    console.log(shareArticle);
-  }, [shareArticle]);
 
   const bookmarkApi = async (
     userIdTemp: string,
