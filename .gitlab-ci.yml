@@ -3,12 +3,14 @@ stages:
 
 deploy_production:
  stage: deploy
+ tags:
+     - vercel
  image: node:16.16.0
  only:
   - develop
  script:
  - cd src/acceleratorcommunity
- - npm install --global vercel
+ - vercel --version
  - vercel pull --yes --environment=production --token=L5Sr6ZrZzYcnkNPW7omJTSnJ
  - vercel build --prod --token=L5Sr6ZrZzYcnkNPW7omJTSnJ
  - vercel deploy --prebuilt --prod --token=L5Sr6ZrZzYcnkNPW7omJTSnJ

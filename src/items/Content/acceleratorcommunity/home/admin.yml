@@ -28,8 +28,11 @@ Languages:
             <r
               uid="{5302BCB7-4076-4290-B89F-D2C0DC80FD1A}"
               p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
+              s:ds="{AD6D1721-22B0-4B50-BE7B-B11F1828769D}"
               s:id="{DB5E2CC5-002A-46AA-B15C-D6527D5A99F2}"
-              s:ph="jss-main" />
+              s:par=""
+              s:ph="jss-main"
+              s:ccb="Clear on publish" />
           </d>
         </r>
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
@@ -40,7 +43,7 @@ Languages:
       Value: admin
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
-      Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
+      Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
@@ -51,11 +54,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "905ff7f9-aa0c-4425-b857-da2c045a5aad"
+      Value: "3adaae7a-41e7-40ad-8f0a-6a91009f8a8a"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230321T111329Z
+      Value: 20230328T095356Z
