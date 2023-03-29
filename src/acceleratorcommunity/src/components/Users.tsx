@@ -93,7 +93,6 @@ const userRows = [
 ];
 
 const ListLabel = 'Lists';
-const UsersLabel = 'Users';
 
 type UserProps = ComponentProps & {
   fields: {
@@ -201,7 +200,7 @@ const Users = (props: UserProps): JSX.Element => {
                   height={20}
                   width={20}
                 ></NextImage>
-                <span>{UsersLabel}</span>
+                <span>{data?.datasource?.userListLabel?.jsonValue?.value ?? 'Admin List'}</span>
               </li>
             </button>
           </ul>
