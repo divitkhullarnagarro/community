@@ -1,7 +1,5 @@
 
-import {   ImageField } from '@sitecore-jss/sitecore-jss-nextjs';
-
- 
+import {   ImageField } from '@sitecore-jss/sitecore-jss-nextjs'; 
 import { ComponentProps } from 'lib/component-props';
 // import notification from '../assets/images/notificationIcon.png';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
@@ -33,6 +31,7 @@ const Notification = (props: NotificationProps): JSX.Element => {
           editable={true}
           width={30}
           height={30}
+          title="Notification"
         />
       </div>
   );
