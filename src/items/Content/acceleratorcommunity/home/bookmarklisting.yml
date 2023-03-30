@@ -25,8 +25,11 @@ Languages:
             <r
               uid="{B7269F17-CEEB-4777-B418-111BAA0357B0}"
               p:after="*[1=2]"
+              s:ds="{D5973845-2EF0-44CE-91CA-BE6328F9DD4A}"
               s:id="{A40FD81A-6605-48A2-A5E5-F865875621C4}"
-              s:ph="jss-main" />
+              s:par="CSSStyles"
+              s:ph="jss-main"
+              s:ccb="Clear on publish" />
           </d>
         </r>
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
@@ -45,11 +48,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "dd42dfd3-2f81-48b0-a91c-437edc9f6320"
+      Value: "eefe2b85-4fcd-4ce0-859e-fe8f74a15995"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230327T035041Z
+      Value: 20230330T123949Z
