@@ -14,10 +14,12 @@ SharedFields:
   Hint: ComponentQuery
   Value: |
     # Editing here does not save the query on the item; copy it back when done!
+    
+    # Editing here does not save the query on the item; copy it back when done!
     # Editing here does not save the query on the item; copy it back when done!
     query Login($datasource: String!, $language: String!) {
       datasource: item(path: $datasource, language: $language) {
-        ... on Login {
+        ... on UserLogin {
           title{jsonValue}
           description{jsonValue}
           image{jsonValue}
@@ -42,11 +44,11 @@ Languages:
       Value: 20230303T113926Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "3e5c685d-702a-4515-933e-4dca6055f411"
+      Value: "3f5f15f2-b47f-4d7d-92be-8d26ace9421d"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230324T024450Z
+      Value: 20230327T143639Z
