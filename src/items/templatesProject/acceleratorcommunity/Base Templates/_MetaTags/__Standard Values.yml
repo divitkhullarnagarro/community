@@ -1,0 +1,64 @@
+﻿---
+ID: "a694d90d-3f15-46d6-b368-6e1a37ee61e0"
+Parent: "18ad9b38-d7f9-4d08-b99d-c49d17433690"
+Template: "18ad9b38-d7f9-4d08-b99d-c49d17433690"
+Path: /sitecore/templates/Project/acceleratorcommunity/Base Templates/_MetaTags/__Standard Values
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "104747be-ebe5-4b3c-b61f-6811cd49bd71"
+      Hint: twitterCard
+      Value: |
+        <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
+    - ID: "1cdfaecb-cb5a-4499-87fa-12bffaf4d991"
+      Hint: twitterImage
+      Value: |
+        <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230330T094054Z
+    - ID: "2cc0dc95-364e-4839-9d80-e478d3aa04c0"
+      Hint: ogImageWidth
+      Value: 1200
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "738b7e6e-4697-42e3-9ba7-5b69c79c8c31"
+      Hint: ogImageHeight
+      Value: 630
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "c097066f-bd4b-4b8c-bd8c-05944609a653"
+    - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
+      Hint: twitterDescription
+      Value: Lorem ipsum dolor sit amet
+    - ID: "a2a8bc50-e09c-4d84-9021-7d870a46ae34"
+      Hint: ogDescription
+      Value: Lorem ipsum dolor sit amet
+    - ID: "af3babb3-496f-4432-ae8d-361f72fe9c60"
+      Hint: twitterTitle
+      Value: Lorem ipsum dolor sit amet
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "c9bf6775-cbf3-4abb-aec3-c0d368791827"
+      Hint: ogType
+      Value: website
+    - ID: "d7aa0a5c-ea2d-4aa5-a5ca-eabfca9d2592"
+      Hint: ogImage
+      Value: |
+        <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230330T094228Z
+    - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
+      Hint: ogTitle
+      Value: Lorem ipsum dolor sit amet

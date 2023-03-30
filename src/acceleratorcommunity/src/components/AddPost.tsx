@@ -687,7 +687,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       width={25}
                       height={25}
                     />
-                    <Link href={"https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20"+post.id}>
+                    <Link href={"https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20"+post.id + 'utm_source=whatsapp&utm_medium=social&utm_id=' + post.id}>
                       WhatsApp
                     </Link>
                   </div>
@@ -700,7 +700,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       width={25}
                       height={25}
                     />
-                    <Link href={"https://twitter.com/intent/tweet?url="+post.id}>
+                    <Link href={"https://twitter.com/intent/tweet?url="+post.id +'utm_source=twitter&utm_medium=social&utm_id='+ post.id}>
                       Twitter
                     </Link>
                   </div>
@@ -713,7 +713,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       width={25}
                       height={25}
                     />
-                    <Link href={"https://www.linkedin.com/sharing/share-offsite/?url="+post.id}>
+                    <Link href={"https://www.linkedin.com/sharing/share-offsite/?url="+post.id +'utm_source=linkedin&utm_medium=social&utm_id='+ post.id}>
                     LinkedIn
                     </Link>
                   </div>
@@ -725,7 +725,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       width={25}
                       height={25}
                     />
-                    <Link href={"https://www.facebook.com/sharer/sharer.php?u="+post.id}>
+                    <Link href={"https://www.facebook.com/sharer/sharer.php?u="+post.id + 'utm_source=facebook&utm_medium=social&utm_id='+ post.id}>
                     Facebook
                     </Link>
                   </div>
