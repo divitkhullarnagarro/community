@@ -78,6 +78,20 @@ const Login = (props: LoginProps): JSX.Element => {
     setPassword(val);
   }
 
+  function getRouteToUrlFromCookie(): string | null {
+    if (typeof document !== 'undefined') {
+      const cookieString = document.cookie;
+      const cookies = cookieString.split(';').reduce((acc: any, cookie: string) => {
+        const [name, value] = cookie.split('=').map((c) => c.trim());
+        acc[name] = value;
+        return acc;
+      }, {});
+
+      return cookies.routeToUrl || null;
+    }
+    return null;
+  }
+
   const onSubmitHandler = async (e: any) => {
     e.preventDefault();
     if (password === '' || email === '') {
@@ -99,10 +113,13 @@ const Login = (props: LoginProps): JSX.Element => {
         if (setObjectId != undefined) {
           setObjectId(email);
         }
-        if (typeof localStorage !== 'undefined') {
-          let routeToUrl = localStorage.getItem('RouteToPage');
-          if (routeToUrl != '' && routeToUrl != null) {
-            router.push(routeToUrl);
+        if (typeof localStorage !== 'undefined' && typeof document !== 'undefined') {
+          document.cookie = `UserToken=${response?.data?.data?.access_token};path=/;`;
+          let routeToUrl = getRouteToUrlFromCookie();
+          // let routeToUrl = localStorage.getItem('RouteToPage');
+          if (routeToUrl !== '' && routeToUrl != null) {
+            console.log('routeURL', routeToUrl);
+            router.push(decodeURIComponent(routeToUrl));
           } else router.push('/');
         }
       } else {

@@ -18,6 +18,20 @@ function viewSinglePost() {
   let [postId, setPostId] = useState('');
   let [post, setPost] = useState<any>([]);
 
+  function getValueFromCookie(key: string): string | null {
+    if (typeof document !== 'undefined') {
+      const cookieString = document.cookie;
+      const cookies = cookieString.split(';').reduce((acc: any, cookie: string) => {
+        const [name, value] = cookie.split('=').map((c) => c.trim());
+        acc[name] = value;
+        return acc;
+      }, {});
+
+      return cookies[key] || null;
+    }
+    return null;
+  }
+
   function getQueryParams(url: string): string {
     const path = url.split('?')[0]; // Extract the path from the URL
     const routeSegments = path.split('/'); // Split the path by forward slash
@@ -30,32 +44,27 @@ function viewSinglePost() {
     if (typeof window !== 'undefined') {
       setPostId(getQueryParams(window?.location?.href));
     }
-    if (
-      typeof localStorage !== 'undefined' &&
-      localStorage.getItem('RouteToPage') != '' &&
-      localStorage.getItem('RouteToPage') != null
-    ) {
-      localStorage.setItem('RouteToPage', '');
+    if (typeof document != 'undefined') {
+      let url = getValueFromCookie('routeToUrl');
+      if (url != null) {
+        url = decodeURIComponent(url);
+      }
+      let currUrl = window?.location?.pathname;
+      if (currUrl == url) {
+        document.cookie = `routeToUrl=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      }
     }
   }, []);
 
   useEffect(() => {
     if (userToken == '') {
-      if (
-        typeof localStorage !== 'undefined' &&
-        localStorage.getItem('UserToken') != '' &&
-        localStorage.getItem('UserToken') != null
-      ) {
-        let token = localStorage.getItem('UserToken');
-        if (token != null && setUserToken != undefined) {
+      let token = getValueFromCookie('UserToken');
+      if (typeof document !== 'undefined' && token != '' && token != null) {
+        if (setUserToken != undefined) {
           setUserToken(token);
         }
       } else {
-        if (typeof localStorage !== 'undefined' && typeof window !== 'undefined') {
-          let CurrUrl = window?.location?.href;
-          localStorage.setItem('RouteToPage', CurrUrl);
-          router.push('/login');
-        }
+        router.push('/login');
       }
     }
   }, []);
@@ -63,15 +72,16 @@ function viewSinglePost() {
   useEffect(() => {
     if (postId != '') {
       getPostByIdCall(userToken, postId).then((response) => {
-        console.log('GetPostByIdResponse', response);
-        setPost(response?.data?.data);
+        if (response?.status == 200) {
+          setPost(response?.data?.data);
+        } else router.push('/404');
       });
     }
   }, [postId]);
 
-  if (typeof document !== 'undefined') {
-    document.cookie = `${'hello'}=${'world'}`;
-  }
+  // if (typeof document !== 'undefined') {
+  //   document.cookie = 'hello=world;path=/';
+  // }
 
   return (
     <>

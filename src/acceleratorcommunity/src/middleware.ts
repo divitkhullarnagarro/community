@@ -6,21 +6,26 @@ import type { NextRequest } from 'next/server';
 //   return middleware(req, ev);
 // }
 
-// export const config = {
-//   // Exclude Sitecore editing API routes
-//   matcher: ['/', '/((?!api/editing/).*)'],
-// };
+export const config = {
+  // Exclude Sitecore editing API routes
+  matcher: ['/', '/((?!api/editing/).*)'],
+};
 
 
-import { NextResponse } from 'next/server'
+import { NextResponse } from 'next/server';
 
-export function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith('/about')) {
-    return NextResponse.rewrite(new URL('/about-2', request.url))
+export function middleware(request: NextRequest, response: NextResponse) {
+
+
+  if (request.nextUrl.pathname.startsWith('/post')) {
+    if (request.cookies.get("UserToken") != '' && request.cookies.get("UserToken") != null)
+      return;
+    else {
+      response = NextResponse.next() && NextResponse.rewrite(new URL('/login', request.url));
+      response.cookies?.set("routeToUrl", request.nextUrl.pathname, { path: "/", httpOnly: false });
+      // return NextResponse.rewrite(new URL('/login', request.url))
+      return response;
+    }
   }
-  // console.log("Request", request)
-  // if (request.nextUrl.pathname.startsWith('/dashboard')) {
-  //   return NextResponse.rewrite(new URL('/dashboard/user', request.url))
-  // }
   return;
 }
