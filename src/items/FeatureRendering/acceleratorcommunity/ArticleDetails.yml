@@ -1,27 +1,31 @@
 ﻿---
-ID: "db5e2cc5-002a-46aa-b15c-d6527d5a99f2"
+ID: "123f0d20-a4d2-4d56-9ea2-bbd877ec9906"
 Parent: "5f8cd8cc-9315-400b-8b42-386745b391b8"
 Template: "04646a89-996f-4ee7-878a-ffdbf1f0ef0d"
-Path: /sitecore/layout/Renderings/Feature/acceleratorcommunity/Users
+Path: /sitecore/layout/Renderings/Feature/acceleratorcommunity/ArticleDetails
 SharedFields:
 - ID: "037fe404-dd19-4bf7-8e30-4dadf68b27b0"
   Hint: componentName
-  Value: Users
+  Value: ArticleDetails
 - ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
   Hint: __Icon
-  Value: Apps/32x32/Male.png
+  Value: applications/16x16/edit.png
 - ID: "17bb046a-a32a-41b3-8315-81217947611b"
   Hint: ComponentQuery
   Value: |
     # Editing here does not save the query on the item; copy it back when done!
     
-    # Editing here does not save the query on the item; copy it back when done!
-    query AdminList($datasource: String!, $language: String!) {
-      datasource: item(path: $datasource, language: $language) {
-        ... on AdminList {
-          mainHeaderLabel{jsonValue}
-          sideNavHeaderLabel{jsonValue}
-          userListLabel{jsonValue}
+    query ArticlesDetails($contextItem: String!, $language: String!) {
+      contextItem: item(path: $contextItem, language: $language) {
+        ... on ArticleDetailPage
+        {
+          longDescription{jsonValue}
+          title{jsonValue}
+          tags{jsonValue}
+          contentType{jsonValue}
+          date{jsonValue}
+          author{jsonValue}
+          image{jsonValue}
         }
       }
     }
@@ -33,7 +37,7 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230314T045354Z
+      Value: 20230326T105754Z
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
@@ -44,11 +48,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "8a4a8746-abe9-4fdd-94e1-da5e1903ecd8"
+      Value: "93defd59-d094-4b88-a1f6-33b2ee4885c6"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230327T125239Z
+      Value: 20230326T113434Z

@@ -189,9 +189,7 @@ const Login = (props: LoginProps): JSX.Element => {
                 </div>
                 <div className={loginCss.forgotPassword}>
                   <Link href={'/forgotPassword'}>
-                    {targetItems?.forgotPasswordLabel?.jsonValue?.value
-                      ? targetItems?.forgotPasswordLabel?.jsonValue?.value
-                      : 'Forgot Password?'}
+                  {targetItems?.forgotPasswordLabel?.jsonValue?.value ? targetItems.forgotPasswordLabel.jsonValue.value : 'Forgot Password?'}
                   </Link>
                 </div>
               </div>
@@ -236,11 +234,7 @@ const Login = (props: LoginProps): JSX.Element => {
                 {targetItems?.dontHaveAccountLabel?.jsonValue?.value}
               </div>
               <div className={loginCss.btn}>
-                <Link href={'/register'}>
-                  {targetItems?.registerHereLabel?.jsonValue?.value
-                    ? targetItems?.registerHereLabel?.jsonValue?.value
-                    : 'Register'}
-                </Link>
+                <Link href={'/register'}>{targetItems?.registerHereLabel?.jsonValue?.value ? targetItems.registerHereLabel.jsonValue.value : 'Register'}</Link>
               </div>
             </div>
             {/* <div className="social-icons">
@@ -260,6 +254,9 @@ const Login = (props: LoginProps): JSX.Element => {
     </>
   );
 };
+
+
+
 
 // export default withDatasourceCheck()<LoginProps>(Login);
 export default Login;

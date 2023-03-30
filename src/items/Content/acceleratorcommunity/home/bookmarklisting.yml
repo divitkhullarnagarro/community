@@ -1,32 +1,20 @@
 ﻿---
-ID: "b687c946-e903-44d4-b479-e5e137e130a3"
+ID: "90599e81-44c6-4318-b285-1c4a2f13461e"
 Parent: "9b2f2c61-b700-51dd-8f47-7600fc865200"
 Template: "0a24b14e-bbdd-4d84-8139-7d40e3b356fa"
-Path: /sitecore/content/acceleratorcommunity/home/news
+Path: /sitecore/content/acceleratorcommunity/home/bookmarklisting
 SharedFields:
-- ID: "1172f251-dad4-4efb-a329-0c63500e4f1e"
-  Hint: __Masters
-  Value: "{05E694D6-3F26-40C0-8CC0-0396FFB7ACBC}"
-- ID: "9621fdf3-7179-4ac3-a3ec-fda713baa1f5"
-  Hint: Show In Header
-  Value: 1
 - ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
   Hint: __Workflow
   Value: "{6C59AE29-D0A1-4B77-9305-0ABAB21D5FE5}"
-- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
-  Hint: __Sortorder
-  Value: 50
 Languages:
 - Language: en
   Versions:
   - Version: 1
     Fields:
-    - ID: "001dd393-96c5-490b-924a-b0f25cd9efd8"
-      Hint: __Lock
-      Value: <r />
     - ID: "03897511-7b06-4331-8ca0-1929bc3047ce"
       Hint: Navigation Title
-      Value: News
+      Value: bookmarklisting
     - ID: "04bf00db-f5fb-41f7-8ab7-22408372a981"
       Hint: __Final Renderings
       Value: |
@@ -35,31 +23,33 @@ Languages:
           <d
             id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
             <r
-              uid="{B426D147-BE18-46C3-9FDC-8034B097F4CA}"
+              uid="{B7269F17-CEEB-4777-B418-111BAA0357B0}"
               p:after="*[1=2]"
-              s:ds="{85442646-9588-4CC9-A98A-DB19DF67B50F}"
-              s:id="{AA7421F4-8B23-48B9-AAB7-BDEE1D1AE03A}"
-              s:par=""
-              s:ph="jss-main"
-              s:ccb="Clear on publish" />
+              s:id="{A40FD81A-6605-48A2-A5E5-F865875621C4}"
+              s:ph="jss-main" />
           </d>
         </r>
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230309T071323Z
-    - ID: "263d7202-9941-5327-aeda-534621fa7b2d"
-      Hint: pageTitle
-      Value: News
+      Value: 20230327T035006Z
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
       Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "f56d8171-aad1-4a8a-9481-32622323648b"
+      Value: "dd42dfd3-2f81-48b0-a91c-437edc9f6320"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230328T092955Z
+      Value: 20230327T035041Z
