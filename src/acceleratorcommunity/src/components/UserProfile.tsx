@@ -75,7 +75,7 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
           title="Profile page"
         />
       </Link>
-      <Button onClick={handleLogoutClick}>Logout</Button>
+      {/* <Button onClick={handleLogoutClick}>Logout</Button> */}
     </div>
   );
 };
