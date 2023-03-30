@@ -1,4 +1,4 @@
-import { ImageField } from '@sitecore-jss/sitecore-jss-nextjs';
+import { ImageField,Field } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import userProfileCss from '../assets/userProfile.module.css';
@@ -15,8 +15,12 @@ import { useRouter } from 'next/router';
 
 type UserProfileProps = ComponentProps & {
   fields: {
-    Image: ImageField;
-    LogoURL: Url;
+    Image:ImageField;
+    LogoURL: {
+      value:{
+        href: Url;
+      }
+    };
   };
 };
 
@@ -61,20 +65,17 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
   };
   return (
     <div className={userProfileCss.container}>
-      <Button onClick={() => router.push('/')}>Back</Button>
-      <Link href={props.fields.LogoURL}>
-        {/* <Link href="/#"> */}
-
+      {/* <Button onClick={() => router.push('/')}>Back</Button> */}
+      <Link href={props.fields.LogoURL.value.href}>
         <NextImage
           field={props.fields.Image.value}
-          // field={profile}
           editable={true}
           width={30}
           height={30}
           title="Profile page"
         />
       </Link>
-      <Button onClick={handleLogoutClick}>Logout</Button>
+      {/* <Button onClick={handleLogoutClick}>Logout</Button> */}
     </div>
   );
 };

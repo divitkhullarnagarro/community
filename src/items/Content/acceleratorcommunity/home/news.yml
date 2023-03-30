@@ -44,6 +44,14 @@ Languages:
               s:ccb="Clear on publish" />
           </d>
         </r>
+    - ID: "104747be-ebe5-4b3c-b61f-6811cd49bd71"
+      Hint: twitterCard
+      Value: |
+        <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
+    - ID: "1cdfaecb-cb5a-4499-87fa-12bffaf4d991"
+      Hint: twitterImage
+      Value: |
+        <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230309T071323Z
@@ -60,6 +68,13 @@ Languages:
       Hint: __Updated by
       Value: |
         sitecore\Admin
+    - ID: "c9bf6775-cbf3-4abb-aec3-c0d368791827"
+      Hint: ogType
+      Value: website
+    - ID: "d7aa0a5c-ea2d-4aa5-a5ca-eabfca9d2592"
+      Hint: ogImage
+      Value: |
+        <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230328T092955Z
+      Value: 20230321T111329Z
