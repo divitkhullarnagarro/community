@@ -1,13 +1,15 @@
 ﻿---
-ID: "94ad1290-b1ea-4c4e-8507-b22b02e68b19"
-Parent: "aec21aad-9be3-42ea-b1ca-93dfe0334983"
-Template: "53dec80a-ee9d-4bcb-b577-d37b695473b0"
-Path: /sitecore/content/acceleratorcommunity/Components/Notification/Notification Logo
+ID: "97657cda-5214-479d-a176-1129b3cc39bc"
+Parent: "aaac225e-8dd0-45b7-b66c-4eb824f3a118"
+Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
+Path: /sitecore/templates/Feature/acceleratorcommunity/BookmarkListing
 SharedFields:
-- ID: "b1db66ee-da88-4a5d-9b48-3c33751eb7e6"
-  Hint: Image
-  Value: |
-    <image mediaid="{24646BEF-CEA8-492F-83FF-06347FCD75FF}" />
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: Apps/32x32/Undo.png
+- ID: "12c33f3f-86c5-43a5-aeb4-5598cec45116"
+  Hint: __Base template
+  Value: "{1930BBEB-7805-471A-A3BE-4858AC7CF696}"
 Languages:
 - Language: en
   Versions:
@@ -15,7 +17,7 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230321T113332Z
+      Value: 20230330T110129Z
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
@@ -26,11 +28,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "e1b062b5-d037-4547-a721-e03de41b454f"
+      Value: "7e5a2803-f119-497a-b1c8-286e19b62823"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230329T111818Z
+      Value: 20230330T110431Z
