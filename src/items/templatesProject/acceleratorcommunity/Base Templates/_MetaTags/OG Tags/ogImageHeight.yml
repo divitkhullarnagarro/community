@@ -1,12 +1,15 @@
 ﻿---
-ID: "0b85d244-3632-44ab-a4ad-46743c2a59b2"
-Parent: "05e694d6-3f26-40c0-8cc0-0396ffb7acbc"
-Template: "05e694d6-3f26-40c0-8cc0-0396ffb7acbc"
-Path: /sitecore/templates/Feature/acceleratorcommunity/ArticleDetailPage/__Standard Values
+ID: "738b7e6e-4697-42e3-9ba7-5b69c79c8c31"
+Parent: "aea48442-5095-4850-ac76-86a736549242"
+Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
+Path: /sitecore/templates/Project/acceleratorcommunity/Base Templates/_MetaTags/OG Tags/ogImageHeight
 SharedFields:
-- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
-  Hint: __Icon
-  Value: Applications/32x32/form_red_edit.png
+- ID: "ab162cc0-dc80-4abf-8871-998ee5d7ba32"
+  Hint: Type
+  Value: "Single-Line Text"
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 600
 Languages:
 - Language: en
   Versions:
@@ -14,7 +17,7 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230313T060754Z
+      Value: 20230330T090253Z
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
@@ -25,14 +28,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "bf6fa852-0cd9-4397-aedd-32a8b3d2a1a0"
+      Value: "611496b0-76a7-452d-8dad-6ec27caa1e47"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
-    - ID: "c9bf6775-cbf3-4abb-aec3-c0d368791827"
-      Hint: ogType
-      Value: article
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230329T123131Z
+      Value: 20230330T090253Z

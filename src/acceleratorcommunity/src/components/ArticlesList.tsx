@@ -275,7 +275,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                     <Link
                       href={
                         'https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20' +
-                        l.title?.jsonValue?.value
+                        l.title?.jsonValue?.value + 'utm_source=whatsapp&utm_medium=social&utm_term=' +l.title?.jsonValue?.value
                       }
                     >
                       WhatsApp
@@ -295,7 +295,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                         'https://twitter.com/intent/tweet?url=' +
                         l.url?.url +
                         '&text=' +
-                        l.title?.jsonValue?.value
+                        l.title?.jsonValue?.value + 'utm_source=twitter&utm_medium=social&utm_term=' +l.title?.jsonValue?.value
                       }
                     >
                       Twitter
@@ -311,7 +311,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       height={25}
                     />
                     <Link
-                      href={'https://www.linkedin.com/sharing/share-offsite/?url=' + l.url?.url}
+                      href={'https://www.linkedin.com/sharing/share-offsite/?url=' + l.url?.url + 'utm_source=linkedin&utm_medium=social&utm_term=' +l.title?.jsonValue?.value}
                     >
                       LinkedIn
                     </Link>
@@ -325,7 +325,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       height={25}
                     />
                     <Link
-                      href={'https://www.facebook.com/sharer/sharer.php?u=' + l.url?.url + '&t='+ l.title?.jsonValue?.value}
+                      href={'https://www.facebook.com/sharer/sharer.php?u=' + l.url?.url + '&t='+ l.title?.jsonValue?.value + 'utm_source=facebook&utm_medium=social&utm_term='+l.title?.jsonValue?.value}
                     >
                       Facebook
                     </Link>
