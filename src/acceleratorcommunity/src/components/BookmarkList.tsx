@@ -11,7 +11,35 @@ import { sitecoreApiHost } from 'temp/config';
 import { ApolloClient, ApolloLink, InMemoryCache, HttpLink } from 'apollo-boost';
 
 type BookmarkListProps = ComponentProps & {
-  fields: {};
+  fields: {
+    data: {
+      datasource: DataSource;
+    };
+  };
+};
+
+type DataSource = {
+  contentType: jsonValue[];
+};
+
+type jsonValue = {
+  data: {
+    datasource: DataSource;
+  };
+  url: {
+    jsonValue: Field<string>;
+  };
+  name: {
+    jsonValue: Field<string>;
+  };
+  displayName: {
+    jsonValue: Field<string>;
+  };
+  fields: {
+    Name: {
+      jsonValue: Field<string>;
+    };
+  };
 };
 
 type bookmarkFields = {
@@ -47,9 +75,10 @@ const client1 = new ApolloClient({
 });
 
 const BookmarkList = (props: BookmarkListProps): JSX.Element => {
+  const data = props?.fields?.data?.datasource?.contentType as any;
   const { setUserToken, userToken } = { ...useContext(WebContext) };
 
-  console.log('props', props);
+  console.log('propssssssssssssssssssssssssssssss', props);
 
   const getFormatedDate = (stringDate: string) => {
     const date = new Date(stringDate);
@@ -69,7 +98,25 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
     return formattedDate;
   };
   // const [bookmarkList, setBookmarkList] = useState<bookmarkFields[]>([]);
+  const [completeList, setcompleteList] = useState<any>([]);
   const [bookmarkLists, setBookmarkLists] = useState<any>([]);
+  const [bookmarkTYpeClicked, setbookmarkTYpeClicked] = useState<any>([]);
+  const [buttonTypes, setbuttonTypes] = useState<any>([]);
+
+  useEffect(() => {
+    setbuttonTypes(data.jsonValue);
+  }, []);
+
+  const [scroll, setScroll] = useState(false);
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      if (window !== undefined) {
+        setScroll(window.scrollY > 45);
+      }
+    });
+  }, []);
+
+  // setbuttonTypes(data.jsonValue)
 
   // For storing token in local storage
   useEffect(() => {
@@ -88,16 +135,28 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
     }
   }, []);
 
+  const handleClick = (name: any) => {
+    let data: any[] = [];
+    setbookmarkTYpeClicked(name);
+    if (completeList.length > 0) {
+      data = completeList.filter((item: any) => {
+        return item?.contentType?.targetItem?.name === name;
+      });
+    }
+    setBookmarkLists(data);
+  };
+
+  const handleAllClick = () => {
+    setbookmarkTYpeClicked('all');
+
+    setBookmarkLists(completeList);
+  };
+
   useEffect(() => {
     if (userToken != '' && userToken != undefined) {
       getBookmarkList(userToken);
     }
   }, [userToken]);
-
-  useEffect(() => {
-    // console.log("realValue",bookmarkLists)
-    // Data(bookmarkLists)
-  }, [bookmarkLists]);
 
   let arrayList: bookmarkFields[] = [];
   const getBookmarkList = async (userToken: string | undefined) => {
@@ -110,19 +169,17 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
           datasource: l.contentId,
           language: 'en',
         };
-         client1.query({ query, variables }).then((result: any) => {
+        client1.query({ query, variables }).then((result: any) => {
           // alert(result?.data?.datasource);
-          // console.log('bookmark', result?.data?.datasource);
           arrayList.push(result?.data?.datasource);
           // setBookmarkLists([...bookmarkLists,result?.data?.datasource])}
         });
-        
       });
+      setcompleteList(arrayList);
       setBookmarkLists(arrayList);
       // setBookmarkList(response?.data?.data);
     }
     // setBookmarkList(response?.data?.data);
-    console.log('arrayList', arrayList);
     // console.log("javaApi",bookmarkLists);
     // Data(bookmarkLists)
   };
@@ -132,55 +189,94 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
       <div className={bookmarkCss.heading}>
         <h3>My collection</h3>
       </div>
-      {bookmarkLists?.length > 0 ? (
-        bookmarkLists.map((l: any, i: any) => {
-          return (
-            <div key={i} className={bookmarkCss.contentTypeContainers}>
-              {/* <div className={bookmarkCss.contentTypeContainer}> */}
-              <div className={bookmarkCss.leftContainer}>
-                <h4>{l.contentType.targetItem.name}</h4>
-                <NextImage
-                  className={bookmarkCss.leftContainerImage}
-                  field={l.image.jsonValue.value}
-                  editable={true}
-                  width={20}
-                  height={300}
-                />
-              </div>
-              <div className={bookmarkCss.rightContainer}>
-                <div className={bookmarkCss.rightContainerHeading}>
-                  <h4>{l?.title?.jsonValue?.value}</h4>
-                  <div>
-                    <p>{l.description.jsonValue.value}</p>
-                  </div>
-                  <div>
-                    <p>{l?.id?.jsonValue?.value}</p>
-                  </div>
-                  <div>{l.author.jsonValue.value}</div>
-                  <div className={bookmarkCss.dates}>
-                    <NextImage field={calender} editable={true} />
-
-                    {getFormatedDate(l.date.jsonValue.value)}
-                  </div>
-
-                  <div className={bookmarkCss.button}>
-                    <button>
+      <div className={bookmarkCss.bodyContainer}>
+        <div className={scroll ? bookmarkCss.sideNavTop : bookmarkCss.sideNav}>
+          {buttonTypes?.length > 0 ? (
+            <button
+              onClick={handleAllClick}
+              className={
+                bookmarkTYpeClicked.includes('all') ? bookmarkCss.activeBtn : bookmarkCss.actionBtn
+              }
+            >
+              ALL
+            </button>
+          ) : (
+            ''
+          )}
+          {buttonTypes?.length > 0
+            ? buttonTypes.map((item: any) => {
+                return (
+                  <button
+                    onClick={() => handleClick(item?.fields?.Name?.value)}
+                    className={
+                      bookmarkTYpeClicked.includes(item?.fields?.Name?.value)
+                        ? bookmarkCss.activeBtn
+                        : bookmarkCss.actionBtn
+                    }
+                  >
+                    {item?.fields?.Name?.value}
+                    {console.log("==========================",item)}
+                  </button>
+                );
+              })
+            : ''}
+        </div>
+        <div>
+          {' '}
+          <div className={bookmarkCss.listContainers}>
+            {bookmarkLists?.length > 0 ? (
+              bookmarkLists.map((l: any, i: any) => {
+                return (
+                  <div key={i} className={bookmarkCss.contentTypeContainers}>
+                    {/* <div className={bookmarkCss.contentTypeContainer}> */}
+                    <div className={bookmarkCss.leftContainer}>
+                      <h4>{l.contentType.targetItem.name}</h4>
                       <NextImage
                         className={bookmarkCss.leftContainerImage}
-                        field={ActiveBookmark}
+                        field={l.image.jsonValue.value}
                         editable={true}
+                        width={20}
+                        height={300}
                       />
-                    </button>
+                    </div>
+                    <div className={bookmarkCss.rightContainer}>
+                      <div className={bookmarkCss.rightContainerHeading}>
+                        <h4>{l?.title?.jsonValue?.value}</h4>
+                        <div>
+                          <p>{l?.description?.jsonValue?.value}</p>
+                        </div>
+                        <div>
+                          <p>{l?.id?.jsonValue?.value}</p>
+                        </div>
+                        <div>{l?.author?.jsonValue?.value}</div>
+                        <div className={bookmarkCss.dates}>
+                          <NextImage field={calender} editable={true} />
+
+                          {getFormatedDate(l?.date?.jsonValue?.value)}
+                        </div>
+
+                        <div className={bookmarkCss.button}>
+                          <button>
+                            <NextImage
+                              className={bookmarkCss.leftContainerImage}
+                              field={ActiveBookmark}
+                              editable={true}
+                            />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-            // </div>
-          );
-        })
-      ) : (
-        <></>
-      )}
+                  // </div>
+                );
+              })
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>
+      </div>
+
       {/* 
       {bookmarkItem } */}
     </div>
