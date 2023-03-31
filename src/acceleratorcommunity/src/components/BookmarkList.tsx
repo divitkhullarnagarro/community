@@ -229,10 +229,10 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                   <div key={i} className={bookmarkCss.contentTypeContainers}>
                     {/* <div className={bookmarkCss.contentTypeContainer}> */}
                     <div className={bookmarkCss.leftContainer}>
-                      <h4>{l.contentType.targetItem.name}</h4>
+                      <h4>{l?.contentType?.targetItem?.name}</h4>
                       <NextImage
                         className={bookmarkCss.leftContainerImage}
-                        field={l.image.jsonValue.value}
+                        field={l?.image?.jsonValue?.value}
                         editable={true}
                         width={20}
                         height={300}
