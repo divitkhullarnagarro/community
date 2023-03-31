@@ -104,7 +104,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
   const [buttonTypes, setbuttonTypes] = useState<any>([]);
 
   useEffect(() => {
-    setbuttonTypes(data.jsonValue);
+    setbuttonTypes(data?.jsonValue);
   }, []);
 
   const [scroll, setScroll] = useState(false);
@@ -164,9 +164,9 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
 
     if (response?.data?.success) {
       var query = getBookmarkItem();
-      response.data.data.map((l: bookmarkFields) => {
+      response?.data?.data?.map((l: bookmarkFields) => {
         const variables = {
-          datasource: l.contentId,
+          datasource: l?.contentId,
           language: 'en',
         };
         client1.query({ query, variables }).then((result: any) => {
@@ -215,7 +215,6 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                     }
                   >
                     {item?.fields?.Name?.value}
-                    {console.log("==========================",item)}
                   </button>
                 );
               })
@@ -230,10 +229,10 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                   <div key={i} className={bookmarkCss.contentTypeContainers}>
                     {/* <div className={bookmarkCss.contentTypeContainer}> */}
                     <div className={bookmarkCss.leftContainer}>
-                      <h4>{l.contentType.targetItem.name}</h4>
+                      <h4>{l?.contentType?.targetItem?.name}</h4>
                       <NextImage
                         className={bookmarkCss.leftContainerImage}
-                        field={l.image.jsonValue.value}
+                        field={l?.image?.jsonValue?.value}
                         editable={true}
                         width={20}
                         height={300}
