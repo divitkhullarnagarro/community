@@ -41,7 +41,7 @@ type Item = {
   date: {
     jsonValue: Field<string>;
   };
-  author: {
+  authorName: {
     jsonValue: Field<string>;
   };
   tags: {
@@ -105,7 +105,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
 
   // const router = useRouter();
 
-  const { targetItems } = props?.fields?.data?.datasource.articlesList;
+  const { targetItems } = props?.fields?.data?.datasource?.articlesList;
 
   const [selectedArticle, setSelectedArticle] = useState<any>([]);
   const [shareArticle, setShareArticle] = useState<any>([]);
@@ -203,7 +203,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                     editable={true}
                   />
                   <div className={ArticlesListCss.infoWrapperTagData}>
-                    {l.author.jsonValue.value}{' '}
+                    {l?.authorName?.jsonValue?.value}{' '}
                   </div>
                 </div>
                 <div className={ArticlesListCss.infoWrapperTag}>

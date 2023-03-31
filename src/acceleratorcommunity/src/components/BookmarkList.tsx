@@ -215,7 +215,6 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                     }
                   >
                     {item?.fields?.Name?.value}
-                    {console.log("==========================",item)}
                   </button>
                 );
               })
