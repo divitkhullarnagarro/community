@@ -25,13 +25,13 @@ Languages:
       Hint: ContentType
       Value: "{757E18A7-D46F-422D-9DF3-7A4E6AA33F40}"
     - ID: "20effcd6-ba5f-47e5-8003-9b0ce2a49335"
-      Hint: Author
+      Hint: AuthorName
       Value: JAMA
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230313T062318Z
     - ID: "31bceb62-c1e4-4109-80b9-172aae293942"
-      Hint: Description
+      Hint: ShortDescription
       Value: A randomized clinical trial enrolling 1067 critically ill adults undergoing tracheal intubation with sedation and positive pressure
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
@@ -71,13 +71,13 @@ Languages:
       Hint: ContentType
       Value: "{757E18A7-D46F-422D-9DF3-7A4E6AA33F40}"
     - ID: "20effcd6-ba5f-47e5-8003-9b0ce2a49335"
-      Hint: Author
+      Hint: AuthorName
       Value: JAMA
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230313T062318Z
     - ID: "31bceb62-c1e4-4109-80b9-172aae293942"
-      Hint: Description
+      Hint: ShortDescription
       Value: A randomized clinical trial enrolling 1067 critically ill adults undergoing tracheal intubation with sedation and positive pressure
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
@@ -91,7 +91,7 @@ Languages:
         <image mediaid="{86843013-C815-4D4F-AF2D-C9362C9E5F88}" />
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "7b9f14a8-d356-4a36-b620-c0efac3bbdad"
+      Value: "969b34e1-e9a0-42ae-bdc4-2215c0c9cf7f"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
@@ -99,9 +99,28 @@ Languages:
     - ID: "bf0d55a4-c617-4ce5-91c1-40913f07b123"
       Hint: Tags
       Value: "{05BA8938-576F-4EB2-A895-94FFCA67DC14}"
+    - ID: "cad30d4d-a801-4a6b-ac34-293f889b0b37"
+      Hint: Banner
+      Value: |
+        <image mediaid="{26770C9A-00BF-4E55-A6C2-D92D738B0F56}" />
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230313T092603Z
+      Value: 20230331T123956Z
+    - ID: "ec59ea43-4087-4f58-8bff-f0b581a9f31b"
+      Hint: LongDescription
+      Value: |
+        
+        <div>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor.</div>
+        <p>&nbsp;</p>
+        <div>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor.
+        </div>
+        <div>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor.
+        <div>
+        </div>
+        </div>
+        
     - ID: "fdf92769-8768-4460-bbad-818073f23d1f"
       Hint: Title
       Value: IV Fluid Bolus Fails To Prevent Cardiovascular Collapse In Intubated Patients

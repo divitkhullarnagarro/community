@@ -2,7 +2,7 @@
 ID: "31bceb62-c1e4-4109-80b9-172aae293942"
 Parent: "afe1984e-76fa-43ad-87d7-5b35dd67c053"
 Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
-Path: /sitecore/templates/Feature/acceleratorcommunity/ArticleDetailPage/Article Details/Description
+Path: /sitecore/templates/Feature/acceleratorcommunity/ArticleDetailPage/Article Details/ShortDescription
 SharedFields:
 - ID: "ab162cc0-dc80-4abf-8871-998ee5d7ba32"
   Hint: Type

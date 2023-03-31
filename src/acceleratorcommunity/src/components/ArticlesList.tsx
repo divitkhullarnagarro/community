@@ -32,7 +32,7 @@ type Item = {
   title: {
     jsonValue: Field<string>;
   };
-  description: {
+  shortDescription: {
     jsonValue: RichTextField;
   };
   image: {
@@ -44,6 +44,7 @@ type Item = {
   authorName: {
     jsonValue: Field<string>;
   };
+  
   tags: {
     targetItems: [
       {
@@ -162,8 +163,13 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     // handleClick();
     handleSelectedArticle(contentId);
   };
-
+  console.log(
+    new URL(
+      'https://twitter.com/Betclic/status/1382074820628783116?s=20'
+    ).pathname
+  );
   return (
+    
     <div className={ArticlesListCss.mainwrapper}>
       {targetItems?.map((l, i) => {
         return (
@@ -179,8 +185,8 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
               <div className={ArticlesListCss.title}>{l?.title?.jsonValue?.value}</div>
               <div className={ArticlesListCss.cardDescription}>
                 <p>
-                  {l?.description?.jsonValue?.value}
-                  {/* <Link href="/readMorePage">Read More </Link> */}
+                  {l?.shortDescription?.jsonValue?.value}<br></br>
+                   <Link href={ new URL(l?.url?.url)?.pathname}>Read More </Link> 
                 </p>
               </div>
               <div className={ArticlesListCss.cardTags}>
@@ -226,7 +232,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       l?.id,
                       // l.title?.jsonValue.value, //This is for URL or Image value
                       l?.title?.jsonValue?.value,
-                      l?.description?.jsonValue?.value
+                      l?.shortDescription?.jsonValue?.value
                     )
                   }
                 >

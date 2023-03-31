@@ -153,3 +153,9 @@
   color: black;
   margin-left: 6px;
 }
+.storyCard{
+  max-width: 80%;
+  margin-top: 30px;
+  margin-left: 300px;
+  margin-right: 300px;
+}

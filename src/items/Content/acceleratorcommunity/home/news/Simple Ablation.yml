@@ -25,13 +25,13 @@ Languages:
       Hint: ContentType
       Value: "{F183E359-A872-4B54-945E-EA8C7A84E445}"
     - ID: "20effcd6-ba5f-47e5-8003-9b0ce2a49335"
-      Hint: Author
+      Hint: AuthorName
       Value: JAMA
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230313T062133Z
     - ID: "31bceb62-c1e4-4109-80b9-172aae293942"
-      Hint: Description
+      Hint: ShortDescription
       Value: A total of 843 patients with symptomatic or asymptomatic persistent AF and undergoing AF ablation were enrolled from July 2016 to January 2020
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
@@ -73,13 +73,13 @@ Languages:
       Hint: ContentType
       Value: "{F183E359-A872-4B54-945E-EA8C7A84E445}"
     - ID: "20effcd6-ba5f-47e5-8003-9b0ce2a49335"
-      Hint: Author
+      Hint: AuthorName
       Value: JAMA
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230313T062133Z
     - ID: "31bceb62-c1e4-4109-80b9-172aae293942"
-      Hint: Description
+      Hint: ShortDescription
       Value: A total of 843 patients with symptomatic or asymptomatic persistent AF and undergoing AF ablation were enrolled from July 2016 to January 2020
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
@@ -93,7 +93,7 @@ Languages:
         <image mediaid="{209B2A59-EE84-45E5-B4C9-B903302BBDCC}" />
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "1091fa08-d9f7-4d02-b0a5-418df8485ab5"
+      Value: "8faaf375-6971-4d02-9d2b-7f4909318cb6"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
@@ -103,9 +103,28 @@ Languages:
       Value: |
         {05BA8938-576F-4EB2-A895-94FFCA67DC14}
         {A4D64509-7714-4A87-AC9E-DB90A4B65EBE}
+    - ID: "cad30d4d-a801-4a6b-ac34-293f889b0b37"
+      Hint: Banner
+      Value: |
+        <image mediaid="{26770C9A-00BF-4E55-A6C2-D92D738B0F56}" />
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230313T092552Z
+      Value: 20230331T115750Z
+    - ID: "ec59ea43-4087-4f58-8bff-f0b581a9f31b"
+      Hint: LongDescription
+      Value: |
+        
+        <div>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor.</div>
+        <p>&nbsp;</p>
+        <div>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor.
+        </div>
+        <div>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor.
+        <div>
+        </div>
+        </div>
+        
     - ID: "fdf92769-8768-4460-bbad-818073f23d1f"
       Hint: Title
       Value: Simple Ablation Has Best Outcomes In Atrial Fibrillation
