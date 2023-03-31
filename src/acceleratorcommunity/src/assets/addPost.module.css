@@ -1,0 +1,70 @@
+.reportPostModalContainer {
+  background-color: rgba(211, 211, 211, 0.096) !important;
+}
+
+.reportPostModalHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  font-size: 1.875rem;
+}
+
+.reportPostModalBody {
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+  font-size: 1.25rem;
+}
+
+.reportItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 10px;
+  font-size: 1.25rem;
+}
+
+.footerBtn {
+  font-size: 1.25rem;
+}
+
+.overlayContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 2px solid lightgray;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.overlayItem {
+  display: flex;
+  justify-content: flex-start;
+  margin-right: 5px;
+}
+
+.reportContainerBtn {
+  background-color: white;
+  color: black;
+  border: none;
+  font-weight: bold;
+  padding-top: 10px;
+  margin-left: 10px;
+}
+
+.copyLinkBtnStyle {
+  width: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.dropdownBtn {
+  background-color: white;
+  border: none;
+  width: 40px;
+}
+
+.dropdownItem:visited {
+  background-color: white;
+}

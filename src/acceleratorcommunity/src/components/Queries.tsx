@@ -12,7 +12,7 @@ export const getBookmarkItem = () => {
           title {
             jsonValue
           }
-          description {
+          shortDescription {
             jsonValue
           }
           image {

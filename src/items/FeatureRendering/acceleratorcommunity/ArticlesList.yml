@@ -33,7 +33,7 @@ SharedFields:
                 title {
                   jsonValue
                 }
-                description {
+                shortDescription {
                   jsonValue
                 }
                 image {
@@ -108,11 +108,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "76c346cd-7f80-4b6b-8639-ad13f1a94d92"
+      Value: "a5c45ac0-ba98-4c95-867d-2605c2ef2ca8"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\sakshi.kumari@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230331T060011Z
+      Value: 20230331T115839Z
