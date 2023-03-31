@@ -1,6 +1,6 @@
 import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
-import { ReactElement, useContext, useEffect, useState } from 'react';
+import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
 import Form from 'react-bootstrap/Form';
 import WebContext from '../Context/WebContext';
@@ -21,6 +21,13 @@ import linkedin from '../assets/images/linkedin.png';
 import twitter from '../assets/images/twitter.png';
 import whatsapp from '../assets/images/whatsapp.png';
 import facebook from '../assets/images/facebook.svg';
+import { Dropdown, Modal } from 'react-bootstrap';
+import { ReportPostOptionsTypeLabel } from 'assets/helpers/enums';
+import styles from '../assets/addPost.module.css';
+import reportPostImage from '../assets/images/flag-icon.svg';
+import bookmarkImage from '../assets/images/bookmark.svg';
+import copylink from '../assets/images/copylink.svg';
+import reportPostCall from 'src/API/reportPostCall';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -29,7 +36,7 @@ type AddPostProps = ComponentProps & {
 };
 
 const AddPost = (props: AddPostProps | any): JSX.Element => {
-  props; //delete me
+  console.log('addpost', props); //delete me
   const { userToken, setUserToken, objectId, userObject, setUserObject } = {
     ...useContext(WebContext),
   };
@@ -132,6 +139,92 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       LoadMorePosts();
     }
   }, [ifReachedEnd]);
+
+  const [showReportPopUp, setShowReportPopUp] = useState(false);
+  const [reportPostId, setReportPostId] = useState('');
+  const [reportPostType, setReportPostType] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const showReportPostPopup = () => {
+    setShowReportPopUp(true);
+  };
+
+  const handleClose = () => {
+    setShowReportPopUp(false);
+  };
+
+  const handleSelectChange = (event: any) => {
+    console.log(event);
+  };
+
+  const ReportPostPopup = () => {
+    const reportTypeList = Object.values(ReportPostOptionsTypeLabel);
+    return (
+      <>
+        <Modal
+          className={styles.reportPostModalContainer}
+          show={showReportPopUp}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+          centered
+          scrollable={true}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title className={styles.reportPostModalHeader}>
+              {props?.fields?.data?.datasource?.reportPostTitle?.jsonValue?.value ?? 'Report'}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className={styles.reportPostModalBody}>
+              {props?.fields?.data?.datasource?.reportPostHeader?.jsonValue?.value ??
+                'Why are you reporting this?'}
+            </div>
+            <Form ref={formRef} style={{ fontSize: '15px', margin: '5px' }}>
+              {reportTypeList.map((item, index) => {
+                return (
+                  <div key={index} className={styles.reportItem}>
+                    {item}
+                    <Form.Check
+                      type="radio"
+                      name="radioGroup"
+                      value={item}
+                      onChange={(e) => handleSelectChange(e)}
+                      defaultChecked={index == 0 ? true : false}
+                      aria-label="radio 1"
+                    ></Form.Check>
+                  </div>
+                );
+              })}
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button className={styles.footerBtn} variant="secondary" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button className={styles.footerBtn} variant="secondary" onClick={onPostReported}>
+              Report
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    );
+  };
+
+  const onPostReported = async () => {
+    let reportReason = '';
+    if (formRef.current != null) {
+      reportReason = (
+        formRef.current.querySelector('input[name="radioGroup"]:checked') as HTMLInputElement
+      )?.value;
+    }
+
+    let response = await reportPostCall(reportPostId, reportPostType, reportReason, userToken);
+    if (response?.success) {
+      setShowReportPopUp(false);
+      console.log(response?.data);
+    }
+  };
 
   function LoadMorePosts() {
     setPostPageNum((prev) => {
@@ -289,8 +382,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     });
   }
 
-
-
   //Function To Handle Open Comments Tray
   function setOpenComments(id: string, show: boolean) {
     // let locArr = myArr.posts;
@@ -323,10 +414,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     console.log('asdsad', myAnotherArr);
     let modPost = locArr.map((post: any) => {
       if (post.id == id) {
-        
-       
-          post.showShare = val;
-      
+        post.showShare = val;
+
         return post;
       } else {
         return post;
@@ -337,7 +426,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       return modPost;
     });
   }
- 
+
   //Function To Handle Post Comments
   function postComments(id: string, e: any) {
     e.preventDefault();
@@ -620,11 +709,67 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </div>
             </div>
             <div className="postHeaderRight">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/463/463292.png"
-                alt="pan"
-                width="50px"
-              />
+              <Dropdown>
+                <Dropdown.Toggle
+                  variant="secondary"
+                  id="dropdown-basic"
+                  className={styles.dropdownBtn}
+                  style={{ backgroundColor: 'white', border: 'none', width: '70px' }}
+                >
+                  <button
+                    onClick={() => {
+                      setReportPostId(post?.id);
+                      setReportPostType(post?.postType);
+                    }}
+                    style={{
+                      border: 'none',
+                      backgroundColor: 'white',
+                      padding: '0',
+                    }}
+                  >
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/463/463292.png"
+                      alt="pan"
+                      width="50px"
+                    />
+                  </button>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item className={styles.dropdownItem}>
+                    <div className={styles.overlayItem}>
+                      <NextImage field={bookmarkImage} editable={true} width={35} height={30} />
+                      <Button variant="secondary" className={styles.reportContainerBtn}>
+                        Save post
+                      </Button>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>
+                    <div className={styles.overlayItem}>
+                      <div className={styles.copyLinkBtnStyle}>
+                        <NextImage field={copylink} editable={true} width={22} height={20} />
+                      </div>
+                      <Button variant="secondary" className={styles.reportContainerBtn}>
+                        Copy link to post
+                      </Button>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>
+                    <div className={styles.overlayItem}>
+                      <NextImage field={reportPostImage} editable={true} width={22} height={20} />
+                      <Button
+                        className={styles.reportContainerBtn}
+                        variant="secondary"
+                        onClick={() => {
+                          showReportPostPopup();
+                        }}
+                      >
+                        Report Post
+                      </Button>
+                    </div>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
               <img
                 style={{ marginLeft: '30px' }}
                 src="https://cdn-icons-png.flaticon.com/512/10091/10091183.png"
@@ -670,67 +815,95 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 />
               </button>
               <div>
-              <button onClick={()=> handleShowShare(post.id, !post?.showShare)}>
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/2956/2956786.png"
-                  width="40px"
-                  alt="actions"
-                />
-              </button>
-              {post?.showShare && (
-                <div className={ShowShareCss.sharePopups} style={{position : "initial"}}>
-                  <div className={ShowShareCss.sharePopup}>
-                    <NextImage
-                      className={ShowShareCss.whatsappImage}
-                      field={whatsapp}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link href={"https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20"+post.id + 'utm_source=whatsapp&utm_medium=social&utm_id=' + post.id}>
-                      WhatsApp
-                    </Link>
-                  </div>
+                <button onClick={() => handleShowShare(post.id, !post?.showShare)}>
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/2956/2956786.png"
+                    width="40px"
+                    alt="actions"
+                  />
+                </button>
+                {post?.showShare && (
+                  <div className={ShowShareCss.sharePopups} style={{ position: 'initial' }}>
+                    <div className={ShowShareCss.sharePopup}>
+                      <NextImage
+                        className={ShowShareCss.whatsappImage}
+                        field={whatsapp}
+                        editable={true}
+                        width={25}
+                        height={25}
+                      />
+                      <Link
+                        href={
+                          'https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20' +
+                          post.id +
+                          'utm_source=whatsapp&utm_medium=social&utm_id=' +
+                          post.id
+                        }
+                      >
+                        WhatsApp
+                      </Link>
+                    </div>
 
-                  <div className={ShowShareCss.sharePopup}>
-                    <NextImage
-                      className={ShowShareCss.whatsappImage}
-                      field={twitter}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link href={"https://twitter.com/intent/tweet?url="+post.id +'utm_source=twitter&utm_medium=social&utm_id='+ post.id}>
-                      Twitter
-                    </Link>
-                  </div>
+                    <div className={ShowShareCss.sharePopup}>
+                      <NextImage
+                        className={ShowShareCss.whatsappImage}
+                        field={twitter}
+                        editable={true}
+                        width={25}
+                        height={25}
+                      />
+                      <Link
+                        href={
+                          'https://twitter.com/intent/tweet?url=' +
+                          post.id +
+                          'utm_source=twitter&utm_medium=social&utm_id=' +
+                          post.id
+                        }
+                      >
+                        Twitter
+                      </Link>
+                    </div>
 
-                  <div className={ShowShareCss.sharePopup}>
-                    <NextImage
-                      className={ShowShareCss.whatsappImage}
-                      field={linkedin}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link href={"https://www.linkedin.com/sharing/share-offsite/?url="+post.id +'utm_source=linkedin&utm_medium=social&utm_id='+ post.id}>
-                    LinkedIn
-                    </Link>
+                    <div className={ShowShareCss.sharePopup}>
+                      <NextImage
+                        className={ShowShareCss.whatsappImage}
+                        field={linkedin}
+                        editable={true}
+                        width={25}
+                        height={25}
+                      />
+                      <Link
+                        href={
+                          'https://www.linkedin.com/sharing/share-offsite/?url=' +
+                          post.id +
+                          'utm_source=linkedin&utm_medium=social&utm_id=' +
+                          post.id
+                        }
+                      >
+                        LinkedIn
+                      </Link>
+                    </div>
+                    <div className={ShowShareCss.sharePopup}>
+                      <NextImage
+                        className={ShowShareCss.whatsappImage}
+                        field={facebook}
+                        editable={true}
+                        width={25}
+                        height={25}
+                      />
+                      <Link
+                        href={
+                          'https://www.facebook.com/sharer/sharer.php?u=' +
+                          post.id +
+                          'utm_source=facebook&utm_medium=social&utm_id=' +
+                          post.id
+                        }
+                      >
+                        Facebook
+                      </Link>
+                    </div>
                   </div>
-                  <div className={ShowShareCss.sharePopup}>
-                    <NextImage
-                      className={ShowShareCss.whatsappImage}
-                      field={facebook}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link href={"https://www.facebook.com/sharer/sharer.php?u="+post.id + 'utm_source=facebook&utm_medium=social&utm_id='+ post.id}>
-                    Facebook
-                    </Link>
-                  </div>
-                </div>
-              )}
+                )}
               </div>
             </div>
             <div>
@@ -1518,6 +1691,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           )}
         </div>
       </div>
+      {<ReportPostPopup />}
     </>
   );
 };
