@@ -1,4 +1,4 @@
-export enum ReportPostType {
+export enum ReportPostOptionsType {
     Spam = 1,
     Harassment = 2,
     Violence = 3,
@@ -6,7 +6,7 @@ export enum ReportPostType {
     InappropriateContent = 5,
 }
 
-export enum ReportPostTypeLabel {
+export enum ReportPostOptionsTypeLabel {
     Spam = "Spam",
     Harassment = "Harassment or Hate Speech",
     Violence = "Violence",
