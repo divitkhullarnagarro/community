@@ -24,9 +24,7 @@ SharedFields:
           tags{jsonValue}
           contentType{jsonValue}
           date{jsonValue}
-           authorName {
-                  jsonValue
-                }
+          author{jsonValue}
           image{jsonValue}
         }
       }
@@ -50,11 +48,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "91e7e4b6-786a-40ed-9e33-327f4b233b14"
+      Value: "93defd59-d094-4b88-a1f6-33b2ee4885c6"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230331T060917Z
+      Value: 20230326T113434Z

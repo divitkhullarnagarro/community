@@ -16,6 +16,9 @@ SharedFields:
 - ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
   Hint: __Sortorder
   Value: 50
+- ID: "fd4e2050-186c-4375-8b99-e8a85dd7436e"
+  Hint: __Enable item fallback
+  Value: 1
 Languages:
 - Language: en
   Versions:
@@ -35,11 +38,11 @@ Languages:
           <d
             id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
             <r
-              uid="{B426D147-BE18-46C3-9FDC-8034B097F4CA}"
+              uid="{C04B3812-8F55-4CED-BD9B-8E976DBE23A3}"
               p:after="*[1=2]"
               s:ds="{85442646-9588-4CC9-A98A-DB19DF67B50F}"
               s:id="{AA7421F4-8B23-48B9-AAB7-BDEE1D1AE03A}"
-              s:par=""
+              s:par="CSSStyles"
               s:ph="jss-main"
               s:ccb="Clear on publish" />
           </d>
@@ -63,11 +66,11 @@ Languages:
       Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "f56d8171-aad1-4a8a-9481-32622323648b"
+      Value: "64f2b02b-776f-48e0-8884-51b0df7f2481"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\sakshi.kumari@nagarro.com
     - ID: "c9bf6775-cbf3-4abb-aec3-c0d368791827"
       Hint: ogType
       Value: website
@@ -77,4 +80,4 @@ Languages:
         <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230321T111329Z
+      Value: 20230331T054935Z

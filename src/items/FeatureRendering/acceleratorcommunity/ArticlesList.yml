@@ -18,6 +18,8 @@ SharedFields:
     # Editing here does not save the query on the item; copy it back when done!
     
     # Editing here does not save the query on the item; copy it back when done!
+    
+    # Editing here does not save the query on the item; copy it back when done!
     query ArticlesList($datasource: String!, $language: String!) {
       datasource: item(path: $datasource, language: $language) {
         ... on ArticleList {
@@ -40,9 +42,7 @@ SharedFields:
                 date {
                   jsonValue
                 }
-                authorName {
-                  jsonValue
-                }
+                author_20effcd6ba5f47e580039b0ce2a49335{jsonValue}
                 tags {
                   targetItems {
                     ... on ContentName {
@@ -108,11 +108,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "dbf59026-0abe-4752-89b6-d548027023e6"
+      Value: "76c346cd-7f80-4b6b-8639-ad13f1a94d92"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\sakshi.kumari@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230331T060900Z
+      Value: 20230331T060011Z
