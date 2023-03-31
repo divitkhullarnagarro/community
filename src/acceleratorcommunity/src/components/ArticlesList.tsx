@@ -166,30 +166,30 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
 
   return (
     <div className={ArticlesListCss.mainwrapper}>
-      {targetItems.map((l, i) => {
+      {targetItems?.map((l, i) => {
         return (
           <div key={i} className={ArticlesListCss.wrapper}>
             <div className={ArticlesListCss.leftSection}>
               <NextImage
                 className={ArticlesListCss.leftSectionImage}
-                field={l.image.jsonValue.value}
+                field={l?.image?.jsonValue?.value}
                 editable={true}
               />
             </div>
             <div className={ArticlesListCss.rightSection}>
-              <div className={ArticlesListCss.title}>{l.title.jsonValue.value}</div>
+              <div className={ArticlesListCss.title}>{l?.title?.jsonValue?.value}</div>
               <div className={ArticlesListCss.cardDescription}>
                 <p>
-                  {l.description.jsonValue.value}
+                  {l?.description?.jsonValue?.value}
                   {/* <Link href="/readMorePage">Read More </Link> */}
                 </p>
               </div>
               <div className={ArticlesListCss.cardTags}>
-                {l.tags.targetItems.map((m, j) => {
+                {l?.tags?.targetItems?.map((m, j) => {
                   return (
                     <div key={j} className={ArticlesListCss.cardTag}>
                       <Link key={j} href={'/#'}>
-                        {m.name}
+                        {m?.name}
                       </Link>
                     </div>
                   );
@@ -213,7 +213,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                     editable={true}
                   />
                   <div className={ArticlesListCss.infoWrapperTagData}>
-                    {getFormatedDate(l.date.jsonValue.value)}
+                    {getFormatedDate(l?.date?.jsonValue?.value)}
                   </div>
                 </div>
               </div>
@@ -224,26 +224,26 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                   onClick={() =>
                     submitBookmark(
                       userIdTemp,
-                      l.id,
+                      l?.id,
                       // l.title?.jsonValue.value, //This is for URL or Image value
-                      l.title?.jsonValue?.value,
-                      l.description?.jsonValue?.value
+                      l?.title?.jsonValue?.value,
+                      l?.description?.jsonValue?.value
                     )
                   }
                 >
                   <NextImage
-                    field={selectedArticle?.includes(l.id) ? activeBookmarkImage : bookmarkImage}
+                    field={selectedArticle?.includes(l?.id) ? activeBookmarkImage : bookmarkImage}
                     id="bookamrksImage"
                     editable={true}
                     title="Add To My Collection"
                   />
                 </button>
-                <button className={ArticlesListCss.button} onClick={() => handleShareClick(l.id)}>
+                <button className={ArticlesListCss.button} onClick={() => handleShareClick(l?.id)}>
                   <NextImage field={shareImage} editable={true} title="Share" />
                 </button>
               </div>
 
-              {shareArticle.includes(l.id) && (
+              {shareArticle.includes(l?.id) && (
                 <div className={ArticlesListCss.sharePopups}>
                   <div className={ArticlesListCss.sharePopup}>
                     <NextImage
@@ -256,7 +256,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                     <Link
                       href={
                         'https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20' +
-                        l.title?.jsonValue?.value
+                        l?.title?.jsonValue?.value
                       }
                     >
                       WhatsApp
@@ -274,9 +274,9 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                     <Link
                       href={
                         'https://twitter.com/intent/tweet?url=' +
-                        l.url?.url +
+                        l?.url?.url +
                         '&text=' +
-                        l.title?.jsonValue?.value
+                        l?.title?.jsonValue?.value
                       }
                     >
                       Twitter
@@ -292,7 +292,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       height={25}
                     />
                     <Link
-                      href={'https://www.linkedin.com/sharing/share-offsite/?url=' + l.url?.url}
+                      href={'https://www.linkedin.com/sharing/share-offsite/?url=' + l?.url?.url}
                     >
                       LinkedIn
                     </Link>
@@ -306,7 +306,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       height={25}
                     />
                     <Link
-                      href={'https://www.facebook.com/sharer/sharer.php?u=' + l.url?.url + '&t='+ l.title?.jsonValue?.value}
+                      href={'https://www.facebook.com/sharer/sharer.php?u=' + l?.url?.url + '&t='+ l?.title?.jsonValue?.value}
                     >
                       Facebook
                     </Link>

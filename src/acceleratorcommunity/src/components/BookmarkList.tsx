@@ -104,7 +104,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
   const [buttonTypes, setbuttonTypes] = useState<any>([]);
 
   useEffect(() => {
-    setbuttonTypes(data.jsonValue);
+    setbuttonTypes(data?.jsonValue);
   }, []);
 
   const [scroll, setScroll] = useState(false);
@@ -164,9 +164,9 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
 
     if (response?.data?.success) {
       var query = getBookmarkItem();
-      response.data.data.map((l: bookmarkFields) => {
+      response?.data?.data?.map((l: bookmarkFields) => {
         const variables = {
-          datasource: l.contentId,
+          datasource: l?.contentId,
           language: 'en',
         };
         client1.query({ query, variables }).then((result: any) => {
