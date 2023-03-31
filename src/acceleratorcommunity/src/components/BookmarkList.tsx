@@ -9,6 +9,7 @@ import calender from '../assets/images/calendar.svg';
 import { getBookmarkItem } from './Queries';
 import { sitecoreApiHost } from 'temp/config';
 import { ApolloClient, ApolloLink, InMemoryCache, HttpLink } from 'apollo-boost';
+import FilterByDate from './FilterByDate';
 
 type BookmarkListProps = ComponentProps & {
   fields: {
@@ -100,7 +101,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
   // const [bookmarkList, setBookmarkList] = useState<bookmarkFields[]>([]);
   const [completeList, setcompleteList] = useState<any>([]);
   const [bookmarkLists, setBookmarkLists] = useState<any>([]);
-  const [bookmarkTYpeClicked, setbookmarkTYpeClicked] = useState<any>([]);
+  const [bookmarkTYpeClicked, setbookmarkTYpeClicked] = useState<any>(['all']);
   const [buttonTypes, setbuttonTypes] = useState<any>([]);
 
   useEffect(() => {
@@ -139,7 +140,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
     let data: any[] = [];
     setbookmarkTYpeClicked(name);
     if (completeList.length > 0) {
-      data = completeList.filter((item: any) => {
+      data = completeList?.filter((item: any) => {
         return item?.contentType?.targetItem?.name === name;
       });
     }
@@ -157,6 +158,53 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
       getBookmarkList(userToken);
     }
   }, [userToken]);
+
+  const nowArticles = () => {
+    let nowDateArticle = completeList?.filter((item: any) => {
+      return item?.date?.jsonValue?.value === new Date().toJSON();
+    });
+    if (bookmarkTYpeClicked === 'all') {
+      setBookmarkLists(nowDateArticle);
+    } else {
+      setBookmarkLists(nowDateArticle);
+      twoFilters(nowDateArticle);
+    }
+  };
+
+  const upComingArticle = () => {
+    let nowDateArticle = completeList?.filter((item: any) => {
+      return item?.date?.jsonValue?.value > new Date().toJSON();
+    });
+    if (bookmarkTYpeClicked === 'all') {
+      setBookmarkLists(nowDateArticle);
+    } else {
+      setBookmarkLists(nowDateArticle);
+      twoFilters(nowDateArticle);
+    }
+  };
+
+  const pastArticle = () => {
+    let nowDateArticle = completeList?.filter((item: any) => {
+      return item?.date?.jsonValue?.value < new Date().toJSON();
+    });
+
+    if (bookmarkTYpeClicked === 'all') {
+      setBookmarkLists(nowDateArticle);
+    } else {
+      setBookmarkLists(nowDateArticle);
+      twoFilters(nowDateArticle);
+    }
+  };
+
+  const twoFilters = (nowDateArticle: any) => {
+    let doubleFilter = nowDateArticle?.filter((item: any) => {
+      return item?.contentType?.targetItem?.name === bookmarkTYpeClicked;
+    });
+    console.log(doubleFilter);
+    setBookmarkLists(doubleFilter);
+  };
+
+
 
   let arrayList: bookmarkFields[] = [];
   const getBookmarkList = async (userToken: string | undefined) => {
@@ -183,7 +231,6 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
     // console.log("javaApi",bookmarkLists);
     // Data(bookmarkLists)
   };
-
   return (
     <div className={bookmarkCss.container}>
       <div className={bookmarkCss.heading}>
@@ -271,13 +318,18 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
               })
             ) : (
               <></>
+           
             )}
           </div>
         </div>
+        <div className={bookmarkCss.filterContainer}>
+          <FilterByDate
+            nowArticles={nowArticles}
+            pastArticle={pastArticle}
+            upComingArticle={upComingArticle}
+          />
+        </div>
       </div>
-
-      {/* 
-      {bookmarkItem } */}
     </div>
   );
 };
