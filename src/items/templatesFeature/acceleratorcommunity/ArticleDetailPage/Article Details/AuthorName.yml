@@ -2,7 +2,7 @@
 ID: "20effcd6-ba5f-47e5-8003-9b0ce2a49335"
 Parent: "afe1984e-76fa-43ad-87d7-5b35dd67c053"
 Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
-Path: /sitecore/templates/Feature/acceleratorcommunity/ArticleDetailPage/Article Details/Author
+Path: /sitecore/templates/Feature/acceleratorcommunity/ArticleDetailPage/Article Details/AuthorName
 SharedFields:
 - ID: "ab162cc0-dc80-4abf-8871-998ee5d7ba32"
   Hint: Type
