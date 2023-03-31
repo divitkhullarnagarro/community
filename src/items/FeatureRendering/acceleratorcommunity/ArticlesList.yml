@@ -14,6 +14,10 @@ SharedFields:
   Hint: ComponentQuery
   Value: |
     # Editing here does not save the query on the item; copy it back when done!
+    
+    # Editing here does not save the query on the item; copy it back when done!
+    
+    # Editing here does not save the query on the item; copy it back when done!
     query ArticlesList($datasource: String!, $language: String!) {
       datasource: item(path: $datasource, language: $language) {
         ... on ArticleList {
@@ -36,7 +40,7 @@ SharedFields:
                 date {
                   jsonValue
                 }
-                author {
+                authorName {
                   jsonValue
                 }
                 tags {
@@ -104,11 +108,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "128f31c0-c5b8-455f-96b2-d1c68693ad24"
+      Value: "dbf59026-0abe-4752-89b6-d548027023e6"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230327T094354Z
+      Value: 20230331T060900Z

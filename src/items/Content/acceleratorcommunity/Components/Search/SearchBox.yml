@@ -21,18 +21,18 @@ Languages:
         sitecore\Admin
     - ID: "760b15b4-30a9-4c3a-9315-90088b88380a"
       Hint: Title
-      Value: Search
+      Value: Explore Community
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "d5a33e7a-dc07-4325-8d1b-9279f12788f0"
+      Value: "c9752a6a-67e1-47c7-b224-6598274aaf95"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230323T124010Z
+      Value: 20230329T111109Z
     - ID: "f299247a-a62a-4fea-b0f6-a83c8f2d4621"
       Hint: Image
       Value: |
-        <image mediaid="{065C475C-F21A-46A9-918C-2BA2D2DBBC89}" />
+        <image mediaid="{8E2BB46E-2BC2-4C56-8616-B6B543631519}" />

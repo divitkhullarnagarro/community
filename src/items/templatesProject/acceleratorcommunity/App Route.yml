@@ -9,7 +9,9 @@ SharedFields:
   Value: Apps/16x16/routes.png
 - ID: "12c33f3f-86c5-43a5-aeb4-5598cec45116"
   Hint: __Base template
-  Value: "{B36BA9FD-0DC0-49C8-BEA2-E55D70E6AF28}"
+  Value: |
+    {B36BA9FD-0DC0-49C8-BEA2-E55D70E6AF28}
+    {18AD9B38-D7F9-4D08-B99D-C49D17433690}
 - ID: "9c6106ea-7a5a-48e2-8cad-f0f693b1e2d4"
   Hint: __Read Only
   Value: 
@@ -38,11 +40,11 @@ Languages:
         sitecore\JssImport
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "af63c8f9-fbae-4d29-8d90-6c8c0536f21e"
+      Value: "dd943805-e804-4710-82b4-a88b95e000a9"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230306T124742Z
+      Value: 20230330T120543Z

@@ -4,6 +4,9 @@ Parent: "9b2f2c61-b700-51dd-8f47-7600fc865200"
 Template: "0a24b14e-bbdd-4d84-8139-7d40e3b356fa"
 Path: /sitecore/content/acceleratorcommunity/home/news
 SharedFields:
+- ID: "1172f251-dad4-4efb-a329-0c63500e4f1e"
+  Hint: __Masters
+  Value: "{05E694D6-3F26-40C0-8CC0-0396FFB7ACBC}"
 - ID: "9621fdf3-7179-4ac3-a3ec-fda713baa1f5"
   Hint: Show In Header
   Value: 1
@@ -32,25 +35,23 @@ Languages:
           <d
             id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
             <r
-              uid="{4BDC6A25-D864-4BDA-A164-4921415B1553}"
-              p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
-              s:id="{1E9900E6-2ACC-4456-A9EA-15BBE2C948AB}"
-              s:par="Title=People%20You%20May%20Know&amp;LinkLabel=See%20all&amp;Link"
-              s:ph="/jss-main/col2-{D7BC190E-FC15-445E-AA76-FF347ED12A72}-0" />
-            <r
-              uid="{0AD8AF13-B449-411A-8936-1C50499613AD}"
-              p:after="r[@uid='{4BDC6A25-D864-4BDA-A164-4921415B1553}']"
+              uid="{B426D147-BE18-46C3-9FDC-8034B097F4CA}"
+              p:after="*[1=2]"
               s:ds="{85442646-9588-4CC9-A98A-DB19DF67B50F}"
               s:id="{AA7421F4-8B23-48B9-AAB7-BDEE1D1AE03A}"
-              s:ph="/jss-main/col1-{D7BC190E-FC15-445E-AA76-FF347ED12A72}-0" />
-            <r
-              uid="{D7BC190E-FC15-445E-AA76-FF347ED12A72}"
-              p:after="r[@uid='{0AD8AF13-B449-411A-8936-1C50499613AD}']"
-              s:ds="{4FF4E41A-9D33-45CC-9179-41230230F951}"
-              s:id="{44F40912-35E3-43E6-8C36-6488DC75421E}"
-              s:ph="jss-main" />
+              s:par=""
+              s:ph="jss-main"
+              s:ccb="Clear on publish" />
           </d>
         </r>
+    - ID: "104747be-ebe5-4b3c-b61f-6811cd49bd71"
+      Hint: twitterCard
+      Value: |
+        <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
+    - ID: "1cdfaecb-cb5a-4499-87fa-12bffaf4d991"
+      Hint: twitterImage
+      Value: |
+        <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230309T071323Z
@@ -59,14 +60,21 @@ Languages:
       Value: News
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
-      Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
+      Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "e9d38598-956a-4220-b0f6-b7e29961c5f1"
+      Value: "f56d8171-aad1-4a8a-9481-32622323648b"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
+    - ID: "c9bf6775-cbf3-4abb-aec3-c0d368791827"
+      Hint: ogType
+      Value: website
+    - ID: "d7aa0a5c-ea2d-4aa5-a5ca-eabfca9d2592"
+      Hint: ogImage
+      Value: |
+        <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
       Value: 20230321T111329Z

@@ -12,6 +12,55 @@ Languages:
   Versions:
   - Version: 1
     Fields:
+    - ID: "04bf00db-f5fb-41f7-8ab7-22408372a981"
+      Hint: __Final Renderings
+      Value: |
+        <r xmlns:p="p" xmlns:s="s"
+          p:p="1">
+          <d
+            id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
+            <r
+              uid="{67200981-7579-4BC4-9F6A-75CB20338B43}"
+              p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
+              s:ds="{94AD1290-B1EA-4C4E-8507-B22B02E68B19}"
+              s:id="{78BAF5D7-D604-454E-B796-8CBB67AA4FE2}"
+              s:par=""
+              s:ph="/jss-header/col2-{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}-0"
+              s:ccb="Clear on publish" />
+            <r
+              uid="{3555FF79-596B-433E-AD70-3747B743E69D}"
+              p:after="r[@uid='{67200981-7579-4BC4-9F6A-75CB20338B43}']"
+              s:ds="{A85E619F-7F82-4795-9E12-85783900263D}"
+              s:id="{66B09AA5-3A20-4FB1-ABC2-D1AE2DF6BE09}"
+              s:par=""
+              s:ph="/jss-header/col2-{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}-0"
+              s:ccb="Clear on publish" />
+            <r
+              uid="{2D3DA198-27F1-491E-832A-8AC684D02D14}"
+              p:after="r[@uid='{3555FF79-596B-433E-AD70-3747B743E69D}']"
+              s:ds="{60828F2C-A954-413B-B5DE-FC77AF7C9F13}"
+              s:id="{67F9F9E6-8533-467F-B7D7-13CC8EE7498F}"
+              s:par=""
+              s:ph="/jss-header/col1-{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}-0"
+              s:ccb="Clear on publish" />
+            <r
+              uid="{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}"
+              p:after="r[@uid='{2D3DA198-27F1-491E-832A-8AC684D02D14}']"
+              s:ds="{AB3AEF4C-1276-4441-83D2-810D05708880}"
+              s:id="{44F40912-35E3-43E6-8C36-6488DC75421E}"
+              s:ph="jss-header" />
+            <r
+              uid="{42961C3B-408C-497A-9D83-9A721AF0E4A2}"
+              p:after="r[@uid='{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}']"
+              s:id="{F58858BA-1C2B-4F10-AF10-0B2E086A2829}"
+              s:ph="jss-main" />
+            <r
+              uid="{01CD56A8-0183-4225-8666-38EEC3D13BEB}"
+              p:after="*[1=2]"
+              s:id="{123F0D20-A4D2-4D56-9EA2-BBD877EC9906}"
+              s:ph="jss-main" />
+          </d>
+        </r>
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230313T060754Z
@@ -25,11 +74,14 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "b56033b3-fbaf-4172-a073-5db9562a40b9"
+      Value: "54f0bc62-6778-40ae-96a5-90c0b5d02074"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
+    - ID: "c9bf6775-cbf3-4abb-aec3-c0d368791827"
+      Hint: ogType
+      Value: article
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
       Value: 20230313T060812Z
