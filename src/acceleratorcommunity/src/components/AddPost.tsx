@@ -714,7 +714,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   variant="secondary"
                   id="dropdown-basic"
                   className={styles.dropdownBtn}
-                  style={{ backgroundColor: 'white', border: 'none', width: '40px' }}
+                  style={{ backgroundColor: 'white', border: 'none', width: '70px' }}
                 >
                   <button
                     onClick={() => {
@@ -736,7 +736,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item className={styles.dropdownbutton}>
+                  <Dropdown.Item className={styles.dropdownItem}>
                     <div className={styles.overlayItem}>
                       <NextImage field={bookmarkImage} editable={true} width={35} height={30} />
                       <Button variant="secondary" className={styles.reportContainerBtn}>
@@ -744,7 +744,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       </Button>
                     </div>
                   </Dropdown.Item>
-                  <Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>
                     <div className={styles.overlayItem}>
                       <div className={styles.copyLinkBtnStyle}>
                         <NextImage field={copylink} editable={true} width={22} height={20} />
@@ -754,7 +754,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       </Button>
                     </div>
                   </Dropdown.Item>
-                  <Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>
                     <div className={styles.overlayItem}>
                       <NextImage field={reportPostImage} editable={true} width={22} height={20} />
                       <Button
