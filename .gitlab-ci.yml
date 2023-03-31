@@ -11,7 +11,7 @@ deploy_preview:
  script:
  - cd src/acceleratorcommunity
  - vercel pull --yes --environment=preview --token=L5Sr6ZrZzYcnkNPW7omJTSnJ
- - vercel build --prod --token=L5Sr6ZrZzYcnkNPW7omJTSnJ
+ - vercel build --token=L5Sr6ZrZzYcnkNPW7omJTSnJ
  - vercel deploy --prebuilt --token=L5Sr6ZrZzYcnkNPW7omJTSnJ
 
 deploy_production:
