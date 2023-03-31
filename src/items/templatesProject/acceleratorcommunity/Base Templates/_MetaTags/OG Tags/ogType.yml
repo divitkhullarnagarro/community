@@ -1,13 +1,15 @@
 ﻿---
-ID: "94ad1290-b1ea-4c4e-8507-b22b02e68b19"
-Parent: "aec21aad-9be3-42ea-b1ca-93dfe0334983"
-Template: "53dec80a-ee9d-4bcb-b577-d37b695473b0"
-Path: /sitecore/content/acceleratorcommunity/Components/Notification/Notification Logo
+ID: "c9bf6775-cbf3-4abb-aec3-c0d368791827"
+Parent: "aea48442-5095-4850-ac76-86a736549242"
+Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
+Path: /sitecore/templates/Project/acceleratorcommunity/Base Templates/_MetaTags/OG Tags/ogType
 SharedFields:
-- ID: "b1db66ee-da88-4a5d-9b48-3c33751eb7e6"
-  Hint: Image
-  Value: |
-    <image mediaid="{24646BEF-CEA8-492F-83FF-06347FCD75FF}" />
+- ID: "ab162cc0-dc80-4abf-8871-998ee5d7ba32"
+  Hint: Type
+  Value: "Single-Line Text"
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 400
 Languages:
 - Language: en
   Versions:
@@ -15,7 +17,7 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230321T113332Z
+      Value: 20230329T123055Z
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
@@ -26,11 +28,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "e1b062b5-d037-4547-a721-e03de41b454f"
+      Value: "a13d753e-ba3a-4a39-bf72-2c9892b3aa5d"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230329T111818Z
+      Value: 20230330T090253Z

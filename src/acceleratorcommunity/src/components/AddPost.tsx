@@ -768,70 +768,67 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 />
               </button>
               <div>
-                <button onClick={() => handleShowShare(post.id, !post?.showShare)}>
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/512/2956/2956786.png"
-                    width="40px"
-                    alt="actions"
-                  />
-                </button>
-                {post?.showShare && (
-                  <div className={ShowShareCss.sharePopups} style={{ position: 'initial' }}>
-                    <div className={ShowShareCss.sharePopup}>
-                      <NextImage
-                        className={ShowShareCss.whatsappImage}
-                        field={whatsapp}
-                        editable={true}
-                        width={25}
-                        height={25}
-                      />
-                      <Link
-                        href={
-                          'https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20' +
-                          post.id
-                        }
-                      >
-                        WhatsApp
-                      </Link>
-                    </div>
-
-                    <div className={ShowShareCss.sharePopup}>
-                      <NextImage
-                        className={ShowShareCss.whatsappImage}
-                        field={twitter}
-                        editable={true}
-                        width={25}
-                        height={25}
-                      />
-                      <Link href={'https://twitter.com/intent/tweet?url=' + post.id}>Twitter</Link>
-                    </div>
-
-                    <div className={ShowShareCss.sharePopup}>
-                      <NextImage
-                        className={ShowShareCss.whatsappImage}
-                        field={linkedin}
-                        editable={true}
-                        width={25}
-                        height={25}
-                      />
-                      <Link href={'https://www.linkedin.com/sharing/share-offsite/?url=' + post.id}>
-                        LinkedIn
-                      </Link>
-                    </div>
-                    <div className={ShowShareCss.sharePopup}>
-                      <NextImage
-                        className={ShowShareCss.whatsappImage}
-                        field={facebook}
-                        editable={true}
-                        width={25}
-                        height={25}
-                      />
-                      <Link href={'https://www.facebook.com/sharer/sharer.php?u=' + post.id}>
-                        Facebook
-                      </Link>
-                    </div>
+              <button onClick={()=> handleShowShare(post.id, !post?.showShare)}>
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/2956/2956786.png"
+                  width="40px"
+                  alt="actions"
+                />
+              </button>
+              {post?.showShare && (
+                <div className={ShowShareCss.sharePopups} style={{position : "initial"}}>
+                  <div className={ShowShareCss.sharePopup}>
+                    <NextImage
+                      className={ShowShareCss.whatsappImage}
+                      field={whatsapp}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link href={"https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20"+post.id + 'utm_source=whatsapp&utm_medium=social&utm_id=' + post.id}>
+                      WhatsApp
+                    </Link>
                   </div>
-                )}
+
+                  <div className={ShowShareCss.sharePopup}>
+                    <NextImage
+                      className={ShowShareCss.whatsappImage}
+                      field={twitter}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link href={"https://twitter.com/intent/tweet?url="+post.id +'utm_source=twitter&utm_medium=social&utm_id='+ post.id}>
+                      Twitter
+                    </Link>
+                  </div>
+
+                  <div className={ShowShareCss.sharePopup}>
+                    <NextImage
+                      className={ShowShareCss.whatsappImage}
+                      field={linkedin}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link href={"https://www.linkedin.com/sharing/share-offsite/?url="+post.id +'utm_source=linkedin&utm_medium=social&utm_id='+ post.id}>
+                    LinkedIn
+                    </Link>
+                  </div>
+                  <div className={ShowShareCss.sharePopup}>
+                    <NextImage
+                      className={ShowShareCss.whatsappImage}
+                      field={facebook}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link href={"https://www.facebook.com/sharer/sharer.php?u="+post.id + 'utm_source=facebook&utm_medium=social&utm_id='+ post.id}>
+                    Facebook
+                    </Link>
+                  </div>
+                </div>
+              )}
               </div>
             </div>
             <div>

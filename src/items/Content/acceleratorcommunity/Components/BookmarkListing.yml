@@ -1,13 +1,8 @@
 ﻿---
-ID: "94ad1290-b1ea-4c4e-8507-b22b02e68b19"
-Parent: "aec21aad-9be3-42ea-b1ca-93dfe0334983"
-Template: "53dec80a-ee9d-4bcb-b577-d37b695473b0"
-Path: /sitecore/content/acceleratorcommunity/Components/Notification/Notification Logo
-SharedFields:
-- ID: "b1db66ee-da88-4a5d-9b48-3c33751eb7e6"
-  Hint: Image
-  Value: |
-    <image mediaid="{24646BEF-CEA8-492F-83FF-06347FCD75FF}" />
+ID: "d53af108-4982-4087-b05f-c77d6327ba52"
+Parent: "ab269aee-2524-51ec-950b-4d1a69da10b5"
+Template: "a87a00b1-e6db-45ab-8b54-636fec3b5523"
+Path: /sitecore/content/acceleratorcommunity/Components/BookmarkListing
 Languages:
 - Language: en
   Versions:
@@ -15,7 +10,7 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230321T113332Z
+      Value: 20230330T110044Z
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
@@ -26,11 +21,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "e1b062b5-d037-4547-a721-e03de41b454f"
+      Value: "ea1f9231-e768-4cdc-9fac-8d910b5037dd"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230329T111818Z
+      Value: 20230330T110044Z
