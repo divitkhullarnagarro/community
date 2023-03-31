@@ -21,7 +21,7 @@ import linkedin from '../assets/images/linkedin.png';
 import twitter from '../assets/images/twitter.png';
 import whatsapp from '../assets/images/whatsapp.png';
 import facebook from '../assets/images/facebook.svg';
-import { Modal, OverlayTrigger, Popover } from 'react-bootstrap';
+import { Dropdown, Modal } from 'react-bootstrap';
 import { ReportPostOptionsTypeLabel } from 'assets/helpers/enums';
 import styles from '../assets/addPost.module.css';
 import reportPostImage from '../assets/images/flag-icon.svg';
@@ -225,38 +225,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       console.log(response?.data);
     }
   };
-
-  const popover = (
-    <Popover id="popover-basic">
-      <Popover.Header as="h3"></Popover.Header>
-      <Popover.Body className={styles.overlayContainer}>
-        <div className={styles.overlayItem}>
-          <NextImage field={bookmarkImage} editable={true} width={35} height={30} />
-          <Button variant="secondary" className={styles.reportContainerBtn}>
-            Save post
-          </Button>
-        </div>
-        <div className={styles.overlayItem}>
-          <NextImage field={copylink} editable={true} width={22} height={20} />
-          <Button variant="secondary" className={styles.reportContainerBtn}>
-            Copy link to Post
-          </Button>
-        </div>
-        <div className={styles.overlayItem}>
-          <NextImage field={reportPostImage} editable={true} width={22} height={20} />
-          <Button
-            className={styles.reportContainerBtn}
-            variant="secondary"
-            onClick={() => {
-              showReportPostPopup();
-            }}
-          >
-            Report Post
-          </Button>
-        </div>
-      </Popover.Body>
-    </Popover>
-  );
 
   function LoadMorePosts() {
     setPostPageNum((prev) => {
@@ -741,25 +709,67 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </div>
             </div>
             <div className="postHeaderRight">
-              <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-                <button
-                  onClick={() => {
-                    setReportPostId(post?.id);
-                    setReportPostType(post?.postType);
-                  }}
-                  style={{
-                    border: 'none',
-                    backgroundColor: 'white',
-                    padding: '0',
-                  }}
+              <Dropdown>
+                <Dropdown.Toggle
+                  variant="secondary"
+                  id="dropdown-basic"
+                  className={styles.dropdownBtn}
+                  style={{ backgroundColor: 'white', border: 'none', width: '40px' }}
                 >
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/512/463/463292.png"
-                    alt="pan"
-                    width="50px"
-                  />
-                </button>
-              </OverlayTrigger>
+                  <button
+                    onClick={() => {
+                      setReportPostId(post?.id);
+                      setReportPostType(post?.postType);
+                    }}
+                    style={{
+                      border: 'none',
+                      backgroundColor: 'white',
+                      padding: '0',
+                    }}
+                  >
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/463/463292.png"
+                      alt="pan"
+                      width="50px"
+                    />
+                  </button>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item className={styles.dropdownbutton}>
+                    <div className={styles.overlayItem}>
+                      <NextImage field={bookmarkImage} editable={true} width={35} height={30} />
+                      <Button variant="secondary" className={styles.reportContainerBtn}>
+                        Save post
+                      </Button>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <div className={styles.overlayItem}>
+                      <div className={styles.copyLinkBtnStyle}>
+                        <NextImage field={copylink} editable={true} width={22} height={20} />
+                      </div>
+                      <Button variant="secondary" className={styles.reportContainerBtn}>
+                        Copy link to post
+                      </Button>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <div className={styles.overlayItem}>
+                      <NextImage field={reportPostImage} editable={true} width={22} height={20} />
+                      <Button
+                        className={styles.reportContainerBtn}
+                        variant="secondary"
+                        onClick={() => {
+                          showReportPostPopup();
+                        }}
+                      >
+                        Report Post
+                      </Button>
+                    </div>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
               <img
                 style={{ marginLeft: '30px' }}
                 src="https://cdn-icons-png.flaticon.com/512/10091/10091183.png"

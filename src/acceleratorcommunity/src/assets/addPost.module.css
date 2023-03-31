@@ -52,3 +52,15 @@
   padding-top: 10px;
   margin-left: 10px;
 }
+
+.copyLinkBtnStyle {
+  width: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.dropdownBtn {
+  background-color: white;
+  border: none;
+  width: 40px;
+}
