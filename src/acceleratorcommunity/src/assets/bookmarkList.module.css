@@ -157,6 +157,13 @@
 
 .listContainers {
   margin-left: 165px;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   height: 100%;
+  /* background-color: pink; */
+  width: 100%;
 }
+
+.filterContainer{
+  margin-right: 6.25rem;
+}
+

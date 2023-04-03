@@ -35,6 +35,10 @@ Languages:
           <d
             id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
             <r
+              uid="{1A53583E-81C4-46F7-9B32-E1508AF86488}">
+              <p:d />
+            </r>
+            <r
               uid="{B426D147-BE18-46C3-9FDC-8034B097F4CA}"
               p:after="*[1=2]"
               s:ds="{85442646-9588-4CC9-A98A-DB19DF67B50F}"
@@ -44,6 +48,14 @@ Languages:
               s:ccb="Clear on publish" />
           </d>
         </r>
+    - ID: "104747be-ebe5-4b3c-b61f-6811cd49bd71"
+      Hint: twitterCard
+      Value: |
+        <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
+    - ID: "1cdfaecb-cb5a-4499-87fa-12bffaf4d991"
+      Hint: twitterImage
+      Value: |
+        <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230309T071323Z
@@ -55,11 +67,18 @@ Languages:
       Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "f56d8171-aad1-4a8a-9481-32622323648b"
+      Value: "456ed5b7-6b47-4f61-b6a0-68573f3c3476"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
+    - ID: "c9bf6775-cbf3-4abb-aec3-c0d368791827"
+      Hint: ogType
+      Value: website
+    - ID: "d7aa0a5c-ea2d-4aa5-a5ca-eabfca9d2592"
+      Hint: ogImage
+      Value: |
+        <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230328T092955Z
+      Value: 20230331T041135Z

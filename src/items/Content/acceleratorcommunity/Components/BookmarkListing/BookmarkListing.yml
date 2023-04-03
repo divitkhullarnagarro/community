@@ -1,0 +1,41 @@
+﻿---
+ID: "d5973845-2ef0-44ce-91ca-be6328f9dd4a"
+Parent: "d53af108-4982-4087-b05f-c77d6327ba52"
+Template: "97657cda-5214-479d-a176-1129b3cc39bc"
+Path: /sitecore/content/acceleratorcommunity/Components/BookmarkListing/BookmarkListing
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230330T110454Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "56f30b23-b337-4ee4-8145-50c928011351"
+      Hint: Title
+      Value: Bookmark listing
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "5bace12e-070d-41bf-a5c8-60f0e72aa1fd"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d1ecc100-b10a-43d0-be06-b3177d0cc2a4"
+      Hint: ContentType
+      Value: |
+        {0C9AE58A-ADD0-411F-9771-A5C15B19F0A8}
+        {757E18A7-D46F-422D-9DF3-7A4E6AA33F40}
+        {F183E359-A872-4B54-945E-EA8C7A84E445}
+        {0DD1A34E-654B-436F-B2FD-4A358EA75F7C}
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230330T110516Z
