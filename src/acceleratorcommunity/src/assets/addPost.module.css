@@ -50,7 +50,7 @@
   border: none;
   font-weight: bold;
   padding-top: 10px;
-  margin-left: 10px;
+  padding-left: 20px;
 }
 
 .copyLinkBtnStyle {
@@ -65,6 +65,34 @@
   width: 40px;
 }
 
+.dropdownItem {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 5px;
+  padding-top: 5px;
+  padding-bottom: 8px;
+}
+
+.dropdownItem:hover .reportContainerBtn {
+  color: #fff;
+  background-color: #5c636a;
+  border-color: #565e64;
+}
+
 .dropdownItem:visited {
-  background-color: white;
+  color: #fff;
+  background-color: #5c636a;
+  border-color: #565e64;
+}
+
+.dropdownItem:hover .dropdownImage {
+  filter: invert(1);
+}
+
+@media only screen and (max-width: 640px) {
+  .dropdownBtn {
+    background-color: white;
+    border: none;
+    width: 20px !important;
+  }
 }
