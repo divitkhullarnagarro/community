@@ -33,8 +33,8 @@ SharedFields:
           registerHereLabel{jsonValue}
           loginFrameImageList{
             targetItems{
-              ... on Image{
-                image{
+              ... on ImageGeneric{
+                imageLogin{
                   jsonValue
                 }
               }
@@ -55,11 +55,11 @@ Languages:
       Value: 20230303T113926Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "e7152dbe-e5d6-4de8-b244-09611e9fb6a0"
+      Value: "0a6976f4-80ae-4bcc-a8dc-03399f0e4ba5"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230403T083633Z
+      Value: 20230403T150622Z

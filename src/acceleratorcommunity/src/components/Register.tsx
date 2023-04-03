@@ -73,7 +73,7 @@ type DataSource = {
   };
   frameImageList: {
     targetItems: Array<{
-      image: {
+      imageLogin: {
         jsonValue: ImageField;
       };
     }>;
@@ -245,21 +245,21 @@ const Register = (props: RegisterProps): JSX.Element => {
             <div className={RegisterCss.rightGridBox}>
               <div className={RegisterCss.img1}>
                 <NextImage
-                  field={targetItems?.frameImageList?.targetItems[0]?.image?.jsonValue?.value}
+                  field={targetItems?.frameImageList?.targetItems[0]?.imageLogin?.jsonValue?.value}
                   height={150}
                   width={150}
                 />
               </div>
               <div className={RegisterCss.img2}>
                 <NextImage
-                  field={targetItems?.frameImageList?.targetItems[1]?.image?.jsonValue?.value}
+                  field={targetItems?.frameImageList?.targetItems[1]?.imageLogin?.jsonValue?.value}
                   height={150}
                   width={150}
                 />
               </div>
               <div className={RegisterCss.img3}>
                 <NextImage
-                  field={targetItems?.frameImageList?.targetItems[2]?.image?.jsonValue?.value}
+                  field={targetItems?.frameImageList?.targetItems[2]?.imageLogin?.jsonValue?.value}
                   height={150}
                   width={150}
                 />
