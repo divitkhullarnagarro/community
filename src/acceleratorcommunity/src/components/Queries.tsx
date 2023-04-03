@@ -21,7 +21,7 @@ export const getBookmarkItem = () => {
           date {
             jsonValue
           }
-          author {
+          authorName {
             jsonValue
           }
           tags {

@@ -25,6 +25,7 @@ SharedFields:
           contentType{jsonValue}
           date{jsonValue}
           image{jsonValue}
+          authorName {jsonValue}
         }
       }
     }
@@ -47,11 +48,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "aa6aa7fe-c291-4624-8736-2be068600ecb"
+      Value: "59f2ee8b-e8c1-4876-8948-6cef72c7c2c7"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\sakshi.kumari@nagarro.com
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230331T134128Z
+      Value: 20230403T124427Z
