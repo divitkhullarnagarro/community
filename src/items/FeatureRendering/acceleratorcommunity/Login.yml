@@ -16,6 +16,8 @@ SharedFields:
     # Editing here does not save the query on the item; copy it back when done!
     
     # Editing here does not save the query on the item; copy it back when done!
+    
+    # Editing here does not save the query on the item; copy it back when done!
     # Editing here does not save the query on the item; copy it back when done!
     query Login($datasource: String!, $language: String!) {
       datasource: item(path: $datasource, language: $language) {
@@ -29,6 +31,15 @@ SharedFields:
           signInBtn{jsonValue}
           dontHaveAccountLabel{jsonValue}
           registerHereLabel{jsonValue}
+          loginFrameImageList{
+            targetItems{
+              ... on Image{
+                image{
+                  jsonValue
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -44,11 +55,11 @@ Languages:
       Value: 20230303T113926Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "3f5f15f2-b47f-4d7d-92be-8d26ace9421d"
+      Value: "e7152dbe-e5d6-4de8-b244-09611e9fb6a0"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230327T143639Z
+      Value: 20230403T083633Z
