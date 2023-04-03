@@ -1,0 +1,36 @@
+﻿---
+ID: "e91e2122-b907-424d-879e-6ca618f73241"
+Parent: "9d167ab6-4485-4286-9516-f1719cb934a7"
+Template: "9287e856-5b1c-461b-b744-46ea3b508e14"
+Path: /sitecore/content/acceleratorcommunity/Components/Login Frame Image List/Image2
+SharedFields:
+- ID: "2e085d7f-7d5c-4975-9dd5-5b339865fab9"
+  Hint: Image
+  Value: |
+    <image mediaid="{540C3808-605C-45BF-A384-C515C035881F}" />
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230403T082923Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "503e36b8-13a1-4281-8da0-051b0b8ebe1f"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230403T083043Z
