@@ -71,6 +71,13 @@ type DataSource = {
   loginBtn: {
     jsonValue: Field<string>;
   };
+  frameImageList: {
+    targetItems: Array<{
+      image: {
+        jsonValue: ImageField;
+      };
+    }>;
+  };
 };
 
 const Register = (props: RegisterProps): JSX.Element => {
@@ -93,7 +100,6 @@ const Register = (props: RegisterProps): JSX.Element => {
   // let [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
   const targetItems = props?.fields?.data?.datasource;
-
   function setFirstNameValue(val: any) {
     setFirstName(val);
     if (val === '') {
@@ -202,33 +208,64 @@ const Register = (props: RegisterProps): JSX.Element => {
 
       console.log('Register Response', resp);
     }
-
-    
   };
 
-  const heading = targetItems.title.jsonValue.value.split("<br>")
-    // console.log("ggggggggggggggggg",heading)
+  const heading = targetItems.title.jsonValue.value.split('<br>');
+  // console.log("ggggggggggggggggg",heading)
+  console.log(targetItems);
   return (
     <>
       <div className={RegisterCss.container}>
         <div className={RegisterCss.leftContainer}>
-          <div className={RegisterCss.welcomeText}>
-            <div className={RegisterCss.welcomeTextImage}>
-              <NextImage field={targetItems?.image?.jsonValue?.value} editable={true} width={30} height={30} />
-              {/* <NextImage field={starImage}  editable={true} /> */}
-            </div>
-            <h2 className={RegisterCss.welcomeTextHeading}>
-              {heading[0]}<br/>
-              {heading[1]}
+          <div className={RegisterCss.leftGrid}>
+            <div className={RegisterCss.welcomeText}>
+              <div className={RegisterCss.welcomeTextImage}>
+                <NextImage
+                  field={targetItems?.image?.jsonValue?.value}
+                  editable={true}
+                  width={50}
+                  height={50}
+                />
+                {/* <NextImage field={starImage}  editable={true} /> */}
+              </div>
+              <h2 className={RegisterCss.welcomeTextHeading}>
+                {heading[0]}
+                <br />
+                {heading[1]}
               </h2>
-            <div className={RegisterCss?.welcomeTextDescription}>
-              {targetItems?.description?.jsonValue?.value}
-
+              <div className={RegisterCss?.welcomeTextDescription}>
+                {targetItems?.description?.jsonValue?.value}
+              </div>
             </div>
-          </div>
+          </div>{' '}
           {/* <div className={RegisterCss.img}>
             <NextImage field={imageNotFound} editable={true} />
           </div> */}
+          <div className={RegisterCss.rightGrid}>
+            <div className={RegisterCss.rightGridBox}>
+              <div className={RegisterCss.img1}>
+                <NextImage
+                  field={targetItems?.frameImageList?.targetItems[0]?.image?.jsonValue?.value}
+                  height={150}
+                  width={150}
+                />
+              </div>
+              <div className={RegisterCss.img2}>
+                <NextImage
+                  field={targetItems?.frameImageList?.targetItems[1]?.image?.jsonValue?.value}
+                  height={150}
+                  width={150}
+                />
+              </div>
+              <div className={RegisterCss.img3}>
+                <NextImage
+                  field={targetItems?.frameImageList?.targetItems[2]?.image?.jsonValue?.value}
+                  height={150}
+                  width={150}
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <div className={RegisterCss.rightContainer}>
           <div className={RegisterCss.formContainer}>
@@ -380,7 +417,9 @@ const Register = (props: RegisterProps): JSX.Element => {
               ''
             )}
             <div className={RegisterCss.formContainerBottom}>
-              <div className={RegisterCss.text}>{targetItems?.haveAccountLabel?.jsonValue?.value}</div>
+              <div className={RegisterCss.text}>
+                {targetItems?.haveAccountLabel?.jsonValue?.value}
+              </div>
               <div className={RegisterCss.btn}>
                 <Link href={'/login'}>{targetItems?.loginBtn?.jsonValue?.value}</Link>
               </div>

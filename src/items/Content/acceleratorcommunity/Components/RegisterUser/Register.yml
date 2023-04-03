@@ -20,6 +20,12 @@ Languages:
     - ID: "3e08b5dc-4b83-4f02-ae56-d2b92b9c906e"
       Hint: PasswordLabel
       Value: Password
+    - ID: "43668085-2710-41ea-84a6-1d2910d04f92"
+      Hint: Frame Image List
+      Value: |
+        {94E1716A-C2E2-482B-B958-08DFC2659FF2}
+        {E91E2122-B907-424D-879E-6CA618F73241}
+        {EF25E9C6-455B-4412-A9A6-57B0A556E46D}
     - ID: "47d86c77-d9ad-4df0-80d8-6b768f3608d8"
       Hint: LastNamePlaceholder
       Value: Last Name
@@ -40,7 +46,7 @@ Languages:
     - ID: "6daed59a-2142-492d-b946-54a11c45e50c"
       Hint: Image
       Value: |
-        <image mediaid="{7C9B274A-47F4-4E03-A770-C41A749FAB3A}" />
+        <image mediaid="{FF1E16B2-C4A4-45F7-B6E3-382459D3A535}" />
     - ID: "7c7058de-7e4d-40ae-966d-b2cbffb147c9"
       Hint: RegisterBtn
       Value: Register
@@ -52,7 +58,7 @@ Languages:
       Value: "Welcome to Community Solution! We're glad you're here. To get started, please fill out the form with your information. Once you've submitted the form, you'll redirected to login page. Thank you for choosing Community Solution!"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "b900c9a3-5176-4221-b7fb-959dcde8fc9b"
+      Value: "393d59bb-0748-4854-87cd-9a76f093d240"
     - ID: "ac4df348-3054-4d3c-8c8f-390472fd4a5b"
       Hint: EmailPlaceholder
       Value: Email
@@ -77,7 +83,7 @@ Languages:
       Value: "Have Account ?"
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230324T065042Z
+      Value: 20230403T085338Z
     - ID: "f50e7022-746b-4648-8fc5-f49c64efb04a"
       Hint: LastNameLabel
       Value: Last Name

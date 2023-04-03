@@ -37,7 +37,7 @@ Languages:
     - ID: "5eb5bf7f-d856-4dc1-ae4d-fd35acf455f2"
       Hint: Image
       Value: |
-        <image mediaid="{7C9B274A-47F4-4E03-A770-C41A749FAB3A}" />
+        <image mediaid="{FF1E16B2-C4A4-45F7-B6E3-382459D3A535}" />
     - ID: "6c8fbd16-c0e4-4b08-a1e7-612d23d9fbe8"
       Hint: UserNameLabel
       Value: User Name / Email
@@ -46,7 +46,7 @@ Languages:
       Value: "Don't have Account ?"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "2696e8d0-8467-4167-83cc-a315f740fbb3"
+      Value: "00ec9f39-5bcb-46ea-aab4-2130867f80a5"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
@@ -56,4 +56,10 @@ Languages:
       Value: Password
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230324T065129Z
+      Value: 20230403T083141Z
+    - ID: "f12c77ed-39d8-45d0-9b2c-b52ba296d6a0"
+      Hint: Login Frame Image List
+      Value: |
+        {94E1716A-C2E2-482B-B958-08DFC2659FF2}
+        {E91E2122-B907-424D-879E-6CA618F73241}
+        {EF25E9C6-455B-4412-A9A6-57B0A556E46D}
