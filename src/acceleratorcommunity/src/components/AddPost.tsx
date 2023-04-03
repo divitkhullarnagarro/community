@@ -25,7 +25,7 @@ import { Dropdown, Modal } from 'react-bootstrap';
 import { ReportPostOptionsTypeLabel } from 'assets/helpers/enums';
 import styles from '../assets/addPost.module.css';
 import reportPostImage from '../assets/images/flag-icon.svg';
-import bookmarkImage from '../assets/images/bookmark.svg';
+import bookmarkImage from '../assets/images/bookmark-outline.svg';
 import copylink from '../assets/images/copylink.svg';
 import reportPostCall from 'src/API/reportPostCall';
 
@@ -145,6 +145,25 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const [reportPostType, setReportPostType] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
 
+  async function copyTextToClipboard(postId: string) {
+    let postUrl = window.location.origin + '/post/' + postId;
+    if ('clipboard' in navigator) {
+      return await navigator.clipboard.writeText(postUrl);
+    } else {
+      return document.execCommand('copy', true, postUrl);
+    }
+  }
+
+  const copyPostLinkToClipboard = (postId: string) => {
+    copyTextToClipboard(postId)
+      .then(() => {
+        console.log(postId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const showReportPostPopup = () => {
     setShowReportPopUp(true);
   };
@@ -170,42 +189,44 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           centered
           scrollable={true}
         >
-          <Modal.Header closeButton>
-            <Modal.Title className={styles.reportPostModalHeader}>
-              {props?.fields?.data?.datasource?.reportPostTitle?.jsonValue?.value ?? 'Report'}
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className={styles.reportPostModalBody}>
-              {props?.fields?.data?.datasource?.reportPostHeader?.jsonValue?.value ??
-                'Why are you reporting this?'}
-            </div>
-            <Form ref={formRef} style={{ fontSize: '15px', margin: '5px' }}>
-              {reportTypeList.map((item, index) => {
-                return (
-                  <div key={index} className={styles.reportItem}>
-                    {item}
-                    <Form.Check
-                      type="radio"
-                      name="radioGroup"
-                      value={item}
-                      onChange={(e) => handleSelectChange(e)}
-                      defaultChecked={index == 0 ? true : false}
-                      aria-label="radio 1"
-                    ></Form.Check>
-                  </div>
-                );
-              })}
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button className={styles.footerBtn} variant="secondary" onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button className={styles.footerBtn} variant="secondary" onClick={onPostReported}>
-              Report
-            </Button>
-          </Modal.Footer>
+          <div className={styles.reportPostModalContent}>
+            <Modal.Header closeButton>
+              <Modal.Title className={styles.reportPostModalHeader}>
+                {props?.fields?.data?.datasource?.reportPostTitle?.jsonValue?.value ?? 'Report'}
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className={styles.reportPostModalBody}>
+                {props?.fields?.data?.datasource?.reportPostHeader?.jsonValue?.value ??
+                  'Why are you reporting this?'}
+              </div>
+              <Form ref={formRef} style={{ fontSize: '15px', margin: '5px' }}>
+                {reportTypeList.map((item, index) => {
+                  return (
+                    <div key={index} className={styles.reportItem}>
+                      {item}
+                      <Form.Check
+                        type="radio"
+                        name="radioGroup"
+                        value={item}
+                        onChange={(e) => handleSelectChange(e)}
+                        defaultChecked={index == 0 ? true : false}
+                        aria-label="radio 1"
+                      ></Form.Check>
+                    </div>
+                  );
+                })}
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button className={styles.footerBtn} variant="secondary" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button className={styles.footerBtn} variant="secondary" onClick={onPostReported}>
+                Report
+              </Button>
+            </Modal.Footer>
+          </div>
         </Modal>
       </>
     );
@@ -735,37 +756,53 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </button>
                 </Dropdown.Toggle>
 
-                <Dropdown.Menu>
+                <Dropdown.Menu className={styles.dropdownMenu}>
                   <Dropdown.Item className={styles.dropdownItem}>
                     <div className={styles.overlayItem}>
-                      <NextImage field={bookmarkImage} editable={true} width={35} height={30} />
-                      <Button variant="secondary" className={styles.reportContainerBtn}>
-                        Save post
-                      </Button>
+                      <NextImage
+                        className={styles.dropdownImage}
+                        field={bookmarkImage}
+                        editable={true}
+                        width={23}
+                        height={20}
+                      />
+                      <div className={styles.reportContainerBtn}> Save Post</div>
                     </div>
                   </Dropdown.Item>
-                  <Dropdown.Item className={styles.dropdownItem}>
+                  <Dropdown.Item
+                    className={styles.dropdownItem}
+                    onClick={() => {
+                      copyPostLinkToClipboard(post?.id);
+                    }}
+                  >
                     <div className={styles.overlayItem}>
                       <div className={styles.copyLinkBtnStyle}>
-                        <NextImage field={copylink} editable={true} width={22} height={20} />
+                        <NextImage
+                          className={styles.dropdownImage}
+                          field={copylink}
+                          editable={true}
+                          width={22}
+                          height={22}
+                        />
                       </div>
-                      <Button variant="secondary" className={styles.reportContainerBtn}>
-                        Copy link to post
-                      </Button>
+                      <div className={styles.reportContainerBtn}> Copy link to post</div>
                     </div>
                   </Dropdown.Item>
-                  <Dropdown.Item className={styles.dropdownItem}>
+                  <Dropdown.Item
+                    className={styles.dropdownItem}
+                    onClick={() => {
+                      showReportPostPopup();
+                    }}
+                  >
                     <div className={styles.overlayItem}>
-                      <NextImage field={reportPostImage} editable={true} width={22} height={20} />
-                      <Button
-                        className={styles.reportContainerBtn}
-                        variant="secondary"
-                        onClick={() => {
-                          showReportPostPopup();
-                        }}
-                      >
-                        Report Post
-                      </Button>
+                      <NextImage
+                        className={styles.dropdownImage}
+                        field={reportPostImage}
+                        editable={true}
+                        width={22}
+                        height={22}
+                      />
+                      <div className={styles.reportContainerBtn}>Report Post</div>
                     </div>
                   </Dropdown.Item>
                 </Dropdown.Menu>
