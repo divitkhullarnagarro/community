@@ -1,4 +1,7 @@
 import type { NextRequest } from 'next/server';
+// import { ApolloClient, ApolloLink, InMemoryCache, HttpLink } from 'apollo-boost';
+// import { getBookmarkItem } from './components/Queries';
+// import { sitecoreApiHost } from 'temp/config';
 // import middleware from 'lib/middleware';
 
 // // eslint-disable-next-line
@@ -16,6 +19,11 @@ import { NextResponse } from 'next/server';
 
 export function middleware(request: NextRequest, response: NextResponse) {
 
+  if (request.cookies.get("UserToken") == '' || request.cookies.get("UserToken") == null || !request.nextUrl.pathname.startsWith('/_next')) {
+    return NextResponse.rewrite(new URL('/login', request.url))
+  }
+
+  console.log(request.nextUrl.pathname);
 
   if (request.nextUrl.pathname.startsWith('/post')) {
     if (request.cookies.get("UserToken") != '' && request.cookies.get("UserToken") != null)
