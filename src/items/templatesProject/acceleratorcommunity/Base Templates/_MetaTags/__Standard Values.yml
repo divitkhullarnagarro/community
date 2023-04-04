@@ -35,7 +35,7 @@ Languages:
       Value: 630
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "c097066f-bd4b-4b8c-bd8c-05944609a653"
+      Value: "a2de0847-1c72-4c68-afcf-9d6e022b0786"
     - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
       Hint: twitterDescription
       Value: Lorem ipsum dolor sit amet
@@ -48,7 +48,7 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\arpana.mittal@nagarro.com
     - ID: "c9bf6775-cbf3-4abb-aec3-c0d368791827"
       Hint: ogType
       Value: website
@@ -58,7 +58,7 @@ Languages:
         <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230330T094228Z
+      Value: 20230403T055911Z
     - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
       Hint: ogTitle
-      Value: Lorem ipsum dolor sit amet
+      Value: Lorem ipsum dolor sit amet1

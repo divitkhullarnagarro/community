@@ -26,7 +26,7 @@ SharedFields:
     
 - ID: "1a7c85e5-dc0b-490d-9187-bb1dbcb4c72f"
   Hint: Datasource Template
-  Value: /sitecore/templates/Feature/acceleratorcommunity/Image
+  Value: /sitecore/templates/Feature/acceleratorcommunity/ImageGeneric
 - ID: "b5b27af1-25ef-405c-87ce-369b3a004016"
   Hint: Datasource Location
   Value: /sitecore/content/acceleratorcommunity/Components/Image
@@ -40,11 +40,11 @@ Languages:
       Value: 20230307T050531Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "fe174175-0677-4b94-9edb-81c828a6fbcb"
+      Value: "ddab6520-acf6-44b0-acb1-bafa3c708dd4"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230310T060953Z
+      Value: 20230403T150215Z
