@@ -79,7 +79,9 @@
   border-color: #565e64;
 }
 
-.dropdownItem:visited {
+.dropdownItem:visited,
+.dropdownItem:hover,
+.dropdownItem:active {
   color: #fff;
   background-color: #5c636a;
   border-color: #565e64;

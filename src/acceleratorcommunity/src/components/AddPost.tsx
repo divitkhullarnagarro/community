@@ -28,6 +28,7 @@ import reportPostImage from '../assets/images/flag-icon.svg';
 import bookmarkImage from '../assets/images/bookmark-outline.svg';
 import copylink from '../assets/images/copylink.svg';
 import reportPostCall from 'src/API/reportPostCall';
+import ToastNotification from './ToastNotification';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -36,7 +37,6 @@ type AddPostProps = ComponentProps & {
 };
 
 const AddPost = (props: AddPostProps | any): JSX.Element => {
-  console.log('addpost', props); //delete me
   const { userToken, setUserToken, objectId, userObject, setUserObject } = {
     ...useContext(WebContext),
   };
@@ -143,6 +143,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const [showReportPopUp, setShowReportPopUp] = useState(false);
   const [reportPostId, setReportPostId] = useState('');
   const [reportPostType, setReportPostType] = useState('');
+  const [showNotification, setShowNofitication] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string>();
+  const [toastSuccess, setToastSuccess] = useState(false);
+  const [toastError, setToastError] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   async function copyTextToClipboard(postId: string) {
@@ -157,9 +161,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const copyPostLinkToClipboard = (postId: string) => {
     copyTextToClipboard(postId)
       .then(() => {
-        console.log(postId);
+        setToastSuccess(true);
+        setToastMessage('Post url copied to clipboard successfully');
+        setShowNofitication(true);
       })
       .catch((err) => {
+        setToastError(true);
+        setToastMessage(err?.message ?? 'Something went wrong');
+        setShowNofitication(true);
         console.log(err);
       });
   };
@@ -232,6 +241,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     );
   };
 
+  const resetToastState = () => {
+    setShowNofitication(!showNotification);
+    setToastSuccess(false);
+    setToastError(false);
+  };
+
   const onPostReported = async () => {
     let reportReason = '';
     if (formRef.current != null) {
@@ -241,9 +256,15 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     }
 
     let response = await reportPostCall(reportPostId, reportPostType, reportReason, userToken);
-    if (response?.success) {
+    if (response) {
+      if (response?.success) {
+        setToastSuccess(true);
+      } else {
+        setToastError(true);
+      }
+      setToastMessage(response?.data);
+      setShowNofitication(true);
       setShowReportPopUp(false);
-      console.log(response?.data);
     }
   };
 
@@ -1729,6 +1750,15 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         </div>
       </div>
       {<ReportPostPopup />}
+      {showNotification && (
+        <ToastNotification
+          showNotification={showNotification}
+          success={toastSuccess}
+          error={toastError}
+          message={toastMessage}
+          handleCallback={resetToastState}
+        />
+      )}
     </>
   );
 };
