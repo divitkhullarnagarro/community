@@ -15,14 +15,10 @@ SharedFields:
   Value: |
     # Editing here does not save the query on the item; copy it back when done!
     
-    # Editing here does not save the query on the item; copy it back when done!
-    
-    # Editing here does not save the query on the item; copy it back when done!
-    # Editing here does not save the query on the item; copy it back when done!
     query Login($datasource: String!, $language: String!) {
-      datasource: item(path: $datasource, language: $language) {
-        ... on RegisterUser {
-          title{jsonValue}
+        datasource: item(path: $datasource, language: $language) {
+         ... on RegisterUser {
+          title {jsonValue}
           description{jsonValue}
           image{jsonValue}
           firstNameLabel{jsonValue}
@@ -42,8 +38,8 @@ SharedFields:
           loginBtn{jsonValue}
           frameImageList{
             targetItems{
-              ...on Image{
-                image{
+              ... on ImageGeneric{
+                imageLogin{
                   jsonValue
                 }
               }
@@ -52,8 +48,6 @@ SharedFields:
         }
       }
     }
-    
-    
 Languages:
 - Language: en
   Versions:
@@ -64,11 +58,11 @@ Languages:
       Value: 20230303T113941Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "bea9e2c3-6c03-4980-a9b5-a19aa1997a69"
+      Value: "745a63ac-f3b7-4b63-9d2d-9dfff038a315"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230403T085548Z
+      Value: 20230403T161338Z

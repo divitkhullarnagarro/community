@@ -34,7 +34,7 @@ Languages:
       Value: 20230306T121612Z
     - ID: "263d7202-9941-5327-aeda-534621fa7b2d"
       Hint: pageTitle
-      Value: Profile
+      Value: "Social Community - User Profile"
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
       Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
@@ -48,11 +48,23 @@ Languages:
         sitecore\admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "fad272b2-43f6-4cd8-9998-09dc15afe11e"
+      Value: "d9181e53-d96a-4124-a62d-5641132d2716"
+    - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
+      Hint: twitterDescription
+      Value: "Social Community - Create your social profile"
+    - ID: "a2a8bc50-e09c-4d84-9021-7d870a46ae34"
+      Hint: ogDescription
+      Value: "Social Community - Create your social profile "
+    - ID: "af3babb3-496f-4432-ae8d-361f72fe9c60"
+      Hint: twitterTitle
+      Value: Create your social profile
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\ankit.rastogi@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230309T073257Z
+      Value: 20230403T075312Z
+    - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
+      Hint: ogTitle
+      Value: Create your social profile

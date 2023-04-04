@@ -47,7 +47,7 @@ type DataSource = {
   };
   loginFrameImageList: {
     targetItems: Array<{
-      image: {
+      imageLogin: {
         jsonValue: ImageField;
       };
     }>;
@@ -168,21 +168,21 @@ const Login = (props: LoginProps): JSX.Element => {
             <div className={loginCss.rightGridBox}>
               <div className={loginCss.img1}>
                 <NextImage
-                  field={targetItems?.loginFrameImageList?.targetItems[0]?.image?.jsonValue?.value}
+                  field={targetItems?.loginFrameImageList?.targetItems[0]?.imageLogin?.jsonValue?.value}
                   height={150}
                   width={150}
                 />
               </div>
               <div className={loginCss.img2}>
                 <NextImage
-                  field={targetItems?.loginFrameImageList?.targetItems[1]?.image?.jsonValue?.value}
+                  field={targetItems?.loginFrameImageList?.targetItems[1]?.imageLogin?.jsonValue?.value}
                   height={150}
                   width={150}
                 />
               </div>
               <div className={loginCss.img3}>
                 <NextImage
-                  field={targetItems?.loginFrameImageList?.targetItems[2]?.image?.jsonValue?.value}
+                  field={targetItems?.loginFrameImageList?.targetItems[2]?.imageLogin?.jsonValue?.value}
                   height={150}
                   width={150}
                 />

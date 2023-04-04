@@ -2,7 +2,7 @@
 ID: "c899e553-eba8-4a55-87c8-97e8c1caac54"
 Parent: "9287e856-5b1c-461b-b744-46ea3b508e14"
 Template: "e269fbb5-3750-427a-9149-7aa950b49301"
-Path: /sitecore/templates/Feature/acceleratorcommunity/Image/data
+Path: /sitecore/templates/Feature/acceleratorcommunity/ImageGeneric/data
 Languages:
 - Language: en
   Versions:
