@@ -82,17 +82,29 @@ Languages:
       Value: 20230301T081956Z
     - ID: "263d7202-9941-5327-aeda-534621fa7b2d"
       Hint: pageTitle
-      Value: Welcome to Sitecore JSS
+      Value: Social Community
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
       Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "1f6094a0-2c5f-425a-b37f-558a52b05cd2"
+      Value: "f5d181cc-2fe3-487f-9457-2bf71b0ae4c5"
+    - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
+      Hint: twitterDescription
+      Value: Post feeds for Social Community
+    - ID: "a2a8bc50-e09c-4d84-9021-7d870a46ae34"
+      Hint: ogDescription
+      Value: Post feeds for Social Community
+    - ID: "af3babb3-496f-4432-ae8d-361f72fe9c60"
+      Hint: twitterTitle
+      Value: Social Community
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230325T100807Z
+      Value: 20230403T065746Z
+    - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
+      Hint: ogTitle
+      Value: Social Community

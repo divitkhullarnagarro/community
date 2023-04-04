@@ -1,135 +1,345 @@
 .AddPostContainer {
-    background-color: white;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
+  background-color: white;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .AddPostEditorContainer {
-    background-color: white;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    transition: height 0.4s cubic-bezier(1, 0.05, 0.17, 0.95) 0s;
+  background-color: white;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: height 0.4s cubic-bezier(1, 0.05, 0.17, 0.95) 0s;
 }
 
 .AddPostContainer .addPostButton {
-    width: 100%;
-    margin-left: 20px;
-    border-color: white;
-    background-color: white;
-    color: grey;
-    cursor: pointer;
-    border: none;
+  width: 100%;
+  margin-left: 20px;
+  border-color: white;
+  background-color: white;
+  color: grey;
+  cursor: pointer;
+  border: none;
 }
 
 .AddPostContainer .addPostButton h4 {
-    float: left;
+  float: left;
 }
 
 .AddPostField {
-    margin: 20px;
+  margin: 20px;
 }
 
 .AddPostItems {
-    margin: 20px;
-    display: flex;
-    justify-content: space-evenly;
+  margin: 20px;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .AddPostItems button {
-    padding: 10px;
-    width: 125px;
+  padding: 10px;
+  width: 125px;
+  height: 50px;
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+}
+
+.AddPostItems button:hover {
+  background-color: rgb(171, 166, 166);
+}
+
+.AddPostItems img {
+  margin-left: 10px;
+}
+
+.AllPostscontainer {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.postHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.postHeaderLeft {
+  display: flex;
+  align-items: center;
+}
+
+.postHeaderRight {
+  display: flex;
+  align-items: center;
+}
+
+.postDetailContainer {
+  margin-left: 20px;
+}
+
+.postContent {
+  margin: 30px 30px 30px 0px;
+}
+
+.postActions {
+  display: flex;
+  gap: 100px;
+  justify-content: space-around;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.postActions button {
+  padding: 10px;
+  width: 70px;
+  height: 70px;
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+}
+
+.postActions button:hover {
+  background-color: rgb(171, 166, 166);
+}
+
+.postContainer {
+  margin-top: 20px;
+  background-color: white;
+  padding: 20px;
+  position: relative;
+}
+
+.AddPostContainer .form-control:focus {
+  box-shadow: none;
+}
+
+.AddPostEditorContainer .form-control:focus {
+  box-shadow: none;
+}
+
+.docPreviewContainer .openPrevButton button:hover {
+  background-color: grey;
+}
+
+.AllPostscontainer::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.postFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.postOwner {
+  font-weight: 750;
+  color: grey;
+  font-size: 1.5rem;
+}
+
+.postCreateDate {
+  font-weight: 700;
+  color: grey;
+  font-size: 1.125rem;
+}
+
+.postUserImage {
+  width: 3.75rem;
+}
+
+.postMoreOptionsImage {
+  width: 3.125rem;
+}
+
+.postCrossImage {
+  width: 3.125rem;
+  margin-left: 1.875rem;
+}
+
+.postLikeImage {
+  width: 2.5rem;
+}
+
+.postCommentImage {
+  width: 2.5rem;
+}
+
+.postShareImage {
+  width: 2.5rem;
+}
+
+.postLikeCount {
+  font-weight: 600;
+}
+
+.postCommentCount {
+  font-weight: 600;
+}
+
+.commentUserImage {
+  width: 60px;
+  margin-right: 10px;
+}
+
+.postCommentButton {
+  float: right;
+  margin-left: 10px;
+  border-radius: 10px;
+  padding: 5px;
+  border: none;
+  background-color: #008cba;
+  color: white;
+  width: 20%;
+}
+
+@media only screen and (max-width: 640px) {
+  .postOwner {
+    font-weight: 750;
+    color: grey;
+    font-size: 0.75rem;
+  }
+
+  .postUserImage {
+    width: 1.875rem;
+  }
+
+  .postCreateDate {
+    font-weight: 700;
+    color: grey;
+    font-size: 0.75rem;
+  }
+
+  .postMoreOptionsImage {
+    width: 1.25rem;
+  }
+
+  .postCrossImage {
+    width: 1.25rem;
+  }
+
+  .postLikeImage {
+    width: 1.25rem;
+  }
+
+  .postCommentImage {
+    width: 1.25rem;
+  }
+
+  .postShareImage {
+    width: 1.25rem;
+  }
+
+  .postActions {
+    display: flex;
+    gap: 0.125rem;
+    justify-content: space-around;
+    margin-bottom: 0.125rem;
+  }
+
+  .postActions button {
+    padding: 5px;
+    width: 50px;
     height: 50px;
     background-color: white;
     border: none;
     border-radius: 10px;
-}
+  }
 
-.AddPostItems button:hover {
-    background-color: rgb(171, 166, 166);
-}
+  .postLikeCount {
+    font-weight: 600;
+    font-size: 0.625rem;
+  }
 
-.AddPostItems img {
-    margin-left: 10px;
-}
+  .postCommentCount {
+    font-weight: 600;
+    font-size: 0.625rem;
+  }
 
+  .commentUserImage {
+    width: 1.875rem;
+    margin-right: 0.3125rem;
+  }
 
-.AllPostscontainer {
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.postHeading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.postHeaderLeft {
-    display: flex;
-    align-items: center;
-}
-
-.postHeaderRight {
-    display: flex;
-    align-items: center;
-}
-
-.postDetailContainer {
-    margin-left: 20px;
-}
-
-.postContent {
-    margin: 30px 30px 30px 0px;
-}
-
-.postActions {
-    display: flex;
-    gap: 100px;
-    justify-content: space-around;
-}
-
-.postActions button {
-    padding: 10px;
-    width: 70px;
-    height: 70px;
-    background-color: white;
+  .postCommentButton {
+    float: right;
+    margin-left: 5px;
+    border-radius: 5px;
+    padding: 5px;
     border: none;
-    border-radius: 10px;
+    background-color: #008cba;
+    color: white;
+    width: 4.375rem;
+    font-size: 0.625rem;
+  }
 }
 
-.postActions button:hover {
-    background-color: rgb(171, 166, 166);
+@media screen and (max-width: 600px) {
+  .postActions {
+    gap: 3.125rem;
+  }
+
+  .postFooter {
+    gap: 3.125rem;
+  }
 }
 
-.postContainer {
-    margin-top: 20px;
-    background-color: white;
-    padding: 20px;
-}
-
-.AddPostContainer .form-control:focus {
-    box-shadow: none;
-}
-
-.AddPostEditorContainer .form-control:focus {
-    box-shadow: none;
-}
-
-.docPreviewContainer .openPrevButton button:hover {
-    background-color: grey
-}
-
-.AllPostscontainer::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-}
-
-.postFooter {
+@media screen and (max-width: 660px) {
+  .likesAndComments {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    gap: 0.125rem;
+    font-size: 0.8125rem;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .postActions button {
+    height: 3.125rem;
+    width: 3.125rem;
+    border-radius: 0.625rem;
+  }
+  .postLikeImage {
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .postActions {
+    gap: 2.5rem;
+  }
+
+  .likesAndComments {
+    font-size: 0.9375rem;
+  }
+
+  .postFooter {
+    gap: 1.875rem;
+    /* justify-content: space-between; */
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .postActions button {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 0.625rem;
+  }
+  .postLikeImage {
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+
+  .postFooter {
+    gap: 0.625rem;
+  }
+
+  .postActions {
+    gap: 1.25rem;
+  }
 }

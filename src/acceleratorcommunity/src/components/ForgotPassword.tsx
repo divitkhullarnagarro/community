@@ -1,4 +1,4 @@
-import { Field, ImageField, RichTextField } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, ImageField, NextImage, RichTextField } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import React, { useContext, useState } from 'react';
 import WebContext from '../Context/WebContext';
@@ -114,6 +114,13 @@ type ForgotPasswordProps = ComponentProps & {
             value: Field<string>;
           };
         };
+        forgotFrameImageList: {
+          targetItems: Array<{
+            imageLogin: {
+              jsonValue: ImageField;
+            };
+          }>;
+        };
       };
     };
   };
@@ -218,27 +225,65 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
     <>
       <div className={loginCss.container}>
         <div className={loginCss.leftContainer}>
-          <div className={loginCss.welcomeText}>
-            {/* <div className={loginCss.welcomeTextImage}>
-              <NextImage field={star} editable={true} width={30} height={30} />
-            </div> */}
-            <h2>
-              {datasource?.title?.jsonValue?.value.split('<br>')[0]}
-              <br />
-              {datasource?.title?.jsonValue?.value.split('<br>')[1]}
-            </h2>
-            <div className={loginCss.welcomeTextDescription}>
-              {datasource?.description?.jsonValue?.value}
+          <div className={loginCss.leftGrid}>
+            <div className={loginCss.welcomeText}>
+              <div className={loginCss.welcomeTextImage}>
+                <NextImage
+                  field={datasource?.image?.jsonValue?.value}
+                  editable={true}
+                  width={50}
+                  height={50}
+                />
+              </div>
+              <h5>
+                {datasource?.title?.jsonValue?.value.split('<br>')[0]}
+                <br />
+                {datasource?.title?.jsonValue?.value.split('<br>')[1]}
+              </h5>
+              <div className={loginCss.welcomeTextDescription}>
+                {datasource?.description?.jsonValue?.value}
+              </div>
             </div>
           </div>{' '}
           {/* <div className={loginCss.img}>
             <NextImage field={imageNotFound} editable={true} />
           </div> */}
+          <div className={loginCss.rightGrid}>
+            <div className={loginCss.rightGridBox}>
+              <div className={loginCss.img1}>
+                <NextImage
+                  field={
+                    datasource?.forgotFrameImageList?.targetItems[0]?.imageLogin?.jsonValue?.value
+                  }
+                  height={100}
+                  width={100}
+                />
+              </div>
+              <div className={loginCss.img2}>
+                <NextImage
+                  field={
+                    datasource?.forgotFrameImageList?.targetItems[1]?.imageLogin?.jsonValue?.value
+                  }
+                  height={100}
+                  width={100}
+                />
+              </div>
+              <div className={loginCss.img3}>
+                <NextImage
+                  field={
+                    datasource?.forgotFrameImageList?.targetItems[2]?.imageLogin?.jsonValue?.value
+                  }
+                  height={100}
+                  width={100}
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className={loginCss.rightContainer}>
           <div className={`${loginCss.formContainer} ${loginCss.forgotPasswordCard}`}>
-            <h4 className={loginCss.UpdatePasswordHeading}>Update Your Password</h4>
+            {/* <h4 className={loginCss.UpdatePasswordHeading}>Update Your Password</h4> */}
             {passwordPage ? (
               <form className={loginCss.login} onSubmit={(e) => onSubmitPasswordHandler(e)}>
                 <div className={loginCss.loginField}>
