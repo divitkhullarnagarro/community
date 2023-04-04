@@ -30,3 +30,7 @@
   color: black;
   margin-left: 6px;
 }
+.targetIcon::after {
+  visibility: hidden;
+ 
+}

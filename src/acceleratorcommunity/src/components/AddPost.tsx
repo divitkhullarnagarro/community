@@ -898,7 +898,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           post.id
                         }
                       >
-                        WhatsApp
+                        <a  className={ShowShareCss.targetIcon} target='_blank' >WhatsApp</a>
+                    
                       </Link>
                     </div>
 
@@ -918,7 +919,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           post.id
                         }
                       >
-                        Twitter
+                         <a  className={ShowShareCss.targetIcon} target='_blank' >Twitter</a>
+                      
                       </Link>
                     </div>
 
@@ -938,7 +940,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           post.id
                         }
                       >
-                        LinkedIn
+                         <a  className={ShowShareCss.targetIcon} target='_blank' >LinkedIn</a>
+                       
                       </Link>
                     </div>
                     <div className={ShowShareCss.sharePopup}>
@@ -957,7 +960,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           post.id
                         }
                       >
-                        Facebook
+                         <a  className={ShowShareCss.targetIcon} target='_blank' >Facebook</a>
+                        
                       </Link>
                     </div>
                   </div>
