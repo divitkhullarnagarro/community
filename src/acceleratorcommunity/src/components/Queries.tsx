@@ -48,46 +48,16 @@ export const getBookmarkItem = () => {
 
 export const getAllRoutes = () => {
   var query = gql`
-    query BookmarkListing($datasource: String!, $language: String!) {
+    query ArticlesList($datasource: String!, $language: String!) {
       datasource: item(path: $datasource, language: $language) {
-        ... on ArticleDetailPage {
-          id
-          url {
-            url
-          }
-          title {
-            jsonValue
-          }
-          description {
-            jsonValue
-          }
-          image {
-            jsonValue
-          }
-          date {
-            jsonValue
-          }
-          author {
-            jsonValue
-          }
-          tags {
-            targetItems {
-              ... on ContentName {
-                name
-              }
-            }
-          }
-          contentType {
-            targetItem {
-              ... on ContentName {
-                name
-              }
-            }
+        children {
+          results {
+            id
+            name
           }
         }
       }
     }
   `;
-  console.log('query', query);
   return query;
 };

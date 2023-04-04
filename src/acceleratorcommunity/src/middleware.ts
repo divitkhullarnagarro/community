@@ -1,29 +1,22 @@
 import type { NextRequest } from 'next/server';
-// import { ApolloClient, ApolloLink, InMemoryCache, HttpLink } from 'apollo-boost';
-// import { getBookmarkItem } from './components/Queries';
-// import { sitecoreApiHost } from 'temp/config';
-// import middleware from 'lib/middleware';
-
-// // eslint-disable-next-line
-// export default async function (req: NextRequest, ev: NextFetchEvent) {
-//   return middleware(req, ev);
-// }
 
 export const config = {
   // Exclude Sitecore editing API routes
-  matcher: ['/', '/((?!api/editing/).*)'],
+  matcher: '/((?!api|_next/static|_next/image|favicon.ico).*)',
 };
 
 
 import { NextResponse } from 'next/server';
+import { getPathList } from 'assets/helpers/middlewareHelper';
 
-export function middleware(request: NextRequest, response: NextResponse) {
+export async function middleware(request: NextRequest, response: NextResponse) {
+  let userToken = request.cookies.get("UserToken");
 
-  if (request.cookies.get("UserToken") == '' || request.cookies.get("UserToken") == null || !request.nextUrl.pathname.startsWith('/_next')) {
-    return NextResponse.rewrite(new URL('/login', request.url))
+  let innerResp: any = false;
+  if (!userToken) {
+    innerResp = await getPathList(request);
   }
-
-  console.log(request.nextUrl.pathname);
+  if (innerResp) return NextResponse.rewrite(new URL('/login', request.url));
 
   if (request.nextUrl.pathname.startsWith('/post')) {
     if (request.cookies.get("UserToken") != '' && request.cookies.get("UserToken") != null)

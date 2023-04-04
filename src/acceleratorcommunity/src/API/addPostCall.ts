@@ -3,8 +3,8 @@ import Axios, { AxiosResponse } from "axios";
 const addPostCall = async (userToken: string | undefined, postObject: any) => {
     var data = {
         // id: "post_Id12",
-        // description: postObject?.description,
-        mediaList: postObject?.mediaList,
+        description: postObject?.description,
+        // mediaList: postObject?.mediaList,
         postType: postObject?.type,
         createdBy: "objectId",
         updatedBy: "objectId",
