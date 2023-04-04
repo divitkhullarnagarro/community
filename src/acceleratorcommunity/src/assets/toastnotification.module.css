@@ -51,4 +51,19 @@
     bottom: 2rem;
     right: 2rem;
   }
+
+  .toastHeader {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 0.625rem;
+    color: #fff;
+  }
+
+  .toastBody {
+    font-weight: bold;
+    font-size: 0.625rem;
+    background-color: white;
+    color: black;
+  }
 }
