@@ -53,14 +53,28 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const [docs, setDocs] = useState([]);
   const [videoLink, setVideoLink] = useState([]);
 
-  let [myArr, setMyArr] = useState<postsType>({ posts: [] });
   let [myAnotherArr, setMyAnotherArr] = useState<any>([]);
   let [postPageNum, setPostPageNum] = useState(0);
   let [ifReachedEnd, setIfReachedEnd] = useState(false);
   let [ifNoMoreData, setIfNoMoreData] = useState(false);
   let [createNewPostError, setCreateNewPostError] = useState(false);
-
+  // let [disableAddImage, setDisableAddImage] = useState(false);
+  // let [disableAddVideo, setDisableAddVideo] = useState(false);
+  // let [disableAddDoc, setDisableAddDoc] = useState(false);
   let isExpEditorActive = props?.sitecoreContext?.pageEditing;
+
+  // function checkDisablity() {
+  //   if (videoLink.length > 0) {
+  //     setDisableAddImage(true);
+  //     setDisableAddDoc(true);
+  //   } else if (docs.length > 0) {
+  //     setDisableAddVideo(true);
+  //     setDisableAddImage(true);
+  //   } else if (file.length > 0) {
+  //     setDisableAddVideo(true);
+  //     setDisableAddDoc(true);
+  //   }
+  // }
 
   useEffect(() => {
     if (userToken == '' && !isExpEditorActive) {
@@ -87,17 +101,22 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   useEffect(() => {
     postStructCreate();
-  }, [myArr, myAnotherArr]);
+  }, [myAnotherArr]);
 
   useEffect(() => {
     if (userToken != '' && userToken != undefined) {
       getAllPostsCall(userToken, postPageNum).then((response: any) => {
         let newArr = response?.data?.data;
-        let empArr: any[] = [];
         newArr?.map((post: any) => {
           post.isOpenComment = false;
-          post.comments = empArr;
+          post.comments = [];
           post.showShare = false;
+          if (post.postMeasures == null || post.postMeasures == 'undefined') {
+            post.postMeasures = {
+              commentCount: 0,
+              likeCount: 0,
+            };
+          }
         });
         setMyAnotherArr(newArr);
       });
@@ -238,6 +257,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           post.isOpenComment = false;
           post.comments = [];
           post.showShare = false;
+          if (post.postMeasures === null || post.postMeasures == 'undefined') {
+            post.postMeasures = {
+              commentCount: 0,
+              likeCount: 0,
+            };
+          }
         });
         setMyAnotherArr((prevState: any[]) => {
           return [...prevState, ...newArr];
@@ -275,31 +300,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     return `${timestamp}-${random}`;
   }
 
-  interface comments {
-    id: string;
-    commentToId: string;
-    nameOfCommentor: string;
-    dateAndTime: string;
-    commentString: string;
-  }
-
-  interface posts {
-    id: string;
-    // heading: string;
-    postText: string;
-    imageArray: any[];
-    docArray: any[];
-    videoArray: any[];
-    likes: any;
-    disLikes: string[];
-    comments: comments[];
-    showComments: boolean;
-  }
-
-  interface postsType {
-    posts: posts[];
-  }
-
   //Function To Handle Likes
   function LikePost(id: any) {
     let locArr = myAnotherArr;
@@ -309,7 +309,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         if (typeof post?.postMeasures?.likeCount === 'number') {
           post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
         } else {
-          post.postMeasures.likeCount = 1;
+          post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
         }
         return post;
       } else {
@@ -379,8 +379,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
     let locArr = myAnotherArr;
     addPostCommentCall(userToken, id, e.target[0].value);
-    let modPost = locArr.map((post: any) => {
-      if (post.id == id) {
+    locArr.map((post: any) => {
+      if (id === post?.id) {
         post?.comments?.push({
           id: 'Unique Id For Each Comment',
           commentToId: id,
@@ -394,12 +394,16 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           post.postMeasures.commentCount = (post.postMeasures.commentCount ?? 0) + 1;
         }
         return post;
-      } else {
-        return post;
       }
     });
-    setMyAnotherArr(() => {
-      return modPost;
+    setMyAnotherArr((prevPosts: any) => {
+      return prevPosts.map((post: any, index: number) => {
+        if (index < locArr.length) {
+          return locArr[index];
+        } else {
+          return post;
+        }
+      });
     });
 
     e.currentTarget.reset();
@@ -528,7 +532,56 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               />
             </div>
           </div>
-          <div className="postContent">{post?.description}</div>
+          <div className="postContent">
+            <div className="postHeading">{post?.description}</div>
+            <div className="postMedia">
+              {post?.mediaList?.map((media: any, num: any) => {
+                if (media?.mediaType === 'VIDEO') {
+                  return (
+                    <div key={num}>
+                      <video width="100%" src={media?.url} controls></video>
+                    </div>
+                  );
+                } else if (media?.mediaType === 'DOCUMENT') {
+                  return (
+                    <div className="docPreviewContainer" key={num}>
+                      <span className="openPrevButton">
+                        <button
+                          onClick={() => openDoc(media?.url)}
+                          style={{
+                            padding: '5px',
+                            borderRadius: '20px',
+                            borderColor: 'white',
+                          }}
+                        >
+                          <img
+                            width="50px"
+                            src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
+                            alt={num}
+                            style={{ margin: '10px' }}
+                          ></img>
+                          {'DocFile'}
+                        </button>
+                      </span>
+                    </div>
+                  );
+                } else if (media?.mediaType === 'IMAGE') {
+                  return (
+                    <div
+                      key={num}
+                      style={{
+                        borderRadius: '30px',
+                        margin: '0px 15px 15px 0px',
+                      }}
+                    >
+                      <img width="300px" src={media?.url} alt={media?.id}></img>
+                    </div>
+                  );
+                }
+                return '';
+              })}
+            </div>
+          </div>
           <hr />
           <div className="postFooter" style={{ marginBottom: '20px' }}>
             <div className="postActions" style={{ marginBottom: '10px' }}>
@@ -775,9 +828,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     if (timeDiffHours >= 24) {
       return `${timeDiffDays} ${timeDiffDays > 1 ? 'days' : 'day'} ago`;
     } else if (timeDiffMinutes >= 60) {
-      return `${timeDiffHours} ${timeDiffDays > 1 ? 'hours' : 'hour'} ago`;
+      return `${timeDiffHours} ${timeDiffHours > 1 ? 'hours' : 'hour'} ago`;
     } else {
-      return `${timeDiffMinutes} ${timeDiffDays > 1 ? 'minutes' : 'minute'} ago`;
+      return `${timeDiffMinutes} ${timeDiffMinutes > 1 ? 'minutes' : 'minute'} ago`;
     }
   }
 
@@ -787,28 +840,32 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     if (postText == '') {
       return;
     }
-    let uniqueId = generateUniqueId();
+    // let uniqueId = generateUniqueId();
 
-    setMyArr((prevPosts) => {
-      const newPost = {
-        id: uniqueId,
-        // heading: postHeading,
-        postText: postText,
-        imageArray: file,
-        docArray: docs,
-        videoArray: videoLink,
-        likes: 0,
-        disLikes: [],
-        showComments: false,
-        comments: [],
-      };
-      return { posts: [...prevPosts.posts, newPost] };
-    });
-    let postType = '';
+    // setMyAnotherArr((prevPosts: any) => {
+    //   const newPost = {
+    //     id: uniqueId,
+    //     // heading: postHeading,
+    //     postText: postText,
+    //     imageArray: file,
+    //     docArray: docs,
+    //     videoArray: videoLink,
+    //     likes: 0,
+    //     disLikes: [],
+    //     showComments: false,
+    //     comments: [],
+    //   };
+    //   return [newPost, ...prevPosts];
+    // });
+    let postType = 'VIDEO';
     if (file.length == 0 && docs.length == 0 && videoLink.length == 0) {
       postType = 'TEXT_POST';
-    } else {
+    } else if (videoLink.length > 0) {
       postType = 'VIDEO';
+    } else if (docs.length > 0) {
+      postType = 'DOC';
+    } else if (file.length > 0) {
+      postType = 'IMAGE';
     }
     addPostCall(userToken, {
       description: postText,
@@ -866,13 +923,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     for (let i = 0; i < files.length; i++) {
       let resp = await UploadFilesToServer(files[i], 'IMAGE');
       let uniqueId = generateUniqueId();
-      fileArray.push({ id: uniqueId, value: resp?.data, type: 'IMAGE' });
+      fileArray.push({ id: uniqueId, url: resp?.data, mediaType: 'IMAGE', mediaSequence: 0 });
     }
     if (fileArray.length === files.length) {
       setFile(fileArray);
     }
   }
-
   //Function To Handle Load Doc Files
   async function uploadMultipleDocs(e: any) {
     const files = e.target.files;
@@ -881,7 +937,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     for (let i = 0; i < files.length; i++) {
       let resp = await UploadFilesToServer(files[i], 'DOC');
       let uniqueId = generateUniqueId();
-      fileArray.push({ id: uniqueId, value: resp?.data, name: files[i].name, type: 'DOC' });
+      fileArray.push({
+        id: uniqueId,
+        url: resp?.data,
+        // name: files[i].name,
+        mediaType: 'DOCUMENT',
+        mediaSequence: 0,
+      });
     }
     if (fileArray.length === files.length) {
       setDocs(fileArray);
@@ -897,13 +959,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       let resp = await UploadFilesToServer(files[i], 'VIDEO');
       resp;
       let uniqueId = generateUniqueId();
-      console.log('VideoFile', files[i]);
       fileArray.push({
         id: uniqueId,
         url: 'https://static.videezy.com/system/resources/previews/000/019/696/original/pointing-blue.mp4',
         // name: files[i]?.name,
-        type: 'VIDEO',
-        sequence: 0,
+        mediaType: 'VIDEO',
+        mediaSequence: 0,
       });
     }
     if (fileArray.length === files.length) {
@@ -1040,7 +1101,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                               style={{ borderRadius: '30px' }}
                             ></img>
                           </button>
-                          <img width="300px" src={img?.value} alt={img?.id}></img>
+                          <img width="300px" src={img?.url} alt={img?.id}></img>
                         </div>
                       );
                     })}
@@ -1051,7 +1112,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         <div className="docPreviewContainer" key={num}>
                           <span className="openPrevButton">
                             <button
-                              onClick={() => openDoc(doc.value)}
+                              onClick={() => openDoc(doc?.url)}
                               style={{
                                 padding: '5px',
                                 borderRadius: '20px',
