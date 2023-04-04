@@ -34,13 +34,6 @@ Languages:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230313T062518Z
-    - ID: "4a1e277b-b787-4aa1-b9c2-92cc68bbe12e"
-      Hint: Article Content Type
-      Value: |
-        {0C9AE58A-ADD0-411F-9771-A5C15B19F0A8}
-        {757E18A7-D46F-422D-9DF3-7A4E6AA33F40}
-        {F183E359-A872-4B54-945E-EA8C7A84E445}
-        {0DD1A34E-654B-436F-B2FD-4A358EA75F7C}
     - ID: "7fd7efe7-f393-4125-9a22-707338dc9836"
       Hint: ArticlesList
       Value: |
@@ -49,13 +42,14 @@ Languages:
         {E3683213-4298-4238-9491-2DBF1715EDB4}
         {404328CD-4367-4BE2-88B1-368BE0986B6D}
         {832A2E37-065F-4F9A-87D0-F3845621D1A5}
+        {AE419B29-02BC-407B-B47A-E10AC33FB422}
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "fdc8277e-f6f9-40e5-af8f-caa9a79f99ae"
+      Value: "2ffdcd7a-719f-459c-9c91-0528ca5a48a9"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\damyanti.wakchaure@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230404T103858Z
+      Value: 20230404T123453Z

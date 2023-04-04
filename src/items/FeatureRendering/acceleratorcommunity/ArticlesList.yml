@@ -23,15 +23,6 @@ SharedFields:
     query ArticlesList($datasource: String!, $language: String!) {
       datasource: item(path: $datasource, language: $language) {
         ... on ArticleList {
-          articleContentType{
-            targetItems{
-              ... on ContentName{
-                name_f18b1a9ad1ff4c13ad6080a2f710e438{
-                  jsonValue
-                }
-              }
-            }
-          }
           articlesList {
             targetItems {
               ... on ArticleDetailPage {
@@ -96,11 +87,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "93f9518f-4d21-4cdf-9ad5-adafdc6611f0"
+      Value: "d10e2512-d15e-4531-b551-c42e9787c77d"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230404T104233Z
+      Value: 20230403T124346Z

@@ -1,0 +1,124 @@
+﻿---
+ID: "ae419b29-02bc-407b-b47a-e10ac33fb422"
+Parent: "b687c946-e903-44d4-b479-e5e137e130a3"
+Template: "05e694d6-3f26-40c0-8cc0-0396ffb7acbc"
+Path: /sitecore/content/acceleratorcommunity/home/news/dummy data
+SharedFields:
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{6C59AE29-D0A1-4B77-9305-0ABAB21D5FE5}"
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 500
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "03897511-7b06-4331-8ca0-1929bc3047ce"
+      Hint: Navigation Title
+      Value: COVID vaccines
+    - ID: "1592c783-bd58-4410-93cf-05285c4e31e3"
+      Hint: ContentType
+      Value: "{0DD1A34E-654B-436F-B2FD-4A358EA75F7C}"
+    - ID: "20effcd6-ba5f-47e5-8003-9b0ce2a49335"
+      Hint: AuthorName
+      Value: Cardiovascular Research
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230313T062400Z
+    - ID: "31bceb62-c1e4-4109-80b9-172aae293942"
+      Hint: ShortDescription
+      Value: A total of 229235 individuals with CVD were identified, of which 1764 were vaccinated and had a diagnosis of MACE during the observation
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{FCFDBB96-946A-4D2F-BCCD-5573073FC176}"
+    - ID: "6bd9a76c-1bc6-4517-b646-e06a5580fc32"
+      Hint: Date
+      Value: 20220621T183000Z
+    - ID: "6f5167c5-117b-47c1-8305-45e8e7b37ae3"
+      Hint: Image
+      Value: |
+        <image mediaid="{70FC5302-D10D-42A0-85CD-AB4E9566D12A}" />
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "bd04cfb9-cabd-4dc8-875d-c2d39f11d348"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\damyanti.wakchaure@nagarro.com
+    - ID: "bf0d55a4-c617-4ce5-91c1-40913f07b123"
+      Hint: Tags
+      Value: |
+        {05BA8938-576F-4EB2-A895-94FFCA67DC14}
+        {77A039E2-1B13-41C1-9E33-7180CF8101FE}
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230404T123242Z
+    - ID: "fdf92769-8768-4460-bbad-818073f23d1f"
+      Hint: Title
+      Value: COVID vaccines are safe for patients with cardiovascular disease
+  - Version: 2
+    Fields:
+    - ID: "03897511-7b06-4331-8ca0-1929bc3047ce"
+      Hint: Navigation Title
+      Value: COVID vaccines
+    - ID: "1592c783-bd58-4410-93cf-05285c4e31e3"
+      Hint: ContentType
+      Value: "{0DD1A34E-654B-436F-B2FD-4A358EA75F7C}"
+    - ID: "20effcd6-ba5f-47e5-8003-9b0ce2a49335"
+      Hint: AuthorName
+      Value: Cardiovascular Research
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230313T062400Z
+    - ID: "31bceb62-c1e4-4109-80b9-172aae293942"
+      Hint: ShortDescription
+      Value: A total of 229235 individuals with CVD were identified, of which 1764 were vaccinated and had a diagnosis of MACE during the observation
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{FCFDBB96-946A-4D2F-BCCD-5573073FC176}"
+    - ID: "6bd9a76c-1bc6-4517-b646-e06a5580fc32"
+      Hint: Date
+      Value: 20220621T183000Z
+    - ID: "6f5167c5-117b-47c1-8305-45e8e7b37ae3"
+      Hint: Image
+      Value: |
+        <image mediaid="{70FC5302-D10D-42A0-85CD-AB4E9566D12A}" />
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "561d63e6-12fe-4a36-9325-8defc3ee0828"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\damyanti.wakchaure@nagarro.com
+    - ID: "bf0d55a4-c617-4ce5-91c1-40913f07b123"
+      Hint: Tags
+      Value: |
+        {05BA8938-576F-4EB2-A895-94FFCA67DC14}
+        {77A039E2-1B13-41C1-9E33-7180CF8101FE}
+    - ID: "cad30d4d-a801-4a6b-ac34-293f889b0b37"
+      Hint: Banner
+      Value: |
+        <image mediaid="{26770C9A-00BF-4E55-A6C2-D92D738B0F56}" />
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230404T123242Z
+    - ID: "ec59ea43-4087-4f58-8bff-f0b581a9f31b"
+      Hint: LongDescription
+      Value: |
+        
+        <div>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor.</div>
+        <p>&nbsp;</p>
+        <div>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor.
+        </div>
+        <div>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor.
+        <div>
+        </div>
+        </div>
+        
+    - ID: "fdf92769-8768-4460-bbad-818073f23d1f"
+      Hint: Title
+      Value: COVID vaccines are safe for patients with cardiovascular disease
