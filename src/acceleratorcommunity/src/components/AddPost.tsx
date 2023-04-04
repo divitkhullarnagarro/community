@@ -1193,7 +1193,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                             // value={postImage}
                             type="file"
                             placeholder="Post Text"
-                            multiple
+                            // multiple
                             accept="image/*"
                             id="clickmebutton"
                           />
@@ -1215,7 +1215,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                             // value={postImage}
                             type="file"
                             placeholder="Post Text"
-                            multiple
+                            // multiple
                             accept=".pdf,.doc,.docx,.txt"
                             id="clickmebutton2"
                           />
