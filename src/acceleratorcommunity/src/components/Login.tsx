@@ -154,11 +154,11 @@ const Login = (props: LoginProps): JSX.Element => {
                   height={50}
                 />
               </div>
-              <h2>
+              <h5>
                 {heading ? heading[0] : 'Welcome,'}
                 <br />
                 {heading ? heading[1] : 'Please Login Here'}
-              </h2>
+              </h5>
               <div className={loginCss.welcomeTextDescription}>
                 {targetItems?.description?.jsonValue?.value}
               </div>
