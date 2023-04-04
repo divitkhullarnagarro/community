@@ -1,18 +1,17 @@
-
 .sharePopups {
   display: flex;
   background-color: #f7ffff;
   border-radius: 8px;
   height: 141px;
   width: 169px;
-  position: absolute;
-  top: 8rem;
-  left: 11rem;
+  position: absolute !important;
+  top: -7rem;
+  left: 24rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.sharePopup{
+.sharePopup {
   display: flex;
   flex-direction: row;
   /* background-color: bisque; */
@@ -21,16 +20,42 @@
   padding: 4px;
   margin-left: 4px;
 }
-.sharePopup:hover{
+.sharePopup:hover {
   background-color: rgb(237 239 245);
   border-radius: 4px;
 }
-.sharePopup a{
+.sharePopup a {
   text-decoration: none;
   color: black;
   margin-left: 6px;
 }
 .targetIcon::after {
   visibility: hidden;
- 
+}
+
+@media screen and (max-width: 700px) {
+  .sharePopups {
+    top: -8rem;
+    left: 14rem;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .sharePopups {
+    top: -8rem;
+    left: 12rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .sharePopups {
+    top: -8rem;
+    left: 12rem;
+  }
+}
+@media screen and (max-width: 470px) {
+  .sharePopups {
+    top: -8rem;
+    left: 9rem;
+  }
 }
