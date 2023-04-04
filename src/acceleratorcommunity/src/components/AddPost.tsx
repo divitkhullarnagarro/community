@@ -190,7 +190,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     return (
       <>
         <Modal
-          className={styles.reportPostModalContainer}
+          className={styles.reportPostModalContent}
           show={showReportPopUp}
           onHide={handleClose}
           backdrop="static"
@@ -198,7 +198,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           centered
           scrollable={true}
         >
-          <div className={styles.reportPostModalContent}>
+          <div>
             <Modal.Header closeButton>
               <Modal.Title className={styles.reportPostModalHeader}>
                 {props?.fields?.data?.datasource?.reportPostTitle?.jsonValue?.value ?? 'Report'}
@@ -722,23 +722,17 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           <div className="postHeading">
             <div className="postHeaderLeft">
               <img
+                className="postUserImage"
                 src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
                 alt="User-Pic"
-                width="60px"
               ></img>
               <div className="postDetailContainer">
-                <h5
-                  className="postOwner mt-2"
-                  style={{ fontWeight: '750', color: 'grey', fontSize: '24px' }}
-                >
+                <h5 className="postOwner mt-2">
                   <span>{post?.createdBy?.firstName ? post?.createdBy?.firstName : 'Unknown'}</span>
                   &nbsp;
                   <span>{post?.createdBy?.lastName ? post?.createdBy?.lastName : 'User'}</span>
                 </h5>
-                <h6
-                  className="postDate"
-                  style={{ fontWeight: '700', color: 'grey', fontSize: '18px' }}
-                >
+                <h6 className="postCreateDate">
                   <span style={{ fontWeight: '100' }}>
                     {post?.createdOn != 0 &&
                     post?.createdOn &&
@@ -770,9 +764,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     }}
                   >
                     <img
+                      className="postMoreOptionsImage"
                       src="https://cdn-icons-png.flaticon.com/512/463/463292.png"
                       alt="pan"
-                      width="50px"
                     />
                   </button>
                 </Dropdown.Toggle>
@@ -780,13 +774,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 <Dropdown.Menu className={styles.dropdownMenu}>
                   <Dropdown.Item className={styles.dropdownItem}>
                     <div className={styles.overlayItem}>
-                      <NextImage
-                        className={styles.dropdownImage}
-                        field={bookmarkImage}
-                        editable={true}
-                        width={23}
-                        height={20}
-                      />
+                      <div className={styles.dropdownImage}>
+                        <NextImage field={bookmarkImage} editable={true} />
+                      </div>
                       <div className={styles.reportContainerBtn}> Save Post</div>
                     </div>
                   </Dropdown.Item>
@@ -797,14 +787,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     }}
                   >
                     <div className={styles.overlayItem}>
-                      <div className={styles.copyLinkBtnStyle}>
-                        <NextImage
-                          className={styles.dropdownImage}
-                          field={copylink}
-                          editable={true}
-                          width={22}
-                          height={22}
-                        />
+                      <div className={styles.dropdownImage}>
+                        <NextImage field={copylink} editable={true} />
                       </div>
                       <div className={styles.reportContainerBtn}> Copy link to post</div>
                     </div>
@@ -816,39 +800,34 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     }}
                   >
                     <div className={styles.overlayItem}>
-                      <NextImage
-                        className={styles.dropdownImage}
-                        field={reportPostImage}
-                        editable={true}
-                        width={22}
-                        height={22}
-                      />
+                      <div className={styles.dropdownImage}>
+                        <NextImage field={reportPostImage} editable={true} />
+                      </div>
                       <div className={styles.reportContainerBtn}>Report Post</div>
                     </div>
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               <img
-                style={{ marginLeft: '30px' }}
+                className="postCrossImage"
                 src="https://cdn-icons-png.flaticon.com/512/10091/10091183.png"
                 alt="pan"
-                width="50px"
               />
             </div>
           </div>
           <div className="postContent">{post?.description}</div>
           <hr />
-          <div className="postFooter" style={{ marginBottom: '20px' }}>
-            <div className="postActions" style={{ marginBottom: '10px' }}>
+          <div className="postFooter">
+            <div className="postActions">
               <button onClick={() => LikePost(post?.id)}>
                 <img
+                  className="postLikeImage"
                   src={
                     post?.isLikedByUser
                       ? 'https://cdn-icons-png.flaticon.com/512/739/739231.png'
                       : 'https://cdn-icons-png.flaticon.com/512/126/126473.png'
                   }
                   //https://cdn-icons-png.flaticon.com/512/739/739231.png
-                  width="40px"
                   alt="actions"
                 />
               </button>
@@ -866,17 +845,17 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 aria-expanded={post?.isOpenComment}
               >
                 <img
+                  className="postCommentImage"
                   src="https://cdn-icons-png.flaticon.com/512/1380/1380338.png"
                   //https://cdn-icons-png.flaticon.com/512/786/786352.png
-                  width="40px"
                   alt="actions"
                 />
               </button>
               <div>
                 <button onClick={() => handleShowShare(post.id, !post?.showShare)}>
                   <img
+                    className="postShareImage"
                     src="https://cdn-icons-png.flaticon.com/512/2956/2956786.png"
-                    width="40px"
                     alt="actions"
                   />
                 </button>
@@ -969,12 +948,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </div>
             </div>
             <div>
-              <span style={{ fontWeight: '600' }}>
+              <span className="postLikeCount">
                 {post?.postMeasures?.likeCount ? post?.postMeasures?.likeCount : '0'}
                 {' Likes'}
               </span>
               <span> | </span>
-              <span style={{ fontWeight: '600' }}>
+              <span className="postCommentCount">
                 {post?.postMeasures?.commentCount ? post?.postMeasures?.commentCount : '0'}
                 {' Comments'}
               </span>
@@ -990,10 +969,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 <Form.Group className="mb-3" controlId="comments" style={{ display: 'flex' }}>
                   <img
+                    className="commentUserImage"
                     src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
                     alt="User-Pic"
-                    width="60px"
-                    style={{ marginRight: '10px' }}
                   ></img>
                   <Form.Control
                     // onChange={(e) => setPostCommentValue(e.target.value)}
@@ -1003,19 +981,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     autoFocus
                     style={{ width: '100%' }}
                   />
-                  <button
-                    type="submit"
-                    style={{
-                      float: 'right',
-                      marginLeft: '10px',
-                      borderRadius: '10px',
-                      padding: '5px',
-                      border: 'none',
-                      backgroundColor: '#008CBA',
-                      color: 'white',
-                      width: '20%',
-                    }}
-                  >
+                  <button type="submit" className="postCommentButton">
                     PostComment
                   </button>
                 </Form.Group>

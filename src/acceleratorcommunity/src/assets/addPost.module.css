@@ -30,14 +30,6 @@
   font-size: 1.25rem;
 }
 
-.overlayContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border: 2px solid lightgray;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
-
 .overlayItem {
   display: flex;
   justify-content: flex-start;
@@ -91,10 +83,65 @@
   filter: invert(1);
 }
 
+.dropdownImage {
+  margin-top: 10px;
+  width: 20px;
+  height: 10px;
+}
+
 @media only screen and (max-width: 640px) {
   .dropdownBtn {
     background-color: white;
     border: none;
     width: 20px !important;
+  }
+
+  .reportPostModalContent {
+    margin-left: 2.5rem;
+    width: 18.75rem;
+    height: 37.5rem;
+    overflow-y: auto;
+  }
+
+  .dropdownItem {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.625rem;
+    border-radius: 0.1875rem;
+    padding-top: 0.1875rem;
+    padding-bottom: 0.3125rem;
+  }
+
+  .reportPostModalHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.1875rem;
+    font-size: 1.0625rem;
+  }
+
+  .reportPostModalBody {
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.1875rem;
+    font-size: 0.625rem;
+  }
+
+  .reportItem {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.3125rem;
+    margin: 0.3125rem;
+    font-size: 0.625rem;
+  }
+
+  .footerBtn {
+    font-size: 0.625rem;
+  }
+
+  .dropdownImage {
+    width: 15px;
+    height: 15px;
   }
 }
