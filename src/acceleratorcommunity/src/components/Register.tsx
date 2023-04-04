@@ -228,11 +228,11 @@ const Register = (props: RegisterProps): JSX.Element => {
                 />
                 {/* <NextImage field={starImage}  editable={true} /> */}
               </div>
-              <h2 className={RegisterCss.welcomeTextHeading}>
+              <h5 className={RegisterCss.welcomeTextHeading}>
                 {heading[0]}
                 <br />
                 {heading[1]}
-              </h2>
+              </h5>
               <div className={RegisterCss?.welcomeTextDescription}>
                 {targetItems?.description?.jsonValue?.value}
               </div>

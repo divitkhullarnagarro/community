@@ -363,7 +363,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                           l?.title?.jsonValue?.value
                         }
                       >
-                        WhatsApp
+                        <a  className={ArticlesListCss.targetIcon} target='_blank' >WhatsApp</a>
                       </Link>
                     </div>
 
@@ -385,7 +385,8 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                           l?.title?.jsonValue?.value
                         }
                       >
-                        Twitter
+                        <a className={ArticlesListCss.targetIcon} target='_blank' >Twitter</a>
+                        
                       </Link>
                     </div>
 
@@ -405,7 +406,8 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                           l?.title?.jsonValue?.value
                         }
                       >
-                        LinkedIn
+                        <a className={ArticlesListCss.targetIcon} target='_blank'>LinkedIn</a>
+                        
                       </Link>
                     </div>
                     <div className={ArticlesListCss.sharePopup}>
@@ -426,7 +428,8 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                           l?.title?.jsonValue?.value
                         }
                       >
-                        Facebook
+                        <a className={ArticlesListCss.targetIcon} target='_blank'>Facebook</a>
+                      
                       </Link>
                     </div>
                   </div>
