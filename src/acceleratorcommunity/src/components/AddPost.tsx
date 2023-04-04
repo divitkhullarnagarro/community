@@ -1,6 +1,6 @@
 import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
-import { ReactElement, useContext, useEffect, useState } from 'react';
+import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
 import Form from 'react-bootstrap/Form';
 import WebContext from '../Context/WebContext';
@@ -21,6 +21,13 @@ import linkedin from '../assets/images/linkedin.png';
 import twitter from '../assets/images/twitter.png';
 import whatsapp from '../assets/images/whatsapp.png';
 import facebook from '../assets/images/facebook.svg';
+import { Dropdown, Modal } from 'react-bootstrap';
+import { ReportPostOptionsTypeLabel } from 'assets/helpers/enums';
+import styles from '../assets/addPost.module.css';
+import reportPostImage from '../assets/images/flag-icon.svg';
+import bookmarkImage from '../assets/images/bookmark-outline.svg';
+import copylink from '../assets/images/copylink.svg';
+import reportPostCall from 'src/API/reportPostCall';
 import uploadFilesCall from 'src/API/uploadFilesCall';
 
 type AddPostProps = ComponentProps & {
@@ -30,7 +37,7 @@ type AddPostProps = ComponentProps & {
 };
 
 const AddPost = (props: AddPostProps | any): JSX.Element => {
-  props; //delete me
+  console.log('addpost', props); //delete me
   const { userToken, setUserToken, objectId, userObject, setUserObject } = {
     ...useContext(WebContext),
   };
@@ -112,6 +119,113 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       LoadMorePosts();
     }
   }, [ifReachedEnd]);
+
+  const [showReportPopUp, setShowReportPopUp] = useState(false);
+  const [reportPostId, setReportPostId] = useState('');
+  const [reportPostType, setReportPostType] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
+
+  async function copyTextToClipboard(postId: string) {
+    let postUrl = window.location.origin + '/post/' + postId;
+    if ('clipboard' in navigator) {
+      return await navigator.clipboard.writeText(postUrl);
+    } else {
+      return document.execCommand('copy', true, postUrl);
+    }
+  }
+
+  const copyPostLinkToClipboard = (postId: string) => {
+    copyTextToClipboard(postId)
+      .then(() => {
+        console.log(postId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const showReportPostPopup = () => {
+    setShowReportPopUp(true);
+  };
+
+  const handleClose = () => {
+    setShowReportPopUp(false);
+  };
+
+  const handleSelectChange = (event: any) => {
+    console.log(event);
+  };
+
+  const ReportPostPopup = () => {
+    const reportTypeList = Object.values(ReportPostOptionsTypeLabel);
+    return (
+      <>
+        <Modal
+          className={styles.reportPostModalContainer}
+          show={showReportPopUp}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+          centered
+          scrollable={true}
+        >
+          <div className={styles.reportPostModalContent}>
+            <Modal.Header closeButton>
+              <Modal.Title className={styles.reportPostModalHeader}>
+                {props?.fields?.data?.datasource?.reportPostTitle?.jsonValue?.value ?? 'Report'}
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className={styles.reportPostModalBody}>
+                {props?.fields?.data?.datasource?.reportPostHeader?.jsonValue?.value ??
+                  'Why are you reporting this?'}
+              </div>
+              <Form ref={formRef} style={{ fontSize: '15px', margin: '5px' }}>
+                {reportTypeList.map((item, index) => {
+                  return (
+                    <div key={index} className={styles.reportItem}>
+                      {item}
+                      <Form.Check
+                        type="radio"
+                        name="radioGroup"
+                        value={item}
+                        onChange={(e) => handleSelectChange(e)}
+                        defaultChecked={index == 0 ? true : false}
+                        aria-label="radio 1"
+                      ></Form.Check>
+                    </div>
+                  );
+                })}
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button className={styles.footerBtn} variant="secondary" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button className={styles.footerBtn} variant="secondary" onClick={onPostReported}>
+                Report
+              </Button>
+            </Modal.Footer>
+          </div>
+        </Modal>
+      </>
+    );
+  };
+
+  const onPostReported = async () => {
+    let reportReason = '';
+    if (formRef.current != null) {
+      reportReason = (
+        formRef.current.querySelector('input[name="radioGroup"]:checked') as HTMLInputElement
+      )?.value;
+    }
+
+    let response = await reportPostCall(reportPostId, reportPostType, reportReason, userToken);
+    if (response?.success) {
+      setShowReportPopUp(false);
+      console.log(response?.data);
+    }
+  };
 
   function LoadMorePosts() {
     setPostPageNum((prev) => {
@@ -329,11 +443,83 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </div>
             </div>
             <div className="postHeaderRight">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/463/463292.png"
-                alt="pan"
-                width="50px"
-              />
+              <Dropdown>
+                <Dropdown.Toggle
+                  variant="secondary"
+                  id="dropdown-basic"
+                  className={styles.dropdownBtn}
+                  style={{ backgroundColor: 'white', border: 'none', width: '70px' }}
+                >
+                  <button
+                    onClick={() => {
+                      setReportPostId(post?.id);
+                      setReportPostType(post?.postType);
+                    }}
+                    style={{
+                      border: 'none',
+                      backgroundColor: 'white',
+                      padding: '0',
+                    }}
+                  >
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/463/463292.png"
+                      alt="pan"
+                      width="50px"
+                    />
+                  </button>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu className={styles.dropdownMenu}>
+                  <Dropdown.Item className={styles.dropdownItem}>
+                    <div className={styles.overlayItem}>
+                      <NextImage
+                        className={styles.dropdownImage}
+                        field={bookmarkImage}
+                        editable={true}
+                        width={23}
+                        height={20}
+                      />
+                      <div className={styles.reportContainerBtn}> Save Post</div>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    className={styles.dropdownItem}
+                    onClick={() => {
+                      copyPostLinkToClipboard(post?.id);
+                    }}
+                  >
+                    <div className={styles.overlayItem}>
+                      <div className={styles.copyLinkBtnStyle}>
+                        <NextImage
+                          className={styles.dropdownImage}
+                          field={copylink}
+                          editable={true}
+                          width={22}
+                          height={22}
+                        />
+                      </div>
+                      <div className={styles.reportContainerBtn}> Copy link to post</div>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    className={styles.dropdownItem}
+                    onClick={() => {
+                      showReportPostPopup();
+                    }}
+                  >
+                    <div className={styles.overlayItem}>
+                      <NextImage
+                        className={styles.dropdownImage}
+                        field={reportPostImage}
+                        editable={true}
+                        width={22}
+                        height={22}
+                      />
+                      <div className={styles.reportContainerBtn}>Report Post</div>
+                    </div>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
               <img
                 style={{ marginLeft: '30px' }}
                 src="https://cdn-icons-png.flaticon.com/512/10091/10091183.png"
@@ -1125,6 +1311,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           )}
         </div>
       </div>
+      {<ReportPostPopup />}
     </>
   );
 };

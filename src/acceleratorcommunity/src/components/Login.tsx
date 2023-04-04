@@ -45,11 +45,17 @@ type DataSource = {
   registerHereLabel: {
     jsonValue: Field<string>;
   };
+  loginFrameImageList: {
+    targetItems: Array<{
+      image: {
+        jsonValue: ImageField;
+      };
+    }>;
+  };
 };
 
 const Login = (props: LoginProps): JSX.Element => {
   const targetItems = props?.fields?.data?.datasource;
-
   const router = useRouter();
   const { setIsLoggedIn, setUserToken, setObjectId, userToken } = { ...useContext(WebContext) };
 
@@ -138,24 +144,51 @@ const Login = (props: LoginProps): JSX.Element => {
     <>
       <div className={loginCss.container}>
         <div className={loginCss.leftContainer}>
-          <div className={loginCss.welcomeText}>
-            <div className={loginCss.welcomeTextImage}>
-              <NextImage
-                field={targetItems?.image?.jsonValue?.value}
-                editable={true}
-                width={30}
-                height={30}
-              />
-            </div>
-            <h2>
-              {heading ? heading[0] : 'Welcome,'}
-              <br />
-              {heading ? heading[1] : 'Please Login Here'}
-            </h2>
-            <div className={loginCss.welcomeTextDescription}>
-              {targetItems?.description?.jsonValue?.value}
+          <div className={loginCss.leftGrid}>
+            <div className={loginCss.welcomeText}>
+              <div className={loginCss.welcomeTextImage}>
+                <NextImage
+                  field={targetItems?.image?.jsonValue?.value}
+                  editable={true}
+                  width={50}
+                  height={50}
+                />
+              </div>
+              <h2>
+                {heading ? heading[0] : 'Welcome,'}
+                <br />
+                {heading ? heading[1] : 'Please Login Here'}
+              </h2>
+              <div className={loginCss.welcomeTextDescription}>
+                {targetItems?.description?.jsonValue?.value}
+              </div>
             </div>
           </div>{' '}
+          <div className={loginCss.rightGrid}>
+            <div className={loginCss.rightGridBox}>
+              <div className={loginCss.img1}>
+                <NextImage
+                  field={targetItems?.loginFrameImageList?.targetItems[0]?.image?.jsonValue?.value}
+                  height={150}
+                  width={150}
+                />
+              </div>
+              <div className={loginCss.img2}>
+                <NextImage
+                  field={targetItems?.loginFrameImageList?.targetItems[1]?.image?.jsonValue?.value}
+                  height={150}
+                  width={150}
+                />
+              </div>
+              <div className={loginCss.img3}>
+                <NextImage
+                  field={targetItems?.loginFrameImageList?.targetItems[2]?.image?.jsonValue?.value}
+                  height={150}
+                  width={150}
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className={loginCss.rightContainer}>
@@ -198,7 +231,7 @@ const Login = (props: LoginProps): JSX.Element => {
                 ) : (
                   ''
                 )}
-                <div style={{ height: '25px' }}>
+                <div style={{ height: '10px' }}>
                   {' '}
                   {ifUnAuthorised ? (
                     <span style={{ fontWeight: 1000, color: 'red', fontSize: '12px' }}>
@@ -211,7 +244,9 @@ const Login = (props: LoginProps): JSX.Element => {
                 </div>
                 <div className={loginCss.forgotPassword}>
                   <Link href={'/forgotPassword'}>
-                  {targetItems?.forgotPasswordLabel?.jsonValue?.value ? targetItems.forgotPasswordLabel.jsonValue.value : 'Forgot Password?'}
+                    {targetItems?.forgotPasswordLabel?.jsonValue?.value
+                      ? targetItems.forgotPasswordLabel.jsonValue.value
+                      : 'Forgot Password?'}
                   </Link>
                 </div>
               </div>
@@ -252,11 +287,17 @@ const Login = (props: LoginProps): JSX.Element => {
               </div>
             </div>
             <div className={loginCss.formContainerBottom}>
-              <div className={loginCss.text}>
-                {targetItems?.dontHaveAccountLabel?.jsonValue?.value}
-              </div>
-              <div className={loginCss.btn}>
-                <Link href={'/register'}>{targetItems?.registerHereLabel?.jsonValue?.value ? targetItems.registerHereLabel.jsonValue.value : 'Register'}</Link>
+              <div className={loginCss.formContainerButton}>
+                <div className={loginCss.text}>
+                  {targetItems?.dontHaveAccountLabel?.jsonValue?.value}
+                </div>
+                <div className={loginCss.btn}>
+                  <Link href={'/register'}>
+                    {targetItems?.registerHereLabel?.jsonValue?.value
+                      ? targetItems.registerHereLabel.jsonValue.value
+                      : 'Register'}
+                  </Link>
+                </div>
               </div>
             </div>
             {/* <div className="social-icons">
@@ -276,9 +317,6 @@ const Login = (props: LoginProps): JSX.Element => {
     </>
   );
 };
-
-
-
 
 // export default withDatasourceCheck()<LoginProps>(Login);
 export default Login;

@@ -11,10 +11,12 @@ import linkedin from '../assets/images/linkedin.png';
 import twitter from '../assets/images/twitter.png';
 import whatsapp from '../assets/images/whatsapp.png';
 import bookmark from '../../src/API/bookmarks';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import WebContext from 'src/Context/WebContext';
 // import { useRouter } from 'next/router';
 import facebook from '../assets/images/facebook.svg';
+import FilterByDate from './FilterByDate';
+import SideBar from './SideBar';
 
 type ArticlesListProps = ComponentProps & {
   fields: {
@@ -32,7 +34,7 @@ type Item = {
   title: {
     jsonValue: Field<string>;
   };
-  description: {
+  shortDescription: {
     jsonValue: RichTextField;
   };
   image: {
@@ -41,9 +43,10 @@ type Item = {
   date: {
     jsonValue: Field<string>;
   };
-  author: {
+  authorName: {
     jsonValue: Field<string>;
   };
+  
   tags: {
     targetItems: [
       {
@@ -59,9 +62,17 @@ type Item = {
     ];
   };
 };
+type Content = {
+  name_f18b1a9ad1ff4c13ad6080a2f710e438: {
+    jsonValue: Field<string>;
+  };
+};
 type DataSource = {
   articlesList: {
     targetItems: Item[];
+  };
+  articleContentType: {
+    targetItems: Content[];
   };
 };
 
@@ -82,8 +93,10 @@ const getFormatedDate = (stringDate: string) => {
 
   return formattedDate;
 };
- 
+
 const ArticlesList = (props: ArticlesListProps): JSX.Element => {
+  const dataum = props?.fields?.data?.datasource?.articleContentType?.targetItems;
+
   const { userToken, setUserToken } = { ...useContext(WebContext) };
 
   const setTokenFromLocalStorage = () => {
@@ -101,12 +114,19 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     }
   };
 
+  const [bookmarkTYpeClicked, setbookmarkTYpeClicked] = useState<any>(['all']);
+
+
   const userIdTemp = 'a@gmail.com';
 
   // const router = useRouter();
 
-  const { targetItems } = props?.fields?.data?.datasource.articlesList;
+  const { targetItems } = props?.fields?.data?.datasource?.articlesList;
 
+  const [bookmarkLists, setBookmarkLists] = useState<any>(targetItems);
+  const [completeList] = useState<any>(targetItems);
+
+  console.log('anmolllllllllllllllllllllllllllllllllllllllllll', targetItems);
   const [selectedArticle, setSelectedArticle] = useState<any>([]);
   const [shareArticle, setShareArticle] = useState<any>([]);
 
@@ -121,8 +141,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     } else {
       setSelectedArticle([...selectedArticle, id]);
     }
-    
-   };
+  };
 
   const handleShareClick = (id: any) => {
     // if (clicked) {
@@ -138,6 +157,50 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     }
   };
 
+  const twoFilters = (nowDateArticle: any) => {
+    let doubleFilter = nowDateArticle?.filter((item: any) => {
+      return item?.contentType?.targetItem?.name === bookmarkTYpeClicked;
+    });
+    console.log(doubleFilter);
+    setBookmarkLists(doubleFilter);
+  };
+
+  const pastArticle = () => {
+    let nowDateArticle = completeList?.filter((item: any) => {
+      return item?.date?.jsonValue?.value < new Date().toJSON();
+    });
+    if (bookmarkTYpeClicked[0] === 'all') {
+      setBookmarkLists(nowDateArticle);
+    } else {
+      setBookmarkLists(nowDateArticle);
+      twoFilters(nowDateArticle);
+    }
+
+    console.log(bookmarkLists);
+  };
+  const nowArticles = () => {
+    let nowDateArticle = completeList?.filter((item: any) => {
+      return item?.date?.jsonValue?.value === new Date().toJSON();
+    });
+    if (bookmarkTYpeClicked[0] === 'all') {
+      setBookmarkLists(nowDateArticle);
+    } else {
+      setBookmarkLists(nowDateArticle);
+      twoFilters(nowDateArticle);
+    }
+  };
+
+  const upComingArticle = () => {
+    let nowDateArticle = completeList?.filter((item: any) => {
+      return item?.date?.jsonValue?.value > new Date().toJSON();
+    });
+    if (bookmarkTYpeClicked[0] === 'all') {
+      setBookmarkLists(nowDateArticle);
+    } else {
+      setBookmarkLists(nowDateArticle);
+      twoFilters(nowDateArticle);
+    }
+  };
   const bookmarkApi = async (
     userIdTemp: string,
     contentId: string,
@@ -145,11 +208,34 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     comment: string | undefined,
     userToken: string | undefined
   ) => {
-    let response = await bookmark(userIdTemp, contentId, title, comment, userToken);
+    let response = await bookmark(userIdTemp,contentId, title, comment, userToken);
     // url,
     console.log(response);
   };
+  const [scroll, setScroll] = useState(false);
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      if (window !== undefined) {
+        setScroll(window.scrollY > 45);
+      }
+    });
+  }, []);
 
+  const handleClick = (name: any) => {
+    let data: any[] = [];
+    setbookmarkTYpeClicked(name);
+    if (completeList.length > 0) {
+      data = completeList?.filter((item: any) => {
+        return item?.contentType?.targetItem?.name === name;
+      });
+    }
+    setBookmarkLists(data);
+  };
+  const handleAllClick = () => {
+    setbookmarkTYpeClicked(['all']);
+
+    setBookmarkLists(completeList);
+  };
   const submitBookmark = (
     userIdTemp: string,
     contentId: string,
@@ -158,165 +244,205 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     comment: string | undefined
   ) => {
     setTokenFromLocalStorage();
-    bookmarkApi(userIdTemp, contentId, title, comment, userToken);
+    bookmarkApi(userIdTemp,contentId, title, comment, userToken);
     // , url:string
     // handleClick();
     handleSelectedArticle(contentId);
   };
-
+  console.log(
+    new URL(
+      'https://twitter.com/Betclic/status/1382074820628783116?s=20'
+    ).pathname
+  );
   return (
+    
     <div className={ArticlesListCss.mainwrapper}>
-      {targetItems.map((l, i) => {
-        return (
-          <div key={i} className={ArticlesListCss.wrapper}>
-            <div className={ArticlesListCss.leftSection}>
-              <NextImage
-                className={ArticlesListCss.leftSectionImage}
-                field={l.image.jsonValue.value}
-                editable={true}
-              />
-            </div>
-            <div className={ArticlesListCss.rightSection}>
-              <div className={ArticlesListCss.title}>{l.title.jsonValue.value}</div>
-              <div className={ArticlesListCss.cardDescription}>
-                <p>
-                  {l.description.jsonValue.value}
-                  {/* <Link href="/readMorePage">Read More </Link> */}
-                </p>
+      <SideBar
+        buttonTypes={dataum}
+        handleAllClick={handleAllClick}
+        handleClick={handleClick}
+        scroll={scroll}
+        bookmarkTYpeClicked={bookmarkTYpeClicked}
+      />
+      <div>
+        {bookmarkLists?.map((l: any, i: any) => {
+          return (
+            <div key={i} className={ArticlesListCss.wrapper}>
+              <div className={ArticlesListCss.leftSection}>
+                <NextImage
+                  className={ArticlesListCss.leftSectionImage}
+                  field={l?.image?.jsonValue?.value}
+                  editable={true}
+                />
               </div>
-              <div className={ArticlesListCss.cardTags}>
-                {l.tags.targetItems.map((m, j) => {
-                  return (
-                    <div key={j} className={ArticlesListCss.cardTag}>
-                      <Link key={j} href={'/#'}>
-                        {m.name}
+              <div className={ArticlesListCss.rightSection}>
+                <div className={ArticlesListCss.title}>{l?.title?.jsonValue?.value}</div>
+                <div className={ArticlesListCss.cardDescription}>
+                  <p>
+                    {l?.shortDescription?.jsonValue?.value}
+                    {/* <Link href="/readMorePage">Read More </Link> */}
+                  </p>
+                </div>
+                <div className={ArticlesListCss.cardTags}>
+                  {l?.tags?.targetItems?.map((m: any, j: any) => {
+                    return (
+                      <div key={j} className={ArticlesListCss.cardTag}>
+                        <Link key={j} href={'/#'}>
+                          {m?.name}
+                        </Link>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className={ArticlesListCss.infoWrapper}>
+                  <div className={ArticlesListCss.infoWrapperTag}>
+                    <NextImage
+                      className={ArticlesListCss.infowrapperImage}
+                      field={sourceImage}
+                      editable={true}
+                    />
+                    <div className={ArticlesListCss.infoWrapperTagData}>
+                      {l?.authorName?.jsonValue?.value}{' '}
+                    </div>
+                  </div>
+                  <div className={ArticlesListCss.infoWrapperTag}>
+                    <NextImage
+                      className={ArticlesListCss.infowrapperImage}
+                      field={calendarImage}
+                      editable={true}
+                    />
+                    <div className={ArticlesListCss.infoWrapperTagData}>
+                      {getFormatedDate(l?.date?.jsonValue?.value)}
+                    </div>
+                  </div>
+                </div>
+
+                <div className={ArticlesListCss.buttons}>
+                  <button
+                    className={ArticlesListCss.button}
+                    onClick={() =>
+                      submitBookmark(
+                        userIdTemp,
+                        l?.id,
+                        // l.title?.jsonValue.value, //This is for URL or Image value
+                        l?.title?.jsonValue?.value,
+                        l?.description?.jsonValue?.value
+                      )
+                    }
+                  >
+                    <NextImage
+                      field={selectedArticle?.includes(l?.id) ? activeBookmarkImage : bookmarkImage}
+                      id="bookamrksImage"
+                      editable={true}
+                      title="Add To My Collection"
+                    />
+                  </button>
+                  <button
+                    className={ArticlesListCss.button}
+                    onClick={() => handleShareClick(l?.id)}
+                  >
+                    <NextImage field={shareImage} editable={true} title="Share" />
+                  </button>
+                </div>
+
+                {shareArticle.includes(l?.id) && (
+                  <div className={ArticlesListCss.sharePopups}>
+                    <div className={ArticlesListCss.sharePopup}>
+                      <NextImage
+                        className={ArticlesListCss.whatsappImage}
+                        field={whatsapp}
+                        editable={true}
+                        width={25}
+                        height={25}
+                      />
+                      <Link
+                        href={
+                          'https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20' +
+                          l?.title?.jsonValue?.value +
+                          'utm_source=whatsapp&utm_medium=social&utm_term=' +
+                          l?.title?.jsonValue?.value
+                        }
+                      >
+                        WhatsApp
                       </Link>
                     </div>
-                  );
-                })}
+
+                    <div className={ArticlesListCss.sharePopup}>
+                      <NextImage
+                        className={ArticlesListCss.whatsappImage}
+                        field={twitter}
+                        editable={true}
+                        width={25}
+                        height={25}
+                      />
+                      <Link
+                        href={
+                          'https://twitter.com/intent/tweet?url=' +
+                          l?.url?.url +
+                          '&text=' +
+                          l?.title?.jsonValue?.value +
+                          'utm_source=twitter&utm_medium=social&utm_term=' +
+                          l?.title?.jsonValue?.value
+                        }
+                      >
+                        Twitter
+                      </Link>
+                    </div>
+
+                    <div className={ArticlesListCss.sharePopup}>
+                      <NextImage
+                        className={ArticlesListCss.whatsappImage}
+                        field={linkedin}
+                        editable={true}
+                        width={25}
+                        height={25}
+                      />
+                      <Link
+                        href={
+                          'https://www.linkedin.com/sharing/share-offsite/?url=' +
+                          l?.url?.url +
+                          'utm_source=linkedin&utm_medium=social&utm_term=' +
+                          l?.title?.jsonValue?.value
+                        }
+                      >
+                        LinkedIn
+                      </Link>
+                    </div>
+                    <div className={ArticlesListCss.sharePopup}>
+                      <NextImage
+                        className={ArticlesListCss.whatsappImage}
+                        field={facebook}
+                        editable={true}
+                        width={25}
+                        height={25}
+                      />
+                      <Link
+                        href={
+                          'https://www.facebook.com/sharer/sharer.php?u=' +
+                          l?.url?.url +
+                          '&t=' +
+                          l?.title?.jsonValue?.value +
+                          'utm_source=facebook&utm_medium=social&utm_term=' +
+                          l?.title?.jsonValue?.value
+                        }
+                      >
+                        Facebook
+                      </Link>
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className={ArticlesListCss.infoWrapper}>
-                <div className={ArticlesListCss.infoWrapperTag}>
-                  <NextImage
-                    className={ArticlesListCss.infowrapperImage}
-                    field={sourceImage}
-                    editable={true}
-                  />
-                  <div className={ArticlesListCss.infoWrapperTagData}>
-                    {l.author.jsonValue.value}{' '}
-                  </div>
-                </div>
-                <div className={ArticlesListCss.infoWrapperTag}>
-                  <NextImage
-                    className={ArticlesListCss.infowrapperImage}
-                    field={calendarImage}
-                    editable={true}
-                  />
-                  <div className={ArticlesListCss.infoWrapperTagData}>
-                    {getFormatedDate(l.date.jsonValue.value)}
-                  </div>
-                </div>
-              </div>
-
-              <div className={ArticlesListCss.buttons}>
-                <button
-                  className={ArticlesListCss.button}
-                  onClick={() =>
-                    submitBookmark(
-                      userIdTemp,
-                      l.id,
-                      // l.title?.jsonValue.value, //This is for URL or Image value
-                      l.title?.jsonValue?.value,
-                      l.description?.jsonValue?.value
-                    )
-                  }
-                >
-                  <NextImage
-                    field={selectedArticle?.includes(l.id) ? activeBookmarkImage : bookmarkImage}
-                    id="bookamrksImage"
-                    editable={true}
-                    title="Add To My Collection"
-                  />
-                </button>
-                <button className={ArticlesListCss.button} onClick={() => handleShareClick(l.id)}>
-                  <NextImage field={shareImage} editable={true} title="Share" />
-                </button>
-              </div>
-
-              {shareArticle.includes(l.id) && (
-                <div className={ArticlesListCss.sharePopups}>
-                  <div className={ArticlesListCss.sharePopup}>
-                    <NextImage
-                      className={ArticlesListCss.whatsappImage}
-                      field={whatsapp}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link
-                      href={
-                        'https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20' +
-                        l.title?.jsonValue?.value + 'utm_source=whatsapp&utm_medium=social&utm_term=' +l.title?.jsonValue?.value
-                      }
-                    >
-                      WhatsApp
-                    </Link>
-                  </div>
-
-                  <div className={ArticlesListCss.sharePopup}>
-                    <NextImage
-                      className={ArticlesListCss.whatsappImage}
-                      field={twitter}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link
-                      href={
-                        'https://twitter.com/intent/tweet?url=' +
-                        l.url?.url +
-                        '&text=' +
-                        l.title?.jsonValue?.value + 'utm_source=twitter&utm_medium=social&utm_term=' +l.title?.jsonValue?.value
-                      }
-                    >
-                      Twitter
-                    </Link>
-                  </div>
-
-                  <div className={ArticlesListCss.sharePopup}>
-                    <NextImage
-                      className={ArticlesListCss.whatsappImage}
-                      field={linkedin}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link
-                      href={'https://www.linkedin.com/sharing/share-offsite/?url=' + l.url?.url + 'utm_source=linkedin&utm_medium=social&utm_term=' +l.title?.jsonValue?.value}
-                    >
-                      LinkedIn
-                    </Link>
-                  </div>
-                  <div className={ArticlesListCss.sharePopup}>
-                    <NextImage
-                      className={ArticlesListCss.whatsappImage}
-                      field={facebook}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link
-                      href={'https://www.facebook.com/sharer/sharer.php?u=' + l.url?.url + '&t='+ l.title?.jsonValue?.value + 'utm_source=facebook&utm_medium=social&utm_term='+l.title?.jsonValue?.value}
-                    >
-                      Facebook
-                    </Link>
-                  </div>
-                </div>
-              )}
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
+      <div className={ArticlesListCss.filterConatiner}>
+        <FilterByDate
+          nowArticles={nowArticles}
+          pastArticle={pastArticle}
+          upComingArticle={upComingArticle}
+        />
+      </div>
     </div>
   );
 };

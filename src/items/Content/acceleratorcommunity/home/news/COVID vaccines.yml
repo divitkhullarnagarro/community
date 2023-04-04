@@ -25,13 +25,13 @@ Languages:
       Hint: ContentType
       Value: "{0DD1A34E-654B-436F-B2FD-4A358EA75F7C}"
     - ID: "20effcd6-ba5f-47e5-8003-9b0ce2a49335"
-      Hint: Author
+      Hint: AuthorName
       Value: Cardiovascular Research
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230313T062400Z
     - ID: "31bceb62-c1e4-4109-80b9-172aae293942"
-      Hint: Description
+      Hint: ShortDescription
       Value: A total of 229235 individuals with CVD were identified, of which 1764 were vaccinated and had a diagnosis of MACE during the observation
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
@@ -73,13 +73,13 @@ Languages:
       Hint: ContentType
       Value: "{0DD1A34E-654B-436F-B2FD-4A358EA75F7C}"
     - ID: "20effcd6-ba5f-47e5-8003-9b0ce2a49335"
-      Hint: Author
+      Hint: AuthorName
       Value: Cardiovascular Research
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230313T062400Z
     - ID: "31bceb62-c1e4-4109-80b9-172aae293942"
-      Hint: Description
+      Hint: ShortDescription
       Value: A total of 229235 individuals with CVD were identified, of which 1764 were vaccinated and had a diagnosis of MACE during the observation
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
@@ -93,7 +93,7 @@ Languages:
         <image mediaid="{70FC5302-D10D-42A0-85CD-AB4E9566D12A}" />
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "3f7313af-31f0-4d01-be81-4625ef980d1d"
+      Value: "d8af19b5-7a70-4337-b1b0-9425e4095ac2"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
@@ -103,9 +103,28 @@ Languages:
       Value: |
         {05BA8938-576F-4EB2-A895-94FFCA67DC14}
         {77A039E2-1B13-41C1-9E33-7180CF8101FE}
+    - ID: "cad30d4d-a801-4a6b-ac34-293f889b0b37"
+      Hint: Banner
+      Value: |
+        <image mediaid="{26770C9A-00BF-4E55-A6C2-D92D738B0F56}" />
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230313T092615Z
+      Value: 20230331T124034Z
+    - ID: "ec59ea43-4087-4f58-8bff-f0b581a9f31b"
+      Hint: LongDescription
+      Value: |
+        
+        <div>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor.</div>
+        <p>&nbsp;</p>
+        <div>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor.
+        </div>
+        <div>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor.
+        <div>
+        </div>
+        </div>
+        
     - ID: "fdf92769-8768-4460-bbad-818073f23d1f"
       Hint: Title
       Value: COVID vaccines are safe for patients with cardiovascular disease

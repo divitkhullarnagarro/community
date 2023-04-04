@@ -1,7 +1,17 @@
+.mainwrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.filterConatiner {
+  margin-top: 30px;
+}
 .wrapper {
   display: flex;
   /* position: absolute; */
   background-color: aliceblue;
+
   width: 45rem;
   height: 22rem;
   border-radius: 8px;
@@ -135,7 +145,7 @@
   justify-content: center;
   align-items: center;
 }
-.sharePopup{
+.sharePopup {
   display: flex;
   flex-direction: row;
   /* background-color: bisque; */
@@ -144,12 +154,13 @@
   padding: 4px;
   margin-left: 4px;
 }
-.sharePopup:hover{
+.sharePopup:hover {
   background-color: rgb(237 239 245);
   border-radius: 4px;
 }
-.sharePopup a{
+.sharePopup a {
   text-decoration: none;
   color: black;
   margin-left: 6px;
 }
+

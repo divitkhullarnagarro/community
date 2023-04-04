@@ -12,7 +12,7 @@ export const getBookmarkItem = () => {
           title {
             jsonValue
           }
-          description {
+          shortDescription {
             jsonValue
           }
           image {
@@ -21,7 +21,7 @@ export const getBookmarkItem = () => {
           date {
             jsonValue
           }
-          author {
+          authorName {
             jsonValue
           }
           tags {
