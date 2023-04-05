@@ -4,7 +4,8 @@ const addPostCall = async (userToken: string | undefined, postObject: any) => {
     var data = {
         // id: "post_Id12",
         description: postObject?.description,
-        postType: "TEXT_POST",
+        mediaList: postObject?.mediaList,
+        postType: postObject?.type,
         createdBy: "objectId",
         updatedBy: "objectId",
         createdOn: 23032023,
@@ -21,7 +22,6 @@ const addPostCall = async (userToken: string | undefined, postObject: any) => {
     };
     const response = await Axios.post<any, AxiosResponse<any>>(addPostURL, data, config)
         .then((response: any) => {
-            console.log("AddPost-Response", response);
             return response;
         })
         .catch((error: any) => {

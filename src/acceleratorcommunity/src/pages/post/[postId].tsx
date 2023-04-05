@@ -162,7 +162,7 @@ function viewSinglePost() {
               </div>
               <div>
                 <span>mediaList : </span>
-                {post?.mediaList}
+                {post?.mediaList?.any}
               </div>
               <div>
                 <span>postType : </span>

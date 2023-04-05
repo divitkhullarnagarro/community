@@ -45,3 +45,19 @@ export const getBookmarkItem = () => {
   console.log('query', query);
   return query;
 };
+
+export const getAllRoutes = () => {
+  var query = gql`
+    query ArticlesList($datasource: String!, $language: String!) {
+      datasource: item(path: $datasource, language: $language) {
+        children {
+          results {
+            id
+            name
+          }
+        }
+      }
+    }
+  `;
+  return query;
+};

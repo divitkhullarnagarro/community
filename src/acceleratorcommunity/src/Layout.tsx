@@ -51,7 +51,7 @@ const router = useRouter();
         <meta property="og:image"                content={ogimage} />
         <meta property="og:image:width"          content={route?.fields?.ogImageWidth?.value.toString()} />
         <meta property="og:image:height"         content={route?.fields?.ogImageHeight?.value.toString()} />
-        <meta property="twitter:card"            content={twitterCard}  />
+        <meta property="twitter:card"            content={route?.fields?.twitterCard?.value.toString()} />
         <meta property="twitter:title"           content={route?.fields?.twitterTitle?.value.toString()} />
         <meta property="twitter:description"     content={route?.fields?.twitterDescription?.value.toString()} />
         <meta property="twitter:image"           content={twitterImage} />
