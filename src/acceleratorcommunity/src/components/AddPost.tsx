@@ -31,6 +31,18 @@ import reportPostCall from 'src/API/reportPostCall';
 import uploadFilesCall from 'src/API/uploadFilesCall';
 import ToastNotification from './ToastNotification';
 
+// Rich Text Editor Files Import Start
+import { EditorState, convertToRaw } from 'draft-js';
+import { EditorProps } from 'react-draft-wysiwyg';
+import parser from 'html-react-parser';
+import dynamic from 'next/dynamic';
+import draftToHtml from 'draftjs-to-html';
+import { apiData, toolbar } from 'assets/helpers/constants';
+const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mod) => mod.Editor), {
+  ssr: false,
+});
+// Rich Text Editor Files Import End
+
 type AddPostProps = ComponentProps & {
   fields: {
     heading: Field<string>;
@@ -75,6 +87,43 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   //     setDisableAddDoc(true);
   //   }
   // }
+
+  const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+  const [mentionUserData, setMentionUserData] = useState<
+    {
+      text: string;
+      value: string;
+      url: string;
+    }[]
+  >([] as { text: string; value: string; url: string }[]);
+  const currentCount = editorState.getCurrentContent().getPlainText().length;
+
+  useEffect(() => {
+    const rawEditorContent = convertToRaw(editorState.getCurrentContent());
+    console.log('vicky rawEditorContent', rawEditorContent);
+    const entityMap = rawEditorContent.entityMap;
+    Object.values(entityMap).map((entity) => {
+      console.log('mention user', entity.data.value, rawEditorContent, entityMap, entity);
+    });
+  }, [editorState]);
+
+  useEffect(() => {
+    const data = apiData.data;
+    const userData = data.map((ele) => {
+      return {
+        text: ele.firstName + ' ' + ele.lastName,
+        value: ele.firstName + ' ' + ele.lastName,
+        url: '/profile/' + ele.objectId,
+        objectId: ele.objectId,
+      };
+    });
+    setMentionUserData(userData);
+  }, []);
+
+  const onEditorStateChangeHandler = (e: any) => {
+    setEditorState(e);
+    setPostTextValue(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+  };
 
   useEffect(() => {
     if (userToken == '' && !isExpEditorActive) {
@@ -533,7 +582,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             </div>
           </div>
           <div className="postContent">
-            <div className="postHeading">{post?.description}</div>
+            <div className="postHeading">{parser(post?.description)}</div>
             <div className="postMedia">
               {post?.mediaList?.map((media: any, num: any) => {
                 if (media?.mediaType === 'VIDEO') {
@@ -1064,7 +1113,29 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               <div className="AddPostField">
                 <Form style={{ border: '1px', borderColor: 'black' }}>
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Control
+                    <Editor
+                      editorState={editorState}
+                      onEditorStateChange={(e) => onEditorStateChangeHandler(e)}
+                      wrapperClassName="wrapper-class"
+                      editorClassName="editor-class"
+                      toolbarClassName="toolbar-class"
+                      editorStyle={{ height: '150px' }}
+                      placeholder="Start Typing..."
+                      toolbar={toolbar}
+                      // toolbarOnFocus={true}
+                      mention={{
+                        separator: ' ',
+                        trigger: '@',
+                        suggestions: mentionUserData,
+                      }}
+                      hashtag={{}}
+                    />
+                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      <div>
+                        {currentCount}/{5000} characters
+                      </div>
+                    </div>
+                    {/* <Form.Control
                       onChange={(e) => setPostTextValue(e.target.value)}
                       value={postText}
                       as="textarea"
@@ -1072,7 +1143,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       placeholder="Share Your Thoughts..."
                       required
                       style={{ border: 'none', resize: 'none' }}
-                    />
+                    /> */}
                   </Form.Group>
                   <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                     {file.map((img: any, num: any) => {
