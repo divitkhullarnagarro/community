@@ -53,8 +53,7 @@ Languages:
         </r>
     - ID: "104747be-ebe5-4b3c-b61f-6811cd49bd71"
       Hint: twitterCard
-      Value: |
-        <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
+      Value: summary_large_image
     - ID: "1cdfaecb-cb5a-4499-87fa-12bffaf4d991"
       Hint: twitterImage
       Value: |
@@ -70,7 +69,7 @@ Languages:
       Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "a68d1e42-3a13-4c93-ba5d-26d8b95d9a7a"
+      Value: "d88bc69b-a167-4eac-95a5-6abb6c7ddf92"
     - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
       Hint: twitterDescription
       Value: Social Community News is the place where you can gather the information about the current affairs
@@ -83,7 +82,7 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\ankit.rastogi@nagarro.com
+        sitecore\Admin
     - ID: "c9bf6775-cbf3-4abb-aec3-c0d368791827"
       Hint: ogType
       Value: website
@@ -93,7 +92,7 @@ Languages:
         <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230403T074717Z
+      Value: 20230405T132032Z
     - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
       Hint: ogTitle
       Value: "Community Solution - Discover trending news"
