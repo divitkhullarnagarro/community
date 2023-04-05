@@ -13,59 +13,60 @@ SharedFields:
 - ID: "17bb046a-a32a-41b3-8315-81217947611b"
   Hint: ComponentQuery
   Value: |
-    # Editing here does not save the query on the item; copy it back when done!
-    
-    # Editing here does not save the query on the item; copy it back when done!
-    
-    # Editing here does not save the query on the item; copy it back when done!
-    
-    # Editing here does not save the query on the item; copy it back when done!
     query ArticlesList($datasource: String!, $language: String!) {
-      datasource: item(path: $datasource, language: $language) {
-        ... on ArticleList {
-          articlesList {
-            targetItems {
-              ... on ArticleDetailPage {
-                id
-                url{
-                  url
-                }
-                title {
-                  jsonValue
-                }
-                shortDescription {
-                  jsonValue
-                }
-                image {
-                  jsonValue
-                }
-                date {
-                  jsonValue
-                }
-                authorName {
-                   jsonValue
-                }
-                tags {
-                  targetItems {
-                    ... on ContentName {
-                      name 
-                    }
-                  }
-                }
-                contentType {
-                  targetItem {
-                    ... on ContentName {
-                      name
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+    datasource: item(path: $datasource, language: $language) {
+    ... on ArticleList {
+    articleContentType{
+    targetItems{
+    ... on ContentName{
+    name_f18b1a9ad1ff4c13ad6080a2f710e438{
+    jsonValue
     }
-    
+    }
+    }
+    }
+    articlesList {
+    targetItems {
+    ... on ArticleDetailPage {
+    id
+    url{
+    url
+    }
+    title {
+    jsonValue
+    }
+    shortDescription {
+    jsonValue
+    }
+    image {
+    jsonValue
+    }
+    date {
+    jsonValue
+    }
+    authorName {
+    jsonValue
+    }
+    tags {
+    targetItems {
+    ... on ContentName {
+    name
+    }
+    }
+    }
+    contentType {
+    targetItem {
+    ... on ContentName {
+    name
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
 - ID: "b5b27af1-25ef-405c-87ce-369b3a004016"
   Hint: Datasource Location
   Value: /sitecore/content/acceleratorcommunity/Components/ArticleList
@@ -87,11 +88,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "d10e2512-d15e-4531-b551-c42e9787c77d"
+      Value: "e245cf58-d18d-4a82-a895-bf51bb85009b"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\mohit.rajpal@nagarro.com
+        sitecore\niti.chauhan@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230403T124346Z
+      Value: 20230405T100402Z

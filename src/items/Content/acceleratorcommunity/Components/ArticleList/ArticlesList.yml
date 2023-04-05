@@ -45,11 +45,18 @@ Languages:
         {AE419B29-02BC-407B-B47A-E10AC33FB422}
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "2ffdcd7a-719f-459c-9c91-0528ca5a48a9"
+      Value: "a2d7379e-545e-4743-8862-b99c26ef0c7e"
+    - ID: "acaa685c-953f-4ea7-ab08-204f5b83137f"
+      Hint: Article Content Type
+      Value: |
+        {0C9AE58A-ADD0-411F-9771-A5C15B19F0A8}
+        {757E18A7-D46F-422D-9DF3-7A4E6AA33F40}
+        {F183E359-A872-4B54-945E-EA8C7A84E445}
+        {0DD1A34E-654B-436F-B2FD-4A358EA75F7C}
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\damyanti.wakchaure@nagarro.com
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230404T123453Z
+      Value: 20230405T070707Z
