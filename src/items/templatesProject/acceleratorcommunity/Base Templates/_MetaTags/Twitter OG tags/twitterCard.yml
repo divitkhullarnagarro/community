@@ -6,7 +6,7 @@ Path: /sitecore/templates/Project/acceleratorcommunity/Base Templates/_MetaTags/
 SharedFields:
 - ID: "ab162cc0-dc80-4abf-8871-998ee5d7ba32"
   Hint: Type
-  Value: Image
+  Value: "Single-Line Text"
 - ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
   Hint: __Sortorder
   Value: 600
@@ -28,11 +28,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "720c7360-c2e5-4602-8706-4c7321021d27"
+      Value: "369871d0-319b-40ec-9d64-adeb54d07a6b"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230313T100726Z
+      Value: 20230405T125758Z
