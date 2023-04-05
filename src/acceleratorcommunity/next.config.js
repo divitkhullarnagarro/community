@@ -31,9 +31,9 @@ const nextConfig = {
     // prefixed path e.g. `/styleguide`.
     defaultLocale: packageConfig.language,
   },
-  
+
   // Enable React Strict Mode
-  reactStrictMode: true,
+  reactStrictMode: false,
 
   async rewrites() {
     // When in connected mode we want to proxy Sitecore paths off to Sitecore
@@ -60,4 +60,4 @@ const nextConfig = {
 module.exports = () => {
   // Run the base config through any configured plugins
   return Object.values(plugins).reduce((acc, plugin) => plugin(acc), nextConfig);
-}
+};

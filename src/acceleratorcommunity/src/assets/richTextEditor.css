@@ -1,0 +1,16 @@
+.wrapper-class {
+  /* display: flex; */
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+.editor-class {
+  /* order: 1; */
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+.toolbar-class {
+  /* order: 2; */
+  border: 1px solid #ccc;
+}

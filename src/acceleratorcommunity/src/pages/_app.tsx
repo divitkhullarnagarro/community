@@ -9,7 +9,6 @@ import '../assets/profile.css';
 import '../assets/addPost.css';
 import '../assets/globalNavigation.css';
 
-
 // Using bootstrap and nprogress are completely optional.
 //  bootstrap is used here to provide a clean layout for samples, without needing extra CSS in the sample app
 //  nprogress provides a loading indicator on page/route changes
@@ -20,6 +19,9 @@ import 'assets/app.css';
 import 'assets/logo.css';
 import 'assets/grid.css';
 import 'assets/rte.css';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import 'draft-js/dist/Draft.css';
+import '../assets/richTextEditor.css';
 
 NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
 
