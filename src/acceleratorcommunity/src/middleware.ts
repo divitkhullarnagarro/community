@@ -3,6 +3,9 @@ import type { NextRequest } from 'next/server';
 export const config = {
   // Exclude Sitecore editing API routes
   matcher: '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  runtime: 'nodejs',
+  unstable_allowDynamic: ['/src/assets/helpers/middlewareHelper.ts', '/lib/utilities.js', '/node_modules/function-bind/**', '/node_modules/ts-invariant/lib/invariant.esm.js', '/node_modules/apollo-boost/lib/bundle.esm.js', '/node_modules/graphql/error/GraphQLError.mjs',
+  ],
 };
 
 
