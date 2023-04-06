@@ -38,14 +38,28 @@ Languages:
           <d
             id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
             <r
-              uid="{1A53583E-81C4-46F7-9B32-E1508AF86488}">
-              <p:d />
-            </r>
-            <r
-              uid="{B426D147-BE18-46C3-9FDC-8034B097F4CA}"
-              p:after="*[1=2]"
+              uid="{991E0AEF-58D4-45B7-8B5C-1D528D2399AB}"
+              p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
               s:ds="{85442646-9588-4CC9-A98A-DB19DF67B50F}"
               s:id="{AA7421F4-8B23-48B9-AAB7-BDEE1D1AE03A}"
+              s:par="CacheClearingBehavior=Clear on publish&amp;CSSStyles"
+              s:ph="/jss-main/col2-{6D47BF1A-FDDE-4389-B2AB-65C6F7005A47}-0" />
+            <r
+              uid="{895C1CE8-4E4B-448A-B093-FEF560EE5B0B}"
+              p:after="r[@uid='{991E0AEF-58D4-45B7-8B5C-1D528D2399AB}']"
+              s:id="{B9C67CBD-E307-4D0A-A06E-1898E050D8A6}"
+              s:par="CacheClearingBehavior=Clear on publish&amp;CSSStyles"
+              s:ph="/jss-main/col1-{6D47BF1A-FDDE-4389-B2AB-65C6F7005A47}-0" />
+            <r
+              uid="{D883CE62-A285-4D76-BF1D-EB3C3F8A3497}"
+              p:after="r[@uid='{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}']"
+              s:id="{DAF857B8-E315-48EF-AC72-30B8A0180AA0}"
+              s:ph="jss-main" />
+            <r
+              uid="{6D47BF1A-FDDE-4389-B2AB-65C6F7005A47}"
+              p:after="*[1=2]"
+              s:ds="{C79255F3-31A1-4FB8-B570-E7DB12DAC7EF}"
+              s:id="{44F40912-35E3-43E6-8C36-6488DC75421E}"
               s:par="CSSStyles"
               s:ph="jss-main"
               s:ccb="Clear on publish" />
@@ -69,7 +83,7 @@ Languages:
       Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "d88bc69b-a167-4eac-95a5-6abb6c7ddf92"
+      Value: "fc239bae-a8bc-4fbf-a644-7d5cce2f209c"
     - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
       Hint: twitterDescription
       Value: Social Community News is the place where you can gather the information about the current affairs
@@ -82,7 +96,7 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\damyanti.wakchaure@nagarro.com
     - ID: "c9bf6775-cbf3-4abb-aec3-c0d368791827"
       Hint: ogType
       Value: website
@@ -92,7 +106,7 @@ Languages:
         <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230405T132032Z
+      Value: 20230406T063518Z
     - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
       Hint: ogTitle
       Value: "Community Solution - Discover trending news"

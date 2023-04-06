@@ -77,6 +77,9 @@ Languages:
               s:ccb="Clear on publish" />
           </d>
         </r>
+    - ID: "104747be-ebe5-4b3c-b61f-6811cd49bd71"
+      Hint: twitterCard
+      Value: summary_large_image
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230301T081956Z
@@ -88,7 +91,7 @@ Languages:
       Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "f5d181cc-2fe3-487f-9457-2bf71b0ae4c5"
+      Value: "b651670b-a8e0-4df0-8e61-e43208c80424"
     - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
       Hint: twitterDescription
       Value: Post feeds for Social Community
@@ -101,10 +104,10 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\mohit.rajpal@nagarro.com
+        sitecore\arpana.mittal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230403T065746Z
+      Value: 20230406T094851Z
     - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
       Hint: ogTitle
       Value: Social Community

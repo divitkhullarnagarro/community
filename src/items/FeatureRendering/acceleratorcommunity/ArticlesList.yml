@@ -64,6 +64,10 @@ SharedFields:
     }
     }
     }
+      whatsApp{jsonValue}
+      twitter{jsonValue}
+      linkedIn{jsonValue}
+      facebook{ jsonValue}
     }
     }
     }
@@ -88,11 +92,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "e245cf58-d18d-4a82-a895-bf51bb85009b"
+      Value: "428c4edb-26d7-4c2a-b1e9-9e82bb4ea566"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\niti.chauhan@nagarro.com
+        sitecore\ankit.rastogi@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230405T100402Z
+      Value: 20230406T083432Z

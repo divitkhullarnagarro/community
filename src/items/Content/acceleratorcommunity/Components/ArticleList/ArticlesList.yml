@@ -31,9 +31,15 @@ Languages:
       Value: 20230313T063551Z
   - Version: 2
     Fields:
+    - ID: "16ed3732-e1bc-49ee-b724-7c0a897a1f9a"
+      Hint: LinkedIn
+      Value: "https://www.linkedin.com/sharing/share-offsite"
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230313T062518Z
+    - ID: "4811810e-1782-4373-a339-4b09bc326b49"
+      Hint: Facebook
+      Value: "https://www.facebook.com/sharer/sharer.php"
     - ID: "7fd7efe7-f393-4125-9a22-707338dc9836"
       Hint: ArticlesList
       Value: |
@@ -43,9 +49,12 @@ Languages:
         {404328CD-4367-4BE2-88B1-368BE0986B6D}
         {832A2E37-065F-4F9A-87D0-F3845621D1A5}
         {AE419B29-02BC-407B-B47A-E10AC33FB422}
+    - ID: "8c630964-184e-4d94-a8c4-4c73523a2438"
+      Hint: WhatsApp
+      Value: "https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "a2d7379e-545e-4743-8862-b99c26ef0c7e"
+      Value: "0b033d62-1187-4c96-a0bc-b50128e2419d"
     - ID: "acaa685c-953f-4ea7-ab08-204f5b83137f"
       Hint: Article Content Type
       Value: |
@@ -56,7 +65,10 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\mohit.rajpal@nagarro.com
+        sitecore\ankit.rastogi@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230405T070707Z
+      Value: 20230406T082547Z
+    - ID: "f001dfc2-520b-4f18-8c7d-e06b14f87b2c"
+      Hint: Twitter
+      Value: "https://twitter.com/intent/tweet"
