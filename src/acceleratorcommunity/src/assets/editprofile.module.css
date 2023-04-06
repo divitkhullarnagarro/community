@@ -17,6 +17,7 @@
 
 .profileImage {
   border: 2px solid black;
+  display: flex;
 }
 
 .leftSection {
@@ -36,10 +37,15 @@
 .followers {
   display: flex;
   justify-content: space-between;
+  font-size: small;
+  color: black;
+  text-shadow: 1px 1px gray;
 }
 
 .name {
   font-weight: bold;
+  color: black;
+  text-shadow: 1px 1px gray;
 }
 
 .editProfileBtn {

@@ -1,6 +1,6 @@
 .container {
   /* background-color: aqua; */
-  width: 100%;
+  width: 98%;
   /* height: auto;
     display: flex;
     justify-content: center;
@@ -11,13 +11,17 @@
     width: 100%;
     gap: 0.625rem; */
 }
+
 .heading {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content:center ;
+  color: #000E46;
+  
 }
+
 .contentTypeContainers {
-  width: 95%;
+  width: 100%;
   display: flex;
   justify-content: center;
   /* background-color: rgb(128, 128, 128); */
@@ -68,6 +72,24 @@
   width: auto;
   border-radius: 9999px;
 }
+.tags{
+  display: flex;
+  width: 50%;
+  justify-content: center;
+  background-color: #dde4f6;
+  border-radius: 20px;
+  align-items: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: 6px;
+  margin-right: 3px;
+  height: 40px;
+  font-size: small;
+  /* color:#0048f0; */
+  font-weight: 600;
+  height: 40px;
+  margin-top: 10%;
+}
 .button {
   display: flex;
   /* position: fixed; */
@@ -88,7 +110,7 @@
 }
 
 .bodyContainer {
-  width: 100%;
+  width: 900px;
   display: flex;
   justify-content: space-between;
   gap: 20px;
@@ -156,15 +178,33 @@
 }
 
 .listContainers {
-  margin-left: 165px;
+  /* margin-left: 165px; */
   /* overflow-y: auto; */
   height: 100%;
   /* background-color: pink; */
-  width: 100%;
+  width: 870px;
 }
 
 .filterContainer{
   margin-right: 50pxpx;
   width: 10%;
 }
+.filterContainerTop{
+  top: 1%;
+  margin-right: 50px;
+  width: 10%;
+}
 
+/* media queries */
+@media screen and (max-width: 600px) {
+  .bodyContainer{
+    width: 90%;
+  }
+  .listContainers{
+    width: 90%;
+  }
+  .contentTypeContainers{
+    width: 400px;
+    height: 370px;
+  }
+}
