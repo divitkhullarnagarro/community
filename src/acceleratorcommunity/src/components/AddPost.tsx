@@ -51,6 +51,7 @@ type AddPostProps = ComponentProps & {
 };
 
 const AddPost = (props: AddPostProps | any): JSX.Element => {
+
   const { userToken, setUserToken, objectId, userObject, setUserObject } = {
     ...useContext(WebContext),
   };
@@ -700,11 +701,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         height={25}
                       />
                       <Link
+                        
                         href={
-                          'https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20' +
-                          post.id +
-                          'utm_source=whatsapp&utm_medium=social&utm_id=' +
-                          post.id
+                          `${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`             
                         }
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
@@ -723,10 +722,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       />
                       <Link
                         href={
-                          'https://twitter.com/intent/tweet?url=' +
-                          post.id +
-                          'utm_source=twitter&utm_medium=social&utm_id=' +
-                          post.id
+                          `${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`
                         }
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
@@ -745,10 +741,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       />
                       <Link
                         href={
-                          'https://www.linkedin.com/sharing/share-offsite/?url=' +
-                          post.id +
-                          'utm_source=linkedin&utm_medium=social&utm_id=' +
-                          post.id
+                          `${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`
                         }
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
@@ -766,10 +759,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       />
                       <Link
                         href={
-                          'https://www.facebook.com/sharer/sharer.php?u=' +
-                          post.id +
-                          'utm_source=facebook&utm_medium=social&utm_id=' +
-                          post.id
+                          `${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`
                         }
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
