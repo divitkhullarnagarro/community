@@ -37,7 +37,8 @@ import { EditorProps } from 'react-draft-wysiwyg';
 import parser from 'html-react-parser';
 import dynamic from 'next/dynamic';
 import draftToHtml from 'draftjs-to-html';
-import { apiData, toolbar } from 'assets/helpers/constants';
+import { toolbar } from 'assets/helpers/constants';
+import allPeersCall from 'src/API/getPeers';
 const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mod) => mod.Editor), {
   ssr: false,
 });
@@ -50,6 +51,7 @@ type AddPostProps = ComponentProps & {
 };
 
 const AddPost = (props: AddPostProps | any): JSX.Element => {
+
   const { userToken, setUserToken, objectId, userObject, setUserObject } = {
     ...useContext(WebContext),
   };
@@ -89,6 +91,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   // }
 
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+  const [addedPeers, setAddedPeers] = useState<string[]>([] as string[]);
   const [mentionUserData, setMentionUserData] = useState<
     {
       text: string;
@@ -107,9 +110,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     });
   }, [editorState]);
 
-  useEffect(() => {
-    const data = apiData.data;
-    const userData = data.map((ele) => {
+  const getAllPears = async () => {
+    const res = await allPeersCall(userToken);
+    const data = res.data.data;
+    const userData = data.map((ele: any) => {
       return {
         text: ele.firstName + ' ' + ele.lastName,
         value: ele.firstName + ' ' + ele.lastName,
@@ -117,13 +121,33 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         objectId: ele.objectId,
       };
     });
+    // console.log('getAllPears', userData);
     setMentionUserData(userData);
+  };
+  useEffect(() => {
+    getAllPears();
+    // console.log('getAllPears', getAllPears());
   }, []);
+
+  useEffect(() => {
+    const rawEditorContent = convertToRaw(editorState.getCurrentContent());
+    console.log('vicky rawEditorContent', rawEditorContent);
+    const entityMap = rawEditorContent.entityMap;
+    const addedPeerList = new Set<string>();
+    Object.values(entityMap).map((entity) => {
+      // console.log('mention', entity.data.value, rawEditorContent, entityMap);
+      addedPeerList.add(entity.data.url.substring(9, entity.data.url.length));
+    });
+    const addedpeersList = [...addedPeerList.values()];
+    setAddedPeers(addedpeersList);
+    // console.log('mention', [...addedPeerList.values()]);
+  }, [editorState]);
 
   const onEditorStateChangeHandler = (e: any) => {
     setEditorState(e);
     setPostTextValue(draftToHtml(convertToRaw(editorState.getCurrentContent())));
   };
+  // console.log('mention', addedPeers);
 
   useEffect(() => {
     if (userToken == '' && !isExpEditorActive) {
@@ -677,11 +701,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         height={25}
                       />
                       <Link
+                        
                         href={
-                          'https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20' +
-                          post.id +
-                          'utm_source=whatsapp&utm_medium=social&utm_id=' +
-                          post.id
+                          `${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`             
                         }
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
@@ -700,10 +722,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       />
                       <Link
                         href={
-                          'https://twitter.com/intent/tweet?url=' +
-                          post.id +
-                          'utm_source=twitter&utm_medium=social&utm_id=' +
-                          post.id
+                          `${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`
                         }
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
@@ -722,10 +741,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       />
                       <Link
                         href={
-                          'https://www.linkedin.com/sharing/share-offsite/?url=' +
-                          post.id +
-                          'utm_source=linkedin&utm_medium=social&utm_id=' +
-                          post.id
+                          `${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`
                         }
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
@@ -743,10 +759,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       />
                       <Link
                         href={
-                          'https://www.facebook.com/sharer/sharer.php?u=' +
-                          post.id +
-                          'utm_source=facebook&utm_medium=social&utm_id=' +
-                          post.id
+                          `${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`
                         }
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
@@ -911,9 +924,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     } else if (file.length > 0) {
       postType = 'IMAGE';
     }
+    // console.log('mention inside api call component', addedPeers);
+
     addPostCall(userToken, {
       description: postText,
       mediaList: [...file, ...docs, ...videoLink],
+      taggedPeers: addedPeers,
       type: postType,
     }).then((response) => {
       if (response?.data?.data) {
@@ -924,6 +940,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         setPostText('');
         setVideoLink([]);
         setDocs([]);
+        setEditorState(() => EditorState.createEmpty());
       } else {
         setCreateNewPostError(true);
         setTimeout(() => {

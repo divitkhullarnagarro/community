@@ -1,18 +1,17 @@
 .mainwrapper {
-  width: 100%;
+  width: 95%;
   display: flex;
   justify-content: space-around;
 }
-
 .filterConatiner {
   margin-top: 30px;
 }
 .wrapper {
   display: flex;
   /* position: absolute; */
-  background-color: aliceblue;
+  background-color: whitesmoke;
 
-  width: 45rem;
+  width: 750px;
   height: 22rem;
   border-radius: 8px;
   margin: 30px;
@@ -167,4 +166,15 @@
 .targetIcon::after {
   visibility: hidden;
  
+}
+@media screen and (max-width: 600px) {
+  /* .mainwrapper{
+    width: 100px;
+  } */
+  /* .wrapper{
+    width: 90%;
+  }
+  .bodyContainer{
+    width: 100%;
+  } */
 }

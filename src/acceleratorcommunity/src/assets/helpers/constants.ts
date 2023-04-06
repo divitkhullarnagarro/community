@@ -1,8 +1,11 @@
-export const LogoutUrl = `https://accelerator-api-management.azure-api.net/user-service/api/v1/logout`;
-export const sendOTPUrl = `https://accelerator-api-management.azure-api.net/user-service/api/v1/users/forget-password/`;
-export const validateOtpUrl = `https://accelerator-api-management.azure-api.net/user-service/api/v1/users/validate-otp/`;
-export const updatePasswordUrl = `https://accelerator-api-management.azure-api.net/user-service/api/v1/users/change-password`;
-
+export const javaHost = `https://accelerator-api-management.azure-api.net`;
+export const LogoutUrl = `${javaHost}/user-service/api/v1/logout`;
+export const sendOTPUrl = `${javaHost}/user-service/api/v1/users/forget-password/`;
+export const validateOtpUrl = `${javaHost}/user-service/api/v1/users/validate-otp/`;
+export const updatePasswordUrl = `${javaHost}/user-service/api/v1/users/change-password`;
+export const addAllPeersUrl = `${javaHost}/graph-service/api/v1/graph/peers`;
+export const addPeersBySearchUrl = `${javaHost}/graph-service/api/v1/graph/peers?keyword=`;
+export const addPeersPaginationUrl = `${javaHost}/graph-service/api/v1/graph/peers?`;
 export const toolbar = {
   options: [
     'inline',
