@@ -4,7 +4,7 @@ import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import userProfileCss from '../assets/userProfile.module.css';
 import WebContext from '../Context/WebContext';
 import React, { useContext, useState } from 'react';
-import { Button, Dropdown, Modal, Spinner } from 'react-bootstrap';
+import { Button, Dropdown, Modal } from 'react-bootstrap';
 import BlockUserImage from '../assets/images/BlockUser.jpg';
 import LogoutImage from '../assets/images/Logout.png';
 import { useRouter } from 'next/router';
