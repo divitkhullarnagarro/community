@@ -107,7 +107,7 @@ const getFormatedDate = (stringDate: string) => {
 };
 
 const ArticlesList = (props: ArticlesListProps): JSX.Element => {
-  console.log("List",props);
+  
   const dataum = props?.fields?.data?.datasource?.articleContentType?.targetItems;
 
   const { userToken, setUserToken } = { ...useContext(WebContext) };
