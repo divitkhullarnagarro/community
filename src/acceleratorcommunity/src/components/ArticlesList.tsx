@@ -74,6 +74,18 @@ type DataSource = {
   articleContentType: {
     targetItems: Content[];
   };
+  whatsApp:{
+    jsonValue: Field<string>;
+  };
+  twitter:{
+    jsonValue: Field<string>;
+  };
+  linkedIn:{
+    jsonValue: Field<string>;
+  };
+  facebook:{
+    jsonValue: Field<string>;
+  };
 };
 
 const getFormatedDate = (stringDate: string) => {
@@ -95,6 +107,7 @@ const getFormatedDate = (stringDate: string) => {
 };
 
 const ArticlesList = (props: ArticlesListProps): JSX.Element => {
+  console.log("List",props);
   const dataum = props?.fields?.data?.datasource?.articleContentType?.targetItems;
 
   const { userToken, setUserToken } = { ...useContext(WebContext) };
@@ -357,10 +370,8 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       />
                       <Link
                         href={
-                          'https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20' +
-                          l?.title?.jsonValue?.value +
-                          'utm_source=whatsapp&utm_medium=social&utm_term=' +
-                          l?.title?.jsonValue?.value
+                          `${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/news/${l.id}&utm_source=whatsapp&utm_medium=social&utm_term=${l.id}`
+                          
                         }
                       >
                         <a  className={ArticlesListCss.targetIcon} target='_blank' >WhatsApp</a>
@@ -377,12 +388,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       />
                       <Link
                         href={
-                          'https://twitter.com/intent/tweet?url=' +
-                          l?.url?.url +
-                          '&text=' +
-                          l?.title?.jsonValue?.value +
-                          'utm_source=twitter&utm_medium=social&utm_term=' +
-                          l?.title?.jsonValue?.value
+                          `${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l.id}&utm_source=twitter&utm_medium=social&utm_term=${l.id}`
                         }
                       >
                         <a className={ArticlesListCss.targetIcon} target='_blank' >Twitter</a>
@@ -400,10 +406,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       />
                       <Link
                         href={
-                          'https://www.linkedin.com/sharing/share-offsite/?url=' +
-                          l?.url?.url +
-                          'utm_source=linkedin&utm_medium=social&utm_term=' +
-                          l?.title?.jsonValue?.value
+                          `${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l.id}&utm_source=linkedIn&utm_medium=social&utm_term=${l.id}`
                         }
                       >
                         <a className={ArticlesListCss.targetIcon} target='_blank'>LinkedIn</a>
@@ -420,12 +423,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       />
                       <Link
                         href={
-                          'https://www.facebook.com/sharer/sharer.php?u=' +
-                          l?.url?.url +
-                          '&t=' +
-                          l?.title?.jsonValue?.value +
-                          'utm_source=facebook&utm_medium=social&utm_term=' +
-                          l?.title?.jsonValue?.value
+                          `${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/news/${l.id}&utm_source=facebook&utm_medium=social&utm_term=${l.id}`
                         }
                       >
                         <a className={ArticlesListCss.targetIcon} target='_blank'>Facebook</a>
