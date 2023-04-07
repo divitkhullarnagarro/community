@@ -44,6 +44,9 @@ const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mo
 });
 // Rich Text Editor Files Import End
 
+import BlockUserImage from '../assets/images/BlockUser.jpg';
+import React from 'react';
+
 type AddPostProps = ComponentProps & {
   fields: {
     heading: Field<string>;
@@ -51,7 +54,6 @@ type AddPostProps = ComponentProps & {
 };
 
 const AddPost = (props: AddPostProps | any): JSX.Element => {
-
   const { userToken, setUserToken, objectId, userObject, setUserObject } = {
     ...useContext(WebContext),
   };
@@ -220,6 +222,57 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const [toastSuccess, setToastSuccess] = useState(false);
   const [toastError, setToastError] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const [showSpinner, setShowSpinner] = useState(false);
+  const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
+  const [blockUserName, setBlockUserName] = useState<string>('');
+
+  const onUserBlocked = async () => {
+    //setToastSuccess(true);
+    //setToastMessage('User blocked successfully');
+    //setShowNofitication(true);
+    setShowBlockUserPopUp(false);
+  };
+
+  const BlockUserPopup = () => {
+    return (
+      <>
+        <Modal
+          className={styles.reportPostModalContent}
+          show={showBlockUserPopUp}
+          onHide={() => setShowBlockUserPopUp(false)}
+          backdrop="static"
+          keyboard={false}
+          centered
+          scrollable={true}
+        >
+          <div>
+            <Modal.Header closeButton>
+              <Modal.Title className={styles.reportPostModalHeader}>{'Block User'}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div
+                className={styles.reportPostModalBody}
+              >{`Do you want to block ${blockUserName} ?`}</div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                className={styles.footerBtn}
+                variant="secondary"
+                onClick={() => {
+                  setShowBlockUserPopUp(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button className={styles.footerBtn} variant="secondary" onClick={onUserBlocked}>
+                Block
+              </Button>
+            </Modal.Footer>
+          </div>
+        </Modal>
+      </>
+    );
+  };
 
   async function copyTextToClipboard(postId: string) {
     let postUrl = window.location.origin + '/post/' + postId;
@@ -234,7 +287,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     copyTextToClipboard(postId)
       .then(() => {
         setToastSuccess(true);
-        setToastMessage('Post url copied to clipboard successfully');
+        setToastMessage('Post url copied to clipboard');
         setShowNofitication(true);
       })
       .catch((err) => {
@@ -305,6 +358,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </Button>
               <Button className={styles.footerBtn} variant="secondary" onClick={onPostReported}>
                 Report
+                {showSpinner ? (
+                  <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
+                ) : (
+                  <></>
+                )}
               </Button>
             </Modal.Footer>
           </div>
@@ -320,6 +378,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   };
 
   const onPostReported = async () => {
+    setShowSpinner(true);
     let reportReason = '';
     if (formRef.current != null) {
       reportReason = (
@@ -331,12 +390,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     if (response) {
       if (response?.success) {
         setToastSuccess(true);
+        setToastMessage(response?.data);
       } else {
         setToastError(true);
+        setToastMessage(response?.errorCode);
       }
-      setToastMessage(response?.data);
       setShowNofitication(true);
       setShowReportPopUp(false);
+      setShowSpinner(false);
     }
   };
 
@@ -596,6 +657,24 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       <div className={styles.reportContainerBtn}>Report Post</div>
                     </div>
                   </Dropdown.Item>
+                  <Dropdown.Item
+                    className={styles.dropdownItem}
+                    onClick={() => {
+                      setBlockUserName(
+                        post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName
+                      );
+                      setShowBlockUserPopUp(true);
+                    }}
+                  >
+                    <div className={styles.overlayItem}>
+                      <div className={styles.dropdownImage}>
+                        <NextImage field={BlockUserImage} editable={true} />
+                      </div>
+                      <div className={styles.reportContainerBtn}>
+                        Block {post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName}
+                      </div>
+                    </div>
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               <img
@@ -701,10 +780,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         height={25}
                       />
                       <Link
-                        
-                        href={
-                          `${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`             
-                        }
+                        href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
                           WhatsApp
@@ -721,9 +797,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         height={25}
                       />
                       <Link
-                        href={
-                          `${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`
-                        }
+                        href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
                           Twitter
@@ -740,9 +814,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         height={25}
                       />
                       <Link
-                        href={
-                          `${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`
-                        }
+                        href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
                           LinkedIn
@@ -758,9 +830,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         height={25}
                       />
                       <Link
-                        href={
-                          `${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`
-                        }
+                        href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
                           Facebook
@@ -1456,6 +1526,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         </div>
       </div>
       {<ReportPostPopup />}
+      {<BlockUserPopup />}
       {showNotification && (
         <ToastNotification
           showNotification={showNotification}
