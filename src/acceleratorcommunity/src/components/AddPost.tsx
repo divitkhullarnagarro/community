@@ -34,6 +34,22 @@ import getCommentsCall from 'src/API/getCommentsCall';
 import getCommentsReplyCall from 'src/API/getCommentsReplyCall';
 import postCommentReplyCall from 'src/API/postCommentReplyCall';
 
+// Rich Text Editor Files Import Start
+import { EditorState, convertToRaw } from 'draft-js';
+import { EditorProps } from 'react-draft-wysiwyg';
+import parser from 'html-react-parser';
+import dynamic from 'next/dynamic';
+import draftToHtml from 'draftjs-to-html';
+import { toolbar } from 'assets/helpers/constants';
+import allPeersCall from 'src/API/getPeers';
+const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mod) => mod.Editor), {
+  ssr: false,
+});
+// Rich Text Editor Files Import End
+
+import BlockUserImage from '../assets/images/BlockUser.jpg';
+import React from 'react';
+
 type AddPostProps = ComponentProps & {
   fields: {
     heading: Field<string>;
@@ -78,6 +94,65 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   //     setDisableAddDoc(true);
   //   }
   // }
+
+  const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+  const [addedPeers, setAddedPeers] = useState<string[]>([] as string[]);
+  const [mentionUserData, setMentionUserData] = useState<
+    {
+      text: string;
+      value: string;
+      url: string;
+    }[]
+  >([] as { text: string; value: string; url: string }[]);
+  const currentCount = editorState.getCurrentContent().getPlainText().length;
+
+  useEffect(() => {
+    const rawEditorContent = convertToRaw(editorState.getCurrentContent());
+    console.log('vicky rawEditorContent', rawEditorContent);
+    const entityMap = rawEditorContent.entityMap;
+    Object.values(entityMap).map((entity) => {
+      console.log('mention user', entity.data.value, rawEditorContent, entityMap, entity);
+    });
+  }, [editorState]);
+
+  const getAllPears = async () => {
+    const res = await allPeersCall(userToken);
+    const data = res.data.data;
+    const userData = data.map((ele: any) => {
+      return {
+        text: ele.firstName + ' ' + ele.lastName,
+        value: ele.firstName + ' ' + ele.lastName,
+        url: '/profile/' + ele.objectId,
+        objectId: ele.objectId,
+      };
+    });
+    // console.log('getAllPears', userData);
+    setMentionUserData(userData);
+  };
+  useEffect(() => {
+    getAllPears();
+    // console.log('getAllPears', getAllPears());
+  }, []);
+
+  useEffect(() => {
+    const rawEditorContent = convertToRaw(editorState.getCurrentContent());
+    console.log('vicky rawEditorContent', rawEditorContent);
+    const entityMap = rawEditorContent.entityMap;
+    const addedPeerList = new Set<string>();
+    Object.values(entityMap).map((entity) => {
+      // console.log('mention', entity.data.value, rawEditorContent, entityMap);
+      addedPeerList.add(entity.data.url.substring(9, entity.data.url.length));
+    });
+    const addedpeersList = [...addedPeerList.values()];
+    setAddedPeers(addedpeersList);
+    // console.log('mention', [...addedPeerList.values()]);
+  }, [editorState]);
+
+  const onEditorStateChangeHandler = (e: any) => {
+    setEditorState(e);
+    setPostTextValue(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+  };
+  // console.log('mention', addedPeers);
 
   useEffect(() => {
     if (userToken == '' && !isExpEditorActive) {
@@ -150,6 +225,57 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const [toastSuccess, setToastSuccess] = useState(false);
   const [toastError, setToastError] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const [showSpinner, setShowSpinner] = useState(false);
+  const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
+  const [blockUserName, setBlockUserName] = useState<string>('');
+
+  const onUserBlocked = async () => {
+    //setToastSuccess(true);
+    //setToastMessage('User blocked successfully');
+    //setShowNofitication(true);
+    setShowBlockUserPopUp(false);
+  };
+
+  const BlockUserPopup = () => {
+    return (
+      <>
+        <Modal
+          className={styles.reportPostModalContent}
+          show={showBlockUserPopUp}
+          onHide={() => setShowBlockUserPopUp(false)}
+          backdrop="static"
+          keyboard={false}
+          centered
+          scrollable={true}
+        >
+          <div>
+            <Modal.Header closeButton>
+              <Modal.Title className={styles.reportPostModalHeader}>{'Block User'}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div
+                className={styles.reportPostModalBody}
+              >{`Do you want to block ${blockUserName} ?`}</div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                className={styles.footerBtn}
+                variant="secondary"
+                onClick={() => {
+                  setShowBlockUserPopUp(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button className={styles.footerBtn} variant="secondary" onClick={onUserBlocked}>
+                Block
+              </Button>
+            </Modal.Footer>
+          </div>
+        </Modal>
+      </>
+    );
+  };
 
   async function copyTextToClipboard(postId: string) {
     let postUrl = window.location.origin + '/post/' + postId;
@@ -164,7 +290,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     copyTextToClipboard(postId)
       .then(() => {
         setToastSuccess(true);
-        setToastMessage('Post url copied to clipboard successfully');
+        setToastMessage('Post url copied to clipboard');
         setShowNofitication(true);
       })
       .catch((err) => {
@@ -235,6 +361,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </Button>
               <Button className={styles.footerBtn} variant="secondary" onClick={onPostReported}>
                 Report
+                {showSpinner ? (
+                  <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
+                ) : (
+                  <></>
+                )}
               </Button>
             </Modal.Footer>
           </div>
@@ -250,6 +381,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   };
 
   const onPostReported = async () => {
+    setShowSpinner(true);
     let reportReason = '';
     if (formRef.current != null) {
       reportReason = (
@@ -261,12 +393,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     if (response) {
       if (response?.success) {
         setToastSuccess(true);
+        setToastMessage(response?.data);
       } else {
         setToastError(true);
+        setToastMessage(response?.errorCode);
       }
-      setToastMessage(response?.data);
       setShowNofitication(true);
       setShowReportPopUp(false);
+      setShowSpinner(false);
     }
   };
 
@@ -521,6 +655,24 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       <div className={styles.reportContainerBtn}>Report Post</div>
                     </div>
                   </Dropdown.Item>
+                  <Dropdown.Item
+                    className={styles.dropdownItem}
+                    onClick={() => {
+                      setBlockUserName(
+                        post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName
+                      );
+                      setShowBlockUserPopUp(true);
+                    }}
+                  >
+                    <div className={styles.overlayItem}>
+                      <div className={styles.dropdownImage}>
+                        <NextImage field={BlockUserImage} editable={true} />
+                      </div>
+                      <div className={styles.reportContainerBtn}>
+                        Block {post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName}
+                      </div>
+                    </div>
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               <img
@@ -531,7 +683,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             </div>
           </div>
           <div className="postContent">
-            <div className="postHeading">{post?.description}</div>
+            <div className="postHeading">{parser(post?.description)}</div>
             <div className="postMedia">
               {post?.mediaList?.map((media: any, num: any) => {
                 if (media?.mediaType === 'VIDEO') {
@@ -626,12 +778,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         height={25}
                       />
                       <Link
-                        href={
-                          'https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20' +
-                          post.id +
-                          'utm_source=whatsapp&utm_medium=social&utm_id=' +
-                          post.id
-                        }
+                        href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
                           WhatsApp
@@ -648,12 +795,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         height={25}
                       />
                       <Link
-                        href={
-                          'https://twitter.com/intent/tweet?url=' +
-                          post.id +
-                          'utm_source=twitter&utm_medium=social&utm_id=' +
-                          post.id
-                        }
+                        href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
                           Twitter
@@ -670,12 +812,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         height={25}
                       />
                       <Link
-                        href={
-                          'https://www.linkedin.com/sharing/share-offsite/?url=' +
-                          post.id +
-                          'utm_source=linkedin&utm_medium=social&utm_id=' +
-                          post.id
-                        }
+                        href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
                           LinkedIn
@@ -691,12 +828,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         height={25}
                       />
                       <Link
-                        href={
-                          'https://www.facebook.com/sharer/sharer.php?u=' +
-                          post.id +
-                          'utm_source=facebook&utm_medium=social&utm_id=' +
-                          post.id
-                        }
+                        href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
                           Facebook
@@ -1168,9 +1300,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     } else if (file.length > 0) {
       postType = 'IMAGE';
     }
+    // console.log('mention inside api call component', addedPeers);
+
     addPostCall(userToken, {
       description: postText,
       mediaList: [...file, ...docs, ...videoLink],
+      taggedPeers: addedPeers,
       type: postType,
     }).then((response) => {
       if (response?.data?.data) {
@@ -1181,6 +1316,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         setPostText('');
         setVideoLink([]);
         setDocs([]);
+        setEditorState(() => EditorState.createEmpty());
       } else {
         setCreateNewPostError(true);
         setTimeout(() => {
@@ -1370,7 +1506,29 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               <div className="AddPostField">
                 <Form style={{ border: '1px', borderColor: 'black' }}>
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Control
+                    <Editor
+                      editorState={editorState}
+                      onEditorStateChange={(e) => onEditorStateChangeHandler(e)}
+                      wrapperClassName="wrapper-class"
+                      editorClassName="editor-class"
+                      toolbarClassName="toolbar-class"
+                      editorStyle={{ height: '150px' }}
+                      placeholder="Start Typing..."
+                      toolbar={toolbar}
+                      // toolbarOnFocus={true}
+                      mention={{
+                        separator: ' ',
+                        trigger: '@',
+                        suggestions: mentionUserData,
+                      }}
+                      hashtag={{}}
+                    />
+                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      <div>
+                        {currentCount}/{5000} characters
+                      </div>
+                    </div>
+                    {/* <Form.Control
                       onChange={(e) => setPostTextValue(e.target.value)}
                       value={postText}
                       as="textarea"
@@ -1378,7 +1536,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       placeholder="Share Your Thoughts..."
                       required
                       style={{ border: 'none', resize: 'none' }}
-                    />
+                    /> */}
                   </Form.Group>
                   <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                     {file.map((img: any, num: any) => {
@@ -1674,6 +1832,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         </div>
       </div>
       {<ReportPostPopup />}
+      {<BlockUserPopup />}
       {showNotification && (
         <ToastNotification
           showNotification={showNotification}

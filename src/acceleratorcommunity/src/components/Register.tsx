@@ -210,7 +210,7 @@ const Register = (props: RegisterProps): JSX.Element => {
     }
   };
 
-  const heading = targetItems.title.jsonValue.value.split('<br>');
+  const heading = targetItems?.title?.jsonValue?.value?.split('<br>');
   // console.log("ggggggggggggggggg",heading)
   console.log(targetItems);
   return (
@@ -229,9 +229,9 @@ const Register = (props: RegisterProps): JSX.Element => {
                 {/* <NextImage field={starImage}  editable={true} /> */}
               </div>
               <h5 className={RegisterCss.welcomeTextHeading}>
-                {heading[0]}
+                {heading?heading[0]:""}
                 <br />
-                {heading[1]}
+                {heading?heading[1]:""}
               </h5>
               <div className={RegisterCss?.welcomeTextDescription}>
                 {targetItems?.description?.jsonValue?.value}
@@ -405,7 +405,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   passwordError
                 }
               >
-                {targetItems.registerBtn.jsonValue.value}
+                {targetItems?.registerBtn?.jsonValue?.value}
                 <i className="button__icon fas fa-chevron-right"></i>
               </button>
             </form>

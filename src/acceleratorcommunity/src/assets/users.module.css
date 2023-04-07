@@ -24,18 +24,17 @@
 
 .right_upper_section {
   width: 73vw;
-  flex: 0 0 2%;
+  flex: 0 0 1%;
+  /* border-radius: 10px;
   background-color: lightgray;
-  border-radius: 10px;
   border: 2px solid #c9c6c6;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
 }
 
 .dashboardWrapper {
-  width: 65vw;
-  text-align: center;
-  margin: 10px;
-  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .right_lower_section {
@@ -43,14 +42,33 @@
   flex: 0 0 85%;
 }
 
+.right_lower_section_spinner {
+  font-size: 25px;
+  width: 70vw;
+  flex: 0 0 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .sidenavbar {
   flex: 1;
-  border-radius: 10px;
-  border: 2px solid #c9c6c6;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   height: 85vh;
   width: 20vw;
   background-color: lightgray;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0.3125rem 0.625rem;
+  position: fixed;
+  z-index: 1;
+  left: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-radius: 10px;
+  border: 2px solid lightgray;
 }
 
 .row {
@@ -127,7 +145,7 @@
   padding: 0;
 }
 .sidenavbar .center ul .title {
-  font-size: 17px;
+  font-size: 20px;
   font-weight: bold;
   color: #999;
   margin-top: 15px;
@@ -138,7 +156,8 @@
   align-items: center;
   padding: 5px;
   cursor: pointer;
-  width: 15vw;
+  width: 19vw;
+  border-radius: 5px;
   word-wrap: break-word;
 }
 
@@ -159,7 +178,7 @@
   justify-content: flex-start;
   flex-wrap: wrap;
   width: 90%;
-  font-size: 0.8125rem;
+  font-size: 1.1875rem;
   font-weight: 600;
   color: #888;
   margin-left: 10px;
@@ -191,6 +210,257 @@
   margin-top: 20px;
 }
 
+.reportPostWrapper {
+  max-height: 80vh;
+  width: 75vw;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.reportPostModalContainer {
+  background-color: rgba(211, 211, 211, 0.096) !important;
+}
+
+.reportPostModalHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  font-size: 1.675rem;
+}
+
+.reportPostModalBody {
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+  font-size: 1.25rem;
+}
+
+.reportItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 10px;
+  font-size: 1.25rem;
+}
+
+.footerBtn {
+  font-size: 1.25rem;
+}
+
+.overlayContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 2px solid lightgray;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.overlayItem {
+  display: flex;
+  justify-content: flex-start;
+  margin-right: 5px;
+}
+
+.reportContainerHeader {
+  background-color: white;
+  color: black;
+  border: none;
+  font-weight: bold;
+  font-size: 15px;
+  padding-top: 10px;
+  margin-left: 10px;
+}
+
+.reportContainerHeaderWithSpinner {
+  background-color: white;
+  color: black;
+  border: none;
+  font-weight: bold;
+  font-size: 15px;
+  margin-left: 5px;
+}
+
+.copyLinkBtnStyle {
+  width: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.dropdownBtn {
+  background-color: white;
+  border: none;
+  width: 50px;
+}
+
+.dropdownItem {
+  width: 260px;
+  border-radius: 5px;
+}
+
+.dropdownItem:visited {
+  background-color: white;
+}
+
+/* report post*/
+.reportPostContainer {
+  margin-top: 20px;
+  background-color: white;
+  padding: 20px;
+  border: 2px solid lightgray;
+  border-radius: 20px;
+}
+
+.reportPostHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.reportPostHeaderLeft {
+  display: flex;
+  align-items: center;
+}
+
+.reportPostDetailContainer {
+  margin-left: 20px;
+}
+
+.reportPostHeaderRight {
+  display: flex;
+  align-items: center;
+}
+
+.reportPostContent {
+  font-size: 18px;
+  margin: 20px 20px 20px 0px;
+}
+
+.reportPostModal {
+  margin-top: 10px;
+  background-color: white;
+  padding: 10px;
+}
+
+.dropdownItem:hover .reportContainerHeader {
+  color: #fff;
+  background-color: #5c636a;
+  border-color: #565e64;
+}
+
+.dropdownItem:hover .reportContainerHeaderWithSpinner {
+  color: #fff;
+  background-color: #5c636a;
+  border-color: #565e64;
+}
+
+.dropdownItem:visited,
+.dropdownItem:hover,
+.dropdownItem:active {
+  color: #fff;
+  background-color: #5c636a;
+  border-color: #565e64;
+}
+
+.dropdownItem:hover .dropdownImage {
+  filter: invert(1);
+}
+
+.dropdownImage {
+  margin-top: 10px;
+  width: 20px;
+  height: 10px;
+}
+
+.postOwner {
+  font-weight: 750;
+  color: grey;
+  font-size: 1.5rem;
+}
+
+.postUserImage {
+  width: 3rem;
+}
+
+.postCreateDate {
+  font-weight: 700;
+  color: grey;
+  font-size: 1.125rem;
+}
+
+.postMoreOptionsImage {
+  width: 3.125rem;
+}
+
+.reportPostModalFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.footerContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.footerFirstRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footerSecondRow {
+  display: flex;
+}
+
+.footerRowHeader {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.footerRowContent {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reportedDate {
+  margin-left: 10px;
+  color: grey;
+}
+
+.dropdownItem:after {
+  visibility: hidden;
+  content: none !important;
+}
+
+.seeMoreReportedPostBtn {
+  color: black;
+  width: 100%;
+  font-size: 1.5rem;
+  height: 50px;
+  background-color: white !important;
+  border: none;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reportedPostContainer {
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.reportPostContainerHeader {
+  margin-right: 15px;
+  font-weight: 600;
+}
+
 @media only screen and (max-width: 640px) {
   .sidenavbar .top .logo {
     font-size: 0.6rem;
@@ -201,6 +471,16 @@
     font-size: 0.9rem;
   }
 
+  .sidenavbar .center ul li {
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    cursor: pointer;
+    width: 5vw;
+    border-radius: 2px;
+    word-wrap: break-word;
+  }
+
   .sidenavbar .center ul li span {
     width: 50%;
     word-wrap: break-word;
@@ -208,6 +488,80 @@
     font-weight: 600;
     color: #888;
     margin-left: 5px;
+  }
+
+  .sidenavbar .center ul .title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #999;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .postOwner {
+    font-weight: 750;
+    color: grey;
+    font-size: 12px;
+  }
+
+  .postUserImage {
+    width: 1.875rem;
+  }
+
+  .postCreateDate {
+    font-weight: 700;
+    color: grey;
+    font-size: 0.75rem;
+  }
+
+  .postMoreOptionsImage {
+    width: 1.25rem;
+  }
+
+  .dropdownItem {
+    width: 120px;
+  }
+
+  .reportContainerHeader {
+    background-color: white;
+    color: black;
+    border: none;
+    font-weight: bold;
+    font-size: 12px;
+    padding-top: 5px;
+    margin-left: 5px;
+  }
+
+  .reportContainerHeaderWithSpinner {
+    background-color: white;
+    color: black;
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    margin-left: 5px;
+  }
+
+  .reportPostModalContent {
+    margin-left: 2.5rem;
+    width: 18.75rem;
+    height: max-content;
+    overflow-y: auto;
+  }
+
+  .reportPostModalHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.1875rem;
+    font-size: 1.0625rem;
+  }
+
+  .reportPostModalBody {
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.1875rem;
+    font-size: 0.625rem;
   }
 }
 
@@ -223,4 +577,40 @@
     display: flex;
     flex-direction: row;
   }
+}
+
+.adminUserSideNav {
+  width: 400px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-top: 50px;
+  padding: 0.3125rem 0.625rem;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  /* top: 7%; */
+  left: 10px;
+  background-color: white;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-top: 20px;
+  border-radius: 10px;
+  border: 2px solid lightgray;
+  /* margin-top: 20px; */
+}
+
+.sideNavHeader {
+  display: flex;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.listItems {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 10px;
 }
