@@ -85,7 +85,6 @@
   margin-right: 3px;
   height: 40px;
   font-size: small;
-  /* color:#0048f0; */
   font-weight: 600;
   height: 40px;
   margin-top: 10%;
@@ -182,7 +181,7 @@
   /* overflow-y: auto; */
   height: 100%;
   /* background-color: pink; */
-  width: 870px;
+  width: 835px;
 }
 
 .filterContainer{
@@ -194,7 +193,9 @@
   margin-right: 50px;
   width: 10%;
 }
-
+.leftContainerImage{
+  margin-top: -2px;
+}
 /* media queries */
 @media screen and (max-width: 600px) {
   .bodyContainer{
@@ -206,5 +207,8 @@
   .contentTypeContainers{
     width: 400px;
     height: 370px;
+  }
+  .tags{
+    width: 100%;
   }
 }
