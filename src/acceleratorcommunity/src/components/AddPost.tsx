@@ -1225,7 +1225,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     let locArr = myAnotherArr;
     locArr.map((post: any) => {
       if (id === post?.id && respArr) {
-        let comm = [...post?.comments, ...respArr];
+        let comm = [...respArr];
         post.comments = comm;
         return post;
       }
