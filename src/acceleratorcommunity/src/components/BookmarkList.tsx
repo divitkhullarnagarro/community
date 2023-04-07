@@ -76,24 +76,93 @@ const client1 = new ApolloClient({
 });
 
 const BookmarkList = (props: BookmarkListProps): JSX.Element => {
+  //   const obj:any = {
+  //     "id": "0885A14F0F9E4DCBAD9358B80CC845DD",
+  //     "url": {
+  //         "url": "https://xmc-nagarro1-communityac5f8a-communityac3796.sitecorecloud.io/explorecommunity/Patients-with-gout",
+  //         "__typename": "ItemUrl"
+  //     },
+  //     "title": {
+  //         "jsonValue": {
+  //             "value": "Patients with gout are more likely to experience cardiovascular event following flare"
+  //         },
+  //         "__typename": "TextField"
+  //     },
+  //     "shortDescription": {
+  //         "jsonValue": {
+  //             "value": "In this case-control study that included 62574 patients with gout, those who experienced a cardiovascular event, compared with those who did"
+  //         },
+  //         "__typename": "RichTextField"
+  //     },
+  //     "image": {
+  //         "jsonValue": {
+  //             "value": {
+  //                 "src": "https://xmc-nagarro1-communityac5f8a-communityac3796.sitecorecloud.io/-/media/acceleratorcommunity/data/media/img/Articles/newgout.jpg?h=459&iar=0&w=623&hash=13B21F7494AD3C7E6B35C1B669D9035F",
+  //                 "alt": "",
+  //                 "width": "623",
+  //                 "height": "459"
+  //             }
+  //         },
+  //         "__typename": "ImageField"
+  //     },
+  //     "date": {
+  //         "jsonValue": {
+  //             "value": "2024-08-01T18:30:00Z"
+  //         },
+  //         "__typename": "DateField"
+  //     },
+  //     "authorName": {
+  //         "jsonValue": {
+  //             "value": "JAMA"
+  //         },
+  //         "__typename": "TextField"
+  //     },
+  //     "tags": {
+  //         "targetItems": [
+  //             {
+  //                 "name": "Cardiology",
+  //                 "__typename": "ContentName"
+  //             },
+  //             {
+  //                 "name": "Research",
+  //                 "__typename": "ContentName"
+  //             }
+  //         ],
+  //         "__typename": "MultilistField"
+  //     },
+  //     "contentType": {
+  //         "targetItem": {
+  //             "name": "Case Study",
+  //             "__typename": "ContentName"
+  //         },
+  //         "__typename": "LookupField"
+  //     },
+  //     "__typename": "ArticleDetailPage"
+  // }
   const data = props?.fields?.data?.datasource?.contentType as any;
   const { setUserToken, userToken } = { ...useContext(WebContext) };
 
   const getFormatedDate = (stringDate: string) => {
-    const date = new Date(stringDate);
+    console.log('stringDate', stringDate);
+    let formattedDate = Date.now().toString();
 
-    // Get month abbreviation
-    const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date);
+    if (stringDate !== undefined) {
+      const date = new Date(stringDate);
 
-    // Get day with leading zero if necessary
-    const day = String(date.getDate()).padStart(2, '0');
+      // Get month abbreviation
+      const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date);
 
-    // Get full year
-    const year = date.getFullYear();
+      // Get day with leading zero if necessary
+      const day = String(date.getDate()).padStart(2, '0');
 
-    // Combine into formatted string
-    const formattedDate = `${month} ${day} ${year}`;
+      // Get full year
+      const year = date.getFullYear();
 
+      // Combine into formatted string
+      formattedDate = `${month} ${day} ${year}`;
+
+      return formattedDate;
+    }
     return formattedDate;
   };
   // const [bookmarkList, setBookmarkList] = useState<bookmarkFields[]>([]);
@@ -151,17 +220,25 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
     setBookmarkLists(completeList);
   };
 
+  const timeToDateParsing = (date: any) => {
+    const isoString = date; // An ISO 8601 string representing August 1, 2022
+    const dateOnlyString = isoString.substring(0, 10); // Extract the date component as a string
+    return dateOnlyString;
+  };
+
   useEffect(() => {
     if (userToken != '' && userToken != undefined) {
       getBookmarkList(userToken);
     }
   }, [userToken]);
 
+  useEffect(() => {}, [bookmarkLists]);
   const nowArticles = () => {
     let nowDateArticle = completeList?.filter((item: any) => {
-      return item?.date?.jsonValue?.value === new Date().toJSON();
+      let date: any = timeToDateParsing(item?.date?.jsonValue?.value);
+      let datee: any = timeToDateParsing(new Date().toISOString());
+      return Date.parse(date) === Date.parse(datee);
     });
-    console.log('bookmarkTYpeClicked', bookmarkTYpeClicked);
     if (bookmarkTYpeClicked[0] === 'all') {
       console.log('bookmarkTYpeClicked', bookmarkTYpeClicked);
 
@@ -174,7 +251,9 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
 
   const upComingArticle = () => {
     let nowDateArticle = completeList?.filter((item: any) => {
-      return item?.date?.jsonValue?.value > new Date().toJSON();
+      let date: any = timeToDateParsing(item?.date?.jsonValue?.value);
+      let datee: any = timeToDateParsing(new Date().toISOString());
+      return Date.parse(date) > Date.parse(datee);
     });
     if (bookmarkTYpeClicked[0] === 'all') {
       setBookmarkLists(nowDateArticle);
@@ -186,7 +265,9 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
 
   const pastArticle = () => {
     let nowDateArticle = completeList?.filter((item: any) => {
-      return item?.date?.jsonValue?.value < new Date().toJSON();
+      let date: any = timeToDateParsing(item?.date?.jsonValue?.value);
+      let datee: any = timeToDateParsing(new Date().toISOString());
+      return Date.parse(date) < Date.parse(datee);
     });
     if (bookmarkTYpeClicked[0] === 'all') {
       setBookmarkLists(nowDateArticle);
@@ -216,9 +297,13 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
           language: 'en',
         };
         client1.query({ query, variables }).then((result: any) => {
-          arrayList.push(result?.data?.datasource);
+          if (result?.data?.datasource !== null) {
+            console.log('result?.data?.datasource', result?.data?.datasource);
+            arrayList.push(result?.data?.datasource);
+          }
         });
       });
+      // arrayList.push(obj)
       setcompleteList(arrayList);
       setBookmarkLists(arrayList);
     }
@@ -265,6 +350,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                       <div className={bookmarkCss.rightContainerHeading}>
                         <h5>{l?.title?.jsonValue?.value}</h5>
                         <div>
+                          {/* {l?.shortDescription?.jsonValue?.value} */}
                           <p>{l?.description?.jsonValue?.value}</p>
                         </div>
                         <div>
