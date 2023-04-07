@@ -122,25 +122,30 @@ function BlockedUser() {
 
   return (
     <>
-      <div>
-        <Button variant="secondary">Back</Button>
-        <div className={styles.blockedUsersSideNav}>
-          <div className={styles.sideNavHeader}>Blocked Users List</div>
-          <hr />
+      <div className={styles.blockedUsercontainer}>
+        <div className={styles.left_column}>
+          <div className={styles.blockedUsersSideNav}>
+            <div className={styles.sideNavHeader}>Blocked Users List</div>
+            <hr />
 
-          {arr.length == 0 ? (
-            <div className={styles.noBlockedUsers}>You haven't blocked anyone</div>
-          ) : (
-            arr.map(() => {
-              return <BlockedUserRow />;
-            })
-          )}
-        </div>
-        <div className={styles.rightContainer}>
-          <div className={styles.blockedUserPreviewImage}>
-            <NextImage field={BlockedUserPreviewImage} editable={true} />
+            {arr.length == 0 ? (
+              <div className={styles.noBlockedUsers}>You haven't blocked anyone</div>
+            ) : (
+              arr.map(() => {
+                return <BlockedUserRow />;
+              })
+            )}
           </div>
-          Select people's name to preview their profile.
+        </div>
+        <div className={styles.right_column}>
+          <div className={styles.rightContainer}>
+            <div className={styles.blockedUserPreviewImage}>
+              <NextImage field={BlockedUserPreviewImage} editable={true} />
+            </div>
+            Select people's name to preview their profile.
+          </div>
+          <div className={styles.right_upper_section}></div>
+          <div className={styles.right_lower_section}></div>
         </div>
       </div>
       {<BlockUserPopup />}

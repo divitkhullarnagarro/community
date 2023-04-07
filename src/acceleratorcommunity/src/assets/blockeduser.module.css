@@ -1,3 +1,27 @@
+.blockedUsercontainer {
+  margin-top: 20px;
+  display: flex;
+  background-color: white;
+  font-family: 'Nunito', sans-serif;
+  justify-content: flex-start;
+}
+
+.left_column {
+  flex: 0 0 20%;
+  background-color: white;
+  margin-left: 20px;
+}
+
+.right_column {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0px;
+  margin-left: 25px;
+  height: 87vh;
+  justify-content: flex-start;
+  flex: 0 0 63%;
+}
+
 .blockedUsersSideNav {
   width: 400px;
   height: 100vh;
@@ -126,16 +150,14 @@
   justify-content: center;
   align-self: center;
   position: relative;
-  left: 800px;
   font-size: 30px;
   font-weight: bold;
   height: 80vh;
 }
 
 .blockedUserPreviewImage {
-  position: relative;
-  left: 300px;
-  width: 80px;
+  display: flex;
+  justify-content: center;
 }
 
 .noBlockedUsers {
