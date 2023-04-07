@@ -137,7 +137,6 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
   const [bookmarkLists, setBookmarkLists] = useState<any>(targetItems);
   const [completeList] = useState<any>(targetItems);
 
-  console.log('anmolllllllllllllllllllllllllllllllllllllllllll', targetItems);
   const [selectedArticle, setSelectedArticle] = useState<any>([]);
   const [shareArticle, setShareArticle] = useState<any>([]);
 
