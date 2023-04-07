@@ -19,8 +19,6 @@ const Profile = (props: ProfileProps | any): JSX.Element => {
   const { isLoggedIn, userToken, setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
   const router = useRouter();
 
-  let isExpEditorActive = props?.sitecoreContext?.pageEditing;
-
   useEffect(() => {
     if (userToken == '') {
       if (

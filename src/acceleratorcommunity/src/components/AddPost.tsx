@@ -287,7 +287,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     copyTextToClipboard(postId)
       .then(() => {
         setToastSuccess(true);
-        setToastMessage('Post url copied to clipboard successfully');
+        setToastMessage('Post url copied to clipboard');
         setShowNofitication(true);
       })
       .catch((err) => {

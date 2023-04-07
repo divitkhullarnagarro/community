@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Toast } from 'react-bootstrap';
 import styles from '../assets/toastnotification.module.css';
+import TickImage from '../assets/images/tick.png';
+import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 
 function ToastNotification(props: any) {
   const [showToastNotification, setShowToastNotification] = useState(props?.showNotification);
@@ -28,9 +30,14 @@ function ToastNotification(props: any) {
               : `${styles['toastHeader']} ${styles['error']}`
           }
         >
-          <strong className="mr-auto">{props?.success ? 'SUCCESS' : 'ERROR'} </strong>
+          <div className={styles.tickImage}>
+            <NextImage field={TickImage} width={20} height={20} />
+          </div>
+          <div className={styles.toastHeaderContent}>
+            <strong className={styles.toastStatus}>{props?.success ? 'SUCCESS' : 'ERROR'} </strong>
+            <div className={styles.toastMessage}>{props?.message}</div>
+          </div>
         </Toast.Header>
-        <Toast.Body className={styles.toastBody}>{props?.message}</Toast.Body>
       </Toast>
     </div>
   );
