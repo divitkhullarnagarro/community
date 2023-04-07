@@ -30,6 +30,9 @@ import copylink from '../assets/images/copylink.svg';
 import reportPostCall from 'src/API/reportPostCall';
 import uploadFilesCall from 'src/API/uploadFilesCall';
 import ToastNotification from './ToastNotification';
+import getCommentsCall from 'src/API/getCommentsCall';
+import getCommentsReplyCall from 'src/API/getCommentsReplyCall';
+import postCommentReplyCall from 'src/API/postCommentReplyCall';
 
 // Rich Text Editor Files Import Start
 import { EditorState, convertToRaw } from 'draft-js';
@@ -44,6 +47,9 @@ const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mo
   ssr: false,
 });
 // Rich Text Editor Files Import End
+
+import BlockUserImage from '../assets/images/BlockUser.jpg';
+import React from 'react';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -221,6 +227,57 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const [toastSuccess, setToastSuccess] = useState(false);
   const [toastError, setToastError] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const [showSpinner, setShowSpinner] = useState(false);
+  const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
+  const [blockUserName, setBlockUserName] = useState<string>('');
+
+  const onUserBlocked = async () => {
+    //setToastSuccess(true);
+    //setToastMessage('User blocked successfully');
+    //setShowNofitication(true);
+    setShowBlockUserPopUp(false);
+  };
+
+  const BlockUserPopup = () => {
+    return (
+      <>
+        <Modal
+          className={styles.reportPostModalContent}
+          show={showBlockUserPopUp}
+          onHide={() => setShowBlockUserPopUp(false)}
+          backdrop="static"
+          keyboard={false}
+          centered
+          scrollable={true}
+        >
+          <div>
+            <Modal.Header closeButton>
+              <Modal.Title className={styles.reportPostModalHeader}>{'Block User'}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div
+                className={styles.reportPostModalBody}
+              >{`Do you want to block ${blockUserName} ?`}</div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                className={styles.footerBtn}
+                variant="secondary"
+                onClick={() => {
+                  setShowBlockUserPopUp(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button className={styles.footerBtn} variant="secondary" onClick={onUserBlocked}>
+                Block
+              </Button>
+            </Modal.Footer>
+          </div>
+        </Modal>
+      </>
+    );
+  };
 
   async function copyTextToClipboard(postId: string) {
     let postUrl = window.location.origin + '/post/' + postId;
@@ -235,7 +292,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     copyTextToClipboard(postId)
       .then(() => {
         setToastSuccess(true);
-        setToastMessage('Post url copied to clipboard successfully');
+        setToastMessage('Post url copied to clipboard');
         setShowNofitication(true);
       })
       .catch((err) => {
@@ -306,6 +363,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </Button>
               <Button className={styles.footerBtn} variant="secondary" onClick={onPostReported}>
                 Report
+                {showSpinner ? (
+                  <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
+                ) : (
+                  <></>
+                )}
               </Button>
             </Modal.Footer>
           </div>
@@ -321,6 +383,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   };
 
   const onPostReported = async () => {
+    setShowSpinner(true);
     let reportReason = '';
     if (formRef.current != null) {
       reportReason = (
@@ -332,12 +395,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     if (response) {
       if (response?.success) {
         setToastSuccess(true);
+        setToastMessage(response?.data);
       } else {
         setToastError(true);
+        setToastMessage(response?.errorCode);
       }
-      setToastMessage(response?.data);
       setShowNofitication(true);
       setShowReportPopUp(false);
+      setShowSpinner(false);
     }
   };
 
@@ -436,6 +501,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       }
     });
   }
+  console.log('ALLPOSTS', myAnotherArr);
 
   //Function To Handle Open Comments Tray
   function setOpenComments(id: string, show: boolean) {
@@ -469,19 +535,23 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   }
 
   //Function To Handle Post Comments
-  function postComments(id: string, e: any) {
+  async function postComments(id: string, e: any) {
     e.preventDefault();
 
     let locArr = myAnotherArr;
-    addPostCommentCall(userToken, id, e.target[0].value);
+    const commStr = e.target[0].value;
+    e.currentTarget.reset();
+    let resp = await addPostCommentCall(userToken, id, commStr);
+    const timestamp = new Date().getTime();
     locArr.map((post: any) => {
       if (id === post?.id) {
         post?.comments?.push({
-          id: 'Unique Id For Each Comment',
-          commentToId: id,
-          nameOfCommentor: 'Will Be Extracted From Token Value',
-          dateAndTime: 'Current Date Time',
-          commentString: e.target[0].value,
+          id: resp?.data?.data,
+          createdBy: { firstName: userObject?.firstName, lastName: userObject?.lastName },
+          text: commStr,
+          replies: [],
+          isOpenReply: false,
+          createdOn: timestamp,
         });
         if (typeof post?.postMeasures?.commentCount === 'number') {
           post.postMeasures.commentCount = (post.postMeasures.commentCount ?? 0) + 1;
@@ -491,25 +561,15 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         return post;
       }
     });
-    setMyAnotherArr((prevPosts: any) => {
-      return prevPosts.map((post: any, index: number) => {
-        if (index < locArr.length) {
-          return locArr[index];
-        } else {
-          return post;
-        }
-      });
-    });
-
-    e.currentTarget.reset();
+    updateArrayWithLatestdata(locArr);
   }
 
   //Function To Handle Posts Feed and Construct React.jsx using data
   function postStructCreate() {
     let locArr2: ReactElement<any, any>[] = [];
-    myAnotherArr?.map((post: any, num: any) => {
+    myAnotherArr?.map((post: any) => {
       locArr2.push(
-        <div className="postContainer" key={num}>
+        <div className="postContainer" key={post?.id}>
           <div className="postHeading">
             <div className="postHeaderLeft">
               <img
@@ -597,6 +657,24 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       <div className={styles.reportContainerBtn}>Report Post</div>
                     </div>
                   </Dropdown.Item>
+                  <Dropdown.Item
+                    className={styles.dropdownItem}
+                    onClick={() => {
+                      setBlockUserName(
+                        post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName
+                      );
+                      setShowBlockUserPopUp(true);
+                    }}
+                  >
+                    <div className={styles.overlayItem}>
+                      <div className={styles.dropdownImage}>
+                        <NextImage field={BlockUserImage} editable={true} />
+                      </div>
+                      <div className={styles.reportContainerBtn}>
+                        Block {post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName}
+                      </div>
+                    </div>
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               <img
@@ -607,7 +685,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             </div>
           </div>
           <div className="postContent">
-            <div className="postHeading">{parser(modifyHtml(post?.description))}</div>
+            <div>{parser(modifyHtml(post?.description))}</div>
             <div className="postMedia">
               {post?.mediaList?.map((media: any, num: any) => {
                 if (media?.mediaType === 'VIDEO') {
@@ -802,10 +880,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </button>
                 </Form.Group>
               </Form>
-              {post?.comments?.map((comment: any) => {
+              {post?.comments?.map((comment: any, num: any) => {
                 return (
                   <>
                     <div
+                      id={num}
                       style={{
                         padding: '20px',
                         backgroundColor: 'lightgray',
@@ -818,14 +897,215 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     >
                       <div>
                         <h4>
-                          {userObject?.firstName} {userObject?.lastName}
+                          {comment?.createdBy?.firstName} {comment?.createdBy?.lastName}
+                          <span style={{ fontSize: '12px', marginLeft: '5px' }}>
+                            {' '}
+                            {calculateTimeDifference(comment?.createdOn)}
+                          </span>
                         </h4>
                       </div>
-                      <div>{comment?.commentString}</div>
+                      <div>{comment?.text}</div>
+                    </div>
+                    <div>
+                      <div style={{ marginBottom: '10px' }}>
+                        <span>
+                          <img
+                            style={{ margin: '5px' }}
+                            width="30px"
+                            src="https://cdn-icons-png.flaticon.com/512/3082/3082422.png"
+                            alt="upvote"
+                          />
+                        </span>
+                        <span>
+                          <img
+                            width="30px"
+                            style={{ margin: '5px' }}
+                            src="https://cdn-icons-png.flaticon.com/512/159/159694.png"
+                            alt="downVote"
+                          />
+                        </span>
+                        <button
+                          onClick={() => openCommentReplies(comment?.id, !comment?.isOpenReply)}
+                          aria-controls="repliesContainer"
+                          aria-expanded={comment?.isOpenReply}
+                          style={{ border: 'none', marginLeft: '16px' }}
+                        >
+                          Reply
+                        </button>
+                      </div>
+                      <Collapse in={comment?.isOpenReply}>
+                        <div style={{ position: 'relative', left: '10%', width: '88%' }}>
+                          <Form
+                            onSubmit={(e) => {
+                              postCommentReply(post?.id, comment?.id, e);
+                            }}
+                            style={{ border: '1px', borderColor: 'black' }}
+                          >
+                            <Form.Group controlId="comments" style={{ display: 'flex' }}>
+                              <img
+                                width="32px"
+                                className="commentUserImage"
+                                src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                                alt="User-Pic"
+                              ></img>
+                              <Form.Control
+                                // onChange={(e) => setPostCommentValue(e.target.value)}
+                                type="text"
+                                placeholder="Reply..."
+                                required
+                                autoFocus
+                                style={{ width: '100%' }}
+                              />
+                              <button type="submit" className="postCommentButton">
+                                Post reply
+                              </button>
+                            </Form.Group>
+                          </Form>
+                          {comment?.replies?.map((reply: any) => {
+                            return (
+                              <>
+                                <div
+                                  id={reply?.id}
+                                  style={{
+                                    padding: '20px',
+                                    backgroundColor: 'lightgray',
+                                    margin: '5px',
+                                    borderBottomLeftRadius: '30px',
+                                    borderTopRightRadius: '30px',
+                                    borderBottomRightRadius: '30px',
+                                    marginTop: '20px',
+                                    marginLeft: '10%',
+                                  }}
+                                >
+                                  <div>
+                                    <span style={{ fontSize: '15px', fontWeight: '600' }}>
+                                      {reply?.createdBy?.firstName} {reply?.createdBy?.lastName}{' '}
+                                    </span>
+                                    <span style={{ fontSize: '12px' }}>
+                                      {' '}
+                                      {calculateTimeDifference(reply?.createdOn)}
+                                    </span>
+                                  </div>
+                                  <div>{reply?.text}</div>
+                                </div>
+                                <div
+                                  style={{
+                                    marginBottom: '10px',
+                                    position: 'relative',
+                                    left: '10%',
+                                    width: '88%',
+                                  }}
+                                >
+                                  <span>
+                                    <img
+                                      style={{ margin: '5px' }}
+                                      width="30px"
+                                      src="https://cdn-icons-png.flaticon.com/512/3082/3082422.png"
+                                      alt="upvote"
+                                    />
+                                  </span>
+                                  <span>
+                                    <img
+                                      width="30px"
+                                      style={{ margin: '5px' }}
+                                      src="https://cdn-icons-png.flaticon.com/512/159/159694.png"
+                                      alt="downVote"
+                                    />
+                                  </span>
+                                  <button
+                                    aria-controls="replyOfReplyContainer"
+                                    aria-expanded={reply?.isOpenReplyOfReply}
+                                    style={{ border: 'none' }}
+                                    onClick={() =>
+                                      openReplyOfReply(
+                                        post?.id,
+                                        comment?.id,
+                                        reply?.id,
+                                        !reply?.isOpenReplyOfReply
+                                      )
+                                    }
+                                  >
+                                    Reply
+                                  </button>
+                                </div>
+                                <Collapse in={reply?.isOpenReplyOfReply}>
+                                  <div style={{ position: 'relative', left: '10%', width: '88%' }}>
+                                    <Form
+                                      onSubmit={(e) => {
+                                        postCommentReply(post?.id, comment?.id, e);
+                                      }}
+                                      style={{ border: '1px', borderColor: 'black' }}
+                                    >
+                                      <Form.Group controlId="comments" style={{ display: 'flex' }}>
+                                        <img
+                                          width="32px"
+                                          className="commentUserImage"
+                                          src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                                          alt="User-Pic"
+                                        ></img>
+                                        <Form.Control
+                                          // onChange={(e) => setPostCommentValue(e.target.value)}
+                                          type="text"
+                                          placeholder="Reply..."
+                                          required
+                                          autoFocus
+                                          style={{ width: '100%' }}
+                                        />
+                                        <button type="submit" className="postCommentButton">
+                                          Post reply
+                                        </button>
+                                      </Form.Group>
+                                    </Form>
+                                  </div>
+                                </Collapse>
+                              </>
+                            );
+                          })}
+                          {comment?.hasReply ? (
+                            <div
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                marginBottom: '16px',
+                              }}
+                            >
+                              <button
+                                onClick={() => loadCommentReplies(comment?.id)}
+                                style={{ padding: '5px', border: 'none', margin: '16px' }}
+                              >
+                                Load Replies
+                              </button>
+                            </div>
+                          ) : (
+                            ''
+                          )}
+                        </div>
+                      </Collapse>
                     </div>
                   </>
                 );
               })}
+              {post?.postMeasures?.commentCount > 0 ? (
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <button
+                    onClick={() => loadComments(post.id)}
+                    style={{
+                      padding: '12px',
+                      border: 'none',
+                      borderRadius: '10px',
+                    }}
+                  >
+                    Load Comments{' '}
+                    <img
+                      width="30px"
+                      src="https://cdn-icons-png.flaticon.com/512/3305/3305803.png"
+                      alt="LoadImage"
+                    />
+                  </button>
+                </div>
+              ) : (
+                ''
+              )}
             </div>
           </Collapse>
         </div>
@@ -834,11 +1114,134 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setPosts(locArr2);
   }
 
+  function openReplyOfReply(postId: string, commentId: string, replyId: string, open: boolean) {
+    let locArr = myAnotherArr;
+    locArr.map((post: any) => {
+      if (post?.id == postId && post.comments?.length > 0) {
+        post.comments.map((comment: any) => {
+          if (comment?.id == commentId) {
+            comment?.replies?.map((reply: any) => {
+              if (reply?.id == replyId) {
+                reply.isOpenReplyOfReply = open;
+                return reply;
+              } else {
+                return reply;
+              }
+            });
+            return comment;
+          } else {
+            return comment;
+          }
+        });
+      }
+    });
+    updateArrayWithLatestdata(locArr);
+  }
+
+  function openCommentReplies(commentid: any, open: boolean) {
+    let locArr = myAnotherArr;
+    locArr.map((post: any) => {
+      if (post.comments?.length > 0) {
+        post.comments.map((comment: any) => {
+          if (comment?.id == commentid) {
+            comment.isOpenReply = open;
+            return comment;
+          } else {
+            return comment;
+          }
+        });
+      }
+    });
+    updateArrayWithLatestdata(locArr);
+  }
+
+  async function postCommentReply(postId: string, commentId: string, e: any) {
+    e.preventDefault();
+    const commentString = e.target[0].value;
+    e.currentTarget.reset();
+    let resp = await postCommentReplyCall(userToken, postId, commentId, commentString);
+    let locArr = myAnotherArr;
+    const timestamp = new Date().getTime();
+    locArr.map((post: any) => {
+      if (post.comments?.length > 0) {
+        post.comments.map((comment: any) => {
+          if (comment?.id == commentId) {
+            comment.replies.push({
+              id: resp?.data?.data,
+              createdBy: { firstName: userObject?.firstName, lastName: userObject?.lastName },
+              text: commentString,
+              hasReply: true,
+              isOpenReplyOfReply: false,
+              createdOn: timestamp,
+            });
+            return comment;
+          } else {
+            return comment;
+          }
+        });
+      }
+    });
+    updateArrayWithLatestdata(locArr);
+  }
+
+  function updateArrayWithLatestdata(locArr: any) {
+    setMyAnotherArr((prevPosts: any) => {
+      return prevPosts.map((post: any, index: number) => {
+        if (index < locArr.length) {
+          return locArr[index];
+        } else {
+          return post;
+        }
+      });
+    });
+  }
+
+  async function loadCommentReplies(id: any) {
+    let resp = await getCommentsReplyCall(userToken, id, 0);
+    let locArr = myAnotherArr;
+    resp?.data?.data.map((reply: any) => {
+      reply.isOpenReplyOfReply = false;
+    });
+    locArr.map((post: any) => {
+      if (post.comments?.length > 0) {
+        post.comments.map((comment: any) => {
+          if (comment?.id == id) {
+            comment.replies = resp?.data?.data;
+            return comment;
+          } else {
+            return comment;
+          }
+        });
+      }
+    });
+    updateArrayWithLatestdata(locArr);
+  }
+
+  async function loadComments(id: any) {
+    let resp = await getCommentsCall(userToken, id, 0);
+    let respArr = resp?.data?.data;
+    respArr?.map((comment: any) => {
+      comment.isOpenReply = false;
+      comment.replies = [];
+    });
+    let locArr = myAnotherArr;
+    locArr.map((post: any) => {
+      if (id === post?.id && respArr) {
+        let comm = [...respArr];
+        post.comments = comm;
+        return post;
+      }
+    });
+    updateArrayWithLatestdata(locArr);
+  }
+
   function addLatestCreatedPost(id: string) {
     getPostByIdCall(userToken, id).then((response) => {
       if (response?.data?.data != undefined) {
+        let resp = response?.data?.data;
+        resp.comments = [];
         let locArray: any = [];
-        locArray.push(response?.data?.data);
+        locArray.push(resp);
         setMyAnotherArr((prevState: any[]) => {
           return [...locArray, ...prevState];
         });
@@ -889,23 +1292,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     if (postText == '') {
       return;
     }
-    // let uniqueId = generateUniqueId();
-
-    // setMyAnotherArr((prevPosts: any) => {
-    //   const newPost = {
-    //     id: uniqueId,
-    //     // heading: postHeading,
-    //     postText: postText,
-    //     imageArray: file,
-    //     docArray: docs,
-    //     videoArray: videoLink,
-    //     likes: 0,
-    //     disLikes: [],
-    //     showComments: false,
-    //     comments: [],
-    //   };
-    //   return [newPost, ...prevPosts];
-    // });
     let postType = 'VIDEO';
     if (file.length == 0 && docs.length == 0 && videoLink.length == 0) {
       postType = 'TEXT_POST';
@@ -1448,6 +1834,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         </div>
       </div>
       {<ReportPostPopup />}
+      {<BlockUserPopup />}
       {showNotification && (
         <ToastNotification
           showNotification={showNotification}

@@ -9,7 +9,6 @@ import calender from '../assets/images/calendar.svg';
 import { getBookmarkItem } from './Queries';
 import { sitecoreApiHost } from 'temp/config';
 import { ApolloClient, ApolloLink, InMemoryCache, HttpLink } from 'apollo-boost';
-import FilterByDate from './FilterByDate';
 import SideBar from './SideBar';
 
 type BookmarkListProps = ComponentProps & {
@@ -107,14 +106,14 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
     setbuttonTypes(data?.jsonValue);
   }, []);
 
-  const [scroll, setScroll] = useState(false);
-  useEffect(() => {
-    window.addEventListener('scroll', () => {
-      if (window !== undefined) {
-        setScroll(window.scrollY > 45);
-      }
-    });
-  }, []);
+  // const [scroll, setScroll] = useState(false);
+  // useEffect(() => {
+  //   window.addEventListener('scroll', () => {
+  //     if (window !== undefined) {
+  //       setScroll(window.scrollY > 260);
+  //     }
+  //   });
+  // }, []);
 
   // setbuttonTypes(data.jsonValue)
 
@@ -226,17 +225,24 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
   };
   return (
     <div className={bookmarkCss.container}>
+      <SideBar
+        handleAllClick={handleAllClick}
+        bookmarkTYpeClicked={bookmarkTYpeClicked}
+        handleClick={handleClick}
+        buttonTypes={buttonTypes}
+        nowArticles={nowArticles}
+        pastArticle={pastArticle}
+        upComingArticle={upComingArticle}
+      />
+
       <div className={bookmarkCss.heading}>
-        <h3>My collection</h3>
+        <div className={bookmarkCss.leftContainerImage}>
+          <NextImage field={ActiveBookmark} editable={true} width={35} height={30} />
+        </div>
+
+        <h5>Saved Bookmarks</h5>
       </div>
       <div className={bookmarkCss.bodyContainer}>
-        <SideBar
-          handleAllClick={handleAllClick}
-          bookmarkTYpeClicked={bookmarkTYpeClicked}
-          scroll={scroll}
-          handleClick={handleClick}
-          buttonTypes={buttonTypes}
-        />
         <div>
           {' '}
           <div className={bookmarkCss.listContainers}>
@@ -246,7 +252,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                   <div key={i} className={bookmarkCss.contentTypeContainers}>
                     {/* <div className={bookmarkCss.contentTypeContainer}> */}
                     <div className={bookmarkCss.leftContainer}>
-                      <h4>{l?.contentType?.targetItem?.name}</h4>
+                      {/* <h4>{l?.contentType?.targetItem?.name}</h4> */}
                       <NextImage
                         className={bookmarkCss.leftContainerImage}
                         field={l?.image?.jsonValue?.value}
@@ -257,7 +263,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                     </div>
                     <div className={bookmarkCss.rightContainer}>
                       <div className={bookmarkCss.rightContainerHeading}>
-                        <h4>{l?.title?.jsonValue?.value}</h4>
+                        <h5>{l?.title?.jsonValue?.value}</h5>
                         <div>
                           <p>{l?.description?.jsonValue?.value}</p>
                         </div>
@@ -267,11 +273,20 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                         <div>{l?.author?.jsonValue?.value}</div>
                         <div className={bookmarkCss.dates}>
                           <NextImage field={calender} editable={true} />
-
                           {getFormatedDate(l?.date?.jsonValue?.value)}
                         </div>
-
-                        <div className={bookmarkCss.button}>
+                        <div className={bookmarkCss.tags}>
+                          <div className={bookmarkCss.leftContainerImage}>
+                            <NextImage
+                              field={ActiveBookmark}
+                              editable={true}
+                              width={35}
+                              height={30}
+                            />
+                          </div>
+                          <h5>{l?.contentType?.targetItem?.name}</h5>
+                        </div>
+                        {/* <div className={bookmarkCss.button}>
                           <button>
                             <NextImage
                               className={bookmarkCss.leftContainerImage}
@@ -279,7 +294,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                               editable={true}
                             />
                           </button>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -291,13 +306,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
             )}
           </div>
         </div>
-        <div className={bookmarkCss.filterContainer}>
-          <FilterByDate
-            nowArticles={nowArticles}
-            pastArticle={pastArticle}
-            upComingArticle={upComingArticle}
-          />
-        </div>
+        {/* <div className={scroll ? bookmarkCss.filterContainerTop : bookmarkCss.filterConatiner}> */}
       </div>
     </div>
   );
