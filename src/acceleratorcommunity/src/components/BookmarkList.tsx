@@ -236,13 +236,11 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
       />
 
       <div className={bookmarkCss.heading}>
-        <h5>Saved Bookmark</h5>
-        <NextImage
-          className={bookmarkCss.leftContainerImage}
-          field={ActiveBookmark}
-          editable={true}
-          width={35}
-        />
+        <div className={bookmarkCss.leftContainerImage}>
+          <NextImage field={ActiveBookmark} editable={true} width={35} height={30} />
+        </div>
+
+        <h5>Saved Bookmarks</h5>
       </div>
       <div className={bookmarkCss.bodyContainer}>
         <div>
@@ -278,9 +276,17 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                           {getFormatedDate(l?.date?.jsonValue?.value)}
                         </div>
                         <div className={bookmarkCss.tags}>
+                          <div className={bookmarkCss.leftContainerImage}>
+                            <NextImage
+                              field={ActiveBookmark}
+                              editable={true}
+                              width={35}
+                              height={30}
+                            />
+                          </div>
                           <h5>{l?.contentType?.targetItem?.name}</h5>
                         </div>
-                        <div className={bookmarkCss.button}>
+                        {/* <div className={bookmarkCss.button}>
                           <button>
                             <NextImage
                               className={bookmarkCss.leftContainerImage}
@@ -288,7 +294,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                               editable={true}
                             />
                           </button>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>

@@ -1,7 +1,7 @@
 .mainwrapper {
-  width: 95%;
+  width: 100%;
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
 }
 .filterConatiner {
   margin-top: 30px;
@@ -11,7 +11,7 @@
   /* position: absolute; */
   background-color: whitesmoke;
 
-  width: 750px;
+  width: 820px;
   height: 22rem;
   border-radius: 8px;
   margin: 30px;
@@ -169,12 +169,24 @@
 }
 @media screen and (max-width: 600px) {
   /* .mainwrapper{
-    width: 100px;
+    width: 50%;
   } */
-  /* .wrapper{
-    width: 90%;
+  .mainwrapper{
+    box-sizing: inherit !important;
   }
-  .bodyContainer{
-    width: 100%;
-  } */
+  .wrapper{
+    width: 400px;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  .rightSection{
+    width:  250px;
+  }
+  .buttons{
+    margin-left: 0;
+  }
+  .title{
+    height: 100%;
+  }
+  
 }
