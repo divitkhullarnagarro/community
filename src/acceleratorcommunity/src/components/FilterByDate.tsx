@@ -3,8 +3,8 @@ import SideBarCss from '../assets/sidebar.module.css';
 
 function FilterByDate(props: any) {
   return (
-    <Dropdown className={SideBarCss.filteredDateContainer}>
-      <Dropdown.Toggle id="dropdown-basic">Filter By date</Dropdown.Toggle>
+    <Dropdown className={SideBarCss.filteredDateBox} >
+      <Dropdown.Toggle className={SideBarCss.filteredDateContainer} id="dropdown-basic">Filter By date</Dropdown.Toggle>
 
       <Dropdown.Menu className={SideBarCss.filteredDateContainerMenu}>
         <Dropdown.Item onClick={props?.nowArticles}>Current</Dropdown.Item>
