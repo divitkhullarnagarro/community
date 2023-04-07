@@ -39,6 +39,7 @@ import dynamic from 'next/dynamic';
 import draftToHtml from 'draftjs-to-html';
 import { toolbar } from 'assets/helpers/constants';
 import allPeersCall from 'src/API/getPeers';
+import { modifyHtml } from 'assets/helpers/helperFunctions';
 const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mod) => mod.Editor), {
   ssr: false,
 });
@@ -51,7 +52,6 @@ type AddPostProps = ComponentProps & {
 };
 
 const AddPost = (props: AddPostProps | any): JSX.Element => {
-
   const { userToken, setUserToken, objectId, userObject, setUserObject } = {
     ...useContext(WebContext),
   };
@@ -126,6 +126,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   };
   useEffect(() => {
     getAllPears();
+
     // console.log('getAllPears', getAllPears());
   }, []);
 
@@ -606,7 +607,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             </div>
           </div>
           <div className="postContent">
-            <div className="postHeading">{parser(post?.description)}</div>
+            <div className="postHeading">{parser(modifyHtml(post?.description))}</div>
             <div className="postMedia">
               {post?.mediaList?.map((media: any, num: any) => {
                 if (media?.mediaType === 'VIDEO') {
@@ -701,10 +702,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         height={25}
                       />
                       <Link
-                        
-                        href={
-                          `${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`             
-                        }
+                        href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
                           WhatsApp
@@ -721,9 +719,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         height={25}
                       />
                       <Link
-                        href={
-                          `${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`
-                        }
+                        href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
                           Twitter
@@ -740,9 +736,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         height={25}
                       />
                       <Link
-                        href={
-                          `${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`
-                        }
+                        href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
                           LinkedIn
@@ -758,9 +752,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         height={25}
                       />
                       <Link
-                        href={
-                          `${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`
-                        }
+                        href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
                       >
                         <a className={ShowShareCss.targetIcon} target="_blank">
                           Facebook
