@@ -76,69 +76,6 @@ const client1 = new ApolloClient({
 });
 
 const BookmarkList = (props: BookmarkListProps): JSX.Element => {
-  //   const obj:any = {
-  //     "id": "0885A14F0F9E4DCBAD9358B80CC845DD",
-  //     "url": {
-  //         "url": "https://xmc-nagarro1-communityac5f8a-communityac3796.sitecorecloud.io/explorecommunity/Patients-with-gout",
-  //         "__typename": "ItemUrl"
-  //     },
-  //     "title": {
-  //         "jsonValue": {
-  //             "value": "Patients with gout are more likely to experience cardiovascular event following flare"
-  //         },
-  //         "__typename": "TextField"
-  //     },
-  //     "shortDescription": {
-  //         "jsonValue": {
-  //             "value": "In this case-control study that included 62574 patients with gout, those who experienced a cardiovascular event, compared with those who did"
-  //         },
-  //         "__typename": "RichTextField"
-  //     },
-  //     "image": {
-  //         "jsonValue": {
-  //             "value": {
-  //                 "src": "https://xmc-nagarro1-communityac5f8a-communityac3796.sitecorecloud.io/-/media/acceleratorcommunity/data/media/img/Articles/newgout.jpg?h=459&iar=0&w=623&hash=13B21F7494AD3C7E6B35C1B669D9035F",
-  //                 "alt": "",
-  //                 "width": "623",
-  //                 "height": "459"
-  //             }
-  //         },
-  //         "__typename": "ImageField"
-  //     },
-  //     "date": {
-  //         "jsonValue": {
-  //             "value": "2024-08-01T18:30:00Z"
-  //         },
-  //         "__typename": "DateField"
-  //     },
-  //     "authorName": {
-  //         "jsonValue": {
-  //             "value": "JAMA"
-  //         },
-  //         "__typename": "TextField"
-  //     },
-  //     "tags": {
-  //         "targetItems": [
-  //             {
-  //                 "name": "Cardiology",
-  //                 "__typename": "ContentName"
-  //             },
-  //             {
-  //                 "name": "Research",
-  //                 "__typename": "ContentName"
-  //             }
-  //         ],
-  //         "__typename": "MultilistField"
-  //     },
-  //     "contentType": {
-  //         "targetItem": {
-  //             "name": "Case Study",
-  //             "__typename": "ContentName"
-  //         },
-  //         "__typename": "LookupField"
-  //     },
-  //     "__typename": "ArticleDetailPage"
-  // }
   const data = props?.fields?.data?.datasource?.contentType as any;
   const { setUserToken, userToken } = { ...useContext(WebContext) };
 
