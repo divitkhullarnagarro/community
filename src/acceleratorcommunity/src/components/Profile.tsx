@@ -19,11 +19,18 @@ const Profile = (props: ProfileProps | any): JSX.Element => {
   const { isLoggedIn, userToken, setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
   const router = useRouter();
 
-  let isExpEditorActive = props?.sitecoreContext?.pageEditing;
-
   useEffect(() => {
-    if (userToken == '' && !isExpEditorActive) {
-      router.push('/login');
+    if (userToken == '') {
+      if (
+        typeof localStorage !== 'undefined' &&
+        localStorage.getItem('UserToken') != '' &&
+        localStorage.getItem('UserToken') != null
+      ) {
+        let token = localStorage.getItem('UserToken');
+        if (token != null && setUserToken != undefined) {
+          setUserToken(token);
+        }
+      } else router.push('/login');
     }
   }, []);
 

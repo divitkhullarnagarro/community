@@ -1,9 +1,132 @@
-.container {
+.userProfileContainer {
   display: flex;
   justify-content: space-between;
   padding: 0.25rem;
   margin: 0.375rem;
 }
-.container img {
+
+.userProfileContainer img {
   cursor: pointer;
+}
+
+.logoutModalHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  font-size: 1.875rem;
+}
+
+.logoutModalBody {
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+  font-size: 1.25rem;
+}
+
+.footerBtn {
+  font-size: 1.25rem;
+}
+
+.userProfileOverlayItem {
+  display: flex;
+  justify-content: flex-start;
+  margin-right: 5px;
+}
+
+.userProfileBtn {
+  background-color: white;
+  color: black;
+  border: none;
+  font-weight: bold;
+  padding-top: 10px;
+  padding-left: 20px;
+}
+
+.userProfileDropdownBtn {
+  background-color: white;
+  border: none;
+  width: 40px;
+}
+
+.userProfileDropdownItem {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 5px;
+  padding-top: 5px;
+  padding-bottom: 8px;
+}
+
+.userProfileDropdownItem:hover .userProfileBtn {
+  color: #fff;
+  background-color: #5c636a;
+  border-color: #565e64;
+}
+
+.userProfileDropdownItem:visited,
+.userProfileDropdownItem:hover,
+.userProfileDropdownItem:active {
+  color: #fff;
+  background-color: #5c636a;
+  border-color: #565e64;
+}
+
+.userProfileDropdownItem:hover .userProfileDropdownImage {
+  filter: invert(1);
+}
+
+.userProfileDropdownImage {
+  margin-top: 10px;
+  width: 20px;
+  height: 10px;
+}
+
+@media only screen and (max-width: 640px) {
+  .dropdownBtn {
+    background-color: white;
+    border: none;
+    width: 20px !important;
+  }
+
+  .logoutModalContent {
+    margin-left: 2.5rem;
+    width: 18.75rem;
+    height: 37.5rem;
+    overflow-y: auto;
+  }
+
+  .userProfileDropdownItem {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.625rem;
+    border-radius: 0.1875rem;
+    padding-top: 0.1875rem;
+    padding-bottom: 0.3125rem;
+  }
+
+  .logoutModalHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.1875rem;
+    font-size: 1.0625rem;
+  }
+
+  .logoutModalBody {
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.1875rem;
+    font-size: 0.625rem;
+  }
+
+  .footerBtn {
+    font-size: 1.25rem;
+  }
+
+  .userProfileDropdownImage {
+    width: 15px;
+    height: 15px;
+  }
 }
