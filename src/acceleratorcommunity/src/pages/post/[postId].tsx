@@ -4,6 +4,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import WebContext from '../../Context/WebContext';
 import specificPostCss from '../../assets/specificPost.module.css';
 import Profile from '../../assets/images/ProfilePic.jpeg';
+import styles from '../../assets/addPost.module.css';
+import bookmarkImage from '../../assets/images/bookmark-outline.svg';
+import reportPostImage from '../../assets/images/flag-icon.svg';
+import BlockUserImage from '../../assets/images/BlockUser.jpg';
+
 // import Event from '../../assets/images/event.jpg';
 // import commentSvg from '../../assets/images/comment-svgrepo-com 1.svg';
 // import shareSvg from '../../assets/images/share.svg';
@@ -15,6 +20,10 @@ import Profile from '../../assets/images/ProfilePic.jpeg';
 
 // import { Form } from 'react-bootstrap';
 import Head from 'next/head';
+import { Dropdown } from 'react-bootstrap';
+import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+import copylink from '../../assets/images/copylink.svg';
+
 // import {calculateTimeDifference} from
 
 // import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
@@ -37,6 +46,19 @@ function viewSinglePost(props: any) {
   // let [post, setPost] = useState<any>([]);
   let [index, setIndex] = useState<any>(0);
   let [imagesAndVideos, setImagesAndVideos] = useState<any>([]);
+  const [showReportPopUp, setShowReportPopUp] = useState(false);
+  const [toastSuccess, setToastSuccess] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string>();
+  const [showNotification, setShowNofitication] = useState(false);
+  const [toastError, setToastError] = useState(false);
+  const [reportPostId, setReportPostId] = useState('');
+  const [reportPostType, setReportPostType] = useState('');
+  const [blockUserName, setBlockUserName] = useState<string>('');
+  const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
+
+  const showReportPostPopup = () => {
+    setShowReportPopUp(true);
+  };
 
   useEffect(() => {
     let arrayOfImagesAndVideos = props?.data?.data?.mediaList?.filter((dataum: any) => {
@@ -105,6 +127,30 @@ function viewSinglePost(props: any) {
   //   }
   // }, []);
 
+  async function copyTextToClipboard(postId: string) {
+    let postUrl = window.location.origin + '/post/' + postId;
+    if ('clipboard' in navigator) {
+      return await navigator.clipboard.writeText(postUrl);
+    } else {
+      return document.execCommand('copy', true, postUrl);
+    }
+  }
+
+  const copyPostLinkToClipboard = (postId: string) => {
+    copyTextToClipboard(postId)
+      .then(() => {
+        setToastSuccess(true);
+        setToastMessage('Post url copied to clipboard');
+        setShowNofitication(true);
+      })
+      .catch((err) => {
+        setToastError(true);
+        setToastMessage(err?.message ?? 'Something went wrong');
+        setShowNofitication(true);
+        console.log(err);
+      });
+  };
+
   const goLeft = () => {
     const isFirstSlide = index === 0;
     const newIndex = isFirstSlide ? imagesAndVideos?.length - 1 : index - 1;
@@ -116,6 +162,16 @@ function viewSinglePost(props: any) {
     const newIndex = isFirstSlide ? 0 : index + 1;
     setIndex(newIndex);
   };
+
+
+  function openDoc(base64: string) {
+    var base64pdf = base64;
+
+    if (window !== undefined) {
+      var pdfWindow = window.open('', '_blank');
+      pdfWindow?.document.write(`<iframe width='100%' height='100%' src=${base64pdf}></iframe>`);
+    }
+  }
 
   useEffect(() => {
     if (userToken == '') {
@@ -211,7 +267,94 @@ function viewSinglePost(props: any) {
                 </div>
               </div>
               <div className={specificPostCss.actionContainer}>
-                <button className={specificPostCss.dropDownBtn}>...</button>
+                <button className={specificPostCss.dropDownBtn}>
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      variant="secondary"
+                      id="dropdown-basic"
+                      className={styles.dropdownBtn}
+                      style={{ backgroundColor: 'white', border: 'none', width: '70px' }}
+                    >
+                      <button
+                        onClick={() => {
+                          setReportPostId(props?.data?.data?.id);
+                          setReportPostType(props?.data?.data?.postType);
+                        }}
+                        style={{
+                          border: 'none',
+                          backgroundColor: 'white',
+                          padding: '0',
+                        }}
+                      >
+                        <img
+                          className="postMoreOptionsImage"
+                          src="https://cdn-icons-png.flaticon.com/512/463/463292.png"
+                          alt="pan"
+                        />
+                      </button>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu className={styles.dropdownMenu}>
+                      <Dropdown.Item className={styles.dropdownItem}>
+                        <div className={styles.overlayItem}>
+                          <div className={styles.dropdownImage}>
+                            <NextImage field={bookmarkImage} editable={true} />
+                          </div>
+                          <div className={styles.reportContainerBtn}> Save Post</div>
+                        </div>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className={styles.dropdownItem}
+                        onClick={() => {
+                          copyPostLinkToClipboard(props?.data?.data?.id);
+                        }}
+                      >
+                        <div className={styles.overlayItem}>
+                          <div className={styles.dropdownImage}>
+                            <NextImage field={copylink} editable={true} />
+                          </div>
+                          <div className={styles.reportContainerBtn}> Copy link to post</div>
+                        </div>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className={styles.dropdownItem}
+                        onClick={() => {
+                          showReportPostPopup();
+                        }}
+                      >
+                        <div className={styles.overlayItem}>
+                          <div className={styles.dropdownImage}>
+                            <NextImage field={reportPostImage} editable={true} />
+                          </div>
+                          <div className={styles.reportContainerBtn}>Report Post</div>
+                        </div>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className={styles.dropdownItem}
+                        onClick={() => {
+                          setBlockUserName(
+                            props?.data?.data?.createdBy?.firstName +
+                              ' ' +
+                              props?.data?.data?.createdBy?.lastName
+                          );
+                          setShowBlockUserPopUp(true);
+                        }}
+                      >
+                        <div className={styles.overlayItem}>
+                          <div className={styles.dropdownImage}>
+                            <NextImage field={BlockUserImage} editable={true} />
+                          </div>
+                          <div className={styles.reportContainerBtn}>
+                            Block{' '}
+                            {props?.data?.data?.createdBy?.firstName +
+                              ' ' +
+                              props?.data?.data?.createdBy?.lastName}
+                          </div>
+                        </div>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </button>
                 <div>X</div>
               </div>
             </div>
@@ -278,11 +421,30 @@ function viewSinglePost(props: any) {
             <div className={specificPostCss.documentContainer}>
               {props?.data?.data?.mediaList?.map((l: any) => {
                 return l?.mediaType === 'DOCUMENT' ? (
-                  <div className={specificPostCss.document}>
-                    <a className={specificPostCss.links} href={l?.url} target="_blank">
-                      {l?.url}
-                    </a>
-                  </div>
+                  <>
+                   <div className={specificPostCss.document}>
+                    <div className="docPreviewContainer">
+                      <span className="openPrevButton">
+                        <button
+                          onClick={() => openDoc(l?.url)}
+                          style={{
+                            padding: '5px',
+                            borderRadius: '20px',
+                            borderColor: 'white',
+                          }}
+                        >
+                          <img
+                            width="50px"
+                            src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
+                            // alt={num}
+                            style={{ margin: '10px' }}
+                          ></img>
+                          {'DocFile'}
+                        </button>
+                      </span>
+                    </div>
+                  </div></>
+                 
                 ) : (
                   ''
                 );

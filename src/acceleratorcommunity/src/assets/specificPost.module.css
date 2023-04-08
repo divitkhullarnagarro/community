@@ -292,6 +292,7 @@
 .documentContainer {
   display: flex;
   flex-direction: column;
+  padding: 10px;
   gap: 0.125rem;
   width: 100%;
 }

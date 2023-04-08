@@ -287,8 +287,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                       <div className={bookmarkCss.rightContainerHeading}>
                         <h5>{l?.title?.jsonValue?.value}</h5>
                         <div>
-                          {/* {l?.shortDescription?.jsonValue?.value} */}
-                          <p>{l?.description?.jsonValue?.value}</p>
+                          {l?.shortDescription?.jsonValue?.value}
                         </div>
                         <div>
                           <p>{l?.id?.jsonValue?.value}</p>
