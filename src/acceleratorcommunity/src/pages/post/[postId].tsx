@@ -25,7 +25,7 @@ import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import copylink from '../../assets/images/copylink.svg';
 import ToastNotification from 'components/ToastNotification';
 import { ReportPostOptionsTypeLabel } from '../../assets/helpers/enums';
-
+import reportPostCall from 'src/API/reportPostCall';
 
 // import {calculateTimeDifference} from
 
@@ -59,7 +59,6 @@ function viewSinglePost(props: any) {
   const [blockUserName, setBlockUserName] = useState<string>('');
   const formRef = useRef<HTMLFormElement>(null);
   const [showSpinner, setShowSpinner] = useState(false);
-
 
   const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
 
@@ -143,7 +142,6 @@ function viewSinglePost(props: any) {
     }
   }
 
-
   // copy to clipboard
 
   const copyPostLinkToClipboard = (postId: string) => {
@@ -166,7 +164,6 @@ function viewSinglePost(props: any) {
     setToastError(false);
   };
 
-
   const goLeft = () => {
     const isFirstSlide = index === 0;
     const newIndex = isFirstSlide ? imagesAndVideos?.length - 1 : index - 1;
@@ -178,7 +175,6 @@ function viewSinglePost(props: any) {
     const newIndex = isFirstSlide ? 0 : index + 1;
     setIndex(newIndex);
   };
-
 
   function openDoc(base64: string) {
     var base64pdf = base64;
@@ -240,8 +236,7 @@ function viewSinglePost(props: any) {
   var metaImage: any = {};
   var breakLoop = true;
 
-
-// user Blocked
+  // user Blocked
   const onUserBlocked = async () => {
     //setToastSuccess(true);
     //setToastMessage('User blocked successfully');
@@ -289,7 +284,7 @@ function viewSinglePost(props: any) {
     );
   };
 
-  //report post 
+  //report post
   const handleClose = () => {
     setShowReportPopUp(false);
   };
@@ -306,7 +301,22 @@ function viewSinglePost(props: any) {
         formRef.current.querySelector('input[name="radioGroup"]:checked') as HTMLInputElement
       )?.value;
     }
-  }
+
+    let response = await reportPostCall(reportPostId, reportPostType, reportReason, userToken);
+    if (response) {
+      if (response?.success) {
+        setToastSuccess(true);
+        setToastMessage(response?.data);
+      } else {
+        setToastError(true);
+        setToastMessage(response?.errorCode);
+      }
+      setShowNofitication(true);
+      setShowReportPopUp(false);
+      setShowSpinner(false);
+    }
+  };
+
   const ReportPostPopup = () => {
     const reportTypeList = Object.values(ReportPostOptionsTypeLabel);
     return (
@@ -367,7 +377,6 @@ function viewSinglePost(props: any) {
       </>
     );
   };
-
 
   return (
     <>
@@ -568,29 +577,29 @@ function viewSinglePost(props: any) {
               {props?.data?.data?.mediaList?.map((l: any) => {
                 return l?.mediaType === 'DOCUMENT' ? (
                   <>
-                   <div className={specificPostCss.document}>
-                    <div className="docPreviewContainer">
-                      <span className="openPrevButton">
-                        <button
-                          onClick={() => openDoc(l?.url)}
-                          style={{
-                            padding: '5px',
-                            borderRadius: '20px',
-                            borderColor: 'white',
-                          }}
-                        >
-                          <img
-                            width="50px"
-                            src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
-                            // alt={num}
-                            style={{ margin: '10px' }}
-                          ></img>
-                          {'DocFile'}
-                        </button>
-                      </span>
+                    <div className={specificPostCss.document}>
+                      <div className="docPreviewContainer">
+                        <span className="openPrevButton">
+                          <button
+                            onClick={() => openDoc(l?.url)}
+                            style={{
+                              padding: '5px',
+                              borderRadius: '20px',
+                              borderColor: 'white',
+                            }}
+                          >
+                            <img
+                              width="50px"
+                              src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
+                              // alt={num}
+                              style={{ margin: '10px' }}
+                            ></img>
+                            {'DocFile'}
+                          </button>
+                        </span>
+                      </div>
                     </div>
-                  </div></>
-                 
+                  </>
                 ) : (
                   ''
                 );
@@ -750,6 +759,7 @@ export async function getServerSideProps(context: any) {
       console.error(error);
     });
   if (res) {
+    console.log("resssssssssssssssssssssss",res)
     var data = await res.json();
   }
   return {
