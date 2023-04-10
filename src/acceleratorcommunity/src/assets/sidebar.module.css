@@ -137,3 +137,9 @@
     position: initial !important;
   }
 }
+/* Media Query for Tablets Ipads portrait mode */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .sideNav{
+    gap: 10px !important;
+  }
+}
