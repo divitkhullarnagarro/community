@@ -278,6 +278,16 @@
     font-size: 0.625rem;
   }
 }
+.likecomments {
+  height: 0.95rem;
+  width: 0.95rem;
+}
+
+.modalContainer{
+  height: 30px;
+  width: 100%;
+  background-color: red;
+}
 
 @media screen and (max-width: 600px) {
   .postActions {
