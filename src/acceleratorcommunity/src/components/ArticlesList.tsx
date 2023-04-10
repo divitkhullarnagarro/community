@@ -73,16 +73,16 @@ type DataSource = {
   articleContentType: {
     targetItems: Content[];
   };
-  whatsApp:{
+  whatsApp: {
     jsonValue: Field<string>;
   };
-  twitter:{
+  twitter: {
     jsonValue: Field<string>;
   };
-  linkedIn:{
+  linkedIn: {
     jsonValue: Field<string>;
   };
-  facebook:{
+  facebook: {
     jsonValue: Field<string>;
   };
 };
@@ -106,7 +106,6 @@ const getFormatedDate = (stringDate: string) => {
 };
 
 const ArticlesList = (props: ArticlesListProps): JSX.Element => {
-  
   const dataum = props?.fields?.data?.datasource?.articleContentType?.targetItems;
 
   const { userToken, setUserToken } = { ...useContext(WebContext) };
@@ -129,6 +128,12 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
   const [bookmarkTYpeClicked, setbookmarkTYpeClicked] = useState<any>(['all']);
 
   const userIdTemp = 'a@gmail.com';
+
+  const timeToDateParsing = (date: any) => {
+    const isoString = date; // An ISO 8601 string representing August 1, 2022
+    const dateOnlyString = isoString.substring(0, 10); // Extract the date component as a string
+    return dateOnlyString;
+  };
 
   // const router = useRouter();
 
@@ -177,7 +182,9 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
 
   const pastArticle = () => {
     let nowDateArticle = completeList?.filter((item: any) => {
-      return item?.date?.jsonValue?.value < new Date().toJSON();
+      let date: any = timeToDateParsing(item?.date?.jsonValue?.value);
+      let datee: any = timeToDateParsing(new Date().toISOString());
+      return Date.parse(date) < Date.parse(datee);
     });
     if (bookmarkTYpeClicked[0] === 'all') {
       setBookmarkLists(nowDateArticle);
@@ -190,7 +197,9 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
   };
   const nowArticles = () => {
     let nowDateArticle = completeList?.filter((item: any) => {
-      return item?.date?.jsonValue?.value === new Date().toJSON();
+      let date: any = timeToDateParsing(item?.date?.jsonValue?.value);
+      let datee: any = timeToDateParsing(new Date().toISOString());
+      return Date.parse(date) === Date.parse(datee);
     });
     if (bookmarkTYpeClicked[0] === 'all') {
       setBookmarkLists(nowDateArticle);
@@ -202,7 +211,9 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
 
   const upComingArticle = () => {
     let nowDateArticle = completeList?.filter((item: any) => {
-      return item?.date?.jsonValue?.value > new Date().toJSON();
+      let date: any = timeToDateParsing(item?.date?.jsonValue?.value);
+      let datee: any = timeToDateParsing(new Date().toISOString());
+      return Date.parse(date) > Date.parse(datee);
     });
     if (bookmarkTYpeClicked[0] === 'all') {
       setBookmarkLists(nowDateArticle);
@@ -261,8 +272,8 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
   };
   console.log(new URL('https://twitter.com/Betclic/status/1382074820628783116?s=20').pathname);
   return (
-    <div className={ArticlesListCss.bodyContainer} >
-       <SideBar 
+    <div className={ArticlesListCss.bodyContainer}>
+      <SideBar
         buttonTypes={dataum}
         handleAllClick={handleAllClick}
         handleClick={handleClick}
@@ -281,175 +292,170 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
         bookmarkTYpeClicked={bookmarkTYpeClicked}
       /> */}
         <div>
-          {bookmarkLists?.map((l: any, i: any) => {
-            return (
-              <div key={i} className={ArticlesListCss.wrapper}>
-                <div className={ArticlesListCss.leftSection}>
-                  <NextImage
-                    className={ArticlesListCss.leftSectionImage}
-                    field={l?.image?.jsonValue?.value}
-                    editable={true}
-                  />
-                </div>
-                <div className={ArticlesListCss.rightSection}>
-                  <div className={ArticlesListCss.title}>{l?.title?.jsonValue?.value}</div>
-                  <div className={ArticlesListCss.cardDescription}>
-                    <p>
-                      {l?.shortDescription?.jsonValue?.value}
-                      {/* <Link href="/readMorePage">Read More </Link> */}
-                    </p>
+          {bookmarkLists?.length > 0 ? (
+            bookmarkLists?.map((l: any, i: any) => {
+              return (
+                <div key={i} className={ArticlesListCss.wrapper}>
+                  <div className={ArticlesListCss.leftSection}>
+                    <NextImage
+                      className={ArticlesListCss.leftSectionImage}
+                      field={l?.image?.jsonValue?.value}
+                      editable={true}
+                    />
                   </div>
-                  <div className={ArticlesListCss.cardTags}>
-                    {l?.tags?.targetItems?.map((m: any, j: any) => {
-                      return (
-                        <div key={j} className={ArticlesListCss.cardTag}>
-                          <Link key={j} href={'/#'}>
-                            {m?.name}
+                  <div className={ArticlesListCss.rightSection}>
+                    <div className={ArticlesListCss.title}>{l?.title?.jsonValue?.value}</div>
+                    <div className={ArticlesListCss.cardDescription}>
+                      <p>
+                        {l?.shortDescription?.jsonValue?.value}
+                        {/* <Link href="/readMorePage">Read More </Link> */}
+                      </p>
+                    </div>
+                    <div className={ArticlesListCss.cardTags}>
+                      {l?.tags?.targetItems?.map((m: any, j: any) => {
+                        return (
+                          <div key={j} className={ArticlesListCss.cardTag}>
+                            <Link key={j} href={'/#'}>
+                              {m?.name}
+                            </Link>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className={ArticlesListCss.infoWrapper}>
+                      <div className={ArticlesListCss.infoWrapperTag}>
+                        <NextImage
+                          className={ArticlesListCss.infowrapperImage}
+                          field={sourceImage}
+                          editable={true}
+                        />
+                        <div className={ArticlesListCss.infoWrapperTagData}>
+                          {l?.authorName?.jsonValue?.value}{' '}
+                        </div>
+                      </div>
+                      <div className={ArticlesListCss.infoWrapperTag}>
+                        <NextImage
+                          className={ArticlesListCss.infowrapperImage}
+                          field={calendarImage}
+                          editable={true}
+                        />
+                        <div className={ArticlesListCss.infoWrapperTagData}>
+                          {getFormatedDate(l?.date?.jsonValue?.value)}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={ArticlesListCss.buttons}>
+                      <button
+                        className={ArticlesListCss.button}
+                        onClick={() =>
+                          submitBookmark(
+                            userIdTemp,
+                            l?.id,
+                            // l.title?.jsonValue.value, //This is for URL or Image value
+                            l?.title?.jsonValue?.value,
+                            l?.description?.jsonValue?.value
+                          )
+                        }
+                      >
+                        <NextImage
+                          field={
+                            selectedArticle?.includes(l?.id) ? activeBookmarkImage : bookmarkImage
+                          }
+                          id="bookamrksImage"
+                          editable={true}
+                          title="Add To My Collection"
+                        />
+                      </button>
+                      <button
+                        className={ArticlesListCss.button}
+                        onClick={() => handleShareClick(l?.id)}
+                      >
+                        <NextImage field={shareImage} editable={true} title="Share" />
+                      </button>
+                    </div>
+
+                    {shareArticle.includes(l?.id) && (
+                      <div className={ArticlesListCss.sharePopups}>
+                        <div className={ArticlesListCss.sharePopup}>
+                          <NextImage
+                            className={ArticlesListCss.whatsappImage}
+                            field={whatsapp}
+                            editable={true}
+                            width={25}
+                            height={25}
+                          />
+                          <Link
+                            href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/news/${l.id}&utm_source=whatsapp&utm_medium=social&utm_term=${l.id}`}
+                          >
+                            <a className={ArticlesListCss.targetIcon} target="_blank">
+                              WhatsApp
+                            </a>
                           </Link>
                         </div>
-                      );
-                    })}
-                  </div>
-                  <div className={ArticlesListCss.infoWrapper}>
-                    <div className={ArticlesListCss.infoWrapperTag}>
-                      <NextImage
-                        className={ArticlesListCss.infowrapperImage}
-                        field={sourceImage}
-                        editable={true}
-                      />
-                      <div className={ArticlesListCss.infoWrapperTagData}>
-                        {l?.authorName?.jsonValue?.value}{' '}
+
+                        <div className={ArticlesListCss.sharePopup}>
+                          <NextImage
+                            className={ArticlesListCss.whatsappImage}
+                            field={twitter}
+                            editable={true}
+                            width={25}
+                            height={25}
+                          />
+                          <Link
+                            href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l.id}&utm_source=twitter&utm_medium=social&utm_term=${l.id}`}
+                          >
+                            <a className={ArticlesListCss.targetIcon} target="_blank">
+                              Twitter
+                            </a>
+                          </Link>
+                        </div>
+
+                        <div className={ArticlesListCss.sharePopup}>
+                          <NextImage
+                            className={ArticlesListCss.whatsappImage}
+                            field={linkedin}
+                            editable={true}
+                            width={25}
+                            height={25}
+                          />
+                          <Link
+                            href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l.id}&utm_source=linkedIn&utm_medium=social&utm_term=${l.id}`}
+                          >
+                            <a className={ArticlesListCss.targetIcon} target="_blank">
+                              LinkedIn
+                            </a>
+                          </Link>
+                        </div>
+                        <div className={ArticlesListCss.sharePopup}>
+                          <NextImage
+                            className={ArticlesListCss.whatsappImage}
+                            field={facebook}
+                            editable={true}
+                            width={25}
+                            height={25}
+                          />
+                          <Link
+                            href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/news/${l.id}&utm_source=facebook&utm_medium=social&utm_term=${l.id}`}
+                          >
+                            <a className={ArticlesListCss.targetIcon} target="_blank">
+                              Facebook
+                            </a>
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                    <div className={ArticlesListCss.infoWrapperTag}>
-                      <NextImage
-                        className={ArticlesListCss.infowrapperImage}
-                        field={calendarImage}
-                        editable={true}
-                      />
-                      <div className={ArticlesListCss.infoWrapperTagData}>
-                        {getFormatedDate(l?.date?.jsonValue?.value)}
-                      </div>
-                    </div>
+                    )}
                   </div>
-
-                  <div className={ArticlesListCss.buttons}>
-                    <button
-                      className={ArticlesListCss.button}
-                      onClick={() =>
-                        submitBookmark(
-                          userIdTemp,
-                          l?.id,
-                          // l.title?.jsonValue.value, //This is for URL or Image value
-                          l?.title?.jsonValue?.value,
-                          l?.description?.jsonValue?.value
-                        )
-                      }
-                    >
-                      <NextImage
-                        field={
-                          selectedArticle?.includes(l?.id) ? activeBookmarkImage : bookmarkImage
-                        }
-                        id="bookamrksImage"
-                        editable={true}
-                        title="Add To My Collection"
-                      />
-                    </button>
-                    <button
-                      className={ArticlesListCss.button}
-                      onClick={() => handleShareClick(l?.id)}
-                    >
-                      <NextImage field={shareImage} editable={true} title="Share" />
-                    </button>
-                  </div>
-
-                {shareArticle.includes(l?.id) && (
-                  <div className={ArticlesListCss.sharePopups}>
-                    <div className={ArticlesListCss.sharePopup}>
-                      <NextImage
-                        className={ArticlesListCss.whatsappImage}
-                        field={whatsapp}
-                        editable={true}
-                        width={25}
-                        height={25}
-                      />
-                      <Link
-                        href={
-                          `${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/news/${l.id}&utm_source=whatsapp&utm_medium=social&utm_term=${l.id}`
-                          
-                        }
-                      >
-                        <a  className={ArticlesListCss.targetIcon} target='_blank' >WhatsApp</a>
-                      </Link>
-                    </div>
-
-                    <div className={ArticlesListCss.sharePopup}>
-                      <NextImage
-                        className={ArticlesListCss.whatsappImage}
-                        field={twitter}
-                        editable={true}
-                        width={25}
-                        height={25}
-                      />
-                      <Link
-                        href={
-                          `${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l.id}&utm_source=twitter&utm_medium=social&utm_term=${l.id}`
-                        }
-                      >
-                        <a className={ArticlesListCss.targetIcon} target='_blank' >Twitter</a>
-                        
-                      </Link>
-                    </div>
-
-                    <div className={ArticlesListCss.sharePopup}>
-                      <NextImage
-                        className={ArticlesListCss.whatsappImage}
-                        field={linkedin}
-                        editable={true}
-                        width={25}
-                        height={25}
-                      />
-                      <Link
-                        href={
-                          `${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l.id}&utm_source=linkedIn&utm_medium=social&utm_term=${l.id}`
-                        }
-                      >
-                        <a className={ArticlesListCss.targetIcon} target='_blank'>LinkedIn</a>
-                        
-                      </Link>
-                    </div>
-                    <div className={ArticlesListCss.sharePopup}>
-                      <NextImage
-                        className={ArticlesListCss.whatsappImage}
-                        field={facebook}
-                        editable={true}
-                        width={25}
-                        height={25}
-                      />
-                      <Link
-                        href={
-                          `${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/news/${l.id}&utm_source=facebook&utm_medium=social&utm_term=${l.id}`
-                        }
-                      >
-                        <a className={ArticlesListCss.targetIcon} target='_blank'>Facebook</a>
-                      
-                      </Link>
-                    </div>
-                  </div>
-                )}
-              </div>
+                </div>
+              );
+            })
+          ) : (
+            <div className={ArticlesListCss.emptyBox}>
+              <h2>Oops there is no content available for this filter !</h2>
             </div>
-          );
-        })}
+          )}
+        </div>
       </div>
-      {/* <div className={ArticlesListCss.filterConatiner}>
-        <FilterByDate
-          nowArticles={nowArticles}
-          pastArticle={pastArticle}
-          upComingArticle={upComingArticle}
-        />
-      </div> */}
-    </div>
     </div>
   );
 };

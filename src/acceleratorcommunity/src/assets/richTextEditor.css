@@ -1,16 +1,37 @@
 .wrapper-class {
-  /* display: flex; */
+  display: flex;
   flex-direction: column;
-  padding: 1rem;
-  border: 1px solid #ccc;
+  /* padding: 1rem; */
+  /* border: 1px solid #ccc; */
 }
 .editor-class {
-  /* order: 1; */
+  order: 1;
   background-color: white;
-  padding: 1rem;
-  border: 1px solid #ccc;
+  /* padding: 1rem; */
+  border: 1px solid rgb(75, 34, 164);
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  /* overflow: hidden; */
+  border-radius: 20px 20px 0 0;
+}
+.editor-class::-webkit-scrollbar {
+  display: none;
 }
 .toolbar-class {
-  /* order: 2; */
-  border: 1px solid #ccc;
+  order: 2;
+  border-left: 1px solid rgb(75, 34, 164);
+  border-right: 1px solid rgb(75, 34, 164);
+  border-bottom: 1px solid rgb(75, 34, 164);
+  background: #cfeef1;
+}
+
+.demo-option-custom {
+  /* background-color: #f3ffcd; */
+}
+.popup-custom {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.popup-custom::-webkit-scrollbar {
+  display: none;
 }

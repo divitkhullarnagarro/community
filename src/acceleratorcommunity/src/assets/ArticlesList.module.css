@@ -1,6 +1,6 @@
 .mainwrapper {
-  width: 100%;
-  display: flex;
+  width: 91%;
+  /* display: flex; */
   /* justify-content: space-around; */
 }
 .filterConatiner {
@@ -9,9 +9,12 @@
 .wrapper {
   display: flex;
   /* position: absolute; */
+  overflow-x: auto;
+
+  overflow-y: auto;
   background-color: whitesmoke;
 
-  width: 820px;
+  width: 100%;
   height: 22rem;
   border-radius: 8px;
   margin: 30px;
@@ -19,7 +22,8 @@
 .leftSection {
   display: flex;
   /* position: relative; */
-  width: 20rem;
+  /* width: 20rem; */
+  width: 40%;
 }
 
 .leftSection img {
@@ -34,7 +38,7 @@
   margin-top: 2%;
   margin-bottom: 2%;
   position: relative;
-  width: 22rem;
+  width: 60%
 }
 .title {
   display: flex;
@@ -42,14 +46,14 @@
   width: 100%;
   font-weight: bold;
   font-size: 14px;
-  height: 13%;
+  /* height: 13%; */
   margin-bottom: 3%;
   /* background-color: #0048f0; */
 }
 .cardDescription {
   display: flex;
   /* width: 100%; */
-  height: 35%;
+  /* height: 35%; */
   margin-bottom: 3%;
   font-size: 14px;
   /* background-color: blueviolet; */
@@ -78,7 +82,7 @@
   padding-right: 15px;
   margin-left: 6px;
   margin-right: 3px;
-  height: 40px;
+  /* height: 40px; */
   font-size: small;
   /* color:#0048f0; */
   font-weight: 600;
@@ -91,7 +95,7 @@
 .infoWrapper {
   display: flex;
   flex-direction: column;
-  width: 13rem;
+  /* width: 208px; */
   height: 6rem;
   margin-bottom: 4px;
   /* background-color: rgb(95, 229, 17); */
@@ -113,7 +117,8 @@
   width: 60px;
   height: 60px;
   justify-content: space-between;
-  margin-left: 18rem;
+  margin-left: auto;
+  margin-right: 20px;
   /* background-color: rgb(197, 17, 229); */
 }
 .button {
@@ -165,28 +170,55 @@
 
 .targetIcon::after {
   visibility: hidden;
- 
+}
+.emptyBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  height: 20rem;
+  width: 100%;
 }
 @media screen and (max-width: 600px) {
   /* .mainwrapper{
     width: 50%;
   } */
-  .mainwrapper{
+  .mainwrapper {
     box-sizing: inherit !important;
   }
-  .wrapper{
+  .wrapper {
     width: 400px;
     margin: 0;
     margin-bottom: 10px;
   }
-  .rightSection{
-    width:  250px;
+  .rightSection {
+    width: 250px;
   }
-  .buttons{
+  .leftSection {
+    width: 352px;
+  }
+  .buttons {
     margin-left: 0;
   }
-  .title{
+  .title {
     height: 100%;
   }
-  
+  .emptyBox {
+    height: 50px;
+  }
+  .emptyBox h2 {
+    margin-left: 40px;
+    font-size: 18px;
+  }
+}
+/* Media Query for Tablets Ipads portrait mode */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .emptyBox {
+    height: 50px;
+    margin-top: 5%;
+  }
+  .emptyBox h2 {
+    margin-left: 40px;
+    font-size: 25px;
+  }
 }
