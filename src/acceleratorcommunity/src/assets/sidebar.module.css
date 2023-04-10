@@ -8,10 +8,10 @@
 .sideNav {
   display: flex;
   height: 36px;
-  gap: 30px;
+  gap: 25px;
   justify-content: center;
   margin-bottom: 10px;
-  margin-right: 5%;
+  margin-right: 3%;
   position: relative;
   /* width: auto;
     height: 100vh;
@@ -135,5 +135,11 @@
   }
   .filteredDateBox {
     position: initial !important;
+  }
+}
+/* Media Query for Tablets Ipads portrait mode */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .sideNav{
+    gap: 10px !important;
   }
 }
