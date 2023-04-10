@@ -430,7 +430,7 @@ export async function getServerSideProps(context: any) {
     .catch((error: any) => {
       console.error(error);
     });
-  if (res) {
+  if (res!==undefined) {
     var data = await res.json();
   }
   return {

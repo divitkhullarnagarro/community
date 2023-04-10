@@ -198,6 +198,23 @@
   width: 20%;
 }
 
+.commentContainer{
+  position: relative;
+}
+.upvoteDownvoteContainer{
+  position: absolute;
+  width: 50px;
+  height: 30px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 0;
+  top: -10px;
+  cursor: pointer;
+  gap:10px;
+  background-color: rgb(202, 197, 197);
+}
 @media only screen and (max-width: 640px) {
   .postOwner {
     font-weight: 750;
@@ -281,6 +298,7 @@
 .likecomments {
   height: 0.95rem;
   width: 0.95rem;
+  margin-bottom: 6px;
 }
 
 .modalContainer{

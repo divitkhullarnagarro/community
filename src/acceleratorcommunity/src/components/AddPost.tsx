@@ -53,9 +53,9 @@ import upVoteCall from 'src/API/upVote';
 import downVoteCall from 'src/API/downVote';
 import getAllDownVotesCall from 'src/API/getAllDownVotesCall';
 import getAllUpVotesCall from 'src/API/getAllUpVotes';
-import Profile from '../assets/images/profile.png'
+import Profile from '../assets/images/profile.png';
+import addPostCss from '../assets/addPosts.module.css';
 // import getAllUpVotesCall from 'src/API/getAllUpVotesCall';
-
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -86,8 +86,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   let [createNewPostError, setCreateNewPostError] = useState(false);
   let [allUpVotes, setAllUpVotes] = useState([]);
   let [allDownVote, setAllDownVote] = useState([]);
-  let [modalForData, setModalForData] = useState(false);
+  let [showUp, setShowup] = useState('up');
 
+  let [modalForData, setModalForData] = useState(false);
 
   // let [allReactions, setAllReactions] = useState([]);
 
@@ -582,18 +583,25 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     updateArrayWithLatestdata(locArr);
   }
 
-  const getAllupVotesAndDownVotes = (comeendId:string) => {
-    
-     Promise.all([getAllUpVotesCall(userToken,comeendId),getAllDownVotesCall(userToken,comeendId)]).then((response)=>{
-      console.log(response)
-      setAllUpVotes(response[0]?.data?.data)
-      setAllDownVote(response[1]?.data?.data)
-      setModalForData(true)
+  const getAllupVotesAndDownVotes = (comeendId: string) => {
+    Promise.all([
+      getAllUpVotesCall(userToken, comeendId),
+      getAllDownVotesCall(userToken, comeendId),
+    ])
+      .then((response) => {
+        console.log(response);
+        setAllUpVotes(response[0]?.data?.data);
+        setAllDownVote(response[1]?.data?.data);
+        setModalForData(true);
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
 
-    }).catch((error:any)=>{
-      console.log(error)
-    })
-  }
+  // useEffect(()=>{
+
+  // },[allDownVote,allDownVote])
 
   //Function To Handle Posts Feed and Construct React.jsx using data
   function postStructCreate() {
@@ -925,6 +933,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         borderBottomRightRadius: '30px',
                         marginTop: '20px',
                       }}
+                      className="commentContainer"
                     >
                       <div>
                         <h4>
@@ -935,7 +944,24 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           </span>
                         </h4>
                       </div>
-                      <div  onClick={() => getAllupVotesAndDownVotes(comment?.id)}>{comment?.text}</div>
+                      <div>{comment?.text}</div>
+                      <div
+                        onClick={() => getAllupVotesAndDownVotes(comment?.id)}
+                        className="upvoteDownvoteContainer"
+                      >
+                        <div className="likecomments">
+                          <img
+                            className="likecomments"
+                            src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
+                          />
+                        </div>
+                        <div className="likecomments">
+                          <img
+                            className="likecomments"
+                            src={'https://img.icons8.com/ios-filled/256/thumbs-down.png'}
+                          />
+                        </div>
+                      </div>
                     </div>
                     <div>
                       <div style={{ marginBottom: '10px' }}>
@@ -956,11 +982,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                             width="30px"
                             style={{ margin: '5px' }}
                             className="likecomments"
-                            src={
-                              post?.isLikedByUser
-                                ? 'https://img.icons8.com/ios/256/thumbs-down.png'
-                                : 'https://img.icons8.com/ios-filled/256/thumbs-down.png'
-                            }
+                            src="https://img.icons8.com/ios/256/thumbs-down.png"
                             alt="downVote"
                           />
                         </span>
@@ -1016,6 +1038,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                     marginTop: '20px',
                                     marginLeft: '10%',
                                   }}
+                                  className="commentContainer"
                                 >
                                   <div>
                                     <span style={{ fontSize: '15px', fontWeight: '600' }}>
@@ -1027,6 +1050,25 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                     </span>
                                   </div>
                                   <div>{reply?.text}</div>
+                                  <div
+                                    onClick={() => getAllupVotesAndDownVotes(reply?.id)}
+                                    className="upvoteDownvoteContainer"
+                                  >
+                                    <div className="likecomments">
+                                      <img
+                                        className="likecomments"
+                                        src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
+                                      />
+                                    </div>
+                                    <div className="likecomments">
+                                      <img
+                                        className="likecomments"
+                                        src={
+                                          'https://img.icons8.com/ios-filled/256/thumbs-down.png'
+                                        }
+                                      />
+                                    </div>
+                                  </div>
                                 </div>
                                 <div
                                   style={{
@@ -1036,19 +1078,23 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                     width: '88%',
                                   }}
                                 >
-                                  <span>
+                                  <span 
+                                  onClick={() => handleUpvote(reply?.id)}>
                                     <img
                                       style={{ margin: '5px' }}
                                       width="30px"
-                                      src="https://cdn-icons-png.flaticon.com/512/3082/3082422.png"
+                                      className="likecomments"
+                                      src="https://cdn-icons-png.flaticon.com/512/126/126473.png"
                                       alt="upvote"
                                     />
                                   </span>
-                                  <span>
+                                  <span
+                                  onClick={() => handleDownvote(reply?.id)}>
                                     <img
                                       width="30px"
                                       style={{ margin: '5px' }}
-                                      src="https://cdn-icons-png.flaticon.com/512/159/159694.png"
+                                      className="likecomments"
+                                      src="https://img.icons8.com/ios/256/thumbs-down.png"
                                       alt="downVote"
                                     />
                                   </span>
@@ -1508,81 +1554,89 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     }
   }
 
-// const handleAll  = ( ) => {
+  // const handleAll  = ( ) => {
 
-// }
-const closeModal = () =>{ 
-  setModalForData(false)
-}
+  // }
+  const closeModal = () => {
+    setModalForData(false);
+    setShowup('up');
+  };
 
-let [modalVoteData, setModalVoteData] = useState(allUpVotes);
+  // let [modalVoteData, setModalVoteData] = useState(allUpVotes);
 
-const handleUp = () => {
-  setModalVoteData(allUpVotes)
-}
+  const handleUp = () => {
+    setShowup('up');
+  };
 
-const handleDown = () => {
-  setModalVoteData(allDownVote)
-}
-  const ModalForReactions = () =>{
+  const handleDown = () => {
+    setShowup('down');
+  };
+  const ModalForReactions = () => {
     return (
       <Modal
-          show={modalForData}
-          onHide={closeModal}
-          backdrop="static"
-          keyboard={false}
-          centered
-          animation={true}
-          scrollable={true}
-          // className={addPostCss.modal}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Reactions</Modal.Title>
-          </Modal.Header>
-          <Modal.Body >
-            <div >
-              {/* <button
+        show={modalForData}
+        onHide={closeModal}
+        backdrop="static"
+        keyboard={false}
+        centered
+        animation={true}
+        scrollable={true}
+        className={addPostCss.modal}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Reactions</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            {/* <button
                 onClick={handleAll}
                 // className={allFilterState ? addPostCss.active : addPostCss.filterBtn}
               >
                 ALL
               </button> */}
-              <button
-                onClick={handleUp}
-                // className={upFilterState ? addPostCss.active : addPostCss.filterBtn}
-              >
-                Up
-              </button>
-              <button
-                onClick={handleDown}
-                // className={downFilterState ? addPostCss.active : addPostCss.filterBtn}
-              >
-                Down
-              </button>
-            </div>
-            {modalVoteData?.map((user:any, id) => {
-              return (
-                <div key={id} className='modalContainer' >
-                  <div >
-                    <img src={Profile.src} />
-                    <div>
-                      <div>{user?.firstName}</div>
-                      <div>{user?.objectId}</div>
+            <button onClick={handleUp} className={addPostCss.filterBtn}>
+              Up
+            </button>
+            <button onClick={handleDown} className={addPostCss.filterBtn}>
+              Down
+            </button>
+          </div>
+          {showUp === 'up'
+            ? allUpVotes?.map((user: any, id) => {
+                return (
+                  <div key={id} className={addPostCss.modalUserContainer}>
+                    <div className={addPostCss.modalUserDetailContainer}>
+                      <img className={addPostCss.userImg} src={Profile.src} />
+                      <div>
+                        <div>{user?.firstName}</div>
+                        <div>{user?.objectId}</div>
+                      </div>
                     </div>
                   </div>
-                  {/* <div>{user.filter}</div> */}
-                </div>
-              );
-            })}
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={closeModal}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-    )
-  }
+                );
+              })
+            : allDownVote?.map((user: any, id) => {
+                return (
+                  <div key={id} className={addPostCss.modalUserContainer}>
+                    <div className={addPostCss.modalUserDetailContainer}>
+                      <img className={addPostCss.userImg} src={Profile.src} />
+                      <div>
+                        <div>{user?.firstName}</div>
+                        <div>{user?.objectId}</div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  };
 
   return (
     <>
@@ -1951,7 +2005,7 @@ const handleDown = () => {
       </div>
       {<ReportPostPopup />}
       {<BlockUserPopup />}
-      {<ModalForReactions/>}
+      {<ModalForReactions />}
       {showNotification && (
         <ToastNotification
           showNotification={showNotification}
