@@ -23,7 +23,7 @@
 }
 
 .blockedUsersSideNav {
-  width: 400px;
+  width: 20vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -147,12 +147,12 @@
 .rightContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-self: center;
   position: relative;
   font-size: 30px;
-  font-weight: bold;
-  height: 80vh;
+  width: 75vw;
+  height: 90vh;
+  border-radius: 10px;
+  border: 2px solid lightgray;
 }
 
 .blockedUserPreviewImage {
@@ -165,6 +165,16 @@
   justify-content: center;
   font-size: 20px;
   font-weight: bold;
+}
+
+.alignItemsCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  height: 80%;
 }
 
 .blockedUserModalHeader {
@@ -185,6 +195,128 @@
 
 .footerBtn {
   font-size: 1.25rem;
+}
+
+.backBtn {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.blockedUserProfileImage {
+  width: 450px;
+  height: 450px;
+  border-radius: 20px;
+}
+
+.blockedUserDetailItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: space-between;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.DetailsContainer {
+  display: flex;
+
+  height: 30vh;
+  margin-left: 50px;
+  margin-top: 100px;
+  justify-content: flex-start;
+}
+
+.detailsLeftContainer {
+  flex: 0 0 5%;
+  margin-top: 25px;
+}
+
+.detailsRightContainer {
+  display: flex;
+  flex-direction: column;
+  margin-left: 25px;
+  height: 30vh;
+  justify-content: flex-start;
+  align-items: flex-end;
+  flex: 0 0 63%;
+}
+
+.rightContainerItem {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 24px;
+}
+
+.editProfileBtn {
+  margin-bottom: 40px;
+  margin-right: 5px;
+}
+
+.rowItem {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.emptyProfileWrapper {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.blockedUserName {
+  margin-left: 20px;
+  margin-top: 15px;
+}
+
+.moreOptions {
+  border: none;
+  background-color: white;
+  padding: 0;
+  width: 30px;
+}
+
+.leftContainer {
+  display: flex;
+}
+
+.buttonRow {
+  width: 90%;
+  background-color: white;
+  border: none;
+  color: black;
+}
+
+.buttonRow:visited,
+.buttonRow:hover,
+.buttonRow:active {
+  color: black !important;
+  background-color: transparent !important;
+}
+
+.buttonRow:hover .blockedUsersDropdownMenu {
+  color: #fff;
+  background-color: #5c636a;
+  border-color: #565e64;
+}
+
+.unblockFooter {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+.unblockBtn {
+  width: 8%;
+  margin-left: 10px;
 }
 
 @media only screen and (max-width: 640px) {
@@ -214,4 +346,60 @@
   .footerBtn {
     font-size: 0.625rem;
   }
+}
+
+.headerWrapper {
+  width: 99%;
+  height: 40vh;
+  margin: 10px;
+  padding: 10px;
+  background-color: rgb(242, 240, 240);
+  background: url('../assets/images/CoverProfile.png') no-repeat;
+  background-size: cover;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  height: 48vh;
+  align-items: flex-end;
+}
+
+.profileImage {
+  border: 2px solid black;
+  display: flex;
+  border-radius: 30px;
+}
+
+.leftSection {
+  width: 13%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profileInfoSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  width: 90%;
+  height: 20%;
+}
+
+.name {
+  font-size: 18px;
+  margin-left: 10px;
+  margin-top: 10px;
+  color: black;
+  text-shadow: 1px 1px gray;
+}
+
+.userName {
+  font-weight: bold;
+  color: #283895;
+  text-shadow: 1px 1px gray;
+}
+
+.userEmail {
+  display: flex;
 }
