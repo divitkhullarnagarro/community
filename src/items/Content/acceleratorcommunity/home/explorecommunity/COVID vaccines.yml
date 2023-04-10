@@ -1,8 +1,8 @@
 ﻿---
-ID: "ae419b29-02bc-407b-b47a-e10ac33fb422"
+ID: "832a2e37-065f-4f9a-87d0-f3845621d1a5"
 Parent: "b687c946-e903-44d4-b479-e5e137e130a3"
 Template: "05e694d6-3f26-40c0-8cc0-0396ffb7acbc"
-Path: /sitecore/content/acceleratorcommunity/home/news/dummy data
+Path: /sitecore/content/acceleratorcommunity/home/explorecommunity/COVID vaccines
 SharedFields:
 - ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
   Hint: __Workflow
@@ -15,6 +15,9 @@ Languages:
   Versions:
   - Version: 1
     Fields:
+    - ID: "001dd393-96c5-490b-924a-b0f25cd9efd8"
+      Hint: __Lock
+      Value: <r />
     - ID: "03897511-7b06-4331-8ca0-1929bc3047ce"
       Hint: Navigation Title
       Value: COVID vaccines
@@ -32,7 +35,7 @@ Languages:
       Value: A total of 229235 individuals with CVD were identified, of which 1764 were vaccinated and had a diagnosis of MACE during the observation
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
-      Value: "{FCFDBB96-946A-4D2F-BCCD-5573073FC176}"
+      Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
     - ID: "6bd9a76c-1bc6-4517-b646-e06a5580fc32"
       Hint: Date
       Value: 20220621T183000Z
@@ -42,11 +45,11 @@ Languages:
         <image mediaid="{70FC5302-D10D-42A0-85CD-AB4E9566D12A}" />
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "bd04cfb9-cabd-4dc8-875d-c2d39f11d348"
+      Value: "a4bdd0b8-d5f0-4e64-89ba-468ebfe0b60a"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\damyanti.wakchaure@nagarro.com
+        sitecore\Admin
     - ID: "bf0d55a4-c617-4ce5-91c1-40913f07b123"
       Hint: Tags
       Value: |
@@ -54,12 +57,15 @@ Languages:
         {77A039E2-1B13-41C1-9E33-7180CF8101FE}
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230404T123242Z
+      Value: 20230313T063230Z
     - ID: "fdf92769-8768-4460-bbad-818073f23d1f"
       Hint: Title
       Value: COVID vaccines are safe for patients with cardiovascular disease
   - Version: 2
     Fields:
+    - ID: "001dd393-96c5-490b-924a-b0f25cd9efd8"
+      Hint: __Lock
+      Value: <r />
     - ID: "03897511-7b06-4331-8ca0-1929bc3047ce"
       Hint: Navigation Title
       Value: COVID vaccines
@@ -77,7 +83,7 @@ Languages:
       Value: A total of 229235 individuals with CVD were identified, of which 1764 were vaccinated and had a diagnosis of MACE during the observation
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
-      Value: "{FCFDBB96-946A-4D2F-BCCD-5573073FC176}"
+      Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "6bd9a76c-1bc6-4517-b646-e06a5580fc32"
       Hint: Date
       Value: 20220621T183000Z
@@ -87,11 +93,11 @@ Languages:
         <image mediaid="{70FC5302-D10D-42A0-85CD-AB4E9566D12A}" />
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "561d63e6-12fe-4a36-9325-8defc3ee0828"
+      Value: "d8af19b5-7a70-4337-b1b0-9425e4095ac2"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\damyanti.wakchaure@nagarro.com
+        sitecore\Admin
     - ID: "bf0d55a4-c617-4ce5-91c1-40913f07b123"
       Hint: Tags
       Value: |
@@ -103,7 +109,7 @@ Languages:
         <image mediaid="{26770C9A-00BF-4E55-A6C2-D92D738B0F56}" />
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230404T123242Z
+      Value: 20230331T124034Z
     - ID: "ec59ea43-4087-4f58-8bff-f0b581a9f31b"
       Hint: LongDescription
       Value: |

@@ -2,7 +2,7 @@
 ID: "b687c946-e903-44d4-b479-e5e137e130a3"
 Parent: "9b2f2c61-b700-51dd-8f47-7600fc865200"
 Template: "0a24b14e-bbdd-4d84-8139-7d40e3b356fa"
-Path: /sitecore/content/acceleratorcommunity/home/news
+Path: /sitecore/content/acceleratorcommunity/home/explorecommunity
 SharedFields:
 - ID: "1172f251-dad4-4efb-a329-0c63500e4f1e"
   Hint: __Masters
@@ -29,7 +29,7 @@ Languages:
       Value: <r />
     - ID: "03897511-7b06-4331-8ca0-1929bc3047ce"
       Hint: Navigation Title
-      Value: News
+      Value: explorecommunity
     - ID: "04bf00db-f5fb-41f7-8ab7-22408372a981"
       Hint: __Final Renderings
       Value: |
@@ -83,7 +83,7 @@ Languages:
       Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "fc239bae-a8bc-4fbf-a644-7d5cce2f209c"
+      Value: "d2c42ac6-0dd6-41b8-8ee4-82ec910a1e10"
     - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
       Hint: twitterDescription
       Value: Social Community News is the place where you can gather the information about the current affairs
@@ -96,7 +96,7 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\damyanti.wakchaure@nagarro.com
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "c9bf6775-cbf3-4abb-aec3-c0d368791827"
       Hint: ogType
       Value: website
@@ -106,7 +106,7 @@ Languages:
         <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230406T063518Z
+      Value: 20230407T094622Z
     - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
       Hint: ogTitle
       Value: "Community Solution - Discover trending news"

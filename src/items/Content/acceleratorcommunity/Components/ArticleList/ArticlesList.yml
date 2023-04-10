@@ -48,13 +48,12 @@ Languages:
         {E3683213-4298-4238-9491-2DBF1715EDB4}
         {404328CD-4367-4BE2-88B1-368BE0986B6D}
         {832A2E37-065F-4F9A-87D0-F3845621D1A5}
-        {AE419B29-02BC-407B-B47A-E10AC33FB422}
     - ID: "8c630964-184e-4d94-a8c4-4c73523a2438"
       Hint: WhatsApp
       Value: "https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "0b033d62-1187-4c96-a0bc-b50128e2419d"
+      Value: "90229531-7091-47f3-83ca-f2dd58d371aa"
     - ID: "acaa685c-953f-4ea7-ab08-204f5b83137f"
       Hint: Article Content Type
       Value: |
@@ -65,10 +64,10 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\ankit.rastogi@nagarro.com
+        sitecore\damyanti.wakchaure@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230406T082547Z
+      Value: 20230407T081038Z
     - ID: "f001dfc2-520b-4f18-8c7d-e06b14f87b2c"
       Hint: Twitter
       Value: "https://twitter.com/intent/tweet"
