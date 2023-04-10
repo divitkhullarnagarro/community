@@ -287,29 +287,29 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                       <div className={bookmarkCss.rightContainerHeading}>
                         <h5>{l?.title?.jsonValue?.value}</h5>
                       </div>
-                        <div className={bookmarkCss.rightContainerDescription}>
-                          {l?.shortDescription?.jsonValue?.value}
+                      <div className={bookmarkCss.rightContainerDescription}>
+                        {l?.shortDescription?.jsonValue?.value}
+                      </div>
+                      <div>
+                        <p>{l?.id?.jsonValue?.value}</p>
+                      </div>
+                      <div>{l?.author?.jsonValue?.value}</div>
+                      <div className={bookmarkCss.dates}>
+                        <NextImage field={calender} editable={true} />
+                        {getFormatedDate(l?.date?.jsonValue?.value)}
+                      </div>
+                      <div className={bookmarkCss.tags}>
+                        <div className={bookmarkCss.leftContainerImage}>
+                          <NextImage
+                            field={ActiveBookmark}
+                            editable={true}
+                            width={35}
+                            height={30}
+                          />
                         </div>
-                        <div >
-                          <p>{l?.id?.jsonValue?.value}</p>
-                        </div>
-                        <div>{l?.author?.jsonValue?.value}</div>
-                        <div className={bookmarkCss.dates}>
-                          <NextImage field={calender} editable={true} />
-                          {getFormatedDate(l?.date?.jsonValue?.value)}
-                        </div>
-                        <div className={bookmarkCss.tags}>
-                          <div className={bookmarkCss.leftContainerImage}>
-                            <NextImage
-                              field={ActiveBookmark}
-                              editable={true}
-                              width={35}
-                              height={30}
-                            />
-                          </div>
-                          <h5>{l?.contentType?.targetItem?.name}</h5>
-                        </div>
-                        {/* <div className={bookmarkCss.button}>
+                        <h5>{l?.contentType?.targetItem?.name}</h5>
+                      </div>
+                      {/* <div className={bookmarkCss.button}>
                           <button>
                             <NextImage
                               className={bookmarkCss.leftContainerImage}
@@ -318,14 +318,16 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                             />
                           </button>
                         </div> */}
-                      </div>
                     </div>
-                 
+                  </div>
+
                   // </div>
                 );
               })
             ) : (
-              <></>
+              <div className={bookmarkCss.emptyBox}>
+                <h2>Oops there is no content available for this filter !</h2>
+              </div>
             )}
           </div>
         </div>

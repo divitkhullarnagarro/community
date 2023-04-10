@@ -15,9 +15,8 @@
 .heading {
   width: 100%;
   display: flex;
-  justify-content:center ;
-  color: #000E46;
-  
+  justify-content: center;
+  color: #000e46;
 }
 
 .contentTypeContainers {
@@ -71,7 +70,7 @@
   display: flex;
   justify-content: center;
 }
-.rightContainerDescription{
+.rightContainerDescription {
   display: flex;
 }
 .cardTags {
@@ -81,7 +80,7 @@
   width: auto;
   border-radius: 9999px;
 }
-.tags{
+.tags {
   display: flex;
   width: 50%;
   justify-content: center;
@@ -145,28 +144,26 @@
   margin-top: 20px;
 }
 
-
 .sideNavTop {
-    /* min-width: 8%; */
-    width: auto;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    padding-top: 50px;
-    /* background-color: #b6afaf; */
-    padding: 0.3125rem 0.625rem;
-    height: 100%;
-    width: px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: whitesmoke;
-    overflow-x: hidden;
-    padding-top: 20px;
-  }
-  
+  /* min-width: 8%; */
+  width: auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-top: 50px;
+  /* background-color: #b6afaf; */
+  padding: 0.3125rem 0.625rem;
+  height: 100%;
+  width: px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: whitesmoke;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
 
 .actionBtn {
   background-color: transparent;
@@ -196,48 +193,70 @@
   overflow-y: auto; */
 }
 
-.filterContainer{
+.filterContainer {
   margin-right: 50pxpx;
   width: 10%;
 }
-.filterContainerTop{
+.filterContainerTop {
   top: 1%;
   margin-right: 50px;
   width: 10%;
 }
-.leftContainerImage{
+.leftContainerImage {
   margin-top: -2px;
+}
+.emptyBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  height: 20rem;
+  width: 100%;
 }
 /* media queries */
 @media screen and (max-width: 600px) {
-  .bodyContainer{
+  .bodyContainer {
     width: 90%;
   }
-  .listContainers{
+  .listContainers {
     width: 90%;
   }
-  .contentTypeContainers{
+  .contentTypeContainers {
     width: 400px;
     /* height: 370px; */
     margin-bottom: 5%;
   }
-  .rightContainer{
+  .rightContainer {
     gap: 0;
   }
-  .rightContainerDescription{
+  .rightContainerDescription {
     font-size: 13px;
   }
-  .rightContainerHeading h5{
+  .rightContainerHeading h5 {
     font-size: 18px;
   }
-  .tags{
+  .tags {
     width: 100%;
+  }
+  .emptyBox {
+    height: 50px;
+  }
+  .emptyBox h2 {
+    margin-left: 40px;
+    font-size: 18px;
   }
 }
 
 /* Media Query for Tablets Ipads portrait mode */
 @media (min-width: 768px) and (max-width: 1024px) {
-  .sideNav{
+  .sideNav {
     gap: 10px;
+  }
+  .emptyBox {
+    height: 50px;
+  }
+  .emptyBox h2 {
+    margin-left: 40px;
+    font-size: 25px;
   }
 }

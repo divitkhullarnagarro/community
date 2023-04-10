@@ -170,31 +170,55 @@
 
 .targetIcon::after {
   visibility: hidden;
- 
+}
+.emptyBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  height: 20rem;
+  width: 100%;
 }
 @media screen and (max-width: 600px) {
   /* .mainwrapper{
     width: 50%;
   } */
-  .mainwrapper{
+  .mainwrapper {
     box-sizing: inherit !important;
   }
-  .wrapper{
+  .wrapper {
     width: 400px;
     margin: 0;
     margin-bottom: 10px;
   }
-  .rightSection{
-    width:  250px;
+  .rightSection {
+    width: 250px;
   }
-  .leftSection{
+  .leftSection {
     width: 352px;
   }
-  .buttons{
+  .buttons {
     margin-left: 0;
   }
-  .title{
+  .title {
     height: 100%;
   }
-  
+  .emptyBox {
+    height: 50px;
+  }
+  .emptyBox h2 {
+    margin-left: 40px;
+    font-size: 18px;
+  }
+}
+/* Media Query for Tablets Ipads portrait mode */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .emptyBox {
+    height: 50px;
+    margin-top: 5%;
+  }
+  .emptyBox h2 {
+    margin-left: 40px;
+    font-size: 25px;
+  }
 }
