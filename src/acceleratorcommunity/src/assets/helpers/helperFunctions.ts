@@ -29,3 +29,18 @@ export const modifyHtml = (convertedContent: string) => {
   }
   return modified;
 };
+
+
+export const getValueFromCookie = (key: string) => {
+  if (typeof document !== 'undefined') {
+    const cookieString = document.cookie;
+    const cookies = cookieString.split(';').reduce((acc: any, cookie: string) => {
+      const [name, value] = cookie.split('=').map((c) => c.trim());
+      acc[name] = value;
+      return acc;
+    }, {});
+
+    return cookies[key] || null;
+  }
+  return null;
+}

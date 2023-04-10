@@ -9,6 +9,7 @@ import BlockUserImage from '../assets/images/BlockUser.jpg';
 import LogoutImage from '../assets/images/Logout.png';
 import { useRouter } from 'next/router';
 import logoutUserCall from 'src/API/logoutUserCall';
+import { getValueFromCookie } from 'assets/helpers/helperFunctions';
 
 type UserProfileProps = ComponentProps & {
   fields: {
@@ -81,6 +82,10 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
       setUserToken != undefined &&
       setIsLoggedIn != undefined
     ) {
+      let token = getValueFromCookie('UserToken');
+      if (token != null) {
+        document.cookie = `UserToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      }
       if (typeof localStorage !== 'undefined' && localStorage.getItem('UserToken')) {
         setLogoutPopUp(false);
         localStorage.clear();
