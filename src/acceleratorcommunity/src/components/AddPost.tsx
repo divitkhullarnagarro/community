@@ -1535,7 +1535,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       editorClassName="editor-class"
                       toolbarClassName="toolbar-class"
                       editorStyle={{ height: '150px' }}
-                      placeholder="Start Typing..."
+                      placeholder="  Share Your Thoughts..."
                       toolbar={toolbar}
                       // toolbarOnFocus={true}
                       mention={{
@@ -1545,11 +1545,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       }}
                       hashtag={{}}
                     />
-                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                       <div>
                         {currentCount}/{5000} characters
                       </div>
-                    </div>
+                    </div> */}
                     {/* <Form.Control
                       onChange={(e) => setPostTextValue(e.target.value)}
                       value={postText}
