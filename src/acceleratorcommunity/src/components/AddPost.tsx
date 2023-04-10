@@ -189,6 +189,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           post.isOpenComment = false;
           post.comments = [];
           post.showShare = false;
+          post.isLoadingComments = false;
           if (post.postMeasures == null || post.postMeasures == 'undefined') {
             post.postMeasures = {
               commentCount: 0,
@@ -461,15 +462,21 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   //Function To Handle Likes
   function LikePost(id: any) {
     let locArr = myAnotherArr;
+    let ifLikedAlready = false;
     let modPost = locArr.map((post: any) => {
       if (post.id == id) {
-        post.isLikedByUser = true;
-        if (typeof post?.postMeasures?.likeCount === 'number') {
-          post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+        if (post.isLikedByUser) {
+          ifLikedAlready = true;
+          return post;
         } else {
-          post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+          post.isLikedByUser = true;
+          if (typeof post?.postMeasures?.likeCount === 'number') {
+            post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+          } else {
+            post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+          }
+          return post;
         }
-        return post;
       } else {
         return post;
       }
@@ -477,27 +484,29 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setMyAnotherArr(() => {
       return modPost;
     });
-    likePostCall(userToken, id).then((response) => {
-      if (response?.data?.success == true) {
-        let locArr = myAnotherArr;
-        let modPost = locArr.map((post: any) => {
-          if (post.id == id) {
-            post.isLikedByUser = true;
-            if (typeof post?.postMeasures?.likeCount === 'number') {
-              post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+    if (!ifLikedAlready) {
+      likePostCall(userToken, id).then((response) => {
+        if (response?.data?.success == true) {
+          let locArr = myAnotherArr;
+          let modPost = locArr.map((post: any) => {
+            if (post.id == id) {
+              post.isLikedByUser = true;
+              if (typeof post?.postMeasures?.likeCount === 'number') {
+                post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+              } else {
+                post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+              }
+              return post;
             } else {
-              post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+              return post;
             }
-            return post;
-          } else {
-            return post;
-          }
-        });
-        setMyAnotherArr(() => {
-          return modPost;
-        });
-      }
-    });
+          });
+          setMyAnotherArr(() => {
+            return modPost;
+          });
+        }
+      });
+    }
   }
   console.log('ALLPOSTS', myAnotherArr);
 
@@ -515,6 +524,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setMyAnotherArr(() => {
       return modPost;
     });
+    // loadComments(id);
   }
   function handleShowShare(id: string, val: any) {
     let locArr = myAnotherArr;
@@ -536,30 +546,116 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   async function postComments(id: string, e: any) {
     e.preventDefault();
 
-    let locArr = myAnotherArr;
     const commStr = e.target[0].value;
     e.currentTarget.reset();
-    let resp = await addPostCommentCall(userToken, id, commStr);
+    let uniqId = generateUniqueId();
     const timestamp = new Date().getTime();
-    locArr.map((post: any) => {
-      if (id === post?.id) {
-        post?.comments?.push({
-          id: resp?.data?.data,
-          createdBy: { firstName: userObject?.firstName, lastName: userObject?.lastName },
-          text: commStr,
-          replies: [],
-          isOpenReply: false,
-          createdOn: timestamp,
-        });
-        if (typeof post?.postMeasures?.commentCount === 'number') {
-          post.postMeasures.commentCount = (post.postMeasures.commentCount ?? 0) + 1;
+    let obj = {
+      id: uniqId,
+      createdBy: { firstName: userObject?.firstName, lastName: userObject?.lastName },
+      text: commStr,
+      replies: [],
+      isOpenReply: false,
+      createdOn: timestamp,
+      isRespPending: true,
+      isLoadingReplies: false,
+    };
+    setMyAnotherArr((prevState: any) => {
+      const updatedPosts = prevState.map((post: any) => {
+        if (post.id === id) {
+          const updatedComments = [obj, ...post.comments];
+          if (typeof post?.postMeasures?.commentCount === 'number') {
+            post.postMeasures.commentCount = (post.postMeasures.commentCount ?? 0) + 1;
+          } else {
+            post.postMeasures.commentCount = (post.postMeasures.commentCount ?? 0) + 1;
+          }
+          return { ...post, comments: updatedComments };
         } else {
-          post.postMeasures.commentCount = (post.postMeasures.commentCount ?? 0) + 1;
+          return post;
+        }
+      });
+      return updatedPosts;
+    });
+    let resp = await addPostCommentCall(userToken, id, commStr);
+    if (!resp?.data?.data) {
+      deleteCommentFromPost(id, uniqId);
+    }
+    setMyAnotherArr((prevPosts: any) => {
+      return prevPosts.map((post: any) => {
+        if (post?.id === id) {
+          const updatedComments = post.comments.map((comment: any) => {
+            if (comment.id === uniqId) {
+              return {
+                ...comment,
+                id: resp?.data?.data,
+                isRespPending: false,
+              };
+            }
+            return comment;
+          });
+          return {
+            ...post,
+            comments: updatedComments,
+          };
         }
         return post;
-      }
+      });
     });
-    updateArrayWithLatestdata(locArr);
+  }
+
+  function deleteCommentFromPost(postId: string, commentId: string) {
+    setMyAnotherArr((prevPosts: any) => {
+      return prevPosts.map((post: any) => {
+        if (typeof post?.postMeasures?.commentCount === 'number') {
+          post.postMeasures.commentCount = (post.postMeasures.commentCount ?? 0) - 1;
+        } else {
+          post.postMeasures.commentCount = (post.postMeasures.commentCount ?? 0) - 1;
+        }
+        if (post?.id === postId) {
+          const updatedComments = post.comments.filter((comment: any) => {
+            if (comment.id === commentId && comment.isDeleted !== true) {
+              return false;
+            }
+            return true;
+          });
+          return {
+            ...post,
+            comments: updatedComments,
+          };
+        }
+        return post;
+      });
+    });
+  }
+
+  function deleteReplyFromComment(postId: string, commentId: string, replyId: string) {
+    setMyAnotherArr((prevPosts: any) => {
+      return prevPosts.map((post: any) => {
+        if (post?.id === postId) {
+          const updatedComments = post.comments.map((comment: any) => {
+            if (comment.id === commentId) {
+              const updatedReplies = comment.replies.filter((reply: any) => {
+                if (reply.id === replyId && reply.isDeleted !== true) {
+                  return false;
+                }
+                return true;
+              });
+              const updatedComment = {
+                ...comment,
+                replies: updatedReplies,
+              };
+              return updatedComment;
+            }
+            return comment;
+          });
+          return {
+            ...post,
+            comments: updatedComments,
+          };
+        }
+        return post;
+      });
+    });
   }
 
   //Function To Handle Posts Feed and Construct React.jsx using data
@@ -735,7 +831,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           <hr />
           <div className="postFooter">
             <div className="postActions">
-              <button onClick={() => LikePost(post?.id)}>
+              <button onClick={() => LikePost(post?.id)} disabled={post?.isRespPending}>
                 <img
                   className="postLikeImage"
                   src={
@@ -751,6 +847,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 onClick={() => setOpenComments(post.id, !post.isOpenComment)}
                 aria-controls="anotherCommentsContainer"
                 aria-expanded={post?.isOpenComment}
+                disabled={post?.isRespPending}
               >
                 <img
                   className="postCommentImage"
@@ -760,7 +857,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 />
               </button>
               <div>
-                <button onClick={() => handleShowShare(post.id, !post?.showShare)}>
+                <button
+                  onClick={() => handleShowShare(post.id, !post?.showShare)}
+                  disabled={post?.isRespPending}
+                >
                   <img
                     className="postShareImage"
                     src="https://cdn-icons-png.flaticon.com/512/2956/2956786.png"
@@ -878,11 +978,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </button>
                 </Form.Group>
               </Form>
-              {post?.comments?.map((comment: any, num: any) => {
+              {post?.comments?.map((comment: any) => {
                 return (
                   <>
                     <div
-                      id={num}
+                      id={comment?.id}
                       style={{
                         padding: '20px',
                         backgroundColor: 'lightgray',
@@ -904,8 +1004,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       </div>
                       <div>{comment?.text}</div>
                     </div>
-                    <div>
-                      <div style={{ marginBottom: '10px' }}>
+                    <div style={{ marginBottom: '10px' }}>
+                      <div>
                         <span>
                           <img
                             style={{ margin: '5px' }}
@@ -923,10 +1023,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           />
                         </span>
                         <button
-                          onClick={() => openCommentReplies(comment?.id, !comment?.isOpenReply)}
+                          onClick={() =>
+                            openCommentReplies(post?.id, comment?.id, !comment?.isOpenReply)
+                          }
                           aria-controls="repliesContainer"
                           aria-expanded={comment?.isOpenReply}
                           style={{ border: 'none', marginLeft: '16px' }}
+                          disabled={comment?.isRespPending}
                         >
                           Reply
                         </button>
@@ -1022,6 +1125,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                         !reply?.isOpenReplyOfReply
                                       )
                                     }
+                                    disabled={reply?.isRespPending}
                                   >
                                     Reply
                                   </button>
@@ -1065,14 +1169,19 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                 display: 'flex',
                                 justifyContent: 'center',
                                 marginBottom: '16px',
+                                marginTop: '16px',
                               }}
                             >
-                              <button
-                                onClick={() => loadCommentReplies(comment?.id)}
-                                style={{ padding: '5px', border: 'none', margin: '16px' }}
-                              >
-                                Load Replies
-                              </button>
+                              {comment.isLoadingReplies ? (
+                                <Spinner animation="border" />
+                              ) : (
+                                <button
+                                  onClick={() => loadCommentReplies(post?.id, comment?.id)}
+                                  style={{ padding: '5px', border: 'none' }}
+                                >
+                                  <span>Load Replies...</span>
+                                </button>
+                              )}
                             </div>
                           ) : (
                             ''
@@ -1085,21 +1194,20 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               })}
               {post?.postMeasures?.commentCount > 0 ? (
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <button
-                    onClick={() => loadComments(post.id)}
-                    style={{
-                      padding: '12px',
-                      border: 'none',
-                      borderRadius: '10px',
-                    }}
-                  >
-                    Load Comments{' '}
-                    <img
-                      width="30px"
-                      src="https://cdn-icons-png.flaticon.com/512/3305/3305803.png"
-                      alt="LoadImage"
-                    />
-                  </button>
+                  {post.isLoadingComments ? (
+                    <Spinner animation="border" />
+                  ) : (
+                    <button
+                      onClick={() => loadComments(post.id)}
+                      style={{
+                        padding: '12px',
+                        border: 'none',
+                        borderRadius: '10px',
+                      }}
+                    >
+                      <span>Load Comments...</span>
+                    </button>
+                  )}
                 </div>
               ) : (
                 ''
@@ -1136,10 +1244,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     updateArrayWithLatestdata(locArr);
   }
 
-  function openCommentReplies(commentid: any, open: boolean) {
+  function openCommentReplies(postId: string, commentid: any, open: boolean) {
     let locArr = myAnotherArr;
     locArr.map((post: any) => {
-      if (post.comments?.length > 0) {
+      if (post.id === postId && post.comments?.length > 0) {
         post.comments.map((comment: any) => {
           if (comment?.id == commentid) {
             comment.isOpenReply = open;
@@ -1151,35 +1259,80 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       }
     });
     updateArrayWithLatestdata(locArr);
+    // loadCommentReplies(postId, commentid);
   }
 
   async function postCommentReply(postId: string, commentId: string, e: any) {
     e.preventDefault();
     const commentString = e.target[0].value;
     e.currentTarget.reset();
-    let resp = await postCommentReplyCall(userToken, postId, commentId, commentString);
-    let locArr = myAnotherArr;
+
+    let uniqId = generateUniqueId();
     const timestamp = new Date().getTime();
-    locArr.map((post: any) => {
-      if (post.comments?.length > 0) {
-        post.comments.map((comment: any) => {
-          if (comment?.id == commentId) {
-            comment.replies.push({
-              id: resp?.data?.data,
-              createdBy: { firstName: userObject?.firstName, lastName: userObject?.lastName },
-              text: commentString,
-              hasReply: true,
-              isOpenReplyOfReply: false,
-              createdOn: timestamp,
-            });
-            return comment;
-          } else {
-            return comment;
-          }
-        });
-      }
+    let replyObj = {
+      id: uniqId,
+      createdBy: { firstName: userObject?.firstName, lastName: userObject?.lastName },
+      text: commentString,
+      hasReply: true,
+      isOpenReplyOfReply: false,
+      createdOn: timestamp,
+      isRespPending: true,
+    };
+    setMyAnotherArr((prevState: any) => {
+      const updatedPosts = prevState.map((post: any) => {
+        if (post.id === postId) {
+          const updatedComments = post.comments.map((comment: any) => {
+            if (comment.id === commentId) {
+              const updatedReplies = [replyObj, ...comment.replies];
+              return {
+                ...comment,
+                replies: updatedReplies,
+              };
+            } else {
+              return comment;
+            }
+          });
+          return { ...post, comments: updatedComments };
+        } else {
+          return post;
+        }
+      });
+      return updatedPosts;
     });
-    updateArrayWithLatestdata(locArr);
+    let resp = await postCommentReplyCall(userToken, postId, commentId, commentString);
+    if (!resp?.data?.data) {
+      deleteReplyFromComment(postId, commentId, uniqId);
+    }
+    setMyAnotherArr((prevPosts: any) => {
+      return prevPosts.map((post: any) => {
+        if (post.id === postId) {
+          const updatedComments = post.comments.map((comment: any) => {
+            if (comment.id === commentId) {
+              const updatedReplies = comment.replies.map((reply: any) => {
+                if (reply.id === uniqId) {
+                  return {
+                    ...reply,
+                    id: resp?.data?.data,
+                    isRespPending: false,
+                  };
+                } else {
+                  return reply;
+                }
+              });
+              return {
+                ...comment,
+                replies: updatedReplies,
+              };
+            } else {
+              return comment;
+            }
+          });
+          return { ...post, comments: updatedComments };
+        } else {
+          return post;
+        }
+      });
+    });
   }
 
   function updateArrayWithLatestdata(locArr: any) {
@@ -1194,8 +1347,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     });
   }
 
-  async function loadCommentReplies(id: any) {
+  async function loadCommentReplies(postId: string, id: string) {
+    loadingReplies(postId, id, true);
     let resp = await getCommentsReplyCall(userToken, id, 0);
+    loadingReplies(postId, id, false);
     let locArr = myAnotherArr;
     resp?.data?.data.map((reply: any) => {
       reply.isOpenReplyOfReply = false;
@@ -1215,12 +1370,55 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     updateArrayWithLatestdata(locArr);
   }
 
+  function loadingComments(id: any, val: boolean) {
+    setMyAnotherArr((prevPosts: any) => {
+      return prevPosts.map((post: any) => {
+        if (post.id === id) {
+          return {
+            ...post,
+            isLoadingComments: val,
+          };
+        } else {
+          return post;
+        }
+      });
+    });
+  }
+
+  function loadingReplies(postId: string, commentId: string, val: boolean) {
+    setMyAnotherArr((prevPosts: any) => {
+      return prevPosts.map((post: any) => {
+        if (post.id === postId) {
+          const updatedComments = post.comments.map((comment: any) => {
+            if (comment.id === commentId) {
+              return {
+                ...comment,
+                isLoadingReplies: val,
+              };
+            } else {
+              return comment;
+            }
+          });
+          return {
+            ...post,
+            comments: updatedComments,
+          };
+        } else {
+          return post;
+        }
+      });
+    });
+  }
+
   async function loadComments(id: any) {
+    loadingComments(id, true);
     let resp = await getCommentsCall(userToken, id, 0);
+    loadingComments(id, false);
     let respArr = resp?.data?.data;
     respArr?.map((comment: any) => {
       comment.isOpenReply = false;
       comment.replies = [];
+      comment.isLoadingReplies = false;
     });
     let locArr = myAnotherArr;
     locArr.map((post: any) => {
@@ -1233,15 +1431,22 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     updateArrayWithLatestdata(locArr);
   }
 
-  function addLatestCreatedPost(id: string) {
+  function addLatestCreatedPost(id: string, localId: string) {
+    localId;
     getPostByIdCall(userToken, id).then((response) => {
       if (response?.data?.data != undefined) {
         let resp = response?.data?.data;
-        resp.comments = [];
-        let locArray: any = [];
-        locArray.push(resp);
-        setMyAnotherArr((prevState: any[]) => {
-          return [...locArray, ...prevState];
+        setMyAnotherArr((prevPosts: any) => {
+          return prevPosts.map((post: any) => {
+            if (post?.id === localId) {
+              return {
+                ...post,
+                id: resp.id,
+                isRespPending: false,
+              };
+            }
+            return post;
+          });
         });
       }
     });
@@ -1301,7 +1506,35 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       postType = 'IMAGE';
     }
     // console.log('mention inside api call component', addedPeers);
-
+    const timestamp = new Date().getTime();
+    let uniqId = generateUniqueId();
+    let obj = {
+      data: {
+        data: {
+          id: uniqId,
+          description: postText,
+          postType: postType,
+          mediaList: [...file, ...docs, ...videoLink],
+          postMeasures: {
+            likeCount: 0,
+            commentCount: 0,
+            repostCount: 0,
+          },
+          createdBy: {
+            firstName: userObject?.firstName,
+            lastName: userObject?.lastName,
+          },
+          createdOn: timestamp,
+          isLikedByUser: false,
+          comments: [],
+          isRespPending: true,
+          isLoadingComments: false,
+        },
+      },
+    };
+    setMyAnotherArr((prevState: any) => {
+      return [obj?.data?.data, ...prevState];
+    });
     addPostCall(userToken, {
       description: postText,
       mediaList: [...file, ...docs, ...videoLink],
@@ -1309,7 +1542,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       type: postType,
     }).then((response) => {
       if (response?.data?.data) {
-        addLatestCreatedPost(response?.data?.data);
+        addLatestCreatedPost(response?.data?.data, uniqId);
         // Empty Post Values
         setShowForm1(false);
         setFile([]);
@@ -1319,12 +1552,19 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         setEditorState(() => EditorState.createEmpty());
       } else {
         setCreateNewPostError(true);
+        deletePostById(uniqId);
         setTimeout(() => {
           setCreateNewPostError(false);
         }, 2000);
       }
     });
   };
+
+  function deletePostById(postId: any) {
+    setMyAnotherArr((prevPosts: any) => {
+      return prevPosts.filter((post: any) => post.id !== postId);
+    });
+  }
 
   function clickmebuttonHandler() {
     if (typeof document !== undefined) {
@@ -1606,9 +1846,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       );
                     })}
                   </div>
-
                   <div style={{ display: 'flex', flexWrap: 'wrap' }} id="setVideoPreview">
-                    <hr />
                     {videoLink.map((video: any, num: any) => {
                       return (
                         <div key={num}>
