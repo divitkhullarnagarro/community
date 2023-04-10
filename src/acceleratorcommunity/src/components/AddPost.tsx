@@ -1586,8 +1586,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         <Modal.Header closeButton>
           <Modal.Title>Reactions</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <div>
+        <Modal.Body className={addPostCss.modalBody}>
+          <div className={addPostCss.btnConatiner} >
             {/* <button
                 onClick={handleAll}
                 // className={allFilterState ? addPostCss.active : addPostCss.filterBtn}
