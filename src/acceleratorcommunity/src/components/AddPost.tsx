@@ -42,6 +42,7 @@ import dynamic from 'next/dynamic';
 import draftToHtml from 'draftjs-to-html';
 import { toolbar } from 'assets/helpers/constants';
 import allPeersCall from 'src/API/getPeers';
+import { modifyHtml } from 'assets/helpers/helperFunctions';
 const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mod) => mod.Editor), {
   ssr: false,
 });
@@ -131,6 +132,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   };
   useEffect(() => {
     getAllPears();
+
     // console.log('getAllPears', getAllPears());
   }, []);
 
@@ -683,7 +685,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             </div>
           </div>
           <div className="postContent">
-            <div>{parser(post?.description)}</div>
+            <div>{parser(modifyHtml(post?.description))}</div>
             <div className="postMedia">
               {post?.mediaList?.map((media: any, num: any) => {
                 if (media?.mediaType === 'VIDEO') {
