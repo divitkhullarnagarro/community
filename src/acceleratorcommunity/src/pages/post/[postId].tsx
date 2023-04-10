@@ -25,11 +25,18 @@ import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import copylink from '../../assets/images/copylink.svg';
 import ToastNotification from 'components/ToastNotification';
 import { ReportPostOptionsTypeLabel } from '../../assets/helpers/enums';
-
+import reportPostCall from 'src/API/reportPostCall';
+import blockUserCall from 'src/API/blockUnblockUserCall';
 
 // import {calculateTimeDifference} from
 
 // import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+
+type BlockUserFields = {
+  objectId: string;
+  firstName: string;
+  lastName: string;
+};
 
 function viewSinglePost(props: any) {
   console.log('mudatatatata', props);
@@ -56,12 +63,11 @@ function viewSinglePost(props: any) {
   const [toastError, setToastError] = useState(false);
   const [reportPostId, setReportPostId] = useState('');
   const [reportPostType, setReportPostType] = useState('');
-  const [blockUserName, setBlockUserName] = useState<string>('');
   const formRef = useRef<HTMLFormElement>(null);
   const [showSpinner, setShowSpinner] = useState(false);
 
-
   const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
+  const [selectedBlockUserItem, setSelectedBlockUserItem] = useState<BlockUserFields>();
 
   const showReportPostPopup = () => {
     setShowReportPopUp(true);
@@ -143,7 +149,6 @@ function viewSinglePost(props: any) {
     }
   }
 
-
   // copy to clipboard
 
   const copyPostLinkToClipboard = (postId: string) => {
@@ -166,7 +171,6 @@ function viewSinglePost(props: any) {
     setToastError(false);
   };
 
-
   const goLeft = () => {
     const isFirstSlide = index === 0;
     const newIndex = isFirstSlide ? imagesAndVideos?.length - 1 : index - 1;
@@ -178,7 +182,6 @@ function viewSinglePost(props: any) {
     const newIndex = isFirstSlide ? 0 : index + 1;
     setIndex(newIndex);
   };
-
 
   function openDoc(base64: string) {
     var base64pdf = base64;
@@ -240,13 +243,22 @@ function viewSinglePost(props: any) {
   var metaImage: any = {};
   var breakLoop = true;
 
-
-// user Blocked
+  // user Blocked
   const onUserBlocked = async () => {
-    //setToastSuccess(true);
-    //setToastMessage('User blocked successfully');
-    //setShowNofitication(true);
+    setShowSpinner(true);
+    let response = await blockUserCall(userToken, selectedBlockUserItem?.objectId);
+    if (response) {
+      if (response?.success) {
+        setToastSuccess(true);
+        setToastMessage(response?.data);
+      } else {
+        setToastError(true);
+        setToastMessage(response?.errorCode);
+      }
+      setShowNofitication(true);
+    }
     setShowBlockUserPopUp(false);
+    setShowSpinner(false);
   };
   const BlockUserPopup = () => {
     return (
@@ -267,7 +279,7 @@ function viewSinglePost(props: any) {
             <Modal.Body>
               <div
                 className={styles.reportPostModalBody}
-              >{`Do you want to block ${blockUserName} ?`}</div>
+              >{`Do you want to block ${selectedBlockUserItem?.firstName} ${selectedBlockUserItem?.lastName} ?`}</div>
             </Modal.Body>
             <Modal.Footer>
               <Button
@@ -281,6 +293,11 @@ function viewSinglePost(props: any) {
               </Button>
               <Button className={styles.footerBtn} variant="secondary" onClick={onUserBlocked}>
                 Block
+                {showSpinner ? (
+                  <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
+                ) : (
+                  <></>
+                )}
               </Button>
             </Modal.Footer>
           </div>
@@ -289,7 +306,7 @@ function viewSinglePost(props: any) {
     );
   };
 
-  //report post 
+  //report post
   const handleClose = () => {
     setShowReportPopUp(false);
   };
@@ -306,7 +323,22 @@ function viewSinglePost(props: any) {
         formRef.current.querySelector('input[name="radioGroup"]:checked') as HTMLInputElement
       )?.value;
     }
-  }
+
+    let response = await reportPostCall(reportPostId, reportPostType, reportReason, userToken);
+    if (response) {
+      if (response?.success) {
+        setToastSuccess(true);
+        setToastMessage(response?.data);
+      } else {
+        setToastError(true);
+        setToastMessage(response?.errorCode);
+      }
+      setShowNofitication(true);
+      setShowReportPopUp(false);
+      setShowSpinner(false);
+    }
+  };
+
   const ReportPostPopup = () => {
     const reportTypeList = Object.values(ReportPostOptionsTypeLabel);
     return (
@@ -367,7 +399,6 @@ function viewSinglePost(props: any) {
       </>
     );
   };
-
 
   return (
     <>
@@ -478,11 +509,7 @@ function viewSinglePost(props: any) {
                       <Dropdown.Item
                         className={styles.dropdownItem}
                         onClick={() => {
-                          setBlockUserName(
-                            props?.data?.data?.createdBy?.firstName +
-                              ' ' +
-                              props?.data?.data?.createdBy?.lastName
-                          );
+                          setSelectedBlockUserItem(props?.data?.data?.createdBy);
                           setShowBlockUserPopUp(true);
                         }}
                       >
@@ -491,7 +518,7 @@ function viewSinglePost(props: any) {
                             <NextImage field={BlockUserImage} editable={true} />
                           </div>
                           <div className={styles.reportContainerBtn}>
-                            Block{' '}
+                            Block
                             {props?.data?.data?.createdBy?.firstName +
                               ' ' +
                               props?.data?.data?.createdBy?.lastName}
@@ -568,29 +595,29 @@ function viewSinglePost(props: any) {
               {props?.data?.data?.mediaList?.map((l: any) => {
                 return l?.mediaType === 'DOCUMENT' ? (
                   <>
-                   <div className={specificPostCss.document}>
-                    <div className="docPreviewContainer">
-                      <span className="openPrevButton">
-                        <button
-                          onClick={() => openDoc(l?.url)}
-                          style={{
-                            padding: '5px',
-                            borderRadius: '20px',
-                            borderColor: 'white',
-                          }}
-                        >
-                          <img
-                            width="50px"
-                            src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
-                            // alt={num}
-                            style={{ margin: '10px' }}
-                          ></img>
-                          {'DocFile'}
-                        </button>
-                      </span>
+                    <div className={specificPostCss.document}>
+                      <div className="docPreviewContainer">
+                        <span className="openPrevButton">
+                          <button
+                            onClick={() => openDoc(l?.url)}
+                            style={{
+                              padding: '5px',
+                              borderRadius: '20px',
+                              borderColor: 'white',
+                            }}
+                          >
+                            <img
+                              width="50px"
+                              src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
+                              // alt={num}
+                              style={{ margin: '10px' }}
+                            ></img>
+                            {'DocFile'}
+                          </button>
+                        </span>
+                      </div>
                     </div>
-                  </div></>
-                 
+                  </>
                 ) : (
                   ''
                 );
@@ -749,7 +776,8 @@ export async function getServerSideProps(context: any) {
     .catch((error: any) => {
       console.error(error);
     });
-  if (res) {
+  console.log('postIDResponse', res);
+  if (res.statusText === 'OK') {
     var data = await res.json();
   }
   return {
