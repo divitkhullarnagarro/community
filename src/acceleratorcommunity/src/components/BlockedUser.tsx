@@ -23,6 +23,17 @@ function BlockedUser() {
     ...useContext(WebContext),
   };
 
+  const SideNavHeaderLabel = 'Blocked Users List';
+  const NoUsersBlockedLabel = "You haven't blocked anyone";
+  const FetchingUsersLabel = 'Fetching blocked users...';
+  const PreviewUserProfileLabel = "Select people's name to preview their profile.";
+
+  const UnblockingUserEffectListLabel = [
+    'Add you as a friend',
+    'See your posts on the timeline',
+    'Invite you to groups',
+  ];
+
   const router = useRouter();
   const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
   const [showPreviewImage, setShowPreviewImage] = useState(true);
@@ -203,7 +214,7 @@ function BlockedUser() {
             <div className={styles.leftSection}>
               <div className={styles.profileImage}>
                 <NextImage
-                  style={{ borderRadius: '30px' }}
+                  style={{ borderRadius: '50px' }}
                   field={Profile}
                   editable={true}
                   height={180}
@@ -217,7 +228,7 @@ function BlockedUser() {
                   className={styles.userName}
                 >{`${blockedUserDetails?.firstName} ${blockedUserDetails?.lastName}`}</div>
                 <div className={styles.userEmail}>
-                  <NextImage field={Email} editable={true} height={20} width={40} />
+                  <NextImage field={Email} editable={true} height={15} width={35} />
                   <div className={styles.name}>{`${blockedUserDetails?.objectId}`}</div>
                 </div>
               </div>
@@ -226,18 +237,20 @@ function BlockedUser() {
         </div>
         <div className={styles.DetailsContainer}>
           <div className={styles.rightContainerItem}>
-            <div>
-              <strong>{` ${blockedUserDetails?.firstName} ${blockedUserDetails?.lastName} `}</strong>
-              will be able to :
+            <div className={styles.unblockedConditions}>
+              <div>
+                <strong>{` ${blockedUserDetails?.firstName} ${blockedUserDetails?.lastName} `}</strong>
+                will be able to :
+              </div>
+
+              <ul>
+                {UnblockingUserEffectListLabel.map((item) => {
+                  return <li>{item}</li>;
+                })}
+              </ul>
             </div>
-            <ul>
-              <li>Add you as a friend</li>
-              <li>See your posts on the timeline</li>
-              <li>Invite you to groups</li>
-            </ul>
             <div className={styles.unblockFooter}>
-              Do you really want to unblock
-              {` ${blockedUserDetails?.firstName} ${blockedUserDetails?.lastName} ?`}
+              If you have read the conditions and are okay with it, Proceed with :
               <Button
                 className={styles.unblockBtn}
                 onClick={() => {
@@ -262,12 +275,12 @@ function BlockedUser() {
       <div className={styles.blockedUsercontainer}>
         <div className={styles.left_column}>
           <div className={styles.blockedUsersSideNav}>
-            <div className={styles.sideNavHeader}>Blocked Users List</div>
+            <div className={styles.sideNavHeader}>{SideNavHeaderLabel}</div>
             <hr />
             {blockedUserList?.length == 0 ? (
-              <div className={styles.noBlockedUsers}>You haven't blocked anyone</div>
+              <div className={styles.alignItemsCenter}>{NoUsersBlockedLabel}</div>
             ) : showFetchingUsers ? (
-              <div className={styles.alignItemsCenter}>Fetching blocked users...</div>
+              <div className={styles.alignItemsCenter}>{FetchingUsersLabel}</div>
             ) : (
               blockedUserList?.map((item) => {
                 return <BlockedUserRow {...item} />;
@@ -282,7 +295,7 @@ function BlockedUser() {
                 <div className={styles.blockedUserPreviewImage}>
                   <NextImage field={BlockedUserPreviewImage} editable={true} />
                 </div>
-                Select people's name to preview their profile.
+                {PreviewUserProfileLabel}
               </div>
             ) : (
               <BlockedUserPreviewProfile />

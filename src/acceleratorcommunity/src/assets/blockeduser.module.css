@@ -150,7 +150,7 @@
   position: relative;
   font-size: 30px;
   width: 75vw;
-  height: 90vh;
+  height: 92vh;
   border-radius: 10px;
   border: 2px solid lightgray;
 }
@@ -219,8 +219,6 @@
 
 .DetailsContainer {
   display: flex;
-
-  height: 30vh;
   margin-left: 50px;
   margin-top: 100px;
   justify-content: flex-start;
@@ -271,6 +269,7 @@
 .blockedUserName {
   margin-left: 20px;
   margin-top: 15px;
+  font-size: 18px;
 }
 
 .moreOptions {
@@ -315,8 +314,16 @@
 }
 
 .unblockBtn {
-  width: 8%;
+  width: 15%;
   margin-left: 10px;
+  margin-top: 10px;
+}
+
+.unblockedConditions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
 }
 
 @media only screen and (max-width: 640px) {
@@ -368,7 +375,7 @@
 .profileImage {
   border: 2px solid black;
   display: flex;
-  border-radius: 30px;
+  border-radius: 50px;
 }
 
 .leftSection {
