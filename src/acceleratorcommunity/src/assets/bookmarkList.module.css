@@ -22,11 +22,16 @@
 
 .contentTypeContainers {
   width: 100%;
+  height: 22rem;
   display: flex;
   justify-content: center;
   /* background-color: rgb(128, 128, 128); */
   justify-content: space-around;
   padding: 0.625rem;
+  overflow-x: auto;
+  overflow-y: auto;
+  margin-bottom: 2%;
+
   /* background-color: pink; */
   /* margin-left: 50px; */
 }
@@ -51,6 +56,7 @@
 }
 .rightContainer {
   display: flex;
+  flex-direction: column;
   /* background-color: rgb(104, 153, 51); */
   padding: 4px 4px;
   margin: 4px 0;
@@ -64,6 +70,9 @@
 .rightContainerHeading h2 {
   display: flex;
   justify-content: center;
+}
+.rightContainerDescription{
+  display: flex;
 }
 .cardTags {
   border: 2px solid black;
@@ -86,8 +95,7 @@
   height: 40px;
   font-size: small;
   font-weight: 600;
-  height: 40px;
-  margin-top: 10%;
+  margin-top: 5%;
 }
 .button {
   display: flex;
@@ -109,8 +117,9 @@
 }
 
 .bodyContainer {
-  width: 900px;
-  display: flex;
+  /* width: 900px; */
+  /* display: flex; */
+  width: 95%;
   justify-content: space-between;
   gap: 20px;
   /* background: red; */
@@ -179,9 +188,12 @@
 .listContainers {
   /* margin-left: 165px; */
   /* overflow-y: auto; */
+  display: contents;
   height: 100%;
   /* background-color: pink; */
   width: 835px;
+  /* overflow-x: auto;
+  overflow-y: auto; */
 }
 
 .filterContainer{
@@ -206,7 +218,17 @@
   }
   .contentTypeContainers{
     width: 400px;
-    height: 370px;
+    /* height: 370px; */
+    margin-bottom: 5%;
+  }
+  .rightContainer{
+    gap: 0;
+  }
+  .rightContainerDescription{
+    font-size: 13px;
+  }
+  .rightContainerHeading h5{
+    font-size: 18px;
   }
   .tags{
     width: 100%;

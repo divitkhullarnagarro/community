@@ -286,10 +286,11 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                     <div className={bookmarkCss.rightContainer}>
                       <div className={bookmarkCss.rightContainerHeading}>
                         <h5>{l?.title?.jsonValue?.value}</h5>
-                        <div>
+                      </div>
+                        <div className={bookmarkCss.rightContainerDescription}>
                           {l?.shortDescription?.jsonValue?.value}
                         </div>
-                        <div>
+                        <div >
                           <p>{l?.id?.jsonValue?.value}</p>
                         </div>
                         <div>{l?.author?.jsonValue?.value}</div>
@@ -319,7 +320,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                         </div> */}
                       </div>
                     </div>
-                  </div>
+                 
                   // </div>
                 );
               })
