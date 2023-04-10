@@ -146,26 +146,10 @@ const Users = (props: UserProps): JSX.Element => {
     setShowReportPopUp(false);
   };
 
-  const [modalHeight, setModalHeight] = useState('auto');
-
-  const handleEnter = () => {
-    const contentHeight = document?.querySelector('.modal-body')?.scrollHeight;
-    const headerHeight = document?.querySelector('.modal-header')?.scrollHeight;
-    const footerHeight = document?.querySelector('.modal-footer')?.scrollHeight;
-    const modalPadding = 70;
-
-    const totalHeight =
-      (contentHeight ?? 0) + (headerHeight ?? 0) + (footerHeight ?? 0) + modalPadding;
-    console.log('height', totalHeight);
-    setModalHeight(totalHeight + 'px');
-  };
-
   const ReportPostPopup = () => {
     return (
       <>
         <Modal
-          onEnter={() => handleEnter()}
-          style={{ maxHeight: modalHeight }}
           className={styles.reportPostModalContent}
           show={showReportPopUp}
           backdrop="static"
@@ -517,6 +501,9 @@ const Users = (props: UserProps): JSX.Element => {
 
   return (
     <div className={styles.container}>
+      <Button className={styles.backBtn} onClick={() => router.push('/')}>
+        Back
+      </Button>
       <div className={styles.left_column}>
         <SideNavbar />
       </div>
