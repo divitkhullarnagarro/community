@@ -42,7 +42,6 @@ const router = useRouter();
 
         <script src="https://cdn.jsdelivr.net/npm/react-bootstrap@next/dist/react-bootstrap.min.js"></script>
 
-        <script>var Alert = ReactBootstrap.Alert;</script>
         <meta property="og:locale"               content={router?.locale} />
         <meta property="og:type"                 content={route?.fields?.ogType?.value.toString()} />        
         <meta property="og:url"                  content={href}/> 

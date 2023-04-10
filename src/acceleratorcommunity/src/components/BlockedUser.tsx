@@ -1,28 +1,86 @@
-import { useRouter } from 'next/router';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import WebContext from '../Context/WebContext';
 import styles from '../assets/blockeduser.module.css';
 import BlockUserImage from '../assets/images/BlockUser.jpg';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
-import { Button, Dropdown, Modal } from 'react-bootstrap';
+import { Button, Dropdown, Modal, Spinner } from 'react-bootstrap';
 import MoreOptionsImage from '../assets/images/MoreOptions.jpg';
+import Email from '../assets/images/EmailIcon.jpg';
+import { useRouter } from 'next/router';
+import Profile from '../assets/images/profile.png';
 import BlockedUserPreviewImage from '../assets/images/BlockedUserPreviewImage.png';
+import { unBlockUserCall, getBlockedUserList } from 'src/API/blockUnblockUserCall';
+import ToastNotification from './ToastNotification';
+
+type blockedUserFields = {
+  firstName: string;
+  lastName: string;
+  objectId: string;
+};
 
 function BlockedUser() {
-  const { userToken, objectId, userObject } = {
+  const { userToken, setUserToken } = {
     ...useContext(WebContext),
   };
 
-  userToken;
-  objectId;
-  userObject;
+  const SideNavHeaderLabel = 'Blocked Users List';
+  const NoUsersBlockedLabel = "You haven't blocked anyone";
+  const FetchingUsersLabel = 'Fetching blocked users...';
+  const PreviewUserProfileLabel = "Select people's name to preview their profile.";
 
-  const arr = [1, 2, 3, 4, 5, 6, 7];
+  const UnblockingUserEffectListLabel = [
+    'Add you as a friend',
+    'See your posts on the timeline',
+    'Invite you to groups',
+  ];
 
   const router = useRouter();
-  router;
   const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
-  const [blockUserName, setBlockUserName] = useState<string>('');
+  const [showPreviewImage, setShowPreviewImage] = useState(true);
+  const [blockedUserDetails, setBlockedUserDetails] = useState<blockedUserFields>();
+  const [blockedUserList, setBlockedUserList] = useState<blockedUserFields[]>();
+  const [showFetchingUsers, setShowFetchingUsers] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
+  const [showNotification, setShowNofitication] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string>();
+  const [toastSuccess, setToastSuccess] = useState(false);
+  const [toastError, setToastError] = useState(false);
+
+  useEffect(() => {
+    if (userToken === undefined || userToken === '') {
+      if (
+        typeof localStorage !== 'undefined' &&
+        localStorage.getItem('UserToken') != '' &&
+        localStorage.getItem('UserToken') != null
+      ) {
+        let token = localStorage.getItem('UserToken');
+        if (token != null && setUserToken != undefined) {
+          setUserToken(token);
+        }
+      } else router.push('/login');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userToken != '' && userToken != undefined) {
+      getAllBlockedUsers(userToken);
+    }
+  }, [userToken]);
+
+  const getAllBlockedUsers = async (userToken: string | undefined) => {
+    setShowFetchingUsers(true);
+    let response = await getBlockedUserList(userToken);
+    if (response?.success) {
+      setBlockedUserList(response?.data);
+    }
+    setShowFetchingUsers(false);
+  };
+
+  const resetToastState = () => {
+    setShowNofitication(!showNotification);
+    setToastSuccess(false);
+    setToastError(false);
+  };
 
   const BlockUserPopup = () => {
     return (
@@ -43,7 +101,7 @@ function BlockedUser() {
             <Modal.Body>
               <div
                 className={styles.blockedUserModalBody}
-              >{`Do you want to unblock ${blockUserName} ?`}</div>
+              >{`Do you want to unblock ${blockedUserDetails?.firstName} ${blockedUserDetails?.lastName} ?`}</div>
             </Modal.Body>
             <Modal.Footer>
               <Button
@@ -55,8 +113,17 @@ function BlockedUser() {
               >
                 Cancel
               </Button>
-              <Button className={styles.footerBtn} variant="secondary">
-                Block
+              <Button
+                className={styles.footerBtn}
+                variant="secondary"
+                onClick={() => onUserUnblocked()}
+              >
+                Unblock
+                {showSpinner ? (
+                  <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
+                ) : (
+                  <></>
+                )}
               </Button>
             </Modal.Footer>
           </div>
@@ -65,56 +132,136 @@ function BlockedUser() {
     );
   };
 
-  const BlockedUserRow = () => {
+  const getBlockedUserProfile = (user: blockedUserFields) => {
+    setBlockedUserDetails(user);
+    setShowPreviewImage(false);
+  };
+
+  const onUserUnblocked = async () => {
+    setShowSpinner(true);
+    let response = await unBlockUserCall(userToken, blockedUserDetails?.objectId);
+    if (response) {
+      if (response?.success) {
+        setToastSuccess(true);
+        setToastMessage(response?.data);
+      } else {
+        setToastError(true);
+        setToastMessage(response?.errorCode);
+      }
+      setShowNofitication(true);
+      setShowSpinner(false);
+      getAllBlockedUsers(userToken);
+    }
+    setShowBlockUserPopUp(false);
+    setShowPreviewImage(true);
+  };
+
+  const BlockedUserRow = (user: blockedUserFields) => {
     return (
-      <div className={styles.blockedUserwrapper}>
-        <div className={styles.blockedUserRow}>
-          <div style={{ display: 'flex' }}>
-            <img
-              className={styles.blockedUserImage}
-              src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
-              alt="User-Pic"
-            ></img>
-            <div style={{ marginLeft: '20px', fontWeight: 'bold', marginTop: '15px' }}>
-              Rohit Kumar
+      <>
+        <div className={styles.blockedUserwrapper}>
+          <div className={styles.blockedUserRow}>
+            <Button className={styles.buttonRow} onClick={() => getBlockedUserProfile(user)}>
+              <div className={styles.leftContainer}>
+                <img
+                  className={styles.blockedUserImage}
+                  src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                  alt="User-Pic"
+                ></img>
+                <div className={styles.blockedUserName}>{`${user.firstName} ${user.lastName}`}</div>
+              </div>
+            </Button>
+
+            <Dropdown>
+              <Dropdown.Toggle variant="secondary" className={styles.blockedUserDropdownBtn}>
+                <button className={styles.moreOptions}>
+                  <NextImage
+                    className="postMoreOptionsImage"
+                    field={MoreOptionsImage}
+                    editable={true}
+                  />
+                </button>
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu className={styles.blockedUsersDropdownMenu}>
+                <Dropdown.Item
+                  className={styles.blockedUsersDropdownMenuItem}
+                  onClick={() => {
+                    setBlockedUserDetails(user);
+                    setShowBlockUserPopUp(true);
+                  }}
+                >
+                  <div className={styles.overlayItem}>
+                    <div className={styles.dropdownImage}>
+                      <NextImage field={BlockUserImage} editable={true} />
+                    </div>
+                    <div className={styles.reportContainerBtn}>Unblock user</div>
+                  </div>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        </div>
+      </>
+    );
+  };
+
+  const BlockedUserPreviewProfile = () => {
+    return (
+      <div>
+        <div className={styles.headerWrapper}>
+          <div className={styles.content}>
+            <div className={styles.leftSection}>
+              <div className={styles.profileImage}>
+                <NextImage
+                  style={{ borderRadius: '50px' }}
+                  field={Profile}
+                  editable={true}
+                  height={180}
+                  width={180}
+                />
+              </div>
+            </div>
+            <div className={styles.profileInfoSection}>
+              <div className={styles.blockedUserDetailItem}>
+                <div
+                  className={styles.userName}
+                >{`${blockedUserDetails?.firstName} ${blockedUserDetails?.lastName}`}</div>
+                <div className={styles.userEmail}>
+                  <NextImage field={Email} editable={true} height={15} width={35} />
+                  <div className={styles.name}>{`${blockedUserDetails?.objectId}`}</div>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+        <div className={styles.DetailsContainer}>
+          <div className={styles.rightContainerItem}>
+            <div className={styles.unblockedConditions}>
+              <div>
+                <strong>{` ${blockedUserDetails?.firstName} ${blockedUserDetails?.lastName} `}</strong>
+                will be able to :
+              </div>
 
-          <Dropdown>
-            <Dropdown.Toggle variant="secondary" className={styles.blockedUserDropdownBtn}>
-              <button
-                style={{
-                  border: 'none',
-                  backgroundColor: 'white',
-                  padding: '0',
-                  width: '30px',
-                }}
-              >
-                <NextImage
-                  className="postMoreOptionsImage"
-                  field={MoreOptionsImage}
-                  editable={true}
-                />
-              </button>
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu className={styles.blockedUsersDropdownMenu}>
-              <Dropdown.Item
-                className={styles.blockedUsersDropdownMenuItem}
+              <ul>
+                {UnblockingUserEffectListLabel.map((item) => {
+                  return <li>{item}</li>;
+                })}
+              </ul>
+            </div>
+            <div className={styles.unblockFooter}>
+              If you have read the conditions and are okay with it, Proceed with :
+              <Button
+                className={styles.unblockBtn}
                 onClick={() => {
-                  setBlockUserName('Rohit kumar');
                   setShowBlockUserPopUp(true);
                 }}
+                variant="primary"
               >
-                <div className={styles.overlayItem}>
-                  <div className={styles.dropdownImage}>
-                    <NextImage field={BlockUserImage} editable={true} />
-                  </div>
-                  <div className={styles.reportContainerBtn}>Unblock user</div>
-                </div>
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+                Unblock
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -122,33 +269,50 @@ function BlockedUser() {
 
   return (
     <>
+      <Button className={styles.backBtn} onClick={() => router.push('/')}>
+        Back
+      </Button>
       <div className={styles.blockedUsercontainer}>
         <div className={styles.left_column}>
           <div className={styles.blockedUsersSideNav}>
-            <div className={styles.sideNavHeader}>Blocked Users List</div>
+            <div className={styles.sideNavHeader}>{SideNavHeaderLabel}</div>
             <hr />
-
-            {arr.length == 0 ? (
-              <div className={styles.noBlockedUsers}>You haven't blocked anyone</div>
+            {blockedUserList?.length == 0 ? (
+              <div className={styles.alignItemsCenter}>{NoUsersBlockedLabel}</div>
+            ) : showFetchingUsers ? (
+              <div className={styles.alignItemsCenter}>{FetchingUsersLabel}</div>
             ) : (
-              arr.map(() => {
-                return <BlockedUserRow />;
+              blockedUserList?.map((item) => {
+                return <BlockedUserRow {...item} />;
               })
             )}
           </div>
         </div>
         <div className={styles.right_column}>
           <div className={styles.rightContainer}>
-            <div className={styles.blockedUserPreviewImage}>
-              <NextImage field={BlockedUserPreviewImage} editable={true} />
-            </div>
-            Select people's name to preview their profile.
+            {showPreviewImage ? (
+              <div className={styles.emptyProfileWrapper}>
+                <div className={styles.blockedUserPreviewImage}>
+                  <NextImage field={BlockedUserPreviewImage} editable={true} />
+                </div>
+                {PreviewUserProfileLabel}
+              </div>
+            ) : (
+              <BlockedUserPreviewProfile />
+            )}
           </div>
-          <div className={styles.right_upper_section}></div>
-          <div className={styles.right_lower_section}></div>
         </div>
       </div>
       {<BlockUserPopup />}
+      {showNotification && (
+        <ToastNotification
+          showNotification={showNotification}
+          success={toastSuccess}
+          error={toastError}
+          message={toastMessage}
+          handleCallback={resetToastState}
+        />
+      )}
     </>
   );
 }
