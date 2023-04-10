@@ -518,7 +518,7 @@ function viewSinglePost(props: any) {
                             <NextImage field={BlockUserImage} editable={true} />
                           </div>
                           <div className={styles.reportContainerBtn}>
-                            Block
+                            Block{" "}
                             {props?.data?.data?.createdBy?.firstName +
                               ' ' +
                               props?.data?.data?.createdBy?.lastName}
@@ -776,8 +776,7 @@ export async function getServerSideProps(context: any) {
     .catch((error: any) => {
       console.error(error);
     });
-  console.log('postIDResponse', res);
-  if (res.statusText === 'OK') {
+  if (res!==undefined) {
     var data = await res.json();
   }
   return {
