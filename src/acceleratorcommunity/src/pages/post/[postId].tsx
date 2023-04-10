@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 // import getPostByIdCall from 'src/API/getPostByIdCall';
 import WebContext from '../../Context/WebContext';
 import specificPostCss from '../../assets/specificPost.module.css';
@@ -20,9 +20,12 @@ import BlockUserImage from '../../assets/images/BlockUser.jpg';
 
 // import { Form } from 'react-bootstrap';
 import Head from 'next/head';
-import { Dropdown } from 'react-bootstrap';
+import { Button, Dropdown, Form, Modal, Spinner } from 'react-bootstrap';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import copylink from '../../assets/images/copylink.svg';
+import ToastNotification from 'components/ToastNotification';
+import { ReportPostOptionsTypeLabel } from '../../assets/helpers/enums';
+
 
 // import {calculateTimeDifference} from
 
@@ -54,6 +57,10 @@ function viewSinglePost(props: any) {
   const [reportPostId, setReportPostId] = useState('');
   const [reportPostType, setReportPostType] = useState('');
   const [blockUserName, setBlockUserName] = useState<string>('');
+  const formRef = useRef<HTMLFormElement>(null);
+  const [showSpinner, setShowSpinner] = useState(false);
+
+
   const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
 
   const showReportPostPopup = () => {
@@ -136,6 +143,9 @@ function viewSinglePost(props: any) {
     }
   }
 
+
+  // copy to clipboard
+
   const copyPostLinkToClipboard = (postId: string) => {
     copyTextToClipboard(postId)
       .then(() => {
@@ -150,6 +160,12 @@ function viewSinglePost(props: any) {
         console.log(err);
       });
   };
+  const resetToastState = () => {
+    setShowNofitication(!showNotification);
+    setToastSuccess(false);
+    setToastError(false);
+  };
+
 
   const goLeft = () => {
     const isFirstSlide = index === 0;
@@ -223,6 +239,136 @@ function viewSinglePost(props: any) {
   // };
   var metaImage: any = {};
   var breakLoop = true;
+
+
+// user Blocked
+  const onUserBlocked = async () => {
+    //setToastSuccess(true);
+    //setToastMessage('User blocked successfully');
+    //setShowNofitication(true);
+    setShowBlockUserPopUp(false);
+  };
+  const BlockUserPopup = () => {
+    return (
+      <>
+        <Modal
+          className={styles.reportPostModalContent}
+          show={showBlockUserPopUp}
+          onHide={() => setShowBlockUserPopUp(false)}
+          backdrop="static"
+          keyboard={false}
+          centered
+          scrollable={true}
+        >
+          <div>
+            <Modal.Header closeButton>
+              <Modal.Title className={styles.reportPostModalHeader}>{'Block User'}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div
+                className={styles.reportPostModalBody}
+              >{`Do you want to block ${blockUserName} ?`}</div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                className={styles.footerBtn}
+                variant="secondary"
+                onClick={() => {
+                  setShowBlockUserPopUp(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button className={styles.footerBtn} variant="secondary" onClick={onUserBlocked}>
+                Block
+              </Button>
+            </Modal.Footer>
+          </div>
+        </Modal>
+      </>
+    );
+  };
+
+  //report post 
+  const handleClose = () => {
+    setShowReportPopUp(false);
+  };
+
+  const handleSelectChange = (event: any) => {
+    console.log(event);
+  };
+
+  const onPostReported = async () => {
+    setShowSpinner(true);
+    let reportReason = '';
+    if (formRef.current != null) {
+      reportReason = (
+        formRef.current.querySelector('input[name="radioGroup"]:checked') as HTMLInputElement
+      )?.value;
+    }
+  }
+  const ReportPostPopup = () => {
+    const reportTypeList = Object.values(ReportPostOptionsTypeLabel);
+    return (
+      <>
+        <Modal
+          className={styles.reportPostModalContent}
+          show={showReportPopUp}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+          centered
+          scrollable={true}
+        >
+          <div>
+            <Modal.Header closeButton>
+              <Modal.Title className={styles.reportPostModalHeader}>
+                {props?.fields?.data?.datasource?.reportPostTitle?.jsonValue?.value ?? 'Report'}
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className={styles.reportPostModalBody}>
+                {props?.fields?.data?.datasource?.reportPostHeader?.jsonValue?.value ??
+                  'Why are you reporting this?'}
+              </div>
+              <Form ref={formRef} style={{ fontSize: '15px', margin: '5px' }}>
+                {reportTypeList.map((item, index) => {
+                  return (
+                    <div key={index} className={styles.reportItem}>
+                      {item}
+                      <Form.Check
+                        type="radio"
+                        name="radioGroup"
+                        value={item}
+                        onChange={(e) => handleSelectChange(e)}
+                        defaultChecked={index == 0 ? true : false}
+                        aria-label="radio 1"
+                      ></Form.Check>
+                    </div>
+                  );
+                })}
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button className={styles.footerBtn} variant="secondary" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button className={styles.footerBtn} variant="secondary" onClick={onPostReported}>
+                Report
+                {showSpinner ? (
+                  <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
+                ) : (
+                  <></>
+                )}
+              </Button>
+            </Modal.Footer>
+          </div>
+        </Modal>
+      </>
+    );
+  };
+
+
   return (
     <>
       <div>
@@ -355,7 +501,7 @@ function viewSinglePost(props: any) {
                     </Dropdown.Menu>
                   </Dropdown>
                 </button>
-                <div>X</div>
+                {/* <div>X</div> */}
               </div>
             </div>
 
@@ -564,6 +710,17 @@ function viewSinglePost(props: any) {
         </div>
       ) : (
         <div className={specificPostCss.errorContainer}>{props?.data?.errorMessages}</div>
+      )}
+      {<BlockUserPopup />}
+      {<ReportPostPopup />}
+      {showNotification && (
+        <ToastNotification
+          showNotification={showNotification}
+          success={toastSuccess}
+          error={toastError}
+          message={toastMessage}
+          handleCallback={resetToastState}
+        />
       )}
     </>
   );
