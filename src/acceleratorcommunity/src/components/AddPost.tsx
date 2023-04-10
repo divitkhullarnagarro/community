@@ -112,7 +112,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       url: string;
     }[]
   >([] as { text: string; value: string; url: string }[]);
-  const currentCount = editorState.getCurrentContent().getPlainText().length;
+  // const currentCount = editorState.getCurrentContent().getPlainText().length;
 
   useEffect(() => {
     const rawEditorContent = convertToRaw(editorState.getCurrentContent());
