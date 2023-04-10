@@ -7,19 +7,20 @@
 }
 
 .left_column {
-  flex: 0 0 20%;
+  flex: 0 0 17%;
   background-color: white;
   margin-left: 20px;
+  margin-top: 45px;
 }
 
 .right_column {
   display: flex;
-  flex-direction: column;
-  margin-top: 0px;
-  margin-left: 25px;
-  height: 87vh;
-  justify-content: flex-start;
   flex: 0 0 63%;
+  flex-direction: column;
+  margin-top: 45px;
+  margin-left: 25px;
+  height: 80vh;
+  justify-content: flex-start;
 }
 
 .right_upper_section {
@@ -58,7 +59,7 @@
   height: 85vh;
   width: 20vw;
   background-color: lightgray;
-  height: 100vh;
+  height: 85vh;
   display: flex;
   flex-direction: column;
   padding: 0.3125rem 0.625rem;
@@ -459,6 +460,23 @@
 .reportPostContainerHeader {
   margin-right: 15px;
   font-weight: 600;
+}
+
+.unauthorizedAccess {
+  width: 100%;
+  font-size: 35px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: red;
+}
+
+.backBtn {
+  width: 70px;
+  height: 40px;
+  margin-left: 10px;
 }
 
 @media only screen and (max-width: 640px) {

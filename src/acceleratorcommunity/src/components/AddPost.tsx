@@ -42,6 +42,7 @@ import dynamic from 'next/dynamic';
 import draftToHtml from 'draftjs-to-html';
 import { toolbar } from 'assets/helpers/constants';
 import allPeersCall from 'src/API/getPeers';
+import { modifyHtml } from 'assets/helpers/helperFunctions';
 const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mod) => mod.Editor), {
   ssr: false,
 });
@@ -49,11 +50,18 @@ const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mo
 
 import BlockUserImage from '../assets/images/BlockUser.jpg';
 import React from 'react';
+import blockUserCall from 'src/API/blockUnblockUserCall';
 
 type AddPostProps = ComponentProps & {
   fields: {
     heading: Field<string>;
   };
+};
+
+type BlockUserFields = {
+  objectId: string;
+  firstName: string;
+  lastName: string;
 };
 
 const AddPost = (props: AddPostProps | any): JSX.Element => {
@@ -131,6 +139,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   };
   useEffect(() => {
     getAllPears();
+
     // console.log('getAllPears', getAllPears());
   }, []);
 
@@ -228,13 +237,23 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const formRef = useRef<HTMLFormElement>(null);
   const [showSpinner, setShowSpinner] = useState(false);
   const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
-  const [blockUserName, setBlockUserName] = useState<string>('');
+  const [selectedBlockUserItem, setSelectedBlockUserItem] = useState<BlockUserFields>();
 
   const onUserBlocked = async () => {
-    //setToastSuccess(true);
-    //setToastMessage('User blocked successfully');
-    //setShowNofitication(true);
+    setShowSpinner(true);
+    let response = await blockUserCall(userToken, selectedBlockUserItem?.objectId);
+    if (response) {
+      if (response?.success) {
+        setToastSuccess(true);
+        setToastMessage(response?.data);
+      } else {
+        setToastError(true);
+        setToastMessage(response?.errorCode);
+      }
+      setShowNofitication(true);
+    }
     setShowBlockUserPopUp(false);
+    setShowSpinner(false);
   };
 
   const BlockUserPopup = () => {
@@ -256,7 +275,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             <Modal.Body>
               <div
                 className={styles.reportPostModalBody}
-              >{`Do you want to block ${blockUserName} ?`}</div>
+              >{`Do you want to block ${selectedBlockUserItem?.firstName} ${selectedBlockUserItem?.lastName} ?`}</div>
             </Modal.Body>
             <Modal.Footer>
               <Button
@@ -270,6 +289,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </Button>
               <Button className={styles.footerBtn} variant="secondary" onClick={onUserBlocked}>
                 Block
+                {showSpinner ? (
+                  <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
+                ) : (
+                  <></>
+                )}
               </Button>
             </Modal.Footer>
           </div>
@@ -754,9 +778,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   <Dropdown.Item
                     className={styles.dropdownItem}
                     onClick={() => {
-                      setBlockUserName(
-                        post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName
-                      );
+                      setSelectedBlockUserItem(post?.createdBy);
                       setShowBlockUserPopUp(true);
                     }}
                   >
@@ -779,7 +801,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             </div>
           </div>
           <div className="postContent">
-            <div>{parser(post?.description)}</div>
+            <div>{parser(modifyHtml(post?.description))}</div>
             <div className="postMedia">
               {post?.mediaList?.map((media: any, num: any) => {
                 if (media?.mediaType === 'VIDEO') {
@@ -1753,7 +1775,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       editorClassName="editor-class"
                       toolbarClassName="toolbar-class"
                       editorStyle={{ height: '150px' }}
-                      placeholder="Start Typing..."
+                      placeholder="  Share Your Thoughts..."
                       toolbar={toolbar}
                       // toolbarOnFocus={true}
                       mention={{
@@ -1763,11 +1785,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       }}
                       hashtag={{}}
                     />
-                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                       <div>
                         {currentCount}/{5000} characters
                       </div>
-                    </div>
+                    </div> */}
                     {/* <Form.Control
                       onChange={(e) => setPostTextValue(e.target.value)}
                       value={postText}

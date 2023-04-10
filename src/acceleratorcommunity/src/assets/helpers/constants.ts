@@ -17,7 +17,7 @@ export const toolbar = {
     'list',
     'textAlign',
 
-    // 'link',
+    'link',
     // 'embedded',
 
     // 'image',
@@ -41,7 +41,22 @@ export const toolbar = {
     // list: { inDropdown: true },
     // textAlign: { inDropdown: true },
     // link: { inDropdown: true },
-    history: { inDropdown: true },
+  },
+  colorPicker: { className: 'demo-option-custom', popupClassName: 'popup-custom' },
+  blockType: { className: 'demo-option-custom-wide', dropdownClassName: 'popup-custom' },
+  fontSize: { className: 'demo-option-custom-medium', dropdownClassName: 'popup-custom' },
+  fontFamily: { className: 'demo-option-custom-wide', dropdownClassName: 'popup-custom' },
+  emoji: {
+    // icon: BsAirplane,
+    className: 'demo-option-custom',
+    popupClassName: 'popup-custom',
+  },
+  history: {
+    undo: {
+      // icon: previous,
+      className: 'demo-option-custom',
+    },
+    // redo: { icon: next, className: 'demo-option-custom' },
   },
 };
 
