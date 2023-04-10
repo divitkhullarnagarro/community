@@ -26,10 +26,17 @@ import copylink from '../../assets/images/copylink.svg';
 import ToastNotification from 'components/ToastNotification';
 import { ReportPostOptionsTypeLabel } from '../../assets/helpers/enums';
 import reportPostCall from 'src/API/reportPostCall';
+import blockUserCall from 'src/API/blockUnblockUserCall';
 
 // import {calculateTimeDifference} from
 
 // import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+
+type BlockUserFields = {
+  objectId: string;
+  firstName: string;
+  lastName: string;
+};
 
 function viewSinglePost(props: any) {
   console.log('mudatatatata', props);
@@ -56,11 +63,11 @@ function viewSinglePost(props: any) {
   const [toastError, setToastError] = useState(false);
   const [reportPostId, setReportPostId] = useState('');
   const [reportPostType, setReportPostType] = useState('');
-  const [blockUserName, setBlockUserName] = useState<string>('');
   const formRef = useRef<HTMLFormElement>(null);
   const [showSpinner, setShowSpinner] = useState(false);
 
   const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
+  const [selectedBlockUserItem, setSelectedBlockUserItem] = useState<BlockUserFields>();
 
   const showReportPostPopup = () => {
     setShowReportPopUp(true);
@@ -238,10 +245,20 @@ function viewSinglePost(props: any) {
 
   // user Blocked
   const onUserBlocked = async () => {
-    //setToastSuccess(true);
-    //setToastMessage('User blocked successfully');
-    //setShowNofitication(true);
+    setShowSpinner(true);
+    let response = await blockUserCall(userToken, selectedBlockUserItem?.objectId);
+    if (response) {
+      if (response?.success) {
+        setToastSuccess(true);
+        setToastMessage(response?.data);
+      } else {
+        setToastError(true);
+        setToastMessage(response?.errorCode);
+      }
+      setShowNofitication(true);
+    }
     setShowBlockUserPopUp(false);
+    setShowSpinner(false);
   };
   const BlockUserPopup = () => {
     return (
@@ -262,7 +279,7 @@ function viewSinglePost(props: any) {
             <Modal.Body>
               <div
                 className={styles.reportPostModalBody}
-              >{`Do you want to block ${blockUserName} ?`}</div>
+              >{`Do you want to block ${selectedBlockUserItem?.firstName} ${selectedBlockUserItem?.lastName} ?`}</div>
             </Modal.Body>
             <Modal.Footer>
               <Button
@@ -276,6 +293,11 @@ function viewSinglePost(props: any) {
               </Button>
               <Button className={styles.footerBtn} variant="secondary" onClick={onUserBlocked}>
                 Block
+                {showSpinner ? (
+                  <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
+                ) : (
+                  <></>
+                )}
               </Button>
             </Modal.Footer>
           </div>
@@ -487,11 +509,7 @@ function viewSinglePost(props: any) {
                       <Dropdown.Item
                         className={styles.dropdownItem}
                         onClick={() => {
-                          setBlockUserName(
-                            props?.data?.data?.createdBy?.firstName +
-                              ' ' +
-                              props?.data?.data?.createdBy?.lastName
-                          );
+                          setSelectedBlockUserItem(props?.data?.data?.createdBy);
                           setShowBlockUserPopUp(true);
                         }}
                       >
@@ -500,7 +518,7 @@ function viewSinglePost(props: any) {
                             <NextImage field={BlockUserImage} editable={true} />
                           </div>
                           <div className={styles.reportContainerBtn}>
-                            Block{' '}
+                            Block
                             {props?.data?.data?.createdBy?.firstName +
                               ' ' +
                               props?.data?.data?.createdBy?.lastName}
@@ -758,8 +776,8 @@ export async function getServerSideProps(context: any) {
     .catch((error: any) => {
       console.error(error);
     });
-  if (res) {
-    console.log("resssssssssssssssssssssss",res)
+  console.log('postIDResponse', res);
+  if (res.statusText === 'OK') {
     var data = await res.json();
   }
   return {
