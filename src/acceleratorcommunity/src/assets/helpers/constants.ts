@@ -17,7 +17,7 @@ export const toolbar = {
     'list',
     'textAlign',
 
-    // 'link',
+    'link',
     // 'embedded',
 
     // 'image',
