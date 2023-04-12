@@ -31,31 +31,45 @@ Languages:
       Value: 20230313T063551Z
   - Version: 2
     Fields:
+    - ID: "16ed3732-e1bc-49ee-b724-7c0a897a1f9a"
+      Hint: LinkedIn
+      Value: "https://www.linkedin.com/sharing/share-offsite"
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230313T062518Z
-    - ID: "4a1e277b-b787-4aa1-b9c2-92cc68bbe12e"
+    - ID: "4811810e-1782-4373-a339-4b09bc326b49"
+      Hint: Facebook
+      Value: "https://www.facebook.com/sharer/sharer.php"
+    - ID: "7fd7efe7-f393-4125-9a22-707338dc9836"
+      Hint: ArticlesList
+      Value: |
+        {8AF8A500-52BB-4D07-A1E3-8197FFBC7DA8}
+        {404328CD-4367-4BE2-88B1-368BE0986B6D}
+        {832A2E37-065F-4F9A-87D0-F3845621D1A5}
+        {E3683213-4298-4238-9491-2DBF1715EDB4}
+        {0885A14F-0F9E-4DCB-AD93-58B80CC845DD}
+        {A37E43A9-EB4C-4A05-BCC0-DD7E753C77A9}
+        {AE419B29-02BC-407B-B47A-E10AC33FB422}
+    - ID: "8c630964-184e-4d94-a8c4-4c73523a2438"
+      Hint: WhatsApp
+      Value: "https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20"
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "d912b939-8f5f-4de1-96e9-0fc6a7911f85"
+    - ID: "acaa685c-953f-4ea7-ab08-204f5b83137f"
       Hint: Article Content Type
       Value: |
         {0C9AE58A-ADD0-411F-9771-A5C15B19F0A8}
         {757E18A7-D46F-422D-9DF3-7A4E6AA33F40}
         {F183E359-A872-4B54-945E-EA8C7A84E445}
         {0DD1A34E-654B-436F-B2FD-4A358EA75F7C}
-    - ID: "7fd7efe7-f393-4125-9a22-707338dc9836"
-      Hint: ArticlesList
-      Value: |
-        {A37E43A9-EB4C-4A05-BCC0-DD7E753C77A9}
-        {0885A14F-0F9E-4DCB-AD93-58B80CC845DD}
-        {E3683213-4298-4238-9491-2DBF1715EDB4}
-        {404328CD-4367-4BE2-88B1-368BE0986B6D}
-        {832A2E37-065F-4F9A-87D0-F3845621D1A5}
-    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
-      Hint: __Revision
-      Value: "fdc8277e-f6f9-40e5-af8f-caa9a79f99ae"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230404T103858Z
+      Value: 20230407T105111Z
+    - ID: "f001dfc2-520b-4f18-8c7d-e06b14f87b2c"
+      Hint: Twitter
+      Value: "https://twitter.com/intent/tweet"

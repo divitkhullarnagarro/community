@@ -16,7 +16,7 @@ Languages:
       Value: Forgot Your Password
     - ID: "1c69fdbc-7cc1-4e27-8000-02b3b39c9661"
       Hint: Title
-      Value: Welcome, <br>Please Login
+      Value: Welcome to Community Solution <br>Please Login
     - ID: "2540abc2-05c9-4e69-adef-c0d85ecdc62e"
       Hint: RegisterHereLabel
       Value: Register Here
@@ -46,17 +46,17 @@ Languages:
       Value: "Don't have Account ?"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "00ec9f39-5bcb-46ea-aab4-2130867f80a5"
+      Value: "121f18f5-e2c9-43d7-a438-8c0f62f8ce58"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\damyanti.wakchaure@nagarro.com
     - ID: "cda5a55c-df69-4e08-8649-81120aace263"
       Hint: PasswordLabel
       Value: Password
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230403T083141Z
+      Value: 20230404T105915Z
     - ID: "f12c77ed-39d8-45d0-9b2c-b52ba296d6a0"
       Hint: Login Frame Image List
       Value: |

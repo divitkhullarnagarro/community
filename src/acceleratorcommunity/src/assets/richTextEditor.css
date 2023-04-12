@@ -25,8 +25,10 @@
   background: #cfeef1;
 }
 
-.demo-option-custom {
-  /* background-color: #f3ffcd; */
+.demo-option-custom-wide .rdw-dropdown-selectedtext,
+.demo-option-custom-medium .rdw-dropdown-selectedtext {
+  text-decoration: none;
+  color: black;
 }
 .popup-custom {
   -ms-overflow-style: none; /* IE and Edge */

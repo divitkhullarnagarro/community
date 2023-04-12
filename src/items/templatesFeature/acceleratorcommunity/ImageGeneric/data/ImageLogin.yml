@@ -2,7 +2,7 @@
 ID: "2e085d7f-7d5c-4975-9dd5-5b339865fab9"
 Parent: "c899e553-eba8-4a55-87c8-97e8c1caac54"
 Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
-Path: /sitecore/templates/Feature/acceleratorcommunity/ImageGeneric/data/Image
+Path: /sitecore/templates/Feature/acceleratorcommunity/ImageGeneric/data/ImageLogin
 SharedFields:
 - ID: "ab162cc0-dc80-4abf-8871-998ee5d7ba32"
   Hint: Type

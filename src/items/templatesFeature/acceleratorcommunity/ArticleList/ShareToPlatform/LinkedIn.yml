@@ -1,18 +1,15 @@
 ﻿---
-ID: "fc8b0f4d-79c8-4c36-98b7-e93d439ea66f"
-Parent: "56c2d45e-dcca-4688-90a8-c7743ef8b4b4"
+ID: "16ed3732-e1bc-49ee-b724-7c0a897a1f9a"
+Parent: "ba805ecd-cd7d-483f-9b6e-003bbc7b8798"
 Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
-Path: /sitecore/templates/Feature/acceleratorcommunity/ArticleDetailPage/Details/RelatedArticles
+Path: /sitecore/templates/Feature/acceleratorcommunity/ArticleList/ShareToPlatform/LinkedIn
 SharedFields:
-- ID: "1eb8ae32-e190-44a6-968d-ed904c794ebf"
-  Hint: Source
-  Value: /sitecore/content/acceleratorcommunity/home/explorecommunity
 - ID: "ab162cc0-dc80-4abf-8871-998ee5d7ba32"
   Hint: Type
-  Value: Multilist
+  Value: "Single-Line Text"
 - ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
   Hint: __Sortorder
-  Value: 200
+  Value: 300
 Languages:
 - Language: en
   Versions:
@@ -20,22 +17,22 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230326T112015Z
+      Value: 20230406T082304Z
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
-        sitecore\Admin
+        sitecore\ankit.rastogi@nagarro.com
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |
-        sitecore\Admin
+        sitecore\ankit.rastogi@nagarro.com
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "682723bf-4b3f-4a75-8792-ff0968e76292"
+      Value: "1a024bc7-c684-46e4-a06a-9a2501ca5620"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\mohit.rajpal@nagarro.com
+        sitecore\ankit.rastogi@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230407T094605Z
+      Value: 20230406T082304Z

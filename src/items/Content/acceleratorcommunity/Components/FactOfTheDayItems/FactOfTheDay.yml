@@ -16,7 +16,7 @@ Languages:
       Value: Fact Of The Day
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "098ec2d0-ed0c-4fed-8e10-13392a92fa35"
+      Value: "9199bbc5-8aa6-4199-b5cd-85995bf1a47c"
     - ID: "97321436-cdf2-4fb6-8c02-333714f630fb"
       Hint: Description
       Value: King Faisal of Saudi Arabia was shot and killed by his nephew Faisal bin Musaid.
@@ -26,7 +26,11 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\damyanti.wakchaure@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230325T101327Z
+      Value: 20230411T101708Z
+    - ID: "ea5bc781-73db-47cd-bfc0-e6fe07f4b2e7"
+      Hint: Image
+      Value: |
+        <image mediaid="{26770C9A-00BF-4E55-A6C2-D92D738B0F56}" />

@@ -58,7 +58,7 @@ Languages:
       Value: "Welcome to Community Solution! We're glad you're here. To get started, please fill out the form with your information. Once you've submitted the form, you'll redirected to login page. Thank you for choosing Community Solution!"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "393d59bb-0748-4854-87cd-9a76f093d240"
+      Value: "d92f8632-ef86-43ef-8f30-41d51ef9d3f0"
     - ID: "ac4df348-3054-4d3c-8c8f-390472fd4a5b"
       Hint: EmailPlaceholder
       Value: Email
@@ -71,10 +71,10 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\damyanti.wakchaure@nagarro.com
     - ID: "bff4b260-3081-4b87-8b69-c38e882e86f7"
       Hint: Title
-      Value: Welcome, <br>Please Register Here
+      Value: Welcome to Community Solution <br>Please Register Here
     - ID: "c1916724-12cd-45ed-b6e5-8b87faa325bc"
       Hint: PhoneNoLabel
       Value: Phone No.
@@ -83,7 +83,7 @@ Languages:
       Value: "Have Account ?"
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230403T085338Z
+      Value: 20230404T110023Z
     - ID: "f50e7022-746b-4648-8fc5-f49c64efb04a"
       Hint: LastNameLabel
       Value: Last Name
