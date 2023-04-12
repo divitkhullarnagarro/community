@@ -43,17 +43,19 @@ Languages:
     - ID: "7fd7efe7-f393-4125-9a22-707338dc9836"
       Hint: ArticlesList
       Value: |
-        {A37E43A9-EB4C-4A05-BCC0-DD7E753C77A9}
-        {0885A14F-0F9E-4DCB-AD93-58B80CC845DD}
-        {E3683213-4298-4238-9491-2DBF1715EDB4}
+        {8AF8A500-52BB-4D07-A1E3-8197FFBC7DA8}
         {404328CD-4367-4BE2-88B1-368BE0986B6D}
         {832A2E37-065F-4F9A-87D0-F3845621D1A5}
+        {E3683213-4298-4238-9491-2DBF1715EDB4}
+        {0885A14F-0F9E-4DCB-AD93-58B80CC845DD}
+        {A37E43A9-EB4C-4A05-BCC0-DD7E753C77A9}
+        {AE419B29-02BC-407B-B47A-E10AC33FB422}
     - ID: "8c630964-184e-4d94-a8c4-4c73523a2438"
       Hint: WhatsApp
       Value: "https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "90229531-7091-47f3-83ca-f2dd58d371aa"
+      Value: "d912b939-8f5f-4de1-96e9-0fc6a7911f85"
     - ID: "acaa685c-953f-4ea7-ab08-204f5b83137f"
       Hint: Article Content Type
       Value: |
@@ -64,10 +66,10 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\damyanti.wakchaure@nagarro.com
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230407T081038Z
+      Value: 20230407T105111Z
     - ID: "f001dfc2-520b-4f18-8c7d-e06b14f87b2c"
       Hint: Twitter
       Value: "https://twitter.com/intent/tweet"
