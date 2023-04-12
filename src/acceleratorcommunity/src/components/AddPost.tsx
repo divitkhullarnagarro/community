@@ -1203,8 +1203,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                     width: '88%',
                                   }}
                                 >
-                                  <span 
-                                  onClick={() => handleUpvote(reply?.id)}>
+                                  <span onClick={() => handleUpvote(reply?.id)}>
                                     <img
                                       style={{ margin: '5px' }}
                                       width="30px"
@@ -1213,8 +1212,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                       alt="upvote"
                                     />
                                   </span>
-                                  <span
-                                  onClick={() => handleDownvote(reply?.id)}>
+                                  <span onClick={() => handleDownvote(reply?.id)}>
                                     <img
                                       width="30px"
                                       style={{ margin: '5px' }}
@@ -1849,7 +1847,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           <Modal.Title>Reactions</Modal.Title>
         </Modal.Header>
         <Modal.Body className={addPostCss.modalBody}>
-          <div className={addPostCss.btnConatiner} >
+          <div className={addPostCss.btnConatiner}>
             {/* <button
                 onClick={handleAll}
                 // className={allFilterState ? addPostCss.active : addPostCss.filterBtn}
@@ -1939,14 +1937,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             >
               <div className="AddPostField">
                 <Form style={{ border: '1px', borderColor: 'black' }}>
-                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                  <Form.Group controlId="exampleForm.ControlInput1">
                     <Editor
                       editorState={editorState}
                       onEditorStateChange={(e) => onEditorStateChangeHandler(e)}
                       wrapperClassName="wrapper-class"
                       editorClassName="editor-class"
                       toolbarClassName="toolbar-class"
-                      editorStyle={{ height: '150px' }}
+                      editorStyle={{ height: '200px' }}
                       placeholder="  Share Your Thoughts..."
                       toolbar={toolbar}
                       // toolbarOnFocus={true}
