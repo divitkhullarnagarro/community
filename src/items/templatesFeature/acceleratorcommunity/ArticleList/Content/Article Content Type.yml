@@ -1,5 +1,5 @@
 ﻿---
-ID: "4a1e277b-b787-4aa1-b9c2-92cc68bbe12e"
+ID: "acaa685c-953f-4ea7-ab08-204f5b83137f"
 Parent: "aa290247-0669-4761-9d89-d1653771193c"
 Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
 Path: /sitecore/templates/Feature/acceleratorcommunity/ArticleList/Content/Article Content Type
@@ -20,22 +20,22 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230404T103813Z
+      Value: 20230405T070628Z
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
-        sitecore\Admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |
-        sitecore\Admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "48812217-d345-402b-8475-54949b570544"
+      Value: "74f8511b-45ef-4ac9-bd8b-459c153969f8"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230404T103839Z
+      Value: 20230405T070633Z

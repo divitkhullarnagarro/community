@@ -1,0 +1,376 @@
+﻿---
+ID: "8af8a500-52bb-4d07-a1e3-8197ffbc7da8"
+Parent: "b687c946-e903-44d4-b479-e5e137e130a3"
+Template: "05e694d6-3f26-40c0-8cc0-0396ffb7acbc"
+Path: /sitecore/content/acceleratorcommunity/home/explorecommunity/New Data
+SharedFields:
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{6C59AE29-D0A1-4B77-9305-0ABAB21D5FE5}"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "03897511-7b06-4331-8ca0-1929bc3047ce"
+      Hint: Navigation Title
+      Value: New Data
+    - ID: "1592c783-bd58-4410-93cf-05285c4e31e3"
+      Hint: ContentType
+      Value: "{F183E359-A872-4B54-945E-EA8C7A84E445}"
+    - ID: "20effcd6-ba5f-47e5-8003-9b0ce2a49335"
+      Hint: AuthorName
+      Value: zsxasASAS
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230407T104653Z
+    - ID: "31bceb62-c1e4-4109-80b9-172aae293942"
+      Hint: ShortDescription
+      Value: |
+        <div role="row" class="gl-responsive-table-row table-row-header" style="color: #000000; width: 1248px; margin: 0px; padding: 16px 0px; border-width: 0px 0px 1px; border-top-style: initial; border-top-color: initial; border-right-style: initial; border-right-color: initial; border-bottom-style: solid; border-bottom-color: #f0f0f0; border-left-style: initial; border-left-color: initial;">
+        <div role="rowheader" class="table-section section-10 js-pipeline-status">Status</div>
+        <div role="rowheader" class="table-section section-10 js-pipeline-info pipeline-info">Pipeline</div>
+        <div role="rowheader" class="table-section section-10 js-triggerer-info triggerer-info">Triggerer</div>
+        <div role="rowheader" class="table-section section-20 js-pipeline-commit pipeline-commit">Commit</div>
+        <div role="rowheader" class="table-section section-15 js-pipeline-stages pipeline-stages">Stages</div>
+        </div>
+        <div class="commit gl-responsive-table-row" style="color: #000000; width: 1248px; margin: 0px; padding: 16px 0px; border-width: 0px 0px 1px; border-top-style: initial; border-top-color: initial; border-right-style: initial; border-right-color: initial; border-bottom-style: solid; border-bottom-color: #f0f0f0; border-left-style: initial; border-left-color: initial;">
+        <div class="table-section section-10 commit-link">
+        <div class="table-mobile-content"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62448" class="ci-status ci-success qa-status-badge" style="color: #1aaa55; padding: 2px 7px 4px; border: 1px solid #1aaa55;"><span class="ci-status-icon ci-status-icon-success js-ci-status-icon-success"><svg aria-hidden="true" class="s16 ic-status_success"><use></use></svg></span>&nbsp;passed</a></div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-tags"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62448" class="js-pipeline-url-link" style="color: #2e2e2e;"><span class="pipeline-id" style="color: #000000;">#62448</span></a>
+        <div class="label-container"><span class="js-pipeline-url-latest badge badge-success" data-original-title="Latest pipeline for this branch" style="color: #ffffff; background-color: #1aaa55; margin-bottom: 3px; padding: 4px 5px; text-align: center; line-height: 1;">latest</span></div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-triggerer"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link prepend-left-default js-pipeline-url-user" style="color: #2e2e2e; margin-left: 16px;"><span><img alt="" src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="26" height="26" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s26 " style="background: #fdfdfd; height: 26px; width: 26px; margin-right: 8px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" /></span></a></div>
+        <div class="table-section section-wrap section-20">
+        <div class="table-mobile-content">
+        <div class="branch-commit cgray" style="color: #2e2e2e;">
+        <div class="icon-container" style="width: 10px;"><svg aria-hidden="true" class="s16 ic-branch"><use></use></svg></div>
+        &nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commits/develop" class="ref-name" data-original-title="develop" style="color: #2e2e2e;">develop</a>&nbsp;<svg aria-hidden="true" class="commit-icon js-commit-icon s16 ic-commit"><use></use></svg>&nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/110d3153b29dcee97f7859f03c440a7df41d2198" class="commit-sha mr-0" style="color: #1b69b6; margin-right: 0px;">110d3153</a>
+        <div class="commit-title flex-truncate-parent" style="margin: 0px;"><span class="flex-truncate-child"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link avatar-image-container" style="color: #2e2e2e;"><span><img src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="20" height="20" alt="mohitrajpal's avatar" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s20 " style="background: #fdfdfd; height: 20px; width: 20px; margin-right: 4px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" />&nbsp;</span></a><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/110d3153b29dcee97f7859f03c440a7df41d2198" class="commit-row-message cgray" style="color: #2e2e2e;">Merge branch 'GenericComponents' into 'develop'</a></span></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-wrap section-15 stage-cell" style="margin-right: -4px;">
+        <div class="table-mobile-content">
+        <div class="stage-container dropdown js-mini-pipeline-graph" style="height: 22px; margin: 3px 0px;">
+        <div class="dropdown"><button id="stageDropdown" title="deploy: passed" data-toggle="dropdown" data-display="static" type="button" aria-haspopup="true" aria-expanded="false" class="mini-pipeline-graph-dropdown-toggle js-builds-dropdown-button ci-status-icon-success" data-original-title="deploy: running" style="border:1px solid #1aaa55;background-color: #ffffff; height: 22px; width: 22px; margin: 0px; padding: 0px;    line-height: inherit;"><span aria-label="deploy: passed" aria-hidden="true" class="no-pointer-events"><svg aria-hidden="true" class="s16 ic-status_success_borderless"><use></use></svg></span></button></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-15 pipelines-time-ago" style="text-align: right;">
+        <div class="table-mobile-content">
+        <p class="duration" style="color: #707070; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;"><span><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewbox="0 0 40 40"><g fill="#8F8F8F" fill-rule="evenodd">
+        <path d="M29.513 10.134A15.922 15.922 0 0 0 23 7.28V6h2.993C26.55 6 27 5.552 27 5V2a1 1 0 0 0-1.007-1H14.007C13.45 1 13 1.448 13 2v3a1 1 0 0 0 1.007 1H17v1.28C9.597 8.686 4 15.19 4 23c0 8.837 7.163 16 16 16s16-7.163 16-16c0-3.461-1.099-6.665-2.967-9.283l1.327-1.58a2.498 2.498 0 0 0-.303-3.53 2.499 2.499 0 0 0-3.528.315l-1.016 1.212zM20 34c6.075 0 11-4.925 11-11s-4.925-11-11-11S9 16.925 9 23s4.925 11 11 11z"></path>
+        <path d="M19 21h-4.002c-.552 0-.998.452-.998 1.01v1.98c0 .567.447 1.01.998 1.01h7.004c.274 0 .521-.111.701-.291a.979.979 0 0 0 .297-.704v-8.01c0-.54-.452-.995-1.01-.995h-1.98a.997.997 0 0 0-1.01.995V21z"></path>
+        </g></svg>&nbsp;</span>00:09:30</p>
+        <p class="finished-at d-none d-sm-none d-md-block" style="color: #707070; margin-top: 0px; margin-right: 0px; margin-left: 0px;">&nbsp;<time data-placement="top" data-container="body" data-original-title="Apr 7, 2023 3:31pm GMT+0530">11 minutes ago</time></p>
+        </div>
+        </div>
+        </div>
+        <div class="commit gl-responsive-table-row" style="color: #000000; width: 1248px; margin: 0px; padding: 16px 0px; border-width: 0px 0px 1px; border-top-style: initial; border-top-color: initial; border-right-style: initial; border-right-color: initial; border-bottom-style: solid; border-bottom-color: #f0f0f0; border-left-style: initial; border-left-color: initial;">
+        <div class="table-section section-10 commit-link">
+        <div class="table-mobile-content"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62447" class="ci-status ci-success qa-status-badge" style="color: #1aaa55; padding: 2px 7px 4px; border: 1px solid #1aaa55;"><span class="ci-status-icon ci-status-icon-success js-ci-status-icon-success"><svg aria-hidden="true" class="s16 ic-status_success"><use></use></svg></span>&nbsp;passed</a></div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-tags"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62447" class="js-pipeline-url-link" style="color: #2e2e2e;"><span class="pipeline-id" style="color: #000000;">#62447</span></a>
+        <div class="label-container"><span class="js-pipeline-url-latest badge badge-success" data-original-title="Latest pipeline for this branch" style="color: #ffffff; background-color: #1aaa55; margin-bottom: 3px; padding: 4px 5px; text-align: center; line-height: 1;">latest</span></div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-triggerer"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link prepend-left-default js-pipeline-url-user" style="color: #2e2e2e; margin-left: 16px;"><span><img alt="" src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="26" height="26" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s26 " style="background: #fdfdfd; height: 26px; width: 26px; margin-right: 8px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" /></span></a></div>
+        <div class="table-section section-wrap section-20">
+        <div class="table-mobile-content">
+        <div class="branch-commit cgray" style="color: #2e2e2e;">
+        <div class="icon-container" style="width: 10px;"><svg aria-hidden="true" class="s16 ic-branch"><use></use></svg></div>
+        &nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commits/GenericComponents" class="ref-name" data-original-title="GenericComponents" style="color: #2e2e2e;">GenericComponents</a>&nbsp;<svg aria-hidden="true" class="commit-icon js-commit-icon s16 ic-commit"><use></use></svg>&nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/162f940f18c389fefbcafe302d19019ef8aa60fe" class="commit-sha mr-0" style="color: #1b69b6; margin-right: 0px;">162f940f</a>
+        <div class="commit-title flex-truncate-parent" style="margin: 0px;"><span class="flex-truncate-child"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link avatar-image-container" style="color: #2e2e2e;"><span><img src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="20" height="20" alt="mohitrajpal's avatar" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s20 " style="background: #fdfdfd; height: 20px; width: 20px; margin-right: 4px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" />&nbsp;</span></a><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/162f940f18c389fefbcafe302d19019ef8aa60fe" class="commit-row-message cgray" style="color: #2e2e2e;">Merge branch 'feature/BIPD-487-PostComponent' into 'GenericComponents'</a></span></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-wrap section-15 stage-cell" style="margin-right: -4px;">
+        <div class="table-mobile-content">
+        <div class="stage-container dropdown js-mini-pipeline-graph" style="height: 22px; margin: 3px 0px;">
+        <div class="dropdown"><button id="stageDropdown" title="deploy: passed" data-toggle="dropdown" data-display="static" type="button" aria-haspopup="true" aria-expanded="false" class="mini-pipeline-graph-dropdown-toggle js-builds-dropdown-button ci-status-icon-success" data-original-title="deploy: running" style="border:1px solid #1aaa55;background-color: #ffffff; height: 22px; width: 22px; margin: 0px; padding: 0px;    line-height: inherit;"><span aria-label="deploy: passed" aria-hidden="true" class="no-pointer-events"><svg aria-hidden="true" class="s16 ic-status_success_borderless"><use></use></svg></span></button></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-15 pipelines-time-ago" style="text-align: right;">
+        <div class="table-mobile-content">
+        <p class="duration" style="color: #707070; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;"><span><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewbox="0 0 40 40"><g fill="#8F8F8F" fill-rule="evenodd">
+        <path d="M29.513 10.134A15.922 15.922 0 0 0 23 7.28V6h2.993C26.55 6 27 5.552 27 5V2a1 1 0 0 0-1.007-1H14.007C13.45 1 13 1.448 13 2v3a1 1 0 0 0 1.007 1H17v1.28C9.597 8.686 4 15.19 4 23c0 8.837 7.163 16 16 16s16-7.163 16-16c0-3.461-1.099-6.665-2.967-9.283l1.327-1.58a2.498 2.498 0 0 0-.303-3.53 2.499 2.499 0 0 0-3.528.315l-1.016 1.212zM20 34c6.075 0 11-4.925 11-11s-4.925-11-11-11S9 16.925 9 23s4.925 11 11 11z"></path>
+        <path d="M19 21h-4.002c-.552 0-.998.452-.998 1.01v1.98c0 .567.447 1.01.998 1.01h7.004c.274 0 .521-.111.701-.291a.979.979 0 0 0 .297-.704v-8.01c0-.54-.452-.995-1.01-.995h-1.98a.997.997 0 0 0-1.01.995V21z"></path>
+        </g></svg>&nbsp;</span>00:09:40</p>
+        <p class="finished-at d-none d-sm-none d-md-block" style="color: #707070; margin-top: 0px; margin-right: 0px; margin-left: 0px;">&nbsp;<time data-placement="top" data-container="body" data-original-title="Apr 7, 2023 3:22pm GMT+0530">2 minutes ago</time></p>
+        </div>
+        </div>
+        </div>
+        <div class="commit gl-responsive-table-row" style="color: #000000; width: 1248px; margin: 0px; padding: 16px 0px; border-width: 0px 0px 1px; border-top-style: initial; border-top-color: initial; border-right-style: initial; border-right-color: initial; border-bottom-style: solid; border-bottom-color: #f0f0f0; border-left-style: initial; border-left-color: initial;">
+        <div class="table-section section-10 commit-link">
+        <div class="table-mobile-content"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62444" class="ci-status ci-success qa-status-badge" style="color: #1aaa55; padding: 2px 7px 4px; border: 1px solid #1aaa55;"><span class="ci-status-icon ci-status-icon-success js-ci-status-icon-success"><svg aria-hidden="true" class="s16 ic-status_success"><use></use></svg></span>&nbsp;passed</a></div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-tags"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62444" class="js-pipeline-url-link" style="color: #2e2e2e;"><span class="pipeline-id" style="color: #000000;">#62444</span></a>
+        <div class="label-container">&nbsp;</div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-triggerer"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link prepend-left-default js-pipeline-url-user" style="color: #2e2e2e; margin-left: 16px;"><span><img alt="" src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="26" height="26" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s26 " style="background: #fdfdfd; height: 26px; width: 26px; margin-right: 8px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" /></span></a></div>
+        <div class="table-section section-wrap section-20">
+        <div class="table-mobile-content">
+        <div class="branch-commit cgray" style="color: #2e2e2e;">
+        <div class="icon-container" style="width: 10px;"><svg aria-hidden="true" class="s16 ic-branch"><use></use></svg></div>
+        &nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commits/develop" class="ref-name" data-original-title="develop" style="color: #2e2e2e;">develop</a>&nbsp;<svg aria-hidden="true" class="commit-icon js-commit-icon s16 ic-commit"><use></use></svg>&nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/623c2224b6ff03273a85f222420631a11c21494f" class="commit-sha mr-0" style="color: #1b69b6; margin-right: 0px;">623c2224</a>
+        <div class="commit-title flex-truncate-parent" style="margin: 0px;"><span class="flex-truncate-child"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link avatar-image-container" style="color: #2e2e2e;"><span><img src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="20" height="20" alt="mohitrajpal's avatar" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s20 " style="background: #fdfdfd; height: 20px; width: 20px; margin-right: 4px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" />&nbsp;</span></a><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/623c2224b6ff03273a85f222420631a11c21494f" class="commit-row-message cgray" style="color: #2e2e2e;">Merge branch 'GenericComponents' into 'develop'</a></span></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-wrap section-15 stage-cell" style="margin-right: -4px;">
+        <div class="table-mobile-content">
+        <div class="stage-container dropdown js-mini-pipeline-graph" style="height: 22px; margin: 3px 0px;">
+        <div class="dropdown"><button id="stageDropdown" data-toggle="dropdown" data-display="static" type="button" aria-haspopup="true" aria-expanded="false" class="mini-pipeline-graph-dropdown-toggle js-builds-dropdown-button ci-status-icon-success" data-original-title="deploy: passed" style="border:1px solid #1aaa55;background-color: #ffffff; height: 22px; width: 22px; margin: 0px; padding: 0px;    line-height: inherit;"><span aria-label="deploy: passed" aria-hidden="true" class="no-pointer-events"><svg aria-hidden="true" class="s16 ic-status_success_borderless"><use></use></svg></span></button></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-15 pipelines-time-ago" style="text-align: right;">
+        <div class="table-mobile-content">
+        <p class="duration" style="color: #707070; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;"><span><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewbox="0 0 40 40"><g fill="#8F8F8F" fill-rule="evenodd">
+        <path d="M29.513 10.134A15.922 15.922 0 0 0 23 7.28V6h2.993C26.55 6 27 5.552 27 5V2a1 1 0 0 0-1.007-1H14.007C13.45 1 13 1.448 13 2v3a1 1 0 0 0 1.007 1H17v1.28C9.597 8.686 4 15.19 4 23c0 8.837 7.163 16 16 16s16-7.163 16-16c0-3.461-1.099-6.665-2.967-9.283l1.327-1.58a2.498 2.498 0 0 0-.303-3.53 2.499 2.499 0 0 0-3.528.315l-1.016 1.212zM20 34c6.075 0 11-4.925 11-11s-4.925-11-11-11S9 16.925 9 23s4.925 11 11 11z"></path>
+        <path d="M19 21h-4.002c-.552 0-.998.452-.998 1.01v1.98c0 .567.447 1.01.998 1.01h7.004c.274 0 .521-.111.701-.291a.979.979 0 0 0 .297-.704v-8.01c0-.54-.452-.995-1.01-.995h-1.98a.997.997 0 0 0-1.01.995V21z"></path>
+        </g></svg>&nbsp;</span>00:09:02</p>
+        <p class="finished-at d-none d-sm-none d-md-block" style="color: #707070; margin-top: 0px; margin-right: 0px; margin-left: 0px;">&nbsp;<time data-placement="top" data-container="body" data-original-title="Apr 7, 2023 3:05pm GMT+0530">8 minutes ago</time></p>
+        </div>
+        </div>
+        </div>
+        <div class="commit gl-responsive-table-row" style="color: #000000; width: 1248px; margin: 0px; padding: 16px 0px; border-width: 0px 0px 1px; border-top-style: initial; border-top-color: initial; border-right-style: initial; border-right-color: initial; border-bottom-style: solid; border-bottom-color: #f0f0f0; border-left-style: initial; border-left-color: initial;">
+        <div class="table-section section-10 commit-link">
+        <div class="table-mobile-content"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62442" class="ci-status ci-success qa-status-badge" style="color: #1aaa55; padding: 2px 7px 4px; border: 1px solid #1aaa55;"><span class="ci-status-icon ci-status-icon-success js-ci-status-icon-success"><svg aria-hidden="true" class="s16 ic-status_success"><use></use></svg></span>&nbsp;passed</a></div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-tags"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62442" class="js-pipeline-url-link" style="color: #2e2e2e;"><span class="pipeline-id" style="color: #000000;">#62442</span></a>
+        <div class="label-container">&nbsp;</div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-triggerer"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link prepend-left-default js-pipeline-url-user" style="color: #2e2e2e; margin-left: 16px;"><span><img alt="" src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="26" height="26" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s26 " style="background: #fdfdfd; height: 26px; width: 26px; margin-right: 8px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" /></span></a></div>
+        <div class="table-section section-wrap section-20">
+        <div class="table-mobile-content">
+        <div class="branch-commit cgray" style="color: #2e2e2e;">
+        <div class="icon-container" style="width: 10px;"><svg aria-hidden="true" class="s16 ic-branch"><use></use></svg></div>
+        &nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commits/GenericComponents" class="ref-name" data-original-title="GenericComponents" style="color: #2e2e2e;">GenericComponents</a>&nbsp;<svg aria-hidden="true" class="commit-icon js-commit-icon s16 ic-commit"><use></use></svg>&nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/2eafbfd904a37ec6532f0049de8299b79e519857" class="commit-sha mr-0" style="color: #1b69b6; margin-right: 0px;">2eafbfd9</a>
+        <div class="commit-title flex-truncate-parent" style="margin: 0px;"><span class="flex-truncate-child"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link avatar-image-container" style="color: #2e2e2e;"><span><img src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="20" height="20" alt="mohitrajpal's avatar" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s20 " style="background: #fdfdfd; height: 20px; width: 20px; margin-right: 4px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" />&nbsp;</span></a><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/2eafbfd904a37ec6532f0049de8299b79e519857" class="commit-row-message cgray" style="color: #2e2e2e;">Merge branch 'feature/UI-Alignment' into 'GenericComponents'</a></span></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-wrap section-15 stage-cell" style="margin-right: -4px;">
+        <div class="table-mobile-content">
+        <div class="stage-container dropdown js-mini-pipeline-graph" style="height: 22px; margin: 3px 0px;">
+        <div class="dropdown"><button id="stageDropdown" data-toggle="dropdown" data-display="static" type="button" aria-haspopup="true" aria-expanded="false" class="mini-pipeline-graph-dropdown-toggle js-builds-dropdown-button ci-status-icon-success" data-original-title="deploy: passed" style="border:1px solid #1aaa55;background-color: #ffffff; height: 22px; width: 22px; margin: 0px; padding: 0px;    line-height: inherit;"><span aria-label="deploy: passed" aria-hidden="true" class="no-pointer-events"><svg aria-hidden="true" class="s16 ic-status_success_borderless"><use></use></svg></span></button></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-15 pipelines-time-ago" style="text-align: right;">
+        <div class="table-mobile-content">
+        <p class="duration" style="color: #707070; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;"><span><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewbox="0 0 40 40"><g fill="#8F8F8F" fill-rule="evenodd">
+        <path d="M29.513 10.134A15.922 15.922 0 0 0 23 7.28V6h2.993C26.55 6 27 5.552 27 5V2a1 1 0 0 0-1.007-1H14.007C13.45 1 13 1.448 13 2v3a1 1 0 0 0 1.007 1H17v1.28C9.597 8.686 4 15.19 4 23c0 8.837 7.163 16 16 16s16-7.163 16-16c0-3.461-1.099-6.665-2.967-9.283l1.327-1.58a2.498 2.498 0 0 0-.303-3.53 2.499 2.499 0 0 0-3.528.315l-1.016 1.212zM20 34c6.075 0 11-4.925 11-11s-4.925-11-11-11S9 16.925 9 23s4.925 11 11 11z"></path>
+        <path d="M19 21h-4.002c-.552 0-.998.452-.998 1.01v1.98c0 .567.447 1.01.998 1.01h7.004c.274 0 .521-.111.701-.291a.979.979 0 0 0 .297-.704v-8.01c0-.54-.452-.995-1.01-.995h-1.98a.997.997 0 0 0-1.01.995V21z"></path>
+        </g></svg>&nbsp;</span>00:09:49</p>
+        <p class="finished-at d-none d-sm-none d-md-block" style="color: #707070; margin-top: 0px; margin-right: 0px; margin-left: 0px;">&nbsp;<time data-placement="top" data-container="body" data-original-title="Apr 7, 2023 2:56pm GMT+0530">17 minutes ago</time></p>
+        </div>
+        </div>
+        </div>
+        <div class="commit gl-responsive-table-row" style="color: #000000; width: 1248px; margin: 0px; padding: 16px 0px; border-width: 0px 0px 1px; border-top-style: initial; border-top-color: initial; border-right-style: initial; border-right-color: initial; border-bottom-style: solid; border-bottom-color: #f0f0f0; border-left-style: initial; border-left-color: initial;">
+        <div class="table-section section-10 commit-link">
+        <div class="table-mobile-content"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62432" class="ci-status ci-failed qa-status-badge" style="color: #db3b21; padding: 2px 7px 4px; border: 1px solid #db3b21;"><span class="ci-status-icon ci-status-icon-failed js-ci-status-icon-failed"><svg aria-hidden="true" class="s16 ic-status_failed"><use></use></svg></span>&nbsp;failed</a></div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-tags"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62432" class="js-pipeline-url-link" style="color: #2e2e2e;"><span class="pipeline-id" style="color: #000000;">#62432</span></a>
+        <div class="label-container">&nbsp;</div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-triggerer"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link prepend-left-default js-pipeline-url-user" style="color: #2e2e2e; margin-left: 16px;"><span><img alt="" src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="26" height="26" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s26 " style="background: #fdfdfd; height: 26px; width: 26px; margin-right: 8px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" /></span></a></div>
+        <div class="table-section section-wrap section-20">
+        <div class="table-mobile-content">
+        <div class="branch-commit cgray" style="color: #2e2e2e;">
+        <div class="icon-container" style="width: 10px;"><svg aria-hidden="true" class="s16 ic-branch"><use></use></svg></div>
+        &nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commits/develop" class="ref-name" data-original-title="develop" style="color: #2e2e2e;">develop</a>&nbsp;<svg aria-hidden="true" class="commit-icon js-commit-icon s16 ic-commit"><use></use></svg>&nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/b745a7ff7e643fa77e187adcdc6db387e0f29a5d" class="commit-sha mr-0" style="color: #1b69b6; margin-right: 0px;">b745a7ff</a>
+        <div class="commit-title flex-truncate-parent" style="margin: 0px;"><span class="flex-truncate-child"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link avatar-image-container" style="color: #2e2e2e;"><span><img src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="20" height="20" alt="mohitrajpal's avatar" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s20 " style="background: #fdfdfd; height: 20px; width: 20px; margin-right: 4px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" />&nbsp;</span></a><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/b745a7ff7e643fa77e187adcdc6db387e0f29a5d" class="commit-row-message cgray" style="color: #2e2e2e;">Merge branch 'GenericComponents' into 'develop'</a></span></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-wrap section-15 stage-cell" style="margin-right: -4px;">
+        <div class="table-mobile-content">
+        <div class="stage-container dropdown js-mini-pipeline-graph" style="height: 22px; margin: 3px 0px;">
+        <div class="dropdown"><button id="stageDropdown" data-toggle="dropdown" data-display="static" type="button" aria-haspopup="true" aria-expanded="false" class="mini-pipeline-graph-dropdown-toggle js-builds-dropdown-button ci-status-icon-failed" data-original-title="deploy: failed" style="border:1px solid #db3b21;background-color: #ffffff; height: 22px; width: 22px; margin: 0px; padding: 0px;    line-height: inherit;"><span aria-label="deploy: failed" aria-hidden="true" class="no-pointer-events"><svg aria-hidden="true" class="s16 ic-status_failed_borderless"><use></use></svg></span></button></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-15 pipelines-time-ago" style="text-align: right;">
+        <div class="table-mobile-content">
+        <p class="duration" style="color: #707070; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;"><span><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewbox="0 0 40 40"><g fill="#8F8F8F" fill-rule="evenodd">
+        <path d="M29.513 10.134A15.922 15.922 0 0 0 23 7.28V6h2.993C26.55 6 27 5.552 27 5V2a1 1 0 0 0-1.007-1H14.007C13.45 1 13 1.448 13 2v3a1 1 0 0 0 1.007 1H17v1.28C9.597 8.686 4 15.19 4 23c0 8.837 7.163 16 16 16s16-7.163 16-16c0-3.461-1.099-6.665-2.967-9.283l1.327-1.58a2.498 2.498 0 0 0-.303-3.53 2.499 2.499 0 0 0-3.528.315l-1.016 1.212zM20 34c6.075 0 11-4.925 11-11s-4.925-11-11-11S9 16.925 9 23s4.925 11 11 11z"></path>
+        <path d="M19 21h-4.002c-.552 0-.998.452-.998 1.01v1.98c0 .567.447 1.01.998 1.01h7.004c.274 0 .521-.111.701-.291a.979.979 0 0 0 .297-.704v-8.01c0-.54-.452-.995-1.01-.995h-1.98a.997.997 0 0 0-1.01.995V21z"></path>
+        </g></svg>&nbsp;</span>01:02:02</p>
+        <p class="finished-at d-none d-sm-none d-md-block" style="color: #707070; margin-top: 0px; margin-right: 0px; margin-left: 0px;">&nbsp;<time data-placement="top" data-container="body" data-original-title="Apr 7, 2023 2:37pm GMT+0530">36 minutes ago</time></p>
+        </div>
+        </div>
+        <div class="table-section section-20 table-button-footer pipeline-actions" style="border-bottom: 0px; text-align: right;">
+        <div class="btn-group table-action-buttons"><button type="button" class="js-pipelines-retry-button btn btn-default btn-retry" style="border:1px solid #e5e5e5;color: #707070; background-color: #ffffff; margin: 0px; padding: 6px 10px;    line-height: 20px;"><svg aria-hidden="true" class="s16 ic-repeat"><use></use></svg></button></div>
+        </div>
+        </div>
+        <div class="commit gl-responsive-table-row" style="color: #000000; width: 1248px; margin: 0px; padding: 16px 0px; border-width: 0px 0px 1px; border-top-style: initial; border-top-color: initial; border-right-style: initial; border-right-color: initial; border-bottom-style: solid; border-bottom-color: #f0f0f0; border-left-style: initial; border-left-color: initial;">
+        <div class="table-section section-10 commit-link">
+        <div class="table-mobile-content"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62431" class="ci-status ci-failed qa-status-badge" style="color: #db3b21; padding: 2px 7px 4px; border: 1px solid #db3b21;"><span class="ci-status-icon ci-status-icon-failed js-ci-status-icon-failed"><svg aria-hidden="true" class="s16 ic-status_failed"><use></use></svg></span>&nbsp;failed</a></div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-tags"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62431" class="js-pipeline-url-link" style="color: #2e2e2e;"><span class="pipeline-id" style="color: #000000;">#62431</span></a>
+        <div class="label-container">&nbsp;</div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-triggerer"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link prepend-left-default js-pipeline-url-user" style="color: #2e2e2e; margin-left: 16px;"><span><img alt="" src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="26" height="26" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s26 " style="background: #fdfdfd; height: 26px; width: 26px; margin-right: 8px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" /></span></a></div>
+        <div class="table-section section-wrap section-20">
+        <div class="table-mobile-content">
+        <div class="branch-commit cgray" style="color: #2e2e2e;">
+        <div class="icon-container" style="width: 10px;"><svg aria-hidden="true" class="s16 ic-branch"><use></use></svg></div>
+        &nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commits/GenericComponents" class="ref-name" data-original-title="GenericComponents" style="color: #2e2e2e;">GenericComponents</a>&nbsp;<svg aria-hidden="true" class="commit-icon js-commit-icon s16 ic-commit"><use></use></svg>&nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/04ee59c0c9c5ef9acac03cf9bb6947867edcc709" class="commit-sha mr-0" style="color: #1b69b6; margin-right: 0px;">04ee59c0</a>
+        <div class="commit-title flex-truncate-parent" style="margin: 0px;"><span class="flex-truncate-child"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link avatar-image-container" style="color: #2e2e2e;"><span><img src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="20" height="20" alt="mohitrajpal's avatar" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s20 " style="background: #fdfdfd; height: 20px; width: 20px; margin-right: 4px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" />&nbsp;</span></a><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/04ee59c0c9c5ef9acac03cf9bb6947867edcc709" class="commit-row-message cgray" style="color: #2e2e2e;">Merge branch 'feature/previewForPost' into 'GenericComponents'</a></span></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-wrap section-15 stage-cell" style="margin-right: -4px;">
+        <div class="table-mobile-content">
+        <div class="stage-container dropdown js-mini-pipeline-graph" style="height: 22px; margin: 3px 0px;">
+        <div class="dropdown"><button id="stageDropdown" data-toggle="dropdown" data-display="static" type="button" aria-haspopup="true" aria-expanded="false" class="mini-pipeline-graph-dropdown-toggle js-builds-dropdown-button ci-status-icon-failed" data-original-title="deploy: failed" style="border:1px solid #db3b21;background-color: #ffffff; height: 22px; width: 22px; margin: 0px; padding: 0px;    line-height: inherit;"><span aria-label="deploy: failed" aria-hidden="true" class="no-pointer-events"><svg aria-hidden="true" class="s16 ic-status_failed_borderless"><use></use></svg></span></button></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-15 pipelines-time-ago" style="text-align: right;">
+        <div class="table-mobile-content">
+        <p class="duration" style="color: #707070; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;"><span><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewbox="0 0 40 40"><g fill="#8F8F8F" fill-rule="evenodd">
+        <path d="M29.513 10.134A15.922 15.922 0 0 0 23 7.28V6h2.993C26.55 6 27 5.552 27 5V2a1 1 0 0 0-1.007-1H14.007C13.45 1 13 1.448 13 2v3a1 1 0 0 0 1.007 1H17v1.28C9.597 8.686 4 15.19 4 23c0 8.837 7.163 16 16 16s16-7.163 16-16c0-3.461-1.099-6.665-2.967-9.283l1.327-1.58a2.498 2.498 0 0 0-.303-3.53 2.499 2.499 0 0 0-3.528.315l-1.016 1.212zM20 34c6.075 0 11-4.925 11-11s-4.925-11-11-11S9 16.925 9 23s4.925 11 11 11z"></path>
+        <path d="M19 21h-4.002c-.552 0-.998.452-.998 1.01v1.98c0 .567.447 1.01.998 1.01h7.004c.274 0 .521-.111.701-.291a.979.979 0 0 0 .297-.704v-8.01c0-.54-.452-.995-1.01-.995h-1.98a.997.997 0 0 0-1.01.995V21z"></path>
+        </g></svg>&nbsp;</span>00:25:17</p>
+        <p class="finished-at d-none d-sm-none d-md-block" style="color: #707070; margin-top: 0px; margin-right: 0px; margin-left: 0px;">&nbsp;<time data-placement="top" data-container="body" data-original-title="Apr 7, 2023 1:35pm GMT+0530">1 hour ago</time></p>
+        </div>
+        </div>
+        <div class="table-section section-20 table-button-footer pipeline-actions" style="border-bottom: 0px; text-align: right;">
+        <div class="btn-group table-action-buttons"><button type="button" class="js-pipelines-retry-button btn btn-default btn-retry" style="border:1px solid #e5e5e5;color: #707070; background-color: #ffffff; margin: 0px; padding: 6px 10px;    line-height: 20px;"><svg aria-hidden="true" class="s16 ic-repeat"><use></use></svg></button></div>
+        </div>
+        </div>
+        <div class="commit gl-responsive-table-row" style="color: #000000; width: 1248px; margin: 0px; padding: 16px 0px; border-width: 0px 0px 1px; border-top-style: initial; border-top-color: initial; border-right-style: initial; border-right-color: initial; border-bottom-style: solid; border-bottom-color: #f0f0f0; border-left-style: initial; border-left-color: initial;">
+        <div class="table-section section-10 commit-link">
+        <div class="table-mobile-content"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62430" class="ci-status ci-success qa-status-badge" style="color: #1aaa55; padding: 2px 7px 4px; border: 1px solid #1aaa55;"><span class="ci-status-icon ci-status-icon-success js-ci-status-icon-success"><svg aria-hidden="true" class="s16 ic-status_success"><use></use></svg></span>&nbsp;passed</a></div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-tags"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62430" class="js-pipeline-url-link" style="color: #2e2e2e;"><span class="pipeline-id" style="color: #000000;">#62430</span></a>
+        <div class="label-container">&nbsp;</div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-triggerer"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link prepend-left-default js-pipeline-url-user" style="color: #2e2e2e; margin-left: 16px;"><span><img alt="" src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="26" height="26" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s26 " style="background: #fdfdfd; height: 26px; width: 26px; margin-right: 8px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" /></span></a></div>
+        <div class="table-section section-wrap section-20">
+        <div class="table-mobile-content">
+        <div class="branch-commit cgray" style="color: #2e2e2e;">
+        <div class="icon-container" style="width: 10px;"><svg aria-hidden="true" class="s16 ic-branch"><use></use></svg></div>
+        &nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commits/develop" class="ref-name" data-original-title="develop" style="color: #2e2e2e;">develop</a>&nbsp;<svg aria-hidden="true" class="commit-icon js-commit-icon s16 ic-commit"><use></use></svg>&nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/d101e9a51d84846723a9b42040a1f2df57b16eb4" class="commit-sha mr-0" style="color: #1b69b6; margin-right: 0px;">d101e9a5</a>
+        <div class="commit-title flex-truncate-parent" style="margin: 0px;"><span class="flex-truncate-child"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link avatar-image-container" style="color: #2e2e2e;"><span><img src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="20" height="20" alt="mohitrajpal's avatar" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s20 " style="background: #fdfdfd; height: 20px; width: 20px; margin-right: 4px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" />&nbsp;</span></a><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/d101e9a51d84846723a9b42040a1f2df57b16eb4" class="commit-row-message cgray" style="color: #2e2e2e;">Merge branch 'GenericComponents' into 'develop'</a></span></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-wrap section-15 stage-cell" style="margin-right: -4px;">
+        <div class="table-mobile-content">
+        <div class="stage-container dropdown js-mini-pipeline-graph" style="height: 22px; margin: 3px 0px;">
+        <div class="dropdown"><button id="stageDropdown" data-toggle="dropdown" data-display="static" type="button" aria-haspopup="true" aria-expanded="false" class="mini-pipeline-graph-dropdown-toggle js-builds-dropdown-button ci-status-icon-success" data-original-title="deploy: passed" style="border:1px solid #1aaa55;background-color: #ffffff; height: 22px; width: 22px; margin: 0px; padding: 0px;    line-height: inherit;"><span aria-label="deploy: passed" aria-hidden="true" class="no-pointer-events"><svg aria-hidden="true" class="s16 ic-status_success_borderless"><use></use></svg></span></button></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-15 pipelines-time-ago" style="text-align: right;">
+        <div class="table-mobile-content">
+        <p class="duration" style="color: #707070; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;"><span><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewbox="0 0 40 40"><g fill="#8F8F8F" fill-rule="evenodd">
+        <path d="M29.513 10.134A15.922 15.922 0 0 0 23 7.28V6h2.993C26.55 6 27 5.552 27 5V2a1 1 0 0 0-1.007-1H14.007C13.45 1 13 1.448 13 2v3a1 1 0 0 0 1.007 1H17v1.28C9.597 8.686 4 15.19 4 23c0 8.837 7.163 16 16 16s16-7.163 16-16c0-3.461-1.099-6.665-2.967-9.283l1.327-1.58a2.498 2.498 0 0 0-.303-3.53 2.499 2.499 0 0 0-3.528.315l-1.016 1.212zM20 34c6.075 0 11-4.925 11-11s-4.925-11-11-11S9 16.925 9 23s4.925 11 11 11z"></path>
+        <path d="M19 21h-4.002c-.552 0-.998.452-.998 1.01v1.98c0 .567.447 1.01.998 1.01h7.004c.274 0 .521-.111.701-.291a.979.979 0 0 0 .297-.704v-8.01c0-.54-.452-.995-1.01-.995h-1.98a.997.997 0 0 0-1.01.995V21z"></path>
+        </g></svg>&nbsp;</span>00:26:49</p>
+        <p class="finished-at d-none d-sm-none d-md-block" style="color: #707070; margin-top: 0px; margin-right: 0px; margin-left: 0px;">&nbsp;<time data-placement="top" data-container="body" data-original-title="Apr 7, 2023 11:25am GMT+0530">3 hours ago</time></p>
+        </div>
+        </div>
+        </div>
+        <div class="commit gl-responsive-table-row" style="color: #000000; width: 1248px; margin: 0px; padding: 16px 0px; border-width: 0px 0px 1px; border-top-style: initial; border-top-color: initial; border-right-style: initial; border-right-color: initial; border-bottom-style: solid; border-bottom-color: #f0f0f0; border-left-style: initial; border-left-color: initial;">
+        <div class="table-section section-10 commit-link">
+        <div class="table-mobile-content"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62429" class="ci-status ci-success qa-status-badge" style="color: #1aaa55; padding: 2px 7px 4px; border: 1px solid #1aaa55;"><span class="ci-status-icon ci-status-icon-success js-ci-status-icon-success"><svg aria-hidden="true" class="s16 ic-status_success"><use></use></svg></span>&nbsp;passed</a></div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-tags"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62429" class="js-pipeline-url-link" style="color: #2e2e2e;"><span class="pipeline-id" style="color: #000000;">#62429</span></a>
+        <div class="label-container">&nbsp;</div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-triggerer"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link prepend-left-default js-pipeline-url-user" style="color: #2e2e2e; margin-left: 16px;"><span><img alt="" src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="26" height="26" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s26 " style="background: #fdfdfd; height: 26px; width: 26px; margin-right: 8px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" /></span></a></div>
+        <div class="table-section section-wrap section-20">
+        <div class="table-mobile-content">
+        <div class="branch-commit cgray" style="color: #2e2e2e;">
+        <div class="icon-container" style="width: 10px;"><svg aria-hidden="true" class="s16 ic-branch"><use></use></svg></div>
+        &nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commits/GenericComponents" class="ref-name" data-original-title="GenericComponents" style="color: #2e2e2e;">GenericComponents</a>&nbsp;<svg aria-hidden="true" class="commit-icon js-commit-icon s16 ic-commit"><use></use></svg>&nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/504563cec1bdf21b9c0c2ef6a06a1597be200001" class="commit-sha mr-0" style="color: #1b69b6; margin-right: 0px;">504563ce</a>
+        <div class="commit-title flex-truncate-parent" style="margin: 0px;"><span class="flex-truncate-child"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link avatar-image-container" style="color: #2e2e2e;"><span><img src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="20" height="20" alt="mohitrajpal's avatar" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s20 " style="background: #fdfdfd; height: 20px; width: 20px; margin-right: 4px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" />&nbsp;</span></a><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/504563cec1bdf21b9c0c2ef6a06a1597be200001" class="commit-row-message cgray" style="color: #2e2e2e;">Merge branch 'feature/BIPD-541-ReportPost' into 'GenericComponents'</a></span></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-wrap section-15 stage-cell" style="margin-right: -4px;">
+        <div class="table-mobile-content">
+        <div class="stage-container dropdown js-mini-pipeline-graph" style="height: 22px; margin: 3px 0px;">
+        <div class="dropdown"><button id="stageDropdown" data-toggle="dropdown" data-display="static" type="button" aria-haspopup="true" aria-expanded="false" class="mini-pipeline-graph-dropdown-toggle js-builds-dropdown-button ci-status-icon-success" data-original-title="deploy: passed" style="border:1px solid #1aaa55;background-color: #ffffff; height: 22px; width: 22px; margin: 0px; padding: 0px;    line-height: inherit;"><span aria-label="deploy: passed" aria-hidden="true" class="no-pointer-events"><svg aria-hidden="true" class="s16 ic-status_success_borderless"><use></use></svg></span></button></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-15 pipelines-time-ago" style="text-align: right;">
+        <div class="table-mobile-content">
+        <p class="duration" style="color: #707070; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;"><span><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewbox="0 0 40 40"><g fill="#8F8F8F" fill-rule="evenodd">
+        <path d="M29.513 10.134A15.922 15.922 0 0 0 23 7.28V6h2.993C26.55 6 27 5.552 27 5V2a1 1 0 0 0-1.007-1H14.007C13.45 1 13 1.448 13 2v3a1 1 0 0 0 1.007 1H17v1.28C9.597 8.686 4 15.19 4 23c0 8.837 7.163 16 16 16s16-7.163 16-16c0-3.461-1.099-6.665-2.967-9.283l1.327-1.58a2.498 2.498 0 0 0-.303-3.53 2.499 2.499 0 0 0-3.528.315l-1.016 1.212zM20 34c6.075 0 11-4.925 11-11s-4.925-11-11-11S9 16.925 9 23s4.925 11 11 11z"></path>
+        <path d="M19 21h-4.002c-.552 0-.998.452-.998 1.01v1.98c0 .567.447 1.01.998 1.01h7.004c.274 0 .521-.111.701-.291a.979.979 0 0 0 .297-.704v-8.01c0-.54-.452-.995-1.01-.995h-1.98a.997.997 0 0 0-1.01.995V21z"></path>
+        </g></svg>&nbsp;</span>00:31:40</p>
+        <p class="finished-at d-none d-sm-none d-md-block" style="color: #707070; margin-top: 0px; margin-right: 0px; margin-left: 0px;">&nbsp;<time data-placement="top" data-container="body" data-original-title="Apr 7, 2023 10:58am GMT+0530">4 hours ago</time></p>
+        </div>
+        </div>
+        </div>
+        <div class="commit gl-responsive-table-row" style="color: #000000; width: 1248px; margin: 0px; padding: 16px 0px; border-width: 0px 0px 1px; border-top-style: initial; border-top-color: initial; border-right-style: initial; border-right-color: initial; border-bottom-style: solid; border-bottom-color: #f0f0f0; border-left-style: initial; border-left-color: initial;">
+        <div class="table-section section-10 commit-link" style="color: #2e2e2e; background-color: #ffffff;">
+        <div class="table-mobile-content"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62422" class="ci-status ci-success qa-status-badge" style="color: #1aaa55; background-color: transparent; padding: 2px 7px 4px; border: 1px solid #1aaa55;"><span class="ci-status-icon ci-status-icon-success js-ci-status-icon-success"><svg aria-hidden="true" class="s16 ic-status_success"><use></use></svg></span>&nbsp;passed</a></div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-tags" style="color: #2e2e2e; background-color: #ffffff;"><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/pipelines/62422" class="js-pipeline-url-link" style="color: #2e2e2e; background-color: transparent;"><span class="pipeline-id" style="color: #000000;">#62422</span></a>
+        <div class="label-container">&nbsp;</div>
+        </div>
+        <div class="table-section section-10 d-none d-sm-none d-md-block pipeline-triggerer" style="color: #2e2e2e; background-color: #ffffff;"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link prepend-left-default js-pipeline-url-user" style="color: #2e2e2e; background-color: transparent; margin-left: 16px;"><span><img alt="" src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="26" height="26" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s26 " style="background: #fdfdfd; height: 26px; width: 26px; margin-right: 8px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" /></span></a></div>
+        <div class="table-section section-wrap section-20" style="color: #2e2e2e; background-color: #ffffff;">
+        <div class="table-mobile-content">
+        <div class="branch-commit cgray">
+        <div class="icon-container" style="width: 10px;"><svg aria-hidden="true" class="s16 ic-branch"><use></use></svg></div>
+        &nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commits/develop" class="ref-name" data-original-title="develop" style="color: #2e2e2e; background-color: transparent;">develop</a>&nbsp;<svg aria-hidden="true" class="commit-icon js-commit-icon s16 ic-commit"><use></use></svg>&nbsp;<a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/1fd52056e871fe3c87b805b783fadd70ff669044" class="commit-sha mr-0" style="color: #1b69b6; background-color: transparent; margin-right: 0px;">1fd52056</a>
+        <div class="commit-title flex-truncate-parent" style="margin: 0px;"><span class="flex-truncate-child"><a href="https://git.nagarro.com/mohitrajpal" class="user-avatar-link avatar-image-container" style="color: #2e2e2e; background-color: transparent;"><span><img src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" width="20" height="20" alt="mohitrajpal's avatar" data-src="https://secure.gravatar.com/avatar/a85bd5365674fedb8ae532f2bbc5302b?s=80&amp;d=identicon" class="avatar s20 " style="background: #fdfdfd; height: 20px; width: 20px; margin-right: 4px; margin-left: 0px; padding: 0px; border: 1px solid #f5f5f5;" />&nbsp;</span></a><a href="https://git.nagarro.com/NAGINTEX/accelerator-xmcloud/commit/1fd52056e871fe3c87b805b783fadd70ff669044" class="commit-row-message cgray" style="color: #2e2e2e; background-color: transparent;">Merge branch 'GenericComponents' into 'develop'</a></span></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-wrap section-15 stage-cell" style="color: #2e2e2e; background-color: #ffffff; margin-right: -4px;">
+        <div class="table-mobile-content">
+        <div class="stage-container dropdown js-mini-pipeline-graph" style="height: 22px; margin: 3px 0px;">
+        <div class="dropdown"><button id="stageDropdown" data-toggle="dropdown" data-display="static" type="button" aria-haspopup="true" aria-expanded="false" class="mini-pipeline-graph-dropdown-toggle js-builds-dropdown-button ci-status-icon-success" data-original-title="deploy: passed" style="border:1px solid #1aaa55;background-color: #ffffff; height: 22px; width: 22px; margin: 0px; padding: 0px;    line-height: inherit;"><span aria-label="deploy: passed" aria-hidden="true" class="no-pointer-events"><svg aria-hidden="true" class="s16 ic-status_success_borderless"><use></use></svg></span></button></div>
+        </div>
+        </div>
+        </div>
+        <div class="table-section section-15 pipelines-time-ago" style="color: #2e2e2e; background-color: #ffffff; text-align: right;">
+        <div class="table-mobile-content">&nbsp;</div>
+        </div>
+        </div>
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\mohit.rajpal@nagarro.com
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\mohit.rajpal@nagarro.com
+    - ID: "6bd9a76c-1bc6-4517-b646-e06a5580fc32"
+      Hint: Date
+      Value: 20230407T000000Z
+    - ID: "6f5167c5-117b-47c1-8305-45e8e7b37ae3"
+      Hint: Image
+      Value: |
+        <image mediaid="{26770C9A-00BF-4E55-A6C2-D92D738B0F56}" />
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "e9daf366-d7e4-4a1b-a42f-eeaf871f48d3"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\mohit.rajpal@nagarro.com
+    - ID: "bf0d55a4-c617-4ce5-91c1-40913f07b123"
+      Hint: Tags
+      Value: "{6C7991A6-D276-450C-889C-FB23A20EFD77}"
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230407T104759Z
+    - ID: "fdf92769-8768-4460-bbad-818073f23d1f"
+      Hint: Title
+      Value: New Community Data
