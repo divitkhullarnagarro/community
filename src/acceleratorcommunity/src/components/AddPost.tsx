@@ -838,11 +838,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 className="postCrossImage"
                 src="https://cdn-icons-png.flaticon.com/512/10091/10091183.png"
                 alt="pan"
+                width="20px"
               />
             </div>
           </div>
           <div className="postContent">
-            <div>{parser(modifyHtml(post?.description))}</div>
             <div className="postMedia">
               {post?.mediaList?.map((media: any, num: any) => {
                 if (media?.mediaType === 'VIDEO') {
@@ -880,18 +880,18 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       key={num}
                       style={{
                         borderRadius: '30px',
-                        margin: '0px 15px 15px 0px',
+                        // margin: '0px 15px 15px 0px',
                       }}
                     >
-                      <img width="300px" src={media?.url} alt={media?.id}></img>
+                      <img width="100%" src={media?.url} alt={media?.id}></img>
                     </div>
                   );
                 }
                 return '';
               })}
             </div>
+            <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
           </div>
-          <hr />
           <div className="postFooter">
             <div className="postActions">
               <button onClick={() => LikePost(post?.id)} disabled={post?.isRespPending}>
@@ -1015,7 +1015,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             </div>
           </div>
           <Collapse in={post?.isOpenComment}>
-            <div id="anotherCommentsContainer">
+            <div id="anotherCommentsContainer" className='loadCommentContainer'>
               <Form
                 onSubmit={(e) => {
                   postComments(post?.id, e);
@@ -1045,6 +1045,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 return (
                   <>
                     <div
+                      className="commentContainer"
                       id={comment?.id}
                       style={{
                         padding: '20px',
@@ -1055,7 +1056,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         borderBottomRightRadius: '30px',
                         marginTop: '20px',
                       }}
-                      className="commentContainer"
                     >
                       <div>
                         <h4>
@@ -1900,32 +1900,34 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   return (
     <>
-      <div style={{ padding: '10px', backgroundColor: 'lightgrey', margin: '15px' }}>
-        <div style={{ marginBottom: '40px' }}>
-          <div className="AddPostContainer">
-            <div className="AddPostField" style={{ display: 'flex', alignItems: 'center' }}>
-              <img
-                style={{ float: 'left' }}
-                src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
-                alt="Profile-Pic"
-                width="60px"
-              ></img>
+      <div className={styles.mainContainer}>
+        <div style={{ backgroundColor: 'white', boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.25)' }}>
+          {/* <div style={{ marginBottom: '40px' }}> */}
+          <div className={styles.addPostFieldContainer}>
+            <div className={styles.addPostField}>
+              <div className={styles.addPostImage}>
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                  alt="Profile-Pic"
+                  width="20px"
+                ></img>
+              </div>
               <button
+                className={styles.addPostButton}
                 onClick={() => setShowForm1(!showForm1)}
                 aria-controls="showAddPostEditorContainer"
                 aria-expanded={showForm1}
-                className="addPostButton"
               >
-                <h4>
+                <div className={styles.addPostHeading}>
                   {props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
                     ? props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
                     : "What's on your mind"}
-                  {`, `}
-                  <span>
-                    {userObject?.firstName ? userObject?.firstName : 'Mr. John Doe'}{' '}
+                  {``}
+                  {/* <span>
+                    {userObject?.firstName ? userObject?.firstName : ''}{' '}
                     {userObject?.lastName ? userObject?.lastName : ''}
-                  </span>
-                </h4>
+                  </span> */}
+                </div>
               </button>
             </div>
           </div>
@@ -1935,7 +1937,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               style={{ maxWidth: '100%' }}
               id="showAddPostEditorContainer"
             >
-              <div className="AddPostField">
+              <div className={styles.addTextEditor}>
                 <Form style={{ border: '1px', borderColor: 'black' }}>
                   <Form.Group controlId="exampleForm.ControlInput1">
                     <Editor
@@ -2070,127 +2072,122 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       );
                     })}
                   </div>
-                  <hr />
-                  <div className="AddPostItems">
-                    <div>
-                      <button onClick={clickmebuttonHandler} type="button">
-                        <span>Image</span>
-                        <img
-                          src="https://cdn-icons-png.flaticon.com/512/16/16410.png"
-                          alt="PostItems"
-                          width="30px"
-                        ></img>{' '}
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            style={{ display: 'none' }}
-                            onChange={(e) => setPostImageValue(e)}
-                            // value={postImage}
-                            type="file"
-                            placeholder="Post Text"
-                            // multiple
-                            accept="image/*"
-                            id="clickmebutton"
-                          />
-                        </Form.Group>
-                      </button>
-                    </div>
-                    <div>
-                      <button onClick={clickmebuttonHandler2} type="button">
-                        <span>Doc</span>
-                        <img
-                          src="https://cdn-icons-png.flaticon.com/512/2991/2991106.png"
-                          alt="PostItems"
-                          width="30px"
-                        ></img>{' '}
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            style={{ display: 'none' }}
-                            onChange={(e) => setPostDocValue(e)}
-                            // value={postImage}
-                            type="file"
-                            placeholder="Post Text"
-                            // multiple
-                            accept=".pdf,.doc,.docx,.txt"
-                            id="clickmebutton2"
-                          />
-                        </Form.Group>
-                      </button>
-                    </div>
-                    <div>
-                      <button onClick={clickmebuttonHandler3} type="button">
-                        <span>Video</span>
-                        <img
-                          src="https://cdn-icons-png.flaticon.com/512/711/711245.png"
-                          alt="PostItems"
-                          width="30px"
-                        ></img>
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            style={{ display: 'none' }}
-                            onChange={(e) => setPostVideoValue(e)}
-                            type="file"
-                            placeholder="Post Video"
-                            // multiple
-                            accept=".mp4"
-                            id="clickmebutton3"
-                          />
-                        </Form.Group>
-                      </button>
-                    </div>
-                    <div>
-                      <button type="button">
-                        <span>Event</span>
-                        <img
-                          src="https://cdn-icons-png.flaticon.com/512/2693/2693507.png"
-                          alt="PostItems"
-                          width="30px"
-                        ></img>
-                      </button>
-                    </div>
-                    <div>
-                      <button type="button">
-                        <span>Poll</span>
-                        <img
-                          src="https://cdn-icons-png.flaticon.com/512/2668/2668889.png"
-                          alt="PostItems"
-                          width="30px"
-                        ></img>
-                      </button>
-                    </div>
-                  </div>
                 </Form>
-                <hr />
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Button
-                    variant="secondary"
-                    style={{
-                      boxShadow: !createNewPostError ? 'none' : '0 4px 8px 0 rgba(255, 0, 0, 0.6)',
-                    }}
-                    type="button"
-                    onClick={(e) => handleSubmit(e)}
-                  >
-                    Publish Post
-                  </Button>
-                  <div>
-                    {createNewPostError ? (
-                      <span style={{ fontWeight: 1000, color: 'red', fontSize: '12px' }}>
-                        * Something Went Wrong. Post not uploaded !
-                      </span>
-                    ) : (
-                      ''
-                    )}
-                  </div>
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    onClick={() => setShowForm1(!showForm1)}
-                  >
-                    Close
-                  </Button>
-                </div>
               </div>
             </div>
           </Collapse>
+          <div className={styles.AddPostItems}>
+            <div>
+              <button className={styles.imageButton} onClick={clickmebuttonHandler} type="button">
+                {/* <span>Image</span> */}
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/16/16410.png"
+                  alt="PostItems"
+                  width="18px"
+                ></img>{' '}
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    style={{ display: 'none' }}
+                    onChange={(e) => setPostImageValue(e)}
+                    // value={postImage}
+                    type="file"
+                    placeholder="Post Text"
+                    // multiple
+                    accept="image/*"
+                    id="clickmebutton"
+                  />
+                </Form.Group>
+              </button>
+              <button className={styles.docButton} onClick={clickmebuttonHandler2} type="button">
+                {/* <span>Doc</span> */}
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/2991/2991106.png"
+                  alt="PostItems"
+                  width="18px"
+                ></img>{' '}
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    style={{ display: 'none' }}
+                    onChange={(e) => setPostDocValue(e)}
+                    // value={postImage}
+                    type="file"
+                    placeholder="Post Text"
+                    // multiple
+                    accept=".pdf,.doc,.docx,.txt"
+                    id="clickmebutton2"
+                  />
+                </Form.Group>
+              </button>
+              <button className={styles.videoButton} onClick={clickmebuttonHandler3} type="button">
+                {/* <span>Video</span> */}
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/711/711245.png"
+                  alt="PostItems"
+                  width="18px"
+                ></img>
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    style={{ display: 'none' }}
+                    onChange={(e) => setPostVideoValue(e)}
+                    type="file"
+                    placeholder="Post Video"
+                    // multiple
+                    accept=".mp4"
+                    id="clickmebutton3"
+                  />
+                </Form.Group>
+              </button>
+              <button className={styles.eventButton} type="button">
+                {/* <span>Event</span> */}
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/2693/2693507.png"
+                  alt="PostItems"
+                  width="18px"
+                ></img>
+              </button>
+              <button className={styles.pollButton} type="button">
+                {/* <span>Poll</span> */}
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/2668/2668889.png"
+                  alt="PostItems"
+                  width="18px"
+                ></img>
+              </button>
+            </div>
+            <div className={styles.errorContainer}>
+              <Button
+                className={styles.publishButton}
+                variant="secondary"
+                style={{
+                  boxShadow: !createNewPostError ? 'none' : '0 4px 8px 0 rgba(255, 0, 0, 0.6)',
+                }}
+                type="button"
+                onClick={(e) => handleSubmit(e)}
+              >
+                Post
+              </Button>
+              {createNewPostError ? (
+                <span style={{ fontWeight: 1000, color: 'red', fontSize: '8px' }}>
+                  * Something Went Wrong. Post not uploaded !
+                </span>
+              ) : (
+                ''
+              )}
+              {/* </div>
+
+              <div> */}
+            </div>
+            {/* <Collapse in={showForm1}> */}
+            {/* <Button
+                className={styles.closeButton}
+                type="button"
+                variant="secondary"
+                onClick={() => setShowForm1(!showForm1)}
+              >
+                Close
+              </Button> */}
+            {/* </Collapse> */}
+          </div>
         </div>
         <div className="postHeading" style={{ marginBottom: '10px' }}>
           <div className="postHeaderLeft">
@@ -2203,13 +2200,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             <img
               src="https://cdn-icons-png.flaticon.com/512/3502/3502458.png"
               alt="pan"
-              width="50px"
+              width="20px"
             />
             <img
               style={{ marginLeft: '20px' }}
               src="https://cdn-icons-png.flaticon.com/512/238/238910.png"
               alt="pan"
-              width="40px"
+              width={20}
             />
           </div>
         </div>
@@ -2261,6 +2258,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           )}
         </div>
       </div>
+
       {<ReportPostPopup />}
       {<BlockUserPopup />}
       {<ModalForReactions />}

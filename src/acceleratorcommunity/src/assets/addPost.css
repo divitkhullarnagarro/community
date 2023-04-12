@@ -64,7 +64,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+
 }
 
 .postHeaderLeft {
@@ -75,12 +78,16 @@
 .postHeaderRight {
   display: flex;
   align-items: center;
+  gap: 20px;
 }
 
 .postDetailContainer {
   margin-left: 20px;
 }
-
+.postDescription{
+  font-size: 20px;
+  color: #091329;
+}
 .postContent {
   margin: 30px 30px 30px 0px;
 }
@@ -138,40 +145,40 @@
 }
 
 .postOwner {
-  font-weight: 750;
-  color: grey;
-  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgba(0, 0, 128, 0.936);
+  font-size: 1.125rem;
 }
 
 .postCreateDate {
   font-weight: 700;
   color: grey;
-  font-size: 1.125rem;
+  font-size: 0.625rem;
 }
 
 .postUserImage {
-  width: 3.75rem;
+  width: 1.75rem;
 }
 
 .postMoreOptionsImage {
-  width: 3.125rem;
+  width: 1.375rem;
 }
 
 .postCrossImage {
-  width: 3.125rem;
+  width: 20px;
   margin-left: 1.875rem;
 }
 
 .postLikeImage {
-  width: 2.5rem;
+  width: 1.5rem;
 }
 
 .postCommentImage {
-  width: 2.5rem;
+  width: 1.5rem;
 }
 
 .postShareImage {
-  width: 2.5rem;
+  width: 1.5rem;
 }
 
 .postLikeCount {
@@ -215,15 +222,19 @@
   gap:10px;
   background-color: rgb(202, 197, 197);
 }
+.loadCommentContainer{
+  overflow-y: auto;
+  height: 250px;
+}
 @media only screen and (max-width: 640px) {
   .postOwner {
     font-weight: 750;
-    color: grey;
+    color: navy;
     font-size: 0.75rem;
   }
 
   .postUserImage {
-    width: 1.875rem;
+    width: 2rem;
   }
 
   .postCreateDate {
@@ -237,7 +248,7 @@
   }
 
   .postCrossImage {
-    width: 1.25rem;
+    width: 20px;
   }
 
   .postLikeImage {
