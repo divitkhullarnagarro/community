@@ -5,8 +5,9 @@
   height: 141px;
   width: 169px;
   position: absolute !important;
-  top: -7rem;
-  left: 24rem;
+  top: -10px;
+  right: 65px;
+  /* left: 488px; */
   flex-direction: column;
   justify-content: center;
   align-items: center;

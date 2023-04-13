@@ -88,8 +88,8 @@
   width: 20px;
   height: 10px;
 }
-.mainContainer{
-  background:whitesmoke;
+.mainContainer {
+  background: whitesmoke;
   padding: 10px;
 }
 .addPostFieldContainer {
@@ -97,17 +97,17 @@
   width: 100%;
   background-color: white;
 }
-.addPostImage{
+.addPostImage {
   display: flex;
-  margin-top: 10px;
+  margin-top: 6px;
   margin-left: 10px;
 }
-.addPostField{
+.addPostField {
   display: flex;
   align-items: center;
 }
-.addPostButton{
-  background-color: #F9F9F9;
+.addPostButton {
+  background-color: #f9f9f9;
   width: 90%;
   height: 30px;
   margin-left: 10px;
@@ -115,16 +115,16 @@
   border: none;
   border-radius: 17.5px;
 }
-.addPostHeading{
+.addPostHeading {
   display: flex;
   font-size: 13px;
-  color: #A5A9AE;
+  color: #a5a9ae;
 }
 .AddPostItems {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 10px;
+  padding: 5px;
 }
 .imageButton {
   background-color: white;
@@ -132,7 +132,7 @@
   height: 30px;
   width: 30px;
 }
-.errorContainer{
+.errorContainer {
   height: 30px;
   display: flex;
   flex-direction: column;
@@ -161,19 +161,83 @@
   height: 30px;
   width: 30px;
 }
-.publishButton{
-height: 35px;
-/* gap: 10px; */
-
+.publishButton {
+  background-color: white;
+  color: #a5a9ae;
+  /* height: 35px; */
+  padding: 2px 25px;
+  /* gap: 10px; */
 }
-.addTextEditor{
+.addTextEditor {
   margin: 20px;
 }
-.closeButton{
- 
+.closeButton {
   height: 35px;
 }
+.postFooterContainer{
+  display: flex;
+  gap: 50px;
+}
+.likeContainer{
+  display: flex;
+  gap: 10px;
+
+}
+.likeButton{
+  border: none;
+  background-color: white;
+  margin-bottom: 2px;
+}
+.likePost{
+  color: #2E86F9;
+  font-weight: 400;
+}
+.likeCount{
+color:#2E86F9 ;
+display: flex;
+width: 25px;
+height: 25px;
+border-radius: 50%;
+justify-content: center;
+background-color: #F7F7F6;
+}
+.commentPost{
+  color: #A5A9AE;
+  font-weight: 400;
+}
+.commentCount
+.sharePost{
+  color: #A5A9AE;
+  font-weight: 400;
+}
+.commentButton{
+  border: none;
+  background-color: white;
+  margin-top: 5px;
+}
+.commentCount{
+  color:#3D3D3F;
+  display: flex;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  justify-content: center;
+  background-color: #F7F7F6;
+}
+.shareButton{
+  border: none;
+  background-color: white;
+}
+.commentContainer{
+  display: flex;
+  gap: 10px;
+}
+.shareContainer{
+  display: flex;
+  gap: 10px;
+}
 @media only screen and (max-width: 640px) {
+
   .dropdownBtn {
     background-color: white;
     border: none;
@@ -227,5 +291,8 @@ height: 35px;
   .dropdownImage {
     width: 15px;
     height: 15px;
+  }
+  .postFooterContainer{
+    gap: 5px;
   }
 }
