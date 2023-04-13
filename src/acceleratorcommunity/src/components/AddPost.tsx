@@ -892,7 +892,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 return '';
               })}
             </div>
-            <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
+            {post?.postType === 'EVENT' ? (
+              <div className="postDescription">{post?.event?.description}</div>
+            ) : (
+              <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
+            )}
           </div>
           <div className="postFooter">
             <div className="postActions">
@@ -1910,6 +1914,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   let [eventTypeSelectError, setEventTypeSelectError] = useState(false);
   let [createNewEventPostError, setCreateNewEventPostError] = useState(false);
+  let [submittingEventPost, setSubmittingEventPost] = useState(false);
 
   function submitEventForm(event: any) {
     event.preventDefault();
@@ -1928,7 +1933,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         data: {
           id: uniqId,
           //description: postText,
-          postType: eventType,
+          postType: 'EVENT',
           //mediaList: [...file, ...docs, ...videoLink],
           postMeasures: {
             likeCount: 0,
@@ -1938,6 +1943,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           createdBy: {
             firstName: userObject?.firstName,
             lastName: userObject?.lastName,
+          },
+          event: {
+            title: title,
+            description: description,
+            eventType: eventType,
+            eventDate: date,
           },
           createdOn: timestamp,
           isLikedByUser: false,
@@ -1950,6 +1961,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setMyAnotherArr((prevState: any) => {
       return [obj?.data?.data, ...prevState];
     });
+    setSubmittingEventPost(true);
 
     addPostCall(userToken, {
       type: 'EVENT',
@@ -1960,6 +1972,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         eventDate: date,
       },
     }).then((response) => {
+      setSubmittingEventPost(false);
       if (response?.data?.data) {
         addLatestCreatedPost(response?.data?.data, uniqId);
         // Empty Post Values
@@ -2347,7 +2360,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         type="submit"
                         // onClick={onPostReported}
                       >
-                        Submit
+                        {submittingEventPost ? (
+                          <Spinner animation="border" />
+                        ) : (
+                          <span>Create Post</span>
+                        )}
                       </Button>
                     </Modal.Footer>
                   </Form>
