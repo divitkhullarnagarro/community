@@ -6,9 +6,9 @@
 }
 .editor-class {
   order: 1;
-  background-color: white;
+  background-color: #F9F9F9;
   /* padding: 1rem; */
-  border: 1px solid rgb(75, 34, 164);
+  border: 1px solid #F9F9F9;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
   /* overflow: hidden; */
@@ -19,14 +19,16 @@
 }
 .toolbar-class {
   order: 2;
-  border-left: 1px solid rgb(75, 34, 164);
-  border-right: 1px solid rgb(75, 34, 164);
-  border-bottom: 1px solid rgb(75, 34, 164);
-  background: #cfeef1;
+  border-left: 1px solid#F9F9F9;
+  border-right: 1px solid #F9F9F9;
+  border-bottom: 1px solid #F9F9F9;
+  background: #F9F9F9
 }
 
-.demo-option-custom {
-  /* background-color: #f3ffcd; */
+.demo-option-custom-wide .rdw-dropdown-selectedtext,
+.demo-option-custom-medium .rdw-dropdown-selectedtext {
+  text-decoration: none;
+  color: black;
 }
 .popup-custom {
   -ms-overflow-style: none; /* IE and Edge */

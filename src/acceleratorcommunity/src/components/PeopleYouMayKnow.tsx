@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { useState, useContext, useEffect } from 'react';
 import WebContext from '../Context/WebContext';
 import peopleYouMayKnowCall from 'src/API/peopleYouMayKnowCall';
-import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useRouter } from 'next/router';
@@ -41,75 +40,59 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
     setPeopleYouMayKnowList(response?.data?.data);
   };
 
-  const sliderSettings = {
-    rows: 1,
-    infinite: false,
-    slidesToShow: 6,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
-  };
-
   const HalfPagePeopleYouMayKnow = () => {
     return (
-      <div
-        className={styles.wrapper}
-        style={{
-          maxHeight: '590px',
-          height: 'max-content',
-        }}
-      >
+      <div className={styles.wrapper}>
         <div className={styles.header}>
           <div className={styles.heading}>{Title}</div>
           {LinkLabel ? <Link href={'/peopleyoumayknow'}>{LinkLabel}</Link> : <></>}
         </div>
-        <div className={styles.listWrapper}>
-          <Slider className="slider" {...sliderSettings}>
-            {peopleYouMayKnowList?.length > 0 ? (
-              peopleYouMayKnowList.slice(0, 9).map((item) => {
-                return <PeopleYouMayKnowHalfPageItem {...item} />;
-              })
-            ) : (
-              <></>
-            )}
-          </Slider>
-        </div>
-      </div>
-    );
-  };
-
-  const PeopleYouMayKnowHalfPageItem = (item: peopleYouMayKnowFields) => {
-    return (
-      <div key={item?.objectId} className={styles.itemHalfPage}>
+  {peopleYouMayKnowList?.length > 0 ? (
+     peopleYouMayKnowList?.map((item) => { 
+      return (
+      <div key={item?.objectId} className={styles.item}>
         <NextImage
-          contentEditable={true}
+          className={styles.img}
           field={Profile ?? item?.imageData?.value}
-          height={200}
-          width={100}
-        ></NextImage>
-        <div className={styles.detailsContainer}>
-          <div className={styles.firstRow}>
-            <div className={styles.name}>{item?.firstName + ' ' + item?.lastName}</div>
-            <div className={styles.button}>
-              <FollowUnfollowButton userName={item?.objectId} />
-            </div>
-          </div>
+          editable={true}
+          height={50}
+          width={50}
+        />
+        <div>
+          <div className={styles.name}>{item?.firstName + ' ' + item?.lastName}</div>
+        </div>
+        <div className={styles.button}>
+          <FollowUnfollowButton userName={item?.objectId} />
         </div>
       </div>
     );
-  };
+    })
+    ) : (
+    <></>
+    )}
+        </div>
+      );
+    };
+  // const PeopleYouMayKnowHalfPageItem = (item: peopleYouMayKnowFields) => {
+  //   return (
+  //     <div key={item?.objectId} className={styles.itemHalfPage}>
+  //       <NextImage
+  //         contentEditable={true}
+  //         field={Profile ?? item?.imageData?.value}
+  //         height={200}
+  //         width={100}
+  //       ></NextImage>
+  //       <div className={styles.detailsContainer}>
+  //         <div className={styles.firstRow}>
+  //           <div className={styles.name}>{item?.firstName + ' ' + item?.lastName}</div>
+  //           <div className={styles.button}>
+  //             <FollowUnfollowButton userName={item?.objectId} />
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // };
 
   const PeopleYouMayKnowFullPageItem = (item: peopleYouMayKnowFields) => {
     return (

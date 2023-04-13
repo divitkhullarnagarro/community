@@ -87,7 +87,7 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
       <div>
         <button type="button" className={styles.followButton} onClick={(e) => onFollow(e)}>
           {followButtonText}
-          {showSpinner ? <Spinner style={{ marginLeft: '10px', height: '30px' }} /> : <></>}
+          {showSpinner ? <Spinner style={{ marginLeft: '10px', height: '10px' }} /> : <></>}
         </button>
       </div>
     );
