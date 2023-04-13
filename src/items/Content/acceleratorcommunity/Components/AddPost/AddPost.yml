@@ -11,6 +11,14 @@ Languages:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230309T090702Z
+    - ID: "37c939d8-9383-4b03-bd59-97f3b1b833b9"
+      Hint: EventType
+      Value: |
+        {03AFC3DC-2A5B-4C17-9BD0-14A8A153A1EF}
+        {F466F4D4-AC10-4F88-B256-FFF35348EF2C}
+        {CBA442C9-58F1-4765-9668-2B32CBD47360}
+        {CBCEF7D5-32EA-4498-9D59-2262BD5041AF}
+        {938F3DC1-7DF8-4681-842A-18B94857F5AA}
     - ID: "3bf3af57-96d3-4137-b949-5fe4f3adaa70"
       Hint: DescriptionLabel
       Value: Description
@@ -59,7 +67,7 @@ Languages:
       Value: Enter your poll question
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "9ec9d3b9-c33c-4418-b41f-639bf6a3e185"
+      Value: "256b9981-42ee-41af-aa14-2691ae62c2aa"
     - ID: "a2d64968-6a39-425c-920a-413e191d7097"
       Hint: EventTitlePlaceholder
       Value: Enter Event Title
@@ -75,7 +83,7 @@ Languages:
       Value: 20230323T062900Z
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230323T063042Z
+      Value: 20230411T110754Z
     - ID: "dee2c514-243a-4bde-b8db-117c1cf58297"
       Hint: addQuestionLabel
       Value: Add question
