@@ -88,7 +88,91 @@
   width: 20px;
   height: 10px;
 }
+.mainContainer{
+  background:whitesmoke;
+  padding: 10px;
+}
+.addPostFieldContainer {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+.addPostImage{
+  display: flex;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.addPostField{
+  display: flex;
+  align-items: center;
+}
+.addPostButton{
+  background-color: #F9F9F9;
+  width: 90%;
+  height: 30px;
+  margin-left: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 17.5px;
+}
+.addPostHeading{
+  display: flex;
+  font-size: 13px;
+  color: #A5A9AE;
+}
+.AddPostItems {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+}
+.imageButton {
+  background-color: white;
+  border: none;
+  height: 30px;
+  width: 30px;
+}
+.errorContainer{
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+}
+.docButton {
+  background-color: white;
+  border: none;
+  height: 30px;
+  width: 30px;
+}
+.videoButton {
+  background-color: white;
+  border: none;
+  height: 30px;
+  width: 30px;
+}
+.eventButton {
+  background-color: white;
+  border: none;
+  height: 30px;
+  width: 30px;
+}
+.pollButton {
+  background-color: white;
+  border: none;
+  height: 30px;
+  width: 30px;
+}
+.publishButton{
+height: 35px;
+/* gap: 10px; */
 
+}
+.addTextEditor{
+  margin: 20px;
+}
+.closeButton{
+ 
+  height: 35px;
+}
 @media only screen and (max-width: 640px) {
   .dropdownBtn {
     background-color: white;
