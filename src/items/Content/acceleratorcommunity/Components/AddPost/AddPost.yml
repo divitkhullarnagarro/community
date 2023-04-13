@@ -17,6 +17,14 @@ Languages:
     - ID: "2d7f287a-96d5-4873-b731-810f3a02c0aa"
       Hint: WhatsApp
       Value: "https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20"
+    - ID: "37c939d8-9383-4b03-bd59-97f3b1b833b9"
+      Hint: EventType
+      Value: |
+        {03AFC3DC-2A5B-4C17-9BD0-14A8A153A1EF}
+        {F466F4D4-AC10-4F88-B256-FFF35348EF2C}
+        {CBA442C9-58F1-4765-9668-2B32CBD47360}
+        {CBCEF7D5-32EA-4498-9D59-2262BD5041AF}
+        {938F3DC1-7DF8-4681-842A-18B94857F5AA}
     - ID: "3bf3af57-96d3-4137-b949-5fe4f3adaa70"
       Hint: DescriptionLabel
       Value: Description
