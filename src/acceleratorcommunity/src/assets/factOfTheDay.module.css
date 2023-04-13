@@ -1,7 +1,7 @@
 .cardContainer {
   width: 95%;
-  background-color: rgb(227, 227, 227);
-  padding: 0.9375rem;
+  background-color: whitesmoke;
+  padding: 3px;
 }
 .cardbody {
   display: flex;
@@ -11,11 +11,14 @@
 }
 
 .cardTitle {
-  padding: 0.5rem 0.3125rem 0.3125rem 0.9375rem;
-  font-size: 1.0625rem;
+  padding: 0rem 0rem 0.5rem 0.5rem;
+  font-size: 18px;
   font-weight: 700;
+  color: #000E46;
 }
 
 .cardDescription {
-  padding: 0rem 0rem 0.3125rem 0.9375rem;
+  padding: 0rem 0rem 0.5rem 0.5rem;
+  font-size: 14px;
+  color: #82888F;
 }
