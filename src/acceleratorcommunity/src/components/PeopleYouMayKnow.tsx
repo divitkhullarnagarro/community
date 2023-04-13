@@ -45,7 +45,9 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
       <div className={styles.wrapper}>
         <div className={styles.header}>
           <div className={styles.heading}>{Title}</div>
-          {LinkLabel ? <Link href={'/peopleyoumayknow'}>{LinkLabel}</Link> : <></>}
+          {LinkLabel ? <Link  href={'/peopleyoumayknow'} className={styles.linkHeader}>
+            <span className={styles.link}> {LinkLabel}</span>
+            </Link> : <></>}
         </div>
   {peopleYouMayKnowList?.length > 0 ? (
      peopleYouMayKnowList?.map((item) => { 
