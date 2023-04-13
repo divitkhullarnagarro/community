@@ -13,7 +13,12 @@ import Spinner from 'react-bootstrap/Spinner';
 import DownArrow from '../assets/images/DownArrow.png';
 import WarningImage from '../assets/images/warning.jpg';
 import ReportedUsers from '../assets/images/ReportedUsers.png';
-import { openDoc, calculateTimeDifference } from 'assets/helpers/helperFunctions';
+import {
+  openDoc,
+  calculateTimeDifference,
+  graphqlQueryWrapper,
+} from 'assets/helpers/helperFunctions';
+import { getEmailTemplatesGraphqlQuery } from './Queries';
 
 const userColumns = [
   {
@@ -94,6 +99,10 @@ const userRows = [
   },
 ];
 
+const EmailTemplateFolder = '02989F59-CFEB-4CC9-90FB-C0DA8A7FE7B5';
+const WarnUserEmailTemplate = '16937DB73C124028877AAA49C0BE30CA';
+const SuspendEmailTemplate = '71C5EDC72EB3474191904768EED4C591';
+
 type reportPostFields = {
   id: string;
   description: string;
@@ -144,6 +153,26 @@ type DataSource = {
   userListLabel: {
     jsonValue: Field<string>;
   };
+};
+
+type data = {
+  datasource: {
+    children: {
+      results: emailTemplate[];
+    };
+  };
+};
+
+type emailTemplate = {
+  id: string;
+  name: string;
+  fields: emailTemplateFields[];
+};
+
+type emailTemplateFields = {
+  id: string;
+  name: string;
+  value: string;
 };
 
 const Users = (props: UserProps): JSX.Element => {
@@ -214,6 +243,49 @@ const Users = (props: UserProps): JSX.Element => {
     );
   };
 
+  const getEmailTemplates = async () => {
+    var emailTemplateQuery = getEmailTemplatesGraphqlQuery();
+    var dataSource = EmailTemplateFolder;
+    const result = await graphqlQueryWrapper<data>(emailTemplateQuery, dataSource);
+    const emailTemplates = result?.data?.datasource?.children?.results;
+    return emailTemplates;
+  };
+
+  const onSendWarningToUser = () => {
+    const emailTemplates = getEmailTemplates();
+    emailTemplates.then((response: emailTemplate[]) => {
+      const result = response.filter((item: emailTemplate) => {
+        return item.id === WarnUserEmailTemplate;
+      });
+      console.log('accountsuspension', result);
+    });
+    setShowWarnUserPopup(false);
+  };
+
+  const onUserAccountSuspension = () => {
+    const emailTemplates = getEmailTemplates();
+    emailTemplates.then((response: emailTemplate[]) => {
+      const result = response.filter((item: emailTemplate) => {
+        return item.id === SuspendEmailTemplate;
+      });
+      console.log('accountsuspension', result);
+    });
+
+    setShowSuspendUserPopup(false);
+  };
+
+  const onReportedPostSendWarning = () => {
+    const emailTemplates = getEmailTemplates();
+    emailTemplates.then((response: emailTemplate[]) => {
+      const result = response.filter((item: emailTemplate) => {
+        return item.id === SuspendEmailTemplate;
+      });
+      console.log('accountsuspension', result);
+    });
+
+    setShowSuspendUserPopup(false);
+  };
+
   const [showWarnUserPopup, setShowWarnUserPopup] = useState(false);
   const WarnUserPopUp = () => {
     return (
@@ -239,7 +311,11 @@ const Users = (props: UserProps): JSX.Element => {
             >
               Cancel
             </Button>
-            <Button className={styles.footerBtn} variant="secondary">
+            <Button
+              className={styles.footerBtn}
+              variant="secondary"
+              onClick={() => onSendWarningToUser()}
+            >
               Send warning
             </Button>
           </Modal.Footer>
@@ -273,7 +349,11 @@ const Users = (props: UserProps): JSX.Element => {
             >
               Cancel
             </Button>
-            <Button className={styles.footerBtn} variant="secondary">
+            <Button
+              className={styles.footerBtn}
+              variant="secondary"
+              onClick={() => onUserAccountSuspension()}
+            >
               Suspend account
             </Button>
           </Modal.Footer>
@@ -526,7 +606,10 @@ const Users = (props: UserProps): JSX.Element => {
                           <div className={styles.reportContainerHeader}>View Original Post</div>
                         </div>
                       </Dropdown.Item>
-                      <Dropdown.Item className={styles.dropdownItem}>
+                      <Dropdown.Item
+                        className={styles.dropdownItem}
+                        onClick={() => onReportedPostSendWarning()}
+                      >
                         <div className={styles.overlayItem}>
                           <div className={styles.dropdownImage}>
                             <NextImage
