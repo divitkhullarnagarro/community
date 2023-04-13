@@ -1,0 +1,9 @@
+﻿---
+ID: "71c5edc7-2eb3-4741-9190-4768eed4c591"
+Parent: "02989f59-cfeb-4cc9-90fb-c0da8a7fe7b5"
+Template: "538ce86a-ad63-4afd-9b3b-98b3798a7ffd"
+Path: /sitecore/content/acceleratorcommunity/Global/EmailTemplates/AccountSuspension
+Languages:
+- Language: en
+  Versions:
+  - Version: 1

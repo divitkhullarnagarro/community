@@ -1,0 +1,109 @@
+﻿---
+ID: "c4093d61-e7f1-445d-a19e-3ce0e4997e11"
+Parent: "9b2f2c61-b700-51dd-8f47-7600fc865200"
+Template: "0a24b14e-bbdd-4d84-8139-7d40e3b356fa"
+Path: /sitecore/content/acceleratorcommunity/home/group
+SharedFields:
+- ID: "1172f251-dad4-4efb-a329-0c63500e4f1e"
+  Hint: __Masters
+  Value: "{05E694D6-3F26-40C0-8CC0-0396FFB7ACBC}"
+- ID: "9621fdf3-7179-4ac3-a3ec-fda713baa1f5"
+  Hint: Show In Header
+  Value: 1
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{6C59AE29-D0A1-4B77-9305-0ABAB21D5FE5}"
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 50
+- ID: "fd4e2050-186c-4375-8b99-e8a85dd7436e"
+  Hint: __Enable item fallback
+  Value: 1
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "03897511-7b06-4331-8ca0-1929bc3047ce"
+      Hint: Navigation Title
+      Value: group
+    - ID: "04bf00db-f5fb-41f7-8ab7-22408372a981"
+      Hint: __Final Renderings
+      Value: |
+        <r xmlns:p="p" xmlns:s="s"
+          p:p="1">
+          <d
+            id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
+            <r
+              uid="{991E0AEF-58D4-45B7-8B5C-1D528D2399AB}"
+              p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
+              s:ds="{85442646-9588-4CC9-A98A-DB19DF67B50F}"
+              s:id="{0EC34140-EA61-443B-B50B-08B7664B8606}"
+              s:par="CacheClearingBehavior=Clear on publish&amp;CSSStyles"
+              s:ph="/jss-main/col2-{6D47BF1A-FDDE-4389-B2AB-65C6F7005A47}-0" />
+            <r
+              uid="{895C1CE8-4E4B-448A-B093-FEF560EE5B0B}"
+              p:after="r[@uid='{991E0AEF-58D4-45B7-8B5C-1D528D2399AB}']"
+              s:id="{959560A8-480D-4749-8582-46191412500C}"
+              s:par="CacheClearingBehavior=Clear on publish&amp;CSSStyles"
+              s:ph="/jss-main/col1-{6D47BF1A-FDDE-4389-B2AB-65C6F7005A47}-0" />
+            <r
+              uid="{D883CE62-A285-4D76-BF1D-EB3C3F8A3497}"
+              p:after="r[@uid='{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}']"
+              s:id="{DAF857B8-E315-48EF-AC72-30B8A0180AA0}"
+              s:ph="jss-main" />
+            <r
+              uid="{6D47BF1A-FDDE-4389-B2AB-65C6F7005A47}"
+              p:after="*[1=2]"
+              s:ds="{C79255F3-31A1-4FB8-B570-E7DB12DAC7EF}"
+              s:id="{44F40912-35E3-43E6-8C36-6488DC75421E}"
+              s:par="CSSStyles"
+              s:ph="jss-main"
+              s:ccb="Clear on publish" />
+          </d>
+        </r>
+    - ID: "104747be-ebe5-4b3c-b61f-6811cd49bd71"
+      Hint: twitterCard
+      Value: summary_large_image
+    - ID: "1cdfaecb-cb5a-4499-87fa-12bffaf4d991"
+      Hint: twitterImage
+      Value: |
+        <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230309T071323Z
+    - ID: "263d7202-9941-5327-aeda-534621fa7b2d"
+      Hint: pageTitle
+      Value: "Social Community - News"
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{FCFDBB96-946A-4D2F-BCCD-5573073FC176}"
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "bb2b216a-544e-44e0-bb97-b81f2141ad0e"
+    - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
+      Hint: twitterDescription
+      Value: Social Community News is the place where you can gather the information about the current affairs
+    - ID: "a2a8bc50-e09c-4d84-9021-7d870a46ae34"
+      Hint: ogDescription
+      Value: Social Community News is the place where you can gather the information about the current affairs
+    - ID: "af3babb3-496f-4432-ae8d-361f72fe9c60"
+      Hint: twitterTitle
+      Value: "Community Solution - Discover trending news"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\mohit.rajpal@nagarro.com
+    - ID: "c9bf6775-cbf3-4abb-aec3-c0d368791827"
+      Hint: ogType
+      Value: website
+    - ID: "d7aa0a5c-ea2d-4aa5-a5ca-eabfca9d2592"
+      Hint: ogImage
+      Value: |
+        <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230413T105059Z
+    - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
+      Hint: ogTitle
+      Value: "Community Solution - Discover trending news"

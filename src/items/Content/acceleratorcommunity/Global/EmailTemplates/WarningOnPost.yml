@@ -1,0 +1,9 @@
+﻿---
+ID: "a5a0180d-b282-4b46-94fb-dcc305157ed7"
+Parent: "02989f59-cfeb-4cc9-90fb-c0da8a7fe7b5"
+Template: "538ce86a-ad63-4afd-9b3b-98b3798a7ffd"
+Path: /sitecore/content/acceleratorcommunity/Global/EmailTemplates/WarningOnPost
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
