@@ -2,7 +2,7 @@ export const modifyHtml = (convertedContent: string) => {
   let modified = '';
   let flag = false;
   let hashtag = '';
-  for (var i = 0; i < convertedContent.length; i++) {
+  for (var i = 0; i < convertedContent?.length; i++) {
     if (flag) {
       if (
         convertedContent.charAt(i) == ' ' ||
