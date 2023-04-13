@@ -890,7 +890,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 return '';
               })}
             </div>
-            <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
+            <div className="postDescription">{post?.description && parser(modifyHtml(post?.description))}</div>
           </div>
           <div className="postFooter">
             <div className="postActions">
