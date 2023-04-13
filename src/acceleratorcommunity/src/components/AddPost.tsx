@@ -58,6 +58,15 @@ import Profile from '../assets/images/profile.png';
 import addPostCss from '../assets/addPosts.module.css';
 // import getAllUpVotesCall from 'src/API/getAllUpVotesCall';
 import blockUserCall from 'src/API/blockUnblockUserCall';
+import user from '../assets/images/user.png';
+import location from '../assets/images/Location.png';
+import camera from '../assets/images/Rounded.png';
+import image from '../assets/images/Vector.png';
+import pin from '../assets/images/Vectorpin.png';
+import smile from '../assets/images/Vectorsmile.png';
+import like from '../assets/images/like.png';
+import comment from '../assets/images/comment.png';
+import share from '../assets/images/share.png';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -898,128 +907,118 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
             )}
           </div>
-          <div className="postFooter">
-            <div className="postActions">
-              <button onClick={() => LikePost(post?.id)} disabled={post?.isRespPending}>
-                <img
-                  className="postLikeImage"
-                  src={
-                    post?.isLikedByUser
-                      ? 'https://cdn-icons-png.flaticon.com/512/739/739231.png'
-                      : 'https://cdn-icons-png.flaticon.com/512/126/126473.png'
-                  }
-                  //https://cdn-icons-png.flaticon.com/512/739/739231.png
-                  alt="actions"
-                />
-              </button>
+
+          <div className={styles.postFooterContainer}>
+            <div className={styles.likeContainer}>
               <button
+                className={styles.likeButton}
+                onClick={() => LikePost(post?.id)}
+                disabled={post?.isRespPending}
+              >
+                <NextImage field={like} editable={true} alt="PostItems" width={18} height={18} />
+              </button>
+              <div className={styles.likePost}>Like Post</div>
+              <div className={styles.likeCount}>
+                {post?.postMeasures?.likeCount ? post?.postMeasures?.likeCount : '0'}
+              </div>
+            </div>
+            <div className={styles.commentContainer}>
+              <button
+                className={styles.commentButton}
                 onClick={() => setOpenComments(post.id, !post.isOpenComment)}
                 aria-controls="anotherCommentsContainer"
                 aria-expanded={post?.isOpenComment}
                 disabled={post?.isRespPending}
               >
-                <img
-                  className="postCommentImage"
-                  src="https://cdn-icons-png.flaticon.com/512/1380/1380338.png"
-                  //https://cdn-icons-png.flaticon.com/512/786/786352.png
-                  alt="actions"
-                />
+                <NextImage field={comment} editable={true} alt="PostItems" width={18} height={18} />
               </button>
-              <div>
-                <button
-                  onClick={() => handleShowShare(post.id, !post?.showShare)}
-                  disabled={post?.isRespPending}
-                >
-                  <img
-                    className="postShareImage"
-                    src="https://cdn-icons-png.flaticon.com/512/2956/2956786.png"
-                    alt="actions"
-                  />
-                </button>
-                {post?.showShare && (
-                  <div className={ShowShareCss.sharePopups} style={{ position: 'initial' }}>
-                    <div className={ShowShareCss.sharePopup}>
-                      <NextImage
-                        className={ShowShareCss.whatsappImage}
-                        field={whatsapp}
-                        editable={true}
-                        width={25}
-                        height={25}
-                      />
-                      <Link
-                        href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
-                      >
-                        <a className={ShowShareCss.targetIcon} target="_blank">
-                          WhatsApp
-                        </a>
-                      </Link>
-                    </div>
-
-                    <div className={ShowShareCss.sharePopup}>
-                      <NextImage
-                        className={ShowShareCss.whatsappImage}
-                        field={twitter}
-                        editable={true}
-                        width={25}
-                        height={25}
-                      />
-                      <Link
-                        href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
-                      >
-                        <a className={ShowShareCss.targetIcon} target="_blank">
-                          Twitter
-                        </a>
-                      </Link>
-                    </div>
-
-                    <div className={ShowShareCss.sharePopup}>
-                      <NextImage
-                        className={ShowShareCss.whatsappImage}
-                        field={linkedin}
-                        editable={true}
-                        width={25}
-                        height={25}
-                      />
-                      <Link
-                        href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
-                      >
-                        <a className={ShowShareCss.targetIcon} target="_blank">
-                          LinkedIn
-                        </a>
-                      </Link>
-                    </div>
-                    <div className={ShowShareCss.sharePopup}>
-                      <NextImage
-                        className={ShowShareCss.whatsappImage}
-                        field={facebook}
-                        editable={true}
-                        width={25}
-                        height={25}
-                      />
-                      <Link
-                        href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
-                      >
-                        <a className={ShowShareCss.targetIcon} target="_blank">
-                          Facebook
-                        </a>
-                      </Link>
-                    </div>
-                  </div>
-                )}
+              <div className={styles.commentPost}>Comment</div>
+              <div className={styles.commentCount}>
+                {post?.postMeasures?.commentCount ? post?.postMeasures?.commentCount : '0'}
               </div>
             </div>
-            <div>
-              <span className="postLikeCount">
-                {post?.postMeasures?.likeCount ? post?.postMeasures?.likeCount : '0'}
-                {' Likes'}
-              </span>
-              <span> | </span>
-              <span className="postCommentCount">
-                {post?.postMeasures?.commentCount ? post?.postMeasures?.commentCount : '0'}
-                {' Comments'}
-              </span>
+            <div className={styles.shareContainer}>
+              <button
+                className={styles.shareButton}
+                onClick={() => handleShowShare(post.id, !post?.showShare)}
+                disabled={post?.isRespPending}
+              >
+                <NextImage field={share} editable={true} alt="PostItems" width={18} height={18} />
+              </button>
+              <div className={styles.sharePost}> Share</div>
+              {post?.showShare && (
+                <div className={ShowShareCss.sharePopups} style={{ position: 'initial' }}>
+                  <div className={ShowShareCss.sharePopup}>
+                    <NextImage
+                      className={ShowShareCss.whatsappImage}
+                      field={whatsapp}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link
+                      href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
+                    >
+                      <a className={ShowShareCss.targetIcon} target="_blank">
+                        WhatsApp
+                      </a>
+                    </Link>
+                  </div>
+
+                  <div className={ShowShareCss.sharePopup}>
+                    <NextImage
+                      className={ShowShareCss.whatsappImage}
+                      field={twitter}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link
+                      href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
+                    >
+                      <a className={ShowShareCss.targetIcon} target="_blank">
+                        Twitter
+                      </a>
+                    </Link>
+                  </div>
+
+                  <div className={ShowShareCss.sharePopup}>
+                    <NextImage
+                      className={ShowShareCss.whatsappImage}
+                      field={linkedin}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link
+                      href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
+                    >
+                      <a className={ShowShareCss.targetIcon} target="_blank">
+                        LinkedIn
+                      </a>
+                    </Link>
+                  </div>
+                  <div className={ShowShareCss.sharePopup}>
+                    <NextImage
+                      className={ShowShareCss.whatsappImage}
+                      field={facebook}
+                      editable={true}
+                      width={25}
+                      height={25}
+                    />
+                    <Link
+                      href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
+                    >
+                      <a className={ShowShareCss.targetIcon} target="_blank">
+                        Facebook
+                      </a>
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
+
           <Collapse in={post?.isOpenComment}>
             <div id="anotherCommentsContainer" className="loadCommentContainer">
               <Form
@@ -1060,23 +1059,24 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         // borderBottomLeftRadius: '30px',
                         // borderTopRightRadius: '30px',
                         // borderBottomRightRadius: '30px',
-                       borderRadius:'10px',
+                        borderRadius: '10px',
                         marginTop: '20px',
-                        marginLeft:'65px',
-                        marginRight:'10px',
+                        marginLeft: '65px',
+                        marginRight: '10px',
                       }}
                     >
-                      <div className= "commentHeadingTop">                        
-                          {comment?.createdBy?.firstName} {comment?.createdBy?.lastName}
-                          <span style={{ fontSize: '12px', marginLeft: '5px' }}>
-                            {' '}
-                            {calculateTimeDifference(comment?.createdOn)}
-                          </span>                      
+                      <div className="commentHeadingTop">
+                        {comment?.createdBy?.firstName} {comment?.createdBy?.lastName}
+                        <span style={{ fontSize: '12px', marginLeft: '5px' }}>
+                          {' '}
+                          {calculateTimeDifference(comment?.createdOn)}
+                        </span>
                       </div>
                       <div className="commentHeading">{comment?.text}</div>
                       <div
                         onClick={() => getAllupVotesAndDownVotes(comment?.id)}
-                        className="upvoteDownvoteContainer">
+                        className="upvoteDownvoteContainer"
+                      >
                         <div className="likecomments">
                           <img
                             className="likecomments"
@@ -1092,7 +1092,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       </div>
                     </div>
                     <div>
-                      <div style={{ marginLeft:'65px'}}>
+                      <div style={{ marginLeft: '65px' }}>
                         <span onClick={() => handleUpvote(comment?.id)}>
                           <img
                             className="likecomments"
@@ -1120,7 +1120,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           }
                           aria-controls="repliesContainer"
                           aria-expanded={comment?.isOpenReply}
-                          style={{ border: 'none', marginLeft: '16px', fontSize:'12px'}}
+                          style={{ border: 'none', marginLeft: '16px', fontSize: '12px' }}
                           disabled={comment?.isRespPending}
                         >
                           Reply
@@ -2003,11 +2003,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           <div className={styles.addPostFieldContainer}>
             <div className={styles.addPostField}>
               <div className={styles.addPostImage}>
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
-                  alt="Profile-Pic"
-                  width="20px"
-                ></img>
+                <NextImage field={user} editable={true} alt="Profile-Pic" width={20} height={20} />
               </div>
               <button
                 className={styles.addPostButton}
@@ -2177,11 +2173,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             <div>
               <button className={styles.imageButton} onClick={clickmebuttonHandler} type="button">
                 {/* <span>Image</span> */}
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/16/16410.png"
-                  alt="PostItems"
-                  width="18px"
-                ></img>{' '}
+                <NextImage
+                  field={camera}
+                  editable={true}
+                  alt="Profile-Pic"
+                  width={18}
+                  height={18}
+                />
+
                 <Form.Group className="mb-3">
                   <Form.Control
                     style={{ display: 'none' }}
@@ -2197,11 +2196,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </button>
               <button className={styles.docButton} onClick={clickmebuttonHandler2} type="button">
                 {/* <span>Doc</span> */}
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/2991/2991106.png"
-                  alt="PostItems"
-                  width="18px"
-                ></img>{' '}
+                <NextImage field={image} editable={true} alt="PostItems" width={18} height={18} />
                 <Form.Group className="mb-3">
                   <Form.Control
                     style={{ display: 'none' }}
@@ -2217,11 +2212,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </button>
               <button className={styles.videoButton} onClick={clickmebuttonHandler3} type="button">
                 {/* <span>Video</span> */}
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/711/711245.png"
-                  alt="PostItems"
-                  width="18px"
-                ></img>
+                <NextImage field={pin} editable={true} alt="PostItems" width={18} height={18} />
                 <Form.Group className="mb-3">
                   <Form.Control
                     style={{ display: 'none' }}
@@ -2240,11 +2231,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 type="button"
               >
                 {/* <span>Event</span> */}
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/2693/2693507.png"
+                <NextImage
+                  field={location}
+                  editable={true}
                   alt="PostItems"
-                  width="18px"
-                ></img>
+                  width={18}
+                  height={18}
+                />
               </button>
               <Modal
                 className={styles.reportPostModalContent}
@@ -2372,11 +2365,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </Modal>
               <button className={styles.pollButton} type="button">
                 {/* <span>Poll</span> */}
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/2668/2668889.png"
-                  alt="PostItems"
-                  width="18px"
-                ></img>
+                <NextImage field={smile} editable={true} alt="PostItems" width={18} height={18} />
               </button>
             </div>
             <div className={styles.errorContainer}>
