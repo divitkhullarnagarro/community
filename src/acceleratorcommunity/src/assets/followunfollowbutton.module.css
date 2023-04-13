@@ -1,25 +1,40 @@
 .followButton {
-  background-color: rgb(65, 143, 254);
-  border-color: rgb(65, 143, 254);
+  background-color: #47D7AC;
+  border-color: #47D7AC;
   color: #fff;
-  font-size: 1.0625rem;
+  /* font-size: 10px; */
   font-weight: bold;
   width: 100%;
-  margin-top: 6px;
-  padding: 6px;
-  border-radius: 10px;
-  box-shadow: unset;
+  margin-top: 2px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  /* box-shadow: unset; */
+  border:none;
+  font-size:12px;
 }
 
 .followingButton {
-  color: #0048f0;
-  border-color: rgb(65, 143, 254);
-  background-color: #fff;
-  font-size: 1.0625rem;
+  background-color:#47D7AC;
+  border-color: #47D7AC;
+  color: #fff;
+  /* border-color: rgb(65, 143, 254); */
+  /* background-color: #fff; */
+  /* font-size: 1.0625rem; */
+  /* font-size:9px; */
   font-weight: bold;
-  width: 100%;
-  padding: 6px;
+  width: 95%;
+  /* padding: 6px;
   margin-top: 6px;
-  border-radius: 10px;
-  border-color: #0048f0;
+  border-radius: 10px; */ 
+  /* margin-top: 6px; */
+  /* padding: 4px;
+  margin-top: -20px;
+  border-radius: 8px;
+  border-color: #0048f0; */
+  margin-top: 2px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: unset;
+  border:none;
+  font-size:12px;
 }

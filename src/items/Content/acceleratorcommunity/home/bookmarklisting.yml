@@ -23,10 +23,33 @@ Languages:
           <d
             id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
             <r
-              uid="{B7269F17-CEEB-4777-B418-111BAA0357B0}"
-              p:after="*[1=2]"
+              uid="{C9881091-C126-4DD0-BC63-5D265EF2B934}"
+              p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
               s:ds="{D5973845-2EF0-44CE-91CA-BE6328F9DD4A}"
               s:id="{A40FD81A-6605-48A2-A5E5-F865875621C4}"
+              s:par="CSSStyles"
+              s:ph="/jss-main/col2-{F58226C9-8CD3-42D9-AC30-8881433D468E}-0"
+              s:ccb="Clear on publish" />
+            <r
+              uid="{4D331BD5-B98E-43C1-91C4-FD318208979B}"
+              p:after="r[@uid='{C9881091-C126-4DD0-BC63-5D265EF2B934}']"
+              s:id="{B9C67CBD-E307-4D0A-A06E-1898E050D8A6}"
+              s:par="CacheClearingBehavior=Clear on publish&amp;CSSStyles"
+              s:ph="/jss-main/col1-{F58226C9-8CD3-42D9-AC30-8881433D468E}-0" />
+            <r
+              uid="{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}"
+              s:ccb="Clear on publish"
+              s:par="CSSStyles" />
+            <r
+              uid="{9C0AAE4A-7546-4CA7-ABD5-E1249FDF21F1}"
+              p:after="r[@uid='{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}']"
+              s:id="{DAF857B8-E315-48EF-AC72-30B8A0180AA0}"
+              s:ph="jss-main" />
+            <r
+              uid="{F58226C9-8CD3-42D9-AC30-8881433D468E}"
+              p:after="*[1=2]"
+              s:ds="{C79255F3-31A1-4FB8-B570-E7DB12DAC7EF}"
+              s:id="{44F40912-35E3-43E6-8C36-6488DC75421E}"
               s:par="CSSStyles"
               s:ph="jss-main"
               s:ccb="Clear on publish" />
@@ -51,7 +74,7 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "b50ff272-ad77-42b4-a968-c8266cc234b5"
+      Value: "8bf399c1-1444-42f4-bbde-fba3ee1a0ff3"
     - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
       Hint: twitterDescription
       Value: Community Solution Bookmark Listing is the place you can see you saved Posts/Articles
@@ -64,10 +87,10 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\ankit.rastogi@nagarro.com
+        sitecore\damyanti.wakchaure@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230403T073711Z
+      Value: 20230406T064829Z
     - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
       Hint: ogTitle
       Value: "Community Solution - Bookmark"

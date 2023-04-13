@@ -1,7 +1,10 @@
 .cardContainer {
   width: 95%;
-  background-color: rgb(227, 227, 227);
-  padding: 0.9375rem;
+  /* background-color: whitesmoke;
+  padding: 3px; */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border: 2px solid #c9c6c6;
 }
 .cardbody {
   display: flex;
@@ -11,11 +14,14 @@
 }
 
 .cardTitle {
-  padding: 0.5rem 0.3125rem 0.3125rem 0.9375rem;
-  font-size: 1.0625rem;
-  font-weight: 700;
+  padding: 0rem 0rem 0.5rem 0.5rem;
+  font-size: 18px;
+  font-weight: 500;
+  color: #000E46;
 }
 
 .cardDescription {
-  padding: 0rem 0rem 0.3125rem 0.9375rem;
+  padding: 0rem 0rem 0.5rem 0.5rem;
+  font-size: 14px;
+  color: #82888F;
 }

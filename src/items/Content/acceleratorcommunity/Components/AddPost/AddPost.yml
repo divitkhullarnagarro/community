@@ -8,9 +8,23 @@ Languages:
   Versions:
   - Version: 1
     Fields:
+    - ID: "1da943f7-55bf-4119-a019-53bc23bac58a"
+      Hint: Twitter
+      Value: "https://twitter.com/intent/tweet"
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20230309T090702Z
+    - ID: "2d7f287a-96d5-4873-b731-810f3a02c0aa"
+      Hint: WhatsApp
+      Value: "https://wa.me/?text=Check%20out%20this%20article%20I%20found%3A%20"
+    - ID: "37c939d8-9383-4b03-bd59-97f3b1b833b9"
+      Hint: EventType
+      Value: |
+        {03AFC3DC-2A5B-4C17-9BD0-14A8A153A1EF}
+        {F466F4D4-AC10-4F88-B256-FFF35348EF2C}
+        {CBA442C9-58F1-4765-9668-2B32CBD47360}
+        {CBCEF7D5-32EA-4498-9D59-2262BD5041AF}
+        {938F3DC1-7DF8-4681-842A-18B94857F5AA}
     - ID: "3bf3af57-96d3-4137-b949-5fe4f3adaa70"
       Hint: DescriptionLabel
       Value: Description
@@ -54,12 +68,15 @@ Languages:
     - ID: "6daab097-d3a2-4ed1-b86c-b7ddc14cc967"
       Hint: CreateEventText
       Value: Create Event
+    - ID: "751621c7-e0e6-4cdd-8bec-635a5b9a4c77"
+      Hint: LinkedIn
+      Value: "https://www.linkedin.com/sharing/share-offsite"
     - ID: "858bf61d-fb8c-43b6-95a0-a6943abc9e04"
       Hint: questionPlaceholder
       Value: Enter your poll question
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "9ec9d3b9-c33c-4418-b41f-639bf6a3e185"
+      Value: "00cfa8b9-8bc9-4a15-a471-111d8802ebc8"
     - ID: "a2d64968-6a39-425c-920a-413e191d7097"
       Hint: EventTitlePlaceholder
       Value: Enter Event Title
@@ -69,13 +86,16 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\ankit.rastogi@nagarro.com
     - ID: "d6d64e53-4068-405c-ad5d-dd1c76b66978"
       Hint: EndDate
       Value: 20230323T062900Z
+    - ID: "d91fa12e-7f86-45db-9ad0-231f9afca033"
+      Hint: Facebook
+      Value: "https://www.facebook.com/sharer/sharer.php"
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230323T063042Z
+      Value: 20230406T070312Z
     - ID: "dee2c514-243a-4bde-b8db-117c1cf58297"
       Hint: addQuestionLabel
       Value: Add question

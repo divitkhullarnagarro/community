@@ -15,7 +15,6 @@ SharedFields:
   Value: |
     # Editing here does not save the query on the item; copy it back when done!
     
-    
     query AddPost($datasource: String!, $language: String!) {
       datasource: item(path: $datasource, language: $language) {
         ... on  AddPost{
@@ -30,6 +29,16 @@ SharedFields:
                   jsonValue
                 }
                 image{
+                  jsonValue
+                }
+              }
+            }
+          }
+                eventType{
+            targetItems{
+              ... on ContainerItem
+              {
+                title{
                   jsonValue
                 }
               }
@@ -56,6 +65,10 @@ SharedFields:
               }
             }
           }
+          whatsApp{jsonValue}
+          twitter{jsonValue}
+          facebook{jsonValue}
+          linkedIn{jsonValue}
         }
       }
     }
@@ -72,11 +85,11 @@ Languages:
       Value: 20230309T071347Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "83af5734-50fe-4bc5-9e11-46ca29d6b15e"
+      Value: "6ac76c34-bcf1-4f48-a6eb-6595740a65be"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\ankit.rastogi@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230323T063109Z
+      Value: 20230406T062656Z

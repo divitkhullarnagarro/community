@@ -1,0 +1,30 @@
+﻿---
+ID: "cba442c9-58f1-4765-9668-2b32cbd47360"
+Parent: "41027582-e567-492c-96c5-a3280ccac7b9"
+Template: "ce7ca1be-b6ba-4085-8f04-34d60ea9dfce"
+Path: /sitecore/content/acceleratorcommunity/Global/DataList/EventType/Conference
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230309T090615Z
+    - ID: "760b15b4-30a9-4c3a-9315-90088b88380a"
+      Hint: Title
+      Value: Conference
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "e9e656af-5845-4a86-9659-c03e4395714d"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230411T110230Z
+    - ID: "f299247a-a62a-4fea-b0f6-a83c8f2d4621"
+      Hint: Image
+      Value: |
+        <image mediaid="{3317A7F2-2D90-43F7-9059-5A5E2D2C3309}" />
