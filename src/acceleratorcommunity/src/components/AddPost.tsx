@@ -100,6 +100,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   // let [allReactions, setAllReactions] = useState([]);
 
+  let [showEvent, setShowEvent] = useState(false);
+  let [eventType, setEventType] = useState('Select Event Type');
   // let [disableAddImage, setDisableAddImage] = useState(false);
   // let [disableAddVideo, setDisableAddVideo] = useState(false);
   // let [disableAddDoc, setDisableAddDoc] = useState(false);
@@ -890,7 +892,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 return '';
               })}
             </div>
-            <div className="postDescription">{post?.description && parser(modifyHtml(post?.description))}</div>
+            {post?.postType === 'EVENT' ? (
+              <div className="postDescription">{post?.event?.description}</div>
+            ) : (
+              <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
+            )}
           </div>
           <div className="postFooter">
             <div className="postActions">
@@ -1015,7 +1021,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             </div>
           </div>
           <Collapse in={post?.isOpenComment}>
-            <div id="anotherCommentsContainer" className='loadCommentContainer'>
+            <div id="anotherCommentsContainer" className="loadCommentContainer">
               <Form
                 onSubmit={(e) => {
                   postComments(post?.id, e);
@@ -1740,7 +1746,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const files = e.target.files;
     const fileArray: any = [];
 
-    for (let i = 0; i < files.length; i++) {
+    for (let i = 0; i < files?.length; i++) {
       let resp = await UploadFilesToServer(files[i], 'VIDEO');
       resp;
       let uniqueId = generateUniqueId();
@@ -1752,7 +1758,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         mediaSequence: 0,
       });
     }
-    if (fileArray.length === files.length) {
+    if (fileArray?.length === files?.length) {
       setVideoLink(fileArray);
     }
   }
@@ -1897,6 +1903,97 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       </Modal>
     );
   };
+
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const minDate = `${year}-${month}-${day}T${hours}:${minutes}:00`;
+
+  let [eventTypeSelectError, setEventTypeSelectError] = useState(false);
+  let [createNewEventPostError, setCreateNewEventPostError] = useState(false);
+  let [submittingEventPost, setSubmittingEventPost] = useState(false);
+
+  function submitEventForm(event: any) {
+    event.preventDefault();
+    if (eventType === 'Select Event Type') {
+      setEventTypeSelectError(true);
+      return;
+    } else setEventTypeSelectError(false);
+    const title = event.target[1].value;
+    const description = event.target[2].value;
+    const date = event.target[3].value;
+
+    const timestamp = new Date().getTime();
+    let uniqId = generateUniqueId();
+    let obj = {
+      data: {
+        data: {
+          id: uniqId,
+          //description: postText,
+          postType: 'EVENT',
+          //mediaList: [...file, ...docs, ...videoLink],
+          postMeasures: {
+            likeCount: 0,
+            commentCount: 0,
+            repostCount: 0,
+          },
+          createdBy: {
+            firstName: userObject?.firstName,
+            lastName: userObject?.lastName,
+          },
+          event: {
+            title: title,
+            description: description,
+            eventType: eventType,
+            eventDate: date,
+          },
+          createdOn: timestamp,
+          isLikedByUser: false,
+          comments: [],
+          isRespPending: true,
+          isLoadingComments: false,
+        },
+      },
+    };
+    setMyAnotherArr((prevState: any) => {
+      return [obj?.data?.data, ...prevState];
+    });
+    setSubmittingEventPost(true);
+
+    addPostCall(userToken, {
+      type: 'EVENT',
+      event: {
+        title: title,
+        description: description,
+        eventType: eventType,
+        eventDate: date,
+      },
+    }).then((response) => {
+      setSubmittingEventPost(false);
+      if (response?.data?.data) {
+        addLatestCreatedPost(response?.data?.data, uniqId);
+        // Empty Post Values
+        setShowForm1(false);
+        event.currentTarget.reset();
+        setEventType('Select Event Type');
+      } else {
+        setCreateNewEventPostError(true);
+        deletePostById(uniqId);
+        setTimeout(() => {
+          setCreateNewEventPostError(false);
+        }, 2000);
+      }
+    });
+  }
+
+  useEffect(() => {
+    if (eventType != 'Select Event Type') {
+      setEventTypeSelectError(false);
+    }
+  }, [eventType]);
 
   return (
     <>
@@ -2137,7 +2234,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   />
                 </Form.Group>
               </button>
-              <button className={styles.eventButton} type="button">
+              <button
+                className={styles.eventButton}
+                onClick={() => setShowEvent(true)}
+                type="button"
+              >
                 {/* <span>Event</span> */}
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/2693/2693507.png"
@@ -2145,6 +2246,130 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   width="18px"
                 ></img>
               </button>
+              <Modal
+                className={styles.reportPostModalContent}
+                show={showEvent}
+                onHide={() => setShowEvent(false)}
+                backdrop="static"
+                keyboard={false}
+                centered
+                scrollable={true}
+                onExit={() => {
+                  setEventType('Select Event Type');
+                }}
+              >
+                <div>
+                  <Form
+                    onSubmit={(e: any) => submitEventForm(e)}
+                    style={{ fontSize: '15px', margin: '5px' }}
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title className={styles.reportPostModalHeader}>
+                        Create Event Post
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <div className={styles.reportPostModalBody}>Event Parameters</div>
+                      <Form.Group className="mb-3">
+                        <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
+                          Title
+                        </Form.Label>
+                        <Form.Control required type="text" placeholder="Enter Event Title" />
+                        <Form.Control.Feedback type="invalid">
+                          Please select an event date.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                      <Form.Group className="mb-3">
+                        <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
+                          Description
+                        </Form.Label>
+                        <Form.Control
+                          required
+                          type="textarea"
+                          placeholder="Enter Event Description"
+                        />
+                      </Form.Group>
+                      <Form.Group className="mb-3">
+                        <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
+                          Date
+                        </Form.Label>
+                        <Form.Control
+                          required
+                          type="datetime-local"
+                          placeholder="Event Date"
+                          min={minDate}
+                        />
+                      </Form.Group>
+                      <Form.Group className="mb-3">
+                        <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
+                          Event Type
+                        </Form.Label>
+                        <Dropdown className="eventTypeDropdown">
+                          <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                            {eventType}
+                          </Dropdown.Toggle>
+
+                          <Dropdown.Menu>
+                            {props?.fields?.data?.datasource?.eventType?.targetItems?.map(
+                              (item: any) => {
+                                return (
+                                  <Dropdown.Item
+                                    href="#"
+                                    onClick={() => setEventType(item?.title?.jsonValue?.value)}
+                                  >
+                                    {item?.title?.jsonValue?.value}
+                                  </Dropdown.Item>
+                                );
+                              }
+                            )}
+                          </Dropdown.Menu>
+                        </Dropdown>
+                        <div style={{ height: '40px' }}>
+                          {eventTypeSelectError ? (
+                            <div style={{ color: 'red', fontSize: '12px', fontWeight: '1000' }}>
+                              * Please Select Valid Event Type
+                            </div>
+                          ) : (
+                            ''
+                          )}
+                          {createNewEventPostError ? (
+                            <div style={{ color: 'red', fontWeight: '1000' }}>
+                              {' '}
+                              ** Something went wrong, Event post not Created !
+                            </div>
+                          ) : (
+                            ''
+                          )}
+                        </div>
+                      </Form.Group>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button
+                        className={styles.footerBtn}
+                        variant="secondary"
+                        onClick={() => {
+                          setShowEvent(false);
+                          setEventType('Select Event Type');
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        className={styles.footerBtn}
+                        variant="secondary"
+                        type="submit"
+                        // onClick={onPostReported}
+                      >
+                        {submittingEventPost ? (
+                          <Spinner animation="border" />
+                        ) : (
+                          <span>Create Post</span>
+                        )}
+                      </Button>
+                    </Modal.Footer>
+                  </Form>
+                </div>
+              </Modal>
               <button className={styles.pollButton} type="button">
                 {/* <span>Poll</span> */}
                 <img

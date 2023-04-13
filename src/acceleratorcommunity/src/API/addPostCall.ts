@@ -7,6 +7,7 @@ const addPostCall = async (userToken: string | undefined, postObject: any) => {
     mediaList: postObject?.mediaList,
     postType: postObject?.type,
     taggedPeers: postObject?.taggedPeers,
+    event: postObject?.event,
     createdBy: 'objectId',
     updatedBy: 'objectId',
     createdOn: 23032023,

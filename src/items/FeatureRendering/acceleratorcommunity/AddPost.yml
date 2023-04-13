@@ -34,6 +34,16 @@ SharedFields:
               }
             }
           }
+                eventType{
+            targetItems{
+              ... on ContainerItem
+              {
+                title{
+                  jsonValue
+                }
+              }
+            }
+          }
           createEventText{jsonValue}
           eventNameLabel{jsonValue}
           eventTitlePlaceholder{jsonValue}
