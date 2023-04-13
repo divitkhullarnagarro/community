@@ -1054,29 +1054,29 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       className="commentContainer"
                       id={comment?.id}
                       style={{
-                        padding: '20px',
+                        padding: '0px',
                         backgroundColor: 'lightgray',
                         margin: '5px',
-                        borderBottomLeftRadius: '30px',
-                        borderTopRightRadius: '30px',
-                        borderBottomRightRadius: '30px',
+                        // borderBottomLeftRadius: '30px',
+                        // borderTopRightRadius: '30px',
+                        // borderBottomRightRadius: '30px',
+                       borderRadius:'10px',
                         marginTop: '20px',
+                        marginLeft:'65px',
+                        marginRight:'10px',
                       }}
                     >
-                      <div>
-                        <h4>
+                      <div className= "commentHeadingTop">                        
                           {comment?.createdBy?.firstName} {comment?.createdBy?.lastName}
                           <span style={{ fontSize: '12px', marginLeft: '5px' }}>
                             {' '}
                             {calculateTimeDifference(comment?.createdOn)}
-                          </span>
-                        </h4>
+                          </span>                      
                       </div>
-                      <div>{comment?.text}</div>
+                      <div className="commentHeading">{comment?.text}</div>
                       <div
                         onClick={() => getAllupVotesAndDownVotes(comment?.id)}
-                        className="upvoteDownvoteContainer"
-                      >
+                        className="upvoteDownvoteContainer">
                         <div className="likecomments">
                           <img
                             className="likecomments"
@@ -1092,7 +1092,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       </div>
                     </div>
                     <div>
-                      <div style={{ marginBottom: '10px' }}>
+                      <div style={{ marginLeft:'65px'}}>
                         <span onClick={() => handleUpvote(comment?.id)}>
                           <img
                             className="likecomments"
@@ -1120,7 +1120,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           }
                           aria-controls="repliesContainer"
                           aria-expanded={comment?.isOpenReply}
-                          style={{ border: 'none', marginLeft: '16px' }}
+                          style={{ border: 'none', marginLeft: '16px', fontSize:'12px'}}
                           disabled={comment?.isRespPending}
                         >
                           Reply

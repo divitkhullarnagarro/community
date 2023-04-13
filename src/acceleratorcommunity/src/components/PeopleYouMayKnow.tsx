@@ -55,8 +55,8 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
           className={styles.img}
           field={Profile ?? item?.imageData?.value}
           editable={true}
-          height={50}
-          width={50}
+          height={35}
+          width={35}
         />
         <div>
           <div className={styles.name}>{item?.firstName + ' ' + item?.lastName}</div>
