@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { ComponentProps } from 'lib/component-props';
 import WebContext from 'src/Context/WebContext';
 import styles from '../assets/users.module.css';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Table } from 'react-bootstrap';
 import Flag from '../assets/images/flag-icon.svg';
 import { Dropdown } from 'react-bootstrap';
 import { getAllReportPostCall, getReportedPostReportersDetailsCall } from 'src/API/reportPostCall';
@@ -12,6 +12,87 @@ import parser from 'html-react-parser';
 import Spinner from 'react-bootstrap/Spinner';
 import DownArrow from '../assets/images/DownArrow.png';
 import WarningImage from '../assets/images/warning.jpg';
+import ReportedUsers from '../assets/images/ReportedUsers.png';
+import { openDoc, calculateTimeDifference } from 'assets/helpers/helperFunctions';
+
+const userColumns = [
+  {
+    field: 'name',
+    headerName: 'Name',
+  },
+  {
+    field: 'gender',
+    headerName: 'Gender',
+  },
+  {
+    field: 'email',
+    headerName: 'Email',
+  },
+
+  {
+    field: 'phone',
+    headerName: 'Phone',
+  },
+  {
+    field: 'reason',
+    headerName: 'Reason',
+  },
+  {
+    field: 'action',
+    headerName: 'Action',
+  },
+];
+
+const userRows = [
+  {
+    id: 1,
+    name: 'Shivam Gupta',
+    gender: 'Male',
+    email: 'Shivam@yopmail.com',
+    phone: 9129739273,
+    reason: 'Fake',
+  },
+  {
+    id: 2,
+    name: 'Rohit Kumar',
+    gender: 'Male',
+    email: 'rohit.kumar@gmail.com',
+    phone: 9893902930,
+    reason: 'Spam',
+  },
+  {
+    id: 3,
+    name: 'Rajan midha',
+    gender: 'Male',
+    email: 'mohit@yopmail.com',
+    phone: 9689489384,
+    reason: 'Infringement of content',
+  },
+  {
+    id: 4,
+    name: 'Shubham verma',
+    gender: 'Male',
+    email: 'shubham@yahoo.com',
+    phone: 9703840380,
+    reason: 'Suspicious',
+  },
+  {
+    id: 5,
+    name: 'Pankaj saxena',
+    gender: 'Male',
+    email: 'gupta@nishant.com',
+    phone: 9947937493,
+    reason: 'Fake',
+  },
+  {
+    id: 6,
+    name: 'Akshay sharma',
+    gender: 'Male',
+    email: 'akshay@sharma.com',
+    phone: 9828038203,
+    reason: 'Inappropriate behaviour',
+  },
+];
 
 type reportPostFields = {
   id: string;
@@ -80,30 +161,126 @@ const Users = (props: UserProps): JSX.Element => {
     ...useContext(WebContext),
   };
 
-  function openDoc(base64: string) {
-    var base64pdf = base64;
+  const [showReportedUserList, setShowReportedUserList] = useState(false);
 
-    if (window !== undefined) {
-      var pdfWindow = window.open('', '_blank');
-      pdfWindow?.document.write(`<iframe width='100%' height='100%' src=${base64pdf}></iframe>`);
-    }
-  }
+  const getReportedUserList = async () => {
+    setShowReportedPosts(false);
+    setShowReportedUserList(true);
+  };
 
-  function calculateTimeDifference(postDate: any) {
-    postDate = new Date(postDate);
-    const currentTime = new Date().getTime();
-    const timeDiffMs = currentTime - postDate.getTime();
-    const timeDiffHours = Math.floor(timeDiffMs / (1000 * 60 * 60));
-    const timeDiffMinutes = Math.floor(timeDiffMs / (1000 * 60));
-    const timeDiffDays = Math.floor(timeDiffMs / (1000 * 60 * 60 * 24));
-    if (timeDiffHours >= 24) {
-      return `${timeDiffDays} ${timeDiffDays > 1 ? 'days' : 'day'} ago`;
-    } else if (timeDiffMinutes >= 60) {
-      return `${timeDiffHours} ${timeDiffDays > 1 ? 'hours' : 'hour'} ago`;
-    } else {
-      return `${timeDiffMinutes} ${timeDiffDays > 1 ? 'minutes' : 'minute'} ago`;
-    }
-  }
+  const ReportedUserListTable = () => {
+    return (
+      <div>
+        <h3 className={styles.userListHeader}>{'Reported User List'}</h3>
+        <Table striped hover className={styles.userListTable}>
+          <thead>
+            <tr className={styles.header}>
+              {userColumns.map((item, index) => {
+                return (
+                  <td key={index} className={styles.item}>
+                    {item.headerName}
+                  </td>
+                );
+              })}
+            </tr>
+          </thead>
+          <tbody>
+            {userRows.map((item) => {
+              return (
+                <tr key={item?.id} className={styles.row}>
+                  <td className={styles.item}>{item?.name}</td>
+                  <td className={styles.item}>{item?.gender}</td>
+                  <td className={styles.item}>{item?.email}</td>
+                  <td className={styles.item}>{item?.phone}</td>
+                  <td className={styles.item}>{item?.reason}</td>
+                  <Button
+                    className={styles.actionWarningButton}
+                    onClick={() => setShowWarnUserPopup(true)}
+                  >
+                    Warning
+                  </Button>
+                  <Button
+                    className={styles.actionButton}
+                    onClick={() => setShowSuspendUserPopup(true)}
+                  >
+                    Suspension
+                  </Button>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </div>
+    );
+  };
+
+  const [showWarnUserPopup, setShowWarnUserPopup] = useState(false);
+  const WarnUserPopUp = () => {
+    return (
+      <Modal
+        className={styles.reportPostModalContent}
+        show={showWarnUserPopup}
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setShowWarnUserPopup(false)}
+        centered
+        scrollable={true}
+      >
+        <div style={{ height: '30vh', display: 'flex', flexDirection: 'column' }}>
+          <Modal.Header closeButton className={styles.reportPostModalHeader}>
+            <Modal.Title>{'Warn user'}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body></Modal.Body>
+          <Modal.Footer>
+            <Button
+              className={styles.footerBtn}
+              variant="secondary"
+              onClick={() => setShowWarnUserPopup(false)}
+            >
+              Cancel
+            </Button>
+            <Button className={styles.footerBtn} variant="secondary">
+              Send warning
+            </Button>
+          </Modal.Footer>
+        </div>
+      </Modal>
+    );
+  };
+
+  const [showSuspendUserPopup, setShowSuspendUserPopup] = useState(false);
+  const SuspendUserPopup = () => {
+    return (
+      <Modal
+        className={styles.reportPostModalContent}
+        show={showSuspendUserPopup}
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setShowSuspendUserPopup(false)}
+        centered
+        scrollable={true}
+      >
+        <div style={{ height: '30vh', display: 'flex', flexDirection: 'column' }}>
+          <Modal.Header closeButton className={styles.reportPostModalHeader}>
+            <Modal.Title>{'Suspend user account'}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body></Modal.Body>
+          <Modal.Footer>
+            <Button
+              className={styles.footerBtn}
+              variant="secondary"
+              onClick={() => setShowSuspendUserPopup(false)}
+            >
+              Cancel
+            </Button>
+            <Button className={styles.footerBtn} variant="secondary">
+              Suspend account
+            </Button>
+          </Modal.Footer>
+        </div>
+      </Modal>
+    );
+  };
 
   useEffect(() => {
     if (userToken == '') {
@@ -123,6 +300,7 @@ const Users = (props: UserProps): JSX.Element => {
   const getReportedPosts = async () => {
     setReportedPostList([]);
     setShowReportedPosts(true);
+    setShowReportedUserList(false);
     let response = await getAllReportPostCall(userToken);
     if (response?.success) {
       setReportedPostList(response?.data);
@@ -474,10 +652,7 @@ const Users = (props: UserProps): JSX.Element => {
     return (
       <div className={styles.sidenavbar}>
         <div className={styles.top}>
-          <span className={styles.logo}>
-            {props?.fields?.data?.datasource?.sideNavHeaderLabel?.jsonValue?.value ??
-              'Professtional Dashboard'}
-          </span>
+          <span className={styles.logo}>{'Admin Dashboard'}</span>
         </div>
         <hr />
         <div className={styles.center}>
@@ -489,8 +664,23 @@ const Users = (props: UserProps): JSX.Element => {
               }}
             >
               <li className={styles.row}>
-                <NextImage contentEditable={true} field={Flag} height={20} width={20}></NextImage>
+                <NextImage contentEditable={true} field={Flag} height={15} width={20}></NextImage>
                 <span>{'Reported Posts'}</span>
+              </li>
+            </button>
+            <button
+              onClick={() => {
+                getReportedUserList();
+              }}
+            >
+              <li className={styles.row}>
+                <NextImage
+                  contentEditable={true}
+                  field={ReportedUsers}
+                  height={20}
+                  width={20}
+                ></NextImage>
+                <span>{'Reported Users'}</span>
               </li>
             </button>
           </ul>
@@ -511,9 +701,7 @@ const Users = (props: UserProps): JSX.Element => {
         <div className={styles.right_upper_section}>{<Dashboard />}</div>
         <div
           className={
-            reportPostList?.length > 0
-              ? styles.right_lower_section
-              : styles.right_lower_section_spinner
+            reportPostList?.length > 0 ? styles.right_lower_section : styles.right_lower_section
           }
         >
           {showReportedPosts ? (
@@ -528,6 +716,15 @@ const Users = (props: UserProps): JSX.Element => {
                 <Spinner animation="border" />
               </span>
             )
+          ) : (
+            <></>
+          )}
+          {showReportedUserList ? (
+            <>
+              <ReportedUserListTable />
+              <WarnUserPopUp />
+              <SuspendUserPopup />
+            </>
           ) : (
             <></>
           )}

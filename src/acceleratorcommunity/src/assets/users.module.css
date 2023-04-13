@@ -39,7 +39,7 @@
 }
 
 .right_lower_section {
-  width: 70vw;
+  width: 85vw;
   flex: 0 0 85%;
 }
 
@@ -79,12 +79,12 @@
 }
 
 .userListTable {
-  margin-top: 30px;
-  width: 72vw;
+  margin-top: 20px;
+  width: 100%;
 }
 
 .header {
-  width: 90%;
+  width: 93%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -97,8 +97,7 @@
   flex-direction: row;
   justify-content: flex-start;
   padding: 20px !important;
-  font-size: 0.7375rem;
-  border: 1px solid black;
+  font-size: 20.8px;
 }
 
 .title {
@@ -631,4 +630,19 @@
   flex-direction: column;
   padding: 10px;
   margin: 10px;
+}
+
+.actionButton {
+  background-color: #47d7ac !important;
+  color: white !important;
+  margin: 10px;
+  padding: 10px !important;
+}
+
+.actionWarningButton {
+  background-color: #47d7ac !important;
+  color: white !important;
+  margin: 10px;
+  padding: 10px !important;
+  width: 120px !important;
 }

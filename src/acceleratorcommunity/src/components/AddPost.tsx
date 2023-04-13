@@ -22,7 +22,7 @@ import twitter from '../assets/images/twitter.png';
 import whatsapp from '../assets/images/whatsapp.png';
 import facebook from '../assets/images/facebook.svg';
 import { Dropdown, Modal } from 'react-bootstrap';
-import { ReportPostOptionsTypeLabel } from 'assets/helpers/enums';
+import { ReportPostOptionsTypeLabel, ReportUserOptionsTypeLabel } from 'assets/helpers/enums';
 import styles from '../assets/addPost.module.css';
 import reportPostImage from '../assets/images/flag-icon.svg';
 import bookmarkImage from '../assets/images/bookmark-outline.svg';
@@ -255,6 +255,72 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const [showSpinner, setShowSpinner] = useState(false);
   const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
   const [selectedBlockUserItem, setSelectedBlockUserItem] = useState<BlockUserFields>();
+  const [showReportUserPopUp, setShowReportUserPopUp] = useState(false);
+
+  const ReportUserPopup = () => {
+    const reportTypeList = Object.values(ReportUserOptionsTypeLabel);
+    return (
+      <>
+        <Modal
+          className={styles.reportPostModalContent}
+          show={showReportUserPopUp}
+          onHide={() => setShowReportUserPopUp(false)}
+          backdrop="static"
+          keyboard={false}
+          centered
+          scrollable={true}
+        >
+          <div>
+            <Modal.Header closeButton>
+              <Modal.Title className={styles.reportPostModalHeader}>
+                {props?.fields?.data?.datasource?.reportPostTitle?.jsonValue?.value ?? 'Report'}
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className={styles.reportPostModalBody}>
+                {props?.fields?.data?.datasource?.reportPostHeader?.jsonValue?.value ??
+                  'Why are you reporting?'}
+              </div>
+              <Form ref={formRef} style={{ fontSize: '15px', margin: '5px' }}>
+                {reportTypeList.map((item, index) => {
+                  return (
+                    <div key={index} className={styles.reportItem}>
+                      {item}
+                      <Form.Check
+                        type="radio"
+                        name="radioGroup"
+                        value={item}
+                        onChange={(e) => handleSelectChange(e)}
+                        defaultChecked={index == 0 ? true : false}
+                        aria-label="radio 1"
+                      ></Form.Check>
+                    </div>
+                  );
+                })}
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                className={styles.footerBtn}
+                variant="secondary"
+                onClick={() => setShowReportUserPopUp(false)}
+              >
+                Cancel
+              </Button>
+              <Button className={styles.footerBtn} variant="secondary">
+                Report
+                {showSpinner ? (
+                  <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
+                ) : (
+                  <></>
+                )}
+              </Button>
+            </Modal.Footer>
+          </div>
+        </Modal>
+      </>
+    );
+  };
 
   const onUserBlocked = async () => {
     setShowSpinner(true);
@@ -834,6 +900,22 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       </div>
                     </div>
                   </Dropdown.Item>
+                  <Dropdown.Item
+                    className={styles.dropdownItem}
+                    onClick={() => {
+                      setSelectedBlockUserItem(post?.createdBy);
+                      setShowReportUserPopUp(true);
+                    }}
+                  >
+                    <div className={styles.overlayItem}>
+                      <div className={styles.dropdownImage}>
+                        <NextImage field={reportPostImage} editable={true} />
+                      </div>
+                      <div className={styles.reportContainerBtn}>
+                        Report {post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName}
+                      </div>
+                    </div>
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               <img
@@ -1060,23 +1142,24 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         // borderBottomLeftRadius: '30px',
                         // borderTopRightRadius: '30px',
                         // borderBottomRightRadius: '30px',
-                       borderRadius:'10px',
+                        borderRadius: '10px',
                         marginTop: '20px',
-                        marginLeft:'65px',
-                        marginRight:'10px',
+                        marginLeft: '65px',
+                        marginRight: '10px',
                       }}
                     >
-                      <div className= "commentHeadingTop">                        
-                          {comment?.createdBy?.firstName} {comment?.createdBy?.lastName}
-                          <span style={{ fontSize: '12px', marginLeft: '5px' }}>
-                            {' '}
-                            {calculateTimeDifference(comment?.createdOn)}
-                          </span>                      
+                      <div className="commentHeadingTop">
+                        {comment?.createdBy?.firstName} {comment?.createdBy?.lastName}
+                        <span style={{ fontSize: '12px', marginLeft: '5px' }}>
+                          {' '}
+                          {calculateTimeDifference(comment?.createdOn)}
+                        </span>
                       </div>
                       <div className="commentHeading">{comment?.text}</div>
                       <div
                         onClick={() => getAllupVotesAndDownVotes(comment?.id)}
-                        className="upvoteDownvoteContainer">
+                        className="upvoteDownvoteContainer"
+                      >
                         <div className="likecomments">
                           <img
                             className="likecomments"
@@ -1092,7 +1175,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       </div>
                     </div>
                     <div>
-                      <div style={{ marginLeft:'65px'}}>
+                      <div style={{ marginLeft: '65px' }}>
                         <span onClick={() => handleUpvote(comment?.id)}>
                           <img
                             className="likecomments"
@@ -1120,7 +1203,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           }
                           aria-controls="repliesContainer"
                           aria-expanded={comment?.isOpenReply}
-                          style={{ border: 'none', marginLeft: '16px', fontSize:'12px'}}
+                          style={{ border: 'none', marginLeft: '16px', fontSize: '12px' }}
                           disabled={comment?.isRespPending}
                         >
                           Reply
@@ -2487,6 +2570,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       {<ReportPostPopup />}
       {<BlockUserPopup />}
       {<ModalForReactions />}
+      {<ReportUserPopup />}
       {showNotification && (
         <ToastNotification
           showNotification={showNotification}
