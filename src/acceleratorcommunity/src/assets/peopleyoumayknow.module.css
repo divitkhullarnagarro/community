@@ -1,17 +1,30 @@
 .wrapper {
   width: 95%;
-  margin: 20px;
+  margin-top: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   border: 2px solid #c9c6c6;
   overflow-x:hidden;
   overflow-y:auto;
-  padding:0.93rem;
+  /* padding:0.93rem; */
   height: 320px;
-  margin-left:-2px;
-  background-color: whitesmoke;
-  padding: 0.9375rem;
+  /* margin-left:-2px; */
+  /* background-color: whitesmoke; */
+  /* padding: 0.9375rem; */
 }
+.wrapper::-webkit-scrollbar {
+  width: 5px;
+  }
+  
+  .wrapper::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #EFEFEF;
+  }
+  
+  .wrapper::-webkit-scrollbar-thumb {
+  background-color: #C2C2C2;
+  border-radius: 4px;
+  }
 
 .flexx {
   display: flex;
@@ -51,23 +64,38 @@
   display: flex;
   justify-content: space-between;
   padding: 10px;
+  font-weight: 400;
+  width: 98%;
+  color:  #F58C60;
+  ;
+  
+}
+.linkHeader{
+  color: #283895 !important;
 }
 .heading {
   /* font-size: 1.0625rem;
   font-weight: 700; */
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 500;
   /* margin-left: -16%; */
+  color:#283895;
 }
-
+.link{
+  color: #F58C60;
+  cursor: pointer;
+}
 .img {
   border-radius: 60%;
+  width:36px;
+  height:36px;
 }
 .name {
-  font-weight: bold;
+  font-weight: 500;
   margin-top: 8px;
   margin-left: 10px;
-  font-size: 15px;
+  font-size: 14px;
+  color:#091329;
 }
 
 .details {
@@ -175,7 +203,7 @@
 .item {
   display: flex;
   /* justify-content: flex-start; */
-  width: 100%;
+  width: 95%;
   padding: 1px;
   font-size: 14px;
   /* border: 1px solid black; */
@@ -311,4 +339,9 @@
   border-bottom: 5px solid lightgray;
   border-radius: 20px;
   height: 50px;
+}
+@media only screen and (max-width: 1000px) {
+  .header {
+    width: 99%;
+  }
 }

@@ -1,0 +1,68 @@
+.groupListTitle {
+  margin-left: 10px;
+  color: #283895;
+  text-shadow: 2px 2px 1px rgb(156, 179, 179);
+}
+.groupListLogo {
+  height: auto;
+
+  max-width: 100%;
+  border-radius: 50%;
+}
+.groupList {
+  background: whitesmoke;
+  margin: 16px;
+  padding-bottom: 16px;
+}
+.groupListHeading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+  padding: 5px 16px;
+}
+.groupListHeadingLeft {
+  display: flex;
+  align-items: center;
+}
+.groupListName {
+  margin-left: 12px;
+}
+.moreOptionList {
+  position: absolute;
+  background: rgb(240, 235, 235);
+  border-radius: 10px;
+  padding: 10px;
+  left: 260px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  margin-top: -9px;
+}
+.moreOptionList > button {
+  cursor: pointer;
+  border: 1px solid rgb(156, 150, 150);
+  padding: 4px;
+  margin-bottom: 4px;
+  border-radius: 10px;
+  /* background: rgb(233, 243, 243); */
+  box-shadow: 5px 5px 2px rgb(156, 179, 179);
+  font-size: small;
+}
+.groupListMoreLogo {
+  cursor: pointer;
+}
+.createGroupHeading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.createGroupHeading > button {
+  border-radius: 8px;
+
+  box-shadow: 5px 5px 2px rgb(156, 179, 179);
+}

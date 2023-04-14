@@ -1,0 +1,25 @@
+.membersGroupList {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.singleMember {
+  background: rgb(239, 233, 233);
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  gap: 5px;
+}
+.memberCrossIcon {
+  cursor: pointer;
+  border-radius: 50%;
+  background: rgb(239, 233, 233);
+}
+.memberCrossIcon:hover {
+  background: rgb(205, 193, 193);
+}
+.requiredField::after {
+  content: '*';
+  color: red;
+}
