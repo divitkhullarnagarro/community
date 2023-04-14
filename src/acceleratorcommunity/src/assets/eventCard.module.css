@@ -1,0 +1,58 @@
+.ConferenceEventContainer {
+    display: flex;
+    flex-direction: row;
+    height: 400px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .25), 0 8px 8px 0 rgba(0, 0, 0, .15);
+    margin: 20px 0;
+    border-radius: 12px;
+    background-color: aliceblue;
+}
+
+.leftContainer {
+    width: 40%;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1483443487168-a49ed320d532?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&s=25a13b3cccc5f22a2d4cb32c4171e3c4');
+    background-size: cover;
+    border-radius: 12px;
+}
+
+.rightContainer {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.head {
+    height: 50%;
+}
+
+.heading {
+    font-size: 48px;
+    padding: 20px;
+    height: 80px;
+    overflow: hidden;
+}
+
+.description {
+    font-size: 24px;
+    padding: 20px;
+    height: 242px;
+    overflow: hidden;
+}
+
+.date {
+    display: flex;
+    justify-content: space-around;
+    font-size: 24px;
+    padding: 12px;
+}
+
+.eventType {
+    position: relative;
+    left: 20%;
+    top: 50%;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}

@@ -139,6 +139,11 @@
   height: 0;
 }
 
+.CreatePollOptions::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
 .postFooter {
   display: flex;
   justify-content: space-between;
