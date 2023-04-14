@@ -67,6 +67,7 @@ import smile from '../assets/images/Vectorsmile.png';
 import like from '../assets/images/like.png';
 import comment from '../assets/images/comment.png';
 import share from '../assets/images/share.png';
+import greylikeimage from '../assets/images/greylikeimage.svg';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -910,12 +911,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
           <div className={styles.postFooterContainer}>
             <div className={styles.likeContainer}>
+
               <button
                 className={styles.likeButton}
                 onClick={() => LikePost(post?.id)}
                 disabled={post?.isRespPending}
               >
-                <NextImage field={like} editable={true} alt="PostItems" width={18} height={18} />
+                <NextImage field={post?.isLikedByUser?like:greylikeimage} editable={true} alt="PostItems" width={18} height={18} />
               </button>
               <div className={styles.likePost}>Like Post</div>
               <div className={styles.likeCount}>
@@ -2403,7 +2405,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             {/* </Collapse> */}
           </div>
         </div>
-        <div className="postHeading" style={{ marginBottom: '10px' }}>
+        <div className="postHead" style={{ marginBottom: '10px' }}>
           <div className="postHeaderLeft">
             <h5 className="postOwner mt-2" style={{ fontWeight: '1000' }}></h5>
             <h4 className="postDate" style={{ fontWeight: '700' }}>
