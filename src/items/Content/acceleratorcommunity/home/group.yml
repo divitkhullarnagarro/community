@@ -35,18 +35,34 @@ Languages:
           <d
             id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
             <r
-              uid="{991E0AEF-58D4-45B7-8B5C-1D528D2399AB}"
+              uid="{21FCB3D8-42AF-4258-8DB7-F530CC137F52}"
               p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
-              s:ds="{85442646-9588-4CC9-A98A-DB19DF67B50F}"
+              s:ds="{C4E858B6-EE9A-4AD1-B4CD-771955027017}"
               s:id="{0EC34140-EA61-443B-B50B-08B7664B8606}"
               s:par="CacheClearingBehavior=Clear on publish&amp;CSSStyles"
               s:ph="/jss-main/col2-{6D47BF1A-FDDE-4389-B2AB-65C6F7005A47}-0" />
             <r
+              uid="{991E0AEF-58D4-45B7-8B5C-1D528D2399AB}"
+              p:after="r[@uid='{21FCB3D8-42AF-4258-8DB7-F530CC137F52}']"
+              s:ds="{85442646-9588-4CC9-A98A-DB19DF67B50F}"
+              s:id="{0EC34140-EA61-443B-B50B-08B7664B8606}"
+              s:par="CSSStyles"
+              s:ph="/jss-main/col2-{E715BB4B-AB97-47E3-9204-4BE77AD1B821}-0"
+              s:ccb="Clear on publish" />
+            <r
               uid="{895C1CE8-4E4B-448A-B093-FEF560EE5B0B}"
               p:after="r[@uid='{991E0AEF-58D4-45B7-8B5C-1D528D2399AB}']"
-              s:id="{959560A8-480D-4749-8582-46191412500C}"
+              s:id="{9CBF7E1F-7CEA-4E4B-8C0E-94DEB7104F9E}"
               s:par="CacheClearingBehavior=Clear on publish&amp;CSSStyles"
               s:ph="/jss-main/col1-{6D47BF1A-FDDE-4389-B2AB-65C6F7005A47}-0" />
+            <r
+              uid="{BA95967B-E831-47C4-889F-CC59DB43A8F4}"
+              p:after="r[@uid='{895C1CE8-4E4B-448A-B093-FEF560EE5B0B}']"
+              s:ds=""
+              s:id="{959560A8-480D-4749-8582-46191412500C}"
+              s:par="CSSStyles"
+              s:ph="/jss-main/col1-{6D47BF1A-FDDE-4389-B2AB-65C6F7005A47}-0"
+              s:ccb="Clear on publish" />
             <r
               uid="{D883CE62-A285-4D76-BF1D-EB3C3F8A3497}"
               p:after="r[@uid='{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}']"
@@ -77,10 +93,10 @@ Languages:
       Value: "Social Community - News"
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
-      Value: "{FCFDBB96-946A-4D2F-BCCD-5573073FC176}"
+      Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "bb2b216a-544e-44e0-bb97-b81f2141ad0e"
+      Value: "86516704-ce73-40a9-85d3-e6a770011f21"
     - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
       Hint: twitterDescription
       Value: Social Community News is the place where you can gather the information about the current affairs
@@ -103,7 +119,7 @@ Languages:
         <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230413T105059Z
+      Value: 20230414T073451Z
     - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
       Hint: ogTitle
       Value: "Community Solution - Discover trending news"

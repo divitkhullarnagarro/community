@@ -45,8 +45,14 @@ Languages:
               s:id="{B9C67CBD-E307-4D0A-A06E-1898E050D8A6}"
               s:ph="/jss-main/col1-{E715BB4B-AB97-47E3-9204-4BE77AD1B821}-0" />
             <r
-              uid="{308914D1-14AF-4E24-A729-076FAB07B6B6}"
+              uid="{B7A91572-7C2A-4215-AD95-53782737AE88}"
               p:after="r[@uid='{87A3F594-E2BA-4896-9999-78F7DA80E485}']"
+              s:id="{9CBF7E1F-7CEA-4E4B-8C0E-94DEB7104F9E}"
+              s:par="CacheClearingBehavior=Clear on publish&amp;CSSStyles"
+              s:ph="/jss-main/col1-{E715BB4B-AB97-47E3-9204-4BE77AD1B821}-0" />
+            <r
+              uid="{308914D1-14AF-4E24-A729-076FAB07B6B6}"
+              p:after="r[@uid='{B7A91572-7C2A-4215-AD95-53782737AE88}']"
               s:ds="{C4E858B6-EE9A-4AD1-B4CD-771955027017}"
               s:id="{0EC34140-EA61-443B-B50B-08B7664B8606}"
               s:ph="/jss-main/col2-{E715BB4B-AB97-47E3-9204-4BE77AD1B821}-0" />
@@ -80,7 +86,7 @@ Languages:
       Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "ae9f73ff-0678-46c8-9118-6eafc82a9151"
+      Value: "fed546b0-f815-4bee-a1b6-cd5dada9bf0c"
     - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
       Hint: twitterDescription
       Value: Post feeds for Social Community
@@ -93,10 +99,10 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\damyanti.wakchaure@nagarro.com
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230411T104817Z
+      Value: 20230414T072510Z
     - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
       Hint: ogTitle
       Value: Social Community
