@@ -6,7 +6,7 @@ import Profile from '../assets/images/profile.png';
 import Button from 'react-bootstrap/Button';
 import ProfileCover from '../assets/images/ProfileCover.jpg';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import groupBackground from '../assets/images/groupBackground.svg';
 import groupLogoImg from '../assets/images/groupLogoImg.svg';
 type HeaderProfileProps = ComponentProps & {
@@ -32,7 +32,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
   const router = useRouter();
   const { groupName } = router.query;
   const isGroupPage = props?.params?.IsGroupList == '1' ? true : false;
-  console.log('EditProfile props', props.params.IsGroupList, isGroupPage);
+  // console.log('EditProfile props', props.params.IsGroupList, isGroupPage);
 
   return (
     <div
