@@ -68,6 +68,7 @@ import like from '../assets/images/like.png';
 import comment from '../assets/images/comment.png';
 import share from '../assets/images/share.png';
 import greylikeimage from '../assets/images/greylikeimage.svg';
+import reportUserCall from 'src/API/reportUserCall';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -317,7 +318,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 Cancel
               </Button>
-              <Button className={styles.footerBtn} variant="secondary">
+              <Button className={styles.footerBtn} variant="secondary" onClick={onUserReported}>
                 Report
                 {showSpinner ? (
                   <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
@@ -330,6 +331,24 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         </Modal>
       </>
     );
+  };
+
+  const onUserReported = async () => {
+    setShowSpinner(true);
+    let reportReason = '';
+    if (formRef.current != null) {
+      reportReason = (
+        formRef.current.querySelector('input[name="radioGroup"]:checked') as HTMLInputElement
+      )?.value;
+    }
+    let response = await reportUserCall(selectedBlockUserItem?.objectId, reportReason, userToken);
+    if (response) {
+      setShowNofitication(true);
+      setToastSuccess(true);
+      setToastMessage('User reported successfully');
+      setShowReportUserPopUp(false);
+      setShowSpinner(false);
+    }
   };
 
   const onUserBlocked = async () => {
@@ -993,13 +1012,18 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
           <div className={styles.postFooterContainer}>
             <div className={styles.likeContainer}>
-
               <button
                 className={styles.likeButton}
                 onClick={() => LikePost(post?.id)}
                 disabled={post?.isRespPending}
               >
-                <NextImage field={post?.isLikedByUser?like:greylikeimage} editable={true} alt="PostItems" width={18} height={18} />
+                <NextImage
+                  field={post?.isLikedByUser ? like : greylikeimage}
+                  editable={true}
+                  alt="PostItems"
+                  width={18}
+                  height={18}
+                />
               </button>
               <div className={styles.likePost}>Like Post</div>
               <div className={styles.likeCount}>

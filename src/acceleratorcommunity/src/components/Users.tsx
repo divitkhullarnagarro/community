@@ -254,9 +254,11 @@ const Users = (props: UserProps): JSX.Element => {
   const onSendWarningToUser = () => {
     const emailTemplates = getEmailTemplates();
     emailTemplates.then((response: emailTemplate[]) => {
-      const result = response.filter((item: emailTemplate) => {
-        return item.id === WarnUserEmailTemplate;
-      });
+      const result = response
+        .filter((item: emailTemplate) => {
+          return item.id === WarnUserEmailTemplate;
+        })
+        .find((item) => item);
       console.log('accountsuspension', result);
     });
     setShowWarnUserPopup(false);
@@ -265,9 +267,11 @@ const Users = (props: UserProps): JSX.Element => {
   const onUserAccountSuspension = () => {
     const emailTemplates = getEmailTemplates();
     emailTemplates.then((response: emailTemplate[]) => {
-      const result = response.filter((item: emailTemplate) => {
-        return item.id === SuspendEmailTemplate;
-      });
+      const result = response
+        .filter((item: emailTemplate) => {
+          return item.id === SuspendEmailTemplate;
+        })
+        .find((item) => item);
       console.log('accountsuspension', result);
     });
 
@@ -277,9 +281,11 @@ const Users = (props: UserProps): JSX.Element => {
   const onReportedPostSendWarning = () => {
     const emailTemplates = getEmailTemplates();
     emailTemplates.then((response: emailTemplate[]) => {
-      const result = response.filter((item: emailTemplate) => {
-        return item.id === SuspendEmailTemplate;
-      });
+      const result = response
+        .filter((item: emailTemplate) => {
+          return item.id === SuspendEmailTemplate;
+        })
+        .find((item) => item);
       console.log('accountsuspension', result);
     });
 
@@ -298,11 +304,15 @@ const Users = (props: UserProps): JSX.Element => {
         centered
         scrollable={true}
       >
-        <div style={{ height: '30vh', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           <Modal.Header closeButton className={styles.reportPostModalHeader}>
             <Modal.Title>{'Warn user'}</Modal.Title>
           </Modal.Header>
-          <Modal.Body></Modal.Body>
+          <Modal.Body>
+            <div
+              className={styles.reportPostModalBody}
+            >{`Do you want to send email warning to the user ?`}</div>
+          </Modal.Body>
           <Modal.Footer>
             <Button
               className={styles.footerBtn}
@@ -336,11 +346,15 @@ const Users = (props: UserProps): JSX.Element => {
         centered
         scrollable={true}
       >
-        <div style={{ height: '30vh', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           <Modal.Header closeButton className={styles.reportPostModalHeader}>
             <Modal.Title>{'Suspend user account'}</Modal.Title>
           </Modal.Header>
-          <Modal.Body></Modal.Body>
+          <Modal.Body>
+            <div
+              className={styles.reportPostModalBody}
+            >{`Do you want to suspend user's account ?`}</div>
+          </Modal.Body>
           <Modal.Footer>
             <Button
               className={styles.footerBtn}
