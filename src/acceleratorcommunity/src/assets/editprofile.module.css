@@ -52,3 +52,31 @@
   margin-bottom: 20px;
   margin-right: 10px;
 }
+.joinedGroupBtn{
+  margin-bottom: 20px;
+  margin-right: 10px;
+  color: rgb(16, 110, 190);
+  background-color: rgb(255, 255, 255);
+  border-color: rgba(36, 136, 216, 0.29);
+  border-radius: 20px;
+  border-width: 1px;
+  border-style: solid;
+  width: 5%;
+}
+
+.joinedGroupBtn:hover span{
+  display: none;
+}
+/* .joinedGroupBtn ::before{
+  content: 'new request';
+} */
+/* .joinedGroupBtn:hover ::after{
+  content: 'availabe';
+} */
+/* /* .joinedGroupBtn:hover span{
+  display: none;
+} */
+.joinedGroupBtn:hover::after{
+  
+  content: 'Leave';
+} 
