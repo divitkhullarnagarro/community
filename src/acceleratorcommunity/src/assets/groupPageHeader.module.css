@@ -1,0 +1,67 @@
+.groupPageHeader {
+  margin: 60px;
+  border-radius: 10px;
+  background: antiquewhite;
+}
+.groupPageBackground {
+  border-radius: 10px;
+}
+.groupPageLogo {
+  border-radius: 80%;
+}
+.groupLogoAndName {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+  bottom: 30px;
+}
+
+.joinButton {
+  color: black;
+  border: 0.5px solid black;
+}
+.joinButton:hover {
+  border: 0.5px solid rgb(152, 148, 148);
+}
+.leaveButton {
+  color: red;
+  border: 0.5px solid black;
+}
+.leaveButton:hover {
+  border: 0.5px solid rgb(152, 148, 148);
+}
+
+@media only screen and (max-width: 640px) {
+  .groupLogoAndName {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* .groupLogoAndName > h3 {
+    font-size: 16px;
+  } */
+  .joinButton {
+    position: relative;
+    top: 24px;
+    height: 30px;
+    width: 90px;
+    font-size: 10px;
+  }
+  .joinButton > svg {
+    height: 14px;
+    width: 14px;
+  }
+  .leaveButton {
+    position: relative;
+    top: 24px;
+    height: 30px;
+    width: 90px;
+    font-size: 10px;
+  }
+  .leaveButton > svg {
+    height: 14px;
+    width: 14px;
+  }
+}

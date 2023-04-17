@@ -59,14 +59,17 @@
   display: flex;
   flex-direction: column;
 }
+.postHead{
+  display:none;
 
+}
 .postHeading {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  /* padding: 10px;
   margin-bottom: 10px;
-  margin-top: 20px;
+  margin-top: 20px; */
 
 }
 
@@ -139,12 +142,12 @@
   height: 0;
 }
 
-.postFooter {
+/* .postFooter {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.25rem;
-}
+} */
 
 .postOwner {
   font-weight: 500;
@@ -406,10 +409,10 @@
     font-size: 0.9375rem;
   }
 
-  .postFooter {
+  /* .postFooter {
     gap: 1.875rem;
-    /* justify-content: space-between; */
-  }
+    justify-content: space-between;
+  } */
 }
 
 @media screen and (max-width: 470px) {
