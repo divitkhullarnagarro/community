@@ -11,7 +11,6 @@ import Profile from '../assets/images/profile.png';
 import BlockedUserPreviewImage from '../assets/images/BlockedUserPreviewImage.png';
 import { unBlockUserCall, getBlockedUserList } from 'src/API/blockUnblockUserCall';
 import ToastNotification from './ToastNotification';
-
 type blockedUserFields = {
   firstName: string;
   lastName: string;
@@ -293,9 +292,11 @@ function BlockedUser() {
             {showPreviewImage ? (
               <div className={styles.emptyProfileWrapper}>
                 <div className={styles.blockedUserPreviewImage}>
-                  <NextImage field={BlockedUserPreviewImage} editable={true} />
+                  <NextImage field={BlockedUserPreviewImage} editable={true}
+                  width={60}
+                  height={60} />
                 </div>
-                {PreviewUserProfileLabel}
+                <div className={styles.blockedUserPreviewImage}>{PreviewUserProfileLabel}</div>
               </div>
             ) : (
               <BlockedUserPreviewProfile />
