@@ -47,36 +47,42 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
       <div className={styles.wrapper}>
         <div className={styles.header}>
           <div className={styles.heading}>{Title}</div>
-          {LinkLabel ? <Link  href={'/peopleyoumayknow'} className={styles.linkHeader}>
-            <span className={styles.link}> {LinkLabel}</span>
-            </Link> : <></>}
+          {LinkLabel ? (
+            <Link href={'/peopleyoumayknow'} className={styles.linkHeader}>
+              <span className={styles.link}> {LinkLabel}</span>
+            </Link>
+          ) : (
+            <></>
+          )}
         </div>
-  {peopleYouMayKnowList?.length > 0 ? (
-     peopleYouMayKnowList?.map((item) => { 
-      return (
-      <div key={item?.objectId} className={styles.item}>
-        <NextImage
-          className={styles.img}
-          field={Profile ?? item?.imageData?.value}
-          editable={true}
-          height={35}
-          width={35}
-        />
-        <div>
-          <div className={styles.name}>{item?.firstName + ' ' + item?.lastName}</div>
-        </div>
-        <div className={styles.button}>
-          <FollowUnfollowButton userName={item?.objectId} />
+        <div className={styles.listContainer}>
+          {peopleYouMayKnowList?.length > 0 ? (
+            peopleYouMayKnowList?.slice(0, 5).map((item) => {
+              return (
+                <div key={item?.objectId} className={styles.item}>
+                  <NextImage
+                    className={styles.img}
+                    field={Profile ?? item?.imageData?.value}
+                    editable={true}
+                    height={40}
+                    width={40}
+                  />
+                  <div>
+                    <div className={styles.name}>{item?.firstName + ' ' + item?.lastName}</div>
+                  </div>
+                  <div className={styles.button}>
+                    <FollowUnfollowButton userName={item?.objectId} />
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     );
-    })
-    ) : (
-    <></>
-    )}
-        </div>
-      );
-    };
+  };
   // const PeopleYouMayKnowHalfPageItem = (item: peopleYouMayKnowFields) => {
   //   return (
   //     <div key={item?.objectId} className={styles.itemHalfPage}>
@@ -102,15 +108,15 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
     return (
       <Card className={styles.cardItem}>
         <div className={styles.imageContainer}>
-          <img className={styles.imgProfile} contentEditable={true} src={PeopleProfile.src}/>
+          <img className={styles.imgProfile} contentEditable={true} src={PeopleProfile.src} />
         </div>
         <Card.Body>
           <Card.Title className={styles.cardTitle}>
             {item?.firstName + ' ' + item?.lastName}
           </Card.Title>
-          <Card.Text className={styles.cardText}>{`${item?.speciality ?? ''} ${item?.speciality ? ' | ' : ''}  ${
-            item?.city ?? ''
-          }`}</Card.Text>
+          <Card.Text className={styles.cardText}>{`${item?.speciality ?? ''} ${
+            item?.speciality ? ' | ' : ''
+          }  ${item?.city ?? ''}`}</Card.Text>
           <FollowUnfollowButton userName={item?.objectId} />
         </Card.Body>
       </Card>
@@ -129,7 +135,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
               return <PeopleYouMayKnowFullPageItem {...item} />;
             })
           ) : (
-          <></>
+            <></>
           )}
         </div>
         {peopleYouMayKnowList === undefined || numItems >= peopleYouMayKnowList?.length ? null : (
@@ -137,7 +143,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
             className={styles.seeMoreBtn}
             style={{
               width: '100%',
-              fontSize:'20px',
+              fontSize: '20px',
               height: '50px',
               backgroundColor: 'white',
               color: 'blue',
@@ -168,12 +174,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
           <ul>
             <button>
               <li className={styles.rowItem}>
-                <NextImage
-                  contentEditable={true}
-                  field={people}
-                  height={18}
-                  width={18}
-                ></NextImage>
+                <NextImage contentEditable={true} field={people} height={18} width={18}></NextImage>
                 <span>{Title ?? 'People You May Know'}</span>
               </li>
             </button>

@@ -57,9 +57,11 @@ const FactOfTheDay = (props: FactOfTheDayProps): JSX.Element => {
       <div className={factOfTheDayCss.cardContainer}>
         <div className={factOfTheDayCss.cardbody}>
           <NextImage objectFit="cover" field={data?.image?.jsonValue?.value} />
-          <div className={factOfTheDayCss.cardTitle}>{data?.title?.jsonValue?.value}</div>
-          <div className={factOfTheDayCss.cardDescription}>
-            {data?.description?.jsonValue?.value}
+          <div className={factOfTheDayCss.cardText}>
+            <div className={factOfTheDayCss.cardTitle}>{data?.title?.jsonValue?.value}</div>
+            <div className={factOfTheDayCss.cardDescription}>
+              {data?.description?.jsonValue?.value}
+            </div>
           </div>
         </div>
       </div>

@@ -745,17 +745,23 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             <div className="postHeaderLeft">
               <img
                 className="postUserImage"
-                src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                 alt="User-Pic"
               ></img>
               <div className="postDetailContainer">
-                <h5 className="postOwner mt-2">
+                <h5 className="postOwner">
                   <span>{post?.createdBy?.firstName ? post?.createdBy?.firstName : 'Unknown'}</span>
                   &nbsp;
                   <span>{post?.createdBy?.lastName ? post?.createdBy?.lastName : 'User'}</span>
                 </h5>
                 <h6 className="postCreateDate">
-                  <span style={{ fontWeight: '100' }}>
+                  <img
+                    width="9px"
+                    src="https://cdn-icons-png.flaticon.com/512/2088/2088617.png"
+                    alt="post time"
+                    style={{ opacity: '0.4', marginRight: '4px' }}
+                  ></img>
+                  <span>
                     {post?.createdOn != 0 &&
                     post?.createdOn &&
                     post?.createdOn != undefined &&
@@ -772,7 +778,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   variant="secondary"
                   id="dropdown-basic"
                   className={styles.dropdownBtn}
-                  style={{ backgroundColor: 'white', border: 'none', width: '70px' }}
+                  // style={{ backgroundColor: 'white', border: 'none', width: '70px' }}
                 >
                   <button
                     onClick={() => {
@@ -888,14 +894,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   );
                 } else if (media?.mediaType === 'IMAGE') {
                   return (
-                    <div
-                      key={num}
-                      style={{
-                        borderRadius: '30px',
-                        // margin: '0px 15px 15px 0px',
-                      }}
-                    >
-                      <img width="100%" src={media?.url} alt={media?.id}></img>
+                    <div key={num}>
+                      <img
+                        width="100%"
+                        src={media?.url}
+                        alt={media?.id}
+                        style={{ margin: '0 0 15px 0', objectFit: 'contain' }}
+                      ></img>
                     </div>
                   );
                 }
@@ -924,7 +929,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   height={18}
                 />
               </button>
-              <div className={styles.likePost}>Like Post</div>
+              <div
+                className={styles.likePost}
+                style={post?.isLikedByUser ? { color: '#2e86f9' } : {}}
+              >
+                {post?.isLikedByUser ? 'Liked Post' : 'Like Post'}
+              </div>
               <div className={styles.likeCount}>
                 {post?.postMeasures?.likeCount ? post?.postMeasures?.likeCount : '0'}
               </div>
@@ -944,85 +954,120 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 {post?.postMeasures?.commentCount ? post?.postMeasures?.commentCount : '0'}
               </div>
             </div>
-            <div className={styles.shareContainer}>
+
+            {/* <div className={styles.shareContainer}>
               <button
                 className={styles.shareButton}
-                onClick={() => handleShowShare(post.id, !post?.showShare)}
+                onClick={() => {}}
+                aria-controls="anotherCommentsContainer"
+                aria-expanded={post?.isOpenComment}
                 disabled={post?.isRespPending}
               >
                 <NextImage field={share} editable={true} alt="PostItems" width={18} height={18} />
               </button>
-              <div className={styles.sharePost}> Share</div>
-              {post?.showShare && (
-                <div className={ShowShareCss.sharePopups} style={{ position: 'initial' }}>
-                  <div className={ShowShareCss.sharePopup}>
-                    <NextImage
-                      className={ShowShareCss.whatsappImage}
-                      field={whatsapp}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link
-                      href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
-                    >
-                      <a className={ShowShareCss.targetIcon} target="_blank">
-                        WhatsApp
-                      </a>
-                    </Link>
-                  </div>
+              <div className={styles.sharePost}>Share</div>
+            </div> */}
 
-                  <div className={ShowShareCss.sharePopup}>
-                    <NextImage
-                      className={ShowShareCss.whatsappImage}
-                      field={twitter}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link
-                      href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
-                    >
-                      <a className={ShowShareCss.targetIcon} target="_blank">
-                        Twitter
-                      </a>
-                    </Link>
-                  </div>
+            <div className={styles.shareContainer}>
+              <Dropdown style={{ alignItems: 'center', display: 'flex' }}>
+                <Dropdown.Toggle
+                  variant="secondary"
+                  id="dropdown-basic"
+                  className={styles.dropdownBtn}
+                >
+                  <button
+                    onClick={() => handleShowShare(post.id, !post?.showShare)}
+                    className={styles.shareButton}
+                    disabled={post?.isRespPending}
+                  >
+                    <NextImage field={share} editable={true} alt="PostItems" width={18} height={18} />
+                    <div className={styles.sharePost}>Share</div>
+                  </button>
+                </Dropdown.Toggle>
 
-                  <div className={ShowShareCss.sharePopup}>
-                    <NextImage
-                      className={ShowShareCss.whatsappImage}
-                      field={linkedin}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link
-                      href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
-                    >
-                      <a className={ShowShareCss.targetIcon} target="_blank">
-                        LinkedIn
-                      </a>
-                    </Link>
-                  </div>
-                  <div className={ShowShareCss.sharePopup}>
-                    <NextImage
-                      className={ShowShareCss.whatsappImage}
-                      field={facebook}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link
-                      href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
-                    >
-                      <a className={ShowShareCss.targetIcon} target="_blank">
-                        Facebook
-                      </a>
-                    </Link>
-                  </div>
-                </div>
-              )}
+                <Dropdown.Menu className={ShowShareCss.dropdownMenu}>
+                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                    <div className={ShowShareCss.overlayItem}>
+                      <div className={ShowShareCss.dropdownImage}>
+                        <NextImage
+                          className={ShowShareCss.whatsappImage}
+                          field={whatsapp}
+                          editable={true}
+                          width={25}
+                          height={25}
+                        />
+                      </div>
+                      <Link
+                        href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
+                      >
+                        <a className={ShowShareCss.targetIcon} target="_blank">
+                          Share on WhatsApp
+                        </a>
+                      </Link>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                    <div className={ShowShareCss.overlayItem}>
+                      <div className={ShowShareCss.dropdownImage}>
+                        <NextImage
+                          className={ShowShareCss.whatsappImage}
+                          field={twitter}
+                          editable={true}
+                          width={25}
+                          height={25}
+                        />
+                      </div>
+                      <Link
+                        href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
+                      >
+                        <a className={ShowShareCss.targetIcon} target="_blank">
+                          Share on Twitter
+                        </a>
+                      </Link>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                    <div className={ShowShareCss.overlayItem}>
+                      <div className={ShowShareCss.dropdownImage}>
+                        <NextImage
+                          className={ShowShareCss.whatsappImage}
+                          field={linkedin}
+                          editable={true}
+                          width={25}
+                          height={25}
+                        />
+                      </div>
+                      <Link
+                        href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
+                      >
+                        <a className={ShowShareCss.targetIcon} target="_blank">
+                          Share on LinkedIn
+                        </a>
+                      </Link>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                    <div className={ShowShareCss.overlayItem}>
+                      <div className={ShowShareCss.dropdownImage}>
+                        <NextImage
+                          className={ShowShareCss.whatsappImage}
+                          field={facebook}
+                          editable={true}
+                          width={25}
+                          height={25}
+                        />
+                      </div>
+                      <Link
+                        href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
+                      >
+                        <a className={ShowShareCss.targetIcon} target="_blank">
+                          Share on Facebook
+                        </a>
+                      </Link>
+                    </div>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
           </div>
 
@@ -1037,7 +1082,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 <Form.Group className="mb-3" controlId="comments" style={{ display: 'flex' }}>
                   <img
                     className="commentUserImage"
-                    src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                    src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                     alt="User-Pic"
                   ></img>
                   <Form.Control
@@ -1145,7 +1190,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                               <img
                                 width="32px"
                                 className="commentUserImage"
-                                src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                                src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                                 alt="User-Pic"
                               ></img>
                               <Form.Control
@@ -1263,7 +1308,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                         <img
                                           width="32px"
                                           className="commentUserImage"
-                                          src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                                          src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                                           alt="User-Pic"
                                         ></img>
                                         <Form.Control
@@ -2420,6 +2465,20 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 Post
               </Button>
+              <Collapse in={showForm1}>
+                <Button
+                  className={styles.publishButton}
+                  variant="default"
+                  style={{ outline: 'none', border: 'none' }}
+                  type="button"
+                  onClick={() => {
+                    setShowForm1(false);
+                    setEditorState(() => EditorState.createEmpty());
+                  }}
+                >
+                  Cancel
+                </Button>
+              </Collapse>
               {createNewPostError ? (
                 <span style={{ fontWeight: 1000, color: 'red', fontSize: '8px' }}>
                   * Something Went Wrong. Post not uploaded !

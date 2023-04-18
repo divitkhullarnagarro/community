@@ -1,30 +1,24 @@
 .wrapper {
-  width: 95%;
-  margin-top: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  border: 2px solid #c9c6c6;
-  overflow-x:hidden;
-  overflow-y:auto;
-  /* padding:0.93rem; */
-  height: 320px;
-  /* margin-left:-2px; */
-  /* background-color: whitesmoke; */
-  /* padding: 0.9375rem; */
+  margin-top: 20px;
+  background: #FFFFFF;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  overflow: hidden;
+  padding: 10px 16px;
 }
 .wrapper::-webkit-scrollbar {
   width: 5px;
-  }
-  
-  .wrapper::-webkit-scrollbar-track {
+}
+
+.wrapper::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: #EFEFEF;
-  }
-  
-  .wrapper::-webkit-scrollbar-thumb {
+}
+
+.wrapper::-webkit-scrollbar-thumb {
   background-color: #C2C2C2;
   border-radius: 4px;
-  }
+}
 
 .flexx {
   display: flex;
@@ -35,11 +29,8 @@
 
 .item {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  margin: 10px;
-  padding: 7px;
-  width: 90%;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
 .itemHalfPage {
@@ -55,35 +46,31 @@
   margin-left: auto;
 }
 
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
 .header a {
   text-decoration: none;
   font-weight: bold;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  font-weight: 400;
-  width: 98%;
-  color:  #F58C60;
-  ;
-  
-}
-.linkHeader{
-  color: #283895 !important;
-}
 .heading {
-  /* font-size: 1.0625rem;
-  font-weight: 700; */
-  font-size: 18px;
   font-weight: 500;
-  /* margin-left: -16%; */
-  color:#283895;
+  font-size: 18px;
+  line-height: 24px;
+  color: #283895;
 }
 .link{
-  color: #F58C60;
+  font-weight: 400;
+  color: #47D7AC;
   cursor: pointer;
+}
+.listContainer {
+  margin-left: 15px;
 }
 .img {
   border-radius: 60%;
@@ -95,11 +82,10 @@
   width:100%;
 }
 .name {
-  font-weight: 500;
-  margin-top: 8px;
-  margin-left: 10px;
   font-size: 14px;
-  color:#091329;
+  line-height: 18px;
+  margin-left: 14px;
+  color: #091329;
 }
 
 .details {
@@ -198,21 +184,6 @@
 .row {
   display: flex;
   flex-direction: row;
-}
-
-.header {
-  display: flex;
-  flex-direction: row;
-  font-weight: bold;
-}
-
-.item {
-  display: flex;
-  /* justify-content: flex-start; */
-  width: 95%;
-  padding: 1px;
-  font-size: 14px;
-  /* border: 1px solid black; */
 }
 
 .title {

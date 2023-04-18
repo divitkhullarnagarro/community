@@ -164,7 +164,7 @@ function BlockedUser() {
               <div className={styles.leftContainer}>
                 <img
                   className={styles.blockedUserImage}
-                  src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                  src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                   alt="User-Pic"
                 ></img>
                 <div className={styles.blockedUserName}>{`${user.firstName} ${user.lastName}`}</div>

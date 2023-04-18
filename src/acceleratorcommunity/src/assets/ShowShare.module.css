@@ -1,34 +1,59 @@
+.dropdownMenu{
+  padding: 0 16px;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.25);
+}
+
+.dropdownItem{
+  padding: 8px 0px;
+  filter: grayscale(1);
+  border-bottom: 1px solid #DFDFDF;
+}
+
+
+.dropdownItem:hover {
+  filter: grayscale(0);
+}
+
+.overlayItem {
+  display: flex;
+  align-items: center;
+}
+
+.dropdownImage {
+  width: 25px;
+  height: 25px;
+}
+
 .sharePopups {
   display: flex;
-  background-color: #f7ffff;
-  border-radius: 8px;
-  height: 141px;
-  width: 169px;
-  position: absolute !important;
-  top: -10px;
-  right: 65px;
-  /* left: 488px; */
+  background-color: #ffffffea;
+  border-radius: 4px;
+  position: absolute;
+  bottom: 20px;
+  right: -250%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 10px;
+  border: 1px solid #a5a9ae;
 }
 .sharePopup {
   display: flex;
   flex-direction: row;
-  /* background-color: bisque; */
-  width: 150px;
+  width: 100%;
   align-items: center;
-  padding: 4px;
-  margin-left: 4px;
+  padding: 5px 0;
 }
 .sharePopup:hover {
   background-color: rgb(237 239 245);
   border-radius: 4px;
 }
-.sharePopup a {
+.targetIcon {
   text-decoration: none;
-  color: black;
-  margin-left: 6px;
+  margin-left: 10px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #A5A9AE;
 }
 .targetIcon::after {
   visibility: hidden;
