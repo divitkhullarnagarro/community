@@ -68,6 +68,8 @@ import like from '../assets/images/like.png';
 import comment from '../assets/images/comment.png';
 import share from '../assets/images/share.png';
 import greylikeimage from '../assets/images/greylikeimage.svg';
+import EventCard from './EventCard';
+import PollCard from './PollCard';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -96,12 +98,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const [file, setFile] = useState([]);
   const [docs, setDocs] = useState([]);
   const [videoLink, setVideoLink] = useState([]);
+  let [eventPost, setEventPost] = useState<any>('');
+  const [pollPost, setPollPost] = useState<any>('');
 
   let [myAnotherArr, setMyAnotherArr] = useState<any>([]);
   let [postPageNum, setPostPageNum] = useState(0);
   let [ifReachedEnd, setIfReachedEnd] = useState(false);
   let [ifNoMoreData, setIfNoMoreData] = useState(false);
-  let [createNewPostError, setCreateNewPostError] = useState(false);
   let [allUpVotes, setAllUpVotes] = useState([]);
   let [allDownVote, setAllDownVote] = useState([]);
   let [showUp, setShowup] = useState('up');
@@ -112,23 +115,62 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   let [showEvent, setShowEvent] = useState(false);
   let [eventType, setEventType] = useState('Select Event Type');
-  // let [disableAddImage, setDisableAddImage] = useState(false);
-  // let [disableAddVideo, setDisableAddVideo] = useState(false);
-  // let [disableAddDoc, setDisableAddDoc] = useState(false);
+
+  let [disableAddImage, setDisableAddImage] = useState(false);
+  let [disableAddVideo, setDisableAddVideo] = useState(false);
+  let [disableAddDoc, setDisableAddDoc] = useState(false);
+  let [disableAddEvent, setDisableAddevent] = useState(false);
+  let [disableAddPoll, setDisableAddPoll] = useState(false);
+  let [globalPostType, setGlobalPostType] = useState('TEXT_POST');
   let isExpEditorActive = props?.sitecoreContext?.pageEditing;
 
-  // function checkDisablity() {
-  //   if (videoLink.length > 0) {
-  //     setDisableAddImage(true);
-  //     setDisableAddDoc(true);
-  //   } else if (docs.length > 0) {
-  //     setDisableAddVideo(true);
-  //     setDisableAddImage(true);
-  //   } else if (file.length > 0) {
-  //     setDisableAddVideo(true);
-  //     setDisableAddDoc(true);
-  //   }
-  // }
+  console.log('GLOBALPOSTTYPE', globalPostType);
+  console.log('PollPost', pollPost);
+
+  useEffect(() => {
+    if (file.length || docs.length || videoLink.length || eventPost != '' || pollPost != '') {
+      if (file.length) {
+        setDisableAddVideo(true);
+        setDisableAddDoc(true);
+        setDisableAddevent(true);
+        setDisableAddPoll(true);
+        setGlobalPostType('IMAGE');
+      } else if (docs.length) {
+        setDisableAddImage(true);
+        setDisableAddVideo(true);
+        setDisableAddevent(true);
+        setDisableAddPoll(true);
+        setGlobalPostType('DOC');
+      } else if (videoLink.length) {
+        setDisableAddImage(true);
+        setDisableAddDoc(true);
+        setDisableAddevent(true);
+        setDisableAddPoll(true);
+        setGlobalPostType('VIDEO');
+      } else if (eventPost != '') {
+        setDisableAddImage(true);
+        setDisableAddVideo(true);
+        setDisableAddDoc(true);
+        setDisableAddevent(true);
+        setDisableAddPoll(true);
+        setGlobalPostType('EVENT');
+      } else if (pollPost != '') {
+        setDisableAddImage(true);
+        setDisableAddVideo(true);
+        setDisableAddDoc(true);
+        setDisableAddevent(true);
+        setDisableAddPoll(true);
+        setGlobalPostType('POLL');
+      }
+    } else {
+      setDisableAddImage(false);
+      setDisableAddVideo(false);
+      setDisableAddDoc(false);
+      setDisableAddevent(false);
+      setDisableAddPoll(false);
+      setGlobalPostType('TEXT_POST');
+    }
+  }, [videoLink, file, docs, eventPost, pollPost]);
 
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const [addedPeers, setAddedPeers] = useState<string[]>([] as string[]);
@@ -903,7 +945,15 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               })}
             </div>
             {post?.postType === 'EVENT' ? (
-              <div className="postDescription">{post?.event?.description}</div>
+              <>
+                <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
+                <EventCard
+                  heading={post?.event?.title}
+                  description={post?.event?.description}
+                  date={post?.event?.eventDate}
+                  eventType={post?.event?.eventType}
+                />
+              </>
             ) : (
               <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
             )}
@@ -911,13 +961,18 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
           <div className={styles.postFooterContainer}>
             <div className={styles.likeContainer}>
-
               <button
                 className={styles.likeButton}
                 onClick={() => LikePost(post?.id)}
                 disabled={post?.isRespPending}
               >
-                <NextImage field={post?.isLikedByUser?like:greylikeimage} editable={true} alt="PostItems" width={18} height={18} />
+                <NextImage
+                  field={post?.isLikedByUser ? like : greylikeimage}
+                  editable={true}
+                  alt="PostItems"
+                  width={18}
+                  height={18}
+                />
               </button>
               <div className={styles.likePost}>Like Post</div>
               <div className={styles.likeCount}>
@@ -1611,16 +1666,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     if (postText == '') {
       return;
     }
-    let postType = 'VIDEO';
-    if (file.length == 0 && docs.length == 0 && videoLink.length == 0) {
-      postType = 'TEXT_POST';
-    } else if (videoLink.length > 0) {
-      postType = 'VIDEO';
-    } else if (docs.length > 0) {
-      postType = 'DOC';
-    } else if (file.length > 0) {
-      postType = 'IMAGE';
-    }
     // console.log('mention inside api call component', addedPeers);
     const timestamp = new Date().getTime();
     let uniqId = generateUniqueId();
@@ -1629,7 +1674,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         data: {
           id: uniqId,
           description: postText,
-          postType: postType,
+          postType: globalPostType,
           mediaList: [...file, ...docs, ...videoLink],
           postMeasures: {
             likeCount: 0,
@@ -1640,11 +1685,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             firstName: userObject?.firstName,
             lastName: userObject?.lastName,
           },
+          event: eventPost?.event,
           createdOn: timestamp,
           isLikedByUser: false,
           comments: [],
           isRespPending: true,
           isLoadingComments: false,
+          poll: pollPost?.poll,
         },
       },
     };
@@ -1655,7 +1702,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       description: postText,
       mediaList: [...file, ...docs, ...videoLink],
       taggedPeers: addedPeers,
-      type: postType,
+      type: globalPostType,
+      event: eventPost?.event,
+      poll: pollPost?.poll,
     }).then((response) => {
       if (response?.data?.data) {
         addLatestCreatedPost(response?.data?.data, uniqId);
@@ -1667,11 +1716,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         setDocs([]);
         setEditorState(() => EditorState.createEmpty());
       } else {
-        setCreateNewPostError(true);
+        setShowNofitication(true);
+        setToastError(true);
+        setToastMessage('Post Not Created !');
         deletePostById(uniqId);
-        setTimeout(() => {
-          setCreateNewPostError(false);
-        }, 2000);
       }
     });
   };
@@ -1714,7 +1762,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const files = e.target.files;
     const fileArray: any = [];
     for (let i = 0; i < files.length; i++) {
-      let resp = await UploadFilesToServer(files[i], 'IMAGE');
+      const temp = files[i];
+      let resp = await UploadFilesToServer(temp, 'IMAGE');
       let uniqueId = generateUniqueId();
       fileArray.push({ id: uniqueId, url: resp?.data, mediaType: 'IMAGE', mediaSequence: 0 });
     }
@@ -1754,7 +1803,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       let uniqueId = generateUniqueId();
       fileArray.push({
         id: uniqueId,
-        url: 'https://static.videezy.com/system/resources/previews/000/019/696/original/pointing-blue.mp4',
+        url: resp?.data,
         // name: files[i]?.name,
         mediaType: 'VIDEO',
         mediaSequence: 0,
@@ -1915,8 +1964,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const minDate = `${year}-${month}-${day}T${hours}:${minutes}:00`;
 
   let [eventTypeSelectError, setEventTypeSelectError] = useState(false);
-  let [createNewEventPostError, setCreateNewEventPostError] = useState(false);
-  let [submittingEventPost, setSubmittingEventPost] = useState(false);
+
+  function emptyEvent() {
+    setEventPost('');
+  }
 
   function submitEventForm(event: any) {
     event.preventDefault();
@@ -1928,67 +1979,17 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const description = event.target[2].value;
     const date = event.target[3].value;
 
-    const timestamp = new Date().getTime();
-    let uniqId = generateUniqueId();
-    let obj = {
-      data: {
-        data: {
-          id: uniqId,
-          //description: postText,
-          postType: 'EVENT',
-          //mediaList: [...file, ...docs, ...videoLink],
-          postMeasures: {
-            likeCount: 0,
-            commentCount: 0,
-            repostCount: 0,
-          },
-          createdBy: {
-            firstName: userObject?.firstName,
-            lastName: userObject?.lastName,
-          },
-          event: {
-            title: title,
-            description: description,
-            eventType: eventType,
-            eventDate: date,
-          },
-          createdOn: timestamp,
-          isLikedByUser: false,
-          comments: [],
-          isRespPending: true,
-          isLoadingComments: false,
-        },
-      },
-    };
-    setMyAnotherArr((prevState: any) => {
-      return [obj?.data?.data, ...prevState];
-    });
-    setSubmittingEventPost(true);
-
-    addPostCall(userToken, {
-      type: 'EVENT',
+    setEventPost({
       event: {
         title: title,
         description: description,
         eventType: eventType,
         eventDate: date,
       },
-    }).then((response) => {
-      setSubmittingEventPost(false);
-      if (response?.data?.data) {
-        addLatestCreatedPost(response?.data?.data, uniqId);
-        // Empty Post Values
-        setShowForm1(false);
-        event.currentTarget.reset();
-        setEventType('Select Event Type');
-      } else {
-        setCreateNewEventPostError(true);
-        deletePostById(uniqId);
-        setTimeout(() => {
-          setCreateNewEventPostError(false);
-        }, 2000);
-      }
     });
+    setShowEvent(false);
+    event.currentTarget?.reset();
+    setEventType('Select Event Type');
   }
 
   useEffect(() => {
@@ -1996,6 +1997,124 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       setEventTypeSelectError(false);
     }
   }, [eventType]);
+
+  let [showPollForm, setShowPollForm] = useState(false);
+  // let [eventTypeSelectError, setEventTypeSelectError] = useState(false);
+  // let [createNewEventPostError, setCreateNewEventPostError] = useState(false);
+  let option1Id = generateUniqueId();
+  let option2Id = generateUniqueId();
+  let option1 = {
+    id: option1Id,
+    name: 1,
+    placeholder: 1,
+    optionSequence: 0,
+    optionText: '',
+  };
+  let option2 = {
+    id: option2Id,
+    name: 2,
+    placeholder: 2,
+    optionSequence: 1,
+    optionText: '',
+  };
+  let [pollFormOptions, setPollFormOptions] = useState<any>([option1, option2]);
+  let [pollOptionCount, setPollOptionCount] = useState(2);
+  let [isOptionsThreshold, setoptionsThreshold] = useState(false);
+  let [isDeleteOptionThreshold, setIsDeleteOptionThreshold] = useState(true);
+  let [pollQuestion, setPollQuestion] = useState('');
+
+  function addPollOption() {
+    setPollOptionCount((prevCount) => {
+      return prevCount + 1;
+    });
+    let option = {
+      id: option2Id,
+      name: pollOptionCount + 1,
+      placeholder: pollOptionCount + 1,
+      optionText: '',
+      optionSequence: pollOptionCount,
+    };
+    setPollFormOptions((prevState: any) => {
+      return [...prevState, option];
+    });
+
+    if (pollOptionCount + 1 > 4) {
+      setoptionsThreshold(true);
+    }
+    if (pollOptionCount + 1 > 2) {
+      setIsDeleteOptionThreshold(false);
+    }
+  }
+  function deleteLastPollOption() {
+    if (pollOptionCount > 2) {
+      setPollFormOptions((prev: any) => {
+        const newOptions = [];
+        for (let i = 0; i < prev.length - 1; i++) {
+          newOptions.push(prev[i]);
+        }
+        return newOptions;
+      });
+      setPollOptionCount((prevCount) => prevCount - 1);
+    }
+    if (pollOptionCount - 1 < 5) {
+      setoptionsThreshold(false);
+    }
+    if (pollOptionCount - 1 <= 2) {
+      setIsDeleteOptionThreshold(true);
+    }
+  }
+
+  function clearPollForm() {
+    setPollQuestion('');
+    setPollFormOptions([option1, option2]);
+    setPollOptionCount(2);
+    setIsDeleteOptionThreshold(true);
+  }
+
+  function pollOptionUpdate(id: any, e: any) {
+    e.preventDefault();
+    setPollFormOptions((prevOptions: any) => {
+      return prevOptions.map((option: any) => {
+        if (option.id === id) {
+          return { ...option, optionText: e.target.value };
+        } else {
+          return option;
+        }
+      });
+    });
+  }
+
+  function updatePollQuestion(e: any) {
+    e.preventDefault();
+    setPollQuestion(e.target.value);
+  }
+
+  function emptyPollPost() {
+    setPollPost('');
+  }
+
+  function submitPollForm(event: any) {
+    event.preventDefault();
+    let newArr = pollFormOptions.map((options: any) => {
+      return {
+        optionSequence: options.optionSequence,
+        optionText: options.optionText,
+        responsePercentage: options.responsePercentage,
+        responseCount: options.responseCount,
+      };
+    });
+    let pollVar = {
+      poll: {
+        pollQuestion: pollQuestion,
+        pollOptions: newArr,
+      },
+    };
+    setPollPost({
+      poll: pollVar.poll,
+    });
+    clearPollForm();
+    setShowPollForm(false);
+  }
 
   return (
     <>
@@ -2167,17 +2286,91 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       );
                     })}
                   </div>
+                  <div>
+                    {eventPost?.event?.title ? (
+                      <div style={{ display: 'grid' }}>
+                        <button
+                          style={{
+                            position: 'absolute',
+                            justifySelf: 'flex-end',
+                            marginTop: '20px',
+                            border: 'none',
+                            borderRadius: '20px',
+                          }}
+                          type="button"
+                          onClick={() => emptyEvent()}
+                        >
+                          <img
+                            width="30px"
+                            src="   https://cdn-icons-png.flaticon.com/512/1617/1617543.png "
+                            alt="crossButton"
+                          />
+                        </button>
+                        <EventCard
+                          heading={eventPost?.event?.title}
+                          description={eventPost?.event?.description}
+                          date={eventPost?.event?.eventDate}
+                          eventType={eventPost?.event?.eventType}
+                        />
+                      </div>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                  <div>
+                    {pollPost?.poll?.pollQuestion ? (
+                      <div
+                        style={{
+                          padding: '12px',
+                          border: '1px solid darkgrey',
+                          borderRadius: '20px',
+                          margin: '16px',
+                        }}
+                      >
+                        <button
+                          type="button"
+                          onClick={() => emptyPollPost()}
+                          style={{
+                            border: 'none',
+                            backgroundColor: 'white',
+                            position: 'relative',
+                            float: 'right',
+                            padding: '0px',
+                            borderRadius: '30px',
+                          }}
+                        >
+                          <img
+                            width="30px"
+                            src="https://cdn-icons-png.flaticon.com/512/1617/1617543.png"
+                            alt="crossButton"
+                          />
+                        </button>
+                        <PollCard pollPost={pollPost} />
+                      </div>
+                    ) : (
+                      ''
+                    )}
+                  </div>
                 </Form>
               </div>
             </div>
           </Collapse>
           <div className={styles.AddPostItems}>
             <div>
-              <button className={styles.imageButton} onClick={clickmebuttonHandler} type="button">
+              <button
+                className={styles.imageButton}
+                onClick={() => {
+                  setShowForm1(true);
+                  clickmebuttonHandler();
+                }}
+                type="button"
+                disabled={disableAddImage}
+              >
                 {/* <span>Image</span> */}
                 <NextImage
                   field={camera}
                   editable={true}
+                  style={{ opacity: disableAddImage ? '0.2' : '1' }}
                   alt="Profile-Pic"
                   width={18}
                   height={18}
@@ -2196,9 +2389,24 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   />
                 </Form.Group>
               </button>
-              <button className={styles.docButton} onClick={clickmebuttonHandler2} type="button">
+              <button
+                className={styles.docButton}
+                onClick={() => {
+                  setShowForm1(true);
+                  clickmebuttonHandler2();
+                }}
+                type="button"
+                disabled={disableAddDoc}
+              >
                 {/* <span>Doc</span> */}
-                <NextImage field={image} editable={true} alt="PostItems" width={18} height={18} />
+                <NextImage
+                  field={image}
+                  editable={true}
+                  alt="PostItems"
+                  width={18}
+                  height={18}
+                  style={{ opacity: disableAddDoc ? '0.2' : '1' }}
+                />
                 <Form.Group className="mb-3">
                   <Form.Control
                     style={{ display: 'none' }}
@@ -2212,9 +2420,24 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   />
                 </Form.Group>
               </button>
-              <button className={styles.videoButton} onClick={clickmebuttonHandler3} type="button">
+              <button
+                className={styles.videoButton}
+                onClick={() => {
+                  setShowForm1(true);
+                  clickmebuttonHandler3();
+                }}
+                type="button"
+                disabled={disableAddVideo}
+              >
                 {/* <span>Video</span> */}
-                <NextImage field={pin} editable={true} alt="PostItems" width={18} height={18} />
+                <NextImage
+                  field={pin}
+                  editable={true}
+                  alt="PostItems"
+                  width={18}
+                  height={18}
+                  style={{ opacity: disableAddVideo ? '0.2' : '1' }}
+                />
                 <Form.Group className="mb-3">
                   <Form.Control
                     style={{ display: 'none' }}
@@ -2229,12 +2452,17 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </button>
               <button
                 className={styles.eventButton}
-                onClick={() => setShowEvent(true)}
+                onClick={() => {
+                  setShowForm1(true);
+                  setShowEvent(true);
+                }}
                 type="button"
+                disabled={disableAddEvent}
               >
                 {/* <span>Event</span> */}
                 <NextImage
                   field={location}
+                  style={{ opacity: disableAddEvent ? '0.2' : '1' }}
                   editable={true}
                   alt="PostItems"
                   width={18}
@@ -2327,14 +2555,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           ) : (
                             ''
                           )}
-                          {createNewEventPostError ? (
-                            <div style={{ color: 'red', fontWeight: '1000' }}>
-                              {' '}
-                              ** Something went wrong, Event post not Created !
-                            </div>
-                          ) : (
-                            ''
-                          )}
                         </div>
                       </Form.Group>
                     </Modal.Body>
@@ -2355,40 +2575,161 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         type="submit"
                         // onClick={onPostReported}
                       >
-                        {submittingEventPost ? (
-                          <Spinner animation="border" />
-                        ) : (
-                          <span>Create Post</span>
-                        )}
+                        Add Event to Post
                       </Button>
                     </Modal.Footer>
                   </Form>
                 </div>
               </Modal>
-              <button className={styles.pollButton} type="button">
+              <button
+                className={styles.pollButton}
+                type="button"
+                onClick={() => {
+                  setShowForm1(true);
+                  setShowPollForm(true);
+                }}
+                disabled={disableAddPoll}
+              >
                 {/* <span>Poll</span> */}
-                <NextImage field={smile} editable={true} alt="PostItems" width={18} height={18} />
+                <NextImage
+                  field={smile}
+                  editable={true}
+                  alt="PostItems"
+                  style={{ opacity: disableAddPoll ? '0.2' : '1' }}
+                  width={18}
+                  height={18}
+                />
               </button>
+              <Modal
+                className={styles.reportPostModalContent}
+                show={showPollForm}
+                onHide={() => setShowPollForm(false)}
+                backdrop="static"
+                keyboard={false}
+                centered
+                scrollable={true}
+                onExit={() => {
+                  clearPollForm();
+                }}
+              >
+                <div>
+                  <Form
+                    onSubmit={(e: any) => submitPollForm(e)}
+                    style={{ fontSize: '15px', margin: '5px' }}
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title className={styles.reportPostModalHeader}>
+                        Create a Poll
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <div className={styles.reportPostModalBody}>Poll Parameters</div>
+                      <Form.Group className="mb-3">
+                        <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
+                          Question
+                        </Form.Label>
+                        <Form.Control
+                          value={pollQuestion}
+                          onChange={(e) => updatePollQuestion(e)}
+                          required
+                          type="text"
+                          placeholder="Write Poll Question"
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please select an event date.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                      <div
+                        style={{
+                          padding: '32px',
+                          border: '1px solid',
+                          borderRadius: '10px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          height: '282px',
+                          overflowY: 'scroll',
+                          // justifyContent: 'space-between',
+                        }}
+                        className="CreatePollOptions mb-3"
+                      >
+                        {pollFormOptions.map((option: any) => {
+                          return (
+                            <Form.Group className="mb-3" id={option?.id}>
+                              <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
+                                Option - <span>{option?.name}</span>
+                              </Form.Label>
+                              <Form.Control
+                                required
+                                type="textarea"
+                                value={option?.optionText}
+                                onChange={(e) => pollOptionUpdate(option?.id, e)}
+                                placeholder={`Enter Option - ${option?.placeholder}`}
+                              />
+                            </Form.Group>
+                          );
+                        })}
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <button
+                          style={{
+                            padding: '12px',
+                            border: 'none',
+                            fontSize: '18px',
+                            borderRadius: '12px',
+                          }}
+                          type="button"
+                          onClick={() => addPollOption()}
+                          disabled={isOptionsThreshold}
+                        >
+                          + Add More option
+                        </button>
+                        <button
+                          style={{
+                            padding: '12px',
+                            border: 'none',
+                            fontSize: '18px',
+                            borderRadius: '12px',
+                          }}
+                          type="button"
+                          onClick={() => deleteLastPollOption()}
+                          disabled={isDeleteOptionThreshold}
+                        >
+                          - Delete option
+                        </button>
+                      </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button
+                        className={styles.footerBtn}
+                        variant="secondary"
+                        onClick={() => {
+                          clearPollForm();
+                        }}
+                      >
+                        Clear
+                      </Button>
+                      <Button
+                        className={styles.footerBtn}
+                        variant="secondary"
+                        type="submit"
+                        style={{ height: '44px', width: '121px' }}
+                      >
+                        <span>Add Poll to Post</span>
+                      </Button>
+                    </Modal.Footer>
+                  </Form>
+                </div>
+              </Modal>
             </div>
             <div className={styles.errorContainer}>
               <Button
                 className={styles.publishButton}
                 variant="secondary"
-                style={{
-                  boxShadow: !createNewPostError ? 'none' : '0 4px 8px 0 rgba(255, 0, 0, 0.6)',
-                }}
                 type="button"
                 onClick={(e) => handleSubmit(e)}
               >
                 Post
               </Button>
-              {createNewPostError ? (
-                <span style={{ fontWeight: 1000, color: 'red', fontSize: '8px' }}>
-                  * Something Went Wrong. Post not uploaded !
-                </span>
-              ) : (
-                ''
-              )}
               {/* </div>
 
               <div> */}

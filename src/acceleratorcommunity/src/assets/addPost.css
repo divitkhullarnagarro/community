@@ -59,10 +59,12 @@
   display: flex;
   flex-direction: column;
 }
-.postHead{
-  display:none;
+
+.postHead {
+  display: none;
 
 }
+
 .postHeading {
   display: flex;
   align-items: center;
@@ -142,7 +144,14 @@
   height: 0;
 }
 
-/* .postFooter {
+.CreatePollOptions::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* 
+
+.postFooter {
   display: flex;
   justify-content: space-between;
   align-items: center;
