@@ -1,6 +1,8 @@
 import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import Profile from '../assets/images/ProfilePic.jpeg';
+import PeopleProfile from '../assets/images/PeopleYouMayKnowProfileImage.png';
+import people from '../assets/images/people.png';
 import styles from '../assets/peopleyoumayknow.module.css';
 import FollowUnfollowButton from './FollowUnfollowButton';
 import Link from 'next/link';
@@ -100,13 +102,13 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
     return (
       <Card className={styles.cardItem}>
         <div className={styles.imageContainer}>
-          <NextImage contentEditable={true} field={Profile} height={140} width={250}></NextImage>
+          <img className={styles.imgProfile} contentEditable={true} src={PeopleProfile.src}/>
         </div>
         <Card.Body>
           <Card.Title className={styles.cardTitle}>
             {item?.firstName + ' ' + item?.lastName}
           </Card.Title>
-          <Card.Text>{`${item?.speciality ?? ''} ${item?.speciality ? ' | ' : ''}  ${
+          <Card.Text className={styles.cardText}>{`${item?.speciality ?? ''} ${item?.speciality ? ' | ' : ''}  ${
             item?.city ?? ''
           }`}</Card.Text>
           <FollowUnfollowButton userName={item?.objectId} />
@@ -127,7 +129,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
               return <PeopleYouMayKnowFullPageItem {...item} />;
             })
           ) : (
-            <></>
+          <></>
           )}
         </div>
         {peopleYouMayKnowList === undefined || numItems >= peopleYouMayKnowList?.length ? null : (
@@ -135,18 +137,18 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
             className={styles.seeMoreBtn}
             style={{
               width: '100%',
-              fontSize: '1.5rem',
+              fontSize:'20px',
               height: '50px',
               backgroundColor: 'white',
               color: 'blue',
               border: 'none',
-              fontWeight: 'bold',
+              fontWeight: '500',
               textAlign: 'center',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
             }}
-            onClick={() => setNumItems(numItems + 5)}
+            onClick={() => setNumItems(numItems + 6)}
           >
             See more...
           </Button>
@@ -159,7 +161,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
     return (
       <div className={styles.sidenavbar}>
         <div className={styles.top}>
-          <span className={styles.logo}>Suggestions</span>
+          <h2 className={styles.logo}>Suggestions</h2>
         </div>
         <hr />
         <div className={styles.center}>
@@ -168,7 +170,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
               <li className={styles.rowItem}>
                 <NextImage
                   contentEditable={true}
-                  field={Profile}
+                  field={people}
                   height={18}
                   width={18}
                 ></NextImage>

@@ -9,18 +9,19 @@
 .left_column {
   flex: 0 0 20%;
   background-color: white;
-  margin-left: 20px;
-  
+  margin-left: 20px;  
 }
 
 .right_column {
   display: flex;
   flex-direction: column;
   margin-top: 0px;
-  /* margin-left: 25px; */
-  height: 87vh;
+  margin-left: 25px;
+  /* height: 87vh; */
   justify-content: flex-start;
   flex: 0 0 63%;
+  border-left: 1px solid white;
+  box-shadow: 8px 1px 8px rgb(0,0,0,0.05);
 }
 
 .blockedUsersSideNav {
@@ -64,6 +65,7 @@ box-shadow: 8px 1px 10px rgba(0, 0, 0, 0.05); */
   color: black !important;
   border: none;
   width: 50px;
+  padding: 20px;
 }
 
 .blockedUserDropdownBtn:checked,
@@ -149,6 +151,7 @@ box-shadow: 8px 1px 10px rgba(0, 0, 0, 0.05); */
 }
 
 .rightContainer {
+  border: none;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -156,14 +159,19 @@ box-shadow: 8px 1px 10px rgba(0, 0, 0, 0.05); */
   width: 75vw;
   height: 92vh;
   /* border-radius: 10px; */
-  border: 2px solid lightgray;
+  /* border: 2px solid lightgray; */
 }
 
 .blockedUserPreviewImage {
   display: flex;
   justify-content: center;
 }
-
+.blockedUserPreviewImage {
+  font-family: 'Equip';
+  font-size: 24px;
+  font-weight: 700;
+  color: #091329;
+}
 .noBlockedUsers {
   display: flex;
   justify-content: center;
@@ -275,6 +283,7 @@ box-shadow: 8px 1px 10px rgba(0, 0, 0, 0.05); */
   margin-left: 20px;
   margin-top: 15px;
   font-size: 18px;
+  font-weight: 700;
 }
 
 .moreOptions {
