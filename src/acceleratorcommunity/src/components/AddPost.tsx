@@ -69,6 +69,7 @@ import comment from '../assets/images/comment.png';
 import share from '../assets/images/share.png';
 import greylikeimage from '../assets/images/greylikeimage.svg';
 import EventCard from './EventCard';
+import PollCard from './PollCard';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -98,12 +99,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const [docs, setDocs] = useState([]);
   const [videoLink, setVideoLink] = useState([]);
   let [eventPost, setEventPost] = useState<any>('');
+  const [pollPost, setPollPost] = useState<any>('');
 
   let [myAnotherArr, setMyAnotherArr] = useState<any>([]);
   let [postPageNum, setPostPageNum] = useState(0);
   let [ifReachedEnd, setIfReachedEnd] = useState(false);
   let [ifNoMoreData, setIfNoMoreData] = useState(false);
-  let [createNewPostError, setCreateNewPostError] = useState(false);
   let [allUpVotes, setAllUpVotes] = useState([]);
   let [allDownVote, setAllDownVote] = useState([]);
   let [showUp, setShowup] = useState('up');
@@ -124,9 +125,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   let isExpEditorActive = props?.sitecoreContext?.pageEditing;
 
   console.log('GLOBALPOSTTYPE', globalPostType);
+  console.log('PollPost', pollPost);
 
   useEffect(() => {
-    if (file.length || docs.length || videoLink.length || eventPost != '') {
+    if (file.length || docs.length || videoLink.length || eventPost != '' || pollPost != '') {
       if (file.length) {
         setDisableAddVideo(true);
         setDisableAddDoc(true);
@@ -152,6 +154,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         setDisableAddevent(true);
         setDisableAddPoll(true);
         setGlobalPostType('EVENT');
+      } else if (pollPost != '') {
+        setDisableAddImage(true);
+        setDisableAddVideo(true);
+        setDisableAddDoc(true);
+        setDisableAddevent(true);
+        setDisableAddPoll(true);
+        setGlobalPostType('POLL');
       }
     } else {
       setDisableAddImage(false);
@@ -161,7 +170,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       setDisableAddPoll(false);
       setGlobalPostType('TEXT_POST');
     }
-  }, [videoLink, file, docs, eventPost]);
+  }, [videoLink, file, docs, eventPost, pollPost]);
 
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const [addedPeers, setAddedPeers] = useState<string[]>([] as string[]);
@@ -1682,6 +1691,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           comments: [],
           isRespPending: true,
           isLoadingComments: false,
+          poll: pollPost?.poll,
         },
       },
     };
@@ -1694,6 +1704,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       taggedPeers: addedPeers,
       type: globalPostType,
       event: eventPost?.event,
+      poll: pollPost?.poll,
     }).then((response) => {
       if (response?.data?.data) {
         addLatestCreatedPost(response?.data?.data, uniqId);
@@ -1705,11 +1716,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         setDocs([]);
         setEditorState(() => EditorState.createEmpty());
       } else {
-        setCreateNewPostError(true);
+        setShowNofitication(true);
+        setToastError(true);
+        setToastMessage('Post Not Created !');
         deletePostById(uniqId);
-        setTimeout(() => {
-          setCreateNewPostError(false);
-        }, 2000);
       }
     });
   };
@@ -1991,7 +2001,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   let [showPollForm, setShowPollForm] = useState(false);
   // let [eventTypeSelectError, setEventTypeSelectError] = useState(false);
   // let [createNewEventPostError, setCreateNewEventPostError] = useState(false);
-  let [submittingPollPost, setSubmittingPollPost] = useState(false);
   let option1Id = generateUniqueId();
   let option2Id = generateUniqueId();
   let option1 = {
@@ -2005,10 +2014,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     id: option2Id,
     name: 2,
     placeholder: 2,
+    optionSequence: 1,
     optionText: '',
   };
   let [pollFormOptions, setPollFormOptions] = useState<any>([option1, option2]);
   let [pollOptionCount, setPollOptionCount] = useState(2);
+  let [isOptionsThreshold, setoptionsThreshold] = useState(false);
+  let [isDeleteOptionThreshold, setIsDeleteOptionThreshold] = useState(true);
   let [pollQuestion, setPollQuestion] = useState('');
 
   function addPollOption() {
@@ -2020,10 +2032,18 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       name: pollOptionCount + 1,
       placeholder: pollOptionCount + 1,
       optionText: '',
+      optionSequence: pollOptionCount,
     };
     setPollFormOptions((prevState: any) => {
       return [...prevState, option];
     });
+
+    if (pollOptionCount + 1 > 4) {
+      setoptionsThreshold(true);
+    }
+    if (pollOptionCount + 1 > 2) {
+      setIsDeleteOptionThreshold(false);
+    }
   }
   function deleteLastPollOption() {
     if (pollOptionCount > 2) {
@@ -2036,16 +2056,19 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       });
       setPollOptionCount((prevCount) => prevCount - 1);
     }
+    if (pollOptionCount - 1 < 5) {
+      setoptionsThreshold(false);
+    }
+    if (pollOptionCount - 1 <= 2) {
+      setIsDeleteOptionThreshold(true);
+    }
   }
 
   function clearPollForm() {
     setPollQuestion('');
-    setPollFormOptions((prevState: any) => {
-      return prevState.map((option: any) => {
-        option.optionText = '';
-        return option;
-      });
-    });
+    setPollFormOptions([option1, option2]);
+    setPollOptionCount(2);
+    setIsDeleteOptionThreshold(true);
   }
 
   function pollOptionUpdate(id: any, e: any) {
@@ -2066,14 +2089,31 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setPollQuestion(e.target.value);
   }
 
+  function emptyPollPost() {
+    setPollPost('');
+  }
+
   function submitPollForm(event: any) {
-    console.log('POllData', pollQuestion, pollFormOptions);
     event.preventDefault();
-    setSubmittingPollPost(true);
-    setTimeout(() => {
-      setSubmittingPollPost(false);
-    }, 2000);
+    let newArr = pollFormOptions.map((options: any) => {
+      return {
+        optionSequence: options.optionSequence,
+        optionText: options.optionText,
+        responsePercentage: options.responsePercentage,
+        responseCount: options.responseCount,
+      };
+    });
+    let pollVar = {
+      poll: {
+        pollQuestion: pollQuestion,
+        pollOptions: newArr,
+      },
+    };
+    setPollPost({
+      poll: pollVar.poll,
+    });
     clearPollForm();
+    setShowPollForm(false);
   }
 
   return (
@@ -2277,6 +2317,40 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       ''
                     )}
                   </div>
+                  <div>
+                    {pollPost?.poll?.pollQuestion ? (
+                      <div
+                        style={{
+                          padding: '12px',
+                          border: '1px solid darkgrey',
+                          borderRadius: '20px',
+                          margin: '16px',
+                        }}
+                      >
+                        <button
+                          type="button"
+                          onClick={() => emptyPollPost()}
+                          style={{
+                            border: 'none',
+                            backgroundColor: 'white',
+                            position: 'relative',
+                            float: 'right',
+                            padding: '0px',
+                            borderRadius: '30px',
+                          }}
+                        >
+                          <img
+                            width="30px"
+                            src="https://cdn-icons-png.flaticon.com/512/1617/1617543.png"
+                            alt="crossButton"
+                          />
+                        </button>
+                        <PollCard pollPost={pollPost} />
+                      </div>
+                    ) : (
+                      ''
+                    )}
+                  </div>
                 </Form>
               </div>
             </div>
@@ -2296,6 +2370,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 <NextImage
                   field={camera}
                   editable={true}
+                  style={{ opacity: disableAddImage ? '0.2' : '1' }}
                   alt="Profile-Pic"
                   width={18}
                   height={18}
@@ -2324,7 +2399,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 disabled={disableAddDoc}
               >
                 {/* <span>Doc</span> */}
-                <NextImage field={image} editable={true} alt="PostItems" width={18} height={18} />
+                <NextImage
+                  field={image}
+                  editable={true}
+                  alt="PostItems"
+                  width={18}
+                  height={18}
+                  style={{ opacity: disableAddDoc ? '0.2' : '1' }}
+                />
                 <Form.Group className="mb-3">
                   <Form.Control
                     style={{ display: 'none' }}
@@ -2348,7 +2430,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 disabled={disableAddVideo}
               >
                 {/* <span>Video</span> */}
-                <NextImage field={pin} editable={true} alt="PostItems" width={18} height={18} />
+                <NextImage
+                  field={pin}
+                  editable={true}
+                  alt="PostItems"
+                  width={18}
+                  height={18}
+                  style={{ opacity: disableAddVideo ? '0.2' : '1' }}
+                />
                 <Form.Group className="mb-3">
                   <Form.Control
                     style={{ display: 'none' }}
@@ -2373,6 +2462,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 {/* <span>Event</span> */}
                 <NextImage
                   field={location}
+                  style={{ opacity: disableAddEvent ? '0.2' : '1' }}
                   editable={true}
                   alt="PostItems"
                   width={18}
@@ -2501,7 +2591,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 disabled={disableAddPoll}
               >
                 {/* <span>Poll</span> */}
-                <NextImage field={smile} editable={true} alt="PostItems" width={18} height={18} />
+                <NextImage
+                  field={smile}
+                  editable={true}
+                  alt="PostItems"
+                  style={{ opacity: disableAddPoll ? '0.2' : '1' }}
+                  width={18}
+                  height={18}
+                />
               </button>
               <Modal
                 className={styles.reportPostModalContent}
@@ -2582,6 +2679,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           }}
                           type="button"
                           onClick={() => addPollOption()}
+                          disabled={isOptionsThreshold}
                         >
                           + Add More option
                         </button>
@@ -2594,6 +2692,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           }}
                           type="button"
                           onClick={() => deleteLastPollOption()}
+                          disabled={isDeleteOptionThreshold}
                         >
                           - Delete option
                         </button>
@@ -2615,11 +2714,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         type="submit"
                         style={{ height: '44px', width: '121px' }}
                       >
-                        {submittingPollPost ? (
-                          <Spinner animation="border" />
-                        ) : (
-                          <span>Create Poll</span>
-                        )}
+                        <span>Add Poll to Post</span>
                       </Button>
                     </Modal.Footer>
                   </Form>
@@ -2630,21 +2725,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               <Button
                 className={styles.publishButton}
                 variant="secondary"
-                style={{
-                  boxShadow: !createNewPostError ? 'none' : '0 4px 8px 0 rgba(255, 0, 0, 0.6)',
-                }}
                 type="button"
                 onClick={(e) => handleSubmit(e)}
               >
                 Post
               </Button>
-              {createNewPostError ? (
-                <span style={{ fontWeight: 1000, color: 'red', fontSize: '8px' }}>
-                  * Something Went Wrong. Post not uploaded !
-                </span>
-              ) : (
-                ''
-              )}
               {/* </div>
 
               <div> */}
