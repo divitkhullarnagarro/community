@@ -911,13 +911,18 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
           <div className={styles.postFooterContainer}>
             <div className={styles.likeContainer}>
-
               <button
                 className={styles.likeButton}
                 onClick={() => LikePost(post?.id)}
                 disabled={post?.isRespPending}
               >
-                <NextImage field={post?.isLikedByUser?like:greylikeimage} editable={true} alt="PostItems" width={18} height={18} />
+                <NextImage
+                  field={post?.isLikedByUser ? like : greylikeimage}
+                  editable={true}
+                  alt="PostItems"
+                  width={18}
+                  height={18}
+                />
               </button>
               <div className={styles.likePost}>Like Post</div>
               <div className={styles.likeCount}>
@@ -2000,180 +2005,191 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   return (
     <>
       <div className={styles.mainContainer}>
-        <div style={{ backgroundColor: 'white', boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.25)' }}>
+        <div className={styles.addPostWidgetContainer}>
           {/* <div style={{ marginBottom: '40px' }}> */}
           <div className={styles.addPostFieldContainer}>
             <div className={styles.addPostField}>
               <div className={styles.addPostImage}>
-                <NextImage field={user} editable={true} alt="Profile-Pic" width={20} height={20} />
+                <NextImage field={user} editable={true} alt="Profile-Pic" width={27} height={27} />
               </div>
-              <button
-                className={styles.addPostButton}
-                onClick={() => setShowForm1(!showForm1)}
-                aria-controls="showAddPostEditorContainer"
-                aria-expanded={showForm1}
-              >
-                <div className={styles.addPostHeading}>
-                  {props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
-                    ? props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
-                    : "What's on your mind"}
-                  {``}
-                  {/* <span>
+              {showForm1 ? (
+                <Collapse in={showForm1}>
+                  <div
+                    className="AddPostEditorContainer"
+                    style={{ maxWidth: '100%' }}
+                    id="showAddPostEditorContainer"
+                  >
+                    <div className={styles.addTextEditor}>
+                      <Form style={{ border: '1px', borderColor: 'black' }}>
+                        <Form.Group controlId="exampleForm.ControlInput1">
+                          <Editor
+                            editorState={editorState}
+                            onEditorStateChange={(e) => onEditorStateChangeHandler(e)}
+                            wrapperClassName="wrapper-class"
+                            editorClassName="editor-class"
+                            toolbarClassName="toolbar-class"
+                            editorStyle={{ height: '200px', padding: '0px 10px', fontSize: '13px' }}
+                            placeholder="Share Your Thoughts..."
+                            toolbar={toolbar}
+                            // toolbarOnFocus={true}
+                            mention={{
+                              separator: ' ',
+                              trigger: '@',
+                              suggestions: mentionUserData,
+                            }}
+                            hashtag={{}}
+                          />
+                          {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                          <div>
+                            {currentCount}/{5000} characters
+                          </div>
+                        </div> */}
+                          {/* <Form.Control
+                          onChange={(e) => setPostTextValue(e.target.value)}
+                          value={postText}
+                          as="textarea"
+                          rows={7}
+                          placeholder="Share Your Thoughts..."
+                          required
+                          style={{ border: 'none', resize: 'none' }}
+                        /> */}
+                        </Form.Group>
+                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                          {file.map((img: any, num: any) => {
+                            return (
+                              <div
+                                key={num}
+                                style={{
+                                  borderRadius: '30px',
+                                  margin: '0px 15px 15px 0px',
+                                }}
+                              >
+                                <button
+                                  type="button"
+                                  style={{
+                                    position: 'absolute',
+                                    border: 'none',
+                                    borderRadius: '15px',
+                                  }}
+                                  onClick={() => clickCrossImageButton(img.id)}
+                                >
+                                  <img
+                                    width="30px"
+                                    src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
+                                    alt="cross_button"
+                                    style={{ borderRadius: '30px' }}
+                                  ></img>
+                                </button>
+                                <img width="300px" src={img?.url} alt={img?.id}></img>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}>
+                          {docs.map((doc: any, num: any) => {
+                            return (
+                              <div className="docPreviewContainer" key={num}>
+                                <span className="openPrevButton">
+                                  <button
+                                    onClick={() => openDoc(doc?.url)}
+                                    style={{
+                                      padding: '5px',
+                                      borderRadius: '20px',
+                                      borderColor: 'white',
+                                    }}
+                                  >
+                                    <img
+                                      width="50px"
+                                      src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
+                                      alt={num}
+                                      style={{ margin: '10px' }}
+                                    ></img>
+                                    {doc.name}
+                                  </button>
+                                </span>
+
+                                <span>
+                                  <button
+                                    style={{ border: 'none', backgroundColor: 'white' }}
+                                    type="button"
+                                    onClick={() => clickCrossDocButton(doc.id)}
+                                  >
+                                    <img
+                                      width="30px"
+                                      src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
+                                      alt="cross_button"
+                                      style={{ marginLeft: '10px' }}
+                                    ></img>
+                                  </button>
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap' }} id="setVideoPreview">
+                          {videoLink.map((video: any, num: any) => {
+                            return (
+                              <div key={num}>
+                                <video width="100%" src={video?.url} controls></video>
+                                <div>
+                                  <img
+                                    width="50px"
+                                    src="https://cdn-icons-png.flaticon.com/512/711/711245.png"
+                                    alt={num}
+                                    style={{ margin: '10px' }}
+                                  ></img>
+                                  <span>
+                                    {video.name}
+                                    <button
+                                      style={{ border: 'none', backgroundColor: 'white' }}
+                                      type="button"
+                                      onClick={clickCrossVideoButton}
+                                    >
+                                      <img
+                                        width="30px"
+                                        src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
+                                        alt="cross_button"
+                                        style={{ marginLeft: '10px' }}
+                                      ></img>
+                                    </button>
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </Form>
+                    </div>
+                  </div>
+                </Collapse>
+              ) : (
+                <button
+                  className={styles.addPostButton}
+                  onClick={() => setShowForm1(!showForm1)}
+                  aria-controls="showAddPostEditorContainer"
+                  aria-expanded={showForm1}
+                >
+                  <div className={styles.addPostHeading}>
+                    {props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
+                      ? props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
+                      : "What's on your mind"}
+                    {``}
+                    {/* <span>
                     {userObject?.firstName ? userObject?.firstName : ''}{' '}
                     {userObject?.lastName ? userObject?.lastName : ''}
                   </span> */}
-                </div>
-              </button>
+                  </div>
+                </button>
+              )}
             </div>
           </div>
-          <Collapse in={showForm1}>
-            <div
-              className="AddPostEditorContainer"
-              style={{ maxWidth: '100%' }}
-              id="showAddPostEditorContainer"
-            >
-              <div className={styles.addTextEditor}>
-                <Form style={{ border: '1px', borderColor: 'black' }}>
-                  <Form.Group controlId="exampleForm.ControlInput1">
-                    <Editor
-                      editorState={editorState}
-                      onEditorStateChange={(e) => onEditorStateChangeHandler(e)}
-                      wrapperClassName="wrapper-class"
-                      editorClassName="editor-class"
-                      toolbarClassName="toolbar-class"
-                      editorStyle={{ height: '200px' }}
-                      placeholder="  Share Your Thoughts..."
-                      toolbar={toolbar}
-                      // toolbarOnFocus={true}
-                      mention={{
-                        separator: ' ',
-                        trigger: '@',
-                        suggestions: mentionUserData,
-                      }}
-                      hashtag={{}}
-                    />
-                    {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <div>
-                        {currentCount}/{5000} characters
-                      </div>
-                    </div> */}
-                    {/* <Form.Control
-                      onChange={(e) => setPostTextValue(e.target.value)}
-                      value={postText}
-                      as="textarea"
-                      rows={7}
-                      placeholder="Share Your Thoughts..."
-                      required
-                      style={{ border: 'none', resize: 'none' }}
-                    /> */}
-                  </Form.Group>
-                  <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    {file.map((img: any, num: any) => {
-                      return (
-                        <div
-                          key={num}
-                          style={{
-                            borderRadius: '30px',
-                            margin: '0px 15px 15px 0px',
-                          }}
-                        >
-                          <button
-                            type="button"
-                            style={{ position: 'absolute', border: 'none', borderRadius: '15px' }}
-                            onClick={() => clickCrossImageButton(img.id)}
-                          >
-                            <img
-                              width="30px"
-                              src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
-                              alt="cross_button"
-                              style={{ borderRadius: '30px' }}
-                            ></img>
-                          </button>
-                          <img width="300px" src={img?.url} alt={img?.id}></img>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}>
-                    {docs.map((doc: any, num: any) => {
-                      return (
-                        <div className="docPreviewContainer" key={num}>
-                          <span className="openPrevButton">
-                            <button
-                              onClick={() => openDoc(doc?.url)}
-                              style={{
-                                padding: '5px',
-                                borderRadius: '20px',
-                                borderColor: 'white',
-                              }}
-                            >
-                              <img
-                                width="50px"
-                                src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
-                                alt={num}
-                                style={{ margin: '10px' }}
-                              ></img>
-                              {doc.name}
-                            </button>
-                          </span>
-
-                          <span>
-                            <button
-                              style={{ border: 'none', backgroundColor: 'white' }}
-                              type="button"
-                              onClick={() => clickCrossDocButton(doc.id)}
-                            >
-                              <img
-                                width="30px"
-                                src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
-                                alt="cross_button"
-                                style={{ marginLeft: '10px' }}
-                              ></img>
-                            </button>
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap' }} id="setVideoPreview">
-                    {videoLink.map((video: any, num: any) => {
-                      return (
-                        <div key={num}>
-                          <video width="100%" src={video?.url} controls></video>
-                          <div>
-                            <img
-                              width="50px"
-                              src="https://cdn-icons-png.flaticon.com/512/711/711245.png"
-                              alt={num}
-                              style={{ margin: '10px' }}
-                            ></img>
-                            <span>
-                              {video.name}
-                              <button
-                                style={{ border: 'none', backgroundColor: 'white' }}
-                                type="button"
-                                onClick={clickCrossVideoButton}
-                              >
-                                <img
-                                  width="30px"
-                                  src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
-                                  alt="cross_button"
-                                  style={{ marginLeft: '10px' }}
-                                ></img>
-                              </button>
-                            </span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </Form>
-              </div>
-            </div>
-          </Collapse>
           <div className={styles.AddPostItems}>
             <div>
-              <button className={styles.imageButton} onClick={clickmebuttonHandler} type="button">
+              <button
+                className={styles.addPostFileButtons}
+                onClick={clickmebuttonHandler}
+                type="button"
+              >
                 {/* <span>Image</span> */}
                 <NextImage
                   field={camera}
@@ -2183,7 +2199,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   height={18}
                 />
 
-                <Form.Group className="mb-3">
+                <Form.Group
+                // className="mb-3"
+                >
                   <Form.Control
                     style={{ display: 'none' }}
                     onChange={(e) => setPostImageValue(e)}
@@ -2196,10 +2214,16 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   />
                 </Form.Group>
               </button>
-              <button className={styles.docButton} onClick={clickmebuttonHandler2} type="button">
+              <button
+                className={styles.addPostFileButtons}
+                onClick={clickmebuttonHandler2}
+                type="button"
+              >
                 {/* <span>Doc</span> */}
                 <NextImage field={image} editable={true} alt="PostItems" width={18} height={18} />
-                <Form.Group className="mb-3">
+                <Form.Group
+                // className="mb-3"
+                >
                   <Form.Control
                     style={{ display: 'none' }}
                     onChange={(e) => setPostDocValue(e)}
@@ -2212,10 +2236,16 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   />
                 </Form.Group>
               </button>
-              <button className={styles.videoButton} onClick={clickmebuttonHandler3} type="button">
+              <button
+                className={styles.addPostFileButtons}
+                onClick={clickmebuttonHandler3}
+                type="button"
+              >
                 {/* <span>Video</span> */}
                 <NextImage field={pin} editable={true} alt="PostItems" width={18} height={18} />
-                <Form.Group className="mb-3">
+                <Form.Group
+                // className="mb-3"
+                >
                   <Form.Control
                     style={{ display: 'none' }}
                     onChange={(e) => setPostVideoValue(e)}
@@ -2228,7 +2258,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 </Form.Group>
               </button>
               <button
-                className={styles.eventButton}
+                className={styles.addPostFileButtons}
                 onClick={() => setShowEvent(true)}
                 type="button"
               >
@@ -2365,7 +2395,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </Form>
                 </div>
               </Modal>
-              <button className={styles.pollButton} type="button">
+              <button className={styles.addPostFileButtons} type="button">
                 {/* <span>Poll</span> */}
                 <NextImage field={smile} editable={true} alt="PostItems" width={18} height={18} />
               </button>
@@ -2373,8 +2403,16 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             <div className={styles.errorContainer}>
               <Button
                 className={styles.publishButton}
+                disabled={editorState.getCurrentContent().getPlainText() ? false : true}
                 variant="secondary"
                 style={{
+                  backgroundColor: editorState.getCurrentContent().getPlainText()
+                    ? '#47D7AC'
+                    : '#FFFFFF',
+                  color: editorState.getCurrentContent().getPlainText() ? '#FFFFFF' : '#A5A9AE',
+                  borderColor: editorState.getCurrentContent().getPlainText()
+                    ? '#47D7AC'
+                    : '#6c757d',
                   boxShadow: !createNewPostError ? 'none' : '0 4px 8px 0 rgba(255, 0, 0, 0.6)',
                 }}
                 type="button"

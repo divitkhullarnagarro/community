@@ -89,8 +89,14 @@
   height: 10px;
 }
 .mainContainer {
-  background: whitesmoke;
-  padding: 10px;
+  background: #F9F9F9;
+  padding: 20px;
+}
+.addPostWidgetContainer {
+  background-color: #FFFFFF;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  padding: 16px;
+  border-radius: 6px;
 }
 .addPostFieldContainer {
   height: 100%;
@@ -98,22 +104,19 @@
   background-color: white;
 }
 .addPostImage {
-  display: flex;
-  margin-top: 6px;
-  margin-left: 10px;
+  min-width: 27px;
 }
 .addPostField {
   display: flex;
-  align-items: center;
+  align-items: start;
+  gap: 10px;
 }
 .addPostButton {
   background-color: #f9f9f9;
-  width: 95%;
-  height: 30px;
-  margin-left: 10px;
-  margin-top: 10px;
+  flex: 1 1;
   border: none;
-  border-radius: 17.5px;
+  border-radius: 15px;
+  padding: 5px 10px;
 }
 .addPostHeading {
   display: flex;
@@ -124,42 +127,17 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 5px;
-}
-.imageButton {
-  background-color: white;
-  border: none;
-  height: 30px;
-  width: 30px;
+  margin-top: 12px;
 }
 .errorContainer {
   height: 30px;
   display: flex;
   flex-direction: column;
 }
-.docButton {
+.addPostFileButtons {
   background-color: white;
   border: none;
-  height: 30px;
-  width: 30px;
-}
-.videoButton {
-  background-color: white;
-  border: none;
-  height: 30px;
-  width: 30px;
-}
-.eventButton {
-  background-color: white;
-  border: none;
-  height: 30px;
-  width: 30px;
-}
-.pollButton {
-  background-color: white;
-  border: none;
-  height: 30px;
-  width: 30px;
+  padding-top: 5px;
 }
 .publishButton {
   background-color: white;
@@ -168,9 +146,9 @@
   padding: 2px 25px;
   /* gap: 10px; */
 }
-.addTextEditor {
+/* .addTextEditor {
   margin: 20px;
-}
+} */
 .closeButton {
   height: 35px;
 }

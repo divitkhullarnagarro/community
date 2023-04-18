@@ -1,5 +1,4 @@
-
-import {   ImageField } from '@sitecore-jss/sitecore-jss-nextjs'; 
+import { ImageField } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import notificationCss from '../assets/notification.module.css';
@@ -22,16 +21,16 @@ const Notification = (props: NotificationProps): JSX.Element => {
   const { datasource } = props?.fields?.data;
   console.log('Notification', props);
 
-  return(
+  return (
     <div className={notificationCss.container}>
-        <NextImage
-          field={datasource?.image?.jsonValue?.value}
-          editable={true}
-          width={30}
-          height={30}
-          title="Notification"
-        />
-      </div>
+      <NextImage
+        field={datasource?.image?.jsonValue?.value}
+        editable={true}
+        width={23}
+        height={23}
+        title="Notification"
+      />
+    </div>
   );
 };
 
