@@ -7,6 +7,15 @@
   background: url('../assets/images/ProfileCover.jpg') no-repeat;
   background-size: cover;
 }
+.groupHeaderWrapper {
+  width: 99%;
+  height: 64vh;
+  margin: 10px;
+  padding: 10px;
+  background-color: rgb(242, 240, 240);
+  background: url('../assets/images/groupBackground.svg') no-repeat;
+  background-size: cover;
+}
 
 .content {
   display: flex;
@@ -14,10 +23,17 @@
   height: 30vh;
   align-items: flex-end;
 }
+.groupContent {
+  display: flex;
+  justify-content: space-between;
+  height: 64vh;
+  align-items: flex-end;
+}
 
 .profileImage {
   border: 2px solid black;
   display: flex;
+  /* border-radius: 10px; */
 }
 
 .leftSection {
@@ -52,31 +68,31 @@
   margin-bottom: 20px;
   margin-right: 10px;
 }
-.joinedGroupBtn{
-  margin-bottom: 20px;
-  margin-right: 10px;
-  color: rgb(16, 110, 190);
-  background-color: rgb(255, 255, 255);
-  border-color: rgba(36, 136, 216, 0.29);
-  border-radius: 20px;
-  border-width: 1px;
-  border-style: solid;
-  width: 5%;
-}
 
-.joinedGroupBtn:hover span{
-  display: none;
+.joinButton {
+  position: relative;
+  bottom: 14px;
+  color: black;
+  border: 0.5px solid black;
 }
-/* .joinedGroupBtn ::before{
-  content: 'new request';
-} */
-/* .joinedGroupBtn:hover ::after{
-  content: 'availabe';
-} */
-/* /* .joinedGroupBtn:hover span{
-  display: none;
-} */
-.joinedGroupBtn:hover::after{
-  
-  content: 'Leave';
-} 
+.joinButton:hover {
+  border: 0.5px solid rgb(152, 148, 148);
+}
+.leaveButton {
+  position: relative;
+  bottom: 14px;
+  color: red;
+  border: 0.5px solid black;
+}
+.leaveButton:hover {
+  border: 0.5px solid rgb(152, 148, 148);
+}
+.groupName {
+  position: relative;
+  font-size: 32px;
+  font-weight: 500;
+  font-family: initial;
+}
+.groupPageLogo {
+  /* border-radius: 10px; */
+}
