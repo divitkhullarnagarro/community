@@ -57,9 +57,12 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Sitecore.XmCloud.Kernel" />
     <PackageReference Include="Sitecore.Assemblies.SitecoreHeadlessServicesServer" />
+    <PackageReference Include="Nest" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Config\Include\publishprocessor.config" />
     <None Include="Platform.wpp.targets" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="README.md" />
@@ -67,6 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Config\Include\zzz\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SitecoreExtensions\Processors\ItemProcessedProcessor.cs" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
