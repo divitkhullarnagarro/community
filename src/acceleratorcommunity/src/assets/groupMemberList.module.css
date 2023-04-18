@@ -4,8 +4,10 @@
   border-radius: 50%;
 }
 .groupMemberList {
-  background: #eeeaea;
-  margin: 16px;
+  background-color: whitesmoke;
+  margin-top: 15px;
+  margin-left: 10px;
+  /* margin: 16px; */
 }
 .groupMemberListHeading {
   display: flex;
@@ -27,15 +29,19 @@
   margin-left: 12px;
 }
 .groupMemberListName {
+  font-size: 16px;
+  font-weight: 600;
   margin-bottom: 0;
 }
 .groupMemberListEmail {
   font-size: 12px;
+  font-weight: 400;
 }
 .groupMemberTitle {
+  font-size: 20px;
   margin-left: 10px;
   color: #283895;
-  text-align: center;
-  margin-top: 8px;
-  text-shadow: 2px 2px 1px rgb(156, 179, 179);
+  /* text-align: center; */
+  /* margin-top: 8px; */
+  /* text-shadow: 2px 2px 1px rgb(156, 179, 179); */
 }
