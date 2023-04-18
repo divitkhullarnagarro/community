@@ -96,3 +96,34 @@
 .groupPageLogo {
   /* border-radius: 10px; */
 }
+@media only screen and (max-width: 640px) {
+  .groupHeaderWrapper {
+    height: 16vh;
+  }
+  .groupContent {
+    height: 16vh;
+  }
+  .joinButton {
+    height: 30px;
+    width: 90px;
+    font-size: 10px;
+  }
+  .joinButton > svg {
+    height: 14px;
+    width: 14px;
+  }
+  .leaveButton {
+    height: 30px;
+    width: 90px;
+    font-size: 10px;
+  }
+  .leaveButton > svg {
+    height: 14px;
+    width: 14px;
+  }
+  .leftSection {
+    height: 56px;
+    width: 154px;
+    margin-bottom: 6px;
+  }
+}
