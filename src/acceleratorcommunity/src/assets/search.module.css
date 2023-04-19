@@ -32,3 +32,10 @@
 .searchBox input:active{
     width: auto;
 }
+
+@media screen and (max-width: 768px) {
+  .container  {
+    gap: 10px;
+    margin: 5px 0;
+  }
+}

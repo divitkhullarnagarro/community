@@ -973,14 +973,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 <Dropdown.Toggle
                   variant="secondary"
                   id="dropdown-basic"
-                  className={styles.dropdownBtn}
+                  className={ShowShareCss.dropdownBtn}
                 >
                   <button
                     onClick={() => handleShowShare(post.id, !post?.showShare)}
                     className={styles.shareButton}
                     disabled={post?.isRespPending}
                   >
-                    <NextImage field={share} editable={true} alt="PostItems" width={18} height={18} />
+                    <img src={share.src} alt="SharePost" />
                     <div className={styles.sharePost}>Share</div>
                   </button>
                 </Dropdown.Toggle>
