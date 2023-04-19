@@ -27,10 +27,11 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
-  height: 18px;
+  max-height: 100px;
   color: #82888F;
-  width: 100%;
-  white-space: nowrap;
+  display: -webkit-box;
+  max-width: 100%;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
