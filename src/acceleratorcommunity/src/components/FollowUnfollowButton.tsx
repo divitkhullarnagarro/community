@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button';
 const FollowUnfollowButton = (props: any): JSX.Element => {
   const { isLoggedIn, userToken, setUserToken } = { ...useContext(WebContext) };
   console.log(isLoggedIn);
-  const [showSpinner, setShowSpinner] = useState(false);
+  // const [showSpinner, setShowSpinner] = useState(false);
   // state variables
   const [showForm1, setShowForm] = useState(false);
   const handleClose1 = () => setShowForm(false);
@@ -54,14 +54,14 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
   };
 
   const onFollow = async (e: any) => {
-    setShowSpinner(true);
+    //setShowSpinner(true);
     e.preventDefault();
     setTokenFromLocalStorage();
     let response = await followCall(props?.userName, userToken);
     if (response?.success) {
       changeText('Following');
     }
-    setShowSpinner(false);
+    //setShowSpinner(false);
   };
 
   const showConfirmationPopup = (e: any) => {
@@ -70,7 +70,7 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
   };
 
   const onUnfollow = async (e: any) => {
-    setShowSpinner(true);
+   // setShowSpinner(true);
     e.preventDefault();
     modalConfirmationDialog();
     setTokenFromLocalStorage();
@@ -78,7 +78,7 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
     if (response?.success) {
       changeText('Follow');
     }
-    setShowSpinner(false);
+    //setShowSpinner(false);
     setShowForm(false);
   };
 

@@ -13,7 +13,7 @@ import WebContext from '../Context/WebContext';
 import peopleYouMayKnowCall from 'src/API/peopleYouMayKnowCall';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { Button, Card } from 'react-bootstrap';
 
 type PeopleYouMayKnowProps = ComponentProps & {
@@ -33,7 +33,7 @@ type peopleYouMayKnowFields = {
 
 const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   console.log('people you may know', props);
-  const router = useRouter();
+  // const router = useRouter();
   const { Title, LinkLabel, IsFullList } = props?.params;
   const [peopleYouMayKnowList, setPeopleYouMayKnowList] = useState<peopleYouMayKnowFields[]>([]);
   const { userToken, setUserToken } = { ...useContext(WebContext) };
