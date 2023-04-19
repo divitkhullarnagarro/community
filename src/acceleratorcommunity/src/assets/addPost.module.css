@@ -54,7 +54,12 @@
 .dropdownBtn {
   background-color: white;
   border: none;
-  width: 40px;
+  width: auto;
+  padding: 0;
+}
+
+.dropdownBtn::after {
+  display: none;
 }
 
 .dropdownItem {
@@ -69,6 +74,10 @@
   color: #fff;
   background-color: #5c636a;
   border-color: #565e64;
+}
+
+.dropdownMenu {
+  padding: 0;
 }
 
 .dropdownItem:visited,
@@ -89,8 +98,15 @@
   height: 10px;
 }
 .mainContainer {
-  background: whitesmoke;
-  padding: 10px;
+  background: #F9F9F9;
+  padding: 20px;
+}
+.addPostWidgetContainer {
+  background-color: #FFFFFF;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  padding: 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
 }
 .addPostFieldContainer {
   height: 100%;
@@ -98,22 +114,19 @@
   background-color: white;
 }
 .addPostImage {
-  display: flex;
-  margin-top: 6px;
-  margin-left: 10px;
+  min-width: 27px;
 }
 .addPostField {
   display: flex;
-  align-items: center;
+  align-items: start;
+  gap: 10px;
 }
 .addPostButton {
   background-color: #f9f9f9;
-  width: 95%;
-  height: 30px;
-  margin-left: 10px;
-  margin-top: 10px;
+  flex: 1 1;
   border: none;
-  border-radius: 17.5px;
+  border-radius: 15px;
+  padding: 5px 10px;
 }
 .addPostHeading {
   display: flex;
@@ -124,120 +137,120 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 5px;
-}
-.imageButton {
-  background-color: white;
-  border: none;
-  height: 30px;
-  width: 30px;
+  margin-top: 12px;
 }
 .errorContainer {
   height: 30px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
+  gap: 10px;
 }
-.docButton {
+.addPostFileButtons {
   background-color: white;
   border: none;
-  height: 30px;
-  width: 30px;
-}
-.videoButton {
-  background-color: white;
-  border: none;
-  height: 30px;
-  width: 30px;
-}
-.eventButton {
-  background-color: white;
-  border: none;
-  height: 30px;
-  width: 30px;
-}
-.pollButton {
-  background-color: white;
-  border: none;
-  height: 30px;
-  width: 30px;
+  padding-top: 5px;
 }
 .publishButton {
   background-color: white;
   color: #a5a9ae;
-  /* height: 35px; */
   padding: 2px 25px;
-  /* gap: 10px; */
-}
-.addTextEditor {
-  margin: 20px;
+  font-size: 12px;
 }
 .closeButton {
   height: 35px;
 }
 .postFooterContainer{
   display: flex;
-  gap: 50px;
+  gap: 40px;
+  margin: 0 15px 15px 15px;
 }
 .likeContainer{
   display: flex;
-  gap: 10px;
-
+  align-items: center;
+  gap: 5px;
 }
 .likeButton{
   border: none;
   background-color: white;
-  margin-bottom: 2px;
+  margin-bottom: 0px;
+  padding: 0;
+  height: 18px;
 }
 .likePost{
-  color: #2E86F9;
+  color: #A5A9AE;
   font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
 }
 .likeCount{
-color:#2E86F9 ;
-display: flex;
-width: 25px;
-height: 25px;
-border-radius: 50%;
-justify-content: center;
-background-color: #F7F7F6;
+  display: flex;
+  height: 14px;
+  border-radius: 10px;
+  justify-content: center;
+  background-color: #F7F7F6;
+  color: #2E86F9;
+  font-size: 12px;
+  line-height: 1.1;
+  padding: 0px 5px;
 }
 .commentPost{
   color: #A5A9AE;
   font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
 }
 
 .sharePost{
   color: #A5A9AE;
   font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
 }
 .commentButton{
   border: none;
   background-color: white;
-  margin-top: 5px;
+  margin-bottom: 0px;
+  padding: 0;
+  height: 18px;
 }
 .commentCount{
   color:#3D3D3F;
   display: flex;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
+  height: 14px;
+  border-radius: 10px;
   justify-content: center;
   background-color: #F7F7F6;
+  font-size: 12px;
+  line-height: 1.1;
+  padding: 0px 5px;
 }
 .shareButton{
   border: none;
   background-color: white;
+  margin-bottom: 0px;
+  padding: 0;
+  height: 18px;
+  display: flex;
+  gap: 5px;
 }
 .commentContainer{
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 5px
 }
 .shareContainer{
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+
+@media only screen and (max-width: 768px) {
+  .mainContainer {
+    margin-top: 12px;
+  }
 }
 @media only screen and (max-width: 640px) {
-
   .dropdownBtn {
     background-color: white;
     border: none;
@@ -294,5 +307,6 @@ background-color: #F7F7F6;
   }
   .postFooterContainer{
     gap: 5px;
+    justify-content: space-between;
   }
 }
