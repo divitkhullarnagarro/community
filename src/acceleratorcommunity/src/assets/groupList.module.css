@@ -11,23 +11,28 @@
 }
 .groupListBox {
   background-color: white;
-  overflow-x: auto;
-  overflow-y: auto;
-  height: 200px;
+ 
+  height: 360px;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
   border-radius: 6px;
   padding: 10px;
 }
-.groupListBox::-webkit-scrollbar {
+.groupListBoxData{
+  height: 300px;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.groupListBoxData::-webkit-scrollbar {
   width: 5px;
 }
 
-.groupListBox::-webkit-scrollbar-track {
+.groupListBoxData::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: #efefef;
 }
 
-.groupListBox::-webkit-scrollbar-thumb {
+.groupListBoxData::-webkit-scrollbar-thumb {
   background-color: #c2c2c2;
   border-radius: 4px;
 }
@@ -48,7 +53,7 @@
   margin-top: 5px;
   padding: 16px;
   padding-bottom: 16px;
-  height: 310px;
+  height: 425px;
 }
 
 .groupListHeading {
@@ -57,7 +62,7 @@
   justify-content: space-between;
   align-items: center;
   /* border-bottom: 1px solid black; */
-  padding: 5px 16px;
+  padding: 5px 5px;
 }
 .groupListHeading:hover {
   background: whitesmoke;
@@ -108,7 +113,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 16px;
+  margin-top: 8px;
 }
 
 .createGroupHeading > button {
