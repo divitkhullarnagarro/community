@@ -18,7 +18,6 @@ const list = [
   { img: groupLogo, name: 'First' },
   { img: groupLogo, name: 'Second' },
   { img: groupLogo, name: 'Third' },
- 
 ];
 
 const GroupList = (props: GroupListProps): JSX.Element => {
@@ -35,73 +34,75 @@ const GroupList = (props: GroupListProps): JSX.Element => {
       <div className={style.groupListContainer}>
         <div className={style.groupList}>
           <h3 className={style.groupListTitle}>Group List</h3>
-          {list.map((ele, index: number) => (
-            <>
-              <div className={style.groupListBox}>
-                <div
-                  className={style.groupListHeading}
-                  style={isSelectedGroup == index ? { background: '#fff' } : {}}
-                >
+          <div className={style.groupListBox}>
+            {list.map((ele, index: number) => (
+              <>
+                <div className={style.groupListBoxContainer}>
                   <div
-                    className={style.groupListHeadingLeft}
-                    onClick={() => {
-                      setIsSelectedGroup(index);
-                      setIsSelectedMoreOption(-1);
-                    }}
-                    style={{ cursor: 'pointer' }}
+                    className={style.groupListHeading}
+                    // style={isSelectedGroup == index ? { background: 'whitesmoke' } : {}}
                   >
-                    <Image
-                      src={ele.img}
-                      alt={ele.name}
-                      className={style.groupListLogo}
-                      height={50}
-                    />
-                    <h5 className={style.groupListName}>{ele.name}</h5>
-                  </div>
-                  <div>
-                    <Image
-                      src={moreLogo}
-                      alt=""
-                      className={style.groupListMoreLogo}
+                    <div
+                      className={style.groupListHeadingLeft}
                       onClick={() => {
-                        if (isSelectedMoreOption == index) {
-                          setIsSelectedMoreOption(-1);
-                        } else {
-                          setIsSelectedMoreOption(index);
-                        }
+                        setIsSelectedGroup(index);
+                        setIsSelectedMoreOption(-1);
                       }}
-                      // onMouseLeave={() => {
-                      //   if (isSelectedMoreOption == index) {
-                      //     setIsSelectedMoreOption(-1);
-                      //   } else {
-                      //     setIsSelectedMoreOption(index);
-                      //   }
-                      // }}
-                    />
-                    {isSelectedMoreOption == index && (
-                      <div
-                        className={style.moreOptionList}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <Image
+                        src={ele.img}
+                        alt={ele.name}
+                        className={style.groupListLogo}
+                        height={50}
+                      />
+                      <h5 className={style.groupListName}>{ele.name}</h5>
+                    </div>
+                    <div>
+                      <Image
+                        src={moreLogo}
+                        alt=""
+                        className={style.groupListMoreLogo}
                         onClick={() => {
-                          setIsSelectedMoreOption(index);
+                          if (isSelectedMoreOption == index) {
+                            setIsSelectedMoreOption(-1);
+                          } else {
+                            setIsSelectedMoreOption(index);
+                          }
                         }}
                         // onMouseLeave={() => {
-                        //   setIsSelectedMoreOption(-1);
+                        //   if (isSelectedMoreOption == index) {
+                        //     setIsSelectedMoreOption(-1);
+                        //   } else {
+                        //     setIsSelectedMoreOption(index);
+                        //   }
                         // }}
-                      >
-                        <button
-                          className="btn btn-light"
-                          onClick={() => handleExploreOnClick(ele.name)}
+                      />
+                      {isSelectedMoreOption == index && (
+                        <div
+                          className={style.moreOptionList}
+                          onClick={() => {
+                            setIsSelectedMoreOption(index);
+                          }}
+                          // onMouseLeave={() => {
+                          //   setIsSelectedMoreOption(-1);
+                          // }}
                         >
-                          Explore the group
-                        </button>
-                        <button className="btn btn-light">Join Group</button>
-                      </div>
-                    )}
+                          <button
+                            className={style.moreOptionButton}
+                            onClick={() => handleExploreOnClick(ele.name)}
+                          >
+                            Explore the group
+                          </button>
+                          <button className={style.moreOptionButton}>Join Group</button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </>
-          ))}
+              </>
+            ))}
+          </div>
           <div className={style.createGroupHeading}>
             <button className={style.createGroupBtn} onClick={() => setCreateGroupVisibel(true)}>
               {' '}

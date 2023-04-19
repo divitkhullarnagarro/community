@@ -1,15 +1,41 @@
-.groupListContainer{
+.groupListContainer {
   background-color: whitesmoke;
   margin-left: 10px;
+  margin-top: 10px;
 }
 .groupListTitle {
   font-size: 20px;
-  margin-left: 10px;
+
   color: #283895;
   /* text-shadow: 2px 2px 1px rgb(156, 179, 179); */
 }
-.groupListBox{
-  /* background-color: white; */
+.groupListBox {
+  background-color: white;
+  overflow-x: auto;
+  overflow-y: auto;
+  height: 200px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  padding: 10px;
+}
+.groupListBox::-webkit-scrollbar {
+  width: 5px;
+}
+
+.groupListBox::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #efefef;
+}
+
+.groupListBox::-webkit-scrollbar-thumb {
+  background-color: #c2c2c2;
+  border-radius: 4px;
+}
+.groupListBoxContainer {
+  /* margin-right: 16px;
+  margin-left: 5px; */
+  /* margin-top: 10px;
+  margin-bottom: 10px; */
 }
 .groupListLogo {
   height: auto;
@@ -20,26 +46,10 @@
 .groupList {
   background: whitesmoke;
   margin-top: 5px;
-  padding: 1px;
+  padding: 16px;
   padding-bottom: 16px;
-  height: 276px;
-  overflow-x: auto;
-  overflow-y: auto;
+  height: 310px;
 }
-
-.groupList::-webkit-scrollbar {
-  width: 5px;
-  }
-  
-  .groupList::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background-color: #EFEFEF;
-  }
-  
-  .groupList::-webkit-scrollbar-thumb {
-  background-color: #C2C2C2;
-  border-radius: 4px;
-  }
 
 .groupListHeading {
   display: flex;
@@ -48,6 +58,9 @@
   align-items: center;
   /* border-bottom: 1px solid black; */
   padding: 5px 16px;
+}
+.groupListHeading:hover {
+  background: whitesmoke;
 }
 .groupListHeadingLeft {
   display: flex;
@@ -60,26 +73,33 @@
 }
 .moreOptionList {
   position: absolute;
-  background: rgb(240, 235, 235);
-  border-radius: 10px;
-  padding: 10px;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 5px;
   left: 260px;
   margin-top: 10px;
   display: flex;
   flex-direction: column;
   z-index: 2;
   margin-top: 4px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 }
 .moreOptionList > button {
-  color: rgb(16, 110, 190);
+  background-color: white;
   cursor: pointer;
   border: none;
-  padding: 4px;
-  margin-bottom: 10px;
-  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 300;
+  /* padding: 4px; */
+  /* margin-top: 10px; */
+  margin-bottom: 5px;
+  /* border-radius: 10px; */
   /* background: rgb(233, 243, 243); */
   /* box-shadow: 5px 5px 2px rgb(156, 179, 179); */
-  font-size: small;
+  /* font-size: small; */
+}
+.moreOptionButton:hover {
+  background: whitesmoke;
 }
 .groupListMoreLogo {
   cursor: pointer;
@@ -92,12 +112,16 @@
 }
 
 .createGroupHeading > button {
-  border-radius: 8px;
+  border-radius: 5px;
 
-  box-shadow: 5px 5px 2px rgb(156, 179, 179);
+  /* box-shadow: 5px 5px 2px rgb(156, 179, 179); */
 }
-.createGroupBtn{
-  color: rgb(16, 110, 190);
+.createGroupBtn {
+  background-color: #47d7ac;
+  border-color: #47d7ac;
+  color: white;
   border: none;
-  width: 80%;
+  font-weight: bold;
+  padding: 5px 10px;
+  width: 100%;
 }
