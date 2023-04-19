@@ -2834,21 +2834,15 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       {<ReportPostPopup />}
       {<BlockUserPopup />}
       {<ModalForReactions />}
-      {/* {showNotification && ( */}
+      {showNotification && (
         <ToastNotification
-          // showNotification={showNotification}
-          // success={toastSuccess}
-          // error={toastError}
-          // message={toastMessage}
-          // handleCallback={resetToastState}
-          
-          showNotification={true}
-          success={true}
-          error={false}
-          message={'jaskdja ssh kjdhasjd hakjshd kjashdkj ahkjdh skjhadk '}
-          handleCallback={() => console.log('sdasasd')}
+          showNotification={showNotification}
+          success={toastSuccess}
+          error={toastError}
+          message={toastMessage}
+          handleCallback={resetToastState}
         />
-      {/* )} */}
+      )}
     </>
   );
 };
