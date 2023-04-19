@@ -6,7 +6,7 @@
 .groupMemberListBox{
   background-color: whitesmoke;
   margin-left: 10px;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   padding: 16px;
 }
 .groupMemberList {
@@ -24,7 +24,7 @@
   justify-content: space-between;
   align-items: center;
   /* border-bottom: 1px solid rgb(143, 135, 135); */
-  padding: 5px 16px;
+  padding: 5px 5px;
   cursor: pointer;
 }
 .groupMemberListHeading:hover {
