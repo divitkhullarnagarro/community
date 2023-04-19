@@ -24,7 +24,7 @@ const GroupList = (props: GroupListProps): JSX.Element => {
   const router = useRouter();
   console.log(props);
   const [isSelectedMoreOption, setIsSelectedMoreOption] = useState(-1);
-  const [isSelectedGroup, setIsSelectedGroup] = useState(0);
+  // const [isSelectedGroup, setIsSelectedGroup] = useState(0);
   const [createGroupVisibel, setCreateGroupVisibel] = useState(false);
   const handleExploreOnClick = (name: string) => {
     router.push(`/group?groupName=${name}`);
@@ -45,7 +45,7 @@ const GroupList = (props: GroupListProps): JSX.Element => {
                     <div
                       className={style.groupListHeadingLeft}
                       onClick={() => {
-                        setIsSelectedGroup(index);
+                        // setIsSelectedGroup(index);
                         setIsSelectedMoreOption(-1);
                       }}
                       style={{ cursor: 'pointer' }}
