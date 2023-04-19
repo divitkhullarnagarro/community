@@ -10,11 +10,11 @@
     /* padding: 0.3125rem 0.625rem; */
 }
 .searchBox{
-    border: 1px solid #EEEEEE;
+    border: 1px solid #B8B8B8;
     border-radius: 4px;
     padding: 8px 12px;
-    width: 300px;
     display: flex;
+    flex: 1;
     gap: 10px;
 }
 .searchBoxText{
