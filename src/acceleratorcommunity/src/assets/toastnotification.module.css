@@ -16,10 +16,12 @@
 
 .toastHeader {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
   font-size: 16px;
   border-radius: 6px;
+  position: relative;
+  padding-right: 30px;
 }
 
 .success {
@@ -37,8 +39,11 @@
 .toastHeader button {
   filter: invert(1);
   opacity: 1;
-  margin-left: 1.875rem !important;
-  margin-top: -2.1875rem;
+  margin-left: 0 !important;
+  margin-top: 0;
+  position: absolute;
+  right: 10px;
+  top: 5px;
 }
 
 .toastBody {
