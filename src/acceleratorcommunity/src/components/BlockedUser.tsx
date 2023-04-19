@@ -5,9 +5,9 @@ import BlockUserImage from '../assets/images/BlockUser.jpg';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { Button, Dropdown, Modal, Spinner } from 'react-bootstrap';
 import MoreOptionsImage from '../assets/images/MoreOptions.jpg';
-import Email from '../assets/images/EmailIcon.jpg';
+// import Email from '../assets/images/EmailIcon.jpg';
 import { useRouter } from 'next/router';
-import Profile from '../assets/images/profile.png';
+// import Profile from '../assets/images/profile.png';
 import BlockedUserPreviewImage from '../assets/images/BlockedUserPreviewImage.png';
 import { unBlockUserCall, getBlockedUserList } from 'src/API/blockUnblockUserCall';
 import ToastNotification from './ToastNotification';
@@ -27,15 +27,15 @@ function BlockedUser() {
   const FetchingUsersLabel = 'Fetching blocked users...';
   const PreviewUserProfileLabel = "Select people's name to preview their profile.";
 
-  const UnblockingUserEffectListLabel = [
-    'Add you as a friend',
-    'See your posts on the timeline',
-    'Invite you to groups',
-  ];
+  // const UnblockingUserEffectListLabel = [
+  //   'Add you as a friend',
+  //   'See your posts on the timeline',
+  //   'Invite you to groups',
+  // ];
 
   const router = useRouter();
   const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
-  const [showPreviewImage, setShowPreviewImage] = useState(true);
+  // const [showPreviewImage, setShowPreviewImage] = useState(true);
   const [blockedUserDetails, setBlockedUserDetails] = useState<blockedUserFields>();
   const [blockedUserList, setBlockedUserList] = useState<blockedUserFields[]>();
   const [showFetchingUsers, setShowFetchingUsers] = useState(false);
@@ -131,10 +131,10 @@ function BlockedUser() {
     );
   };
 
-  const getBlockedUserProfile = (user: blockedUserFields) => {
-    setBlockedUserDetails(user);
-    setShowPreviewImage(false);
-  };
+  // const getBlockedUserProfile = (user: blockedUserFields) => {
+  //   setBlockedUserDetails(user);
+  //   setShowPreviewImage(false);
+  // };
 
   const onUserUnblocked = async () => {
     setShowSpinner(true);
@@ -152,7 +152,7 @@ function BlockedUser() {
       getAllBlockedUsers(userToken);
     }
     setShowBlockUserPopUp(false);
-    setShowPreviewImage(true);
+    // setShowPreviewImage(true);
   };
 
   const BlockedUserRow = (user: blockedUserFields) => {
