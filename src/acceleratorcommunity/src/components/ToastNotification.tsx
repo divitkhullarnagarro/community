@@ -12,12 +12,12 @@ function ToastNotification(props: any) {
   };
 
   useEffect(() => {
-    const popupTimer = setTimeout(() => {
-      toggleToast();
-    }, 2000);
-    return () => {
-      clearTimeout(popupTimer);
-    };
+    // const popupTimer = setTimeout(() => {
+    //   toggleToast();
+    // }, 2000);
+    // return () => {
+    //   clearTimeout(popupTimer);
+    // };
   }, [showToastNotification]);
 
   return (

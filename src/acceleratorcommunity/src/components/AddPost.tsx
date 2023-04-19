@@ -820,7 +820,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   variant="secondary"
                   id="dropdown-basic"
                   className={styles.dropdownBtn}
-                  // style={{ backgroundColor: 'white', border: 'none', width: '70px' }}
                 >
                   <button
                     onClick={() => {
@@ -847,7 +846,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       <div className={styles.dropdownImage}>
                         <NextImage field={bookmarkImage} editable={true} />
                       </div>
-                      <div className={styles.reportContainerBtn}> Save Post</div>
+                      <div className={styles.reportContainerBtn}>Save Post</div>
                     </div>
                   </Dropdown.Item>
                   <Dropdown.Item
@@ -860,7 +859,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       <div className={styles.dropdownImage}>
                         <NextImage field={copylink} editable={true} />
                       </div>
-                      <div className={styles.reportContainerBtn}> Copy link to post</div>
+                      <div className={styles.reportContainerBtn}>Copy link to post</div>
                     </div>
                   </Dropdown.Item>
                   <Dropdown.Item
@@ -2792,16 +2791,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             />
           </div>
         </div>
-        <div
-          className="AllPostscontainer"
-          id="PostFeedList"
-          style={{
-            maxWidth: '100%',
-            height: '800px',
-            overflowX: 'hidden',
-            scrollbarWidth: 'none',
-          }}
-        >
+        <div className="AllPostscontainer" id="PostFeedList" style={{ maxWidth: '100%' }}>
           {posts?.length == 0 ? (
             <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
               <span style={{ marginRight: '15px', fontWeight: '600' }}>Loading.. </span>{' '}
@@ -2844,15 +2834,21 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       {<ReportPostPopup />}
       {<BlockUserPopup />}
       {<ModalForReactions />}
-      {showNotification && (
+      {/* {showNotification && ( */}
         <ToastNotification
-          showNotification={showNotification}
-          success={toastSuccess}
-          error={toastError}
-          message={toastMessage}
-          handleCallback={resetToastState}
+          // showNotification={showNotification}
+          // success={toastSuccess}
+          // error={toastError}
+          // message={toastMessage}
+          // handleCallback={resetToastState}
+          
+          showNotification={true}
+          success={true}
+          error={false}
+          message={'jaskdja ssh kjdhasjd hakjshd kjashdkj ahkjdh skjhadk '}
+          handleCallback={() => console.log('sdasasd')}
         />
-      )}
+      {/* )} */}
     </>
   );
 };

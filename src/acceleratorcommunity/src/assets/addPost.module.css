@@ -33,16 +33,13 @@
 .overlayItem {
   display: flex;
   justify-content: flex-start;
-  margin-right: 5px;
+  gap: 10px;
 }
 
 .reportContainerBtn {
-  background-color: white;
-  color: black;
-  border: none;
-  font-weight: bold;
-  padding-top: 10px;
-  padding-left: 20px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #A5A9AE;
 }
 
 .copyLinkBtnStyle {
@@ -64,42 +61,22 @@
 
 .dropdownItem {
   display: flex;
-  justify-content: space-between;
-  border-radius: 5px;
-  padding-top: 5px;
-  padding-bottom: 8px;
-}
-
-.dropdownItem:hover .reportContainerBtn {
-  color: #fff;
-  background-color: #5c636a;
-  border-color: #565e64;
+  padding: 10px 5px;
+  border-bottom: 2px solid #F5F5F5;
 }
 
 .dropdownMenu {
-  padding: 0;
-}
-
-.dropdownItem:visited,
-.dropdownItem:hover,
-.dropdownItem:active {
-  color: #fff;
-  background-color: #5c636a;
-  border-color: #565e64;
-}
-
-.dropdownItem:hover .dropdownImage {
-  filter: invert(1);
+  padding: 0px 16px;
 }
 
 .dropdownImage {
-  margin-top: 10px;
-  width: 20px;
-  height: 10px;
+  width: 16px;
+  height: 16px;
 }
 .mainContainer {
   background: #F9F9F9;
   padding: 20px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
 }
 .addPostWidgetContainer {
   background-color: #FFFFFF;
@@ -257,20 +234,15 @@
     width: 20px !important;
   }
 
+  .dropdownMenu {
+    inset: 0 0 auto auto !important;
+  }
+
   .reportPostModalContent {
     margin-left: 2.5rem;
     width: 18.75rem;
     height: 37.5rem;
     overflow-y: auto;
-  }
-
-  .dropdownItem {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.625rem;
-    border-radius: 0.1875rem;
-    padding-top: 0.1875rem;
-    padding-bottom: 0.3125rem;
   }
 
   .reportPostModalHeader {
