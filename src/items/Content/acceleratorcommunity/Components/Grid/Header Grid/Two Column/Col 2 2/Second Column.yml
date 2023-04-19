@@ -6,19 +6,19 @@ Path: /sitecore/content/acceleratorcommunity/Components/Grid/Header Grid/Two Col
 SharedFields:
 - ID: "124f077d-5fd3-4ac1-8f81-b980f2f1c6f1"
   Hint: colLG
-  Value: 5
+  Value: 6
 - ID: "1691ea75-1b5e-4720-a604-c8a8ac525069"
   Hint: heading
   Value: Second Column
 - ID: "4e6e411d-1780-42de-9ce1-45794a93c9be"
   Hint: colSM
-  Value: 4
+  Value: 6
 - ID: "5e24bddf-30c6-4e68-ba24-d95b3af47c8a"
   Hint: colExtraCss
   Value: rightNavigation
 - ID: "9c5b7024-ed1d-4755-80cc-8a46ca50bfdb"
   Hint: colMD
-  Value: 4
+  Value: 6
 - ID: "a1365dd8-b09f-4915-9faf-c659b2d182ea"
   Hint: colXS
   Value: 4
@@ -40,11 +40,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "187e3ad5-dd3d-4cdc-9d24-11d63208c7e8"
+      Value: "8e1146b4-795e-4732-8656-bcfba6b503b7"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230329T132609Z
+      Value: 20230419T071302Z

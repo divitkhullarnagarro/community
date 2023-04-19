@@ -67,6 +67,7 @@ Languages:
               uid="{D883CE62-A285-4D76-BF1D-EB3C3F8A3497}"
               p:after="r[@uid='{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}']"
               s:id="{DAF857B8-E315-48EF-AC72-30B8A0180AA0}"
+              s:par="Title&amp;LinkLabel&amp;Link&amp;IsFullList&amp;IsGroupList=1"
               s:ph="jss-main" />
             <r
               uid="{6D47BF1A-FDDE-4389-B2AB-65C6F7005A47}"
@@ -93,10 +94,10 @@ Languages:
       Value: "Social Community - News"
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
-      Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
+      Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "86516704-ce73-40a9-85d3-e6a770011f21"
+      Value: "d915fb0b-f745-4f14-ade2-b1ff7d2ec4bd"
     - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
       Hint: twitterDescription
       Value: Social Community News is the place where you can gather the information about the current affairs
@@ -119,7 +120,7 @@ Languages:
         <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230414T073451Z
+      Value: 20230418T082702Z
     - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
       Hint: ogTitle
       Value: "Community Solution - Discover trending news"
