@@ -167,7 +167,7 @@ const Users = (props: UserProps): JSX.Element => {
                 <div className={styles.reportPostHeading}>
                   <div className={styles.reportPostHeaderLeft}>
                     <img
-                      src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                      src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                       alt="User-Pic"
                       width="30px"
                     ></img>
@@ -291,7 +291,7 @@ const Users = (props: UserProps): JSX.Element => {
                 <div className={styles.reportPostHeaderLeft}>
                   <img
                     className="postUserImage"
-                    src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                    src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                     alt="User-Pic"
                   ></img>
                   <div className={styles.reportPostDetailContainer}>

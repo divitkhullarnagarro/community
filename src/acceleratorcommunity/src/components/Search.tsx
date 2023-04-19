@@ -25,7 +25,7 @@ const Search = (props: SearchProps): JSX.Element => {
     <div className={searchCss.container}>
       <div className={searchCss.image}>
         <a href="/">
-        <NextImage field={logo} editable={true} height={30} width={30}/>
+          <NextImage field={logo} editable={true} height={45} width={45} />
         </a>
       </div>
       <div className={searchCss.searchBox}>
