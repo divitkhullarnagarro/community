@@ -69,7 +69,7 @@ import comment from '../assets/images/comment.png';
 import share from '../assets/images/share.png';
 import greylikeimage from '../assets/images/greylikeimage.svg';
 import EventCard from './EventCard';
-import PollCard from './PollCard';
+// import PollCard from './PollCard';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -2010,9 +2010,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   let [eventTypeSelectError, setEventTypeSelectError] = useState(false);
 
-  function emptyEvent() {
-    setEventPost('');
-  }
+  // function emptyEvent() {
+  //   setEventPost('');
+  // }
 
   function submitEventForm(event: any) {
     event.preventDefault();
@@ -2134,9 +2134,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setPollQuestion(e.target.value);
   }
 
-  function emptyPollPost() {
-    setPollPost('');
-  }
+  // function emptyPollPost() {
+  //   setPollPost('');
+  // }
 
   function submitPollForm(event: any) {
     event.preventDefault();
@@ -2346,14 +2346,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             <div>
               <button
                 className={styles.addPostFileButtons}
-                              onClick={() => {
-                                  setShowForm1(true);
-                                  clickmebuttonHandler();
-                              }}
-
-                              disabled={disableAddImage}
+                onClick={() => {
+                  setShowForm1(true);
+                  clickmebuttonHandler();
+                }}
+                disabled={disableAddImage}
                 type="button"
-
               >
                 {/* <span>Image</span> */}
                 <NextImage
@@ -2380,18 +2378,24 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   />
                 </Form.Group>
               </button>
-                          <button
-                              disabled={disableAddVideo}
+              <button
+                disabled={disableAddVideo}
                 className={styles.addPostFileButtons}
-                              onClick={() => {
-                                  setShowForm1(true);
-                                  clickmebuttonHandler2();
-                              }}
+                onClick={() => {
+                  setShowForm1(true);
+                  clickmebuttonHandler2();
+                }}
                 type="button"
               >
                 {/* <span>Doc</span> */}
-                              <NextImage field={image} editable={true} alt="PostItems" width={18} height={18} style={{ opacity: disableAddDoc ? '0.2' : '1' }}
-                              />
+                <NextImage
+                  field={image}
+                  editable={true}
+                  alt="PostItems"
+                  width={18}
+                  height={18}
+                  style={{ opacity: disableAddDoc ? '0.2' : '1' }}
+                />
                 <Form.Group
                 // className="mb-3"
                 >
@@ -2409,17 +2413,22 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </button>
               <button
                 className={styles.addPostFileButtons}
-                              onClick={() => {
-                                  setShowForm1(true);
-                                  clickmebuttonHandler3();
-                              }}
-                              disabled={disableAddVideo}
+                onClick={() => {
+                  setShowForm1(true);
+                  clickmebuttonHandler3();
+                }}
+                disabled={disableAddVideo}
                 type="button"
               >
                 {/* <span>Video</span> */}
-                              <NextImage field={pin} editable={true} alt="PostItems" width={18} height={18}
-                                  style={{ opacity: disableAddVideo ? '0.2' : '1' }}
-                              />
+                <NextImage
+                  field={pin}
+                  editable={true}
+                  alt="PostItems"
+                  width={18}
+                  height={18}
+                  style={{ opacity: disableAddVideo ? '0.2' : '1' }}
+                />
                 <Form.Group
                 // className="mb-3"
                 >
@@ -2434,10 +2443,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   />
                 </Form.Group>
               </button>
-                          <button
-                              className={styles.addPostFileButtons}
-
-                              onClick={() => setShowForm1(true); setShowEvent(true);}
+              <button
+                className={styles.addPostFileButtons}
+                onClick={() => {
+                  setShowForm1(true);
+                  setShowEvent(true);
+                }}
                 type="button"
                 disabled={disableAddEvent}
               >
@@ -2563,10 +2574,15 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </Form>
                 </div>
               </Modal>
-                      <button className={styles.addPostFileButtons} onClick={() => {
-                          setShowForm1(true);
-                          setShowPollForm(true);
-                      }} type="button" disabled={disableAddPoll}>
+              <button
+                className={styles.addPostFileButtons}
+                onClick={() => {
+                  setShowForm1(true);
+                  setShowPollForm(true);
+                }}
+                type="button"
+                disabled={disableAddPoll}
+              >
                 {/* <span>Poll</span> */}
                 <NextImage
                   field={smile}
@@ -2711,7 +2727,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   borderColor: editorState.getCurrentContent().getPlainText()
                     ? '#47D7AC'
                     : '#6c757d',
-                  boxShadow: !createNewPostError ? 'none' : '0 4px 8px 0 rgba(255, 0, 0, 0.6)',
+                  // boxShadow: !createNewPostError ? 'none' : '0 4px 8px 0 rgba(255, 0, 0, 0.6)',
                 }}
                 type="button"
                 onClick={(e) => handleSubmit(e)}
@@ -2732,13 +2748,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   Cancel
                 </Button>
               </Collapse>
-              {createNewPostError ? (
+              {/* {createNewPostError ? (
                 <span style={{ fontWeight: 1000, color: 'red', fontSize: '8px' }}>
                   * Something Went Wrong. Post not uploaded !
                 </span>
               ) : (
                 ''
-              )}
+              )} */}
               {/* </div>
 
               <div> */}
