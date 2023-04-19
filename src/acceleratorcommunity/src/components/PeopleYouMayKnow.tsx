@@ -1,9 +1,11 @@
 import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import Profile from '../assets/images/ProfilePic.jpeg';
-import PeopleProfile from '../assets/images/PeopleYouMayKnowProfileImage.png';
+// import PeopleProfile from '../assets/images/PeopleYouMayKnowProfileImage.png';
+import DropArrow from '../assets/images/droparrow.png';
 import people from '../assets/images/people.png';
 import styles from '../assets/peopleyoumayknow.module.css';
+// import style from '../assets/fonts.css';
 import FollowUnfollowButton from './FollowUnfollowButton';
 import Link from 'next/link';
 import { useState, useContext, useEffect } from 'react';
@@ -102,15 +104,15 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
     return (
       <Card className={styles.cardItem}>
         <div className={styles.imageContainer}>
-          <img className={styles.imgProfile} contentEditable={true} src={PeopleProfile.src}/>
+          <img className={styles.imgProfile} contentEditable={true} src={Profile.src}/>
         </div>
         <Card.Body>
           <Card.Title className={styles.cardTitle}>
             {item?.firstName + ' ' + item?.lastName}
           </Card.Title>
-          <Card.Text className={styles.cardText}>{`${item?.speciality ?? ''} ${item?.speciality ? ' | ' : ''}  ${
+          {/* <Card.Text className={styles.cardText}>{`${item?.speciality ?? ''} ${item?.speciality ? ' | ' : ''}  ${
             item?.city ?? ''
-          }`}</Card.Text>
+          }`}</Card.Text> */}
           <FollowUnfollowButton userName={item?.objectId} />
         </Card.Body>
       </Card>
@@ -134,23 +136,23 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
         </div>
         {peopleYouMayKnowList === undefined || numItems >= peopleYouMayKnowList?.length ? null : (
           <Button
-            className={styles.seeMoreBtn}
             style={{
               width: '100%',
               fontSize:'20px',
               height: '50px',
-              backgroundColor: 'white',
-              color: 'blue',
+              backgroundColor: '#F9F9F9',
+              color: '#2A86FD',
               border: 'none',
               fontWeight: '500',
               textAlign: 'center',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              
             }}
             onClick={() => setNumItems(numItems + 6)}
           >
-            See more...
+            <div><span className={styles.seeMoreBtn}>See more</span></div><NextImage field={DropArrow} editable={true}/>
           </Button>
         )}
       </div>
@@ -160,24 +162,27 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   const SideNavbar = () => {
     return (
       <div className={styles.sidenavbar}>
+        <div className={styles.rectContainer}>
         <div className={styles.top}>
-          <h2 className={styles.logo}>Suggestions</h2>
+          <span className={styles.logo}>Suggestions</span>
         </div>
-        <hr />
         <div className={styles.center}>
           <ul>
             <button>
               <li className={styles.rowItem}>
+                {/* <span className={styles.NavImageContainer}> */}
                 <NextImage
                   contentEditable={true}
                   field={people}
-                  height={18}
-                  width={18}
+                  height={20}
+                  width={20}
                 ></NextImage>
+                
                 <span>{Title ?? 'People You May Know'}</span>
               </li>
             </button>
           </ul>
+        </div>
         </div>
       </div>
     );
@@ -186,9 +191,9 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   const FullPagePeopleYouMayKnow = () => {
     return (
       <div className={styles.mainContainer}>
-        <div className={styles.backbtn}>
+        {/* <div className={styles.backbtn}>
           <Button onClick={() => router.push('/')}>Back</Button>
-        </div>
+        </div> */}
         <div className={styles.container}>
           <div className={styles.left_column}>
             <SideNavbar />
