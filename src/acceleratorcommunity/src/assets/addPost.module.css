@@ -88,24 +88,29 @@
   width: 20px;
   height: 10px;
 }
+
 .mainContainer {
   background: whitesmoke;
   padding: 10px;
 }
+
 .addPostFieldContainer {
   height: 100%;
   width: 100%;
   background-color: white;
 }
+
 .addPostImage {
   display: flex;
   margin-top: 6px;
   margin-left: 10px;
 }
+
 .addPostField {
   display: flex;
   align-items: center;
 }
+
 .addPostButton {
   background-color: #f9f9f9;
   width: 95%;
@@ -115,52 +120,61 @@
   border: none;
   border-radius: 17.5px;
 }
+
 .addPostHeading {
   display: flex;
   font-size: 13px;
   color: #a5a9ae;
 }
+
 .AddPostItems {
   display: flex;
   justify-content: space-between;
   width: 100%;
   padding: 5px;
 }
+
 .imageButton {
   background-color: white;
   border: none;
   height: 30px;
   width: 30px;
 }
+
 .errorContainer {
   height: 30px;
   display: flex;
   flex-direction: column;
 }
+
 .docButton {
   background-color: white;
   border: none;
   height: 30px;
   width: 30px;
 }
+
 .videoButton {
   background-color: white;
   border: none;
   height: 30px;
   width: 30px;
 }
+
 .eventButton {
   background-color: white;
   border: none;
   height: 30px;
   width: 30px;
 }
+
 .pollButton {
   background-color: white;
   border: none;
   height: 30px;
   width: 30px;
 }
+
 .publishButton {
   background-color: white;
   color: #a5a9ae;
@@ -168,55 +182,39 @@
   padding: 2px 25px;
   /* gap: 10px; */
 }
+
 .addTextEditor {
   margin: 20px;
 }
+
 .closeButton {
   height: 35px;
 }
-.postFooterContainer{
+
+.postFooterContainer {
   display: flex;
   gap: 50px;
 }
-.likeContainer{
+
+.likeContainer {
   display: flex;
   gap: 10px;
 
 }
-.likeButton{
+
+.likeButton {
   border: none;
   background-color: white;
   margin-bottom: 2px;
 }
-.likePost{
+
+.likePost {
   color: #2E86F9;
   font-weight: 400;
 }
-.likeCount{
-color:#2E86F9 ;
-display: flex;
-width: 25px;
-height: 25px;
-border-radius: 50%;
-justify-content: center;
-background-color: #F7F7F6;
-}
-.commentPost{
-  color: #A5A9AE;
-  font-weight: 400;
-}
 
-.sharePost{
-  color: #A5A9AE;
-  font-weight: 400;
-}
-.commentButton{
-  border: none;
-  background-color: white;
-  margin-top: 5px;
-}
-.commentCount{
-  color:#3D3D3F;
+.likeCount {
+  color: #2E86F9;
   display: flex;
   width: 25px;
   height: 25px;
@@ -224,18 +222,59 @@ background-color: #F7F7F6;
   justify-content: center;
   background-color: #F7F7F6;
 }
-.shareButton{
+
+.commentPost {
+  color: #A5A9AE;
+  font-weight: 400;
+}
+
+.sharePost {
+  color: #A5A9AE;
+  font-weight: 400;
+}
+
+.commentButton {
+  border: none;
+  background-color: white;
+  margin-top: 5px;
+}
+
+.commentCount {
+  color: #3D3D3F;
+  display: flex;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  justify-content: center;
+  background-color: #F7F7F6;
+}
+
+.shareButton {
   border: none;
   background-color: white;
 }
-.commentContainer{
+
+.commentContainer {
   display: flex;
   gap: 10px;
 }
-.shareContainer{
+
+.shareContainer {
   display: flex;
   gap: 10px;
 }
+
+
+.AddEventModalHeader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  font-size: 1.875rem;
+  color: #283895;
+}
+
 @media only screen and (max-width: 640px) {
 
   .dropdownBtn {
@@ -292,7 +331,8 @@ background-color: #F7F7F6;
     width: 15px;
     height: 15px;
   }
-  .postFooterContainer{
+
+  .postFooterContainer {
     gap: 5px;
   }
 }

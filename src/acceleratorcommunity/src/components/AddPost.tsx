@@ -14,7 +14,6 @@ import getPostByIdCall from '../API/getPostByIdCall';
 import addPostCall from '../API/addPostCall';
 import getUserCall from 'src/API/getUserCall';
 import addPostCommentCall from 'src/API/addPostCommentCall';
-// import loginUserCall from 'src/API/loginUserCall';
 import Link from 'next/link';
 import ShowShareCss from '../assets/ShowShare.module.css';
 import linkedin from '../assets/images/linkedin.png';
@@ -56,7 +55,6 @@ import getAllDownVotesCall from 'src/API/getAllDownVotesCall';
 import getAllUpVotesCall from 'src/API/getAllUpVotes';
 import Profile from '../assets/images/profile.png';
 import addPostCss from '../assets/addPosts.module.css';
-// import getAllUpVotesCall from 'src/API/getAllUpVotesCall';
 import blockUserCall from 'src/API/blockUnblockUserCall';
 import user from '../assets/images/user.png';
 import location from '../assets/images/Location.png';
@@ -70,6 +68,7 @@ import share from '../assets/images/share.png';
 import greylikeimage from '../assets/images/greylikeimage.svg';
 import EventCard from './EventCard';
 import PollCard from './PollCard';
+import deletePostCall from 'src/API/deletePostCall';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -777,6 +776,17 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     });
   }
 
+  //Delete Post Call
+  async function deletePostByApi(id: any) {
+    let ans = confirm('Do You Really Want To Delete This Post');
+    if (ans) {
+      let resp = await deletePostCall(userToken, id);
+      if (resp?.data?.success === true) {
+        deletePostById(id);
+      }
+    }
+  }
+
   //Function To Handle Posts Feed and Construct React.jsx using data
   function postStructCreate() {
     let locArr2: ReactElement<any, any>[] = [];
@@ -888,12 +898,22 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <img
-                className="postCrossImage"
-                src="https://cdn-icons-png.flaticon.com/512/10091/10091183.png"
-                alt="pan"
-                width="20px"
-              />
+              {post?.createdBy?.objectId === objectId ? (
+                <button
+                  type="button"
+                  onClick={() => deletePostByApi(post?.id)}
+                  style={{ border: 'none', backgroundColor: 'white' }}
+                >
+                  <img
+                    className="postCrossImage"
+                    src="https://cdn-icons-png.flaticon.com/512/10091/10091183.png"
+                    alt="pan"
+                    width="20px"
+                  />
+                </button>
+              ) : (
+                ''
+              )}
             </div>
           </div>
           <div className="postContent">
@@ -2470,7 +2490,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 />
               </button>
               <Modal
-                className={styles.reportPostModalContent}
+                className={styles.AddEventModalContent}
                 show={showEvent}
                 onHide={() => setShowEvent(false)}
                 backdrop="static"
@@ -2487,7 +2507,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     style={{ fontSize: '15px', margin: '5px' }}
                   >
                     <Modal.Header closeButton>
-                      <Modal.Title className={styles.reportPostModalHeader}>
+                      <Modal.Title className={styles.AddEventModalHeader}>
                         Create Event Post
                       </Modal.Title>
                     </Modal.Header>
