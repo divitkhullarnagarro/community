@@ -275,6 +275,108 @@
   color: #283895;
 }
 
+/* .AddEventModalContent {
+
+  display: grid;
+  place-items: center;
+}
+
+.AddEventModalBody {
+  width: 920px;
+} */
+
+.AddEventModalProfile {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.AddEventModalProfilePic {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 16px;
+}
+
+.AddEventModalProfilePic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.AddEventModalEventName::placeholder {
+  color: black;
+  font-size: 18px;
+  color: 'black';
+  font-weight: 800px;
+}
+
+.DateInput::before {
+  content: "Start Date: ";
+  font-size: 12px;
+  color: black;
+}
+
+.TimeInput::before {
+  content: "Start Time: ";
+  font-size: 12px;
+  color: black;
+}
+
+.eventTypeDropdownToggle {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  height: 54px;
+  background-color: white;
+  color: black;
+  font-weight: 400;
+}
+
+.eventTypeDropdownToggle:hover {
+  background-color: #47D7AC;
+}
+
+.eventTypeDropdownToggle:active {
+  background-color: #47D7AC !important;
+}
+
+.eventTypeDropdownToggle:focus-visible {
+  background-color: #47D7AC;
+}
+
+.eventModalCancel {
+  border: none;
+  background-color: white;
+  color: #F58C60;
+}
+
+.eventModalCancel:hover {
+  background-color: #F58C60;
+  color: white;
+}
+
+.eventModalAddToPost {
+  border: none;
+  background-color: #47D7AC;
+  color: white;
+}
+
+.eventModalAddToPost:hover {
+  background-color: #349175;
+  color: white;
+}
+
+.eventModalDropdownItem:active {
+  background-color: #47D7AC;
+}
+
+/* .AddEventModalEventDescription {} */
+
+.AddEventModalEventDates div {
+  width: 100%;
+}
+
 @media only screen and (max-width: 640px) {
 
   .dropdownBtn {

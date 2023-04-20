@@ -254,6 +254,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     });
   }, []);
 
+  console.log('USEROBJECT', userObject);
+
   useEffect(() => {
     postStructCreate();
   }, [myAnotherArr]);
@@ -1784,6 +1786,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     for (let i = 0; i < files.length; i++) {
       const temp = files[i];
       let resp = await UploadFilesToServer(temp, 'IMAGE');
+      if (!resp?.data) break;
       let uniqueId = generateUniqueId();
       fileArray.push({ id: uniqueId, url: resp?.data, mediaType: 'IMAGE', mediaSequence: 0 });
     }
@@ -1798,6 +1801,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
     for (let i = 0; i < files.length; i++) {
       let resp = await UploadFilesToServer(files[i], 'DOC');
+      if (!resp?.data) break;
       let uniqueId = generateUniqueId();
       fileArray.push({
         id: uniqueId,
@@ -1819,7 +1823,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
     for (let i = 0; i < files?.length; i++) {
       let resp = await UploadFilesToServer(files[i], 'VIDEO');
-      resp;
+      if (!resp?.data) break;
       let uniqueId = generateUniqueId();
       fileArray.push({
         id: uniqueId,
@@ -1979,11 +1983,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const day = String(now.getDate()).padStart(2, '0');
-  const hours = String(now.getHours()).padStart(2, '0');
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  const minDate = `${year}-${month}-${day}T${hours}:${minutes}:00`;
-
-  let [eventTypeSelectError, setEventTypeSelectError] = useState(false);
+  // const hours = String(now.getHours()).padStart(2, '0');
+  // const minutes = String(now.getMinutes()).padStart(2, '0');
+  const minDate = `${year}-${month}-${day}`;
 
   function emptyEvent() {
     setEventPost('');
@@ -1992,19 +1994,22 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   function submitEventForm(event: any) {
     event.preventDefault();
     if (eventType === 'Select Event Type') {
-      setEventTypeSelectError(true);
+      setShowNofitication(true);
+      setToastError(true);
+      setToastMessage('Please Select Event Type !');
       return;
-    } else setEventTypeSelectError(false);
+    }
     const title = event.target[1].value;
-    const description = event.target[2].value;
-    const date = event.target[3].value;
+    const date = event.target[2].value;
+    const time = event.target[3].value;
+    const description = event.target[5].value;
 
     setEventPost({
       event: {
         title: title,
         description: description,
         eventType: eventType,
-        eventDate: date,
+        eventDate: `${date}T${time}`,
       },
     });
     setShowEvent(false);
@@ -2012,15 +2017,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setEventType('Select Event Type');
   }
 
-  useEffect(() => {
-    if (eventType != 'Select Event Type') {
-      setEventTypeSelectError(false);
-    }
-  }, [eventType]);
-
   let [showPollForm, setShowPollForm] = useState(false);
-  // let [eventTypeSelectError, setEventTypeSelectError] = useState(false);
-  // let [createNewEventPostError, setCreateNewEventPostError] = useState(false);
   let option1Id = generateUniqueId();
   let option2Id = generateUniqueId();
   let option1 = {
@@ -2135,6 +2132,27 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     clearPollForm();
     setShowPollForm(false);
   }
+
+  let [eventImage, setEventImage] = useState(
+    'https://chinchincelebration.com/wp-content/uploads/2019/08/product-launch-events-min.png'
+  );
+
+  useEffect(() => {
+    props?.fields?.data?.datasource?.eventType?.targetItems.map((item: any) => {
+      if (item?.title?.jsonValue?.value === 'Seminar')
+        item.image =
+          'https://higherlogicdownload.s3.amazonaws.com/APSNET/UploadedImages/tAiEB79vTYq1gz2UEGu1_IMG_2866-L.jpg';
+      if (item?.title?.jsonValue?.value === 'Conference')
+        item.image = 'https://th.bing.com/th/id/OIP.IXdC6XgETCp5RaM3iQCb6QHaE8?pid=ImgDet&rs=1';
+      if (item?.title?.jsonValue?.value === 'Announcement')
+        item.image = 'https://th.bing.com/th/id/OIP.zPaWJzUBQwbXDjhCtCtI1gHaE8?pid=ImgDet&rs=1';
+      if (item?.title?.jsonValue?.value === 'Launch Event')
+        item.image = 'https://live.staticflickr.com/808/39724254630_e9cdcb8e77_b.jpg';
+      if (item?.title?.jsonValue?.value === 'Celebration')
+        item.image = 'https://th.bing.com/th/id/OIP.E1RiHHXMHUcq0L0KvprXfQHaEn?pid=ImgDet&rs=1';
+      return item;
+    });
+  }, [props]);
 
   return (
     <>
@@ -2502,53 +2520,70 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 }}
               >
                 <div>
-                  <Form
-                    onSubmit={(e: any) => submitEventForm(e)}
-                    style={{ fontSize: '15px', margin: '5px' }}
-                  >
+                  <Form onSubmit={(e: any) => submitEventForm(e)} style={{ fontSize: '15px' }}>
                     <Modal.Header closeButton>
                       <Modal.Title className={styles.AddEventModalHeader}>
                         Create Event Post
                       </Modal.Title>
                     </Modal.Header>
+                    <div className={styles.AddEventModalBody}>
+                      <img width="100%" src={eventImage} />
+                    </div>
                     <Modal.Body>
-                      <div className={styles.reportPostModalBody}>Event Parameters</div>
+                      <div className={styles.AddEventModalProfile}>
+                        <div className={styles.AddEventModalProfilePic}>
+                          <img src={Profile.src} />
+                        </div>
+                        <div style={{ alignSelf: 'center' }}>
+                          <div style={{ fontSize: '14px', fontWeight: '600' }}>
+                            {userObject?.firstName
+                              ? `${userObject?.firstName} ${userObject?.lastName}`
+                              : 'John Doe'}
+                          </div>
+                          {/* <div style={{ fontSize: '14px', color: 'grey' }}>Profile</div> */}
+                        </div>
+                      </div>
                       <Form.Group className="mb-3">
-                        <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
-                          Title
-                        </Form.Label>
-                        <Form.Control required type="text" placeholder="Enter Event Title" />
-                        <Form.Control.Feedback type="invalid">
-                          Please select an event date.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                      <Form.Group className="mb-3">
-                        <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
-                          Description
-                        </Form.Label>
                         <Form.Control
+                          className={styles.AddEventModalEventName}
+                          style={{ fontSize: '18px', color: 'black', fontWeight: '800px' }}
                           required
-                          type="textarea"
-                          placeholder="Enter Event Description"
+                          type="text"
+                          placeholder="Event Name"
                         />
                       </Form.Group>
+                      <div
+                        style={{ display: 'flex', gap: '12px' }}
+                        className={`${styles.AddEventModalEventDates} mb-3`}
+                      >
+                        <Form.Group>
+                          <Form.Control
+                            required
+                            type="date"
+                            placeholder="Event Date"
+                            className={styles.DateInput}
+                            min={minDate}
+                          />
+                        </Form.Group>
+                        <Form.Group>
+                          <Form.Control
+                            className={styles.TimeInput}
+                            required
+                            type="time"
+                            placeholder="Event Time"
+                          />
+                        </Form.Group>
+                      </div>
                       <Form.Group className="mb-3">
-                        <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
-                          Date
-                        </Form.Label>
-                        <Form.Control
-                          required
-                          type="datetime-local"
-                          placeholder="Event Date"
-                          min={minDate}
-                        />
-                      </Form.Group>
-                      <Form.Group className="mb-3">
-                        <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
-                          Event Type
-                        </Form.Label>
                         <Dropdown className="eventTypeDropdown">
-                          <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                          <Dropdown.Toggle
+                            variant="secondary"
+                            id="dropdown-basic"
+                            style={{
+                              width: '100%',
+                            }}
+                            className={styles.eventTypeDropdownToggle}
+                          >
                             {eventType}
                           </Dropdown.Toggle>
 
@@ -2558,7 +2593,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                 return (
                                   <Dropdown.Item
                                     href="#"
-                                    onClick={() => setEventType(item?.title?.jsonValue?.value)}
+                                    onClick={() => {
+                                      setEventType(item?.title?.jsonValue?.value);
+                                      setEventImage(item?.image);
+                                    }}
+                                    className={styles.eventModalDropdownItem}
                                   >
                                     {item?.title?.jsonValue?.value}
                                   </Dropdown.Item>
@@ -2567,7 +2606,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                             )}
                           </Dropdown.Menu>
                         </Dropdown>
-                        <div style={{ height: '40px' }}>
+                        {/* <div style={{ height: '40px' }}>
                           {eventTypeSelectError ? (
                             <div style={{ color: 'red', fontSize: '12px', fontWeight: '1000' }}>
                               * Please Select Valid Event Type
@@ -2575,12 +2614,22 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           ) : (
                             ''
                           )}
-                        </div>
+                        </div> */}
+                      </Form.Group>
+                      <Form.Group className="mb-3">
+                        <Form.Control
+                          className={`${styles.AddEventModalEventName} ${styles.AddEventModalEventDescription}`}
+                          required
+                          as="textarea"
+                          rows={2}
+                          placeholder="Description"
+                          style={{ resize: 'none' }}
+                        />
                       </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>
                       <Button
-                        className={styles.footerBtn}
+                        className={styles.eventModalCancel}
                         variant="secondary"
                         onClick={() => {
                           setShowEvent(false);
@@ -2590,7 +2639,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         Cancel
                       </Button>
                       <Button
-                        className={styles.footerBtn}
+                        className={styles.eventModalAddToPost}
                         variant="secondary"
                         type="submit"
                         // onClick={onPostReported}
