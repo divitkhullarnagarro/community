@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import WebContext from '../Context/WebContext';
 import styles from '../assets/blockeduser.module.css';
-import BlockUserImage from '../assets/images/BlockUser.jpg';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
-import { Button, Dropdown, Modal, Spinner } from 'react-bootstrap';
-import MoreOptionsImage from '../assets/images/MoreOptions.jpg';
+import { Modal, Spinner } from 'react-bootstrap';
+import moreLogo from '../assets/images/moreLogo.svg';
 // import Email from '../assets/images/EmailIcon.jpg';
 import { useRouter } from 'next/router';
 // import Profile from '../assets/images/profile.png';
 import BlockedUserPreviewImage from '../assets/images/BlockedUserPreviewImage.png';
 import { unBlockUserCall, getBlockedUserList } from 'src/API/blockUnblockUserCall';
 import ToastNotification from './ToastNotification';
+import Image from 'next/image';
+import unBlockLogo from '../assets/images/UnblockUser.svg';
 type blockedUserFields = {
   firstName: string;
   lastName: string;
@@ -25,17 +26,20 @@ function BlockedUser() {
   const SideNavHeaderLabel = 'Blocked Users List';
   const NoUsersBlockedLabel = "You haven't blocked anyone";
   const FetchingUsersLabel = 'Fetching blocked users...';
-  const PreviewUserProfileLabel = "Select people's name to preview their profile.";
+  const PreviewUserProfileLabel = "List of blocked members...";
 
-  // const UnblockingUserEffectListLabel = [
-  //   'Add you as a friend',
-  //   'See your posts on the timeline',
-  //   'Invite you to groups',
-  // ];
+  const UnblockingUserEffectListLabel = [
+    'See your posts on the timeline',
+    'Tag you',
+    'Invite you to events or groups',
+    'Message you',
+    'Add you as a friend',
+  ];
 
   const router = useRouter();
   const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
   // const [showPreviewImage, setShowPreviewImage] = useState(true);
+  const [isSelectedMoreOption, setIsSelectedMoreOption] = useState('');
   const [blockedUserDetails, setBlockedUserDetails] = useState<blockedUserFields>();
   const [blockedUserList, setBlockedUserList] = useState<blockedUserFields[]>();
   const [showFetchingUsers, setShowFetchingUsers] = useState(false);
@@ -98,32 +102,36 @@ function BlockedUser() {
               <Modal.Title className={styles.blockedUserModalHeader}>{'Unblock User'}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div
-                className={styles.blockedUserModalBody}
-              >{`Do you want to unblock ${blockedUserDetails?.firstName} ${blockedUserDetails?.lastName} ?`}</div>
+              <div className={styles.unblockUserName}>
+                <strong>{` ${blockedUserDetails?.firstName} ${blockedUserDetails?.lastName} `}</strong>
+                will be able to :
+                <ul>
+                  {UnblockingUserEffectListLabel.map((item) => {
+                    return <li>{item}</li>;
+                  })}
+                </ul>
+              </div>
+              <div className={styles.unblockUserContition}>
+                If you have read the conditions and are okay with it, Proceed with :
+              </div>
             </Modal.Body>
             <Modal.Footer>
-              <Button
-                className={styles.footerBtn}
-                variant="secondary"
+              <button
+                className={styles.unblockCancelBtn}
                 onClick={() => {
                   setShowBlockUserPopUp(false);
                 }}
               >
                 Cancel
-              </Button>
-              <Button
-                className={styles.footerBtn}
-                variant="secondary"
-                onClick={() => onUserUnblocked()}
-              >
-                Unblock
+              </button>
+              <button className={styles.unBlockConfirm} onClick={() => onUserUnblocked()}>
+                Confirm
                 {showSpinner ? (
-                  <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
+                  <Spinner style={{ marginLeft: '5px', width: '20px', height: '20px' }} />
                 ) : (
                   <></>
                 )}
-              </Button>
+              </button>
             </Modal.Footer>
           </div>
         </Modal>
@@ -161,17 +169,60 @@ function BlockedUser() {
         <div className={styles.blockedUserwrapper}>
           <div className={styles.blockedUserRow}>
             {/* <Button className={styles.buttonRow} onClick={() => getBlockedUserProfile(user)}> */}
-              <div className={styles.leftContainer}>
-                <img
-                  className={styles.blockedUserImage}
-                  src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
-                  alt="User-Pic"
-                ></img>
-                <div className={styles.blockedUserName}>{`${user.firstName} ${user.lastName}`}</div>
-              </div>
+            <div className={styles.leftContainer}>
+              <img
+                className={styles.blockedUserImage}
+                src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                alt="User-Pic"
+              ></img>
+
+              <div className={styles.blockedUserName}>{`${user.firstName} ${user.lastName}`}</div>
+            </div>
+            <div>
+              <Image
+                src={moreLogo}
+                className={styles.groupListMoreLogo}
+                onClick={() => {
+                  if (isSelectedMoreOption == user.objectId) {
+                    setIsSelectedMoreOption('');
+                  } else {
+                    setIsSelectedMoreOption(user.objectId);
+                  }
+                }}
+              />
+              {isSelectedMoreOption == user.objectId && (
+                <div
+                  className={styles.moreOptionList}
+                  onClick={() => {
+                    setIsSelectedMoreOption(user.objectId);
+                  }}
+                  // onMouseLeave={() => {
+                  //   setIsSelectedMoreOption(-1);
+                  // }}
+                >
+                  <button
+                    className={styles.moreOptionButton}
+                    onClick={() => {
+                      setBlockedUserDetails(user);
+                      setShowBlockUserPopUp(true);
+                    }}
+                  >
+                    <div style={{ marginTop: '3px' }}>
+                      <Image
+                        src={unBlockLogo}
+                        // className={styles.moreOptionButton}
+                        height={17}
+                        width={17}
+                      />
+                    </div>
+                    Unblock user
+                  </button>
+                </div>
+              )}
+            </div>
             {/* </Button> */}
 
-            <Dropdown>
+            {/* <Dropdown>
               <Dropdown.Toggle variant="secondary" className={styles.blockedUserDropdownBtn}>
                 <button className={styles.moreOptions}>
                   <NextImage
@@ -198,7 +249,7 @@ function BlockedUser() {
                   </div>
                 </Dropdown.Item>
               </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> */}
           </div>
         </div>
       </>
