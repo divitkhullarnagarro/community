@@ -5,6 +5,7 @@
             "nodeVersion": "16.15.1",
             "jssDeploymentSecret":"n6uut156izfipoz5hx03fswllvp5taofyymy22bkd3q",
             "enabled": true,
+            "type" : "sxa",
             "lintCommand": "lint",
             "startCommand": "start:production"
         }
