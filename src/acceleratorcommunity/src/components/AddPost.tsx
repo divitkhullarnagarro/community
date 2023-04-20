@@ -332,6 +332,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const handleDownvote = (commentId: string) => {
     downVoteCall(userToken, commentId);
   };
+
+  //RemoveMe and Implement Upvote & DownVote
+  handleDownvote;
+  handleUpvote;
+
   const BlockUserPopup = () => {
     return (
       <>
