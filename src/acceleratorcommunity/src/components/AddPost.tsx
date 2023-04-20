@@ -2354,6 +2354,71 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                             );
                           })}
                         </div>
+                        <div>
+                          {eventPost?.event?.title ? (
+                            <div style={{ display: 'grid' }}>
+                              <button
+                                style={{
+                                  position: 'absolute',
+                                  justifySelf: 'flex-end',
+                                  marginTop: '20px',
+                                  border: 'none',
+                                  borderRadius: '20px',
+                                }}
+                                type="button"
+                                onClick={() => emptyEvent()}
+                              >
+                                <img
+                                  width="30px"
+                                  src="   https://cdn-icons-png.flaticon.com/512/1617/1617543.png "
+                                  alt="crossButton"
+                                />
+                              </button>
+                              <EventCard
+                                heading={eventPost?.event?.title}
+                                description={eventPost?.event?.description}
+                                date={eventPost?.event?.eventDate}
+                                eventType={eventPost?.event?.eventType}
+                              />
+                            </div>
+                          ) : (
+                            ''
+                          )}
+                        </div>
+                        <div>
+                          {pollPost?.poll?.pollQuestion ? (
+                            <div
+                              style={{
+                                padding: '12px',
+                                border: '1px solid darkgrey',
+                                borderRadius: '20px',
+                                margin: '16px',
+                              }}
+                            >
+                              <button
+                                type="button"
+                                onClick={() => emptyPollPost()}
+                                style={{
+                                  border: 'none',
+                                  backgroundColor: 'white',
+                                  position: 'relative',
+                                  float: 'right',
+                                  padding: '0px',
+                                  borderRadius: '30px',
+                                }}
+                              >
+                                <img
+                                  width="30px"
+                                  src="https://cdn-icons-png.flaticon.com/512/1617/1617543.png"
+                                  alt="crossButton"
+                                />
+                              </button>
+                              <PollCard pollPost={pollPost} />
+                            </div>
+                          ) : (
+                            ''
+                          )}
+                        </div>
                       </Form>
                     </div>
                   </div>
