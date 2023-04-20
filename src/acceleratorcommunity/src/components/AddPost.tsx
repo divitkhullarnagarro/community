@@ -1128,19 +1128,20 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 }}
                 style={{ border: '1px', borderColor: 'black' }}
               >
-                <Form.Group className="mb-3" controlId="comments" style={{ display: 'flex' }}>
+                <Form.Group className="mb-2" controlId="comments" style={{ display: 'flex', padding: '5px 15px 0' }}>
                   <img
                     className="commentUserImage"
                     src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                     alt="User-Pic"
+                    style={{ marginLeft: '0'}}
                   ></img>
                   <Form.Control
                     // onChange={(e) => setPostCommentValue(e.target.value)}
                     type="text"
-                    placeholder="Add Comments..."
+                    placeholder="Write a Comment..."
                     required
                     autoFocus
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', fontSize: '13px', color: '#a5a9ae' }}
                   />
                   <button type="submit" className="postCommentButton">
                     PostComment
@@ -1150,260 +1151,271 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               {post?.comments?.map((comment: any) => {
                 return (
                   <>
-                    <div
-                      className="commentContainer"
-                      id={comment?.id}
-                      style={{
-                        padding: '0px',
-                        backgroundColor: 'lightgray',
-                        margin: '5px',
-                        // borderBottomLeftRadius: '30px',
-                        // borderTopRightRadius: '30px',
-                        // borderBottomRightRadius: '30px',
-                        borderRadius: '10px',
-                        marginTop: '20px',
-                        marginLeft: '65px',
-                        marginRight: '10px',
-                      }}
-                    >
-                      <div className="commentHeadingTop">
-                        {comment?.createdBy?.firstName} {comment?.createdBy?.lastName}
-                        <span style={{ fontSize: '12px', marginLeft: '5px' }}>
-                          {' '}
-                          {calculateTimeDifference(comment?.createdOn)}
-                        </span>
-                      </div>
-                      <div className="commentHeading">{comment?.text}</div>
-                      <div
-                        onClick={() => getAllupVotesAndDownVotes(comment?.id)}
-                        className="upvoteDownvoteContainer"
-                      >
-                        <div className="likecomments">
-                          <img
-                            className="likecomments"
-                            src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
-                          />
+                  <div className='commentSection'>
+                     <figure>
+                        <img
+                           className="commentUserImage"
+                           src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                           alt="User-Pic"
+                           style={{
+                              marginLeft: '0',
+                           }}
+                        ></img>
+                     </figure>
+                     <div
+                        className="commentContainer"
+                        id={comment?.id}
+                        style={{
+                           padding: '10px',
+                           backgroundColor: '#F0F0F0',
+                           borderRadius: '10px',
+                        }}
+                     >
+                        <h5 className="commentHeadingTop">
+                           {comment?.createdBy?.firstName} {comment?.createdBy?.lastName}
+                        </h5>
+                        <p className="commentHeading">{comment?.text}</p>
+                        <div
+                           onClick={() => getAllupVotesAndDownVotes(comment?.id)}
+                           className="upvoteDownvoteContainer"
+                        >
+                           <div className="likecomments">
+                              <img
+                                 className="likecomments"
+                                 src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
+                              />
+                           </div>
+                           <div className="likecomments">
+                              <img
+                                 className="likecomments"
+                                 src={'https://img.icons8.com/ios-filled/256/thumbs-down.png'}
+                              />
+                           </div>
                         </div>
-                        <div className="likecomments">
-                          <img
-                            className="likecomments"
-                            src={'https://img.icons8.com/ios-filled/256/thumbs-down.png'}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div style={{ marginLeft: '65px' }}>
-                        <span onClick={() => handleUpvote(comment?.id)}>
-                          <img
-                            className="likecomments"
-                            src={
-                              post?.isLikedByUser
-                                ? 'https://cdn-icons-png.flaticon.com/512/739/739231.png'
-                                : 'https://cdn-icons-png.flaticon.com/512/126/126473.png'
-                            }
-                            //https://cdn-icons-png.flaticon.com/512/739/739231.png
-                            alt="actions"
-                          />
+                     </div>
+                  </div>
+
+                  <div>
+                     <div style={{ marginLeft: '55px' }}>
+                        {/* <span onClick={() => handleUpvote(comment?.id)}>
+                           <img
+                              className="likecomments"
+                              src={
+                                 post?.isLikedByUser
+                                 ? 'https://cdn-icons-png.flaticon.com/512/739/739231.png'
+                                 : 'https://cdn-icons-png.flaticon.com/512/126/126473.png'
+                              }
+                              //https://cdn-icons-png.flaticon.com/512/739/739231.png
+                              alt="actions"
+                           />
                         </span>
                         <span onClick={() => handleDownvote(comment?.id)}>
-                          <img
-                            width="30px"
-                            style={{ margin: '5px' }}
-                            className="likecomments"
-                            src="https://img.icons8.com/ios/256/thumbs-down.png"
-                            alt="downVote"
-                          />
-                        </span>
+                           <img
+                              width="30px"
+                              style={{ margin: '5px' }}
+                              className="likecomments"
+                              src="https://img.icons8.com/ios/256/thumbs-down.png"
+                              alt="downVote"
+                           />
+                        </span> */}
                         <button
-                          onClick={() =>
-                            openCommentReplies(post?.id, comment?.id, !comment?.isOpenReply)
-                          }
-                          aria-controls="repliesContainer"
-                          aria-expanded={comment?.isOpenReply}
-                          style={{ border: 'none', marginLeft: '16px', fontSize: '12px' }}
-                          disabled={comment?.isRespPending}
+                           onClick={() =>
+                              openCommentReplies(post?.id, comment?.id, !comment?.isOpenReply)
+                           }
+                           aria-controls="repliesContainer"
+                           aria-expanded={comment?.isOpenReply}
+                           className="commentReply"
+                           disabled={comment?.isRespPending}
                         >
-                          Reply
+                           Reply
                         </button>
-                      </div>
-                      <Collapse in={comment?.isOpenReply}>
+                        <span className='commentPostDate' style={{ fontSize: '12px'}}>
+                           {' '}
+                           {calculateTimeDifference(comment?.createdOn)}
+                        </span>
+                     </div>
+                     <Collapse in={comment?.isOpenReply}>
                         <div style={{ position: 'relative', left: '10%', width: '88%' }}>
-                          <Form
-                            onSubmit={(e) => {
-                              postCommentReply(post?.id, comment?.id, e);
-                            }}
-                            style={{ border: '1px', borderColor: 'black' }}
-                          >
-                            <Form.Group controlId="comments" style={{ display: 'flex' }}>
-                              <img
-                                width="32px"
-                                className="commentUserImage"
-                                src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
-                                alt="User-Pic"
-                              ></img>
-                              <Form.Control
-                                // onChange={(e) => setPostCommentValue(e.target.value)}
-                                type="text"
-                                placeholder="Reply..."
-                                required
-                                autoFocus
-                                style={{ width: '100%' }}
-                              />
-                              <button type="submit" className="postCommentButton">
-                                Post reply
-                              </button>
-                            </Form.Group>
-                          </Form>
-                          {comment?.replies?.map((reply: any) => {
-                            return (
+                           <Form
+                              onSubmit={(e) => {
+                                 postCommentReply(post?.id, comment?.id, e);
+                              }}
+                              style={{ border: '1px', borderColor: 'black' }}
+                           >
+                              <Form.Group controlId="comments" style={{ display: 'flex', padding: '5px 0 15px 15px' }}>
+                                 <img
+                                 width="32px"
+                                 className="commentUserImage"
+                                 src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                                 alt="User-Pic"
+                                 style={{ marginLeft: '0' }}
+                                 ></img>
+                                 <Form.Control
+                                 // onChange={(e) => setPostCommentValue(e.target.value)}
+                                    type="text"
+                                    placeholder="Reply..."
+                                    required
+                                    autoFocus
+                                    style={{ width: '100%', color: '#a5a9ae', fontSize: '13px' }}
+                                 />
+                                 <button type="submit" className="postCommentButton">
+                                 Post reply
+                                 </button>
+                              </Form.Group>
+                        </Form>
+                        {comment?.replies?.map((reply: any) => {
+                           return (
                               <>
-                                <div
-                                  id={reply?.id}
-                                  style={{
-                                    padding: '20px',
-                                    backgroundColor: 'lightgray',
-                                    margin: '5px',
-                                    borderBottomLeftRadius: '30px',
-                                    borderTopRightRadius: '30px',
-                                    borderBottomRightRadius: '30px',
-                                    marginTop: '20px',
-                                    marginLeft: '10%',
-                                  }}
-                                  className="commentContainer"
-                                >
-                                  <div>
-                                    <span style={{ fontSize: '15px', fontWeight: '600' }}>
-                                      {reply?.createdBy?.firstName} {reply?.createdBy?.lastName}{' '}
-                                    </span>
-                                    <span style={{ fontSize: '12px' }}>
-                                      {' '}
-                                      {calculateTimeDifference(reply?.createdOn)}
-                                    </span>
-                                  </div>
-                                  <div>{reply?.text}</div>
-                                  <div
-                                    onClick={() => getAllupVotesAndDownVotes(reply?.id)}
-                                    className="upvoteDownvoteContainer"
-                                  >
-                                    <div className="likecomments">
-                                      <img
-                                        className="likecomments"
-                                        src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
-                                      />
-                                    </div>
-                                    <div className="likecomments">
-                                      <img
-                                        className="likecomments"
-                                        src={
-                                          'https://img.icons8.com/ios-filled/256/thumbs-down.png'
-                                        }
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div
-                                  style={{
-                                    marginBottom: '10px',
-                                    position: 'relative',
-                                    left: '10%',
-                                    width: '88%',
-                                  }}
-                                >
-                                  <span onClick={() => handleUpvote(reply?.id)}>
+                              <div className='commentSection'>
+                                 <figure>
                                     <img
-                                      style={{ margin: '5px' }}
-                                      width="30px"
-                                      className="likecomments"
-                                      src="https://cdn-icons-png.flaticon.com/512/126/126473.png"
-                                      alt="upvote"
-                                    />
-                                  </span>
-                                  <span onClick={() => handleDownvote(reply?.id)}>
+                                       className="commentUserImage"
+                                       src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                                       alt="User-Pic"
+                                       style={{
+                                          marginLeft: '0',
+                                       }}
+                                    ></img>
+                                 </figure>
+                                 <div
+                                    id={reply?.id}
+                                    style={{
+                                       padding: '10px',
+                                       backgroundColor: '#F0F0F0',
+                                       borderRadius: '10px',
+                                    }}
+                                    className="commentContainer"
+                                 >
+                                    <h5 className="commentHeadingTop">
+                                       {reply?.createdBy?.firstName} {reply?.createdBy?.lastName}{' '}
+                                    </h5>
+                                    <p className="commentHeading">{reply?.text}</p>
+                                    <div
+                                       onClick={() => getAllupVotesAndDownVotes(reply?.id)}
+                                       className="upvoteDownvoteContainer"
+                                    >
+                                       <div className="likecomments">
+                                       <img
+                                          className="likecomments"
+                                          src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
+                                       />
+                                       </div>
+                                       <div className="likecomments">
+                                       <img
+                                          className="likecomments"
+                                          src={
+                                             'https://img.icons8.com/ios-filled/256/thumbs-down.png'
+                                          }
+                                       />
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              
+                              <div
+                                 style={{
+                                    marginLeft: '55px'
+                                 }}
+                              >
+                                 {/* <span onClick={() => handleUpvote(reply?.id)}>
                                     <img
-                                      width="30px"
-                                      style={{ margin: '5px' }}
-                                      className="likecomments"
-                                      src="https://img.icons8.com/ios/256/thumbs-down.png"
-                                      alt="downVote"
+                                    style={{ margin: '5px' }}
+                                    width="30px"
+                                    className="likecomments"
+                                    src="https://cdn-icons-png.flaticon.com/512/126/126473.png"
+                                    alt="upvote"
                                     />
-                                  </span>
-                                  <button
+                                 </span>
+                                 <span onClick={() => handleDownvote(reply?.id)}>
+                                    <img
+                                    width="30px"
+                                    style={{ margin: '5px' }}
+                                    className="likecomments"
+                                    src="https://img.icons8.com/ios/256/thumbs-down.png"
+                                    alt="downVote"
+                                    />
+                                 </span> */}
+                                 <button
                                     aria-controls="replyOfReplyContainer"
                                     aria-expanded={reply?.isOpenReplyOfReply}
-                                    style={{ border: 'none' }}
+                                    className="commentReply"
                                     onClick={() =>
-                                      openReplyOfReply(
-                                        post?.id,
-                                        comment?.id,
-                                        reply?.id,
-                                        !reply?.isOpenReplyOfReply
-                                      )
+                                    openReplyOfReply(
+                                       post?.id,
+                                       comment?.id,
+                                       reply?.id,
+                                       !reply?.isOpenReplyOfReply
+                                    )
                                     }
                                     disabled={reply?.isRespPending}
-                                  >
+                                 >
                                     Reply
-                                  </button>
-                                </div>
-                                <Collapse in={reply?.isOpenReplyOfReply}>
-                                  <div style={{ position: 'relative', left: '10%', width: '88%' }}>
+                                 </button>
+                                 <span className='commentPostDate' style={{ fontSize: '12px' }}>
+                                    {' '}
+                                    {calculateTimeDifference(reply?.createdOn)}
+                                 </span>     
+                              </div>
+                              <Collapse in={reply?.isOpenReplyOfReply}>
+                                 <div style={{ position: 'relative', left: '10%', width: '88%' }}>
                                     <Form
-                                      onSubmit={(e) => {
-                                        postCommentReply(post?.id, comment?.id, e);
-                                      }}
-                                      style={{ border: '1px', borderColor: 'black' }}
+                                    onSubmit={(e) => {
+                                       postCommentReply(post?.id, comment?.id, e);
+                                    }}
+                                    style={{ border: '1px', borderColor: 'black' }}
                                     >
-                                      <Form.Group controlId="comments" style={{ display: 'flex' }}>
-                                        <img
+                                    <Form.Group controlId="comments" style={{ display: 'flex' }}>
+                                       <img
                                           width="32px"
                                           className="commentUserImage"
                                           src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                                           alt="User-Pic"
-                                        ></img>
-                                        <Form.Control
+                                          style={{ marginLeft: '0' }}
+                                       ></img>
+                                       <Form.Control
                                           // onChange={(e) => setPostCommentValue(e.target.value)}
                                           type="text"
                                           placeholder="Reply..."
                                           required
                                           autoFocus
-                                          style={{ width: '100%' }}
-                                        />
-                                        <button type="submit" className="postCommentButton">
+                                          style={{ width: '100%', color: '#a5a9ae', fontSize: '13px' }}
+                                       />
+                                       <button type="submit" className="postCommentButton">
                                           Post reply
-                                        </button>
-                                      </Form.Group>
+                                       </button>
+                                    </Form.Group>
                                     </Form>
-                                  </div>
-                                </Collapse>
+                                 </div>
+                              </Collapse>
                               </>
-                            );
-                          })}
-                          {comment?.hasReply ? (
-                            <div
+                           );
+                        })}
+                        {comment?.hasReply ? (
+                           <div
                               style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                marginBottom: '16px',
-                                marginTop: '16px',
+                              display: 'flex',
+                              justifyContent: 'center',
+                              marginBottom: '16px',
+                              marginTop: '16px',
                               }}
-                            >
+                           >
                               {comment.isLoadingReplies ? (
-                                <Spinner animation="border" />
+                              <Spinner animation="border" />
                               ) : (
-                                <button
-                                  onClick={() => loadCommentReplies(post?.id, comment?.id)}
-                                  style={{ padding: '5px', border: 'none' }}
-                                >
-                                  <span>Load Replies...</span>
-                                </button>
+                              <button
+                                 onClick={() => loadCommentReplies(post?.id, comment?.id)}
+                                 className='postCommentButton'
+                              >
+                                 <span>Load Replies...</span>
+                              </button>
                               )}
-                            </div>
-                          ) : (
-                            ''
-                          )}
+                           </div>
+                        ) : (
+                           ''
+                        )}
                         </div>
-                      </Collapse>
-                    </div>
+                     </Collapse>
+                  </div>
                   </>
                 );
               })}
@@ -1414,11 +1426,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   ) : (
                     <button
                       onClick={() => loadComments(post.id)}
-                      style={{
-                        padding: '12px',
-                        border: 'none',
-                        borderRadius: '10px',
-                      }}
+                      className='postCommentButton'
                     >
                       <span>Load Comments...</span>
                     </button>
@@ -1945,7 +1953,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         className={addPostCss.modal}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Reactions</Modal.Title>
+          <Modal.Title style={{ color: '#283895' }}>Reactions</Modal.Title>
         </Modal.Header>
         <Modal.Body className={addPostCss.modalBody}>
           <div className={addPostCss.btnConatiner}>
@@ -1955,10 +1963,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 ALL
               </button> */}
-            <button onClick={handleUp} className={addPostCss.filterBtn}>
+            <button onClick={handleUp} className={addPostCss.filterBtn} style={{ color: '#000E46' }}>
               Up
             </button>
-            <button onClick={handleDown} className={addPostCss.filterBtn}>
+            <button onClick={handleDown} className={addPostCss.filterBtn} style={{ color: '#000E46' }}>
               Down
             </button>
           </div>
@@ -1991,7 +1999,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               })}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={closeModal}>
+          <Button variant='' onClick={closeModal} className='closeButton'>
             Close
           </Button>
         </Modal.Footer>
