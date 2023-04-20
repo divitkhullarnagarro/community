@@ -50,8 +50,8 @@ const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mo
 
 import BlockUserImage from '../assets/images/BlockUser.jpg';
 import React from 'react';
-import upVoteCall from 'src/API/upVote';
-import downVoteCall from 'src/API/downVote';
+// import upVoteCall from 'src/API/upVote';
+// import downVoteCall from 'src/API/downVote';
 import getAllDownVotesCall from 'src/API/getAllDownVotesCall';
 import getAllUpVotesCall from 'src/API/getAllUpVotes';
 import Profile from '../assets/images/profile.png';
@@ -325,12 +325,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setShowSpinner(false);
   };
 
-  const handleUpvote = (commentId: string) => {
-    upVoteCall(userToken, commentId);
-  };
-  const handleDownvote = (commentId: string) => {
-    downVoteCall(userToken, commentId);
-  };
+  // const handleUpvote = (commentId: string) => {
+  //   upVoteCall(userToken, commentId);
+  // };
+  // const handleDownvote = (commentId: string) => {
+  //   downVoteCall(userToken, commentId);
+  // };
   const BlockUserPopup = () => {
     return (
       <>
