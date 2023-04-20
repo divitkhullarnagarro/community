@@ -2,14 +2,14 @@
   margin-top: 20px;
   display: flex;
   background-color: white;
-  font-family: 'Nunito', sans-serif;
+  font-family:'Equip';
   justify-content: flex-start;
 }
 
 .left_column {
   flex: 0 0 20%;
   background-color: white;
-  margin-left: 20px;  
+  /* margin-left: 20px;   */
 }
 
 .right_column {
@@ -29,7 +29,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  /* gap: 1.25rem; */
   padding-top: 50px;
   /* padding: 0.3125rem 0.625rem; */
   height: 100%;
@@ -41,6 +41,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   padding-top: 20px;
+  margin-left: 16px;
   /* border-radius: 10px; */
   /* border: 2px solid lightgray; */
   /* margin-top: 20px; */
@@ -87,12 +88,17 @@ box-shadow: 8px 1px 10px rgba(0, 0, 0, 0.05); */
 .blockedUserwrapper {
   margin: 5px;
 }
-
+.blockedUserwrapper:hover{
+  background-color: whitesmoke;
+}
 .sideNavHeader {
   display: flex;
-  justify-content: center;
-  font-size: 25px;
-  font-weight: bold;
+  font-family:'Equip-regular';
+  /* justify-content: center; */
+  font-size: 26px;
+  font-weight: 500;
+  color: #283895;
+  margin-left: 16px;
 }
 
 .overlayItem {
@@ -167,7 +173,7 @@ box-shadow: 8px 1px 10px rgba(0, 0, 0, 0.05); */
   justify-content: center;
 }
 .blockedUserPreviewImage {
-  font-family: 'Equip';
+  /* font-family: 'Equip'; */
   font-size: 24px;
   font-weight: 700;
   color: #091329;

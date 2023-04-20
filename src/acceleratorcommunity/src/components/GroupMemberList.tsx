@@ -25,9 +25,10 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
   };
   return (
     <>
-      <div>
+      <div className={style.groupMemberListBox}>
+      <h3 className={style.groupMemberTitle}>Members List</h3>
         <div className={style.groupMemberList}>
-          <h3 className={style.groupMemberTitle}>Members List</h3>
+          
           {list.map((ele) => (
             <>
               <div

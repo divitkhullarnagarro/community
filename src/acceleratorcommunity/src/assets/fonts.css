@@ -1,0 +1,54 @@
+@font-face {
+    font-family: 'Equip-Regular';
+    src: url('/assets/fonts/EquipExtended-Regular.eot');   
+    src: url('/assets/fonts/EquipExtended-Regular.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/EquipExtended-Regular.woff2') format('woff2'),
+        url('/assets/fonts/EquipExtended-Regular.woff') format('woff'),
+        url('/assets/fonts/EquipExtended-Regular.ttf') format('truetype');    
+}
+
+@font-face {
+    font-family: 'Equip-Medium';
+    src: url('../assets/fonts/EquipExtended-Medium.eot');
+    src: url('../assets/fonts/EquipExtended-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/EquipExtended-Medium.woff2') format('woff2'),
+        url('../assets/fonts/EquipExtended-Medium.woff') format('woff'),
+        url('../assets/fonts/EquipExtended-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Equip-Light';
+    src: url('../assets/fonts/EquipExtended-Light.eot');
+    src: url('../assets/fonts/EquipExtended-Light.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/EquipExtended-Light.woff2') format('woff2'),
+        url('../assets/fonts/EquipExtended-Light.woff') format('woff'),
+        url('../assets/fonts/EquipExtended-Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Equip-Italic';
+    src: url('../assets/fonts/EquipExtended-Italic.eot');
+    src: url('../assets/fonts/EquipExtended-Italic.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/EquipExtended-Italic.woff2') format('woff2'),
+        url('../assets/fonts/EquipExtended-Italic.woff') format('woff'),
+        url('../assets/fonts/EquipExtended-Italic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Equip-Bold';
+    src: url('../assets/fonts/EquipExtended-Bold.eot');
+    src: url('../assets/fonts/EquipExtended-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/EquipExtended-Bold.woff2') format('woff2'),
+        url('../assets/fonts/EquipExtended-Bold.woff') format('woff'),
+        url('../assets/fonts/EquipExtended-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Equip-Black';
+    src: url('../assets/fonts/EquipExtended-Black.eot');
+    src: url('../assets/fonts/EquipExtended-Black.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/EquipExtended-Black.woff2') format('woff2'),
+        url('../assets/fonts/EquipExtended-Black.woff') format('woff'),
+        url('../assets/fonts/EquipExtended-Black.ttf') format('truetype');
+}
+

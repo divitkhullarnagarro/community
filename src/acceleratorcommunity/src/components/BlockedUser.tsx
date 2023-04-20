@@ -5,9 +5,9 @@ import BlockUserImage from '../assets/images/BlockUser.jpg';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import { Button, Dropdown, Modal, Spinner } from 'react-bootstrap';
 import MoreOptionsImage from '../assets/images/MoreOptions.jpg';
-import Email from '../assets/images/EmailIcon.jpg';
+// import Email from '../assets/images/EmailIcon.jpg';
 import { useRouter } from 'next/router';
-import Profile from '../assets/images/profile.png';
+// import Profile from '../assets/images/profile.png';
 import BlockedUserPreviewImage from '../assets/images/BlockedUserPreviewImage.png';
 import { unBlockUserCall, getBlockedUserList } from 'src/API/blockUnblockUserCall';
 import ToastNotification from './ToastNotification';
@@ -27,15 +27,15 @@ function BlockedUser() {
   const FetchingUsersLabel = 'Fetching blocked users...';
   const PreviewUserProfileLabel = "Select people's name to preview their profile.";
 
-  const UnblockingUserEffectListLabel = [
-    'Add you as a friend',
-    'See your posts on the timeline',
-    'Invite you to groups',
-  ];
+  // const UnblockingUserEffectListLabel = [
+  //   'Add you as a friend',
+  //   'See your posts on the timeline',
+  //   'Invite you to groups',
+  // ];
 
   const router = useRouter();
   const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
-  const [showPreviewImage, setShowPreviewImage] = useState(true);
+  // const [showPreviewImage, setShowPreviewImage] = useState(true);
   const [blockedUserDetails, setBlockedUserDetails] = useState<blockedUserFields>();
   const [blockedUserList, setBlockedUserList] = useState<blockedUserFields[]>();
   const [showFetchingUsers, setShowFetchingUsers] = useState(false);
@@ -131,10 +131,10 @@ function BlockedUser() {
     );
   };
 
-  const getBlockedUserProfile = (user: blockedUserFields) => {
-    setBlockedUserDetails(user);
-    setShowPreviewImage(false);
-  };
+  // const getBlockedUserProfile = (user: blockedUserFields) => {
+  //   setBlockedUserDetails(user);
+  //   setShowPreviewImage(false);
+  // };
 
   const onUserUnblocked = async () => {
     setShowSpinner(true);
@@ -152,7 +152,7 @@ function BlockedUser() {
       getAllBlockedUsers(userToken);
     }
     setShowBlockUserPopUp(false);
-    setShowPreviewImage(true);
+    // setShowPreviewImage(true);
   };
 
   const BlockedUserRow = (user: blockedUserFields) => {
@@ -160,16 +160,16 @@ function BlockedUser() {
       <>
         <div className={styles.blockedUserwrapper}>
           <div className={styles.blockedUserRow}>
-            <Button className={styles.buttonRow} onClick={() => getBlockedUserProfile(user)}>
+            {/* <Button className={styles.buttonRow} onClick={() => getBlockedUserProfile(user)}> */}
               <div className={styles.leftContainer}>
                 <img
                   className={styles.blockedUserImage}
-                  src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                  src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                   alt="User-Pic"
                 ></img>
                 <div className={styles.blockedUserName}>{`${user.firstName} ${user.lastName}`}</div>
               </div>
-            </Button>
+            {/* </Button> */}
 
             <Dropdown>
               <Dropdown.Toggle variant="secondary" className={styles.blockedUserDropdownBtn}>
@@ -205,72 +205,72 @@ function BlockedUser() {
     );
   };
 
-  const BlockedUserPreviewProfile = () => {
-    return (
-      <div>
-        <div className={styles.headerWrapper}>
-          <div className={styles.content}>
-            <div className={styles.leftSection}>
-              <div className={styles.profileImage}>
-                <NextImage
-                  style={{ borderRadius: '50px' }}
-                  field={Profile}
-                  editable={true}
-                  height={180}
-                  width={180}
-                />
-              </div>
-            </div>
-            <div className={styles.profileInfoSection}>
-              <div className={styles.blockedUserDetailItem}>
-                <div
-                  className={styles.userName}
-                >{`${blockedUserDetails?.firstName} ${blockedUserDetails?.lastName}`}</div>
-                <div className={styles.userEmail}>
-                  <NextImage field={Email} editable={true} height={15} width={35} />
-                  <div className={styles.name}>{`${blockedUserDetails?.objectId}`}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className={styles.DetailsContainer}>
-          <div className={styles.rightContainerItem}>
-            <div className={styles.unblockedConditions}>
-              <div>
-                <strong>{` ${blockedUserDetails?.firstName} ${blockedUserDetails?.lastName} `}</strong>
-                will be able to :
-              </div>
+  // const BlockedUserPreviewProfile = () => {
+  //   return (
+  //     <div>
+  //       <div className={styles.headerWrapper}>
+  //         <div className={styles.content}>
+  //           <div className={styles.leftSection}>
+  //             <div className={styles.profileImage}>
+  //               <NextImage
+  //                 style={{ borderRadius: '50px' }}
+  //                 field={Profile}
+  //                 editable={true}
+  //                 height={180}
+  //                 width={180}
+  //               />
+  //             </div>
+  //           </div>
+  //           <div className={styles.profileInfoSection}>
+  //             <div className={styles.blockedUserDetailItem}>
+  //               <div
+  //                 className={styles.userName}
+  //               >{`${blockedUserDetails?.firstName} ${blockedUserDetails?.lastName}`}</div>
+  //               <div className={styles.userEmail}>
+  //                 <NextImage field={Email} editable={true} height={15} width={35} />
+  //                 <div className={styles.name}>{`${blockedUserDetails?.objectId}`}</div>
+  //               </div>
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //       <div className={styles.DetailsContainer}>
+  //         <div className={styles.rightContainerItem}>
+  //           <div className={styles.unblockedConditions}>
+  //             <div>
+  //               <strong>{` ${blockedUserDetails?.firstName} ${blockedUserDetails?.lastName} `}</strong>
+  //               will be able to :
+  //             </div>
 
-              <ul>
-                {UnblockingUserEffectListLabel.map((item) => {
-                  return <li>{item}</li>;
-                })}
-              </ul>
-            </div>
-            <div className={styles.unblockFooter}>
-              If you have read the conditions and are okay with it, Proceed with :
-              <Button
-                className={styles.unblockBtn}
-                onClick={() => {
-                  setShowBlockUserPopUp(true);
-                }}
-                variant="primary"
-              >
-                Unblock
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
+  //             <ul>
+  //               {UnblockingUserEffectListLabel.map((item) => {
+  //                 return <li>{item}</li>;
+  //               })}
+  //             </ul>
+  //           </div>
+  //           <div className={styles.unblockFooter}>
+  //             If you have read the conditions and are okay with it, Proceed with :
+  //             <Button
+  //               className={styles.unblockBtn}
+  //               onClick={() => {
+  //                 setShowBlockUserPopUp(true);
+  //               }}
+  //               variant="primary"
+  //             >
+  //               Unblock
+  //             </Button>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // };
 
   return (
     <>
-      <Button className={styles.backBtn} onClick={() => router.push('/')}>
+      {/* <Button className={styles.backBtn} onClick={() => router.push('/')}>
         Back
-      </Button>
+      </Button> */}
       <div className={styles.blockedUsercontainer}>
         <div className={styles.left_column}>
           <div className={styles.blockedUsersSideNav}>
@@ -289,18 +289,17 @@ function BlockedUser() {
         </div>
         <div className={styles.right_column}>
           <div className={styles.rightContainer}>
-            {showPreviewImage ? (
-              <div className={styles.emptyProfileWrapper}>
-                <div className={styles.blockedUserPreviewImage}>
-                  <NextImage field={BlockedUserPreviewImage} editable={true}
-                  width={60}
-                  height={60} />
-                </div>
-                <div className={styles.blockedUserPreviewImage}>{PreviewUserProfileLabel}</div>
+            <div className={styles.emptyProfileWrapper}>
+              <div className={styles.blockedUserPreviewImage}>
+                <NextImage field={BlockedUserPreviewImage} editable={true} width={60} height={60} />
               </div>
+              <div className={styles.blockedUserPreviewImage}>{PreviewUserProfileLabel}</div>
+            </div>
+            {/* {showPreviewImage ? (
+              
             ) : (
               <BlockedUserPreviewProfile />
-            )}
+            )} */}
           </div>
         </div>
       </div>
