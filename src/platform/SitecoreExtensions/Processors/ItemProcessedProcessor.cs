@@ -89,6 +89,7 @@ namespace CommunityAccelerator.SitecoreExtensions.Processors
         {
             var response = await client1.BulkAsync(b => b.Index("sitecore_elastic_web").Index<object>(itemObject));
 
+
             if (response.IsValid)
             {
                 Console.WriteLine($"Index document with ID {string.Join(",", response.Items.Select(x => x.Id))} succeeded.");
