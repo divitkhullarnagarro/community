@@ -115,6 +115,7 @@ const Login = (props: LoginProps): JSX.Element => {
         setUserToken(response?.data?.data?.access_token);
         if (typeof localStorage !== 'undefined') {
           localStorage.setItem('UserToken', response?.data?.data?.access_token);
+          localStorage.setItem('ObjectId',email)
         }
         if (setObjectId != undefined) {
           setObjectId(email);
