@@ -1,19 +1,30 @@
+.parentContainer {
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  margin: 2.8vw auto;
+  background: #F9F9F9;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+}
+
 .cardContainer {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  width: 50%;
-  align-items: center;
-  /* background-color: pink; */
-  border: 0.0625rem solid #ced0d4;
+  position: relative;
+  border-radius: 6px;
+  background: #FFFFFF;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
 }
 
 .header {
-  width: 100%;
-  background-color: #fff;
   display: flex;
-  padding: 0.125rem 0.75rem;
+  align-items: center;
   justify-content: space-between;
+  padding: 15px;
+}
+
+.userDetail {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .img {
@@ -22,59 +33,62 @@
   border-radius: 50%;
 }
 
-.parentContainer {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  /* height: 100vh; */
-  align-items: center;
-  margin-top: 3.125rem;
+.detail {}
+
+.name {
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #283895;
+  margin-bottom: 5px;
 }
 
-.detail {
+.postCreationTime {
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 13px;
+  color: #AFB0B4;
+  margin: 0;
+}
+
+.actionContainer {}
+
+.dropDownBtn {
+  background-color: white;
+  border: none;
+  width: auto;
+  padding: 0;
+}
+
+.bannerImgContainer {
+  width: 100%;
 }
 
 .bannerImg {
   width: 100%;
   height: 100%;
-  background-position: center;
-  background-size: cover;
-  /* background-ewe321`size:auto; */
+  object-fit: cover;
 }
 
-.userDetail {
-  gap: 1.25rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 70%;
+.documentContainer {}
+
+.body {
+  padding: 15px;
+  font-size: 14px;
+  line-height: 18px;
+  color: #091329;
 }
 
-.actionContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.25rem;
+.body p {
+  margin: 0;
 }
+
 .links{
   margin-bottom: 0.1875rem;
 }
-.bannerImgContainer {
-  width: 100%;
-  position: relative;
-  height: 25rem;
-}
-
-.body {
-  width: 100%;
-  background-color: #fff;
-  padding: 0.3125rem 0.625rem;
-  border-top: 0.0625rem solid rgb(173, 173, 173) ;
-
-}
-
-
-
 
 .btnLeft{
   background-color: #fff;
@@ -147,17 +161,6 @@
 .likeActionsContainer {
   display: flex;
   width: 100%;
-}
-
-.name {
-  display: flex;
-  gap: 0.3125rem;
-}
-
-.dropDownBtn {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
 }
 
 .formInput {
@@ -289,13 +292,6 @@
   gap: 3.125rem;
 }
 
-.documentContainer {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  gap: 0.125rem;
-  width: 100%;
-}
 .heading {
   width: 100%;
   display: flex;
