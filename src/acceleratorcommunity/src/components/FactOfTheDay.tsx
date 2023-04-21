@@ -62,6 +62,9 @@ const FactOfTheDay = (props: FactOfTheDayProps): JSX.Element => {
             <div className={factOfTheDayCss.cardDescription}>
               {data?.description?.jsonValue?.value}
             </div>
+            {data?.description?.jsonValue?.value.length > 250 && (
+              <div className={factOfTheDayCss.tooltip}>{data?.description?.jsonValue?.value}</div>
+            )}
           </div>
         </div>
       </div>
