@@ -42,7 +42,7 @@ const About = (props: AboutProps): JSX.Element => {
           return (
             <Accordion.Item className={styles.accordionItem} eventKey={index.toString()}>
               <Accordion.Header className={styles.accordionHeader}>{item.Header}</Accordion.Header>
-              <Accordion.Body>{item.Body}</Accordion.Body>
+              <Accordion.Body className={styles.accordionBody}>{item.Body}</Accordion.Body>
             </Accordion.Item>
           );
         })}

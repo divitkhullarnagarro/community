@@ -1,9 +1,10 @@
 .container{
     display: flex;
-    /* width: 50px; */
-    /* justify-content: end; */
-    padding: 0.25rem;
-    margin: 0.375rem;
+    padding: 8px;
+    margin: 0;
+    background: #F9F9F9;
+    border: 1px solid #F3F3F3;
+    border-radius: 50%;
 }
 .badge {
     background-color: red;

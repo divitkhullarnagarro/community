@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 import style from '../../assets/createGroup.module.css';
 
 const list = [
@@ -81,7 +81,7 @@ function CreateGroup({
     <div className={style.createGroup}>
       <Modal show={createGroupVisibel} onHide={() => setCreateGroupVisibel(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Create Group</Modal.Title>
+          <Modal.Title className={style.modalTitle}>Create Group</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p className="text-danger" style={{ fontSize: '10px' }}>
@@ -89,28 +89,32 @@ function CreateGroup({
           </p>
           <form className="form">
             <div className="form-group">
-              <label className={`${style.requiredField} form-label`}>Name</label>
+              {/* <label className={`${style.requiredField} form-label`}>Name</label> */}
               <input
                 className="form-control"
                 value={nameValue}
+                style={{marginBottom:'10px',height:'46px'}}
+                placeholder="Name"
                 onChange={(e) => setNameValue(e.target.value)}
                 required
               />
             </div>
 
             <div className="form-group">
-              <label className={`${style.requiredField} form-label`}>Description</label>
+              {/* <label className={`${style.requiredField} form-label`}>Description</label> */}
               <textarea
                 className="form-control"
                 rows={6}
                 value={descriptionValue}
+                style={{height:'200px'}}
+                placeholder="Description"
                 onChange={(e) => setDescriptionValue(e.target.value)}
                 required
               ></textarea>
             </div>
 
             <div className="form-group">
-              <label className={`${style.requiredField} form-label`}>Members</label>
+              {/* <label className={`${style.requiredField} form-label`}>Members</label> */}
               <div className={style.membersGroupList}>
                 {addMemberList.map((ele, index: number) => (
                   <div className={style.singleMember}>
@@ -140,6 +144,7 @@ function CreateGroup({
             <input
               type="text"
               list="suggestions"
+              style={{height:'46px'}}
               className={`form-control ${
                 (invalidMemberError || duplicateMemberError) && 'is-invalid'
               }`}
@@ -164,28 +169,36 @@ function CreateGroup({
                 Member Already Added
               </div>
             )}
-            <button
+            {/* <button
               type="submit"
               style={{ marginTop: '8px' }}
               className="btn btn-primary"
               onClick={addMemberButtonClick}
+               
+            > */}
+            <button
+              className={style.addMemberButton}
+              // style={{ fontSize: '15px', marginLeft: '15px', marginTop: '2px' }}
+              onClick={addMemberButtonClick}
               disabled={invalidMemberError || addMemberValue.length < 1 || duplicateMemberError}
             >
-              Add Member
+              + Add Member 
             </button>
+            {/* </button> */}
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setCreateGroupVisibel(false)}>
+          <button className={style.closeButton} onClick={() => setCreateGroupVisibel(false)}>
             Close
-          </Button>
-          <Button
-            variant="primary"
+          </button>
+          <button
+            // variant="primary"
+            className={style.saveButton}
             onClick={() => createGroupSubmit()}
             disabled={!(nameValue && descriptionValue && addMemberList.length > 0)}
           >
-            Save Changes
-          </Button>
+            Save
+          </button>
         </Modal.Footer>
       </Modal>
     </div>
