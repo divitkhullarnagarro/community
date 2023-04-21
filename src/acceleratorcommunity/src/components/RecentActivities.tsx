@@ -30,9 +30,6 @@ const list = [
   { img: recentActivityLogo, activityName: 'Created a Post', date: '10 Jan 2022' },
   { img: recentActivityLogo, activityName: 'Liked a Post', date: '13 Feb 2023' },
   { img: recentActivityLogo, activityName: 'Created a Article', date: '18 Dec 2021' },
-  { img: recentActivityLogo, activityName: 'Created a Post', date: '10 Jan 2022' },
-  { img: recentActivityLogo, activityName: 'Liked a Post', date: '13 Feb 2023' },
-  { img: recentActivityLogo, activityName: 'Created a Article', date: '18 Dec 2021' },
 ];
 
 const RecentActivities = (props: RecentActivitiesProps): JSX.Element => {
@@ -76,11 +73,6 @@ const RecentActivities = (props: RecentActivitiesProps): JSX.Element => {
               </div>
             </>
           ))}
-          {/* <h2>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley
-          </h2> */}
         </div>
       </div>
     </>
