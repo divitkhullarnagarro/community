@@ -73,6 +73,7 @@ import EventCard from './EventCard';
 import PollCard from './PollCard';
 import deletePostCall from 'src/API/deletePostCall';
 import deleteCommentCall from 'src/API/deleteCommentCall';
+import articleIcon from '../assets/images/ArticleIcon.svg';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -2984,6 +2985,17 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </Form>
                 </div>
               </Modal>
+              <button className={styles.pollButton} type="button">
+                <Link href="/addblogpost">
+                  <NextImage
+                    field={articleIcon}
+                    editable={true}
+                    alt="PostItems"
+                    width={18}
+                    height={18}
+                  />
+                </Link>
+              </button>
             </div>
             <div className={styles.errorContainer}>
               <Button
