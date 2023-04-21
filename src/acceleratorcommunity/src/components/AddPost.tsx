@@ -33,6 +33,7 @@ import ToastNotification from './ToastNotification';
 import getCommentsCall from 'src/API/getCommentsCall';
 import getCommentsReplyCall from 'src/API/getCommentsReplyCall';
 import postCommentReplyCall from 'src/API/postCommentReplyCall';
+import downVote from '../assets/images/dislikeIcon.svg'
 
 // Rich Text Editor Files Import Start
 import { EditorState, convertToRaw } from 'draft-js';
@@ -1183,12 +1184,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                               <img
                                  className="likecomments"
                                  src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
+                                 alt='Like'
                               />
                            </div>
                            <div className="likecomments">
                               <img
                                  className="likecomments"
-                                 src={'https://img.icons8.com/ios-filled/256/thumbs-down.png'}
+                                 src={downVote.src}
+                                 alt="Dislike"
                               />
                            </div>
                         </div>
@@ -1253,13 +1256,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                  <Form.Control
                                  // onChange={(e) => setPostCommentValue(e.target.value)}
                                     type="text"
-                                    placeholder="Reply..."
+                                    placeholder="Write a Reply..."
                                     required
                                     autoFocus
                                     style={{ width: '100%', color: '#a5a9ae', fontSize: '13px' }}
                                  />
                                  <button type="submit" className="postCommentButton">
-                                 Post reply
+                                 Reply
                                  </button>
                               </Form.Group>
                         </Form>
@@ -1298,14 +1301,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                        <img
                                           className="likecomments"
                                           src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
+                                          alt='Like'
                                        />
                                        </div>
                                        <div className="likecomments">
                                        <img
                                           className="likecomments"
-                                          src={
-                                             'https://img.icons8.com/ios-filled/256/thumbs-down.png'
-                                          }
+                                          src={downVote.src}
+                                          alt="Dislike"
                                        />
                                        </div>
                                     </div>
@@ -1375,13 +1378,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                        <Form.Control
                                           // onChange={(e) => setPostCommentValue(e.target.value)}
                                           type="text"
-                                          placeholder="Reply..."
+                                          placeholder="Write a Reply..."
                                           required
                                           autoFocus
                                           style={{ width: '100%', color: '#a5a9ae', fontSize: '13px' }}
                                        />
                                        <button type="submit" className="postCommentButton">
-                                          Post reply
+                                          Reply
                                        </button>
                                     </Form.Group>
                                     </Form>
@@ -1405,6 +1408,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                               <button
                                  onClick={() => loadCommentReplies(post?.id, comment?.id)}
                                  className='postCommentButton'
+                                 style={{
+                                  marginLeft: '0'
+                                }}
                               >
                                  <span>Load Replies...</span>
                               </button>
@@ -1427,6 +1433,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     <button
                       onClick={() => loadComments(post.id)}
                       className='postCommentButton'
+                      style={{
+                        marginBottom: '16px',
+                        marginLeft: '0'
+                      }}
                     >
                       <span>Load Comments...</span>
                     </button>
