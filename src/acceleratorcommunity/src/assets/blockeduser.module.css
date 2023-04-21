@@ -2,33 +2,34 @@
   margin-top: 20px;
   display: flex;
   background-color: white;
-  font-family: 'Nunito', sans-serif;
+  /* font-family: 'Equip'; */
   justify-content: flex-start;
 }
 
 .left_column {
   flex: 0 0 20%;
   background-color: white;
-  margin-left: 20px;
-  
+  /* margin-left: 20px;   */
 }
 
 .right_column {
   display: flex;
   flex-direction: column;
   margin-top: 0px;
-  /* margin-left: 25px; */
-  height: 87vh;
+  margin-left: 25px;
+  /* height: 87vh; */
   justify-content: flex-start;
   flex: 0 0 63%;
+  border-left: 1px solid white;
+  box-shadow: 8px 1px 8px rgb(0, 0, 0, 0.05);
 }
 
 .blockedUsersSideNav {
-  width: 20vw;
+  width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  /* gap: 1.25rem; */
   padding-top: 50px;
   /* padding: 0.3125rem 0.625rem; */
   height: 100%;
@@ -40,17 +41,61 @@
   overflow-x: hidden;
   overflow-y: auto;
   padding-top: 20px;
+  margin-left: 16px;
   /* border-radius: 10px; */
   /* border: 2px solid lightgray; */
   /* margin-top: 20px; */
-/*   
+  /*   
   border-right: 1px solid #F3F3F3;
 box-shadow: 8px 1px 10px rgba(0, 0, 0, 0.05); */
 }
 
 .blockedUserRow {
   display: flex;
+  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
+  padding: 5px 5px;
+  border-radius: 10px;
+}
+.blockedUserRow:hover {
+  background-color: whitesmoke;
+}
+.moreOptionList {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 5px;
+  /* left: 260px; */
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  margin-top: 4px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+.moreOptionList > button {
+  display: flex;
+  gap: 10px;
+  background-color: white;
+  cursor: pointer;
+  border: none;
+  font-size: 14px;
+  font-weight: 300;
+  color: black;
+  padding: 4px;
+  /* margin-top: 10px; */
+  /* margin-bottom: 5px; */
+  /* border-radius: 10px; */
+  /* background: rgb(233, 243, 243); */
+  /* box-shadow: 5px 5px 2px rgb(156, 179, 179); */
+  /* font-size: small; */
+}
+.moreOptionButton:hover {
+  background: whitesmoke;
+}
+.groupListMoreLogo {
+  cursor: pointer;
 }
 
 .blockedUserImage {
@@ -64,6 +109,7 @@ box-shadow: 8px 1px 10px rgba(0, 0, 0, 0.05); */
   color: black !important;
   border: none;
   width: 50px;
+  padding: 20px;
 }
 
 .blockedUserDropdownBtn:checked,
@@ -85,12 +131,14 @@ box-shadow: 8px 1px 10px rgba(0, 0, 0, 0.05); */
 .blockedUserwrapper {
   margin: 5px;
 }
-
 .sideNavHeader {
   display: flex;
-  justify-content: center;
-  font-size: 25px;
-  font-weight: bold;
+  /* font-family: 'Equip-regular'; */
+  /* justify-content: center; */
+  font-size: 26px;
+  font-weight: 500;
+  color: #283895;
+  margin-left: 16px;
 }
 
 .overlayItem {
@@ -149,6 +197,7 @@ box-shadow: 8px 1px 10px rgba(0, 0, 0, 0.05); */
 }
 
 .rightContainer {
+  border: none;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -156,14 +205,19 @@ box-shadow: 8px 1px 10px rgba(0, 0, 0, 0.05); */
   width: 75vw;
   height: 92vh;
   /* border-radius: 10px; */
-  border: 2px solid lightgray;
+  /* border: 2px solid lightgray; */
 }
 
 .blockedUserPreviewImage {
   display: flex;
   justify-content: center;
 }
-
+.blockedUserPreviewImage {
+  /* font-family: 'Equip'; */
+  font-size: 24px;
+  font-weight: 700;
+  color: #091329;
+}
 .noBlockedUsers {
   display: flex;
   justify-content: center;
@@ -177,7 +231,8 @@ box-shadow: 8px 1px 10px rgba(0, 0, 0, 0.05); */
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 500;
+  color: #283895;
   height: 80%;
 }
 
@@ -186,7 +241,9 @@ box-shadow: 8px 1px 10px rgba(0, 0, 0, 0.05); */
   justify-content: center;
   align-items: center;
   margin: 5px;
-  font-size: 1.875rem;
+  font-size: 24px;
+  margin-left: 145px;
+  color: #283895;
 }
 
 .blockedUserModalBody {
@@ -268,13 +325,15 @@ box-shadow: 8px 1px 10px rgba(0, 0, 0, 0.05); */
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #F0F2F5;
+  background-color: #f0f2f5;
 }
 
 .blockedUserName {
-  margin-left: 20px;
-  margin-top: 15px;
-  font-size: 18px;
+  /* margin-left: 20px;
+  margin-top: 15px; */
+  padding: 20px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .moreOptions {
@@ -414,4 +473,28 @@ box-shadow: 8px 1px 10px rgba(0, 0, 0, 0.05); */
 
 .userEmail {
   display: flex;
+}
+.unblockUserName {
+  font-size: 14px;
+  font-weight: 400;
+}
+.unblockUserContition {
+  font-size: 14px;
+  font-weight: 500;
+}
+.unblockCancelBtn {
+  font-size: 15px;
+  border: none;
+  color: #f58c60;
+  background-color: white;
+}
+.unBlockConfirm {
+  border: none;
+  width: 20%;
+  height: 25px;
+  background-color: #42d0a5f3;
+  color: white;
+  font-weight: 400;
+  font-size: 15px;
+  border-radius: 4px;
 }

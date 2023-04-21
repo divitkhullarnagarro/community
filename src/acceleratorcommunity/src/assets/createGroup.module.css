@@ -1,11 +1,12 @@
 .membersGroupList {
   display: flex;
+  margin-top: 10px;
   gap: 5px;
   align-items: center;
   flex-wrap: wrap;
 }
 .singleMember {
-  background: rgb(239, 233, 233);
+  background: whitesmoke;
   border-radius: 8px;
   padding: 4px;
   display: flex;
@@ -14,12 +15,51 @@
 .memberCrossIcon {
   cursor: pointer;
   border-radius: 50%;
-  background: rgb(239, 233, 233);
+  background: whitesmoke;
 }
-.memberCrossIcon:hover {
-  background: rgb(205, 193, 193);
-}
+/* .memberCrossIcon:hover {
+  background: 
+} */
 .requiredField::after {
   content: '*';
   color: red;
 }
+.modalTitle {
+  color: #283895;
+  margin-left: 145px;
+}
+.addMemberButton {
+  font-size: 16px;
+  margin-top: 5px;
+  color: #f58c60;
+  border: none;
+  background-color: white;
+}
+.closeButton {
+  font-size: 15px;
+  border: none;
+  color: #f58c60;
+  background-color: white;
+}
+/* .closeButton:hover{
+border: none;
+background-color: white;
+color:#f58c60 ;
+} */
+.saveButton {
+  border: none;
+  width: 12%;
+  background-color: #42d0a5f3;
+  color: white;
+  font-weight: 400;
+  font-size: 15px;
+  border-radius: 4px;
+}
+.saveButton:hover {
+  color: white;
+  background-color: #47d7ac;
+}
+.saveButton:disabled {
+  background-color: #47d7ac;
+}
+

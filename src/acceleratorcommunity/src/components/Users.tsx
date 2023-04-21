@@ -98,6 +98,8 @@ const userRows = [
     reason: 'Inappropriate behaviour',
   },
 ];
+import HeadBanner from '../assets/images/HeadBanner.png';
+// import icon from '../assets/images/icons8-home 1.png'
 
 const EmailTemplateFolder = '02989F59-CFEB-4CC9-90FB-C0DA8A7FE7B5';
 const WarnUserEmailTemplate = '16937DB73C124028877AAA49C0BE30CA';
@@ -133,7 +135,7 @@ type mediaType = {
   url: string;
 };
 
-const ListLabel = 'Lists';
+const ListLabel = 'Insights';
 
 type UserProps = ComponentProps & {
   fields: {
@@ -439,7 +441,7 @@ const Users = (props: UserProps): JSX.Element => {
                 <div className={styles.reportPostHeading}>
                   <div className={styles.reportPostHeaderLeft}>
                     <img
-                      src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                      src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                       alt="User-Pic"
                       width="30px"
                     ></img>
@@ -563,7 +565,7 @@ const Users = (props: UserProps): JSX.Element => {
                 <div className={styles.reportPostHeaderLeft}>
                   <img
                     className="postUserImage"
-                    src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                    src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                     alt="User-Pic"
                   ></img>
                   <div className={styles.reportPostDetailContainer}>
@@ -735,12 +737,13 @@ const Users = (props: UserProps): JSX.Element => {
     return (
       <>
         <div className={styles.dashboardWrapper}>
-          <h2>
-            {props?.fields?.data?.datasource?.mainHeaderLabel?.jsonValue?.value ??
-              'Welcome to the Dashboard'}
-          </h2>
+          <div className={styles.imgContainer}>
+            <img src={HeadBanner.src} width="100%"/>
+            {/* {props?.fields?.data?.datasource?.mainHeaderLabel?.jsonValue?.value ??
+              'Welcome to the Dashboard'} */}
+          </div>
         </div>
-        <hr style={{ fontWeight: 'bold' }} />
+        {/* <hr style={{ fontWeight: 'bold' }} /> */}
       </>
     );
   };
@@ -748,20 +751,23 @@ const Users = (props: UserProps): JSX.Element => {
   const SideNavbar = () => {
     return (
       <div className={styles.sidenavbar}>
+        <div className={styles.blockContainer}>
         <div className={styles.top}>
-          <span className={styles.logo}>{'Admin Dashboard'}</span>
+          <span className={styles.logo}>
+          {props?.fields?.data?.datasource?.sideNavHeaderLabel?.jsonValue?.value ??
+              'Professtional Dashboard'}
+          </span>
         </div>
-        <hr />
+        <p className={styles.title}>{ListLabel}</p>
         <div className={styles.center}>
-          <ul>
-            <p className={styles.title}>{ListLabel}</p>
-            <button
+          <ul>            
+            <button 
               onClick={() => {
                 getReportedPosts();
               }}
             >
               <li className={styles.row}>
-                <NextImage contentEditable={true} field={Flag} height={15} width={20}></NextImage>
+                <NextImage contentEditable={true} field={Flag} height={18} width={18}></NextImage>
                 <span>{'Reported Posts'}</span>
               </li>
             </button>
@@ -782,15 +788,17 @@ const Users = (props: UserProps): JSX.Element => {
             </button>
           </ul>
         </div>
+        </div>
       </div>
     );
   };
 
   return (
     <div className={styles.container}>
-      <Button className={styles.backBtn} onClick={() => router.push('/')}>
+      
+      {/* <Button className={styles.backBtn} onClick={() => router.push('/')}>
         Back
-      </Button>
+      </Button> */}
       <div className={styles.left_column}>
         <SideNavbar />
       </div>

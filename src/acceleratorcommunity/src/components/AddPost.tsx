@@ -68,6 +68,8 @@ import like from '../assets/images/like.png';
 import comment from '../assets/images/comment.png';
 import share from '../assets/images/share.png';
 import greylikeimage from '../assets/images/greylikeimage.svg';
+import EventCard from './EventCard';
+// import PollCard from './PollCard';
 import reportUserCall from 'src/API/reportUserCall';
 
 type AddPostProps = ComponentProps & {
@@ -97,12 +99,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const [file, setFile] = useState([]);
   const [docs, setDocs] = useState([]);
   const [videoLink, setVideoLink] = useState([]);
+  let [eventPost, setEventPost] = useState<any>('');
+  const [pollPost, setPollPost] = useState<any>('');
 
   let [myAnotherArr, setMyAnotherArr] = useState<any>([]);
   let [postPageNum, setPostPageNum] = useState(0);
   let [ifReachedEnd, setIfReachedEnd] = useState(false);
   let [ifNoMoreData, setIfNoMoreData] = useState(false);
-  let [createNewPostError, setCreateNewPostError] = useState(false);
   let [allUpVotes, setAllUpVotes] = useState([]);
   let [allDownVote, setAllDownVote] = useState([]);
   let [showUp, setShowup] = useState('up');
@@ -113,23 +116,62 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   let [showEvent, setShowEvent] = useState(false);
   let [eventType, setEventType] = useState('Select Event Type');
-  // let [disableAddImage, setDisableAddImage] = useState(false);
-  // let [disableAddVideo, setDisableAddVideo] = useState(false);
-  // let [disableAddDoc, setDisableAddDoc] = useState(false);
+
+  let [disableAddImage, setDisableAddImage] = useState(false);
+  let [disableAddVideo, setDisableAddVideo] = useState(false);
+  let [disableAddDoc, setDisableAddDoc] = useState(false);
+  let [disableAddEvent, setDisableAddevent] = useState(false);
+  let [disableAddPoll, setDisableAddPoll] = useState(false);
+  let [globalPostType, setGlobalPostType] = useState('TEXT_POST');
   let isExpEditorActive = props?.sitecoreContext?.pageEditing;
 
-  // function checkDisablity() {
-  //   if (videoLink.length > 0) {
-  //     setDisableAddImage(true);
-  //     setDisableAddDoc(true);
-  //   } else if (docs.length > 0) {
-  //     setDisableAddVideo(true);
-  //     setDisableAddImage(true);
-  //   } else if (file.length > 0) {
-  //     setDisableAddVideo(true);
-  //     setDisableAddDoc(true);
-  //   }
-  // }
+  console.log('GLOBALPOSTTYPE', globalPostType);
+  console.log('PollPost', pollPost);
+
+  useEffect(() => {
+    if (file.length || docs.length || videoLink.length || eventPost != '' || pollPost != '') {
+      if (file.length) {
+        setDisableAddVideo(true);
+        setDisableAddDoc(true);
+        setDisableAddevent(true);
+        setDisableAddPoll(true);
+        setGlobalPostType('IMAGE');
+      } else if (docs.length) {
+        setDisableAddImage(true);
+        setDisableAddVideo(true);
+        setDisableAddevent(true);
+        setDisableAddPoll(true);
+        setGlobalPostType('DOC');
+      } else if (videoLink.length) {
+        setDisableAddImage(true);
+        setDisableAddDoc(true);
+        setDisableAddevent(true);
+        setDisableAddPoll(true);
+        setGlobalPostType('VIDEO');
+      } else if (eventPost != '') {
+        setDisableAddImage(true);
+        setDisableAddVideo(true);
+        setDisableAddDoc(true);
+        setDisableAddevent(true);
+        setDisableAddPoll(true);
+        setGlobalPostType('EVENT');
+      } else if (pollPost != '') {
+        setDisableAddImage(true);
+        setDisableAddVideo(true);
+        setDisableAddDoc(true);
+        setDisableAddevent(true);
+        setDisableAddPoll(true);
+        setGlobalPostType('POLL');
+      }
+    } else {
+      setDisableAddImage(false);
+      setDisableAddVideo(false);
+      setDisableAddDoc(false);
+      setDisableAddevent(false);
+      setDisableAddPoll(false);
+      setGlobalPostType('TEXT_POST');
+    }
+  }, [videoLink, file, docs, eventPost, pollPost]);
 
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const [addedPeers, setAddedPeers] = useState<string[]>([] as string[]);
@@ -830,17 +872,23 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             <div className="postHeaderLeft">
               <img
                 className="postUserImage"
-                src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                 alt="User-Pic"
               ></img>
               <div className="postDetailContainer">
-                <h5 className="postOwner mt-2">
+                <h5 className="postOwner">
                   <span>{post?.createdBy?.firstName ? post?.createdBy?.firstName : 'Unknown'}</span>
                   &nbsp;
                   <span>{post?.createdBy?.lastName ? post?.createdBy?.lastName : 'User'}</span>
                 </h5>
                 <h6 className="postCreateDate">
-                  <span style={{ fontWeight: '100' }}>
+                  <img
+                    width="9px"
+                    src="https://cdn-icons-png.flaticon.com/512/2088/2088617.png"
+                    alt="post time"
+                    style={{ opacity: '0.4', marginRight: '4px' }}
+                  ></img>
+                  <span>
                     {post?.createdOn != 0 &&
                     post?.createdOn &&
                     post?.createdOn != undefined &&
@@ -857,7 +905,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   variant="secondary"
                   id="dropdown-basic"
                   className={styles.dropdownBtn}
-                  style={{ backgroundColor: 'white', border: 'none', width: '70px' }}
                 >
                   <button
                     onClick={() => {
@@ -884,7 +931,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       <div className={styles.dropdownImage}>
                         <NextImage field={bookmarkImage} editable={true} />
                       </div>
-                      <div className={styles.reportContainerBtn}> Save Post</div>
+                      <div className={styles.reportContainerBtn}>Save Post</div>
                     </div>
                   </Dropdown.Item>
                   <Dropdown.Item
@@ -897,7 +944,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       <div className={styles.dropdownImage}>
                         <NextImage field={copylink} editable={true} />
                       </div>
-                      <div className={styles.reportContainerBtn}> Copy link to post</div>
+                      <div className={styles.reportContainerBtn}>Copy link to post</div>
                     </div>
                   </Dropdown.Item>
                   <Dropdown.Item
@@ -989,14 +1036,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   );
                 } else if (media?.mediaType === 'IMAGE') {
                   return (
-                    <div
-                      key={num}
-                      style={{
-                        borderRadius: '30px',
-                        // margin: '0px 15px 15px 0px',
-                      }}
-                    >
-                      <img width="100%" src={media?.url} alt={media?.id}></img>
+                    <div key={num}>
+                      <img
+                        width="100%"
+                        src={media?.url}
+                        alt={media?.id}
+                        style={{ margin: '0 0 15px 0', objectFit: 'contain' }}
+                      ></img>
                     </div>
                   );
                 }
@@ -1004,7 +1050,15 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               })}
             </div>
             {post?.postType === 'EVENT' ? (
-              <div className="postDescription">{post?.event?.description}</div>
+              <>
+                <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
+                <EventCard
+                  heading={post?.event?.title}
+                  description={post?.event?.description}
+                  date={post?.event?.eventDate}
+                  eventType={post?.event?.eventType}
+                />
+              </>
             ) : (
               <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
             )}
@@ -1025,7 +1079,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   height={18}
                 />
               </button>
-              <div className={styles.likePost}>Like Post</div>
+              <div
+                className={styles.likePost}
+                style={post?.isLikedByUser ? { color: '#2e86f9' } : {}}
+              >
+                {post?.isLikedByUser ? 'Liked Post' : 'Like Post'}
+              </div>
               <div className={styles.likeCount}>
                 {post?.postMeasures?.likeCount ? post?.postMeasures?.likeCount : '0'}
               </div>
@@ -1045,85 +1104,120 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 {post?.postMeasures?.commentCount ? post?.postMeasures?.commentCount : '0'}
               </div>
             </div>
-            <div className={styles.shareContainer}>
+
+            {/* <div className={styles.shareContainer}>
               <button
                 className={styles.shareButton}
-                onClick={() => handleShowShare(post.id, !post?.showShare)}
+                onClick={() => {}}
+                aria-controls="anotherCommentsContainer"
+                aria-expanded={post?.isOpenComment}
                 disabled={post?.isRespPending}
               >
                 <NextImage field={share} editable={true} alt="PostItems" width={18} height={18} />
               </button>
-              <div className={styles.sharePost}> Share</div>
-              {post?.showShare && (
-                <div className={ShowShareCss.sharePopups} style={{ position: 'initial' }}>
-                  <div className={ShowShareCss.sharePopup}>
-                    <NextImage
-                      className={ShowShareCss.whatsappImage}
-                      field={whatsapp}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link
-                      href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
-                    >
-                      <a className={ShowShareCss.targetIcon} target="_blank">
-                        WhatsApp
-                      </a>
-                    </Link>
-                  </div>
+              <div className={styles.sharePost}>Share</div>
+            </div> */}
 
-                  <div className={ShowShareCss.sharePopup}>
-                    <NextImage
-                      className={ShowShareCss.whatsappImage}
-                      field={twitter}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link
-                      href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
-                    >
-                      <a className={ShowShareCss.targetIcon} target="_blank">
-                        Twitter
-                      </a>
-                    </Link>
-                  </div>
+            <div className={styles.shareContainer}>
+              <Dropdown style={{ alignItems: 'center', display: 'flex' }}>
+                <Dropdown.Toggle
+                  variant="secondary"
+                  id="dropdown-basic"
+                  className={ShowShareCss.dropdownBtn}
+                >
+                  <button
+                    onClick={() => handleShowShare(post.id, !post?.showShare)}
+                    className={styles.shareButton}
+                    disabled={post?.isRespPending}
+                  >
+                    <img src={share.src} alt="SharePost" />
+                    <div className={styles.sharePost}>Share</div>
+                  </button>
+                </Dropdown.Toggle>
 
-                  <div className={ShowShareCss.sharePopup}>
-                    <NextImage
-                      className={ShowShareCss.whatsappImage}
-                      field={linkedin}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link
-                      href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
-                    >
-                      <a className={ShowShareCss.targetIcon} target="_blank">
-                        LinkedIn
-                      </a>
-                    </Link>
-                  </div>
-                  <div className={ShowShareCss.sharePopup}>
-                    <NextImage
-                      className={ShowShareCss.whatsappImage}
-                      field={facebook}
-                      editable={true}
-                      width={25}
-                      height={25}
-                    />
-                    <Link
-                      href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
-                    >
-                      <a className={ShowShareCss.targetIcon} target="_blank">
-                        Facebook
-                      </a>
-                    </Link>
-                  </div>
-                </div>
-              )}
+                <Dropdown.Menu className={ShowShareCss.dropdownMenu}>
+                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                    <div className={ShowShareCss.overlayItem}>
+                      <div className={ShowShareCss.dropdownImage}>
+                        <NextImage
+                          className={ShowShareCss.whatsappImage}
+                          field={whatsapp}
+                          editable={true}
+                          width={25}
+                          height={25}
+                        />
+                      </div>
+                      <Link
+                        href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
+                      >
+                        <a className={ShowShareCss.targetIcon} target="_blank">
+                          Share on WhatsApp
+                        </a>
+                      </Link>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                    <div className={ShowShareCss.overlayItem}>
+                      <div className={ShowShareCss.dropdownImage}>
+                        <NextImage
+                          className={ShowShareCss.whatsappImage}
+                          field={twitter}
+                          editable={true}
+                          width={25}
+                          height={25}
+                        />
+                      </div>
+                      <Link
+                        href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
+                      >
+                        <a className={ShowShareCss.targetIcon} target="_blank">
+                          Share on Twitter
+                        </a>
+                      </Link>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                    <div className={ShowShareCss.overlayItem}>
+                      <div className={ShowShareCss.dropdownImage}>
+                        <NextImage
+                          className={ShowShareCss.whatsappImage}
+                          field={linkedin}
+                          editable={true}
+                          width={25}
+                          height={25}
+                        />
+                      </div>
+                      <Link
+                        href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
+                      >
+                        <a className={ShowShareCss.targetIcon} target="_blank">
+                          Share on LinkedIn
+                        </a>
+                      </Link>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                    <div className={ShowShareCss.overlayItem}>
+                      <div className={ShowShareCss.dropdownImage}>
+                        <NextImage
+                          className={ShowShareCss.whatsappImage}
+                          field={facebook}
+                          editable={true}
+                          width={25}
+                          height={25}
+                        />
+                      </div>
+                      <Link
+                        href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
+                      >
+                        <a className={ShowShareCss.targetIcon} target="_blank">
+                          Share on Facebook
+                        </a>
+                      </Link>
+                    </div>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
           </div>
 
@@ -1135,19 +1229,20 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 }}
                 style={{ border: '1px', borderColor: 'black' }}
               >
-                <Form.Group className="mb-3" controlId="comments" style={{ display: 'flex' }}>
+                <Form.Group className="mb-2" controlId="comments" style={{ display: 'flex', padding: '5px 15px 0' }}>
                   <img
                     className="commentUserImage"
-                    src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                    src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                     alt="User-Pic"
+                    style={{ marginLeft: '0'}}
                   ></img>
                   <Form.Control
                     // onChange={(e) => setPostCommentValue(e.target.value)}
                     type="text"
-                    placeholder="Add Comments..."
+                    placeholder="Write a Comment..."
                     required
                     autoFocus
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', fontSize: '13px', color: '#a5a9ae' }}
                   />
                   <button type="submit" className="postCommentButton">
                     PostComment
@@ -1157,260 +1252,271 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               {post?.comments?.map((comment: any) => {
                 return (
                   <>
-                    <div
-                      className="commentContainer"
-                      id={comment?.id}
-                      style={{
-                        padding: '0px',
-                        backgroundColor: 'lightgray',
-                        margin: '5px',
-                        // borderBottomLeftRadius: '30px',
-                        // borderTopRightRadius: '30px',
-                        // borderBottomRightRadius: '30px',
-                        borderRadius: '10px',
-                        marginTop: '20px',
-                        marginLeft: '65px',
-                        marginRight: '10px',
-                      }}
-                    >
-                      <div className="commentHeadingTop">
-                        {comment?.createdBy?.firstName} {comment?.createdBy?.lastName}
-                        <span style={{ fontSize: '12px', marginLeft: '5px' }}>
-                          {' '}
-                          {calculateTimeDifference(comment?.createdOn)}
-                        </span>
-                      </div>
-                      <div className="commentHeading">{comment?.text}</div>
-                      <div
-                        onClick={() => getAllupVotesAndDownVotes(comment?.id)}
-                        className="upvoteDownvoteContainer"
-                      >
-                        <div className="likecomments">
-                          <img
-                            className="likecomments"
-                            src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
-                          />
+                  <div className='commentSection'>
+                     <figure>
+                        <img
+                           className="commentUserImage"
+                           src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                           alt="User-Pic"
+                           style={{
+                              marginLeft: '0',
+                           }}
+                        ></img>
+                     </figure>
+                     <div
+                        className="commentContainer"
+                        id={comment?.id}
+                        style={{
+                           padding: '10px',
+                           backgroundColor: '#F0F0F0',
+                           borderRadius: '10px',
+                        }}
+                     >
+                        <h5 className="commentHeadingTop">
+                           {comment?.createdBy?.firstName} {comment?.createdBy?.lastName}
+                        </h5>
+                        <p className="commentHeading">{comment?.text}</p>
+                        <div
+                           onClick={() => getAllupVotesAndDownVotes(comment?.id)}
+                           className="upvoteDownvoteContainer"
+                        >
+                           <div className="likecomments">
+                              <img
+                                 className="likecomments"
+                                 src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
+                              />
+                           </div>
+                           <div className="likecomments">
+                              <img
+                                 className="likecomments"
+                                 src={'https://img.icons8.com/ios-filled/256/thumbs-down.png'}
+                              />
+                           </div>
                         </div>
-                        <div className="likecomments">
-                          <img
-                            className="likecomments"
-                            src={'https://img.icons8.com/ios-filled/256/thumbs-down.png'}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div style={{ marginLeft: '65px' }}>
-                        <span onClick={() => handleUpvote(comment?.id)}>
-                          <img
-                            className="likecomments"
-                            src={
-                              post?.isLikedByUser
-                                ? 'https://cdn-icons-png.flaticon.com/512/739/739231.png'
-                                : 'https://cdn-icons-png.flaticon.com/512/126/126473.png'
-                            }
-                            //https://cdn-icons-png.flaticon.com/512/739/739231.png
-                            alt="actions"
-                          />
+                     </div>
+                  </div>
+
+                  <div>
+                     <div style={{ marginLeft: '55px' }}>
+                        {/* <span onClick={() => handleUpvote(comment?.id)}>
+                           <img
+                              className="likecomments"
+                              src={
+                                 post?.isLikedByUser
+                                 ? 'https://cdn-icons-png.flaticon.com/512/739/739231.png'
+                                 : 'https://cdn-icons-png.flaticon.com/512/126/126473.png'
+                              }
+                              //https://cdn-icons-png.flaticon.com/512/739/739231.png
+                              alt="actions"
+                           />
                         </span>
                         <span onClick={() => handleDownvote(comment?.id)}>
-                          <img
-                            width="30px"
-                            style={{ margin: '5px' }}
-                            className="likecomments"
-                            src="https://img.icons8.com/ios/256/thumbs-down.png"
-                            alt="downVote"
-                          />
-                        </span>
+                           <img
+                              width="30px"
+                              style={{ margin: '5px' }}
+                              className="likecomments"
+                              src="https://img.icons8.com/ios/256/thumbs-down.png"
+                              alt="downVote"
+                           />
+                        </span> */}
                         <button
-                          onClick={() =>
-                            openCommentReplies(post?.id, comment?.id, !comment?.isOpenReply)
-                          }
-                          aria-controls="repliesContainer"
-                          aria-expanded={comment?.isOpenReply}
-                          style={{ border: 'none', marginLeft: '16px', fontSize: '12px' }}
-                          disabled={comment?.isRespPending}
+                           onClick={() =>
+                              openCommentReplies(post?.id, comment?.id, !comment?.isOpenReply)
+                           }
+                           aria-controls="repliesContainer"
+                           aria-expanded={comment?.isOpenReply}
+                           className="commentReply"
+                           disabled={comment?.isRespPending}
                         >
-                          Reply
+                           Reply
                         </button>
-                      </div>
-                      <Collapse in={comment?.isOpenReply}>
+                        <span className='commentPostDate' style={{ fontSize: '12px'}}>
+                           {' '}
+                           {calculateTimeDifference(comment?.createdOn)}
+                        </span>
+                     </div>
+                     <Collapse in={comment?.isOpenReply}>
                         <div style={{ position: 'relative', left: '10%', width: '88%' }}>
-                          <Form
-                            onSubmit={(e) => {
-                              postCommentReply(post?.id, comment?.id, e);
-                            }}
-                            style={{ border: '1px', borderColor: 'black' }}
-                          >
-                            <Form.Group controlId="comments" style={{ display: 'flex' }}>
-                              <img
-                                width="32px"
-                                className="commentUserImage"
-                                src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
-                                alt="User-Pic"
-                              ></img>
-                              <Form.Control
-                                // onChange={(e) => setPostCommentValue(e.target.value)}
-                                type="text"
-                                placeholder="Reply..."
-                                required
-                                autoFocus
-                                style={{ width: '100%' }}
-                              />
-                              <button type="submit" className="postCommentButton">
-                                Post reply
-                              </button>
-                            </Form.Group>
-                          </Form>
-                          {comment?.replies?.map((reply: any) => {
-                            return (
+                           <Form
+                              onSubmit={(e) => {
+                                 postCommentReply(post?.id, comment?.id, e);
+                              }}
+                              style={{ border: '1px', borderColor: 'black' }}
+                           >
+                              <Form.Group controlId="comments" style={{ display: 'flex', padding: '5px 0 15px 15px' }}>
+                                 <img
+                                 width="32px"
+                                 className="commentUserImage"
+                                 src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                                 alt="User-Pic"
+                                 style={{ marginLeft: '0' }}
+                                 ></img>
+                                 <Form.Control
+                                 // onChange={(e) => setPostCommentValue(e.target.value)}
+                                    type="text"
+                                    placeholder="Reply..."
+                                    required
+                                    autoFocus
+                                    style={{ width: '100%', color: '#a5a9ae', fontSize: '13px' }}
+                                 />
+                                 <button type="submit" className="postCommentButton">
+                                 Post reply
+                                 </button>
+                              </Form.Group>
+                        </Form>
+                        {comment?.replies?.map((reply: any) => {
+                           return (
                               <>
-                                <div
-                                  id={reply?.id}
-                                  style={{
-                                    padding: '20px',
-                                    backgroundColor: 'lightgray',
-                                    margin: '5px',
-                                    borderBottomLeftRadius: '30px',
-                                    borderTopRightRadius: '30px',
-                                    borderBottomRightRadius: '30px',
-                                    marginTop: '20px',
-                                    marginLeft: '10%',
-                                  }}
-                                  className="commentContainer"
-                                >
-                                  <div>
-                                    <span style={{ fontSize: '15px', fontWeight: '600' }}>
-                                      {reply?.createdBy?.firstName} {reply?.createdBy?.lastName}{' '}
-                                    </span>
-                                    <span style={{ fontSize: '12px' }}>
-                                      {' '}
-                                      {calculateTimeDifference(reply?.createdOn)}
-                                    </span>
-                                  </div>
-                                  <div>{reply?.text}</div>
-                                  <div
-                                    onClick={() => getAllupVotesAndDownVotes(reply?.id)}
-                                    className="upvoteDownvoteContainer"
-                                  >
-                                    <div className="likecomments">
-                                      <img
-                                        className="likecomments"
-                                        src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
-                                      />
-                                    </div>
-                                    <div className="likecomments">
-                                      <img
-                                        className="likecomments"
-                                        src={
-                                          'https://img.icons8.com/ios-filled/256/thumbs-down.png'
-                                        }
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div
-                                  style={{
-                                    marginBottom: '10px',
-                                    position: 'relative',
-                                    left: '10%',
-                                    width: '88%',
-                                  }}
-                                >
-                                  <span onClick={() => handleUpvote(reply?.id)}>
+                              <div className='commentSection'>
+                                 <figure>
                                     <img
-                                      style={{ margin: '5px' }}
-                                      width="30px"
-                                      className="likecomments"
-                                      src="https://cdn-icons-png.flaticon.com/512/126/126473.png"
-                                      alt="upvote"
-                                    />
-                                  </span>
-                                  <span onClick={() => handleDownvote(reply?.id)}>
+                                       className="commentUserImage"
+                                       src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                                       alt="User-Pic"
+                                       style={{
+                                          marginLeft: '0',
+                                       }}
+                                    ></img>
+                                 </figure>
+                                 <div
+                                    id={reply?.id}
+                                    style={{
+                                       padding: '10px',
+                                       backgroundColor: '#F0F0F0',
+                                       borderRadius: '10px',
+                                    }}
+                                    className="commentContainer"
+                                 >
+                                    <h5 className="commentHeadingTop">
+                                       {reply?.createdBy?.firstName} {reply?.createdBy?.lastName}{' '}
+                                    </h5>
+                                    <p className="commentHeading">{reply?.text}</p>
+                                    <div
+                                       onClick={() => getAllupVotesAndDownVotes(reply?.id)}
+                                       className="upvoteDownvoteContainer"
+                                    >
+                                       <div className="likecomments">
+                                       <img
+                                          className="likecomments"
+                                          src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
+                                       />
+                                       </div>
+                                       <div className="likecomments">
+                                       <img
+                                          className="likecomments"
+                                          src={
+                                             'https://img.icons8.com/ios-filled/256/thumbs-down.png'
+                                          }
+                                       />
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              
+                              <div
+                                 style={{
+                                    marginLeft: '55px'
+                                 }}
+                              >
+                                 {/* <span onClick={() => handleUpvote(reply?.id)}>
                                     <img
-                                      width="30px"
-                                      style={{ margin: '5px' }}
-                                      className="likecomments"
-                                      src="https://img.icons8.com/ios/256/thumbs-down.png"
-                                      alt="downVote"
+                                    style={{ margin: '5px' }}
+                                    width="30px"
+                                    className="likecomments"
+                                    src="https://cdn-icons-png.flaticon.com/512/126/126473.png"
+                                    alt="upvote"
                                     />
-                                  </span>
-                                  <button
+                                 </span>
+                                 <span onClick={() => handleDownvote(reply?.id)}>
+                                    <img
+                                    width="30px"
+                                    style={{ margin: '5px' }}
+                                    className="likecomments"
+                                    src="https://img.icons8.com/ios/256/thumbs-down.png"
+                                    alt="downVote"
+                                    />
+                                 </span> */}
+                                 <button
                                     aria-controls="replyOfReplyContainer"
                                     aria-expanded={reply?.isOpenReplyOfReply}
-                                    style={{ border: 'none' }}
+                                    className="commentReply"
                                     onClick={() =>
-                                      openReplyOfReply(
-                                        post?.id,
-                                        comment?.id,
-                                        reply?.id,
-                                        !reply?.isOpenReplyOfReply
-                                      )
+                                    openReplyOfReply(
+                                       post?.id,
+                                       comment?.id,
+                                       reply?.id,
+                                       !reply?.isOpenReplyOfReply
+                                    )
                                     }
                                     disabled={reply?.isRespPending}
-                                  >
+                                 >
                                     Reply
-                                  </button>
-                                </div>
-                                <Collapse in={reply?.isOpenReplyOfReply}>
-                                  <div style={{ position: 'relative', left: '10%', width: '88%' }}>
+                                 </button>
+                                 <span className='commentPostDate' style={{ fontSize: '12px' }}>
+                                    {' '}
+                                    {calculateTimeDifference(reply?.createdOn)}
+                                 </span>     
+                              </div>
+                              <Collapse in={reply?.isOpenReplyOfReply}>
+                                 <div style={{ position: 'relative', left: '10%', width: '88%' }}>
                                     <Form
-                                      onSubmit={(e) => {
-                                        postCommentReply(post?.id, comment?.id, e);
-                                      }}
-                                      style={{ border: '1px', borderColor: 'black' }}
+                                    onSubmit={(e) => {
+                                       postCommentReply(post?.id, comment?.id, e);
+                                    }}
+                                    style={{ border: '1px', borderColor: 'black' }}
                                     >
-                                      <Form.Group controlId="comments" style={{ display: 'flex' }}>
-                                        <img
+                                    <Form.Group controlId="comments" style={{ display: 'flex' }}>
+                                       <img
                                           width="32px"
                                           className="commentUserImage"
-                                          src="https://cdn-icons-png.flaticon.com/512/1144/1144811.png"
+                                          src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                                           alt="User-Pic"
-                                        ></img>
-                                        <Form.Control
+                                          style={{ marginLeft: '0' }}
+                                       ></img>
+                                       <Form.Control
                                           // onChange={(e) => setPostCommentValue(e.target.value)}
                                           type="text"
                                           placeholder="Reply..."
                                           required
                                           autoFocus
-                                          style={{ width: '100%' }}
-                                        />
-                                        <button type="submit" className="postCommentButton">
+                                          style={{ width: '100%', color: '#a5a9ae', fontSize: '13px' }}
+                                       />
+                                       <button type="submit" className="postCommentButton">
                                           Post reply
-                                        </button>
-                                      </Form.Group>
+                                       </button>
+                                    </Form.Group>
                                     </Form>
-                                  </div>
-                                </Collapse>
+                                 </div>
+                              </Collapse>
                               </>
-                            );
-                          })}
-                          {comment?.hasReply ? (
-                            <div
+                           );
+                        })}
+                        {comment?.hasReply ? (
+                           <div
                               style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                marginBottom: '16px',
-                                marginTop: '16px',
+                              display: 'flex',
+                              justifyContent: 'center',
+                              marginBottom: '16px',
+                              marginTop: '16px',
                               }}
-                            >
+                           >
                               {comment.isLoadingReplies ? (
-                                <Spinner animation="border" />
+                              <Spinner animation="border" />
                               ) : (
-                                <button
-                                  onClick={() => loadCommentReplies(post?.id, comment?.id)}
-                                  style={{ padding: '5px', border: 'none' }}
-                                >
-                                  <span>Load Replies...</span>
-                                </button>
+                              <button
+                                 onClick={() => loadCommentReplies(post?.id, comment?.id)}
+                                 className='postCommentButton'
+                              >
+                                 <span>Load Replies...</span>
+                              </button>
                               )}
-                            </div>
-                          ) : (
-                            ''
-                          )}
+                           </div>
+                        ) : (
+                           ''
+                        )}
                         </div>
-                      </Collapse>
-                    </div>
+                     </Collapse>
+                  </div>
                   </>
                 );
               })}
@@ -1421,11 +1527,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   ) : (
                     <button
                       onClick={() => loadComments(post.id)}
-                      style={{
-                        padding: '12px',
-                        border: 'none',
-                        borderRadius: '10px',
-                      }}
+                      className='postCommentButton'
                     >
                       <span>Load Comments...</span>
                     </button>
@@ -1717,16 +1819,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     if (postText == '') {
       return;
     }
-    let postType = 'VIDEO';
-    if (file.length == 0 && docs.length == 0 && videoLink.length == 0) {
-      postType = 'TEXT_POST';
-    } else if (videoLink.length > 0) {
-      postType = 'VIDEO';
-    } else if (docs.length > 0) {
-      postType = 'DOC';
-    } else if (file.length > 0) {
-      postType = 'IMAGE';
-    }
     // console.log('mention inside api call component', addedPeers);
     const timestamp = new Date().getTime();
     let uniqId = generateUniqueId();
@@ -1735,7 +1827,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         data: {
           id: uniqId,
           description: postText,
-          postType: postType,
+          postType: globalPostType,
           mediaList: [...file, ...docs, ...videoLink],
           postMeasures: {
             likeCount: 0,
@@ -1746,11 +1838,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             firstName: userObject?.firstName,
             lastName: userObject?.lastName,
           },
+          event: eventPost?.event,
           createdOn: timestamp,
           isLikedByUser: false,
           comments: [],
           isRespPending: true,
           isLoadingComments: false,
+          poll: pollPost?.poll,
         },
       },
     };
@@ -1761,7 +1855,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       description: postText,
       mediaList: [...file, ...docs, ...videoLink],
       taggedPeers: addedPeers,
-      type: postType,
+      type: globalPostType,
+      event: eventPost?.event,
+      poll: pollPost?.poll,
     }).then((response) => {
       if (response?.data?.data) {
         addLatestCreatedPost(response?.data?.data, uniqId);
@@ -1773,11 +1869,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         setDocs([]);
         setEditorState(() => EditorState.createEmpty());
       } else {
-        setCreateNewPostError(true);
+        setShowNofitication(true);
+        setToastError(true);
+        setToastMessage('Post Not Created !');
         deletePostById(uniqId);
-        setTimeout(() => {
-          setCreateNewPostError(false);
-        }, 2000);
       }
     });
   };
@@ -1820,7 +1915,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const files = e.target.files;
     const fileArray: any = [];
     for (let i = 0; i < files.length; i++) {
-      let resp = await UploadFilesToServer(files[i], 'IMAGE');
+      const temp = files[i];
+      let resp = await UploadFilesToServer(temp, 'IMAGE');
       let uniqueId = generateUniqueId();
       fileArray.push({ id: uniqueId, url: resp?.data, mediaType: 'IMAGE', mediaSequence: 0 });
     }
@@ -1860,7 +1956,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       let uniqueId = generateUniqueId();
       fileArray.push({
         id: uniqueId,
-        url: 'https://static.videezy.com/system/resources/previews/000/019/696/original/pointing-blue.mp4',
+        url: resp?.data,
         // name: files[i]?.name,
         mediaType: 'VIDEO',
         mediaSequence: 0,
@@ -1958,7 +2054,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         className={addPostCss.modal}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Reactions</Modal.Title>
+          <Modal.Title style={{ color: '#283895' }}>Reactions</Modal.Title>
         </Modal.Header>
         <Modal.Body className={addPostCss.modalBody}>
           <div className={addPostCss.btnConatiner}>
@@ -1968,10 +2064,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 ALL
               </button> */}
-            <button onClick={handleUp} className={addPostCss.filterBtn}>
+            <button onClick={handleUp} className={addPostCss.filterBtn} style={{ color: '#000E46' }}>
               Up
             </button>
-            <button onClick={handleDown} className={addPostCss.filterBtn}>
+            <button onClick={handleDown} className={addPostCss.filterBtn} style={{ color: '#000E46' }}>
               Down
             </button>
           </div>
@@ -2004,7 +2100,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               })}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={closeModal}>
+          <Button variant='' onClick={closeModal} className='closeButton'>
             Close
           </Button>
         </Modal.Footer>
@@ -2021,8 +2117,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const minDate = `${year}-${month}-${day}T${hours}:${minutes}:00`;
 
   let [eventTypeSelectError, setEventTypeSelectError] = useState(false);
-  let [createNewEventPostError, setCreateNewEventPostError] = useState(false);
-  let [submittingEventPost, setSubmittingEventPost] = useState(false);
+
+  // function emptyEvent() {
+  //   setEventPost('');
+  // }
 
   function submitEventForm(event: any) {
     event.preventDefault();
@@ -2034,67 +2132,17 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const description = event.target[2].value;
     const date = event.target[3].value;
 
-    const timestamp = new Date().getTime();
-    let uniqId = generateUniqueId();
-    let obj = {
-      data: {
-        data: {
-          id: uniqId,
-          //description: postText,
-          postType: 'EVENT',
-          //mediaList: [...file, ...docs, ...videoLink],
-          postMeasures: {
-            likeCount: 0,
-            commentCount: 0,
-            repostCount: 0,
-          },
-          createdBy: {
-            firstName: userObject?.firstName,
-            lastName: userObject?.lastName,
-          },
-          event: {
-            title: title,
-            description: description,
-            eventType: eventType,
-            eventDate: date,
-          },
-          createdOn: timestamp,
-          isLikedByUser: false,
-          comments: [],
-          isRespPending: true,
-          isLoadingComments: false,
-        },
-      },
-    };
-    setMyAnotherArr((prevState: any) => {
-      return [obj?.data?.data, ...prevState];
-    });
-    setSubmittingEventPost(true);
-
-    addPostCall(userToken, {
-      type: 'EVENT',
+    setEventPost({
       event: {
         title: title,
         description: description,
         eventType: eventType,
         eventDate: date,
       },
-    }).then((response) => {
-      setSubmittingEventPost(false);
-      if (response?.data?.data) {
-        addLatestCreatedPost(response?.data?.data, uniqId);
-        // Empty Post Values
-        setShowForm1(false);
-        event.currentTarget.reset();
-        setEventType('Select Event Type');
-      } else {
-        setCreateNewEventPostError(true);
-        deletePostById(uniqId);
-        setTimeout(() => {
-          setCreateNewEventPostError(false);
-        }, 2000);
-      }
     });
+    setShowEvent(false);
+    event.currentTarget?.reset();
+    setEventType('Select Event Type');
   }
 
   useEffect(() => {
@@ -2103,193 +2151,329 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     }
   }, [eventType]);
 
+  let [showPollForm, setShowPollForm] = useState(false);
+  // let [eventTypeSelectError, setEventTypeSelectError] = useState(false);
+  // let [createNewEventPostError, setCreateNewEventPostError] = useState(false);
+  let option1Id = generateUniqueId();
+  let option2Id = generateUniqueId();
+  let option1 = {
+    id: option1Id,
+    name: 1,
+    placeholder: 1,
+    optionSequence: 0,
+    optionText: '',
+  };
+  let option2 = {
+    id: option2Id,
+    name: 2,
+    placeholder: 2,
+    optionSequence: 1,
+    optionText: '',
+  };
+  let [pollFormOptions, setPollFormOptions] = useState<any>([option1, option2]);
+  let [pollOptionCount, setPollOptionCount] = useState(2);
+  let [isOptionsThreshold, setoptionsThreshold] = useState(false);
+  let [isDeleteOptionThreshold, setIsDeleteOptionThreshold] = useState(true);
+  let [pollQuestion, setPollQuestion] = useState('');
+
+  function addPollOption() {
+    setPollOptionCount((prevCount) => {
+      return prevCount + 1;
+    });
+    let option = {
+      id: option2Id,
+      name: pollOptionCount + 1,
+      placeholder: pollOptionCount + 1,
+      optionText: '',
+      optionSequence: pollOptionCount,
+    };
+    setPollFormOptions((prevState: any) => {
+      return [...prevState, option];
+    });
+
+    if (pollOptionCount + 1 > 4) {
+      setoptionsThreshold(true);
+    }
+    if (pollOptionCount + 1 > 2) {
+      setIsDeleteOptionThreshold(false);
+    }
+  }
+  function deleteLastPollOption() {
+    if (pollOptionCount > 2) {
+      setPollFormOptions((prev: any) => {
+        const newOptions = [];
+        for (let i = 0; i < prev.length - 1; i++) {
+          newOptions.push(prev[i]);
+        }
+        return newOptions;
+      });
+      setPollOptionCount((prevCount) => prevCount - 1);
+    }
+    if (pollOptionCount - 1 < 5) {
+      setoptionsThreshold(false);
+    }
+    if (pollOptionCount - 1 <= 2) {
+      setIsDeleteOptionThreshold(true);
+    }
+  }
+
+  function clearPollForm() {
+    setPollQuestion('');
+    setPollFormOptions([option1, option2]);
+    setPollOptionCount(2);
+    setIsDeleteOptionThreshold(true);
+  }
+
+  function pollOptionUpdate(id: any, e: any) {
+    e.preventDefault();
+    setPollFormOptions((prevOptions: any) => {
+      return prevOptions.map((option: any) => {
+        if (option.id === id) {
+          return { ...option, optionText: e.target.value };
+        } else {
+          return option;
+        }
+      });
+    });
+  }
+
+  function updatePollQuestion(e: any) {
+    e.preventDefault();
+    setPollQuestion(e.target.value);
+  }
+
+  // function emptyPollPost() {
+  //   setPollPost('');
+  // }
+
+  function submitPollForm(event: any) {
+    event.preventDefault();
+    let newArr = pollFormOptions.map((options: any) => {
+      return {
+        optionSequence: options.optionSequence,
+        optionText: options.optionText,
+        responsePercentage: options.responsePercentage,
+        responseCount: options.responseCount,
+      };
+    });
+    let pollVar = {
+      poll: {
+        pollQuestion: pollQuestion,
+        pollOptions: newArr,
+      },
+    };
+    setPollPost({
+      poll: pollVar.poll,
+    });
+    clearPollForm();
+    setShowPollForm(false);
+  }
+
   return (
     <>
       <div className={styles.mainContainer}>
-        <div style={{ backgroundColor: 'white', boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.25)' }}>
+        <div className={styles.addPostWidgetContainer}>
           {/* <div style={{ marginBottom: '40px' }}> */}
           <div className={styles.addPostFieldContainer}>
             <div className={styles.addPostField}>
               <div className={styles.addPostImage}>
-                <NextImage field={user} editable={true} alt="Profile-Pic" width={20} height={20} />
+                <NextImage field={user} editable={true} alt="Profile-Pic" width={27} height={27} />
               </div>
-              <button
-                className={styles.addPostButton}
-                onClick={() => setShowForm1(!showForm1)}
-                aria-controls="showAddPostEditorContainer"
-                aria-expanded={showForm1}
-              >
-                <div className={styles.addPostHeading}>
-                  {props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
-                    ? props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
-                    : "What's on your mind"}
-                  {``}
-                  {/* <span>
+              {showForm1 ? (
+                <Collapse in={showForm1}>
+                  <div
+                    className="AddPostEditorContainer"
+                    style={{ maxWidth: '100%' }}
+                    id="showAddPostEditorContainer"
+                  >
+                    <div className={styles.addTextEditor}>
+                      <Form style={{ border: '1px', borderColor: 'black' }}>
+                        <Form.Group controlId="exampleForm.ControlInput1">
+                          <Editor
+                            editorState={editorState}
+                            onEditorStateChange={(e) => onEditorStateChangeHandler(e)}
+                            wrapperClassName="wrapper-class"
+                            editorClassName="editor-class"
+                            toolbarClassName="toolbar-class"
+                            editorStyle={{ height: '200px', padding: '0px 10px', fontSize: '13px' }}
+                            placeholder="Share Your Thoughts..."
+                            toolbar={toolbar}
+                            // toolbarOnFocus={true}
+                            mention={{
+                              separator: ' ',
+                              trigger: '@',
+                              suggestions: mentionUserData,
+                            }}
+                            hashtag={{}}
+                          />
+                          {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                          <div>
+                            {currentCount}/{5000} characters
+                          </div>
+                        </div> */}
+                          {/* <Form.Control
+                          onChange={(e) => setPostTextValue(e.target.value)}
+                          value={postText}
+                          as="textarea"
+                          rows={7}
+                          placeholder="Share Your Thoughts..."
+                          required
+                          style={{ border: 'none', resize: 'none' }}
+                        /> */}
+                        </Form.Group>
+                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                          {file.map((img: any, num: any) => {
+                            return (
+                              <div
+                                key={num}
+                                style={{
+                                  borderRadius: '30px',
+                                  margin: '0px 15px 15px 0px',
+                                }}
+                              >
+                                <button
+                                  type="button"
+                                  style={{
+                                    position: 'absolute',
+                                    border: 'none',
+                                    borderRadius: '15px',
+                                  }}
+                                  onClick={() => clickCrossImageButton(img.id)}
+                                >
+                                  <img
+                                    width="30px"
+                                    src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
+                                    alt="cross_button"
+                                    style={{ borderRadius: '30px' }}
+                                  ></img>
+                                </button>
+                                <img width="300px" src={img?.url} alt={img?.id}></img>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}>
+                          {docs.map((doc: any, num: any) => {
+                            return (
+                              <div className="docPreviewContainer" key={num}>
+                                <span className="openPrevButton">
+                                  <button
+                                    onClick={() => openDoc(doc?.url)}
+                                    style={{
+                                      padding: '5px',
+                                      borderRadius: '20px',
+                                      borderColor: 'white',
+                                    }}
+                                  >
+                                    <img
+                                      width="50px"
+                                      src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
+                                      alt={num}
+                                      style={{ margin: '10px' }}
+                                    ></img>
+                                    {doc.name}
+                                  </button>
+                                </span>
+
+                                <span>
+                                  <button
+                                    style={{ border: 'none', backgroundColor: 'white' }}
+                                    type="button"
+                                    onClick={() => clickCrossDocButton(doc.id)}
+                                  >
+                                    <img
+                                      width="30px"
+                                      src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
+                                      alt="cross_button"
+                                      style={{ marginLeft: '10px' }}
+                                    ></img>
+                                  </button>
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap' }} id="setVideoPreview">
+                          {videoLink.map((video: any, num: any) => {
+                            return (
+                              <div key={num}>
+                                <video width="100%" src={video?.url} controls></video>
+                                <div>
+                                  <img
+                                    width="50px"
+                                    src="https://cdn-icons-png.flaticon.com/512/711/711245.png"
+                                    alt={num}
+                                    style={{ margin: '10px' }}
+                                  ></img>
+                                  <span>
+                                    {video.name}
+                                    <button
+                                      style={{ border: 'none', backgroundColor: 'white' }}
+                                      type="button"
+                                      onClick={clickCrossVideoButton}
+                                    >
+                                      <img
+                                        width="30px"
+                                        src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
+                                        alt="cross_button"
+                                        style={{ marginLeft: '10px' }}
+                                      ></img>
+                                    </button>
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </Form>
+                    </div>
+                  </div>
+                </Collapse>
+              ) : (
+                <button
+                  className={styles.addPostButton}
+                  onClick={() => setShowForm1(!showForm1)}
+                  aria-controls="showAddPostEditorContainer"
+                  aria-expanded={showForm1}
+                >
+                  <div className={styles.addPostHeading}>
+                    {props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
+                      ? props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
+                      : "What's on your mind"}
+                    {``}
+                    {/* <span>
                     {userObject?.firstName ? userObject?.firstName : ''}{' '}
                     {userObject?.lastName ? userObject?.lastName : ''}
                   </span> */}
-                </div>
-              </button>
+                  </div>
+                </button>
+              )}
             </div>
           </div>
-          <Collapse in={showForm1}>
-            <div
-              className="AddPostEditorContainer"
-              style={{ maxWidth: '100%' }}
-              id="showAddPostEditorContainer"
-            >
-              <div className={styles.addTextEditor}>
-                <Form style={{ border: '1px', borderColor: 'black' }}>
-                  <Form.Group controlId="exampleForm.ControlInput1">
-                    <Editor
-                      editorState={editorState}
-                      onEditorStateChange={(e) => onEditorStateChangeHandler(e)}
-                      wrapperClassName="wrapper-class"
-                      editorClassName="editor-class"
-                      toolbarClassName="toolbar-class"
-                      editorStyle={{ height: '200px' }}
-                      placeholder="  Share Your Thoughts..."
-                      toolbar={toolbar}
-                      // toolbarOnFocus={true}
-                      mention={{
-                        separator: ' ',
-                        trigger: '@',
-                        suggestions: mentionUserData,
-                      }}
-                      hashtag={{}}
-                    />
-                    {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <div>
-                        {currentCount}/{5000} characters
-                      </div>
-                    </div> */}
-                    {/* <Form.Control
-                      onChange={(e) => setPostTextValue(e.target.value)}
-                      value={postText}
-                      as="textarea"
-                      rows={7}
-                      placeholder="Share Your Thoughts..."
-                      required
-                      style={{ border: 'none', resize: 'none' }}
-                    /> */}
-                  </Form.Group>
-                  <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    {file.map((img: any, num: any) => {
-                      return (
-                        <div
-                          key={num}
-                          style={{
-                            borderRadius: '30px',
-                            margin: '0px 15px 15px 0px',
-                          }}
-                        >
-                          <button
-                            type="button"
-                            style={{ position: 'absolute', border: 'none', borderRadius: '15px' }}
-                            onClick={() => clickCrossImageButton(img.id)}
-                          >
-                            <img
-                              width="30px"
-                              src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
-                              alt="cross_button"
-                              style={{ borderRadius: '30px' }}
-                            ></img>
-                          </button>
-                          <img width="300px" src={img?.url} alt={img?.id}></img>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}>
-                    {docs.map((doc: any, num: any) => {
-                      return (
-                        <div className="docPreviewContainer" key={num}>
-                          <span className="openPrevButton">
-                            <button
-                              onClick={() => openDoc(doc?.url)}
-                              style={{
-                                padding: '5px',
-                                borderRadius: '20px',
-                                borderColor: 'white',
-                              }}
-                            >
-                              <img
-                                width="50px"
-                                src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
-                                alt={num}
-                                style={{ margin: '10px' }}
-                              ></img>
-                              {doc.name}
-                            </button>
-                          </span>
-
-                          <span>
-                            <button
-                              style={{ border: 'none', backgroundColor: 'white' }}
-                              type="button"
-                              onClick={() => clickCrossDocButton(doc.id)}
-                            >
-                              <img
-                                width="30px"
-                                src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
-                                alt="cross_button"
-                                style={{ marginLeft: '10px' }}
-                              ></img>
-                            </button>
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap' }} id="setVideoPreview">
-                    {videoLink.map((video: any, num: any) => {
-                      return (
-                        <div key={num}>
-                          <video width="100%" src={video?.url} controls></video>
-                          <div>
-                            <img
-                              width="50px"
-                              src="https://cdn-icons-png.flaticon.com/512/711/711245.png"
-                              alt={num}
-                              style={{ margin: '10px' }}
-                            ></img>
-                            <span>
-                              {video.name}
-                              <button
-                                style={{ border: 'none', backgroundColor: 'white' }}
-                                type="button"
-                                onClick={clickCrossVideoButton}
-                              >
-                                <img
-                                  width="30px"
-                                  src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
-                                  alt="cross_button"
-                                  style={{ marginLeft: '10px' }}
-                                ></img>
-                              </button>
-                            </span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </Form>
-              </div>
-            </div>
-          </Collapse>
           <div className={styles.AddPostItems}>
             <div>
-              <button className={styles.imageButton} onClick={clickmebuttonHandler} type="button">
+              <button
+                className={styles.addPostFileButtons}
+                onClick={() => {
+                  setShowForm1(true);
+                  clickmebuttonHandler();
+                }}
+                disabled={disableAddImage}
+                type="button"
+              >
                 {/* <span>Image</span> */}
                 <NextImage
                   field={camera}
                   editable={true}
+                  style={{ opacity: disableAddImage ? '0.2' : '1' }}
                   alt="Profile-Pic"
                   width={18}
                   height={18}
                 />
 
-                <Form.Group className="mb-3">
+                <Form.Group
+                // className="mb-3"
+                >
                   <Form.Control
                     style={{ display: 'none' }}
                     onChange={(e) => setPostImageValue(e)}
@@ -2302,10 +2486,27 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   />
                 </Form.Group>
               </button>
-              <button className={styles.docButton} onClick={clickmebuttonHandler2} type="button">
+              <button
+                disabled={disableAddVideo}
+                className={styles.addPostFileButtons}
+                onClick={() => {
+                  setShowForm1(true);
+                  clickmebuttonHandler2();
+                }}
+                type="button"
+              >
                 {/* <span>Doc</span> */}
-                <NextImage field={image} editable={true} alt="PostItems" width={18} height={18} />
-                <Form.Group className="mb-3">
+                <NextImage
+                  field={image}
+                  editable={true}
+                  alt="PostItems"
+                  width={18}
+                  height={18}
+                  style={{ opacity: disableAddDoc ? '0.2' : '1' }}
+                />
+                <Form.Group
+                // className="mb-3"
+                >
                   <Form.Control
                     style={{ display: 'none' }}
                     onChange={(e) => setPostDocValue(e)}
@@ -2318,10 +2519,27 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   />
                 </Form.Group>
               </button>
-              <button className={styles.videoButton} onClick={clickmebuttonHandler3} type="button">
+              <button
+                className={styles.addPostFileButtons}
+                onClick={() => {
+                  setShowForm1(true);
+                  clickmebuttonHandler3();
+                }}
+                disabled={disableAddVideo}
+                type="button"
+              >
                 {/* <span>Video</span> */}
-                <NextImage field={pin} editable={true} alt="PostItems" width={18} height={18} />
-                <Form.Group className="mb-3">
+                <NextImage
+                  field={pin}
+                  editable={true}
+                  alt="PostItems"
+                  width={18}
+                  height={18}
+                  style={{ opacity: disableAddVideo ? '0.2' : '1' }}
+                />
+                <Form.Group
+                // className="mb-3"
+                >
                   <Form.Control
                     style={{ display: 'none' }}
                     onChange={(e) => setPostVideoValue(e)}
@@ -2334,13 +2552,18 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 </Form.Group>
               </button>
               <button
-                className={styles.eventButton}
-                onClick={() => setShowEvent(true)}
+                className={styles.addPostFileButtons}
+                onClick={() => {
+                  setShowForm1(true);
+                  setShowEvent(true);
+                }}
                 type="button"
+                disabled={disableAddEvent}
               >
                 {/* <span>Event</span> */}
                 <NextImage
                   field={location}
+                  style={{ opacity: disableAddEvent ? '0.2' : '1' }}
                   editable={true}
                   alt="PostItems"
                   width={18}
@@ -2433,14 +2656,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           ) : (
                             ''
                           )}
-                          {createNewEventPostError ? (
-                            <div style={{ color: 'red', fontWeight: '1000' }}>
-                              {' '}
-                              ** Something went wrong, Event post not Created !
-                            </div>
-                          ) : (
-                            ''
-                          )}
                         </div>
                       </Form.Group>
                     </Modal.Body>
@@ -2461,40 +2676,193 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         type="submit"
                         // onClick={onPostReported}
                       >
-                        {submittingEventPost ? (
-                          <Spinner animation="border" />
-                        ) : (
-                          <span>Create Post</span>
-                        )}
+                        Add Event to Post
                       </Button>
                     </Modal.Footer>
                   </Form>
                 </div>
               </Modal>
-              <button className={styles.pollButton} type="button">
+              <button
+                className={styles.addPostFileButtons}
+                onClick={() => {
+                  setShowForm1(true);
+                  setShowPollForm(true);
+                }}
+                type="button"
+                disabled={disableAddPoll}
+              >
                 {/* <span>Poll</span> */}
-                <NextImage field={smile} editable={true} alt="PostItems" width={18} height={18} />
+                <NextImage
+                  field={smile}
+                  editable={true}
+                  alt="PostItems"
+                  style={{ opacity: disableAddPoll ? '0.2' : '1' }}
+                  width={18}
+                  height={18}
+                />
               </button>
+              <Modal
+                className={styles.reportPostModalContent}
+                show={showPollForm}
+                onHide={() => setShowPollForm(false)}
+                backdrop="static"
+                keyboard={false}
+                centered
+                scrollable={true}
+                onExit={() => {
+                  clearPollForm();
+                }}
+              >
+                <div>
+                  <Form
+                    onSubmit={(e: any) => submitPollForm(e)}
+                    style={{ fontSize: '15px', margin: '5px' }}
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title className={styles.reportPostModalHeader}>
+                        Create a Poll
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <div className={styles.reportPostModalBody}>Poll Parameters</div>
+                      <Form.Group className="mb-3">
+                        <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
+                          Question
+                        </Form.Label>
+                        <Form.Control
+                          value={pollQuestion}
+                          onChange={(e) => updatePollQuestion(e)}
+                          required
+                          type="text"
+                          placeholder="Write Poll Question"
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please select an event date.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                      <div
+                        style={{
+                          padding: '32px',
+                          border: '1px solid',
+                          borderRadius: '10px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          height: '282px',
+                          overflowY: 'scroll',
+                          // justifyContent: 'space-between',
+                        }}
+                        className="CreatePollOptions mb-3"
+                      >
+                        {pollFormOptions.map((option: any) => {
+                          return (
+                            <Form.Group className="mb-3" id={option?.id}>
+                              <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
+                                Option - <span>{option?.name}</span>
+                              </Form.Label>
+                              <Form.Control
+                                required
+                                type="textarea"
+                                value={option?.optionText}
+                                onChange={(e) => pollOptionUpdate(option?.id, e)}
+                                placeholder={`Enter Option - ${option?.placeholder}`}
+                              />
+                            </Form.Group>
+                          );
+                        })}
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <button
+                          style={{
+                            padding: '12px',
+                            border: 'none',
+                            fontSize: '18px',
+                            borderRadius: '12px',
+                          }}
+                          type="button"
+                          onClick={() => addPollOption()}
+                          disabled={isOptionsThreshold}
+                        >
+                          + Add More option
+                        </button>
+                        <button
+                          style={{
+                            padding: '12px',
+                            border: 'none',
+                            fontSize: '18px',
+                            borderRadius: '12px',
+                          }}
+                          type="button"
+                          onClick={() => deleteLastPollOption()}
+                          disabled={isDeleteOptionThreshold}
+                        >
+                          - Delete option
+                        </button>
+                      </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button
+                        className={styles.footerBtn}
+                        variant="secondary"
+                        onClick={() => {
+                          clearPollForm();
+                        }}
+                      >
+                        Clear
+                      </Button>
+                      <Button
+                        className={styles.footerBtn}
+                        variant="secondary"
+                        type="submit"
+                        style={{ height: '44px', width: '121px' }}
+                      >
+                        <span>Add Poll to Post</span>
+                      </Button>
+                    </Modal.Footer>
+                  </Form>
+                </div>
+              </Modal>
             </div>
             <div className={styles.errorContainer}>
               <Button
                 className={styles.publishButton}
+                disabled={editorState.getCurrentContent().getPlainText() ? false : true}
                 variant="secondary"
                 style={{
-                  boxShadow: !createNewPostError ? 'none' : '0 4px 8px 0 rgba(255, 0, 0, 0.6)',
+                  backgroundColor: editorState.getCurrentContent().getPlainText()
+                    ? '#47D7AC'
+                    : '#FFFFFF',
+                  color: editorState.getCurrentContent().getPlainText() ? '#FFFFFF' : '#A5A9AE',
+                  borderColor: editorState.getCurrentContent().getPlainText()
+                    ? '#47D7AC'
+                    : '#6c757d',
+                  // boxShadow: !createNewPostError ? 'none' : '0 4px 8px 0 rgba(255, 0, 0, 0.6)',
                 }}
                 type="button"
                 onClick={(e) => handleSubmit(e)}
               >
                 Post
               </Button>
-              {createNewPostError ? (
+              <Collapse in={showForm1}>
+                <Button
+                  className={styles.publishButton}
+                  variant="default"
+                  style={{ outline: 'none', border: 'none' }}
+                  type="button"
+                  onClick={() => {
+                    setShowForm1(false);
+                    setEditorState(() => EditorState.createEmpty());
+                  }}
+                >
+                  Cancel
+                </Button>
+              </Collapse>
+              {/* {createNewPostError ? (
                 <span style={{ fontWeight: 1000, color: 'red', fontSize: '8px' }}>
                   * Something Went Wrong. Post not uploaded !
                 </span>
               ) : (
                 ''
-              )}
+              )} */}
               {/* </div>
 
               <div> */}
@@ -2532,16 +2900,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             />
           </div>
         </div>
-        <div
-          className="AllPostscontainer"
-          id="PostFeedList"
-          style={{
-            maxWidth: '100%',
-            height: '800px',
-            overflowX: 'hidden',
-            scrollbarWidth: 'none',
-          }}
-        >
+        <div className="AllPostscontainer" id="PostFeedList" style={{ maxWidth: '100%' }}>
           {posts?.length == 0 ? (
             <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
               <span style={{ marginRight: '15px', fontWeight: '600' }}>Loading.. </span>{' '}

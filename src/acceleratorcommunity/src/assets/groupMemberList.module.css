@@ -3,21 +3,33 @@
   max-width: 100%;
   border-radius: 50%;
 }
+.groupMemberListBox{
+  background-color: whitesmoke;
+  /* margin-left: 10px; */
+  margin-top: 20px;
+  padding: 16px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+}
 .groupMemberList {
-  background: #eeeaea;
-  margin: 16px;
+  background-color: white;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
+    padding: 10px;
+  /* margin-top: 15px;
+  margin-left: 10px; */
+  /* margin: 16px; */
 }
 .groupMemberListHeading {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgb(143, 135, 135);
-  padding: 5px 16px;
+  /* border-bottom: 1px solid rgb(143, 135, 135); */
+  padding: 5px 5px;
   cursor: pointer;
 }
 .groupMemberListHeading:hover {
-  background: #fff;
+  background: whitesmoke;
 }
 .groupMemberListHeadingLeft {
   display: flex;
@@ -27,15 +39,19 @@
   margin-left: 12px;
 }
 .groupMemberListName {
+  font-size: 16px;
+  font-weight: 400;
   margin-bottom: 0;
 }
 .groupMemberListEmail {
   font-size: 12px;
+  font-weight: 400;
 }
 .groupMemberTitle {
-  margin-left: 10px;
+  font-size: 20px;
+  /* margin-left: 10px; */
   color: #283895;
-  text-align: center;
-  margin-top: 8px;
-  text-shadow: 2px 2px 1px rgb(156, 179, 179);
+  /* text-align: center; */
+  /* margin-top: 8px; */
+  /* text-shadow: 2px 2px 1px rgb(156, 179, 179); */
 }

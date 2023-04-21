@@ -103,23 +103,14 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
           variant="secondary"
           id="dropdown-basic"
           className={userProfileCss.userProfileDropdownBtn}
-          style={{ backgroundColor: 'white', border: 'none', width: '70px' }}
         >
-          <button
-            style={{
-              border: 'none',
-              backgroundColor: 'white',
-              padding: '0',
-            }}
-          >
-            <NextImage
-              field={props.fields.Image.value}
-              editable={true}
-              width={30}
-              height={30}
-              title="Profile page"
-            />
-          </button>
+          <NextImage
+            field={props.fields.Image.value}
+            editable={true}
+            width={32}
+            height={32}
+            title="Profile page"
+          />
         </Dropdown.Toggle>
 
         <Dropdown.Menu>

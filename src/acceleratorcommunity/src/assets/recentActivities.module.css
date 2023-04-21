@@ -1,0 +1,53 @@
+.recentActivityListLogo {
+  height: auto;
+  max-width: 100%;
+  border-radius: 5px;
+}
+.recentActivityListBox {
+  background-color: whitesmoke;
+  margin-left: 10px;
+  margin-top: 10px;
+  padding: 16px;
+}
+.recentActivityList {
+  background-color: white;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  padding: 10px;
+}
+.recentActivityListHeading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 16px;
+  cursor: pointer;
+}
+.recentActivityListHeading:hover {
+  background: whitesmoke;
+}
+.recentActivityListHeadingLeft {
+  display: flex;
+  align-items: center;
+}
+.recentActivityNameAndDate {
+  margin-left: 12px;
+}
+.recentActivityName {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+.recentActivityDate {
+  font-size: 12px;
+  font-weight: 400;
+  color: #afb0b4;
+}
+.recentActivityTitle {
+  font-size: 20px;
+  color: #283895;
+}
+.viewAllButton {
+  color: #f58c60;
+  cursor: pointer;
+}
