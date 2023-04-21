@@ -1,21 +1,26 @@
 import { useEffect, useState } from 'react';
-import io from 'socket.io-client';
+const io = require('socket.io-client');
 import SocketContext from './SocketContext';
 
 function SocketProvider(props: any) {
   const [socket, setSocket] = useState<any>();
   //console.log('NOTIFICATION_SOCKET_URL', process.env.NOTIFICATION_SOCKET_URL);
-  const socketServerUrl = 'http://localhost:5000';
+  const socketServerUrl =
+    'http://accelerator-notification-socket-dev.eastus.cloudapp.azure.com:8878/';
   const [socketEndpoint, setSocketEndpoint] = useState(socketServerUrl);
 
   useEffect(() => {
     if (!socket) {
-      const newSocket = io(socketEndpoint);
-      setSocket(newSocket);
-
-      socket?.on('connect', function () {
-        console.log('Socket connected');
+      const newSocket = io(socketEndpoint, {
+        transports: ['websocket'],
+        upgrade: false,
+        forceNew: true,
+        query: {
+          v: '2.0.0',
+          // EIO: 3,
+        },
       });
+      setSocket(newSocket);
 
       return () => {
         newSocket.disconnect();
@@ -25,6 +30,12 @@ function SocketProvider(props: any) {
 
     return socket;
   }, []);
+
+  useEffect(() => {
+    socket?.on('connect', function () {
+      console.log('SocketConnected');
+    });
+  }, [socket]);
 
   return (
     <SocketContext.Provider value={{ socket, setSocket, socketEndpoint, setSocketEndpoint }}>
