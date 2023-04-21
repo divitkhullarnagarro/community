@@ -10,8 +10,11 @@ import { getAllReportPostCall, getReportedPostReportersDetailsCall } from 'src/A
 import { useRouter } from 'next/router';
 import parser from 'html-react-parser';
 import Spinner from 'react-bootstrap/Spinner';
-import DownArrow from '../assets/images/DownArrow.png';
-import WarningImage from '../assets/images/warning.jpg';
+import ViewPost from '../assets/images/View_icon.svg';
+import WarningImage from '../assets/images/Send_warning.svg';
+import ReportPost from '../assets/images/report_post.svg';
+import HeadBanner from '../assets/images/HeadBanner.png';
+import DropArrow from '../assets/images/droparrow.png';
 import ReportedUsers from '../assets/images/ReportedUsers.png';
 import {
   openDoc,
@@ -98,7 +101,6 @@ const userRows = [
     reason: 'Inappropriate behaviour',
   },
 ];
-import HeadBanner from '../assets/images/HeadBanner.png';
 // import icon from '../assets/images/icons8-home 1.png'
 
 const EmailTemplateFolder = '02989F59-CFEB-4CC9-90FB-C0DA8A7FE7B5';
@@ -421,6 +423,7 @@ const Users = (props: UserProps): JSX.Element => {
   };
 
   const ReportPostPopup = () => {
+    console.log(reportedPostItem?.postType === 'TEXT_POST');
     return (
       <>
         <Modal
@@ -432,123 +435,251 @@ const Users = (props: UserProps): JSX.Element => {
           centered
           scrollable={true}
         >
-          <div style={{ height: '70vh', display: 'flex', flexDirection: 'column' }}>
-            <Modal.Header closeButton className={styles.reportPostModalHeader}>
-              <Modal.Title>{'Reported Post'}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div className={styles.reportPostModal}>
-                <div className={styles.reportPostHeading}>
-                  <div className={styles.reportPostHeaderLeft}>
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
-                      alt="User-Pic"
-                      width="30px"
-                    ></img>
-                    <div className={styles.reportPostDetailContainer}>
-                      <h4 className={styles.postOwner}>
-                        <span>{reportedPostItem?.createdBy?.firstName}</span>
-                        &nbsp;
-                        <span>{reportedPostItem?.createdBy?.lastName}</span>
-                      </h4>
-                      <h6 className={styles.postCreateDate}>
-                        <span style={{ fontWeight: '100' }}>
-                          {reportedPostItem?.createdOn
-                            ? calculateTimeDifference(reportedPostItem?.createdOn)
-                            : 'Recently'}
-                        </span>
-                      </h6>
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.postContent}>
-                  {reportedPostItem?.description
-                    ? parser(reportedPostItem?.description)
-                    : reportedPostItem?.description}
-                </div>
-                <div className="postMedia">
-                  {reportedPostItem?.mediaList?.map((media: mediaType, num: any) => {
-                    if (media?.mediaType === 'VIDEO') {
-                      return (
-                        <div key={num}>
-                          <video width="100%" src={media?.url} controls></video>
-                        </div>
-                      );
-                    } else if (media?.mediaType === 'DOCUMENT') {
-                      return (
-                        <div className="docPreviewContainer" key={num}>
-                          <span className="openPrevButton">
-                            <button
-                              onClick={() => openDoc(media?.url)}
-                              style={{
-                                padding: '5px',
-                                borderRadius: '20px',
-                                borderColor: 'white',
-                              }}
-                            >
-                              <img
-                                width="50px"
-                                src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
-                                alt={num}
-                                style={{ margin: '10px' }}
-                              ></img>
-                              {'DocFile'}
-                            </button>
-                          </span>
-                        </div>
-                      );
-                    } else if (media?.mediaType === 'IMAGE') {
-                      return (
-                        <div
-                          key={num}
-                          style={{
-                            borderRadius: '30px',
-                            margin: '0px 15px 15px 0px',
-                          }}
-                        >
-                          <img width="100%" src={media?.url} alt={media?.id}></img>
-                        </div>
-                      );
-                    }
-                    return '';
-                  })}
-                </div>
-              </div>
-            </Modal.Body>
-            <Modal.Footer className={styles.reportPostModalFooter}>
-              {showSpinner ? (
-                <>
-                  {'Fetching users who reported the post...'}
-                  <Spinner animation="border" style={{ marginLeft: '5px', height: '30px' }} />
-                </>
-              ) : (
-                reportedPostReporterDetails.map((reportDetails) => {
-                  return (
-                    <>
-                      <div className={styles.footerContainer}>
-                        <div className={styles.footerFirstRow}>
-                          <div className={styles.footerRowHeader}>Reported By :</div>
-                          <div className={styles.footerRowContent}>
-                            <div>{`${reportDetails?.reportedBy?.firstName} ${reportDetails?.reportedBy?.lastName}`}</div>
-                            <div className={styles.reportedDate}>
-                              {reportDetails?.reportedAt
-                                ? calculateTimeDifference(reportDetails?.reportedAt)
+          {reportedPostItem?.postType === 'TEXT_POST' ? (
+            <div>
+              <div style={{ height: '300px', display: 'flex', flexDirection: 'column' }}>
+                <Modal.Header closeButton className={styles.reportPostModalHeader}>
+                  <Modal.Title className={styles.reportTitle}>{'Reported Post'}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className={styles.reportBody}>
+                  <div className={styles.reportPostModal}>
+                    <div className={styles.reportPostHeading}>
+                      <div className={styles.reportPostHeaderLeft}>
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                          alt="User-Pic"
+                          width="30px"
+                        ></img>
+                        <div className={styles.reportPostDetailContainer}>
+                          <h4 className={styles.postOwner}>
+                            <span>{reportedPostItem?.createdBy?.firstName}</span>
+                            &nbsp;
+                            <span>{reportedPostItem?.createdBy?.lastName}</span>
+                          </h4>
+                          <h6 className={styles.postCreateDate}>
+                            <span style={{ fontWeight: '100' }}>
+                              {reportedPostItem?.createdOn
+                                ? calculateTimeDifference(reportedPostItem?.createdOn)
                                 : 'Recently'}
-                            </div>
-                          </div>
-                        </div>
-                        <div className={styles.footerSecondRow}>
-                          <div className={styles.footerRowHeader}>Report Reason :</div>
-                          <div>{reportDetails?.reason ?? 'Spam'}</div>
+                            </span>
+                          </h6>
                         </div>
                       </div>
-                      <hr />
+                    </div>
+                    <div className={styles.postContent}>
+                      {reportedPostItem?.description
+                        ? parser(reportedPostItem?.description)
+                        : reportedPostItem?.description}
+                    </div>
+                    <div className="postMedia">
+                      {reportedPostItem?.mediaList?.map((media: mediaType, num: any) => {
+                        if (media?.mediaType === 'VIDEO') {
+                          return (
+                            <div key={num}>
+                              <video width="100%" src={media?.url} controls></video>
+                            </div>
+                          );
+                        } else if (media?.mediaType === 'DOCUMENT') {
+                          return (
+                            <div className="docPreviewContainer" key={num}>
+                              <span className="openPrevButton">
+                                <button
+                                  onClick={() => openDoc(media?.url)}
+                                  style={{
+                                    padding: '5px',
+                                    borderRadius: '20px',
+                                    borderColor: 'white',
+                                  }}
+                                >
+                                  <img
+                                    width="50px"
+                                    src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
+                                    alt={num}
+                                    style={{ margin: '10px' }}
+                                  ></img>
+                                  {'DocFile'}
+                                </button>
+                              </span>
+                            </div>
+                          );
+                        } else if (media?.mediaType === 'IMAGE') {
+                          return (
+                            <div
+                              key={num}
+                              style={{
+                                borderRadius: '30px',
+                                // margin: '0px 15px 15px 0px',
+                              }}
+                            >
+                              <img width="100%" src={media?.url} alt={media?.id}></img>
+                            </div>
+                          );
+                        }
+                        return '';
+                      })}
+                    </div>
+                  </div>
+                </Modal.Body>
+                <Modal.Footer className={styles.reportPostModalFooter}>
+                  {showSpinner ? (
+                    <>
+                      {'Fetching users who reported the post...'}
+                      <Spinner animation="border" style={{ marginLeft: '5px', height: '30px' }} />
                     </>
-                  );
-                })
-              )}
-            </Modal.Footer>
-          </div>
+                  ) : (
+                    reportedPostReporterDetails.map((reportDetails) => {
+                      return (
+                        <>
+                          <div className={styles.footerContainer}>
+                            <div className={styles.footerFirstRow}>
+                              <div className={styles.footerRowHeader}>Reported By :</div>
+                              <div className={styles.footerRowContent}>
+                                <div>{`${reportDetails?.reportedBy?.firstName} ${reportDetails?.reportedBy?.lastName}`}</div>
+                                <div className={styles.reportedDate}>
+                                  {reportDetails?.reportedAt
+                                    ? calculateTimeDifference(reportDetails?.reportedAt)
+                                    : 'Recently'}
+                                </div>
+                              </div>
+                            </div>
+                            <div className={styles.footerSecondRow}>
+                              <div className={styles.footerRowHeader}>Reason :</div>
+                              <div className={styles.footerRowContent}>
+                                {reportDetails?.reason ?? 'Spam'}
+                              </div>
+                            </div>
+                          </div>
+                          <hr />
+                        </>
+                      );
+                    })
+                  )}
+                </Modal.Footer>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <div style={{ height: '660px', display: 'flex', flexDirection: 'column' }}>
+                <Modal.Header closeButton className={styles.reportPostModalHeader}>
+                  <Modal.Title className={styles.reportTitle}>{'Reported Post'}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className={styles.reportBody}>
+                  <div className={styles.reportPostModal}>
+                    <div className={styles.reportPostHeading}>
+                      <div className={styles.reportPostHeaderLeft}>
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                          alt="User-Pic"
+                          width="30px"
+                        ></img>
+                        <div className={styles.reportPostDetailContainer}>
+                          <h4 className={styles.postOwner}>
+                            <span>{reportedPostItem?.createdBy?.firstName}</span>
+                            &nbsp;
+                            <span>{reportedPostItem?.createdBy?.lastName}</span>
+                          </h4>
+                          <h6 className={styles.postCreateDate}>
+                            <span style={{ fontWeight: '100' }}>
+                              {reportedPostItem?.createdOn
+                                ? calculateTimeDifference(reportedPostItem?.createdOn)
+                                : 'Recently'}
+                            </span>
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={styles.postContent}>
+                      {reportedPostItem?.description
+                        ? parser(reportedPostItem?.description)
+                        : reportedPostItem?.description}
+                    </div>
+                    <div className="postMedia">
+                      {reportedPostItem?.mediaList?.map((media: mediaType, num: any) => {
+                        if (media?.mediaType === 'VIDEO') {
+                          return (
+                            <div key={num}>
+                              <video width="100%" src={media?.url} controls></video>
+                            </div>
+                          );
+                        } else if (media?.mediaType === 'DOCUMENT') {
+                          return (
+                            <div className="docPreviewContainer" key={num}>
+                              <span className="openPrevButton">
+                                <button
+                                  onClick={() => openDoc(media?.url)}
+                                  style={{
+                                    padding: '5px',
+                                    borderRadius: '20px',
+                                    borderColor: 'white',
+                                  }}
+                                >
+                                  <img
+                                    width="50px"
+                                    src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
+                                    alt={num}
+                                    style={{ margin: '10px' }}
+                                  ></img>
+                                  {'DocFile'}
+                                </button>
+                              </span>
+                            </div>
+                          );
+                        } else if (media?.mediaType === 'IMAGE') {
+                          return (
+                            <div
+                              key={num}
+                              style={{
+                                borderRadius: '30px',
+                                // margin: '0px 15px 15px 0px',
+                              }}
+                            >
+                              <img width="100%" src={media?.url} alt={media?.id}></img>
+                            </div>
+                          );
+                        }
+                        return '';
+                      })}
+                    </div>
+                  </div>
+                </Modal.Body>
+                <Modal.Footer className={styles.reportPostModalFooter}>
+                  {showSpinner ? (
+                    <>
+                      {'Fetching users who reported the post...'}
+                      <Spinner animation="border" style={{ marginLeft: '5px', height: '30px' }} />
+                    </>
+                  ) : (
+                    reportedPostReporterDetails.map((reportDetails) => {
+                      return (
+                        <>
+                          <div className={styles.footerContainer}>
+                            <div className={styles.footerFirstRow}>
+                              <div className={styles.footerRowHeader}>Reported By :</div>
+                              <div className={styles.footerRowContent}>
+                                <div>{`${reportDetails?.reportedBy?.firstName} ${reportDetails?.reportedBy?.lastName}`}</div>
+                                <div className={styles.reportedDate}>
+                                  {reportDetails?.reportedAt
+                                    ? calculateTimeDifference(reportDetails?.reportedAt)
+                                    : 'Recently'}
+                                </div>
+                              </div>
+                            </div>
+                            <div className={styles.footerSecondRow}>
+                              <div className={styles.footerRowHeader}>Reason :</div>
+                              <div className={styles.footerRowContent}>
+                                {reportDetails?.reason ?? 'Spam'}
+                              </div>
+                            </div>
+                          </div>
+                          <hr />
+                        </>
+                      );
+                    })
+                  )}
+                </Modal.Footer>
+              </div>
+            </div>
+          )}
         </Modal>
       </>
     );
@@ -557,7 +688,11 @@ const Users = (props: UserProps): JSX.Element => {
   const ReportedPostList = () => {
     return (
       <div className={styles.reportPostWrapper}>
-        <h3>{reportPostList?.length > 0 ? ' Reported Posts' : ''}</h3>
+        <div className={styles.reportPostHeader}>
+          <h3 className={styles.reportPostTitle}>
+            {reportPostList?.length > 0 ? ' Reported Posts' : ''}
+          </h3>
+        </div>
         {reportPostList.slice(0, numberOfReportedItemsToShow).map((item) => {
           return (
             <div key={item?.id} className={styles.reportPostContainer}>
@@ -575,6 +710,12 @@ const Users = (props: UserProps): JSX.Element => {
                       <span>{item?.createdBy?.lastName}</span>
                     </h5>
                     <h6 className={styles.postCreateDate}>
+                      <img
+                        width="9px"
+                        src="https://cdn-icons-png.flaticon.com/512/2088/2088617.png"
+                        alt="post time"
+                        style={{ opacity: '0.4', marginRight: '4px' }}
+                      ></img>
                       <span style={{ fontWeight: '100' }}>
                         {item?.createdOn ? calculateTimeDifference(item?.createdOn) : 'Recently'}
                       </span>
@@ -584,7 +725,7 @@ const Users = (props: UserProps): JSX.Element => {
                 <div className={styles.reportPostHeaderRight}>
                   <Dropdown>
                     <Dropdown.Toggle
-                      variant="outline"
+                      variant="secondary"
                       id="dropdown-basic"
                       className={styles.dropdownBtn}
                       style={{ backgroundColor: 'white', border: 'none', width: '50px' }}
@@ -604,7 +745,7 @@ const Users = (props: UserProps): JSX.Element => {
                       </button>
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
+                    <Dropdown.Menu className={styles.dropdownMenu}>
                       <Dropdown.Item
                         className={styles.dropdownItem}
                         href={`/post/${item.id}`}
@@ -613,10 +754,10 @@ const Users = (props: UserProps): JSX.Element => {
                         <div className={styles.overlayItem}>
                           <div className={styles.dropdownImage}>
                             <NextImage
-                              field={WarningImage}
+                              field={ViewPost}
                               editable={true}
-                              height={30}
-                              width={30}
+                              // height={30}
+                              // width={30}
                             />
                           </div>
                           <div className={styles.reportContainerHeader}>View Original Post</div>
@@ -649,7 +790,7 @@ const Users = (props: UserProps): JSX.Element => {
                       >
                         <div className={styles.overlayItem}>
                           <div className={styles.dropdownImage}>
-                            <NextImage field={Flag} editable={true} />
+                            <NextImage field={ReportPost} editable={true} />
                           </div>
                           <div className={styles.reportContainerHeader}>Reported Post Details</div>
                         </div>
@@ -658,53 +799,61 @@ const Users = (props: UserProps): JSX.Element => {
                   </Dropdown>
                 </div>
               </div>
-              <div className={styles.reportPostContent}>{parser(item?.description)}</div>
-              <div className="postMedia">
-                {item?.mediaList?.map((media: mediaType, num: any) => {
-                  if (media?.mediaType === 'VIDEO') {
-                    return (
-                      <div key={num}>
-                        <video width="100%" src={media?.url} controls></video>
-                      </div>
-                    );
-                  } else if (media?.mediaType === 'DOCUMENT') {
-                    return (
-                      <div className="docPreviewContainer" key={num}>
-                        <span className="openPrevButton">
-                          <button
-                            onClick={() => openDoc(media?.url)}
-                            style={{
-                              padding: '5px',
-                              borderRadius: '20px',
-                              borderColor: 'white',
-                            }}
-                          >
-                            <img
-                              width="50px"
-                              src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
-                              alt={num}
-                              style={{ margin: '10px' }}
-                            ></img>
-                            {'DocFile'}
-                          </button>
-                        </span>
-                      </div>
-                    );
-                  } else if (media?.mediaType === 'IMAGE') {
-                    return (
-                      <div
-                        key={num}
-                        style={{
-                          borderRadius: '30px',
-                          margin: '0px 15px 15px 0px',
-                        }}
-                      >
-                        <img width="300px" src={media?.url} alt={media?.id}></img>
-                      </div>
-                    );
-                  }
-                  return '';
-                })}
+              <div className={styles.reportPostContent}>
+                <div className="postMedia">
+                  {item?.mediaList?.map((media: mediaType, num: any) => {
+                    if (media?.mediaType === 'VIDEO') {
+                      return (
+                        <div key={num}>
+                          <video width="100%" src={media?.url} controls></video>
+                        </div>
+                      );
+                    } else if (media?.mediaType === 'DOCUMENT') {
+                      return (
+                        <div className={styles.docPreviewContainer} key={num}>
+                          <span className="openPrevButton">
+                            <button
+                              onClick={() => openDoc(media?.url)}
+                              style={{
+                                padding: '5px',
+                                borderRadius: '20px',
+                                borderColor: 'white',
+                              }}
+                            >
+                              <img
+                                width="50px"
+                                src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
+                                alt={num}
+                                style={{ margin: '10px' }}
+                              ></img>
+                              {'DocFile'}
+                            </button>
+                          </span>
+                        </div>
+                      );
+                    } else if (media?.mediaType === 'IMAGE') {
+                      return (
+                        <div
+                          key={num}
+                          style={{
+                            borderRadius: '30px',
+                            margin: '0px 15px 15px 0px',
+                          }}
+                        >
+                          <img
+                            className={styles.reportPostImage}
+                            height="438px"
+                            width="100%"
+                            src={media?.url}
+                            alt={media?.id}
+                          ></img>
+                        </div>
+                      );
+                    }
+                    return '';
+                  })}
+                </div>
+                <div className="postDescription">{parser(item?.description)}</div>
               </div>
             </div>
           );
@@ -712,13 +861,13 @@ const Users = (props: UserProps): JSX.Element => {
         <Button
           className={styles.seeMoreReportedPostBtn}
           style={{
-            color: 'black',
             width: '100%',
-            fontSize: '1.5rem',
+            fontSize: '20px',
             height: '50px',
-            backgroundColor: 'white',
+            backgroundColor: 'whitesmoke',
+            color: '#2A86FD',
             border: 'none',
-            fontWeight: 'bold',
+            fontWeight: '500',
             textAlign: 'center',
             display: 'flex',
             justifyContent: 'center',
@@ -726,8 +875,10 @@ const Users = (props: UserProps): JSX.Element => {
           }}
           onClick={() => setNumberOfReportedItemsToShow(numberOfReportedItemsToShow + 5)}
         >
-          See more
-          <NextImage height={30} width={30} field={DownArrow} />
+          <div>
+            <span className={styles.seeMoreBtn}>See more</span>
+          </div>
+          <NextImage field={DropArrow} editable={true} />
         </Button>
       </div>
     );
@@ -738,7 +889,7 @@ const Users = (props: UserProps): JSX.Element => {
       <>
         <div className={styles.dashboardWrapper}>
           <div className={styles.imgContainer}>
-            <img src={HeadBanner.src} width="100%"/>
+            <img src={HeadBanner.src} width="100%" />
             {/* {props?.fields?.data?.datasource?.mainHeaderLabel?.jsonValue?.value ??
               'Welcome to the Dashboard'} */}
           </div>
@@ -752,42 +903,42 @@ const Users = (props: UserProps): JSX.Element => {
     return (
       <div className={styles.sidenavbar}>
         <div className={styles.blockContainer}>
-        <div className={styles.top}>
-          <span className={styles.logo}>
-          {props?.fields?.data?.datasource?.sideNavHeaderLabel?.jsonValue?.value ??
-              'Professtional Dashboard'}
-          </span>
-        </div>
-        <p className={styles.title}>{ListLabel}</p>
-        <div className={styles.center}>
-          <ul>            
-            <button 
-              onClick={() => {
-                getReportedPosts();
-              }}
-            >
-              <li className={styles.row}>
-                <NextImage contentEditable={true} field={Flag} height={18} width={18}></NextImage>
-                <span>{'Reported Posts'}</span>
-              </li>
-            </button>
-            <button
-              onClick={() => {
-                getReportedUserList();
-              }}
-            >
-              <li className={styles.row}>
-                <NextImage
-                  contentEditable={true}
-                  field={ReportedUsers}
-                  height={20}
-                  width={20}
-                ></NextImage>
-                <span>{'Reported Users'}</span>
-              </li>
-            </button>
-          </ul>
-        </div>
+          <div className={styles.top}>
+            <span className={styles.logo}>
+              {props?.fields?.data?.datasource?.sideNavHeaderLabel?.jsonValue?.value ??
+                'Professtional Dashboard'}
+            </span>
+          </div>
+          <p className={styles.title}>{ListLabel}</p>
+          <div className={styles.center}>
+            <ul>
+              <button
+                onClick={() => {
+                  getReportedPosts();
+                }}
+              >
+                <li className={styles.row}>
+                  <NextImage contentEditable={true} field={Flag} height={18} width={18}></NextImage>
+                  <span>{'Reported Posts'}</span>
+                </li>
+              </button>
+              <button
+                onClick={() => {
+                  getReportedUserList();
+                }}
+              >
+                <li className={styles.row}>
+                  <NextImage
+                    contentEditable={true}
+                    field={ReportedUsers}
+                    height={20}
+                    width={20}
+                  ></NextImage>
+                  <span>{'Reported Users'}</span>
+                </li>
+              </button>
+            </ul>
+          </div>
         </div>
       </div>
     );
@@ -795,7 +946,6 @@ const Users = (props: UserProps): JSX.Element => {
 
   return (
     <div className={styles.container}>
-      
       {/* <Button className={styles.backBtn} onClick={() => router.push('/')}>
         Back
       </Button> */}
@@ -818,7 +968,7 @@ const Users = (props: UserProps): JSX.Element => {
             ) : (
               <span className={styles.reportedPostContainer}>
                 <span className={styles.reportPostContainerHeader}>Getting Reported Posts ...</span>
-                <Spinner animation="border" />
+                <Spinner animation="border" className={styles.spinner} />
               </span>
             )
           ) : (

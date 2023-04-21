@@ -59,25 +59,40 @@
   display: none;
 }
 
-.dropdownItem {
-  display: flex;
-  padding: 10px 5px;
-  border-bottom: 2px solid #F5F5F5;
+.dropdownMenu{
+  padding: 0;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.25);
+  overflow: hidden;
 }
 
-.dropdownMenu {
-  padding: 0px 16px;
+.dropdownItem{
+  padding: 10px;
+  position: relative;
+}
+
+.dropdownItem:after {
+  content: "";
+  display: inline-block;
+  width: 85%;
+  height: 1px;
+  border-bottom: 1px solid #DFDFDF;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50% );
 }
 
 .dropdownImage {
   width: 16px;
   height: 16px;
 }
+
 .mainContainer {
   background: #F9F9F9;
   padding: 20px;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
 }
+
 .addPostWidgetContainer {
   background-color: #FFFFFF;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
@@ -85,19 +100,23 @@
   border-radius: 6px;
   margin-bottom: 20px;
 }
+
 .addPostFieldContainer {
   height: 100%;
   width: 100%;
   background-color: white;
 }
+
 .addPostImage {
   min-width: 27px;
 }
+
 .addPostField {
   display: flex;
   align-items: start;
   gap: 10px;
 }
+
 .addPostButton {
   background-color: #f9f9f9;
   flex: 1 1;
@@ -105,61 +124,72 @@
   border-radius: 15px;
   padding: 5px 10px;
 }
+
 .addPostHeading {
   display: flex;
   font-size: 13px;
   color: #a5a9ae;
 }
+
 .AddPostItems {
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-top: 12px;
 }
+
 .errorContainer {
   height: 30px;
   display: flex;
   flex-direction: row-reverse;
   gap: 10px;
 }
+
 .addPostFileButtons {
   background-color: white;
   border: none;
   padding-top: 5px;
 }
+
 .publishButton {
   background-color: white;
   color: #a5a9ae;
   padding: 2px 25px;
   font-size: 12px;
 }
+
 .closeButton {
   height: 35px;
 }
-.postFooterContainer{
+
+.postFooterContainer {
   display: flex;
   gap: 40px;
   margin: 0 15px 15px 15px;
 }
-.likeContainer{
+
+.likeContainer {
   display: flex;
   align-items: center;
   gap: 5px;
 }
-.likeButton{
+
+.likeButton {
   border: none;
   background-color: white;
   margin-bottom: 0px;
   padding: 0;
   height: 18px;
 }
-.likePost{
+
+.likePost {
   color: #A5A9AE;
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
 }
-.likeCount{
+
+.likeCount {
   display: flex;
   height: 14px;
   border-radius: 10px;
@@ -170,28 +200,31 @@
   line-height: 1.1;
   padding: 0px 5px;
 }
-.commentPost{
+
+.commentPost {
   color: #A5A9AE;
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
 }
 
-.sharePost{
+.sharePost {
   color: #A5A9AE;
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
 }
-.commentButton{
+
+.commentButton {
   border: none;
   background-color: white;
   margin-bottom: 0px;
   padding: 0;
   height: 18px;
 }
-.commentCount{
-  color:#3D3D3F;
+
+.commentCount {
+  color: #3D3D3F;
   display: flex;
   height: 14px;
   border-radius: 10px;
@@ -201,7 +234,8 @@
   line-height: 1.1;
   padding: 0px 5px;
 }
-.shareButton{
+
+.shareButton {
   border: none;
   background-color: white;
   margin-bottom: 0px;
@@ -210,12 +244,14 @@
   display: flex;
   gap: 5px;
 }
-.commentContainer{
+
+.commentContainer {
   display: flex;
   align-items: center;
   gap: 5px
 }
-.shareContainer{
+
+.shareContainer {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -227,6 +263,120 @@
     margin-top: 12px;
   }
 }
+
+
+.AddEventModalHeader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  font-size: 1.875rem;
+  color: #283895;
+}
+
+/* .AddEventModalContent {
+
+  display: grid;
+  place-items: center;
+}
+
+.AddEventModalBody {
+  width: 920px;
+} */
+
+.AddEventModalProfile {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.AddEventModalProfilePic {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 16px;
+}
+
+.AddEventModalProfilePic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.AddEventModalEventName::placeholder {
+  color: black;
+  font-size: 18px;
+  color: 'black';
+  font-weight: 800px;
+}
+
+.DateInput::before {
+  content: "Start Date: ";
+  font-size: 12px;
+  color: black;
+}
+
+.TimeInput::before {
+  content: "Start Time: ";
+  font-size: 12px;
+  color: black;
+}
+
+.eventTypeDropdownToggle {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  height: 54px;
+  background-color: white;
+  color: black;
+  font-weight: 400;
+}
+
+.eventTypeDropdownToggle:hover {
+  background-color: #47D7AC;
+}
+
+.eventTypeDropdownToggle:active {
+  background-color: #47D7AC !important;
+}
+
+.eventTypeDropdownToggle:focus-visible {
+  background-color: #47D7AC;
+}
+
+.eventModalCancel {
+  border: none;
+  background-color: white;
+  color: #F58C60;
+}
+
+.eventModalCancel:hover {
+  background-color: #F58C60;
+  color: white;
+}
+
+.eventModalAddToPost {
+  border: none;
+  background-color: #47D7AC;
+  color: white;
+}
+
+.eventModalAddToPost:hover {
+  background-color: #349175;
+  color: white;
+}
+
+.eventModalDropdownItem:active {
+  background-color: #47D7AC;
+}
+
+/* .AddEventModalEventDescription {} */
+
+.AddEventModalEventDates div {
+  width: 100%;
+}
+
 @media only screen and (max-width: 640px) {
   .dropdownBtn {
     background-color: white;
@@ -277,7 +427,8 @@
     width: 15px;
     height: 15px;
   }
-  .postFooterContainer{
+
+  .postFooterContainer {
     gap: 5px;
     justify-content: space-between;
   }

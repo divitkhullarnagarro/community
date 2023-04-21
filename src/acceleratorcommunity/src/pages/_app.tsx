@@ -22,6 +22,7 @@ import 'assets/rte.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'draft-js/dist/Draft.css';
 import '../assets/richTextEditor.css';
+import SocketProvider from 'src/Context/SocketProvider';
 
 NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
 
@@ -37,9 +38,11 @@ function App({ Component, pageProps }: AppProps<SitecorePageProps>): JSX.Element
     // Note Next.js does not (currently) provide anything for translation, only i18n routing.
     // If your app is not multilingual, next-localization and references to it can be removed.
     <I18nProvider lngDict={dictionary} locale={pageProps.locale}>
-      <WebProvider>
-        <Component {...rest} />
-      </WebProvider>
+      <SocketProvider>
+        <WebProvider>
+          <Component {...rest} />
+        </WebProvider>
+      </SocketProvider>
     </I18nProvider>
   );
 }

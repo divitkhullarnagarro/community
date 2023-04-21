@@ -14,7 +14,6 @@ const addPostCall = async (userToken: string | undefined, postObject: any) => {
     createdOn: 23032023,
     updatedOn: 23032023,
   };
-  console.log("PSOT", data);
   let addPostURL =
     'https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/post';
   var config = {

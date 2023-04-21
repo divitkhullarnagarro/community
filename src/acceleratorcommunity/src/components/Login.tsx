@@ -8,6 +8,7 @@ import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';
 import loginCss from '../assets/login.module.css';
 import Spinner from 'react-bootstrap/Spinner';
+import SocketContext from 'src/Context/SocketContext';
 // import star from '../assets/images/star.png';
 
 type LoginProps = ComponentProps & {
@@ -55,6 +56,11 @@ type DataSource = {
 };
 
 const Login = (props: LoginProps): JSX.Element => {
+  const { socket } = { ...useContext(SocketContext) };
+  console.log('socketRegister', socket);
+  socket?.on('kr62521@gmail.com', (data: any) => {
+    console.log('Received message:', data);
+  });
   const targetItems = props?.fields?.data?.datasource;
   const router = useRouter();
   const { setIsLoggedIn, setUserToken, setObjectId, userToken } = { ...useContext(WebContext) };
