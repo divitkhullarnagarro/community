@@ -11,6 +11,25 @@ type RecentActivitiesProps = ComponentProps & {
   };
 };
 const list = [
+  {
+    img: recentActivityLogo,
+    activityName:
+      ' Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum',
+    date: '13 Feb 2023',
+  },
+  { img: recentActivityLogo, activityName: 'Created a Article fg gj g', date: '18 Dec 2021' },
+  { img: recentActivityLogo, activityName: 'Created a Post', date: '10 Jan 2022' },
+  { img: recentActivityLogo, activityName: 'Liked a Post', date: '13 Feb 2023' },
+  { img: recentActivityLogo, activityName: 'Created a Article', date: '18 Dec 2021' },
+  { img: recentActivityLogo, activityName: 'Created a Post', date: '10 Jan 2022' },
+  { img: recentActivityLogo, activityName: 'Liked a Post', date: '13 Feb 2023' },
+  { img: recentActivityLogo, activityName: 'Created a Article', date: '18 Dec 2021' },
+  { img: recentActivityLogo, activityName: 'Created a Post', date: '10 Jan 2022' },
+  { img: recentActivityLogo, activityName: 'Liked a Post', date: '13 Feb 2023' },
+  { img: recentActivityLogo, activityName: 'Created a Article', date: '18 Dec 2021' },
+  { img: recentActivityLogo, activityName: 'Created a Post', date: '10 Jan 2022' },
+  { img: recentActivityLogo, activityName: 'Liked a Post', date: '13 Feb 2023' },
+  { img: recentActivityLogo, activityName: 'Created a Article', date: '18 Dec 2021' },
   { img: recentActivityLogo, activityName: 'Created a Post', date: '10 Jan 2022' },
   { img: recentActivityLogo, activityName: 'Liked a Post', date: '13 Feb 2023' },
   { img: recentActivityLogo, activityName: 'Created a Article', date: '18 Dec 2021' },
@@ -45,15 +64,23 @@ const RecentActivities = (props: RecentActivitiesProps): JSX.Element => {
                     alt={ele.activityName}
                     className={style.recentActivityListLogo}
                     height={50}
+                    width={50}
                   />
                   <div className={`d-flex flex-column ${style.recentActivityNameAndDate}`}>
-                    <h5 className={style.recentActivityName}>{ele.activityName}</h5>
+                    <h5 className={style.recentActivityName} title={ele.activityName}>
+                      {ele.activityName}
+                    </h5>
                     <h6 className={style.recentActivityDate}>{ele.date}</h6>
                   </div>
                 </div>
               </div>
             </>
           ))}
+          {/* <h2>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+            has been the industry's standard dummy text ever since the 1500s, when an unknown
+            printer took a galley
+          </h2> */}
         </div>
       </div>
     </>
