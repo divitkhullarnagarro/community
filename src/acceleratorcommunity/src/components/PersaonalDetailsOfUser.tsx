@@ -167,7 +167,10 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => (
               <option value="FEMALE">FEMALE</option>
               <option value="OTHERS">OTHERS</option>
             </Form.Control>
+            {console.log("+++++++++++++++++++++++++++",props.errorState?.gender)}
             {props.errorState?.gender ? <span className="error">Field is required</span> : ' '}
+            {props.personalInfo?.gender === undefined ? <span className="error">Field is required</span> : ' '}
+
           </Form.Group>
         </Form>
       </Modal.Body>

@@ -190,7 +190,6 @@ const ContactDetails = (props: any): JSX.Element => (
           </Button>
           {console.log('+++++++++++++++++++++', props.userResidenceInfo)}
           {props.userResidenceInfo?.map((data: any) => {
-            console.log('dataaaaaaaaaaaaaaaaaaaaaa', data);
             return (
               <>
                 {data?.leftAt === null ? (
