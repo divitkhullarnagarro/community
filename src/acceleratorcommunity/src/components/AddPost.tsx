@@ -1867,6 +1867,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           createdBy: {
             firstName: userObject?.firstName,
             lastName: userObject?.lastName,
+            objectId: objectId,
           },
           event: eventPost?.event,
           createdOn: timestamp,
