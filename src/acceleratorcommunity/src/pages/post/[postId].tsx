@@ -440,7 +440,15 @@ function viewSinglePost(props: any) {
                       )}
                     </div>
                   </div>
-                  <div>{calculateTimeDifference(props?.data?.data?.createdOn)}</div>
+                  <div className={specificPostCss.postCreationTime}>
+                    <img
+                      width="9px"
+                      src="https://cdn-icons-png.flaticon.com/512/2088/2088617.png"
+                      alt="post time"
+                      style={{ opacity: '0.4', marginRight: '4px' }}
+                    ></img>
+                    {calculateTimeDifference(props?.data?.data?.createdOn)}
+                  </div>
                 </div>
               </div>
               <div className={specificPostCss.actionContainer}>
@@ -450,7 +458,6 @@ function viewSinglePost(props: any) {
                       variant="secondary"
                       id="dropdown-basic"
                       className={styles.dropdownBtn}
-                      style={{ backgroundColor: 'white', border: 'none', width: '70px' }}
                     >
                       <button
                         onClick={() => {
@@ -518,7 +525,7 @@ function viewSinglePost(props: any) {
                             <NextImage field={BlockUserImage} editable={true} />
                           </div>
                           <div className={styles.reportContainerBtn}>
-                            Block{" "}
+                            Block{' '}
                             {props?.data?.data?.createdBy?.firstName +
                               ' ' +
                               props?.data?.data?.createdBy?.lastName}
@@ -776,7 +783,7 @@ export async function getServerSideProps(context: any) {
     .catch((error: any) => {
       console.error(error);
     });
-  if (res!==undefined) {
+  if (res !== undefined) {
     var data = await res.json();
   }
   return {
