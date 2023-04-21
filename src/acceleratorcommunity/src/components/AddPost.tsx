@@ -32,6 +32,7 @@ import ToastNotification from './ToastNotification';
 import getCommentsCall from 'src/API/getCommentsCall';
 import getCommentsReplyCall from 'src/API/getCommentsReplyCall';
 import postCommentReplyCall from 'src/API/postCommentReplyCall';
+import CreateModalPopup from './helperComponents/CreateModalPopup';
 
 // Rich Text Editor Files Import Start
 import { EditorState, convertToRaw } from 'draft-js';
@@ -47,6 +48,7 @@ const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mo
 });
 // Rich Text Editor Files Import End
 
+import Deleteimage from '../assets/images/deleteImg.png';
 import BlockUserImage from '../assets/images/BlockUser.jpg';
 import React from 'react';
 import upVoteCall from 'src/API/upVote';
@@ -69,6 +71,7 @@ import greylikeimage from '../assets/images/greylikeimage.svg';
 import EventCard from './EventCard';
 import PollCard from './PollCard';
 import deletePostCall from 'src/API/deletePostCall';
+import deleteCommentCall from 'src/API/deleteCommentCall';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -107,6 +110,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   let [allUpVotes, setAllUpVotes] = useState([]);
   let [allDownVote, setAllDownVote] = useState([]);
   let [showUp, setShowup] = useState('up');
+  let [showDeletePostPopup, setShowDeletePostPopup] = useState(false);
+  let [showDeleteCommentPopup, setShowDeleteCommentPopup] = useState(false);
 
   let [modalForData, setModalForData] = useState(false);
 
@@ -657,7 +662,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const timestamp = new Date().getTime();
     let obj = {
       id: uniqId,
-      createdBy: { firstName: userObject?.firstName, lastName: userObject?.lastName },
+      createdBy: {
+        firstName: userObject?.firstName,
+        lastName: userObject?.lastName,
+        objectId: objectId,
+      },
       text: commStr,
       replies: [],
       isOpenReply: false,
@@ -783,14 +792,54 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     });
   }
 
+  let [deletePostId, setDeletePostId] = useState('');
+  let [deleteCommentId, setDeleteCommentId] = useState<any>('');
+
+  //For Comment
+  const confirmationForDeleteComment = (id: any) => {
+    setDeleteCommentId('');
+    setShowDeleteCommentPopup(false);
+    deleteCommentByApi(id);
+  };
+
+  //Delete Comment Call
+  async function deleteCommentByApi(id: any) {
+    let resp: any = '';
+    if (id.replyId) {
+      resp = await deleteCommentCall(userToken, id?.replyId);
+    } else {
+      resp = await deleteCommentCall(userToken, id?.commentId);
+    }
+    if (resp?.data?.success === true) {
+      if (id?.replyId) {
+        deleteReplyFromComment(id?.postId, id?.commentId, id?.replyId);
+        setShowNofitication(true);
+        setToastSuccess(true);
+        setToastMessage('Reply Deleted Successfully !');
+      } else {
+        deleteCommentFromPost(id?.postId, id?.commentId);
+        setShowNofitication(true);
+        setToastSuccess(true);
+        setToastMessage('Comment Deleted Successfully !');
+      }
+    }
+  }
+
+  //For Post
+  const confirmationForDelete = (id: any) => {
+    setDeletePostId('');
+    setShowDeletePostPopup(false);
+    deletePostByApi(id);
+  };
+
   //Delete Post Call
   async function deletePostByApi(id: any) {
-    let ans = confirm('Do You Really Want To Delete This Post');
-    if (ans) {
-      let resp = await deletePostCall(userToken, id);
-      if (resp?.data?.success === true) {
-        deletePostById(id);
-      }
+    let resp = await deletePostCall(userToken, id);
+    if (resp?.data?.success === true) {
+      deletePostById(id);
+      setShowNofitication(true);
+      setToastSuccess(true);
+      setToastMessage('Post Deleted Successfully !');
     }
   }
 
@@ -908,24 +957,26 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       </div>
                     </div>
                   </Dropdown.Item>
+                  {post?.createdBy?.objectId === objectId ? (
+                    <Dropdown.Item
+                      className={styles.dropdownItem}
+                      onClick={() => {
+                        setDeletePostId(post?.id);
+                        setShowDeletePostPopup(true);
+                      }}
+                    >
+                      <div className={styles.overlayItem}>
+                        <div className={styles.dropdownImage}>
+                          <NextImage field={Deleteimage} editable={true} />
+                        </div>
+                        <div className={styles.reportContainerBtn}>Delete Post</div>
+                      </div>
+                    </Dropdown.Item>
+                  ) : (
+                    ''
+                  )}
                 </Dropdown.Menu>
               </Dropdown>
-              {post?.createdBy?.objectId === objectId ? (
-                <button
-                  type="button"
-                  onClick={() => deletePostByApi(post?.id)}
-                  style={{ border: 'none', backgroundColor: 'white' }}
-                >
-                  <img
-                    className="postCrossImage"
-                    src="https://cdn-icons-png.flaticon.com/512/10091/10091183.png"
-                    alt="pan"
-                    width="20px"
-                  />
-                </button>
-              ) : (
-                ''
-              )}
             </div>
           </div>
           <div className="postContent">
@@ -1257,6 +1308,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           aria-expanded={comment?.isOpenReply}
                           className="commentReply"
                           disabled={comment?.isRespPending}
+                          style={comment?.isRespPending ? { opacity: 0.5 } : {}}
                         >
                           Reply
                         </button>
@@ -1264,6 +1316,21 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           {' '}
                           {calculateTimeDifference(comment?.createdOn)}
                         </span>
+                        {comment?.createdBy.objectId === objectId && objectId ? (
+                          <button
+                            disabled={comment?.isRespPending}
+                            style={comment?.isRespPending ? { opacity: 0.5 } : {}}
+                            onClick={() => {
+                              setDeleteCommentId({ postId: post?.id, commentId: comment?.id });
+                              setShowDeleteCommentPopup(true);
+                            }}
+                            className="commentReply"
+                          >
+                            Delete
+                          </button>
+                        ) : (
+                          ''
+                        )}
                       </div>
                       <Collapse in={comment?.isOpenReply}>
                         <div style={{ position: 'relative', left: '10%', width: '88%' }}>
@@ -1382,6 +1449,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                       )
                                     }
                                     disabled={reply?.isRespPending}
+                                    style={reply?.isRespPending ? { opacity: 0.5 } : {}}
                                   >
                                     Reply
                                   </button>
@@ -1389,6 +1457,25 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                     {' '}
                                     {calculateTimeDifference(reply?.createdOn)}
                                   </span>
+                                  {comment?.createdBy.objectId === objectId && objectId ? (
+                                    <button
+                                      disabled={comment?.isRespPending}
+                                      onClick={() => {
+                                        setDeleteCommentId({
+                                          postId: post?.id,
+                                          commentId: comment?.id,
+                                          replyId: reply?.id,
+                                        });
+                                        setShowDeleteCommentPopup(true);
+                                      }}
+                                      className="commentReply"
+                                      style={reply?.isRespPending ? { opacity: 0.5 } : {}}
+                                    >
+                                      Delete
+                                    </button>
+                                  ) : (
+                                    ''
+                                  )}
                                 </div>
                                 <Collapse in={reply?.isOpenReplyOfReply}>
                                   <div style={{ position: 'relative', left: '10%', width: '88%' }}>
@@ -3006,7 +3093,36 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           )}
         </div>
       </div>
-
+      {showDeletePostPopup ? (
+        <CreateModalPopup
+          popUpVisiable={showDeletePostPopup}
+          setPopUpVisiable={setShowDeletePostPopup}
+          body={'Do you really want to delete this post ?'}
+          buttonName={'Delete'}
+          title={'Delete Confirmation'}
+          buttonClickHandler={confirmationForDelete}
+          disabled={false}
+          id={deletePostId}
+        />
+      ) : (
+        ''
+      )}
+      {showDeleteCommentPopup ? (
+        <CreateModalPopup
+          popUpVisiable={showDeleteCommentPopup}
+          setPopUpVisiable={setShowDeleteCommentPopup}
+          body={`Do you really want to delete this ${
+            deleteCommentId?.replyId ? 'reply' : 'comment'
+          } ?`}
+          buttonName={'Delete'}
+          title={'Delete Confirmation'}
+          buttonClickHandler={confirmationForDeleteComment}
+          disabled={false}
+          id={deleteCommentId}
+        />
+      ) : (
+        ''
+      )}
       {<ReportPostPopup />}
       {<BlockUserPopup />}
       {<ModalForReactions />}
