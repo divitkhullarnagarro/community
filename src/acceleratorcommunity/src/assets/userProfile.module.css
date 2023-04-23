@@ -7,13 +7,25 @@
 .userProfileContainer img {
   cursor: pointer;
 }
-
 .logoutModalHeader {
+  padding: 10px;
+}
+.logoutModalClose {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  opacity: 1;
+  filter: invert(8%) sepia(48%) saturate(4526%) hue-rotate(222deg) brightness(86%) contrast(111%);
+  font-size: 15px;
+}
+.logoutModalTitle {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 5px;
-  font-size: 1.875rem;
+  font-size: 24px;
+  color: #283895;
+  margin: 0px auto;
 }
 
 .logoutModalBody {
@@ -22,10 +34,29 @@
   justify-content: center;
   margin-bottom: 5px;
   font-size: 1.25rem;
+  font-weight: 600;
 }
 
 .footerBtn {
   font-size: 1.25rem;
+}
+.footerBtnCancel {
+  font-size: 16px;
+  color: #F58C60;
+}
+.footerBtnCancel:hover, .footerBtnCancel:active, .footerBtnCancel:focus-visible {
+  color: #F58C60 !important;
+}
+.footerBtnDefault {
+  background-color: #47D7AC;
+  border-color: #47D7AC;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+.footerBtnDefault:hover, .footerBtnDefault:active, .footerBtnDefault:focus-visible {
+  background-color: #ffffff !important;
+  color: #47D7AC !important;
+  border-color: #47D7AC !important;
 }
 
 .userProfileOverlayItem {
@@ -131,7 +162,7 @@
     padding-bottom: 0.3125rem;
   }
 
-  .logoutModalHeader {
+  .logoutModalTitle {
     display: flex;
     justify-content: center;
     align-items: center;

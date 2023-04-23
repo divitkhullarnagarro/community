@@ -4,7 +4,7 @@ import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import userProfileCss from '../assets/userProfile.module.css';
 import WebContext from '../Context/WebContext';
 import React, { useContext, useState } from 'react';
-import { Button, Dropdown, Modal } from 'react-bootstrap';
+import { Button, CloseButton, Dropdown, Modal } from 'react-bootstrap';
 import BlockUserImage from '../assets/images/BlockUser.jpg';
 import LogoutImage from '../assets/images/Logout.png';
 import { useRouter } from 'next/router';
@@ -42,16 +42,19 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
           scrollable={true}
         >
           <div>
-            <Modal.Header closeButton>
-              <Modal.Title className={userProfileCss.logoutModalHeader}>{'Logout'}</Modal.Title>
+            <Modal.Header className={userProfileCss.logoutModalHeader}>
+              <Modal.Title className={userProfileCss.logoutModalTitle}>{'Logout'}</Modal.Title>
+              <CloseButton variant='default' className={userProfileCss.logoutModalClose} onClick={() => {
+                  setLogoutPopUp(false);
+                }}></CloseButton>
             </Modal.Header>
             <Modal.Body>
               <div className={userProfileCss.logoutModalBody}>{`Do you want to logout ?`}</div>
             </Modal.Body>
             <Modal.Footer>
               <Button
-                className={userProfileCss.footerBtn}
-                variant="secondary"
+                className={userProfileCss.footerBtnCancel}
+                variant="default"
                 onClick={() => {
                   setLogoutPopUp(false);
                 }}
@@ -59,7 +62,7 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
                 Cancel
               </Button>
               <Button
-                className={userProfileCss.footerBtn}
+                className={userProfileCss.footerBtnDefault}
                 variant="secondary"
                 onClick={() => {
                   logOutUser();
