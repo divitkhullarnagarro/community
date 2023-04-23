@@ -10,22 +10,23 @@
 
 .left_column {
   flex: 0 0 20%;
+  margin-left: 15px;
   /* background-color: white; */
   /* margin-left: 52px;;
   margin-top: 45px; */
 }
 
 .right_column {
+  width: 75%;
   display: flex;
   flex: 0 0 76%;
   flex-direction: column;
   /* margin-top: 45px; */
-  margin-left: 2%;
+  margin-left: 20px;
   height: 80vh;
   justify-content: flex-start;
 }
-r
-.right_upper_section {
+r .right_upper_section {
   width: 73vw;
   flex: 0 0 1%;
   /* border-radius: 10px;
@@ -38,16 +39,25 @@ r
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  
 }
 
 .right_lower_section {
-  width: 70vw;
-  flex: 0 0 85%;
+  /* width: 70vw; */
+  /* flex: 0 0 85%; */
+  width: 100%;
+  margin-top: 10px;
+  padding: 15px;
+  background-color: whitesmoke;
 }
 
 .blockContainer {
-  background-color:#FFFFFF;
+  background-color: #ffffff;
+  border-width: 0px 2px 2px 0px;
+  border-style: solid;
+  border-color: #edeff1;
+}
+.spinner{
+  color:#283895
 }
 .right_lower_section_spinner {
   font-size: 25px;
@@ -60,11 +70,12 @@ r
 }
 
 .sidenavbar {
+  padding: 12px 16px;
   flex: 1;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
   width: 20vw;
-  background-color: #F9F9F9;
-  height: 80vh;
+  background-color: #f9f9f9;
+  height: 720px;
   display: flex;
   flex-direction: column;
   /* padding: 0.3125rem 0.625rem; */
@@ -74,7 +85,7 @@ r
   overflow-x: hidden;
   overflow-y: auto;
   /* border-radius: 10px; */
-  padding:8px;
+  /* padding: 8px; */
   /* border: 2px solid lightgray; */
 }
 
@@ -83,9 +94,8 @@ r
   flex-direction: row;
   width: 90%;
 }
-.imgContainer
-{
-  
+.imgContainer {
+  width: 100%;
 }
 .userListTable {
   margin-top: 30px;
@@ -114,12 +124,16 @@ r
   /* font-size: 3em; */
   font-size: 14px;
   font-weight: 500;
-  color:#82888F;
-  margin-left:12px;
-  font-family:'Equip-Regular';
-  margin-top:18px;
+  color: #82888f;
+  margin-left: 12px;
+  font-family: 'Equip-Regular';
+  margin-top: 18px;
 }
-
+.reportPostTitle {
+  font-size: 20px;
+  color: #283895;
+  font-family: 'Equip-Regular';
+}
 .userList {
   display: flex;
   flex: 0 0 50%;
@@ -142,21 +156,20 @@ r
   align-items: center;
   word-wrap: break-word;
   padding: 8px;
-  font-size: 18px;
-  font-weight: bold;
-  color: black;
+  font-size: 20px;
+  /* font-weight: bold; */
+  color: #283895;
   width: 20vw;
   height: 5.625rem;
-  font-family:'Equip-Regular';
+  font-family: 'Equip-Regular';
 }
 .sidenavbar hr {
   height: 0;
   border: 0.5px solid #e6e3e3;
 }
 .sidenavbar .center:hover {
-  padding-left: 10px;
-  background-color:#F0F2F5;
-
+  /* padding-left: 10px; */
+  background-color: #ffdada;
 }
 .sidenavbar .center ul {
   list-style: none;
@@ -166,10 +179,10 @@ r
 .sidenavbar .center ul .title {
   font-size: 14px;
   font-weight: 500;
-  color:#82888F;
+  /* color: #82888f; */
   margin-top: 15px;
   margin-bottom: 5px;
-  font-family:'Equip-Regular';
+  font-family: 'Equip-Regular';
 }
 .sidenavbar .center ul li {
   display: flex;
@@ -201,9 +214,9 @@ r
   width: 90%;
   font-size: 16px;
   font-weight: 500;
-  color:#3D3D3F;
+  color: #3d3d3f;
   margin-left: 10px;
-  font-family:'Equip-Regular';
+  font-family: 'Equip-Regular';
 }
 .sidenavbar .bottom {
   display: flex;
@@ -233,10 +246,10 @@ r
 }
 
 .reportPostWrapper {
-  max-height: 80vh;
-  width: 75vw;
-  overflow-x: hidden;
-  overflow-y: auto;
+  /* max-height: 80vh; */
+  /* width: 75vw; */
+  /* overflow-x: hidden;
+  overflow-y: auto; */
 }
 
 .reportPostModalContainer {
@@ -247,8 +260,16 @@ r
   display: flex;
   justify-content: center;
   align-items: center;
+  /* margin: 5px;
+  font-size: 20px; */
+  color: #283895; 
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 5px;
-  font-size: 1.675rem;
+  font-size: 24px;
+  margin-left: 145px;
+  color: #283895; */
 }
 
 .reportPostModalBody {
@@ -281,18 +302,21 @@ r
 
 .overlayItem {
   display: flex;
-  justify-content: flex-start;
-  margin-right: 5px;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .reportContainerHeader {
-  background-color: white;
+  /* background-color: white;
   color: black;
   border: none;
   font-weight: bold;
   font-size: 15px;
   padding-top: 10px;
-  margin-left: 10px;
+  margin-left: 10px; */
+  font-size: 12px;
+  line-height: 16px;
+  color: #a5a9ae;
 }
 
 .reportContainerHeaderWithSpinner {
@@ -313,27 +337,40 @@ r
 .dropdownBtn {
   background-color: white;
   border: none;
-  width: 50px;
+  width: auto;
+  padding: 0;
+}
+
+.dropdownBtn::after {
+  display: none;
 }
 
 .dropdownItem {
-  width: 260px;
-  border-radius: 5px;
+  display: flex;
+  padding: 10px 5px;
+  border-bottom: 2px solid #f5f5f5;
 }
 
-.dropdownItem:visited {
+/* .dropdownItem:visited {
   background-color: white;
-}
+} */
 
 /* report post*/
 .reportPostContainer {
   margin-top: 20px;
   background-color: white;
   padding: 20px;
-  border: 2px solid lightgray;
-  border-radius: 20px;
-}
+  /* border: 2px solid lightgray; */
 
+  border-bottom: 1px solid #ff0000;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+}
+.reportPostHeader {
+  font-size: 20px;
+  font-weight: 500;
+  color: #283895;
+}
 .reportPostHeading {
   display: flex;
   align-items: center;
@@ -356,50 +393,57 @@ r
 }
 
 .reportPostContent {
-  font-size: 18px;
-  margin: 20px 20px 20px 0px;
+  /* font-size: 18px;
+  margin: 20px 20px 20px 0px; */
 }
-
+.postDescription {
+  padding: 15px;
+  padding-top: 0;
+  font-size: 14px;
+  line-height: 18px;
+  color: #091329;
+}
 .reportPostModal {
-  margin-top: 10px;
+  /* margin-top: 10px; */
   background-color: white;
   padding: 10px;
 }
 
-.dropdownItem:hover .reportContainerHeader {
+/* .dropdownItem:hover .reportContainerHeader {
   color: #fff;
   background-color: #5c636a;
   border-color: #565e64;
-}
+} */
 
-.dropdownItem:hover .reportContainerHeaderWithSpinner {
+/* .dropdownItem:hover .reportContainerHeaderWithSpinner {
   color: #fff;
   background-color: #5c636a;
   border-color: #565e64;
-}
+} */
 
-.dropdownItem:visited,
+/* .dropdownItem:visited,
 .dropdownItem:hover,
 .dropdownItem:active {
   color: #fff;
   background-color: #5c636a;
   border-color: #565e64;
-}
+} */
 
-.dropdownItem:hover .dropdownImage {
+/* .dropdownItem:hover .dropdownImage {
   filter: invert(1);
-}
+} */
 
 .dropdownImage {
-  margin-top: 10px;
-  width: 20px;
-  height: 10px;
+  width: 16px;
+  height: 16px;
 }
 
 .postOwner {
-  font-weight: 750;
-  color: grey;
-  font-size: 1.5rem;
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #283895;
 }
 
 .postUserImage {
@@ -407,9 +451,13 @@ r
 }
 
 .postCreateDate {
-  font-weight: 700;
-  color: grey;
-  font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 13px;
+  color: #afb0b4;
+  margin: 0;
 }
 
 .postMoreOptionsImage {
@@ -438,16 +486,22 @@ r
 }
 
 .footerRowHeader {
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 16px;
   margin-right: 10px;
+  color: #000E46;
 }
 
 .footerRowContent {
   display: flex;
+  font-size: 16px;
   justify-content: space-between;
+  color: #000E46;
 }
 
 .reportedDate {
+  font-size: 14px;
+  font-weight: 300;
   margin-left: 10px;
   color: grey;
 }
@@ -456,22 +510,20 @@ r
   visibility: hidden;
   content: none !important;
 }
-
-.seeMoreReportedPostBtn {
-  color: black;
-  width: 100%;
-  font-size: 1.5rem;
-  height: 50px;
-  background-color: white !important;
-  border: none;
-  font-weight: bold;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.docPreviewContainer {
+  margin-bottom: 10px;
 }
-
+.seeMoreReportedPostBtn {
+}
+.seeMoreBtn {
+  margin-bottom: 1px;
+  padding: 10px;
+  font-family: 'Equip-Regular';
+  font-size: 18px;
+  /* text-shadow: #3D3D3F; */
+}
 .reportedPostContainer {
+  /* margin-top: 250px; */
   display: flex;
   padding: 10px;
   justify-content: center;
@@ -479,8 +531,11 @@ r
 }
 
 .reportPostContainerHeader {
+  color: #283895;
+  font-size: 20px;
   margin-right: 15px;
   font-weight: 600;
+  font-family: 'Equip-Regular';
 }
 
 .unauthorizedAccess {
@@ -499,7 +554,18 @@ r
   height: 40px;
   margin-left: 10px;
 }
-
+.dropdownMenu {
+  padding: 0px 16px;
+}
+.reportTitle{
+  margin-left: 140px;
+  font-size: 24px;
+  color: #283895;
+  font-weight: 500;
+}
+.reportBody{
+  padding: 10px;
+}
 @media only screen and (max-width: 640px) {
   .sidenavbar .top .logo {
     font-size: 0.6rem;
@@ -536,7 +602,9 @@ r
     margin-top: 5px;
     margin-bottom: 5px;
   }
-
+  .dropdownMenu {
+    inset: 0 0 auto auto !important;
+  }
   .postOwner {
     font-weight: 750;
     color: grey;
@@ -557,9 +625,9 @@ r
     width: 1.25rem;
   }
 
-  .dropdownItem {
+  /* .dropdownItem {
     width: 120px;
-  }
+  } */
 
   .reportContainerHeader {
     background-color: white;
@@ -585,6 +653,8 @@ r
     width: 18.75rem;
     height: max-content;
     overflow-y: auto;
+    border: none;
+   
   }
 
   .reportPostModalHeader {
@@ -601,6 +671,14 @@ r
     justify-content: center;
     margin-bottom: 0.1875rem;
     font-size: 0.625rem;
+  }
+  .reportPostImage {
+    /* height: 438px;
+    width: 100%; */
+  }
+  .dropdownImage {
+    width: 15px;
+    height: 15px;
   }
 }
 
@@ -655,28 +733,30 @@ r
 }
 
 @media only screen and (max-width: 1500px) {
-  .right_column  {
+  .right_column {
     flex: 0 0 50%;
   }
 }
-  @media only screen and (max-width: 1200px) {
-    .right_column {
-      flex: 0 0 50%;
-    }
+@media only screen and (max-width: 1200px) {
+  .right_column {
+    flex: 0 0 50%;
   }
-  @media only screen and (max-width: 900px) {
-    .right_column {
-      flex: 0 0 50%;
-    }
+}
+@media only screen and (max-width: 900px) {
+  .right_column {
+    flex: 0 0 50%;
   }
-  @media only screen and (max-width: 768px) {
-    .right_column {
-      flex: 0 0 50%;
-    }
+}
+@media only screen and (max-width: 768px) {
+  .right_column {
+    flex: 0 0 50%;
   }
-  @media only screen and (max-width: 480px) {
-    .cardItem {
-      flex: 0 0 76%;
-    }
-  
- }
+}
+@media only screen and (max-width: 480px) {
+  .cardItem {
+    flex: 0 0 76%;
+  }
+  .reportPostImage {
+    height: 100%;
+  }
+}
