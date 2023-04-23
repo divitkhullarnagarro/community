@@ -89,7 +89,7 @@ type BlockUserFields = {
 };
 
 const AddPost = (props: AddPostProps | any): JSX.Element => {
-  const { userToken, setUserToken, objectId, userObject, setUserObject } = {
+  const { userToken, setUserToken, objectId, setObjectId, userObject, setUserObject } = {
     ...useContext(WebContext),
   };
 
@@ -247,8 +247,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         localStorage.getItem('UserToken') != null
       ) {
         let token = localStorage.getItem('UserToken');
+        let userId = localStorage.getItem('ObjectId');
         if (token != null && setUserToken != undefined) {
           setUserToken(token);
+        }
+        if (userId != null && setObjectId != undefined) {
+          setObjectId(userId);
         }
       } else router.push('/login');
     }
@@ -393,12 +397,17 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     }
     let response = await reportUserCall(selectedBlockUserItem?.objectId, reportReason, userToken);
     if (response) {
+      if (response?.success) {
+        setToastSuccess(true);
+        setToastMessage(response?.data);
+      } else {
+        setToastError(true);
+        setToastMessage(response?.errorCode);
+      }
       setShowNofitication(true);
-      setToastSuccess(true);
-      setToastMessage('User reported successfully');
-      setShowReportUserPopUp(false);
-      setShowSpinner(false);
     }
+    setShowReportUserPopUp(false);
+    setShowSpinner(false);
   };
 
   const onUserBlocked = async () => {
@@ -1015,35 +1024,57 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       <div className={styles.reportContainerBtn}>Copy link to post</div>
                     </div>
                   </Dropdown.Item>
-                  <Dropdown.Item
-                    className={styles.dropdownItem}
-                    onClick={() => {
-                      showReportPostPopup();
-                    }}
-                  >
-                    <div className={styles.overlayItem}>
-                      <div className={styles.dropdownImage}>
-                        <NextImage field={reportPostImage} editable={true} />
-                      </div>
-                      <div className={styles.reportContainerBtn}>Report Post</div>
-                    </div>
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    className={styles.dropdownItem}
-                    onClick={() => {
-                      setSelectedBlockUserItem(post?.createdBy);
-                      setShowBlockUserPopUp(true);
-                    }}
-                  >
-                    <div className={styles.overlayItem}>
-                      <div className={styles.dropdownImage}>
-                        <NextImage field={BlockUserImage} editable={true} />
-                      </div>
-                      <div className={styles.reportContainerBtn}>
-                        Block {post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName}
-                      </div>
-                    </div>
-                  </Dropdown.Item>
+                  {post?.createdBy?.objectId !== objectId ? (
+                    <>
+                      <Dropdown.Item
+                        className={styles.dropdownItem}
+                        onClick={() => {
+                          showReportPostPopup();
+                        }}
+                      >
+                        <div className={styles.overlayItem}>
+                          <div className={styles.dropdownImage}>
+                            <NextImage field={reportPostImage} editable={true} />
+                          </div>
+                          <div className={styles.reportContainerBtn}>Report Post</div>
+                        </div>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className={styles.dropdownItem}
+                        onClick={() => {
+                          setSelectedBlockUserItem(post?.createdBy);
+                          setShowBlockUserPopUp(true);
+                        }}
+                      >
+                        <div className={styles.overlayItem}>
+                          <div className={styles.dropdownImage}>
+                            <NextImage field={BlockUserImage} editable={true} />
+                          </div>
+                          <div className={styles.reportContainerBtn}>
+                            Block {post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName}
+                          </div>
+                        </div>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className={styles.dropdownItem}
+                        onClick={() => {
+                          setSelectedBlockUserItem(post?.createdBy);
+                          setShowReportUserPopUp(true);
+                        }}
+                      >
+                        <div className={styles.overlayItem}>
+                          <div className={styles.dropdownImage}>
+                            <NextImage field={reportPostImage} editable={true} />
+                          </div>
+                          <div className={styles.reportContainerBtn}>
+                            Report {post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName}
+                          </div>
+                        </div>
+                      </Dropdown.Item>
+                    </>
+                  ) : (
+                    ''
+                  )}
                   {post?.createdBy?.objectId === objectId ? (
                     <Dropdown.Item
                       className={styles.dropdownItem}
@@ -1062,22 +1093,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   ) : (
                     ''
                   )}
-                  <Dropdown.Item
-                    className={styles.dropdownItem}
-                    onClick={() => {
-                      setSelectedBlockUserItem(post?.createdBy);
-                      setShowReportUserPopUp(true);
-                    }}
-                  >
-                    <div className={styles.overlayItem}>
-                      <div className={styles.dropdownImage}>
-                        <NextImage field={reportPostImage} editable={true} />
-                      </div>
-                      <div className={styles.reportContainerBtn}>
-                        Report {post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName}
-                      </div>
-                    </div>
-                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>

@@ -22,86 +22,7 @@ import {
   graphqlQueryWrapper,
 } from 'assets/helpers/helperFunctions';
 import { getEmailTemplatesGraphqlQuery } from './Queries';
-
-const userColumns = [
-  {
-    field: 'name',
-    headerName: 'Name',
-  },
-  {
-    field: 'gender',
-    headerName: 'Gender',
-  },
-  {
-    field: 'email',
-    headerName: 'Email',
-  },
-
-  {
-    field: 'phone',
-    headerName: 'Phone',
-  },
-  {
-    field: 'reason',
-    headerName: 'Reason',
-  },
-  {
-    field: 'action',
-    headerName: 'Action',
-  },
-];
-
-const userRows = [
-  {
-    id: 1,
-    name: 'Shivam Gupta',
-    gender: 'Male',
-    email: 'Shivam@yopmail.com',
-    phone: 9129739273,
-    reason: 'Fake',
-  },
-  {
-    id: 2,
-    name: 'Rohit Kumar',
-    gender: 'Male',
-    email: 'rohit.kumar@gmail.com',
-    phone: 9893902930,
-    reason: 'Spam',
-  },
-  {
-    id: 3,
-    name: 'Rajan midha',
-    gender: 'Male',
-    email: 'mohit@yopmail.com',
-    phone: 9689489384,
-    reason: 'Infringement of content',
-  },
-  {
-    id: 4,
-    name: 'Shubham verma',
-    gender: 'Male',
-    email: 'shubham@yahoo.com',
-    phone: 9703840380,
-    reason: 'Suspicious',
-  },
-  {
-    id: 5,
-    name: 'Pankaj saxena',
-    gender: 'Male',
-    email: 'gupta@nishant.com',
-    phone: 9947937493,
-    reason: 'Fake',
-  },
-  {
-    id: 6,
-    name: 'Akshay sharma',
-    gender: 'Male',
-    email: 'akshay@sharma.com',
-    phone: 9828038203,
-    reason: 'Inappropriate behaviour',
-  },
-];
-// import icon from '../assets/images/icons8-home 1.png'
+import { getAllReportUserCall } from 'src/API/reportUserCall';
 
 const EmailTemplateFolder = '02989F59-CFEB-4CC9-90FB-C0DA8A7FE7B5';
 const WarnUserEmailTemplate = '16937DB73C124028877AAA49C0BE30CA';
@@ -179,6 +100,21 @@ type emailTemplateFields = {
   value: string;
 };
 
+type reportUserFields = {
+  reason: string;
+  reportedBy: {
+    objectId: string;
+    firstName: string;
+    lastName: string;
+  };
+  reportedUser: {
+    objectId: string;
+    firstName: string;
+    lastName: string;
+    speciality: string;
+  };
+};
+
 const Users = (props: UserProps): JSX.Element => {
   const router = useRouter();
 
@@ -195,49 +131,60 @@ const Users = (props: UserProps): JSX.Element => {
   };
 
   const [showReportedUserList, setShowReportedUserList] = useState(false);
+  const [reportUserList, setReportedUserList] = useState<reportUserFields[]>([]);
 
   const getReportedUserList = async () => {
     setShowReportedPosts(false);
     setShowReportedUserList(true);
+    setReportedUserList([]);
+    let response = await getAllReportUserCall(userToken);
+    if (response?.success) {
+      setReportedUserList(response?.data);
+    }
   };
 
   const ReportedUserListTable = () => {
     return (
       <div>
         <h3 className={styles.userListHeader}>{'Reported User List'}</h3>
-        <Table striped hover className={styles.userListTable}>
+        <Table hover className={styles.userListTable}>
           <thead>
             <tr className={styles.header}>
-              {userColumns.map((item, index) => {
-                return (
-                  <td key={index} className={styles.item}>
-                    {item.headerName}
-                  </td>
-                );
-              })}
+              <td className={styles.reportPostHeaderRow}>Name</td>
+              <td className={styles.reportPostHeaderRow}>Email</td>
+              <td className={styles.reportPostHeaderRow}>Speciality</td>
+              <td className={styles.reportPostHeaderRow}>Reported By</td>
+              <td className={styles.reportPostHeaderRow}>Reported By Email</td>
+              <td className={styles.reportPostHeaderRow}>Report Reason</td>
+              <td className={styles.reportPostHeaderRow}>Action</td>
             </tr>
           </thead>
           <tbody>
-            {userRows.map((item) => {
+            {reportUserList.map((item, index) => {
               return (
-                <tr key={item?.id} className={styles.row}>
-                  <td className={styles.item}>{item?.name}</td>
-                  <td className={styles.item}>{item?.gender}</td>
-                  <td className={styles.item}>{item?.email}</td>
-                  <td className={styles.item}>{item?.phone}</td>
-                  <td className={styles.item}>{item?.reason}</td>
-                  <Button
+                <tr key={index.toString()} className={styles.row}>
+                  <td className={styles.reportPostBodyRow}>
+                    {item?.reportedUser?.firstName + ' ' + item?.reportedUser?.lastName}
+                  </td>
+                  <td className={styles.reportPostBodyRow}>{item?.reportedUser?.objectId}</td>
+                  <td className={styles.reportPostBodyRow}>{item?.reportedUser?.speciality}</td>
+                  <td className={styles.reportPostBodyRow}>
+                    {item?.reportedBy.firstName + ' ' + item?.reportedBy?.lastName}
+                  </td>
+                  <td className={styles.reportPostBodyRow}>{item?.reportedBy?.objectId}</td>
+                  <td className={styles.reportPostBodyRow}>{item?.reason}</td>
+                  <button
                     className={styles.actionWarningButton}
                     onClick={() => setShowWarnUserPopup(true)}
                   >
                     Warning
-                  </Button>
-                  <Button
+                  </button>
+                  <button
                     className={styles.actionButton}
                     onClick={() => setShowSuspendUserPopup(true)}
                   >
                     Suspension
-                  </Button>
+                  </button>
                 </tr>
               );
             })}
@@ -858,28 +805,18 @@ const Users = (props: UserProps): JSX.Element => {
             </div>
           );
         })}
-        <Button
-          className={styles.seeMoreReportedPostBtn}
-          style={{
-            width: '100%',
-            fontSize: '20px',
-            height: '50px',
-            backgroundColor: 'whitesmoke',
-            color: '#2A86FD',
-            border: 'none',
-            fontWeight: '500',
-            textAlign: 'center',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          onClick={() => setNumberOfReportedItemsToShow(numberOfReportedItemsToShow + 5)}
-        >
-          <div>
-            <span className={styles.seeMoreBtn}>See more</span>
-          </div>
-          <NextImage field={DropArrow} editable={true} />
-        </Button>
+        {reportPostList === undefined ||
+        numberOfReportedItemsToShow >= reportPostList?.length ? null : (
+          <button
+            className={styles.seeMoreReportedPostBtn}
+            onClick={() => setNumberOfReportedItemsToShow(numberOfReportedItemsToShow + 5)}
+          >
+            <div>
+              <span className={styles.seeMoreBtn}>See more</span>
+            </div>
+            <NextImage field={DropArrow} editable={true} />
+          </button>
+        )}
       </div>
     );
   };
@@ -906,7 +843,7 @@ const Users = (props: UserProps): JSX.Element => {
           <div className={styles.top}>
             <span className={styles.logo}>
               {props?.fields?.data?.datasource?.sideNavHeaderLabel?.jsonValue?.value ??
-                'Professtional Dashboard'}
+                'Professional Dashboard'}
             </span>
           </div>
           <p className={styles.title}>{ListLabel}</p>
@@ -975,11 +912,18 @@ const Users = (props: UserProps): JSX.Element => {
             <></>
           )}
           {showReportedUserList ? (
-            <>
-              <ReportedUserListTable />
-              <WarnUserPopUp />
-              <SuspendUserPopup />
-            </>
+            reportUserList?.length > 0 ? (
+              <div>
+                <ReportedUserListTable />
+                <WarnUserPopUp />
+                <SuspendUserPopup />
+              </div>
+            ) : (
+              <span className={styles.reportedPostContainer}>
+                <span className={styles.reportPostContainerHeader}>Getting Reported Users ...</span>
+                <Spinner animation="border" className={styles.spinner} />
+              </span>
+            )
           ) : (
             <></>
           )}
