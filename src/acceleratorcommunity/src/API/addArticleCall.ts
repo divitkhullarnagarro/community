@@ -1,6 +1,6 @@
 import Axios, { AxiosResponse } from 'axios';
 
-const addPostCall = async (userToken: string | undefined, postObject: any) => {
+const addArticleCall = async (userToken: string | undefined, postObject: any) => {
   var data = {
     // id: "post_Id12",
     description: postObject?.description,
@@ -34,4 +34,4 @@ const addPostCall = async (userToken: string | undefined, postObject: any) => {
   return response;
 };
 
-export default addPostCall;
+export default addArticleCall;

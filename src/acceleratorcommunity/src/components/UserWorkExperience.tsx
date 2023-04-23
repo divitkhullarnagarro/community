@@ -6,7 +6,7 @@ const UserWorkExperience = (props: any) => {
 
   return (
     <div className="workContainer">
-      <Button className="profileBtn" onClick={props.handleOpenWorkModal}>
+      <Button className="profileBtn" onClick={props.addNewWorkDetail}>
         <img
           src="https://www.svgrepo.com/show/170952/add-button.svg"
           alt="edit"
@@ -71,6 +71,7 @@ const UserWorkExperience = (props: any) => {
             </Form.Group>
             <span>
               {props.errorState?.orgName ? <span className="error">Field is required</span> : ' '}
+              {console.log("fromuserexperiencecomponent",props.errorState?.orgName)}
             </span>
             {console.log('props.editUserData?.orgName', props?.placeOfPractice)}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">

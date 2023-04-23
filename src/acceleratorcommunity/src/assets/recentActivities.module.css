@@ -5,7 +5,7 @@
 }
 .recentActivityListBox {
   background-color: whitesmoke;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   margin-top: 10px;
   padding: 16px;
 }
@@ -14,7 +14,59 @@
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
   border-radius: 6px;
   padding: 10px;
+  overflow: scroll;
+  max-height: 300px;
+  /* overflow-x: scroll;
+  overflow-y: scroll; */
 }
+.recentActivityList::-webkit-scrollbar {
+  width: 20px;
+  height: 20px;
+}
+
+.recentActivityList::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.recentActivityList::-webkit-scrollbar-track:horizontal {
+  background-color: transparent;
+}
+
+.recentActivityList::-webkit-scrollbar-thumb {
+  background-image: url('./../assets/images/arrow.png');
+  background-position: center top;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 50px;
+}
+.recentActivityList::-webkit-scrollbar-thumb:horizontal {
+  background-image: url('./../assets/images/arrowx.png');
+  background-position: center left;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 50px;
+}
+
+/* .recentActivityList::-webkit-scrollbar {
+  background-color: rgb(255, 255, 255);
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+}
+
+.recentActivityList::-webkit-scrollbar-track {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+.recentActivityList::-webkit-scrollbar-thumb {
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.5, #a520ca),
+    color-stop(1, #2681cc)
+  );
+  border-radius: 10px;
+} */
+
 .recentActivityListHeading {
   display: flex;
   flex-direction: row;
@@ -30,6 +82,10 @@
   display: flex;
   align-items: center;
 }
+.recentActivityListHeadingLeft > span {
+  width: 50px !important;
+  height: 50px !important;
+}
 .recentActivityNameAndDate {
   margin-left: 12px;
 }
@@ -37,6 +93,7 @@
   font-size: 16px;
   font-weight: 400;
   margin-bottom: 0;
+  white-space: nowrap;
 }
 .recentActivityDate {
   font-size: 12px;

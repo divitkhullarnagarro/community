@@ -14,7 +14,6 @@ import getPostByIdCall from '../API/getPostByIdCall';
 import addPostCall from '../API/addPostCall';
 import getUserCall from 'src/API/getUserCall';
 import addPostCommentCall from 'src/API/addPostCommentCall';
-// import loginUserCall from 'src/API/loginUserCall';
 import Link from 'next/link';
 import ShowShareCss from '../assets/ShowShare.module.css';
 import linkedin from '../assets/images/linkedin.png';
@@ -33,7 +32,8 @@ import ToastNotification from './ToastNotification';
 import getCommentsCall from 'src/API/getCommentsCall';
 import getCommentsReplyCall from 'src/API/getCommentsReplyCall';
 import postCommentReplyCall from 'src/API/postCommentReplyCall';
-import downVote from '../assets/images/dislikeIcon.svg'
+import downVote from '../assets/images/dislikeIcon.svg';
+import CreateModalPopup from './helperComponents/CreateModalPopup';
 
 // Rich Text Editor Files Import Start
 import { EditorState, convertToRaw } from 'draft-js';
@@ -49,6 +49,7 @@ const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mo
 });
 // Rich Text Editor Files Import End
 
+import Deleteimage from '../assets/images/deleteImg.png';
 import BlockUserImage from '../assets/images/BlockUser.jpg';
 import React from 'react';
 import upVoteCall from 'src/API/upVote';
@@ -57,7 +58,6 @@ import getAllDownVotesCall from 'src/API/getAllDownVotesCall';
 import getAllUpVotesCall from 'src/API/getAllUpVotes';
 import Profile from '../assets/images/profile.png';
 import addPostCss from '../assets/addPosts.module.css';
-// import getAllUpVotesCall from 'src/API/getAllUpVotesCall';
 import blockUserCall from 'src/API/blockUnblockUserCall';
 import user from '../assets/images/user.png';
 import location from '../assets/images/Location.png';
@@ -70,7 +70,10 @@ import comment from '../assets/images/comment.png';
 import share from '../assets/images/share.png';
 import greylikeimage from '../assets/images/greylikeimage.svg';
 import EventCard from './EventCard';
-// import PollCard from './PollCard';
+import PollCard from './PollCard';
+import deletePostCall from 'src/API/deletePostCall';
+import deleteCommentCall from 'src/API/deleteCommentCall';
+import articleIcon from '../assets/images/ArticleIcon.svg';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -109,6 +112,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   let [allUpVotes, setAllUpVotes] = useState([]);
   let [allDownVote, setAllDownVote] = useState([]);
   let [showUp, setShowup] = useState('up');
+  let [showDeletePostPopup, setShowDeletePostPopup] = useState(false);
+  let [showDeleteCommentPopup, setShowDeleteCommentPopup] = useState(false);
 
   let [modalForData, setModalForData] = useState(false);
 
@@ -256,6 +261,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     });
   }, []);
 
+  console.log('USEROBJECT', userObject);
+
   useEffect(() => {
     postStructCreate();
   }, [myAnotherArr]);
@@ -332,7 +339,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const handleDownvote = (commentId: string) => {
     downVoteCall(userToken, commentId);
   };
-  console.log(handleUpvote, handleDownvote);
+
+  //RemoveMe and Implement Upvote & DownVote
+  handleDownvote;
+  handleUpvote;
+
   const BlockUserPopup = () => {
     return (
       <>
@@ -653,7 +664,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const timestamp = new Date().getTime();
     let obj = {
       id: uniqId,
-      createdBy: { firstName: userObject?.firstName, lastName: userObject?.lastName },
+      createdBy: {
+        firstName: userObject?.firstName,
+        lastName: userObject?.lastName,
+        objectId: objectId,
+      },
       text: commStr,
       replies: [],
       isOpenReply: false,
@@ -779,6 +794,57 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     });
   }
 
+  let [deletePostId, setDeletePostId] = useState('');
+  let [deleteCommentId, setDeleteCommentId] = useState<any>('');
+
+  //For Comment
+  const confirmationForDeleteComment = (id: any) => {
+    setDeleteCommentId('');
+    setShowDeleteCommentPopup(false);
+    deleteCommentByApi(id);
+  };
+
+  //Delete Comment Call
+  async function deleteCommentByApi(id: any) {
+    let resp: any = '';
+    if (id.replyId) {
+      resp = await deleteCommentCall(userToken, id?.replyId);
+    } else {
+      resp = await deleteCommentCall(userToken, id?.commentId);
+    }
+    if (resp?.data?.success === true) {
+      if (id?.replyId) {
+        deleteReplyFromComment(id?.postId, id?.commentId, id?.replyId);
+        setShowNofitication(true);
+        setToastSuccess(true);
+        setToastMessage('Reply Deleted Successfully !');
+      } else {
+        deleteCommentFromPost(id?.postId, id?.commentId);
+        setShowNofitication(true);
+        setToastSuccess(true);
+        setToastMessage('Comment Deleted Successfully !');
+      }
+    }
+  }
+
+  //For Post
+  const confirmationForDelete = (id: any) => {
+    setDeletePostId('');
+    setShowDeletePostPopup(false);
+    deletePostByApi(id);
+  };
+
+  //Delete Post Call
+  async function deletePostByApi(id: any) {
+    let resp = await deletePostCall(userToken, id);
+    if (resp?.data?.success === true) {
+      deletePostById(id);
+      setShowNofitication(true);
+      setToastSuccess(true);
+      setToastMessage('Post Deleted Successfully !');
+    }
+  }
+
   //Function To Handle Posts Feed and Construct React.jsx using data
   function postStructCreate() {
     let locArr2: ReactElement<any, any>[] = [];
@@ -893,14 +959,26 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       </div>
                     </div>
                   </Dropdown.Item>
+                  {post?.createdBy?.objectId === objectId ? (
+                    <Dropdown.Item
+                      className={styles.dropdownItem}
+                      onClick={() => {
+                        setDeletePostId(post?.id);
+                        setShowDeletePostPopup(true);
+                      }}
+                    >
+                      <div className={styles.overlayItem}>
+                        <div className={styles.dropdownImage}>
+                          <NextImage field={Deleteimage} editable={true} />
+                        </div>
+                        <div className={styles.reportContainerBtn}>Delete Post</div>
+                      </div>
+                    </Dropdown.Item>
+                  ) : (
+                    ''
+                  )}
                 </Dropdown.Menu>
               </Dropdown>
-              <img
-                className="postCrossImage"
-                src="https://cdn-icons-png.flaticon.com/512/10091/10091183.png"
-                alt="pan"
-                width="20px"
-              />
             </div>
           </div>
           <div className="postContent">
@@ -979,13 +1057,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   width={18}
                   height={18}
                 />
+                <span
+                  className={styles.likePost}
+                  style={post?.isLikedByUser ? { color: '#2e86f9' } : {}}
+                >
+                  {post?.isLikedByUser ? 'Liked Post' : 'Like Post'}
+                </span>
               </button>
-              <div
-                className={styles.likePost}
-                style={post?.isLikedByUser ? { color: '#2e86f9' } : {}}
-              >
-                {post?.isLikedByUser ? 'Liked Post' : 'Like Post'}
-              </div>
+              
               <div className={styles.likeCount}>
                 {post?.postMeasures?.likeCount ? post?.postMeasures?.likeCount : '0'}
               </div>
@@ -999,8 +1078,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 disabled={post?.isRespPending}
               >
                 <NextImage field={comment} editable={true} alt="PostItems" width={18} height={18} />
+                <span className={styles.commentPost}>Comment</span>
               </button>
-              <div className={styles.commentPost}>Comment</div>
               <div className={styles.commentCount}>
                 {post?.postMeasures?.commentCount ? post?.postMeasures?.commentCount : '0'}
               </div>
@@ -1130,12 +1209,16 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 }}
                 style={{ border: '1px', borderColor: 'black' }}
               >
-                <Form.Group className="mb-2" controlId="comments" style={{ display: 'flex', padding: '5px 15px 0' }}>
+                <Form.Group
+                  className="mb-2"
+                  controlId="comments"
+                  style={{ display: 'flex', padding: '5px 15px 0' }}
+                >
                   <img
                     className="commentUserImage"
                     src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                     alt="User-Pic"
-                    style={{ marginLeft: '0'}}
+                    style={{ marginLeft: '0' }}
                   ></img>
                   <Form.Control
                     // onChange={(e) => setPostCommentValue(e.target.value)}
@@ -1146,61 +1229,57 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     style={{ width: '100%', fontSize: '13px', color: '#a5a9ae' }}
                   />
                   <button type="submit" className="postCommentButton">
-                    PostComment
+                    Post
                   </button>
                 </Form.Group>
               </Form>
               {post?.comments?.map((comment: any) => {
                 return (
                   <>
-                  <div className='commentSection'>
-                     <figure>
+                    <div className="commentSection">
+                      <figure>
                         <img
-                           className="commentUserImage"
-                           src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
-                           alt="User-Pic"
-                           style={{
-                              marginLeft: '0',
-                           }}
+                          className="commentUserImage"
+                          src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                          alt="User-Pic"
+                          style={{
+                            marginLeft: '0',
+                          }}
                         ></img>
-                     </figure>
-                     <div
+                      </figure>
+                      <div
                         className="commentContainer"
                         id={comment?.id}
                         style={{
-                           padding: '10px',
-                           backgroundColor: '#F0F0F0',
-                           borderRadius: '10px',
+                          padding: '10px',
+                          backgroundColor: '#F0F0F0',
+                          borderRadius: '10px',
                         }}
-                     >
+                      >
                         <h5 className="commentHeadingTop">
-                           {comment?.createdBy?.firstName} {comment?.createdBy?.lastName}
+                          {comment?.createdBy?.firstName} {comment?.createdBy?.lastName}
                         </h5>
                         <p className="commentHeading">{comment?.text}</p>
                         <div
-                           onClick={() => getAllupVotesAndDownVotes(comment?.id)}
-                           className="upvoteDownvoteContainer"
+                          onClick={() => getAllupVotesAndDownVotes(comment?.id)}
+                          className="upvoteDownvoteContainer"
                         >
-                           <div className="likecomments">
-                              <img
-                                 className="likecomments"
-                                 src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
-                                 alt='Like'
-                              />
-                           </div>
-                           <div className="likecomments">
-                              <img
-                                 className="likecomments"
-                                 src={downVote.src}
-                                 alt="Dislike"
-                              />
-                           </div>
+                          <div className="likecomments">
+                            <img
+                              className="likecomments"
+                              src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
+                              alt="Like"
+                            />
+                          </div>
+                          <div className="likecomments">
+                            <img className="likecomments" src={downVote.src} alt="Dislike" />
+                          </div>
                         </div>
-                     </div>
-                  </div>
+                      </div>
+                    </div>
 
-                  <div>
-                     <div style={{ marginLeft: '55px' }}>
+                    <div>
+                      <div style={{ marginLeft: '55px' }}>
                         {/* <span onClick={() => handleUpvote(comment?.id)}>
                            <img
                               className="likecomments"
@@ -1223,105 +1302,124 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                            />
                         </span> */}
                         <button
-                           onClick={() =>
-                              openCommentReplies(post?.id, comment?.id, !comment?.isOpenReply)
-                           }
-                           aria-controls="repliesContainer"
-                           aria-expanded={comment?.isOpenReply}
-                           className="commentReply"
-                           disabled={comment?.isRespPending}
+                          onClick={() =>
+                            openCommentReplies(post?.id, comment?.id, !comment?.isOpenReply)
+                          }
+                          aria-controls="repliesContainer"
+                          aria-expanded={comment?.isOpenReply}
+                          className="commentReply"
+                          disabled={comment?.isRespPending}
+                          style={comment?.isRespPending ? { opacity: 0.5 } : {}}
                         >
-                           Reply
+                          Reply
                         </button>
-                        <span className='commentPostDate' style={{ fontSize: '12px'}}>
-                           {' '}
-                           {calculateTimeDifference(comment?.createdOn)}
+                        <span className="commentPostDate" style={{ fontSize: '12px' }}>
+                          {' '}
+                          {calculateTimeDifference(comment?.createdOn)}
                         </span>
-                     </div>
-                     <Collapse in={comment?.isOpenReply}>
+                        {comment?.createdBy.objectId === objectId && objectId ? (
+                          <button
+                            disabled={comment?.isRespPending}
+                            style={comment?.isRespPending ? { opacity: 0.5 } : {}}
+                            onClick={() => {
+                              setDeleteCommentId({ postId: post?.id, commentId: comment?.id });
+                              setShowDeleteCommentPopup(true);
+                            }}
+                            className="commentReply"
+                          >
+                            Delete
+                          </button>
+                        ) : (
+                          ''
+                        )}
+                      </div>
+                      <Collapse in={comment?.isOpenReply}>
                         <div style={{ position: 'relative', left: '10%', width: '88%' }}>
-                           <Form
-                              onSubmit={(e) => {
-                                 postCommentReply(post?.id, comment?.id, e);
-                              }}
-                              style={{ border: '1px', borderColor: 'black' }}
-                           >
-                              <Form.Group controlId="comments" style={{ display: 'flex', padding: '5px 0 15px 15px' }}>
-                                 <img
-                                 width="32px"
-                                 className="commentUserImage"
-                                 src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
-                                 alt="User-Pic"
-                                 style={{ marginLeft: '0' }}
-                                 ></img>
-                                 <Form.Control
-                                 // onChange={(e) => setPostCommentValue(e.target.value)}
-                                    type="text"
-                                    placeholder="Write a Reply..."
-                                    required
-                                    autoFocus
-                                    style={{ width: '100%', color: '#a5a9ae', fontSize: '13px' }}
-                                 />
-                                 <button type="submit" className="postCommentButton">
-                                 Reply
-                                 </button>
-                              </Form.Group>
-                        </Form>
-                        {comment?.replies?.map((reply: any) => {
-                           return (
+                          <Form
+                            onSubmit={(e) => {
+                              postCommentReply(post?.id, comment?.id, e);
+                            }}
+                            style={{ border: '1px', borderColor: 'black' }}
+                          >
+                            <Form.Group
+                              controlId="comments"
+                              style={{ display: 'flex', padding: '5px 0 15px 15px' }}
+                            >
+                              <img
+                                width="32px"
+                                className="commentUserImage"
+                                src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                                alt="User-Pic"
+                                style={{ marginLeft: '0' }}
+                              ></img>
+                              <Form.Control
+                                // onChange={(e) => setPostCommentValue(e.target.value)}
+                                type="text"
+                                placeholder="Write a Reply..."
+                                required
+                                autoFocus
+                                style={{ width: '100%', color: '#a5a9ae', fontSize: '13px' }}
+                              />
+                              <button type="submit" className="postCommentButton">
+                                Reply
+                              </button>
+                            </Form.Group>
+                          </Form>
+                          {comment?.replies?.map((reply: any) => {
+                            return (
                               <>
-                              <div className='commentSection'>
-                                 <figure>
+                                <div className="commentSection">
+                                  <figure>
                                     <img
-                                       className="commentUserImage"
-                                       src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
-                                       alt="User-Pic"
-                                       style={{
-                                          marginLeft: '0',
-                                       }}
+                                      className="commentUserImage"
+                                      src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                                      alt="User-Pic"
+                                      style={{
+                                        marginLeft: '0',
+                                      }}
                                     ></img>
-                                 </figure>
-                                 <div
+                                  </figure>
+                                  <div
                                     id={reply?.id}
                                     style={{
-                                       padding: '10px',
-                                       backgroundColor: '#F0F0F0',
-                                       borderRadius: '10px',
+                                      padding: '10px',
+                                      backgroundColor: '#F0F0F0',
+                                      borderRadius: '10px',
                                     }}
                                     className="commentContainer"
-                                 >
+                                  >
                                     <h5 className="commentHeadingTop">
-                                       {reply?.createdBy?.firstName} {reply?.createdBy?.lastName}{' '}
+                                      {reply?.createdBy?.firstName} {reply?.createdBy?.lastName}{' '}
                                     </h5>
                                     <p className="commentHeading">{reply?.text}</p>
                                     <div
-                                       onClick={() => getAllupVotesAndDownVotes(reply?.id)}
-                                       className="upvoteDownvoteContainer"
+                                      onClick={() => getAllupVotesAndDownVotes(reply?.id)}
+                                      className="upvoteDownvoteContainer"
                                     >
-                                       <div className="likecomments">
-                                       <img
+                                      <div className="likecomments">
+                                        <img
                                           className="likecomments"
                                           src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
-                                          alt='Like'
-                                       />
-                                       </div>
-                                       <div className="likecomments">
-                                       <img
+                                          alt="Like"
+                                        />
+                                      </div>
+                                      <div className="likecomments">
+                                        <img
                                           className="likecomments"
                                           src={downVote.src}
                                           alt="Dislike"
-                                       />
-                                       </div>
+                                        />
+                                      </div>
                                     </div>
-                                 </div>
-                              </div>
-                              
-                              <div
-                                 style={{
-                                    marginLeft: '55px'
-                                 }}
-                              >
-                                 {/* <span onClick={() => handleUpvote(reply?.id)}>
+                                  </div>
+                                </div>
+
+                                <div
+                                  style={{
+                                    marginLeft: '55px',
+                                  }}
+                                >
+                                  {/* <span onClick={() => handleUpvote(reply?.id)}>
                                     <img
                                     style={{ margin: '5px' }}
                                     width="30px"
@@ -1339,90 +1437,114 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                     alt="downVote"
                                     />
                                  </span> */}
-                                 <button
+                                  <button
                                     aria-controls="replyOfReplyContainer"
                                     aria-expanded={reply?.isOpenReplyOfReply}
                                     className="commentReply"
                                     onClick={() =>
-                                    openReplyOfReply(
-                                       post?.id,
-                                       comment?.id,
-                                       reply?.id,
-                                       !reply?.isOpenReplyOfReply
-                                    )
+                                      openReplyOfReply(
+                                        post?.id,
+                                        comment?.id,
+                                        reply?.id,
+                                        !reply?.isOpenReplyOfReply
+                                      )
                                     }
                                     disabled={reply?.isRespPending}
-                                 >
+                                    style={reply?.isRespPending ? { opacity: 0.5 } : {}}
+                                  >
                                     Reply
-                                 </button>
-                                 <span className='commentPostDate' style={{ fontSize: '12px' }}>
+                                  </button>
+                                  <span className="commentPostDate" style={{ fontSize: '12px' }}>
                                     {' '}
                                     {calculateTimeDifference(reply?.createdOn)}
-                                 </span>     
-                              </div>
-                              <Collapse in={reply?.isOpenReplyOfReply}>
-                                 <div style={{ position: 'relative', left: '10%', width: '88%' }}>
-                                    <Form
-                                    onSubmit={(e) => {
-                                       postCommentReply(post?.id, comment?.id, e);
-                                    }}
-                                    style={{ border: '1px', borderColor: 'black' }}
+                                  </span>
+                                  {comment?.createdBy.objectId === objectId && objectId ? (
+                                    <button
+                                      disabled={comment?.isRespPending}
+                                      onClick={() => {
+                                        setDeleteCommentId({
+                                          postId: post?.id,
+                                          commentId: comment?.id,
+                                          replyId: reply?.id,
+                                        });
+                                        setShowDeleteCommentPopup(true);
+                                      }}
+                                      className="commentReply"
+                                      style={reply?.isRespPending ? { opacity: 0.5 } : {}}
                                     >
-                                    <Form.Group controlId="comments" style={{ display: 'flex' }}>
-                                       <img
+                                      Delete
+                                    </button>
+                                  ) : (
+                                    ''
+                                  )}
+                                </div>
+                                <Collapse in={reply?.isOpenReplyOfReply}>
+                                  <div style={{ position: 'relative', left: '10%', width: '88%' }}>
+                                    <Form
+                                      onSubmit={(e) => {
+                                        postCommentReply(post?.id, comment?.id, e);
+                                      }}
+                                      style={{ border: '1px', borderColor: 'black' }}
+                                    >
+                                      <Form.Group controlId="comments" style={{ display: 'flex' }}>
+                                        <img
                                           width="32px"
                                           className="commentUserImage"
                                           src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                                           alt="User-Pic"
                                           style={{ marginLeft: '0' }}
-                                       ></img>
-                                       <Form.Control
+                                        ></img>
+                                        <Form.Control
                                           // onChange={(e) => setPostCommentValue(e.target.value)}
                                           type="text"
                                           placeholder="Write a Reply..."
                                           required
                                           autoFocus
-                                          style={{ width: '100%', color: '#a5a9ae', fontSize: '13px' }}
-                                       />
-                                       <button type="submit" className="postCommentButton">
+                                          style={{
+                                            width: '100%',
+                                            color: '#a5a9ae',
+                                            fontSize: '13px',
+                                          }}
+                                        />
+                                        <button type="submit" className="postCommentButton">
                                           Reply
-                                       </button>
-                                    </Form.Group>
+                                        </button>
+                                      </Form.Group>
                                     </Form>
-                                 </div>
-                              </Collapse>
+                                  </div>
+                                </Collapse>
                               </>
-                           );
-                        })}
-                        {comment?.hasReply ? (
-                           <div
+                            );
+                          })}
+                          {comment?.hasReply ? (
+                            <div
                               style={{
-                              display: 'flex',
-                              justifyContent: 'center',
-                              marginBottom: '16px',
-                              marginTop: '16px',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                marginBottom: '16px',
+                                marginTop: '16px',
                               }}
-                           >
+                            >
                               {comment.isLoadingReplies ? (
-                              <Spinner animation="border" />
+                                <Spinner animation="border" />
                               ) : (
-                              <button
-                                 onClick={() => loadCommentReplies(post?.id, comment?.id)}
-                                 className='postCommentButton'
-                                 style={{
-                                  marginLeft: '0'
-                                }}
-                              >
-                                 <span>Load Replies...</span>
-                              </button>
+                                <button
+                                  onClick={() => loadCommentReplies(post?.id, comment?.id)}
+                                  className="postCommentButton"
+                                  style={{
+                                    marginLeft: '0',
+                                  }}
+                                >
+                                  <span>Load Replies...</span>
+                                </button>
                               )}
-                           </div>
-                        ) : (
-                           ''
-                        )}
+                            </div>
+                          ) : (
+                            ''
+                          )}
                         </div>
-                     </Collapse>
-                  </div>
+                      </Collapse>
+                    </div>
                   </>
                 );
               })}
@@ -1433,10 +1555,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   ) : (
                     <button
                       onClick={() => loadComments(post.id)}
-                      className='postCommentButton'
+                      className="postCommentButton"
                       style={{
                         marginBottom: '16px',
-                        marginLeft: '0'
+                        marginLeft: '0',
                       }}
                     >
                       <span>Load Comments...</span>
@@ -1827,6 +1949,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     for (let i = 0; i < files.length; i++) {
       const temp = files[i];
       let resp = await UploadFilesToServer(temp, 'IMAGE');
+      if (!resp?.data) break;
       let uniqueId = generateUniqueId();
       fileArray.push({ id: uniqueId, url: resp?.data, mediaType: 'IMAGE', mediaSequence: 0 });
     }
@@ -1841,6 +1964,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
     for (let i = 0; i < files.length; i++) {
       let resp = await UploadFilesToServer(files[i], 'DOC');
+      if (!resp?.data) break;
       let uniqueId = generateUniqueId();
       fileArray.push({
         id: uniqueId,
@@ -1862,7 +1986,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
     for (let i = 0; i < files?.length; i++) {
       let resp = await UploadFilesToServer(files[i], 'VIDEO');
-      resp;
+      if (!resp?.data) break;
       let uniqueId = generateUniqueId();
       fileArray.push({
         id: uniqueId,
@@ -1974,10 +2098,18 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 ALL
               </button> */}
-            <button onClick={handleUp} className={addPostCss.filterBtn} style={{ color: '#000E46' }}>
+            <button
+              onClick={handleUp}
+              className={addPostCss.filterBtn}
+              style={{ color: '#000E46' }}
+            >
               Up
             </button>
-            <button onClick={handleDown} className={addPostCss.filterBtn} style={{ color: '#000E46' }}>
+            <button
+              onClick={handleDown}
+              className={addPostCss.filterBtn}
+              style={{ color: '#000E46' }}
+            >
               Down
             </button>
           </div>
@@ -2010,7 +2142,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               })}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='' onClick={closeModal} className='closeButton'>
+          <Button variant="" onClick={closeModal} className="closeButton">
             Close
           </Button>
         </Modal.Footer>
@@ -2022,32 +2154,33 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const day = String(now.getDate()).padStart(2, '0');
-  const hours = String(now.getHours()).padStart(2, '0');
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  const minDate = `${year}-${month}-${day}T${hours}:${minutes}:00`;
+  // const hours = String(now.getHours()).padStart(2, '0');
+  // const minutes = String(now.getMinutes()).padStart(2, '0');
+  const minDate = `${year}-${month}-${day}`;
 
-  let [eventTypeSelectError, setEventTypeSelectError] = useState(false);
-
-  // function emptyEvent() {
-  //   setEventPost('');
-  // }
+  function emptyEvent() {
+    setEventPost('');
+  }
 
   function submitEventForm(event: any) {
     event.preventDefault();
     if (eventType === 'Select Event Type') {
-      setEventTypeSelectError(true);
+      setShowNofitication(true);
+      setToastError(true);
+      setToastMessage('Please Select Event Type !');
       return;
-    } else setEventTypeSelectError(false);
+    }
     const title = event.target[1].value;
-    const description = event.target[2].value;
-    const date = event.target[3].value;
+    const date = event.target[2].value;
+    const time = event.target[3].value;
+    const description = event.target[5].value;
 
     setEventPost({
       event: {
         title: title,
         description: description,
         eventType: eventType,
-        eventDate: date,
+        eventDate: `${date}T${time}`,
       },
     });
     setShowEvent(false);
@@ -2055,15 +2188,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setEventType('Select Event Type');
   }
 
-  useEffect(() => {
-    if (eventType != 'Select Event Type') {
-      setEventTypeSelectError(false);
-    }
-  }, [eventType]);
-
   let [showPollForm, setShowPollForm] = useState(false);
-  // let [eventTypeSelectError, setEventTypeSelectError] = useState(false);
-  // let [createNewEventPostError, setCreateNewEventPostError] = useState(false);
   let option1Id = generateUniqueId();
   let option2Id = generateUniqueId();
   let option1 = {
@@ -2152,9 +2277,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setPollQuestion(e.target.value);
   }
 
-  // function emptyPollPost() {
-  //   setPollPost('');
-  // }
+  function emptyPollPost() {
+    setPollPost('');
+  }
 
   function submitPollForm(event: any) {
     event.preventDefault();
@@ -2178,6 +2303,40 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     clearPollForm();
     setShowPollForm(false);
   }
+
+  let [eventImage, setEventImage] = useState(
+    'https://chinchincelebration.com/wp-content/uploads/2019/08/product-launch-events-min.png'
+  );
+
+  interface ItemImage {
+    [key: string]: string;
+  }
+
+  const EventImage: ItemImage = {
+    Seminar:
+      'https://higherlogicdownload.s3.amazonaws.com/APSNET/UploadedImages/tAiEB79vTYq1gz2UEGu1_IMG_2866-L.jpg',
+    Conference: 'https://th.bing.com/th/id/OIP.IXdC6XgETCp5RaM3iQCb6QHaE8?pid=ImgDet&rs=1',
+    Announcement: 'https://th.bing.com/th/id/OIP.zPaWJzUBQwbXDjhCtCtI1gHaE8?pid=ImgDet&rs=1',
+    'Launch Event': 'https://live.staticflickr.com/808/39724254630_e9cdcb8e77_b.jpg',
+    Celebration: 'https://th.bing.com/th/id/OIP.E1RiHHXMHUcq0L0KvprXfQHaEn?pid=ImgDet&rs=1',
+  };
+
+  useEffect(() => {
+    props?.fields?.data?.datasource?.eventType?.targetItems.map((item: any) => {
+      if (item?.title?.jsonValue?.value === 'Seminar')
+        item.image =
+          'https://higherlogicdownload.s3.amazonaws.com/APSNET/UploadedImages/tAiEB79vTYq1gz2UEGu1_IMG_2866-L.jpg';
+      if (item?.title?.jsonValue?.value === 'Conference')
+        item.image = 'https://th.bing.com/th/id/OIP.IXdC6XgETCp5RaM3iQCb6QHaE8?pid=ImgDet&rs=1';
+      if (item?.title?.jsonValue?.value === 'Announcement')
+        item.image = 'https://th.bing.com/th/id/OIP.zPaWJzUBQwbXDjhCtCtI1gHaE8?pid=ImgDet&rs=1';
+      if (item?.title?.jsonValue?.value === 'Launch Event')
+        item.image = 'https://live.staticflickr.com/808/39724254630_e9cdcb8e77_b.jpg';
+      if (item?.title?.jsonValue?.value === 'Celebration')
+        item.image = 'https://th.bing.com/th/id/OIP.E1RiHHXMHUcq0L0KvprXfQHaEn?pid=ImgDet&rs=1';
+      return item;
+    });
+  }, [props]);
 
   return (
     <>
@@ -2335,6 +2494,71 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                             );
                           })}
                         </div>
+                        <div>
+                          {eventPost?.event?.title ? (
+                            <div style={{ display: 'grid' }}>
+                              <button
+                                style={{
+                                  position: 'absolute',
+                                  justifySelf: 'flex-end',
+                                  marginTop: '20px',
+                                  border: 'none',
+                                  borderRadius: '20px',
+                                }}
+                                type="button"
+                                onClick={() => emptyEvent()}
+                              >
+                                <img
+                                  width="30px"
+                                  src="   https://cdn-icons-png.flaticon.com/512/1617/1617543.png "
+                                  alt="crossButton"
+                                />
+                              </button>
+                              <EventCard
+                                heading={eventPost?.event?.title}
+                                description={eventPost?.event?.description}
+                                date={eventPost?.event?.eventDate}
+                                eventType={eventPost?.event?.eventType}
+                              />
+                            </div>
+                          ) : (
+                            ''
+                          )}
+                        </div>
+                        <div>
+                          {pollPost?.poll?.pollQuestion ? (
+                            <div
+                              style={{
+                                padding: '12px',
+                                border: '1px solid darkgrey',
+                                borderRadius: '20px',
+                                margin: '16px',
+                              }}
+                            >
+                              <button
+                                type="button"
+                                onClick={() => emptyPollPost()}
+                                style={{
+                                  border: 'none',
+                                  backgroundColor: 'white',
+                                  position: 'relative',
+                                  float: 'right',
+                                  padding: '0px',
+                                  borderRadius: '30px',
+                                }}
+                              >
+                                <img
+                                  width="30px"
+                                  src="https://cdn-icons-png.flaticon.com/512/1617/1617543.png"
+                                  alt="crossButton"
+                                />
+                              </button>
+                              <PollCard pollPost={pollPost} />
+                            </div>
+                          ) : (
+                            ''
+                          )}
+                        </div>
                       </Form>
                     </div>
                   </div>
@@ -2481,7 +2705,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 />
               </button>
               <Modal
-                className={styles.reportPostModalContent}
+                className={styles.AddEventModalContent}
                 show={showEvent}
                 onHide={() => setShowEvent(false)}
                 backdrop="static"
@@ -2493,53 +2717,70 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 }}
               >
                 <div>
-                  <Form
-                    onSubmit={(e: any) => submitEventForm(e)}
-                    style={{ fontSize: '15px', margin: '5px' }}
-                  >
+                  <Form onSubmit={(e: any) => submitEventForm(e)} style={{ fontSize: '15px' }}>
                     <Modal.Header closeButton>
-                      <Modal.Title className={styles.reportPostModalHeader}>
+                      <Modal.Title className={styles.AddEventModalHeader}>
                         Create Event Post
                       </Modal.Title>
                     </Modal.Header>
+                    <div className={styles.AddEventModalBody}>
+                      <img width="100%" src={eventImage} />
+                    </div>
                     <Modal.Body>
-                      <div className={styles.reportPostModalBody}>Event Parameters</div>
+                      <div className={styles.AddEventModalProfile}>
+                        <div className={styles.AddEventModalProfilePic}>
+                          <img src={Profile.src} />
+                        </div>
+                        <div style={{ alignSelf: 'center' }}>
+                          <div style={{ fontSize: '14px', fontWeight: '600' }}>
+                            {userObject?.firstName
+                              ? `${userObject?.firstName} ${userObject?.lastName}`
+                              : 'John Doe'}
+                          </div>
+                          {/* <div style={{ fontSize: '14px', color: 'grey' }}>Profile</div> */}
+                        </div>
+                      </div>
                       <Form.Group className="mb-3">
-                        <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
-                          Title
-                        </Form.Label>
-                        <Form.Control required type="text" placeholder="Enter Event Title" />
-                        <Form.Control.Feedback type="invalid">
-                          Please select an event date.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                      <Form.Group className="mb-3">
-                        <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
-                          Description
-                        </Form.Label>
                         <Form.Control
+                          className={styles.AddEventModalEventName}
+                          style={{ fontSize: '18px', color: 'black', fontWeight: '800px' }}
                           required
-                          type="textarea"
-                          placeholder="Enter Event Description"
+                          type="text"
+                          placeholder="Event Name"
                         />
                       </Form.Group>
+                      <div
+                        style={{ display: 'flex', gap: '12px' }}
+                        className={`${styles.AddEventModalEventDates} mb-3`}
+                      >
+                        <Form.Group>
+                          <Form.Control
+                            required
+                            type="date"
+                            placeholder="Event Date"
+                            className={styles.DateInput}
+                            min={minDate}
+                          />
+                        </Form.Group>
+                        <Form.Group>
+                          <Form.Control
+                            className={styles.TimeInput}
+                            required
+                            type="time"
+                            placeholder="Event Time"
+                          />
+                        </Form.Group>
+                      </div>
                       <Form.Group className="mb-3">
-                        <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
-                          Date
-                        </Form.Label>
-                        <Form.Control
-                          required
-                          type="datetime-local"
-                          placeholder="Event Date"
-                          min={minDate}
-                        />
-                      </Form.Group>
-                      <Form.Group className="mb-3">
-                        <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
-                          Event Type
-                        </Form.Label>
                         <Dropdown className="eventTypeDropdown">
-                          <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                          <Dropdown.Toggle
+                            variant="secondary"
+                            id="dropdown-basic"
+                            style={{
+                              width: '100%',
+                            }}
+                            className={styles.eventTypeDropdownToggle}
+                          >
                             {eventType}
                           </Dropdown.Toggle>
 
@@ -2549,7 +2790,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                 return (
                                   <Dropdown.Item
                                     href="#"
-                                    onClick={() => setEventType(item?.title?.jsonValue?.value)}
+                                    onClick={() => {
+                                      setEventType(item?.title?.jsonValue?.value);
+                                      setEventImage(EventImage[item?.title?.jsonValue?.value]);
+                                    }}
+                                    className={styles.eventModalDropdownItem}
                                   >
                                     {item?.title?.jsonValue?.value}
                                   </Dropdown.Item>
@@ -2558,7 +2803,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                             )}
                           </Dropdown.Menu>
                         </Dropdown>
-                        <div style={{ height: '40px' }}>
+                        {/* <div style={{ height: '40px' }}>
                           {eventTypeSelectError ? (
                             <div style={{ color: 'red', fontSize: '12px', fontWeight: '1000' }}>
                               * Please Select Valid Event Type
@@ -2566,12 +2811,22 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           ) : (
                             ''
                           )}
-                        </div>
+                        </div> */}
+                      </Form.Group>
+                      <Form.Group className="mb-3">
+                        <Form.Control
+                          className={`${styles.AddEventModalEventName} ${styles.AddEventModalEventDescription}`}
+                          required
+                          as="textarea"
+                          rows={2}
+                          placeholder="Description"
+                          style={{ resize: 'none' }}
+                        />
                       </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>
                       <Button
-                        className={styles.footerBtn}
+                        className={styles.eventModalCancel}
                         variant="secondary"
                         onClick={() => {
                           setShowEvent(false);
@@ -2581,7 +2836,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         Cancel
                       </Button>
                       <Button
-                        className={styles.footerBtn}
+                        className={styles.eventModalAddToPost}
                         variant="secondary"
                         type="submit"
                         // onClick={onPostReported}
@@ -2731,6 +2986,17 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </Form>
                 </div>
               </Modal>
+              <button className={styles.pollButton} type="button">
+                <Link href="/addblogpost">
+                  <NextImage
+                    field={articleIcon}
+                    editable={true}
+                    alt="PostItems"
+                    width={18}
+                    height={18}
+                  />
+                </Link>
+              </button>
             </div>
             <div className={styles.errorContainer}>
               <Button
@@ -2756,7 +3022,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 <Button
                   className={styles.publishButton}
                   variant="default"
-                  style={{ outline: 'none', border: 'none' }}
+                  style={{ outline: 'none', border: 'none', color: '#F58C60' }}
                   type="button"
                   onClick={() => {
                     setShowForm1(false);
@@ -2849,7 +3115,36 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           )}
         </div>
       </div>
-
+      {showDeletePostPopup ? (
+        <CreateModalPopup
+          popUpVisiable={showDeletePostPopup}
+          setPopUpVisiable={setShowDeletePostPopup}
+          body={'Do you really want to delete this post ?'}
+          buttonName={'Delete'}
+          title={'Delete Confirmation'}
+          buttonClickHandler={confirmationForDelete}
+          disabled={false}
+          id={deletePostId}
+        />
+      ) : (
+        ''
+      )}
+      {showDeleteCommentPopup ? (
+        <CreateModalPopup
+          popUpVisiable={showDeleteCommentPopup}
+          setPopUpVisiable={setShowDeleteCommentPopup}
+          body={`Do you really want to delete this ${
+            deleteCommentId?.replyId ? 'reply' : 'comment'
+          } ?`}
+          buttonName={'Delete'}
+          title={'Delete Confirmation'}
+          buttonClickHandler={confirmationForDeleteComment}
+          disabled={false}
+          id={deleteCommentId}
+        />
+      ) : (
+        ''
+      )}
       {<ReportPostPopup />}
       {<BlockUserPopup />}
       {<ModalForReactions />}

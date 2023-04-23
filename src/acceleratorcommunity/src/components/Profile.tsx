@@ -155,6 +155,7 @@ const Profile = (props: any): JSX.Element => {
   const [openLocationModalState, setOpenLocationModalState] = useState(false);
   const checkboxRef = React.useRef<any>(null);
   useEffect(() => {
+    console.log('===========+++++++++++++++++++++', locationObj);
     if (
       errorState?.city === false &&
       errorState?.address === false &&
@@ -269,7 +270,7 @@ const Profile = (props: any): JSX.Element => {
       errorState?.firstName === false &&
       errorState?.lastName === false &&
       errorState.gender === false &&
-      personalInfo?.gender !== '' &&
+      personalInfo?.gender !== undefined &&
       errorState?.speciality === false &&
       errorState?.role === false
     ) {
@@ -347,7 +348,14 @@ const Profile = (props: any): JSX.Element => {
   }, [placeOfPracticeDetails]);
 
   const submitWork = () => {
-    if (errorState?.orgName === false && errorState?.empId === false) {
+    console.log('placeOfPracticeDetails', placeOfPracticeDetails);
+
+    if (
+      errorState?.orgName === false &&
+      errorState?.empId === false &&
+      placeOfPracticeDetails?.userWorkDetails[0].orgName !== '' &&
+      placeOfPracticeDetails?.userWorkDetails[0].employeeId !== ''
+    ) {
       updateUuserCall(userToken, objectId, placeOfPracticeDetails).then((response) => {
         if (response) {
           if (response?.data?.success) {
@@ -363,6 +371,19 @@ const Profile = (props: any): JSX.Element => {
           setShowNofitication(true);
         }
       });
+    } else if (
+      placeOfPracticeDetails?.userWorkDetails[0].orgName === '' &&
+      placeOfPracticeDetails?.userWorkDetails[0].employeeId === ''
+    ) {
+      setErrorState({ ...errorState, orgName: true });
+      setErrorState({ ...errorState, empId: true });
+    } else if (placeOfPracticeDetails?.userWorkDetails[0].orgName === '') {
+      setErrorState({ ...errorState, orgName: true });
+    } else if (placeOfPracticeDetails?.userWorkDetails[0].employeeId === '') {
+      setErrorState({ ...errorState, empId: true });
+    } else {
+      setErrorState({ ...errorState, orgName: false });
+      setErrorState({ ...errorState, empId: false });
     }
   };
 
@@ -423,6 +444,25 @@ const Profile = (props: any): JSX.Element => {
     }
   };
 
+  const addNewWorkDetail = () => {
+    setPlaceOfPractice({
+      city: '',
+      country: '',
+      designation: '',
+      employeeId: '',
+      joiningDate: '',
+      joiningYear: 0,
+      latitude: null,
+      leavingDate: '',
+      orgName: '',
+      pincode: 0,
+      presentlyWorkingHere: false,
+      socialUrl: '',
+      state: '',
+      wid: '',
+    });
+    handleOpenWorkModal();
+  };
   const handleOpenWorkModal = () => {
     setOpenWorkModal(true);
   };
@@ -458,7 +498,10 @@ const Profile = (props: any): JSX.Element => {
     if (
       errorState.instituteName === false &&
       errorState.standard === false &&
-      errorState.grade === false
+      errorState.grade === false &&
+      educationDetails?.usersQualification[0].grade !== '' &&
+      educationDetails?.usersQualification[0].standard !== ' ' &&
+      educationDetails?.usersQualification[0].instituteName !== ''
     ) {
       updateUuserCall(userToken, objectId, educationDetails).then((response) => {
         if (response) {
@@ -733,6 +776,25 @@ const Profile = (props: any): JSX.Element => {
     standard: false,
     empId: false,
   });
+
+  const addEducationDetails = () => {
+    setEducation({
+      city: '',
+      country: '',
+      endDate: '',
+      grade: '',
+      instituteName: '',
+      percentage: 0,
+      pincode: '',
+      remarks: '',
+      standard: '',
+      startDate: '',
+      state: '',
+      qid: '',
+    });
+
+    handleOpenForEducation();
+  };
 
   const editEducationmData = (id: any) => {
     const data = tempUserData.qualifications?.filter((data: any) => {
@@ -1034,6 +1096,9 @@ const Profile = (props: any): JSX.Element => {
     if (val === '') {
       setErrorState({ ...errorState, gender: true });
       setPersonalInfo({ ...personalInfo, gender: val });
+    } else if (val === undefined) {
+      setErrorState({ ...errorState, gender: true });
+      setPersonalInfo({ ...personalInfo, gender: val });
     } else {
       setErrorState({ ...errorState, gender: false });
       setPersonalInfo({ ...personalInfo, gender: val });
@@ -1283,8 +1348,8 @@ const Profile = (props: any): JSX.Element => {
   };
 
   if (tempUserData?.middleName !== undefined) {
-    var name = tempUserData.firstName?.concat(' ' +
-      tempUserData?.middleName + ' ' + tempUserData?.lastName
+    var name = tempUserData.firstName?.concat(
+      ' ' + tempUserData?.middleName + ' ' + tempUserData?.lastName
     );
   } else {
     var name = tempUserData.firstName?.concat(' ' + tempUserData?.lastName);
@@ -1489,6 +1554,7 @@ const Profile = (props: any): JSX.Element => {
                   Grade={Grade}
                   setEndDate={setEndDate}
                   setCountryOfEducation={setCountryOfEducation}
+                  addEducationDetails={addEducationDetails}
                   setStateOfEducation={setStateOfEducation}
                   setStartDate={setStartDate}
                   setStandard={setStandard}
@@ -1509,6 +1575,7 @@ const Profile = (props: any): JSX.Element => {
                   placeOfPractice={tempUserData.placeOfPractice}
                   specificPlaceOfWork={placeOfPractice}
                   handleOpenWorkModal={handleOpenWorkModal}
+                  addNewWorkDetail={addNewWorkDetail}
                   openWorkModal={openWorkModal}
                   handleCloseWorkModal={handleCloseWorkModal}
                   submitWorkModal={submitWorkModal}

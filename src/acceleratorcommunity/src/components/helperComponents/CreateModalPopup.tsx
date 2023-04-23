@@ -11,6 +11,7 @@ type ComponentProps = {
   title: string;
   buttonClickHandler: Function;
   disabled?: boolean;
+  id?: any;
 };
 function CreateModalPopup({
   popUpVisiable,
@@ -20,6 +21,7 @@ function CreateModalPopup({
   title,
   buttonClickHandler,
   disabled,
+  id,
 }: ComponentProps) {
   return (
     <>
@@ -32,7 +34,7 @@ function CreateModalPopup({
           <Button variant="secondary" onClick={() => setPopUpVisiable(false)}>
             Close
           </Button>
-          <Button variant="primary" onClick={(e) => buttonClickHandler(e)} disabled={disabled}>
+          <Button variant="primary" onClick={() => buttonClickHandler(id)} disabled={disabled}>
             {buttonName}
           </Button>
         </Modal.Footer>
