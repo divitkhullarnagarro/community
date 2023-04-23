@@ -26,8 +26,11 @@ import { getAllReportUserCall } from 'src/API/reportUserCall';
 
 const EmailTemplateFolder = '02989F59-CFEB-4CC9-90FB-C0DA8A7FE7B5';
 const WarnUserEmailTemplate = '16937DB73C124028877AAA49C0BE30CA';
-const SuspendEmailTemplate = '71C5EDC72EB3474191904768EED4C591';
-
+const WarnUserEmailTemplateBody = 'DD033BE99AD5406699A18F9956ED029F';
+const SuspendUserEmailTemplate = '71C5EDC72EB3474191904768EED4C591';
+const SuspendUserEmailTemplateBody = 'DD033BE99AD5406699A18F9956ED029F';
+const WarnUserForPostEmailTemplate = 'A5A0180DB2824B4694FBDCC305157ED7';
+const WarnUserForPostEmailTemplateBody = 'DD033BE99AD5406699A18F9956ED029F';
 type reportPostFields = {
   id: string;
   description: string;
@@ -194,36 +197,57 @@ const Users = (props: UserProps): JSX.Element => {
     );
   };
 
+  const [emailTemplates, setEmailTemplates] = useState<emailTemplate[]>([]);
   const getEmailTemplates = async () => {
-    var emailTemplateQuery = getEmailTemplatesGraphqlQuery();
-    var dataSource = EmailTemplateFolder;
-    const result = await graphqlQueryWrapper<data>(emailTemplateQuery, dataSource);
-    const emailTemplates = result?.data?.datasource?.children?.results;
+    if (emailTemplates === undefined || emailTemplates.length === 0) {
+      const emailTemplateQuery = getEmailTemplatesGraphqlQuery();
+      const dataSource = EmailTemplateFolder;
+      const result = await graphqlQueryWrapper<data>(emailTemplateQuery, dataSource);
+      const emailTemplatesForAdminAction = result?.data?.datasource?.children?.results;
+      setEmailTemplates(emailTemplatesForAdminAction);
+      return emailTemplatesForAdminAction;
+    }
     return emailTemplates;
+  };
+
+  const getEmailTemplateBodyHtml = (
+    emailTemplates: Promise<emailTemplate[]>,
+    emailTemplate: string,
+    emailTemplateBody: string
+  ) => {
+    return emailTemplates.then((response: emailTemplate[]) => {
+      const result = response
+        .filter((item: emailTemplate) => {
+          return item.id === emailTemplate;
+        })
+        .find((item) => item)
+        ?.fields?.filter((item: emailTemplateFields) => {
+          return item.id === emailTemplateBody;
+        })
+        .find((item) => item);
+      return result?.value;
+    });
   };
 
   const onSendWarningToUser = () => {
     const emailTemplates = getEmailTemplates();
-    emailTemplates.then((response: emailTemplate[]) => {
-      const result = response
-        .filter((item: emailTemplate) => {
-          return item.id === WarnUserEmailTemplate;
-        })
-        .find((item) => item);
-      console.log('accountsuspension', result);
-    });
+    getEmailTemplateBodyHtml(emailTemplates, WarnUserEmailTemplate, WarnUserEmailTemplateBody).then(
+      (result) => {
+        console.log('warn', result);
+      }
+    );
+
     setShowWarnUserPopup(false);
   };
 
   const onUserAccountSuspension = () => {
     const emailTemplates = getEmailTemplates();
-    emailTemplates.then((response: emailTemplate[]) => {
-      const result = response
-        .filter((item: emailTemplate) => {
-          return item.id === SuspendEmailTemplate;
-        })
-        .find((item) => item);
-      console.log('accountsuspension', result);
+    getEmailTemplateBodyHtml(
+      emailTemplates,
+      SuspendUserEmailTemplate,
+      SuspendUserEmailTemplateBody
+    ).then((result) => {
+      console.log('suspend', result);
     });
 
     setShowSuspendUserPopup(false);
@@ -231,16 +255,14 @@ const Users = (props: UserProps): JSX.Element => {
 
   const onReportedPostSendWarning = () => {
     const emailTemplates = getEmailTemplates();
-    emailTemplates.then((response: emailTemplate[]) => {
-      const result = response
-        .filter((item: emailTemplate) => {
-          return item.id === SuspendEmailTemplate;
-        })
-        .find((item) => item);
-      console.log('accountsuspension', result);
+    getEmailTemplateBodyHtml(
+      emailTemplates,
+      WarnUserForPostEmailTemplate,
+      WarnUserForPostEmailTemplateBody
+    ).then((result) => {
+      console.log('warnforpost', result);
     });
-
-    setShowSuspendUserPopup(false);
+    setShowWarnUserForPostReportPopUp(false);
   };
 
   const [showWarnUserPopup, setShowWarnUserPopup] = useState(false);
@@ -320,6 +342,48 @@ const Users = (props: UserProps): JSX.Element => {
               onClick={() => onUserAccountSuspension()}
             >
               Suspend account
+            </Button>
+          </Modal.Footer>
+        </div>
+      </Modal>
+    );
+  };
+
+  const [showWarnUserForPostReportPopUp, setShowWarnUserForPostReportPopUp] = useState(false);
+  const WarnUserForPostReportPopUp = () => {
+    return (
+      <Modal
+        className={styles.reportPostModalContent}
+        show={showWarnUserForPostReportPopUp}
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setShowWarnUserForPostReportPopUp(false)}
+        centered
+        scrollable={true}
+      >
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <Modal.Header closeButton className={styles.reportPostModalHeader}>
+            <Modal.Title>{'Warn user'}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div
+              className={styles.reportPostModalBody}
+            >{`Do you want to send email warning to the user ?`}</div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              className={styles.footerBtn}
+              variant="secondary"
+              onClick={() => setShowWarnUserForPostReportPopUp(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              className={styles.footerBtn}
+              variant="secondary"
+              onClick={() => onReportedPostSendWarning()}
+            >
+              Send warning
             </Button>
           </Modal.Footer>
         </div>
@@ -712,7 +776,7 @@ const Users = (props: UserProps): JSX.Element => {
                       </Dropdown.Item>
                       <Dropdown.Item
                         className={styles.dropdownItem}
-                        onClick={() => onReportedPostSendWarning()}
+                        onClick={() => setShowWarnUserForPostReportPopUp(true)}
                       >
                         <div className={styles.overlayItem}>
                           <div className={styles.dropdownImage}>
@@ -901,6 +965,7 @@ const Users = (props: UserProps): JSX.Element => {
               <div>
                 <ReportedPostList />
                 <ReportPostPopup />
+                <WarnUserForPostReportPopUp />
               </div>
             ) : (
               <span className={styles.reportedPostContainer}>
