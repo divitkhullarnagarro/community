@@ -102,7 +102,11 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => (
                 placeholder="Speciality"
                 autoFocus
               />
-              {props.errorState?.speciality ? <span className="error">Field is required</span> : ' '}
+              {props.errorState?.speciality ? (
+                <span className="error">Field is required</span>
+              ) : (
+                ' '
+              )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>
@@ -118,9 +122,7 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => (
               {props.errorState?.role ? <span className="error">Field is required</span> : ' '}
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>
-                Dob
-              </Form.Label>
+              <Form.Label>Dob</Form.Label>
               <Form.Control
                 onChange={(e) => props.setDobValue(e.target.value)}
                 value={props.personalInfo?.dob}
@@ -178,7 +180,13 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => (
                 <option value="FEMALE">FEMALE</option>
                 <option value="OTHERS">OTHERS</option>
               </Form.Control>
+              {console.log('+++++++++++++++++++++++++++', props.errorState?.gender)}
               {props.errorState?.gender ? <span className="error">Field is required</span> : ' '}
+              {props.personalInfo?.gender === undefined ? (
+                <span className="error">Field is required</span>
+              ) : (
+                ' '
+              )}
             </Form.Group>
           </Form>
         </Modal.Body>
