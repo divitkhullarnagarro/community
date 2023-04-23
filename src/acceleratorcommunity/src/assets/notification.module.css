@@ -1,24 +1,199 @@
-.container{
-    display: flex;
-    padding: 8px;
-    margin: 0;
-    background: #F9F9F9;
-    border: 1px solid #F3F3F3;
-    border-radius: 50%;
+.container {
+  display: flex;
+  padding: 8px;
+  margin: 0;
+  background: #f9f9f9;
+  border: 1px solid #f3f3f3;
+  border-radius: 50%;
 }
 .badge {
-    background-color: red;
-      color: white;
-      border-radius: 80%;
-      padding: 0.1875rem;
-      width: 1.25rem;
-      height: 1.25rem;
-      justify-content: center;
-      display: flex;
-      font-size: 0.625rem;
-      position: absolute;
-      right: 3.875rem;
-  }
-  .container img{
-    cursor: pointer;
+  background-color: red;
+  color: white;
+  border-radius: 80%;
+  padding: 0.1875rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  justify-content: center;
+  display: flex;
+  font-size: 0.625rem;
+  position: absolute;
+  right: 3.875rem;
+}
+.container img {
+  cursor: pointer;
+}
+
+.dropdownMenu {
+  width: 450px;
+  background-color: white;
+  border-radius: 15px;
+}
+
+.dropdownItem {
+  white-space: normal;
+}
+
+.dropdownItem:after {
+  visibility: hidden;
+  content: none !important;
+}
+
+.notificationHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: bold;
+  white-space: normal;
+}
+
+.notificationHeaderRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.notificationHeaderAction {
+  display: flex;
+  gap: 20px;
+}
+
+.notificationActionBtn {
+  width: 30x;
+  height: 33px;
+  background-color: #47d7ac;
+  border: none;
+  border-radius: 15px;
+}
+
+.notificationHeaderLabel {
+  color: #283895;
+  font-size: 23px;
+}
+
+.notificationItem {
+  display: flex;
+}
+
+.notificationMessage {
+  margin-left: 15px;
+  width: 83%;
+  word-wrap: break-word;
+}
+
+.notificationIconContainer {
+  position: relative;
+  display: inline-block;
+  border: none;
+  width: 10%;
+}
+
+.notificationIcon {
+  padding: 3px !important;
+  filter: invert(1);
+}
+.notificationHeaderIconContainer {
+  position: relative;
+  display: inline-block;
+  border: none;
+  background-color: #47d7ac;
+  border-radius: 30px;
+}
+
+.notificationCount {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.dropdownToggle {
+  background-color: #fff !important;
+  border: none;
+  padding: 0;
+  display: inline-block;
+  position: relative;
+}
+
+.dropdownMoreMenu {
+  width: 200px;
+  background-color: white;
+  border-radius: 15px;
+}
+
+.dropdownMoreMenuItem {
+  display: flex;
+}
+
+.notificationMoreMenuLabel {
+  margin-left: 10px;
+}
+
+.notificationMoreOptions {
+  background-color: #fff !important;
+  border: none;
+  padding: 0;
+}
+
+.dropdownToggle::before {
+  content: '';
+  border: 1px solid #000;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 15px;
+  height: 15px;
+  background-color: #fff;
+  z-index: 1;
+  border-radius: 50%;
+}
+
+.dropdownToggle::after {
+  margin-left: 0;
+  border-top: 4px solid #000;
+  border-right: 4px solid transparent;
+  border-bottom: 0;
+  border-left: 4px solid transparent;
+  position: absolute;
+  bottom: 13%;
+  right: 10%;
+  z-index: 1;
+}
+
+.notificationDropdownToggle {
+  background-color: #fff !important;
+  border: none;
+  padding: 0;
+  display: inline-block;
+  position: relative;
+}
+
+.noNotifications {
+  display: flex;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.notificationTypeImage {
+  position: absolute;
+  top: 23px;
+  right: -5px;
+  background-color: #47d7ac;
+  color: white;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  z-index: 1;
+  border-radius: 50%;
 }

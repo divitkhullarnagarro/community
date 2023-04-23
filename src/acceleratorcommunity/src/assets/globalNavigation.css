@@ -1,8 +1,8 @@
-.rightNavigation{
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-    /* width: 66% !important; */
-    align-items: center;
-    gap: 10px;
+.rightNavigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  /* width: 66% !important; */
+  align-items: center;
+  /* gap: 6px; */
 }
