@@ -21,7 +21,7 @@ const EductionDetails = (props: any): JSX.Element => (
                   <div className="instituteFields">{data?.percentage}</div>
                   <div className="instituteFields">{data?.remarks}</div>
                 </div>
-                <button className="itemEditBtn" onClick={props.handleShowFormForHobby}>
+                <button className="itemEditBtn"   onClick={() => props?.editEducationmData(data?.qid)}>
                   <img
                     src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
                     alt="edit"
