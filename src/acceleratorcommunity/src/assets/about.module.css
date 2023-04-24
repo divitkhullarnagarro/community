@@ -1,7 +1,7 @@
 .aboutContainer {
   background: #F9F9F9;
   padding: 12px 16px;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25)
+  /* box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25) */
 }
 
 .accordionItem {

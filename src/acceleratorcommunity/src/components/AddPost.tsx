@@ -34,6 +34,10 @@ import getCommentsReplyCall from 'src/API/getCommentsReplyCall';
 import postCommentReplyCall from 'src/API/postCommentReplyCall';
 import downVote from '../assets/images/dislikeIcon.svg';
 import CreateModalPopup from './helperComponents/CreateModalPopup';
+import videoIcon from '../assets/images/AddVideo_icon.svg';
+import pollIcon from '../assets/images/CreatePoll_icon.svg';
+import addBlogIcon from '../assets/images/AddBlogPost_icon.svg';
+import createEventIcon from '../assets/images/CreateEventPost_icon.svg';
 
 // Rich Text Editor Files Import Start
 import { EditorState, convertToRaw } from 'draft-js';
@@ -60,11 +64,10 @@ import Profile from '../assets/images/profile.png';
 import addPostCss from '../assets/addPosts.module.css';
 import blockUserCall from 'src/API/blockUnblockUserCall';
 import user from '../assets/images/user.png';
-import location from '../assets/images/Location.png';
-import camera from '../assets/images/Rounded.png';
+// import location from '../assets/images/Location.png';
 import image from '../assets/images/Vector.png';
 import pin from '../assets/images/Vectorpin.png';
-import smile from '../assets/images/Vectorsmile.png';
+// import smile from '../assets/images/Vectorsmile.png';
 import like from '../assets/images/like.png';
 import comment from '../assets/images/comment.png';
 import share from '../assets/images/share.png';
@@ -73,7 +76,7 @@ import EventCard from './EventCard';
 import PollCard from './PollCard';
 import deletePostCall from 'src/API/deletePostCall';
 import deleteCommentCall from 'src/API/deleteCommentCall';
-import articleIcon from '../assets/images/ArticleIcon.svg';
+// import articleIcon from '../assets/images/ArticleIcon.svg';
 // import PollCard from './PollCard';
 import reportUserCall from 'src/API/reportUserCall';
 
@@ -1181,7 +1184,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   {post?.isLikedByUser ? 'Liked Post' : 'Like Post'}
                 </span>
               </button>
-              
+
               <div className={styles.likeCount}>
                 {post?.postMeasures?.likeCount ? post?.postMeasures?.likeCount : '0'}
               </div>
@@ -2714,7 +2717,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 {/* <span>Image</span> */}
                 <NextImage
-                  field={camera}
+                  field={image}
                   editable={true}
                   style={{ opacity: disableAddImage ? '0.2' : '1' }}
                   alt="Profile-Pic"
@@ -2738,6 +2741,38 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 </Form.Group>
               </button>
               <button
+                className={styles.addPostFileButtons}
+                onClick={() => {
+                  setShowForm1(true);
+                  clickmebuttonHandler3();
+                }}
+                disabled={disableAddVideo}
+                type="button"
+              >
+                {/* <span>Video</span> */}
+                <NextImage
+                  field={videoIcon}
+                  editable={true}
+                  alt="PostItems"
+                  width={18}
+                  height={18}
+                  style={{ opacity: disableAddVideo ? '0.2' : '1' }}
+                />
+                <Form.Group
+                // className="mb-3"
+                >
+                  <Form.Control
+                    style={{ display: 'none' }}
+                    onChange={(e) => setPostVideoValue(e)}
+                    type="file"
+                    placeholder="Post Video"
+                    // multiple
+                    accept=".mp4"
+                    id="clickmebutton3"
+                  />
+                </Form.Group>
+              </button>
+              <button
                 disabled={disableAddVideo}
                 className={styles.addPostFileButtons}
                 onClick={() => {
@@ -2748,7 +2783,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 {/* <span>Doc</span> */}
                 <NextImage
-                  field={image}
+                  field={pin}
                   editable={true}
                   alt="PostItems"
                   width={18}
@@ -2774,38 +2809,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 className={styles.addPostFileButtons}
                 onClick={() => {
                   setShowForm1(true);
-                  clickmebuttonHandler3();
-                }}
-                disabled={disableAddVideo}
-                type="button"
-              >
-                {/* <span>Video</span> */}
-                <NextImage
-                  field={pin}
-                  editable={true}
-                  alt="PostItems"
-                  width={18}
-                  height={18}
-                  style={{ opacity: disableAddVideo ? '0.2' : '1' }}
-                />
-                <Form.Group
-                // className="mb-3"
-                >
-                  <Form.Control
-                    style={{ display: 'none' }}
-                    onChange={(e) => setPostVideoValue(e)}
-                    type="file"
-                    placeholder="Post Video"
-                    // multiple
-                    accept=".mp4"
-                    id="clickmebutton3"
-                  />
-                </Form.Group>
-              </button>
-              <button
-                className={styles.addPostFileButtons}
-                onClick={() => {
-                  setShowForm1(true);
                   setShowEvent(true);
                 }}
                 type="button"
@@ -2813,7 +2816,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 {/* <span>Event</span> */}
                 <NextImage
-                  field={location}
+                  field={createEventIcon}
                   style={{ opacity: disableAddEvent ? '0.2' : '1' }}
                   editable={true}
                   alt="PostItems"
@@ -2975,7 +2978,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 {/* <span>Poll</span> */}
                 <NextImage
-                  field={smile}
+                  field={pollIcon}
                   editable={true}
                   alt="PostItems"
                   style={{ opacity: disableAddPoll ? '0.2' : '1' }}
@@ -3103,14 +3106,21 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </Form>
                 </div>
               </Modal>
-              <button className={styles.pollButton} type="button">
+              <button
+                className={styles.addPostFileButtons}
+                onClick={() => {
+                  setShowForm1(true);
+                }}
+                type="button"
+              >
                 <Link href="/addblogpost">
                   <NextImage
-                    field={articleIcon}
+                    field={addBlogIcon}
                     editable={true}
                     alt="PostItems"
                     width={18}
                     height={18}
+                    style={{ opacity: disableAddDoc ? '0.2' : '1' }}
                   />
                 </Link>
               </button>
