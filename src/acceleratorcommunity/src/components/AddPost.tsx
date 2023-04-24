@@ -2844,8 +2844,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   setEventType('Select Event Type');
                 }}
               >
-                <div>
-                  <Form onSubmit={(e: any) => submitEventForm(e)} style={{ fontSize: '15px' }}>
+                <div className={styles.eventPostContainer}>
+                  <Form onSubmit={(e: any) => submitEventForm(e)} style={{ fontSize: '14px'}}>
                     <Modal.Header closeButton>
                       <Modal.Title className={styles.AddEventModalHeader}>
                         Create Event Post
@@ -2860,7 +2860,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           <img src={Profile.src} />
                         </div>
                         <div style={{ alignSelf: 'center' }}>
-                          <div style={{ fontSize: '14px', fontWeight: '600' }}>
+                          <div style={{ fontSize: '1rem', fontWeight: '600' }}>
                             {userObject?.firstName
                               ? `${userObject?.firstName} ${userObject?.lastName}`
                               : 'John Doe'}
