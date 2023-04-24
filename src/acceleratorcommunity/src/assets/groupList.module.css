@@ -1,7 +1,7 @@
 .groupListContainer {
   background-color: #f9f9f9;
-  margin-top: 20px;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25)
+  /* margin-top: 20px; */
+  /* box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25) */
 }
 .groupListTitle {
   font-size: 20px;
@@ -49,8 +49,8 @@
   border-radius: 50%;
 }
 .groupList {
-  background: whitesmoke;
-  margin-top: 5px;
+  background: #F9F9F9;
+  /* margin-top: 5px; */
   padding: 16px;
   padding-bottom: 16px;
   height: 425px;

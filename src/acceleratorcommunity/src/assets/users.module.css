@@ -56,8 +56,8 @@ r .right_upper_section {
   border-style: solid;
   border-color: #edeff1;
 }
-.spinner{
-  color:#283895
+.spinner {
+  color: #283895;
 }
 .right_lower_section_spinner {
   font-size: 25px;
@@ -75,7 +75,7 @@ r .right_upper_section {
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
   width: 20vw;
   background-color: #f9f9f9;
-  height: 720px;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   /* padding: 0.3125rem 0.625rem; */
@@ -92,18 +92,18 @@ r .right_upper_section {
 .row {
   display: flex;
   flex-direction: row;
-  width: 90%;
+  width: 100%;
 }
 .imgContainer {
   width: 100%;
 }
 .userListTable {
-  margin-top: 30px;
-  width: 72vw;
+  margin-top: 20px;
+  width: 100%;
 }
 
 .header {
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -116,8 +116,7 @@ r .right_upper_section {
   flex-direction: row;
   justify-content: flex-start;
   padding: 20px !important;
-  font-size: 0.7375rem;
-  border: 1px solid black;
+  font-size: 20.8px;
 }
 
 .title {
@@ -167,10 +166,10 @@ r .right_upper_section {
   height: 0;
   border: 0.5px solid #e6e3e3;
 }
-.sidenavbar .center:hover {
-  /* padding-left: 10px; */
+/* .sidenavbar .center:hover {
+  padding-left: 10px;
   background-color: #ffdada;
-}
+} */
 .sidenavbar .center ul {
   list-style: none;
   margin: 0;
@@ -200,9 +199,13 @@ r .right_upper_section {
   border: none;
   background: none;
 }
-.sidenavbar .center ul li {
-  /* background-color: white; */
+
+.sidenavbar .center ul button:hover {
+  background-color: #ffdada;
 }
+/* .sidenavbar .center ul li {
+  background-color: white;
+} */
 .sidenavbar .center ul li .icon {
   font-size: 18px;
   color: black;
@@ -242,15 +245,17 @@ r .right_upper_section {
 }
 
 .userListHeader {
+  color: #283895;
   margin-top: 20px;
+  font-weight: bold;
 }
 
-.reportPostWrapper {
-  /* max-height: 80vh; */
-  /* width: 75vw; */
-  /* overflow-x: hidden;
-  overflow-y: auto; */
-}
+/* .reportPostWrapper {
+  max-height: 80vh;
+  width: 75vw;
+  overflow-x: hidden;
+  overflow-y: auto;
+} */
 
 .reportPostModalContainer {
   background-color: rgba(211, 211, 211, 0.096) !important;
@@ -262,7 +267,7 @@ r .right_upper_section {
   align-items: center;
   /* margin: 5px;
   font-size: 20px; */
-  color: #283895; 
+  color: #283895;
   /* display: flex;
   justify-content: center;
   align-items: center;
@@ -392,10 +397,10 @@ r .right_upper_section {
   align-items: center;
 }
 
-.reportPostContent {
-  /* font-size: 18px;
-  margin: 20px 20px 20px 0px; */
-}
+/* .reportPostContent {
+  font-size: 18px;
+  margin: 20px 20px 20px 0px;
+} */
 .postDescription {
   padding: 15px;
   padding-top: 0;
@@ -408,30 +413,6 @@ r .right_upper_section {
   background-color: white;
   padding: 10px;
 }
-
-/* .dropdownItem:hover .reportContainerHeader {
-  color: #fff;
-  background-color: #5c636a;
-  border-color: #565e64;
-} */
-
-/* .dropdownItem:hover .reportContainerHeaderWithSpinner {
-  color: #fff;
-  background-color: #5c636a;
-  border-color: #565e64;
-} */
-
-/* .dropdownItem:visited,
-.dropdownItem:hover,
-.dropdownItem:active {
-  color: #fff;
-  background-color: #5c636a;
-  border-color: #565e64;
-} */
-
-/* .dropdownItem:hover .dropdownImage {
-  filter: invert(1);
-} */
 
 .dropdownImage {
   width: 16px;
@@ -489,14 +470,14 @@ r .right_upper_section {
   font-weight: 500;
   font-size: 16px;
   margin-right: 10px;
-  color: #000E46;
+  color: #000e46;
 }
 
 .footerRowContent {
   display: flex;
   font-size: 16px;
   justify-content: space-between;
-  color: #000E46;
+  color: #000e46;
 }
 
 .reportedDate {
@@ -513,8 +494,7 @@ r .right_upper_section {
 .docPreviewContainer {
   margin-bottom: 10px;
 }
-.seeMoreReportedPostBtn {
-}
+
 .seeMoreBtn {
   margin-bottom: 1px;
   padding: 10px;
@@ -557,15 +537,121 @@ r .right_upper_section {
 .dropdownMenu {
   padding: 0px 16px;
 }
-.reportTitle{
+.reportTitle {
   margin-left: 140px;
   font-size: 24px;
   color: #283895;
   font-weight: 500;
 }
-.reportBody{
+.reportBody {
   padding: 10px;
 }
+
+.reportPostHeaderRow {
+  width: 20%;
+  font-size: 18px;
+  color: #091329;
+}
+
+.reportPostHeaderRowName {
+  width: 14%;
+  font-size: 18px;
+  color: #091329;
+}
+
+.reportPostHeaderRowEmail {
+  width: 24%;
+  font-size: 18px;
+  color: #091329;
+}
+
+.reportPostHeaderSpeciality {
+  width: 15%;
+  font-size: 18px;
+  color: #091329;
+}
+
+.reportPostBodyRowName {
+  width: 14%;
+  padding-top: 15px;
+  font-size: 18px;
+  color: #091329;
+}
+
+.reportPostBodyRowEmail {
+  width: 25%;
+  padding-top: 15px;
+  font-size: 18px;
+  color: #091329;
+}
+
+.reportPostBodyRowSpeciality {
+  width: 15%;
+  padding-top: 15px;
+  font-size: 18px;
+  color: #091329;
+}
+
+.reportPostBodyRow {
+  width: 20%;
+  padding-top: 15px;
+  font-size: 18px;
+  color: #091329;
+}
+
+.accordionBodyRow {
+  width: 10vw;
+  font-size: 17px;
+  color: #091329;
+  word-wrap: break-word;
+}
+
+.reportPostHeaderEmptyRow {
+  width: 5%;
+}
+
+.accordionBodyEmptyBodyRow {
+  width: 2%;
+}
+
+.reportPostEmptyBodyRow {
+  width: 2%;
+}
+
+.reportedUserAccordion {
+  width: 100%;
+}
+
+.accordionHeader button::after {
+  position: absolute;
+  top: 40%;
+  left: 10px;
+  transform: translateY(-50%);
+}
+
+.accordionHeader button {
+  padding: 10px;
+}
+
+.accordionHeader button:not(.collapsed) {
+  background-color: white;
+  border: none;
+}
+
+.accordionBody {
+  width: 100%;
+}
+
+.reportedByRow {
+  display: block;
+  padding: 20px;
+}
+
+.popupContent {
+  display: flex;
+  flex-direction: column;
+}
+
 @media only screen and (max-width: 640px) {
   .sidenavbar .top .logo {
     font-size: 0.6rem;
@@ -654,7 +740,6 @@ r .right_upper_section {
     height: max-content;
     overflow-y: auto;
     border: none;
-   
   }
 
   .reportPostModalHeader {
@@ -672,10 +757,10 @@ r .right_upper_section {
     margin-bottom: 0.1875rem;
     font-size: 0.625rem;
   }
-  .reportPostImage {
-    /* height: 438px;
-    width: 100%; */
-  }
+  /* .reportPostImage {
+    height: 438px;
+    width: 100%;
+  } */
   .dropdownImage {
     width: 15px;
     height: 15px;
@@ -730,6 +815,59 @@ r .right_upper_section {
   flex-direction: column;
   padding: 10px;
   margin: 10px;
+}
+
+.actionButton {
+  background-color: #47d7ac !important;
+  border: none;
+  color: white !important;
+  margin: 10px;
+  border-radius: 15px;
+}
+
+.actionWarningButton {
+  background-color: #47d7ac !important;
+  border: none;
+  color: white !important;
+  margin: 10px;
+  width: 150px !important;
+  height: 40px !important;
+  border-radius: 15px;
+}
+
+.seeMoreReportedPostBtn {
+  width: 100%;
+  font-size: 20px;
+  height: 50px;
+  background-color: whitesmoke;
+  color: #2a86fd;
+  border: none;
+  font-weight: 500;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reportedUserListContainer {
+  height: 60vh;
+  overflow-y: scroll;
+}
+
+.reportedUserListContainer::-webkit-scrollbar {
+  overflow-y: auto;
+  width: 8px;
+}
+
+.reportedUserListContainer::-webkit-scrollbar-track {
+  border-radius: 2px;
+  background-color: white;
+  height: 1px;
+}
+
+.reportedUserListContainer::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 2px;
 }
 
 @media only screen and (max-width: 1500px) {

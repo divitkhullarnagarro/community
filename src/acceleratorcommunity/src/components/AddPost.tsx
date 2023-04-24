@@ -4,7 +4,6 @@ import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
 import Form from 'react-bootstrap/Form';
 import WebContext from '../Context/WebContext';
-import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 import likePostCall from '../API/likePostCall';
@@ -12,7 +11,6 @@ import getAllPostsCall from '../API/getAllPostsCall';
 import Spinner from 'react-bootstrap/Spinner';
 import getPostByIdCall from '../API/getPostByIdCall';
 import addPostCall from '../API/addPostCall';
-import getUserCall from 'src/API/getUserCall';
 import addPostCommentCall from 'src/API/addPostCommentCall';
 import Link from 'next/link';
 import ShowShareCss from '../assets/ShowShare.module.css';
@@ -21,7 +19,7 @@ import twitter from '../assets/images/twitter.png';
 import whatsapp from '../assets/images/whatsapp.png';
 import facebook from '../assets/images/facebook.svg';
 import { Dropdown, Modal } from 'react-bootstrap';
-import { ReportPostOptionsTypeLabel } from 'assets/helpers/enums';
+import { ReportPostOptionsTypeLabel, ReportUserOptionsTypeLabel } from 'assets/helpers/enums';
 import styles from '../assets/addPost.module.css';
 import reportPostImage from '../assets/images/flag-icon.svg';
 import bookmarkImage from '../assets/images/bookmark-outline.svg';
@@ -34,6 +32,10 @@ import getCommentsReplyCall from 'src/API/getCommentsReplyCall';
 import postCommentReplyCall from 'src/API/postCommentReplyCall';
 import downVote from '../assets/images/dislikeIcon.svg';
 import CreateModalPopup from './helperComponents/CreateModalPopup';
+import videoIcon from '../assets/images/AddVideo_icon.svg';
+import pollIcon from '../assets/images/CreatePoll_icon.svg';
+import addBlogIcon from '../assets/images/AddBlogPost_icon.svg';
+import createEventIcon from '../assets/images/CreateEventPost_icon.svg';
 
 // Rich Text Editor Files Import Start
 import { EditorState, convertToRaw } from 'draft-js';
@@ -60,11 +62,10 @@ import Profile from '../assets/images/profile.png';
 import addPostCss from '../assets/addPosts.module.css';
 import blockUserCall from 'src/API/blockUnblockUserCall';
 import user from '../assets/images/user.png';
-import location from '../assets/images/Location.png';
-import camera from '../assets/images/Rounded.png';
+// import location from '../assets/images/Location.png';
 import image from '../assets/images/Vector.png';
 import pin from '../assets/images/Vectorpin.png';
-import smile from '../assets/images/Vectorsmile.png';
+// import smile from '../assets/images/Vectorsmile.png';
 import like from '../assets/images/like.png';
 import comment from '../assets/images/comment.png';
 import share from '../assets/images/share.png';
@@ -73,7 +74,9 @@ import EventCard from './EventCard';
 import PollCard from './PollCard';
 import deletePostCall from 'src/API/deletePostCall';
 import deleteCommentCall from 'src/API/deleteCommentCall';
-import articleIcon from '../assets/images/ArticleIcon.svg';
+// import articleIcon from '../assets/images/ArticleIcon.svg';
+// import PollCard from './PollCard';
+import reportUserCall from 'src/API/reportUserCall';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -88,11 +91,23 @@ type BlockUserFields = {
 };
 
 const AddPost = (props: AddPostProps | any): JSX.Element => {
-  const { userToken, setUserToken, objectId, userObject, setUserObject } = {
+  const { userToken, objectId, userObject } = {
     ...useContext(WebContext),
   };
 
-  const router = useRouter();
+  interface ItemImage {
+    [key: string]: string;
+  }
+
+  const EventImage: ItemImage = {
+    Seminar:
+      'https://higherlogicdownload.s3.amazonaws.com/APSNET/UploadedImages/tAiEB79vTYq1gz2UEGu1_IMG_2866-L.jpg',
+    Conference: 'https://th.bing.com/th/id/OIP.IXdC6XgETCp5RaM3iQCb6QHaE8?pid=ImgDet&rs=1',
+    Announcement: 'https://th.bing.com/th/id/OIP.zPaWJzUBQwbXDjhCtCtI1gHaE8?pid=ImgDet&rs=1',
+    'Launch Event': 'https://live.staticflickr.com/808/39724254630_e9cdcb8e77_b.jpg',
+    Celebration: 'https://th.bing.com/th/id/OIP.E1RiHHXMHUcq0L0KvprXfQHaEn?pid=ImgDet&rs=1',
+  };
+
   const [showForm1, setShowForm1] = useState(false);
   let myPostArray: ReactElement<any, any>[] = [];
   let [posts, setPosts] = useState(myPostArray);
@@ -128,7 +143,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   let [disableAddEvent, setDisableAddevent] = useState(false);
   let [disableAddPoll, setDisableAddPoll] = useState(false);
   let [globalPostType, setGlobalPostType] = useState('TEXT_POST');
-  let isExpEditorActive = props?.sitecoreContext?.pageEditing;
 
   console.log('GLOBALPOSTTYPE', globalPostType);
   console.log('PollPost', pollPost);
@@ -238,28 +252,28 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   };
   // console.log('mention', addedPeers);
 
-  useEffect(() => {
-    if (userToken == '' && !isExpEditorActive) {
-      if (
-        typeof localStorage !== 'undefined' &&
-        localStorage.getItem('UserToken') != '' &&
-        localStorage.getItem('UserToken') != null
-      ) {
-        let token = localStorage.getItem('UserToken');
-        if (token != null && setUserToken != undefined) {
-          setUserToken(token);
-        }
-      } else router.push('/login');
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (userToken == '' && !isExpEditorActive) {
+  //     if (
+  //       typeof localStorage !== 'undefined' &&
+  //       localStorage.getItem('UserToken') != '' &&
+  //       localStorage.getItem('UserToken') != null
+  //     ) {
+  //       let token = localStorage.getItem('UserToken');
+  //       if (token != null && setUserToken != undefined) {
+  //         setUserToken(token);
+  //       }
+  //     } else router.push('/login');
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    getUserCall(userToken, objectId).then((response) => {
-      if (setUserObject != undefined) {
-        setUserObject(response?.data?.data);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   getUserCall(userToken, objectId).then((response) => {
+  //     if (setUserObject != undefined) {
+  //       setUserObject(response?.data?.data);
+  //     }
+  //   });
+  // }, []);
 
   console.log('USEROBJECT', userObject);
 
@@ -315,6 +329,95 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const [showSpinner, setShowSpinner] = useState(false);
   const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
   const [selectedBlockUserItem, setSelectedBlockUserItem] = useState<BlockUserFields>();
+  const [showReportUserPopUp, setShowReportUserPopUp] = useState(false);
+
+  const ReportUserPopup = () => {
+    const reportTypeList = Object.values(ReportUserOptionsTypeLabel);
+    return (
+      <>
+        <Modal
+          className={styles.reportPostModalContent}
+          show={showReportUserPopUp}
+          onHide={() => setShowReportUserPopUp(false)}
+          backdrop="static"
+          keyboard={false}
+          centered
+          scrollable={true}
+        >
+          <div>
+            <Modal.Header closeButton>
+              <Modal.Title className={styles.reportPostModalHeader}>
+                {props?.fields?.data?.datasource?.reportPostTitle?.jsonValue?.value ?? 'Report'}
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className={styles.reportPostModalBody}>
+                {props?.fields?.data?.datasource?.reportPostHeader?.jsonValue?.value ??
+                  'Why are you reporting?'}
+              </div>
+              <Form ref={formRef} style={{ fontSize: '15px', margin: '5px' }}>
+                {reportTypeList.map((item, index) => {
+                  return (
+                    <div key={index} className={styles.reportItem}>
+                      {item}
+                      <Form.Check
+                        type="radio"
+                        name="radioGroup"
+                        value={item}
+                        onChange={(e) => handleSelectChange(e)}
+                        defaultChecked={index == 0 ? true : false}
+                        aria-label="radio 1"
+                      ></Form.Check>
+                    </div>
+                  );
+                })}
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                className={styles.footerBtn}
+                variant="secondary"
+                onClick={() => setShowReportUserPopUp(false)}
+              >
+                Cancel
+              </Button>
+              <Button className={styles.footerBtn} variant="secondary" onClick={onUserReported}>
+                Report
+                {showSpinner ? (
+                  <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
+                ) : (
+                  <></>
+                )}
+              </Button>
+            </Modal.Footer>
+          </div>
+        </Modal>
+      </>
+    );
+  };
+
+  const onUserReported = async () => {
+    setShowSpinner(true);
+    let reportReason = '';
+    if (formRef.current != null) {
+      reportReason = (
+        formRef.current.querySelector('input[name="radioGroup"]:checked') as HTMLInputElement
+      )?.value;
+    }
+    let response = await reportUserCall(selectedBlockUserItem?.objectId, reportReason, userToken);
+    if (response) {
+      if (response?.success) {
+        setToastSuccess(true);
+        setToastMessage(response?.data);
+      } else {
+        setToastError(true);
+        setToastMessage(response?.errorCode);
+      }
+      setShowNofitication(true);
+    }
+    setShowReportUserPopUp(false);
+    setShowSpinner(false);
+  };
 
   const onUserBlocked = async () => {
     setShowSpinner(true);
@@ -930,35 +1033,57 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       <div className={styles.reportContainerBtn}>Copy link to post</div>
                     </div>
                   </Dropdown.Item>
-                  <Dropdown.Item
-                    className={styles.dropdownItem}
-                    onClick={() => {
-                      showReportPostPopup();
-                    }}
-                  >
-                    <div className={styles.overlayItem}>
-                      <div className={styles.dropdownImage}>
-                        <NextImage field={reportPostImage} editable={true} />
-                      </div>
-                      <div className={styles.reportContainerBtn}>Report Post</div>
-                    </div>
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    className={styles.dropdownItem}
-                    onClick={() => {
-                      setSelectedBlockUserItem(post?.createdBy);
-                      setShowBlockUserPopUp(true);
-                    }}
-                  >
-                    <div className={styles.overlayItem}>
-                      <div className={styles.dropdownImage}>
-                        <NextImage field={BlockUserImage} editable={true} />
-                      </div>
-                      <div className={styles.reportContainerBtn}>
-                        Block {post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName}
-                      </div>
-                    </div>
-                  </Dropdown.Item>
+                  {post?.createdBy?.objectId !== objectId ? (
+                    <>
+                      <Dropdown.Item
+                        className={styles.dropdownItem}
+                        onClick={() => {
+                          showReportPostPopup();
+                        }}
+                      >
+                        <div className={styles.overlayItem}>
+                          <div className={styles.dropdownImage}>
+                            <NextImage field={reportPostImage} editable={true} />
+                          </div>
+                          <div className={styles.reportContainerBtn}>Report Post</div>
+                        </div>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className={styles.dropdownItem}
+                        onClick={() => {
+                          setSelectedBlockUserItem(post?.createdBy);
+                          setShowBlockUserPopUp(true);
+                        }}
+                      >
+                        <div className={styles.overlayItem}>
+                          <div className={styles.dropdownImage}>
+                            <NextImage field={BlockUserImage} editable={true} />
+                          </div>
+                          <div className={styles.reportContainerBtn}>
+                            Block {post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName}
+                          </div>
+                        </div>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className={styles.dropdownItem}
+                        onClick={() => {
+                          setSelectedBlockUserItem(post?.createdBy);
+                          setShowReportUserPopUp(true);
+                        }}
+                      >
+                        <div className={styles.overlayItem}>
+                          <div className={styles.dropdownImage}>
+                            <NextImage field={reportPostImage} editable={true} />
+                          </div>
+                          <div className={styles.reportContainerBtn}>
+                            Report {post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName}
+                          </div>
+                        </div>
+                      </Dropdown.Item>
+                    </>
+                  ) : (
+                    ''
+                  )}
                   {post?.createdBy?.objectId === objectId ? (
                     <Dropdown.Item
                       className={styles.dropdownItem}
@@ -1036,6 +1161,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   description={post?.event?.description}
                   date={post?.event?.eventDate}
                   eventType={post?.event?.eventType}
+                  url={EventImage[post?.event?.eventType]}
                 />
               </>
             ) : (
@@ -1861,6 +1987,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           createdBy: {
             firstName: userObject?.firstName,
             lastName: userObject?.lastName,
+            objectId: objectId,
           },
           event: eventPost?.event,
           createdOn: timestamp,
@@ -1872,6 +1999,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         },
       },
     };
+    setShowForm1(false);
     setMyAnotherArr((prevState: any) => {
       return [obj?.data?.data, ...prevState];
     });
@@ -1886,13 +2014,17 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       if (response?.data?.data) {
         addLatestCreatedPost(response?.data?.data, uniqId);
         // Empty Post Values
-        setShowForm1(false);
         setFile([]);
         setPostText('');
         setVideoLink([]);
         setDocs([]);
         setEditorState(() => EditorState.createEmpty());
+        setEventPost('');
+        setPollPost('');
+        setGlobalPostType('TEXT_POST');
+        setShowForm1(false);
       } else {
+        setShowForm1(true);
         setShowNofitication(true);
         setToastError(true);
         setToastMessage('Post Not Created !');
@@ -2300,19 +2432,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     'https://chinchincelebration.com/wp-content/uploads/2019/08/product-launch-events-min.png'
   );
 
-  interface ItemImage {
-    [key: string]: string;
-  }
-
-  const EventImage: ItemImage = {
-    Seminar:
-      'https://higherlogicdownload.s3.amazonaws.com/APSNET/UploadedImages/tAiEB79vTYq1gz2UEGu1_IMG_2866-L.jpg',
-    Conference: 'https://th.bing.com/th/id/OIP.IXdC6XgETCp5RaM3iQCb6QHaE8?pid=ImgDet&rs=1',
-    Announcement: 'https://th.bing.com/th/id/OIP.zPaWJzUBQwbXDjhCtCtI1gHaE8?pid=ImgDet&rs=1',
-    'Launch Event': 'https://live.staticflickr.com/808/39724254630_e9cdcb8e77_b.jpg',
-    Celebration: 'https://th.bing.com/th/id/OIP.E1RiHHXMHUcq0L0KvprXfQHaEn?pid=ImgDet&rs=1',
-  };
-
   useEffect(() => {
     props?.fields?.data?.datasource?.eventType?.targetItems.map((item: any) => {
       if (item?.title?.jsonValue?.value === 'Seminar')
@@ -2329,6 +2448,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       return item;
     });
   }, [props]);
+
+  if (typeof window !== 'undefined')
+    window?.addEventListener('scroll', () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      if (scrollTop + clientHeight >= scrollHeight) {
+        HandleScrollEvent();
+      }
+    });
 
   return (
     <>
@@ -2511,6 +2638,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                 description={eventPost?.event?.description}
                                 date={eventPost?.event?.eventDate}
                                 eventType={eventPost?.event?.eventType}
+                                url={EventImage[eventPost?.event?.eventType]}
                               />
                             </div>
                           ) : (
@@ -2589,7 +2717,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 {/* <span>Image</span> */}
                 <NextImage
-                  field={camera}
+                  field={image}
                   editable={true}
                   style={{ opacity: disableAddImage ? '0.2' : '1' }}
                   alt="Profile-Pic"
@@ -2613,6 +2741,38 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 </Form.Group>
               </button>
               <button
+                className={styles.addPostFileButtons}
+                onClick={() => {
+                  setShowForm1(true);
+                  clickmebuttonHandler3();
+                }}
+                disabled={disableAddVideo}
+                type="button"
+              >
+                {/* <span>Video</span> */}
+                <NextImage
+                  field={videoIcon}
+                  editable={true}
+                  alt="PostItems"
+                  width={18}
+                  height={18}
+                  style={{ opacity: disableAddVideo ? '0.2' : '1' }}
+                />
+                <Form.Group
+                // className="mb-3"
+                >
+                  <Form.Control
+                    style={{ display: 'none' }}
+                    onChange={(e) => setPostVideoValue(e)}
+                    type="file"
+                    placeholder="Post Video"
+                    // multiple
+                    accept=".mp4"
+                    id="clickmebutton3"
+                  />
+                </Form.Group>
+              </button>
+              <button
                 disabled={disableAddVideo}
                 className={styles.addPostFileButtons}
                 onClick={() => {
@@ -2623,7 +2783,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 {/* <span>Doc</span> */}
                 <NextImage
-                  field={image}
+                  field={pin}
                   editable={true}
                   alt="PostItems"
                   width={18}
@@ -2649,38 +2809,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 className={styles.addPostFileButtons}
                 onClick={() => {
                   setShowForm1(true);
-                  clickmebuttonHandler3();
-                }}
-                disabled={disableAddVideo}
-                type="button"
-              >
-                {/* <span>Video</span> */}
-                <NextImage
-                  field={pin}
-                  editable={true}
-                  alt="PostItems"
-                  width={18}
-                  height={18}
-                  style={{ opacity: disableAddVideo ? '0.2' : '1' }}
-                />
-                <Form.Group
-                // className="mb-3"
-                >
-                  <Form.Control
-                    style={{ display: 'none' }}
-                    onChange={(e) => setPostVideoValue(e)}
-                    type="file"
-                    placeholder="Post Video"
-                    // multiple
-                    accept=".mp4"
-                    id="clickmebutton3"
-                  />
-                </Form.Group>
-              </button>
-              <button
-                className={styles.addPostFileButtons}
-                onClick={() => {
-                  setShowForm1(true);
                   setShowEvent(true);
                 }}
                 type="button"
@@ -2688,7 +2816,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 {/* <span>Event</span> */}
                 <NextImage
-                  field={location}
+                  field={createEventIcon}
                   style={{ opacity: disableAddEvent ? '0.2' : '1' }}
                   editable={true}
                   alt="PostItems"
@@ -2850,7 +2978,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 {/* <span>Poll</span> */}
                 <NextImage
-                  field={smile}
+                  field={pollIcon}
                   editable={true}
                   alt="PostItems"
                   style={{ opacity: disableAddPoll ? '0.2' : '1' }}
@@ -2978,14 +3106,21 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </Form>
                 </div>
               </Modal>
-              <button className={styles.pollButton} type="button">
+              <button
+                className={styles.addPostFileButtons}
+                onClick={() => {
+                  setShowForm1(true);
+                }}
+                type="button"
+              >
                 <Link href="/addblogpost">
                   <NextImage
-                    field={articleIcon}
+                    field={addBlogIcon}
                     editable={true}
                     alt="PostItems"
                     width={18}
                     height={18}
+                    style={{ opacity: disableAddDoc ? '0.2' : '1' }}
                   />
                 </Link>
               </button>
@@ -3077,34 +3212,36 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           ) : (
             posts
           )}
-          {ifReachedEnd ? (
-            !ifNoMoreData ? (
-              <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
-                <span style={{ marginRight: '15px', fontWeight: '600' }}>Loading.. </span>{' '}
-                <Spinner animation="border" />
-              </span>
+          <div style={{ height: '50px' }}>
+            {ifReachedEnd ? (
+              !ifNoMoreData ? (
+                <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
+                  <span style={{ marginRight: '15px', fontWeight: '600' }}>Loading.. </span>{' '}
+                  <Spinner animation="border" />
+                </span>
+              ) : (
+                <span
+                  style={{
+                    display: 'flex',
+                    padding: '10px',
+                    justifyContent: 'center',
+                    backgroundColor: 'lightBlue',
+                    borderRadius: '20px',
+                  }}
+                >
+                  No More Posts Available{' '}
+                  <img
+                    style={{ marginLeft: '10px' }}
+                    width="25px"
+                    src="https://cdn-icons-png.flaticon.com/512/927/927567.png"
+                    alt="smile"
+                  ></img>
+                </span>
+              )
             ) : (
-              <span
-                style={{
-                  display: 'flex',
-                  padding: '10px',
-                  justifyContent: 'center',
-                  backgroundColor: 'lightBlue',
-                  borderRadius: '20px',
-                }}
-              >
-                No More Posts Available{' '}
-                <img
-                  style={{ marginLeft: '10px' }}
-                  width="25px"
-                  src="https://cdn-icons-png.flaticon.com/512/927/927567.png"
-                  alt="smile"
-                ></img>
-              </span>
-            )
-          ) : (
-            ''
-          )}
+              ''
+            )}
+          </div>
         </div>
       </div>
       {showDeletePostPopup ? (
@@ -3140,6 +3277,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       {<ReportPostPopup />}
       {<BlockUserPopup />}
       {<ModalForReactions />}
+      {<ReportUserPopup />}
       {showNotification && (
         <ToastNotification
           showNotification={showNotification}
