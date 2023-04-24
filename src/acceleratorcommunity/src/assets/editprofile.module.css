@@ -93,9 +93,9 @@
   font-weight: 500;
   font-family: initial;
 }
-.groupPageLogo {
-  /* border-radius: 10px; */
-}
+/* .groupPageLogo {
+ 
+} */
 @media only screen and (max-width: 640px) {
   .groupHeaderWrapper {
     height: 16vh;
