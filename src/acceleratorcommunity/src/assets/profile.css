@@ -98,7 +98,7 @@
   position: relative;
   text-align: center;
   max-width: 160px;
-  max-height: 160px;
+  height: 160px;
   margin: 0 auto;
 }
 
@@ -106,6 +106,7 @@
   display: inline-block;
   margin: auto;
   width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 50%;
   border: 5px solid #2a86fd;
@@ -205,6 +206,30 @@
   font-size: 12px;
   background: #4294ff;
   border-color: #4294ff;
+}
+
+.specificLanguage {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin: 10px 0;
+}
+
+.addLanguageBtn {
+  border: 0;
+  background: #4590ff;
+  font-size: 12px;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.cross {
+  max-width: 32px;
+  max-height: 32px;
+  cursor: pointer;
 }
   
  @media only screen and (max-width: 768px) {

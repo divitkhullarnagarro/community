@@ -186,35 +186,35 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => (
       </Modal.Footer>
     </Modal>
 
-      <Modal show={props.languageForm} onHide={props.handleCloseLanguageForm}>
-        <Modal.Header closeButton>
-          <Modal.Title>Language</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label>Language</Form.Label>
-              <Form.Control
-                onChange={(e) => props.handleAddLanguage(e.target.value)}
-                value={props.editUserData?.language}
-                type="text"
-                placeholder="Add a language"
-              />
-              <button className="addLanguageBtn" onClick={props.addLanguage}>
-                Add Language
-              </button>
-              <div className="languageConatiner">
-                {props?.language?.length > 0
-                  ? props?.language?.map((lang: any, index: number) => {
-                      return (
-                        <div className="specificLanguage" key={index}>
-                          {lang}
-                          <div onClick={() => props.filterLanguage(lang)}>
-                            <img
-                              className="cross"
-                              src="https://cdn-icons-png.flaticon.com/512/10396/10396993.png"
-                            />
-                          </div>
+    <Modal show={props.languageForm} onHide={props.handleCloseLanguageForm}>
+      <Modal.Header closeButton>
+        <Modal.Title>Language</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Language</Form.Label>
+            <Form.Control
+              onChange={(e) => props.handleAddLanguage(e.target.value)}
+              value={props.editUserData?.language}
+              type="text"
+              placeholder="Add a language"
+            />
+            <button className="addLanguageBtn" onClick={props.addLanguage}>
+              Add Language
+            </button>
+            <div className="languageConatiner">
+              {props?.language?.length > 0
+                ? props?.language?.map((lang: any, index: number) => {
+                    return (
+                      <div className="specificLanguage" key={index}>
+                        {lang}
+                        <div onClick={() => props.filterLanguage(lang)}>
+                          <img
+                            className="cross"
+                            src="https://cdn-icons-png.flaticon.com/32/10396/10396993.png"
+                            alt="delete"
+                          />
                         </div>
                       </div>
                     );
@@ -259,211 +259,269 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => (
                         <div onClick={() => props.filterHobby(hobby)}>
                           <img
                             className="cross"
-                            src="https://cdn-icons-png.flaticon.com/512/10396/10396993.png"
+                            src="https://cdn-icons-png.flaticon.com/32/10396/10396993.png"
+                            alt="delete"
                           />
                         </div>
-                      );
-                    })
-                  : ''}
-              </div>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={props.handleCloseFormForHobby}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={props.hobbyFormData}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal show={props.intrestForm} onHide={props.handleCloseFormForIntrest}>
-        <Modal.Header closeButton>
-          <Modal.Title>Intrest</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label>Intrest</Form.Label>
-              <Form.Control
-                onChange={(e) => props.handleIntrest(e.target.value)}
-                value={props.editUserData?.intrest}
-                type="text"
-                placeholder="All intrest should be comma seperated"
-              />
-            </Form.Group>
-          </Form>
-          <button className="addLanguageBtn" onClick={props.addInterest}>
-            Add Interrest
-          </button>
-          <div className="languageConatiner">
-            {console.log('userInterests', props?.userInterests)}
-            {props?.userInterests?.length > 0
-              ? props?.userInterests?.map((interest: any, index: number) => {
-                  return (
-                    <div className="specificLanguage" key={index}>
-                      {interest}
-                      <div onClick={() => props.filterInterest(interest)}>
-                        <img
-                          className="cross"
-                          src="https://cdn-icons-png.flaticon.com/512/10396/10396993.png"
-                        />
                       </div>
-                    </div>
-                  );
-                })
-              : ''}
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={props.handleCloseFormForIntrest}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={props.IntrestFormData}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+                    );
+                  })
+                : ''}
+            </div>
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={props.handleCloseFormForHobby}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={props.hobbyFormData}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
+    <Modal show={props.intrestForm} onHide={props.handleCloseFormForIntrest}>
+      <Modal.Header closeButton>
+        <Modal.Title>Intrest</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Intrest</Form.Label>
+            <Form.Control
+              onChange={(e) => props.handleIntrest(e.target.value)}
+              value={props.editUserData?.intrest}
+              type="text"
+              placeholder="All intrest should be comma seperated"
+            />
+          </Form.Group>
+        </Form>
+        <button className="addLanguageBtn" onClick={props.addInterest}>
+          Add Interest
+        </button>
+        <div className="languageConatiner">
+          {props?.userInterests?.length > 0 &&
+            props?.userInterests?.map((interest: any, index: number) => {
+              return (
+                <div className="specificLanguage" key={index}>
+                  {interest}
+                  <div onClick={() => props.filterInterest(interest)}>
+                    <img
+                      className="cross"
+                      src="https://cdn-icons-png.flaticon.com/32/10396/10396993.png"
+                      alt="delete"
+                    />
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={props.handleCloseFormForHobby}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={props.hobbyFormData}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
 
-      <Modal show={props.showForm2} onHide={props.handleCloseForm2}>
-        <Modal.Header closeButton>
-          <Modal.Title>Summary</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label>Summary</Form.Label>
-              <Form.Control
-                onChange={(e) => props.setSummaryValue(e.target.value)}
-                value={props.editUserData?.summary}
-                as="textarea"
-                rows={5}
-              />
-              {props.errorState?.summary ? (
-                <span className="error">Max limit is 200 characters</span>
-              ) : (
-                ' '
-              )}
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={props.handleCloseForm2}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={props.submitForm2}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+    <Modal show={props.intrestForm} onHide={props.handleCloseFormForIntrest}>
+      <Modal.Header closeButton>
+        <Modal.Title>Intrest</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Intrest</Form.Label>
+            <Form.Control
+              onChange={(e) => props.handleIntrest(e.target.value)}
+              value={props.editUserData?.intrest}
+              type="text"
+              placeholder="All intrest should be comma seperated"
+            />
+          </Form.Group>
+        </Form>
+        <button className="addLanguageBtn" onClick={props.addInterest}>
+          Add Interest
+        </button>
+        <div className="languageConatiner">
+          {props?.userInterests?.length > 0 &&
+            props?.userInterests?.map((interest: any, index: number) => {
+              return (
+                <div className="specificLanguage" key={index}>
+                  {interest}
+                  <div onClick={() => props.filterInterest(interest)}>
+                    <img
+                      className="cross"
+                      src="https://cdn-icons-png.flaticon.com/512/10396/10396993.png"
+                      alt="delete"
+                    />
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={props.handleCloseFormForIntrest}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={props.IntrestFormData}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
 
-      <div className="personalInformationParentContainer">
-        <div className="personaleInformationContainer">
-          <div className="personalInfomation">
-            <div className="infomationContainer">
-              <div className="infoTag">Age</div>
-              <div className="infoTagValue">{props?.tempUserData?.age}</div>
-            </div>
-            <div className="infomationContainer">
-              <div className="infoTag">Gender</div>
-              {console.log('props?.tempUserData?.gender', props?.tempUserData?.gender)}
-              <div className="infoTagValue">{props?.tempUserData?.gender}</div>
-            </div>
-            <div className="infomationContainer">
-              <div className="infoTag">Date of Birth</div>
-              <div className="infoTagValue">{props?.tempUserData?.dob}</div>
-            </div>
-            <div className="infomationContainer">
-              <div className="infoTag">Experience</div>
-              <div className="infoTagValue">{props?.tempUserData?.yearsOfExperience}</div>
-            </div>
-            <div className="infomationContainer">
-              <div className="infoTag">Designation</div>
-              <div className="infoTagValue">{props?.tempUserData?.designation}</div>
-            </div>
-            <div className="infomationContainer">
-              <div className="infoTag">Profession</div>
-              <div className="infoTagValue">{props?.tempUserData?.areaOfExpertise}</div>
-            </div>
-            <div className="infomationContainer">
-              <div className="infoTag">Domain</div>
-              <div className="infoTagValue">{props?.tempUserData?.domain}</div>
-            </div>
-            <div className="infomationContainer">
-              <div className="infoTag">Speciality</div>
-              <div className="infoTagValue">{props?.tempUserData?.speciality}</div>
-            </div>
-            <div className="infomationContainer">
-              <div className="infoTag">Website</div>
-              <div className="infoTagValue">
-                <a className="websiteUrl" href={props?.tempUserData?.websiteUrl} target="_blank">
-                  {props?.tempUserData?.websiteUrl}
-                </a>
-              </div>
+    <Modal show={props.showForm2} onHide={props.handleCloseForm2}>
+      <Modal.Header closeButton>
+        <Modal.Title>Summary</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Summary</Form.Label>
+            <Form.Control
+              onChange={(e) => props.setSummaryValue(e.target.value)}
+              value={props.editUserData?.summary}
+              as="textarea"
+              rows={5}
+            />
+            {props.errorState?.summary ? (
+              <span className="error">Max limit is 200 characters</span>
+            ) : (
+              ' '
+            )}
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={props.handleCloseForm2}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={props.submitForm2}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
+
+    <div className="personalInformationParentContainer">
+      <div className="personaleInformationContainer">
+        <div className="personalInfomation">
+          <div className="infomationContainer">
+            <div className="infoTag">Age</div>
+            <div className="infoTagValue">{props?.tempUserData?.age}</div>
+          </div>
+          <div className="infomationContainer">
+            <div className="infoTag">Gender</div>
+            {console.log('props?.tempUserData?.gender', props?.tempUserData?.gender)}
+            <div className="infoTagValue">{props?.tempUserData?.gender}</div>
+          </div>
+          <div className="infomationContainer">
+            <div className="infoTag">Date of Birth</div>
+            <div className="infoTagValue">{props?.tempUserData?.dob}</div>
+          </div>
+          <div className="infomationContainer">
+            <div className="infoTag">Experience</div>
+            <div className="infoTagValue">{props?.tempUserData?.yearsOfExperience}</div>
+          </div>
+          <div className="infomationContainer">
+            <div className="infoTag">Designation</div>
+            <div className="infoTagValue">{props?.tempUserData?.designation}</div>
+          </div>
+          <div className="infomationContainer">
+            <div className="infoTag">Profession</div>
+            <div className="infoTagValue">{props?.tempUserData?.areaOfExpertise}</div>
+          </div>
+          <div className="infomationContainer">
+            <div className="infoTag">Domain</div>
+            <div className="infoTagValue">{props?.tempUserData?.domain}</div>
+          </div>
+          <div className="infomationContainer">
+            <div className="infoTag">Speciality</div>
+            <div className="infoTagValue">{props?.tempUserData?.speciality}</div>
+          </div>
+          <div className="infomationContainer">
+            <div className="infoTag">Website</div>
+            <div className="infoTagValue">
+              <a className="websiteUrl" href={props?.tempUserData?.websiteUrl} target="_blank">
+                {props?.tempUserData?.websiteUrl}
+              </a>
             </div>
           </div>
-          <div className="fieldListContainer">
-            <span className="infoTag">Summary</span>
-            <div className="fieldValue">{props?.tempUserData?.summary}</div>
-            <Button className="profileBtn" onClick={props.handleShowForm2}>
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                alt="edit"
-                width="20px"
-              />
-            </Button>
+        </div>
+        <div className="fieldListContainer">
+          <span className="infoTag">Summary</span>
+          <div className="fieldValue">{props?.tempUserData?.summary}</div>
+          <Button className="profileBtn" onClick={props.handleShowForm2}>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
+              alt="edit"
+              width="20px"
+            />
+          </Button>
+        </div>
+        <div className="fieldListContainer">
+          <span className="infoTag">Hobby</span>
+          <div className="fieldValue">
+            {props?.tempUserData?.hobby?.map((hob: any, index: number) => {
+              return (
+                <div key={index} className="hobbyValue">
+                  {hob}
+                </div>
+              );
+            })}
           </div>
-          <div className="fieldListContainer">
-            <span className="infoTag">Hobby</span>
-            <div className="fieldValue">
-              {props?.tempUserData?.hobby?.map((hob: any) => {
-                return <div className="hobbyValue">{hob}</div>;
-              })}
-            </div>
-            <Button className="profileBtn" onClick={props.handleShowFormForHobby}>
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                alt="edit"
-                width="20px"
-              />
-            </Button>
+          <Button className="profileBtn" onClick={props.handleShowFormForHobby}>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
+              alt="edit"
+              width="20px"
+            />
+          </Button>
+        </div>
+        <div className="fieldListContainer">
+          <span className="infoTag">Language</span>
+          <div className="fieldValue">
+            {props?.tempUserData?.language?.map((lang: any, index: number) => {
+              return (
+                <div key={index} className="languageValue">
+                  {lang}
+                </div>
+              );
+            })}
           </div>
-          <div className="fieldListContainer">
-            <span className="infoTag">Language</span>
-            <div className="fieldValue">
-              {props?.tempUserData?.language?.map((lang: any) => {
-                return <div className="languageValue">{lang}</div>;
-              })}
-            </div>
-            <Button className="profileBtn" onClick={props.handleShowFormForLanguage}>
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                alt="edit"
-                width="20px"
-              />
-            </Button>
+          <Button className="profileBtn" onClick={props.handleShowFormForLanguage}>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
+              alt="edit"
+              width="20px"
+            />
+          </Button>
+        </div>
+        <div className="fieldListContainer">
+          <span className="infoTag">Interest</span>
+          <div className="fieldValue">
+            {props?.tempUserData?.interests?.map((interest: any, index: number) => {
+              return (
+                <div key={index} className="interestValue">
+                  {interest}
+                </div>
+              );
+            })}
           </div>
-          <div className="fieldListContainer">
-            <span className="infoTag">Interest</span>
-            <div className="fieldValue">
-              {props?.tempUserData?.interests?.map((interest: any) => {
-                return <div className="interestValue">{interest}</div>;
-              })}
-            </div>
-            <Button className="profileBtn" onClick={props.handleShowFormForIntrest}>
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                alt="edit"
-                width="20px"
-              />
-            </Button>
-          </div>
+          <Button className="profileBtn" onClick={props.handleShowFormForIntrest}>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
+              alt="edit"
+              width="20px"
+            />
+          </Button>
         </div>
       </div>
     </div>
-  </>
+  </div>
 );
 
 export default PersaonalDetailsOfUser;

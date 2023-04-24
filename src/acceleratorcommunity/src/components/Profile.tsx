@@ -12,7 +12,7 @@ import PersaonalDetailsOfUser from './PersaonalDetailsOfUser';
 import ContactDetails from './ContactDetails';
 import EductionDetails from './EductionDetails';
 import UserWorkExperience from './UserWorkExperience';
-import Link from 'next/link';
+// import Link from 'next/link';
 import React from 'react';
 import DotLoader from './DotLoader';
 
@@ -664,90 +664,6 @@ const Profile = (props: any): JSX.Element => {
     areaOfExpertise: '',
     websiteUrl: '',
     userResidenceInfo: {},
-    // firstName: 'FirstName',
-    // lastName: 'LastName',
-    // profession: 'Profession',
-    // yearsOfExperience: 10,
-    // designation: 'Designation',
-    // domain: 'Domain',
-    // summary:
-    //   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam luctus neque a nisl venenatis rutrum. Sed varius tortor et ultricies congue. Nam dapibus id orci ut ultrices. In hac habitasse platea dictumst. Vestibulum nibh lacus, porttitor ut semper in, aliquam vel nulla. Praesent fermentum laoreet molestie. Aliquam egestas volutpat quam, quis dictum enim commodo elementum. Cras a purus nec magna porta mattis. Phasellus maximus, dui at posuere consectetur, elit odio porta magna, ut faucibus ligula magna id felis',
-    // role: 'Role',
-    // email: 'email@internet.com',
-    // phoneNumber: '1234567890',
-    // alternateEmail: 'internet@email.com',
-    // dob: '11/11/11',
-    // speciality: 'Speciality',
-    // middleName: 'MiddleName',
-    // country: 'Country',
-    // cityt: 'City',
-    // websiteOptions: 'WebsiteOptions',
-    // interests: ['Interest 1', 'Interest 2', 'Interest 3', 'Interest 4'],
-    // hobby: ['Hobby 1', 'Hobby 2', 'Hobby 3', 'Hobby 4'],
-    // language: ['Language 1', 'Language 2', 'Language 3', 'Language 4'],
-    // skills:
-    //   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam luctus neque a nisl venenatis rutrum. Sed varius tortor et ultricies congue.',
-    // workDetails:
-    //   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam luctus neque a nisl venenatis rutrum. Sed varius tortor et ultricies congue.',
-    // school: 'School Name, City, State - 000000',
-    // degree: 'Degree',
-    // fieldOfStudy: 'Field of study',
-    // bannerImgUrl:
-    //   'https://images.pexels.com/photos/1133502/pexels-photo-1133502.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    // qualifications: ['Qualification 1', 'Qualification 2', 'Qualification 3', 'Qualification 4'],
-    // gender: 'Male',
-    // age: 30,
-    // profilePictureUrl: 'http://localhost:3000/_next/static/media/user.aa566b82.png?mw=64',
-    // Address:
-    //   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam luctus neque a nisl venenatis rutrum.',
-    // State: 'State',
-    // ResidingFrom:
-    //   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam luctus neque a nisl venenatis rutrum.',
-    // LeftAt:
-    //   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam luctus neque a nisl venenatis rutrum.',
-    // placeOfPractice: [
-    //   {
-    //     city: 'City 1',
-    //     address: 'Address 1',
-    //     state: 'State 1',
-    //     country: 'Country 1',
-    //     residingFrom: 'Residing From 1',
-    //     leftAt: null,
-    //     designation: 'Designation 1',
-    //     employeeId: 'Emp001',
-    //     joiningDate: '11/11/11',
-    //     joiningYear: 2023,
-    //     latitude: '0000000000000000',
-    //     leavingDate: '11/11/11',
-    //     orgName: 'Organisation 1',
-    //     pincode: 110001,
-    //     presentlyWorkingHere: false,
-    //     socialUrl: 'sjkahdsdkjslkajdlkjalksjdlkajskldjalkjsdlk',
-    //     wid: 'jsahdkhsjkhdkjahsd',
-    //   },
-    //   {
-    //     city: 'City 2',
-    //     address: 'Address 2',
-    //     state: 'State 2',
-    //     country: 'Country 2',
-    //     residingFrom: 'Residing From 2',
-    //     leftAt: null,
-    //     designation: 'Designation 2',
-    //     employeeId: 'Emp002',
-    //     joiningDate: '11/11/11',
-    //     joiningYear: 2023,
-    //     latitude: '0000000000000000',
-    //     leavingDate: '11/11/11',
-    //     orgName: 'Organisation 2',
-    //     pincode: 110001,
-    //     presentlyWorkingHere: true,
-    //     socialUrl: 'sjkahdsdkjslkajdlkjalksjdlkajskldjalkjsdlk',
-    //     wid: 'jsahdkhsjkhdkjahsd',
-    //   },
-    // ],
-    // areaOfExpertise: 'Area of Expertise',
-    // websiteUrl: 'aksdjkaljsdlkajsldkjalskdjkalsjdl',
-    // userResidenceInfo: {},
   });
 
   const [errorState, setErrorState] = useState<any>({
