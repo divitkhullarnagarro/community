@@ -75,7 +75,7 @@ r .right_upper_section {
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
   width: 20vw;
   background-color: #f9f9f9;
-  height: 720px;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   /* padding: 0.3125rem 0.625rem; */
@@ -92,18 +92,18 @@ r .right_upper_section {
 .row {
   display: flex;
   flex-direction: row;
-  width: 90%;
+  width: 100%;
 }
 .imgContainer {
   width: 100%;
 }
 .userListTable {
-  margin-top: 30px;
-  width: 72vw;
+  margin-top: 20px;
+  width: 100%;
 }
 
 .header {
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -116,8 +116,7 @@ r .right_upper_section {
   flex-direction: row;
   justify-content: flex-start;
   padding: 20px !important;
-  font-size: 0.7375rem;
-  border: 1px solid black;
+  font-size: 20.8px;
 }
 
 .title {
@@ -167,10 +166,10 @@ r .right_upper_section {
   height: 0;
   border: 0.5px solid #e6e3e3;
 }
-.sidenavbar .center:hover {
-  /* padding-left: 10px; */
+/* .sidenavbar .center:hover {
+  padding-left: 10px;
   background-color: #ffdada;
-}
+} */
 .sidenavbar .center ul {
   list-style: none;
   margin: 0;
@@ -199,6 +198,10 @@ r .right_upper_section {
   width: 100%;
   border: none;
   background: none;
+}
+
+.sidenavbar .center ul button:hover {
+  background-color: #ffdada;
 }
 /* .sidenavbar .center ul li {
   background-color: white;
@@ -242,7 +245,9 @@ r .right_upper_section {
 }
 
 .userListHeader {
+  color: #283895;
   margin-top: 20px;
+  font-weight: bold;
 }
 
 /* .reportPostWrapper {
@@ -409,30 +414,6 @@ r .right_upper_section {
   padding: 10px;
 }
 
-/* .dropdownItem:hover .reportContainerHeader {
-  color: #fff;
-  background-color: #5c636a;
-  border-color: #565e64;
-} */
-
-/* .dropdownItem:hover .reportContainerHeaderWithSpinner {
-  color: #fff;
-  background-color: #5c636a;
-  border-color: #565e64;
-} */
-
-/* .dropdownItem:visited,
-.dropdownItem:hover,
-.dropdownItem:active {
-  color: #fff;
-  background-color: #5c636a;
-  border-color: #565e64;
-} */
-
-/* .dropdownItem:hover .dropdownImage {
-  filter: invert(1);
-} */
-
 .dropdownImage {
   width: 16px;
   height: 16px;
@@ -565,6 +546,19 @@ r .right_upper_section {
 .reportBody {
   padding: 10px;
 }
+
+.reportPostHeaderRow {
+  width: 20%;
+  font-size: 18px;
+  color: #091329;
+}
+
+.reportPostBodyRow {
+  width: 20%;
+  font-size: 18px;
+  color: #091329;
+}
+
 @media only screen and (max-width: 640px) {
   .sidenavbar .top .logo {
     font-size: 0.6rem;
@@ -728,6 +722,37 @@ r .right_upper_section {
   flex-direction: column;
   padding: 10px;
   margin: 10px;
+}
+
+.actionButton {
+  background-color: #47d7ac !important;
+  border: none;
+  color: white !important;
+  margin: 10px;
+  border-radius: 15px;
+}
+
+.actionWarningButton {
+  background-color: #47d7ac !important;
+  border: none;
+  color: white !important;
+  margin: 10px;
+  width: 150px !important;
+  border-radius: 15px;
+}
+
+.seeMoreReportedPostBtn {
+  width: 100%;
+  font-size: 20px;
+  height: 50px;
+  background-color: whitesmoke;
+  color: #2a86fd;
+  border: none;
+  font-weight: 500;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media only screen and (max-width: 1500px) {
