@@ -6,50 +6,46 @@ const UserWorkExperience = (props: any) => {
 
   return (
     <div className="workContainer">
-      <Button className="profileBtn" onClick={props.addNewWorkDetail}>
-        <img
-          src="https://www.svgrepo.com/show/170952/add-button.svg"
-          alt="edit"
-          width="30px"
-          style={{ marginRight: '20px' }}
-        />
-      </Button>
       <div>
         {props?.placeOfPractice?.length > 0 ? (
-          <div>
-            {props.placeOfPractice.map((work: any) => {
-              return (
-                <div>
-                  <Button className="profileBtn" onClick={() => props.editWorkFormData(work?.wid)}>
+          props?.placeOfPractice.map((work: any, index: number) => {
+            return (
+              <div key={index} className="itemContainer">
+                <div className="instituteDetails">
+                  <div className="instituteFields instituteName">{work.orgName}</div>
+                  <div className="instituteFields">
+                    {work.city}, {work.state} - {work.pincode}
+                  </div>
+                  <div className="instituteFields">{work.country}</div>
+                  <div className="instituteFields">{work.employeeId}</div>
+                  <div className="instituteFields">{work.designation}</div>
+                  <div className="instituteFields">
+                    {work.joiningDate} - {work.joiningYear}
+                  </div>
+                  <div className="instituteFields">{work.wid}</div>
+                  <div className="instituteFields">{work.presentlyWorkingHere}</div>
+                  <div className="instituteFields">{work.leavingDate}</div>
+                  <div className="instituteFields">{work.latitude}</div>
+                  <div className="instituteFields">{work.socialUrl}</div>
+                  <button className="itemEditBtn" onClick={() => props.editWorkFormData(work?.wid)}>
                     <img
                       src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
                       alt="edit"
-                      width="30px"
-                      style={{ marginRight: '20px' }}
+                      width="20px"
                     />
-                  </Button>
-                  <div>{work.city}</div>
-                  <div>{work.country}</div>
-                  <div>{work.designation}</div>
-                  <div>{work.employeeId}</div>
-                  <div>{work.joiningDate}</div>
-                  <div>{work.joiningYear}</div>
-                  <div>{work.latitude}</div>
-                  <div>{work.leavingDate}</div>
-                  <div>{work.orgName}</div>
-                  <div>{work.pincode}</div>
-                  <div>{work.presentlyWorkingHere}</div>
-                  <div>{work.socialUrl}</div>
-                  <div>{work.state}</div>
-                  <div>{work.wid}</div>
-                  <div className="border"></div>
+                  </button>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })
         ) : (
-          ''
+          <></>
         )}
+        <div className="addNewItem">
+          <Button onClick={props.addNewWorkDetail}>
+            <span>Add Work</span>
+          </Button>
+        </div>
       </div>
 
       <Modal show={props.openWorkModal} onHide={props.handleCloseWorkModal}>
@@ -59,7 +55,9 @@ const UserWorkExperience = (props: any) => {
         <Modal.Body className="modalForProfile">
           <Form onSubmit={props.submitForm1}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Organization Name<span className="required">*</span></Form.Label>
+              <Form.Label>
+                Organization Name<span className="required">*</span>
+              </Form.Label>
               <Form.Control
                 onChange={(e) => props.setOrgName(e.target.value)}
                 value={props.specificPlaceOfWork?.orgName}
@@ -71,7 +69,7 @@ const UserWorkExperience = (props: any) => {
             </Form.Group>
             <span>
               {props.errorState?.orgName ? <span className="error">Field is required</span> : ' '}
-              {console.log("fromuserexperiencecomponent",props.errorState?.orgName)}
+              {console.log('fromuserexperiencecomponent', props.errorState?.orgName)}
             </span>
             {console.log('props.editUserData?.orgName', props?.placeOfPractice)}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -86,7 +84,9 @@ const UserWorkExperience = (props: any) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Employee ID<span className="required">*</span></Form.Label>
+              <Form.Label>
+                Employee ID<span className="required">*</span>
+              </Form.Label>
               <Form.Control
                 onChange={(e) => props.setEmployeeId(e.target.value)}
                 value={props.specificPlaceOfWork?.employeeId}
@@ -95,7 +95,6 @@ const UserWorkExperience = (props: any) => {
                 autoFocus
               />
               {props.errorState?.empId ? <span className="error">Field is required</span> : ' '}
-
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Social Url</Form.Label>
