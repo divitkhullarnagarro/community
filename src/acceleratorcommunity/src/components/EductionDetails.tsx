@@ -3,7 +3,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 const EductionDetails = (props: any): JSX.Element => (
   <>
     <div className="EducationContainer">
-      <Button className="profileBtn" onClick={props.handleOpenForEducation}>
+      <Button className="profileBtn" onClick={props.addEducationDetails}>
         <img
           src="https://www.svgrepo.com/show/170952/add-button.svg"
           alt="edit"

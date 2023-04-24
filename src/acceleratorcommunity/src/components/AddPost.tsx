@@ -73,6 +73,7 @@ import EventCard from './EventCard';
 import PollCard from './PollCard';
 import deletePostCall from 'src/API/deletePostCall';
 import deleteCommentCall from 'src/API/deleteCommentCall';
+import articleIcon from '../assets/images/ArticleIcon.svg';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -1056,13 +1057,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   width={18}
                   height={18}
                 />
+                <span
+                  className={styles.likePost}
+                  style={post?.isLikedByUser ? { color: '#2e86f9' } : {}}
+                >
+                  {post?.isLikedByUser ? 'Liked Post' : 'Like Post'}
+                </span>
               </button>
-              <div
-                className={styles.likePost}
-                style={post?.isLikedByUser ? { color: '#2e86f9' } : {}}
-              >
-                {post?.isLikedByUser ? 'Liked Post' : 'Like Post'}
-              </div>
+              
               <div className={styles.likeCount}>
                 {post?.postMeasures?.likeCount ? post?.postMeasures?.likeCount : '0'}
               </div>
@@ -1076,8 +1078,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 disabled={post?.isRespPending}
               >
                 <NextImage field={comment} editable={true} alt="PostItems" width={18} height={18} />
+                <span className={styles.commentPost}>Comment</span>
               </button>
-              <div className={styles.commentPost}>Comment</div>
               <div className={styles.commentCount}>
                 {post?.postMeasures?.commentCount ? post?.postMeasures?.commentCount : '0'}
               </div>
@@ -1227,7 +1229,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     style={{ width: '100%', fontSize: '13px', color: '#a5a9ae' }}
                   />
                   <button type="submit" className="postCommentButton">
-                    PostComment
+                    Post
                   </button>
                 </Form.Group>
               </Form>
@@ -2985,6 +2987,17 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </Form>
                 </div>
               </Modal>
+              <button className={styles.pollButton} type="button">
+                <Link href="/addblogpost">
+                  <NextImage
+                    field={articleIcon}
+                    editable={true}
+                    alt="PostItems"
+                    width={18}
+                    height={18}
+                  />
+                </Link>
+              </button>
             </div>
             <div className={styles.errorContainer}>
               <Button
@@ -3010,7 +3023,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 <Button
                   className={styles.publishButton}
                   variant="default"
-                  style={{ outline: 'none', border: 'none' }}
+                  style={{ outline: 'none', border: 'none', color: '#F58C60' }}
                   type="button"
                   onClick={() => {
                     setShowForm1(false);

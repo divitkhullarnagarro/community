@@ -4,9 +4,8 @@ import SocketContext from './SocketContext';
 
 function SocketProvider(props: any) {
   const [socket, setSocket] = useState<any>();
-  //console.log('NOTIFICATION_SOCKET_URL', process.env.NOTIFICATION_SOCKET_URL);
   const socketServerUrl =
-    'http://accelerator-notification-socket-dev.eastus.cloudapp.azure.com:8878/';
+    'http://accelerator-notification-service-dev.eastus.cloudapp.azure.com:8878/';
   const [socketEndpoint, setSocketEndpoint] = useState(socketServerUrl);
 
   useEffect(() => {
