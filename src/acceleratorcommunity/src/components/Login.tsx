@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import loginCss from '../assets/login.module.css';
 import Spinner from 'react-bootstrap/Spinner';
 import SocketContext from 'src/Context/SocketContext';
+import getUserCall from 'src/API/getUserCall';
 // import star from '../assets/images/star.png';
 
 type LoginProps = ComponentProps & {
@@ -121,17 +122,19 @@ const Login = (props: LoginProps): JSX.Element => {
         setUserToken(response?.data?.data?.access_token);
         if (typeof localStorage !== 'undefined') {
           localStorage.setItem('UserToken', response?.data?.data?.access_token);
-          localStorage.setItem('ObjectId',email)
+          localStorage.setItem('ObjectId', email);
         }
         if (setObjectId != undefined) {
           setObjectId(email);
         }
+        let getUserResp = await getUserCall(response?.data?.data?.access_token, email);
+        if (getUserResp?.data?.success == true) {
+          localStorage.setItem('UserObject', JSON.stringify(getUserResp?.data?.data));
+        }
         if (typeof localStorage !== 'undefined' && typeof document !== 'undefined') {
           document.cookie = `UserToken=${response?.data?.data?.access_token};path=/;`;
           let routeToUrl = getRouteToUrlFromCookie();
-          // let routeToUrl = localStorage.getItem('RouteToPage');
           if (routeToUrl !== '' && routeToUrl != null) {
-            console.log('routeURL', routeToUrl);
             router.push(decodeURIComponent(routeToUrl));
           } else router.push('/');
         }
@@ -175,21 +178,27 @@ const Login = (props: LoginProps): JSX.Element => {
             <div className={loginCss.rightGridBox}>
               <div className={loginCss.img1}>
                 <NextImage
-                  field={targetItems?.loginFrameImageList?.targetItems[0]?.imageLogin?.jsonValue?.value}
+                  field={
+                    targetItems?.loginFrameImageList?.targetItems[0]?.imageLogin?.jsonValue?.value
+                  }
                   height={150}
                   width={150}
                 />
               </div>
               <div className={loginCss.img2}>
                 <NextImage
-                  field={targetItems?.loginFrameImageList?.targetItems[1]?.imageLogin?.jsonValue?.value}
+                  field={
+                    targetItems?.loginFrameImageList?.targetItems[1]?.imageLogin?.jsonValue?.value
+                  }
                   height={150}
                   width={150}
                 />
               </div>
               <div className={loginCss.img3}>
                 <NextImage
-                  field={targetItems?.loginFrameImageList?.targetItems[2]?.imageLogin?.jsonValue?.value}
+                  field={
+                    targetItems?.loginFrameImageList?.targetItems[2]?.imageLogin?.jsonValue?.value
+                  }
                   height={150}
                   width={150}
                 />
