@@ -19,6 +19,9 @@ SharedFields:
 - ID: "a1365dd8-b09f-4915-9faf-c659b2d182ea"
   Hint: colXS
   Value: 8
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 100
 Languages:
 - Language: en
   Versions:
@@ -37,11 +40,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "262b4e3a-a097-4e29-b663-ddff04abea87"
+      Value: "270f1b92-b78a-4ea1-b7cf-5e266a3c87bd"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\mohit.rajpal@nagarro.com
+        sitecore\damyanti.wakchaure@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230419T071247Z
+      Value: 20230424T071329Z
