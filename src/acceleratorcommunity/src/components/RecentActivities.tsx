@@ -41,7 +41,7 @@ const RecentActivities = (props: RecentActivitiesProps): JSX.Element => {
   return (
     <>
       <div className={style.recentActivityListBox}>
-        <div className={`d-flex justify-content-between`}>
+        <div className={style.recentActivityContainer}>
           <h3 className={style.recentActivityTitle}>Your Recent Activities</h3>
           <h6 className={style.viewAllButton}>See All</h6>
         </div>
