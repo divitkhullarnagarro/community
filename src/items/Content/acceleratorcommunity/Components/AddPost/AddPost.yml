@@ -20,11 +20,11 @@ Languages:
     - ID: "37c939d8-9383-4b03-bd59-97f3b1b833b9"
       Hint: EventType
       Value: |
-        {03AFC3DC-2A5B-4C17-9BD0-14A8A153A1EF}
-        {F466F4D4-AC10-4F88-B256-FFF35348EF2C}
-        {CBA442C9-58F1-4765-9668-2B32CBD47360}
-        {CBCEF7D5-32EA-4498-9D59-2262BD5041AF}
-        {938F3DC1-7DF8-4681-842A-18B94857F5AA}
+        {E525A110-CA7E-485C-B0BD-94412A7EE14E}
+        {B94CAE95-02AA-48AB-9F2F-9D3634D59A59}
+        {072947D2-19E4-4A24-817C-DE45ABE1F0E5}
+        {3131042C-FA31-4B83-9917-DF3FA614F346}
+        {9ABC0BA4-F627-4800-9131-F569B1D252D4}
     - ID: "3bf3af57-96d3-4137-b949-5fe4f3adaa70"
       Hint: DescriptionLabel
       Value: Description
@@ -76,7 +76,7 @@ Languages:
       Value: Enter your poll question
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "00cfa8b9-8bc9-4a15-a471-111d8802ebc8"
+      Value: "a8afb510-ee0e-4b64-bd0a-6da573f4a15b"
     - ID: "a2d64968-6a39-425c-920a-413e191d7097"
       Hint: EventTitlePlaceholder
       Value: Enter Event Title
@@ -86,7 +86,7 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\ankit.rastogi@nagarro.com
+        sitecore\nishant.tiwari@nagarro.com
     - ID: "d6d64e53-4068-405c-ad5d-dd1c76b66978"
       Hint: EndDate
       Value: 20230323T062900Z
@@ -95,7 +95,7 @@ Languages:
       Value: "https://www.facebook.com/sharer/sharer.php"
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230406T070312Z
+      Value: 20230419T070224Z
     - ID: "dee2c514-243a-4bde-b8db-117c1cf58297"
       Hint: addQuestionLabel
       Value: Add question

@@ -1,7 +1,7 @@
 ﻿---
-ID: "938f3dc1-7df8-4681-842a-18b94857f5aa"
+ID: "9abc0ba4-f627-4800-9131-f569b1d252d4"
 Parent: "41027582-e567-492c-96c5-a3280ccac7b9"
-Template: "ce7ca1be-b6ba-4085-8f04-34d60ea9dfce"
+Template: "898e05ca-26c0-4f83-8c49-4c7ff9330510"
 Path: /sitecore/content/acceleratorcommunity/Global/DataList/EventType/Seminar
 Languages:
 - Language: en
@@ -10,21 +10,25 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230309T090625Z
-    - ID: "760b15b4-30a9-4c3a-9315-90088b88380a"
+      Value: 20230419T065854Z
+    - ID: "423bc42e-68da-4266-934d-4a8e70ee5de1"
       Hint: Title
       Value: Seminar
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\nishant.tiwari@nagarro.com
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\nishant.tiwari@nagarro.com
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "6fcdab30-6d4e-4ea3-b314-5b7f47a9050d"
+      Value: "c59beeae-91b4-419a-b962-101996cf0b55"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\nishant.tiwari@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230411T110259Z
-    - ID: "f299247a-a62a-4fea-b0f6-a83c8f2d4621"
-      Hint: Image
-      Value: |
-        <image mediaid="{AE6E21DD-285C-4047-B53B-8850E589DF2D}" />
+      Value: 20230419T065859Z

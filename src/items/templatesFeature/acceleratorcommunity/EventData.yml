@@ -1,8 +1,12 @@
 ﻿---
-ID: "072947d2-19e4-4a24-817c-de45abe1f0e5"
-Parent: "41027582-e567-492c-96c5-a3280ccac7b9"
-Template: "898e05ca-26c0-4f83-8c49-4c7ff9330510"
-Path: /sitecore/content/acceleratorcommunity/Global/DataList/EventType/Conference
+ID: "898e05ca-26c0-4f83-8c49-4c7ff9330510"
+Parent: "aaac225e-8dd0-45b7-b66c-4eb824f3a118"
+Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
+Path: /sitecore/templates/Feature/acceleratorcommunity/EventData
+SharedFields:
+- ID: "12c33f3f-86c5-43a5-aeb4-5598cec45116"
+  Hint: __Base template
+  Value: "{1930BBEB-7805-471A-A3BE-4858AC7CF696}"
 Languages:
 - Language: en
   Versions:
@@ -10,10 +14,7 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230419T065807Z
-    - ID: "423bc42e-68da-4266-934d-4a8e70ee5de1"
-      Hint: Title
-      Value: Conference
+      Value: 20230413T154242Z
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
@@ -24,11 +25,11 @@ Languages:
         sitecore\nishant.tiwari@nagarro.com
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "79c815c5-6830-4cd1-babb-9b82e9309302"
+      Value: "1aa44774-8691-4b44-a69d-9e7890680d9b"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\nishant.tiwari@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230419T065913Z
+      Value: 20230413T154242Z

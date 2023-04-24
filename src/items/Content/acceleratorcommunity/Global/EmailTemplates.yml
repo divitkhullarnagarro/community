@@ -1,15 +1,8 @@
 ﻿---
-ID: "ab3aef4c-1276-4441-83d2-810d05708880"
-Parent: "d93be888-edb2-48c6-b660-eb474f415d0b"
-Template: "260ab92e-b8dc-467d-b1bf-e0ec47163461"
-Path: /sitecore/content/acceleratorcommunity/Components/Grid/Header Grid/Two Column/Col 2 2
-SharedFields:
-- ID: "331e2929-3995-480d-99f3-6735f472159c"
-  Hint: rowExtraCss
-  Value: "m-0"
-- ID: "fceb2f6c-667b-449c-8352-cecbe931db17"
-  Hint: heading
-  Value: New GridRow
+ID: "02989f59-cfeb-4cc9-90fb-c0da8a7fe7b5"
+Parent: "3ab609e6-bb24-4ebf-847b-fdd46d1e7774"
+Template: "a87a00b1-e6db-45ab-8b54-636fec3b5523"
+Path: /sitecore/content/acceleratorcommunity/Global/EmailTemplates
 Languages:
 - Language: en
   Versions:
@@ -17,22 +10,22 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230321T104826Z
+      Value: 20230413T065216Z
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
-        sitecore\Admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |
-        sitecore\Admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "11c390fe-6340-4996-be12-fc55b91efdba"
+      Value: "b1308aba-492c-40ac-804d-f1e29433b31f"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230419T071342Z
+      Value: 20230413T065216Z

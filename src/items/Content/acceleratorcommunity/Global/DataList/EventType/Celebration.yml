@@ -1,7 +1,7 @@
 ﻿---
-ID: "f466f4d4-ac10-4f88-b256-fff35348ef2c"
+ID: "b94cae95-02aa-48ab-9f2f-9d3634d59a59"
 Parent: "41027582-e567-492c-96c5-a3280ccac7b9"
-Template: "ce7ca1be-b6ba-4085-8f04-34d60ea9dfce"
+Template: "898e05ca-26c0-4f83-8c49-4c7ff9330510"
 Path: /sitecore/content/acceleratorcommunity/Global/DataList/EventType/Celebration
 Languages:
 - Language: en
@@ -10,21 +10,25 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230309T090615Z
-    - ID: "760b15b4-30a9-4c3a-9315-90088b88380a"
+      Value: 20230419T065724Z
+    - ID: "423bc42e-68da-4266-934d-4a8e70ee5de1"
       Hint: Title
       Value: Celebration
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\nishant.tiwari@nagarro.com
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\nishant.tiwari@nagarro.com
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "85657863-51dd-4cbb-b65c-d950d3e2a8f1"
+      Value: "299da6d1-1cd6-4b94-bca2-0178207b60b8"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\nishant.tiwari@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230411T110111Z
-    - ID: "f299247a-a62a-4fea-b0f6-a83c8f2d4621"
-      Hint: Image
-      Value: |
-        <image mediaid="{8FAFC920-F3F8-414C-8417-F7BE16526996}" />
+      Value: 20230419T065731Z

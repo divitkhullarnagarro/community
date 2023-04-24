@@ -4,6 +4,9 @@ Parent: "4748982d-53b6-4831-b4e2-b07f2c10f4d2"
 Template: "260ab92e-b8dc-467d-b1bf-e0ec47163461"
 Path: /sitecore/content/acceleratorcommunity/Components/Grid/Generic Grid/Three Column/Col 3 9 3
 SharedFields:
+- ID: "331e2929-3995-480d-99f3-6735f472159c"
+  Hint: rowExtraCss
+  Value: "m-0"
 - ID: "fceb2f6c-667b-449c-8352-cecbe931db17"
   Hint: heading
   Value: col 2 10
@@ -17,11 +20,11 @@ Languages:
       Value: 20230306T154738Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "69b7c8af-f456-4c7d-9077-2b4ee1f6c176"
+      Value: "2b7b48b9-3a69-452a-b525-ee69efbc261f"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\damyanti.wakchaure@nagarro.com
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230411T083051Z
+      Value: 20230419T071412Z

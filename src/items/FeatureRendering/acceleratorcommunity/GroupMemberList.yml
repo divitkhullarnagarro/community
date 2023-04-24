@@ -1,15 +1,15 @@
 ﻿---
-ID: "ab3aef4c-1276-4441-83d2-810d05708880"
-Parent: "d93be888-edb2-48c6-b660-eb474f415d0b"
-Template: "260ab92e-b8dc-467d-b1bf-e0ec47163461"
-Path: /sitecore/content/acceleratorcommunity/Components/Grid/Header Grid/Two Column/Col 2 2
+ID: "959560a8-480d-4749-8582-46191412500c"
+Parent: "5f8cd8cc-9315-400b-8b42-386745b391b8"
+Template: "04646a89-996f-4ee7-878a-ffdbf1f0ef0d"
+Path: /sitecore/layout/Renderings/Feature/acceleratorcommunity/GroupMemberList
 SharedFields:
-- ID: "331e2929-3995-480d-99f3-6735f472159c"
-  Hint: rowExtraCss
-  Value: "m-0"
-- ID: "fceb2f6c-667b-449c-8352-cecbe931db17"
-  Hint: heading
-  Value: New GridRow
+- ID: "037fe404-dd19-4bf7-8e30-4dadf68b27b0"
+  Hint: componentName
+  Value: GroupMemberList
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: Office/32x32/users5.png
 Languages:
 - Language: en
   Versions:
@@ -17,22 +17,22 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20230321T104826Z
+      Value: 20230413T104619Z
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
-        sitecore\Admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |
-        sitecore\Admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "11c390fe-6340-4996-be12-fc55b91efdba"
+      Value: "e9624b8d-ae36-4965-86e5-aed7d77356ef"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230419T071342Z
+      Value: 20230413T104818Z

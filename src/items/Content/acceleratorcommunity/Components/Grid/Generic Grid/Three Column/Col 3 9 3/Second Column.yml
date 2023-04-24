@@ -12,13 +12,13 @@ SharedFields:
   Value: Second Column
 - ID: "4e6e411d-1780-42de-9ce1-45794a93c9be"
   Hint: colSM
-  Value: 9
+  Value: 12
 - ID: "9c5b7024-ed1d-4755-80cc-8a46ca50bfdb"
   Hint: colMD
-  Value: 9
+  Value: 12
 - ID: "a1365dd8-b09f-4915-9faf-c659b2d182ea"
   Hint: colXS
-  Value: 9
+  Value: 12
 Languages:
 - Language: en
   Versions:
@@ -37,11 +37,11 @@ Languages:
         sitecore\admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "b6ae658a-2386-4e02-9845-afd95ccfea5a"
+      Value: "9e1e25af-f929-4863-8530-c263bf5b11ba"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\damyanti.wakchaure@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230411T085213Z
+      Value: 20230413T123427Z
