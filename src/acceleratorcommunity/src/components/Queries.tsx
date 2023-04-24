@@ -61,3 +61,25 @@ export const getAllRoutes = () => {
   `;
   return query;
 };
+
+export const getEmailTemplatesGraphqlQuery = () => {
+  var query = gql`
+    query EmailTemplate($datasource: String!, $language: String!) {
+      datasource: item(path: $datasource, language: $language) {
+        children {
+          results {
+            id
+            name
+            fields {
+              id
+              name
+              value
+              jsonValue
+            }
+          }
+        }
+      }
+    }
+  `;
+  return query;
+};
