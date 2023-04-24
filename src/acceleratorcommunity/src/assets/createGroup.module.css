@@ -38,8 +38,13 @@
 .closeButton {
   font-size: 15px;
   border: none;
+  border-radius: 4px;
   color: #f58c60;
   background-color: white;
+}
+.closeButton:hover {
+  background-color: #F58C60;
+  color: white;
 }
 /* .closeButton:hover{
 border: none;
@@ -57,8 +62,9 @@ color:#f58c60 ;
 }
 .saveButton:hover {
   color: white;
-  background-color: #47d7ac;
+  background-color:#349175;
 }
+
 .saveButton:disabled {
   background-color: #47d7ac;
 }
