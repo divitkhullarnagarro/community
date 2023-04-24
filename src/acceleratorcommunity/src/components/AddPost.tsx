@@ -1064,7 +1064,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   {post?.isLikedByUser ? 'Liked Post' : 'Like Post'}
                 </span>
               </button>
-              
+
               <div className={styles.likeCount}>
                 {post?.postMeasures?.likeCount ? post?.postMeasures?.likeCount : '0'}
               </div>
@@ -1116,7 +1116,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu className={ShowShareCss.dropdownMenu}>
-                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                  <Dropdown.Item
+                    className={ShowShareCss.dropdownItem}
+                    target="_blank"
+                    href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
+                  >
                     <div className={ShowShareCss.overlayItem}>
                       <div className={ShowShareCss.dropdownImage}>
                         <NextImage
@@ -1127,16 +1131,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           height={25}
                         />
                       </div>
-                      <Link
-                        href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
-                      >
-                        <a className={ShowShareCss.targetIcon} target="_blank">
-                          Share on WhatsApp
-                        </a>
-                      </Link>
+                      <span className={ShowShareCss.targetIcon}>Share on WhatsApp</span>
                     </div>
                   </Dropdown.Item>
-                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                  <Dropdown.Item
+                    className={ShowShareCss.dropdownItem}
+                    target="_blank"
+                    href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
+                  >
                     <div className={ShowShareCss.overlayItem}>
                       <div className={ShowShareCss.dropdownImage}>
                         <NextImage
@@ -1147,16 +1149,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           height={25}
                         />
                       </div>
-                      <Link
-                        href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
-                      >
-                        <a className={ShowShareCss.targetIcon} target="_blank">
-                          Share on Twitter
-                        </a>
-                      </Link>
+                      <span className={ShowShareCss.targetIcon}>Share on Twitter</span>
                     </div>
                   </Dropdown.Item>
-                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                  <Dropdown.Item
+                    className={ShowShareCss.dropdownItem}
+                    target="_blank"
+                    href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
+                  >
                     <div className={ShowShareCss.overlayItem}>
                       <div className={ShowShareCss.dropdownImage}>
                         <NextImage
@@ -1167,16 +1167,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           height={25}
                         />
                       </div>
-                      <Link
-                        href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
-                      >
-                        <a className={ShowShareCss.targetIcon} target="_blank">
-                          Share on LinkedIn
-                        </a>
-                      </Link>
+                      <span className={ShowShareCss.targetIcon}>Share on LinkedIn</span>
                     </div>
                   </Dropdown.Item>
-                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                  <Dropdown.Item
+                    className={ShowShareCss.dropdownItem}
+                    target="_blank"
+                    href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
+                  >
                     <div className={ShowShareCss.overlayItem}>
                       <div className={ShowShareCss.dropdownImage}>
                         <NextImage
@@ -1187,13 +1185,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           height={25}
                         />
                       </div>
-                      <Link
-                        href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
-                      >
-                        <a className={ShowShareCss.targetIcon} target="_blank">
-                          Share on Facebook
-                        </a>
-                      </Link>
+                      <span className={ShowShareCss.targetIcon}>Share on Facebook</span>
                     </div>
                   </Dropdown.Item>
                 </Dropdown.Menu>

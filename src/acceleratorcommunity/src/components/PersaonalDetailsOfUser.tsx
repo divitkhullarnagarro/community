@@ -376,76 +376,51 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => (
       <div className="personalInformationParentContainer">
         <div className="personaleInformationContainer">
           <div className="personalInfomation">
-            {/* <div className="packOfThree"> */}
             <div className="infomationContainer">
-              <div className="personalInfoTag">Age</div>
-              <div className="personalInfoTagValue">30</div>
-              {/* <div className="personalInfoTagValue">{props?.tempUserData?.age}</div> */}
+              <div className="infoTag">Age</div>
+              <div className="infoTagValue">{props?.tempUserData?.age}</div>
             </div>
             <div className="infomationContainer">
-              <div className="personalInfoTag">Gender</div>
+              <div className="infoTag">Gender</div>
               {console.log('props?.tempUserData?.gender', props?.tempUserData?.gender)}
-              <div className="personalInfoTagValue">M</div>
-              {/* <div className="personalInfoTagValue">{props?.tempUserData?.gender}</div> */}
+              <div className="infoTagValue">{props?.tempUserData?.gender}</div>
             </div>
             <div className="infomationContainer">
-              <div className="personalInfoTag">Date of Birth</div>
-              <div className="personalInfoTagValue">11/11/11</div>
-              {/* <div className="personalInfoTagValue">{props?.tempUserData?.dob}</div> */}
-            </div>
-            {/* </div> */}
-            {/* <div className="packOfThree"> */}
-            <div className="infomationContainer">
-              <div className="personalInfoTag">Experience</div>
-              <div className="personalInfoTagValue">10</div>
-              {/* <div className="personalInfoTagValue">{props?.tempUserData?.yearsOfExperience}</div> */}
+              <div className="infoTag">Date of Birth</div>
+              <div className="infoTagValue">{props?.tempUserData?.dob}</div>
             </div>
             <div className="infomationContainer">
-              <div className="personalInfoTag">Designation</div>
-              <div className="personalInfoTagValue">Designation</div>
-              {/* <div className="personalInfoTagValue">{props?.tempUserData?.designation}</div> */}
-            </div>
-            {/* </div> */}
-            {/* <div className="packOfThree"> */}
-            <div className="infomationContainer">
-              <div className="personalInfoTag">Profession</div>
-              <div className="personalInfoTagValue">Profession</div>
-              {/* <div className="personalInfoTagValue">{props?.tempUserData?.areaOfExpertise}</div> */}
+              <div className="infoTag">Experience</div>
+              <div className="infoTagValue">{props?.tempUserData?.yearsOfExperience}</div>
             </div>
             <div className="infomationContainer">
-              <div className="personalInfoTag">Domain</div>
-              <div className="personalInfoTagValue">Domain</div>
-              {/* <div className="personalInfoTagValue">{props?.tempUserData?.domain}</div> */}
+              <div className="infoTag">Designation</div>
+              <div className="infoTagValue">{props?.tempUserData?.designation}</div>
             </div>
             <div className="infomationContainer">
-              <div className="personalInfoTag">Speciality</div>
-              <div className="personalInfoTagValue">Speciality</div>
-              {/* <div className="personalInfoTagValue">{props?.tempUserData?.speciality}</div> */}
+              <div className="infoTag">Profession</div>
+              <div className="infoTagValue">{props?.tempUserData?.areaOfExpertise}</div>
             </div>
             <div className="infomationContainer">
-              <div className="personalInfoTag">Website</div>
-              <div className="personalInfoTagValue">
+              <div className="infoTag">Domain</div>
+              <div className="infoTagValue">{props?.tempUserData?.domain}</div>
+            </div>
+            <div className="infomationContainer">
+              <div className="infoTag">Speciality</div>
+              <div className="infoTagValue">{props?.tempUserData?.speciality}</div>
+            </div>
+            <div className="infomationContainer">
+              <div className="infoTag">Website</div>
+              <div className="infoTagValue">
                 <a className="websiteUrl" href={props?.tempUserData?.websiteUrl} target="_blank">
-                  {/* {props?.tempUserData?.websiteUrl} */}
-                  Google
+                  {props?.tempUserData?.websiteUrl}
                 </a>
               </div>
             </div>
-            {/* </div> */}
           </div>
-          {/* <div className="border"></div> */}
           <div className="fieldListContainer">
-            <span className="personalInfoTag">Summary</span>
-            <div className="fieldValue">
-              {/* {props?.tempUserData?.summary} */}
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam luctus neque a nisl
-              venenatis rutrum. Sed varius tortor et ultricies congue. Nam dapibus id orci ut
-              ultrices. In hac habitasse platea dictumst. Vestibulum nibh lacus, porttitor ut semper
-              semper in, aliquam vel nulla. Praesent fermentum laoreet molestie. Aliquam egestas
-              quam, quis dictum enim commodo elementum. Cras a purus nec magna porta mattis.
-              Phasellus maximus, dui at posuere consectetur, elit odio porta magna, ut faucibus
-              ligula magna id felis
-            </div>
+            <span className="infoTag">Summary</span>
+            <div className="fieldValue">{props?.tempUserData?.summary}</div>
             <Button className="profileBtn" onClick={props.handleShowForm2}>
               <img
                 src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
@@ -454,16 +429,12 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => (
               />
             </Button>
           </div>
-          {/* <div className="border"></div> */}
           <div className="fieldListContainer">
-            <span className="personalInfoTag">Hobby</span>
+            <span className="infoTag">Hobby</span>
             <div className="fieldValue">
-              {['Hobby 1', 'Hobby 2', 'Hobby 3', 'Hobby 4'].map((hob: any) => {
-                return <div className="fieldItem">{hob}</div>;
-              })}
-              {/* {props?.tempUserData?.hobby?.map((hob: any) => {
+              {props?.tempUserData?.hobby?.map((hob: any) => {
                 return <div className="hobbyValue">{hob}</div>;
-              })} */}
+              })}
             </div>
             <Button className="profileBtn" onClick={props.handleShowFormForHobby}>
               <img
@@ -473,16 +444,12 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => (
               />
             </Button>
           </div>
-          {/* <div className="border"></div> */}
           <div className="fieldListContainer">
-            <span className="personalInfoTag">Language</span>
+            <span className="infoTag">Language</span>
             <div className="fieldValue">
-              {['Language 1', 'Language 2', 'Language 3', 'Language 4'].map((lang: any) => {
-                return <div className="fieldItem">{lang}</div>;
-              })}
-              {/* {props?.tempUserData?.language?.map((lang: any) => {
+              {props?.tempUserData?.language?.map((lang: any) => {
                 return <div className="languageValue">{lang}</div>;
-              })} */}
+              })}
             </div>
             <Button className="profileBtn" onClick={props.handleShowFormForLanguage}>
               <img
@@ -492,16 +459,12 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => (
               />
             </Button>
           </div>
-          {/* <div className="border"></div> */}
           <div className="fieldListContainer">
-            <span className="personalInfoTag">Interest</span>
+            <span className="infoTag">Interest</span>
             <div className="fieldValue">
-              {['Interest 1', 'Interest 2', 'Interest 3', 'Interest 4'].map((interest: any) => {
-                return <div className="fieldItem">{interest}</div>;
-              })}
-              {/* {props?.tempUserData?.interests?.map((interest: any) => {
+              {props?.tempUserData?.interests?.map((interest: any) => {
                 return <div className="interestValue">{interest}</div>;
-              })} */}
+              })}
             </div>
             <Button className="profileBtn" onClick={props.handleShowFormForIntrest}>
               <img

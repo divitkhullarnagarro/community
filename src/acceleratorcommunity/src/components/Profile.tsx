@@ -1359,11 +1359,15 @@ const Profile = (props: any): JSX.Element => {
     <>
       <div className="parentContainerForProfile">
         <div className="rightContainerForProfile">
-          <Link passHref href={'/'}>
-            <a className="backbtn">Back</a>
-          </Link>
           <div className="imageContainer">
-            <img className="profilePic" src={tempUserData?.profilePictureUrl}></img>
+            <img
+              className="profilePic"
+              src={
+                !!tempUserData?.profilePictureUrl
+                  ? tempUserData?.profilePictureUrl
+                  : 'https://cdn-icons-png.flaticon.com/128/3177/3177440.png'
+              }
+            ></img>
             <label className="imageUpload" htmlFor="uploadbutton">
               <div className="cameraContainer">
                 <img className="camera" src={CameraImg?.src} />
