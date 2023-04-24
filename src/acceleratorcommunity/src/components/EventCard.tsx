@@ -21,7 +21,7 @@ function EventCard(props: any) {
   });
   return (
     <div className={eventCard.ConferenceEventContainer}>
-      <div className={eventCard.leftContainer}>
+      <div className={eventCard.leftContainer} style={{ backgroundImage: `url(${props?.url})` }}>
         {' '}
         <div className={eventCard.eventType}>{props?.eventType}</div>
       </div>
