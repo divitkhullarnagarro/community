@@ -2341,6 +2341,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     });
   }, [props]);
 
+  if (typeof window !== 'undefined')
+    window?.addEventListener('scroll', () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      if (scrollTop + clientHeight >= scrollHeight) {
+        HandleScrollEvent();
+      }
+    });
+
   return (
     <>
       <div className={styles.mainContainer}>
@@ -3089,34 +3097,36 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           ) : (
             posts
           )}
-          {ifReachedEnd ? (
-            !ifNoMoreData ? (
-              <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
-                <span style={{ marginRight: '15px', fontWeight: '600' }}>Loading.. </span>{' '}
-                <Spinner animation="border" />
-              </span>
+          <div style={{ height: '50px' }}>
+            {ifReachedEnd ? (
+              !ifNoMoreData ? (
+                <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
+                  <span style={{ marginRight: '15px', fontWeight: '600' }}>Loading.. </span>{' '}
+                  <Spinner animation="border" />
+                </span>
+              ) : (
+                <span
+                  style={{
+                    display: 'flex',
+                    padding: '10px',
+                    justifyContent: 'center',
+                    backgroundColor: 'lightBlue',
+                    borderRadius: '20px',
+                  }}
+                >
+                  No More Posts Available{' '}
+                  <img
+                    style={{ marginLeft: '10px' }}
+                    width="25px"
+                    src="https://cdn-icons-png.flaticon.com/512/927/927567.png"
+                    alt="smile"
+                  ></img>
+                </span>
+              )
             ) : (
-              <span
-                style={{
-                  display: 'flex',
-                  padding: '10px',
-                  justifyContent: 'center',
-                  backgroundColor: 'lightBlue',
-                  borderRadius: '20px',
-                }}
-              >
-                No More Posts Available{' '}
-                <img
-                  style={{ marginLeft: '10px' }}
-                  width="25px"
-                  src="https://cdn-icons-png.flaticon.com/512/927/927567.png"
-                  alt="smile"
-                ></img>
-              </span>
-            )
-          ) : (
-            ''
-          )}
+              ''
+            )}
+          </div>
         </div>
       </div>
       {showDeletePostPopup ? (
