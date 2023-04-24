@@ -14,6 +14,7 @@ import EductionDetails from './EductionDetails';
 import UserWorkExperience from './UserWorkExperience';
 import Link from 'next/link';
 import React from 'react';
+import DotLoader from './DotLoader';
 
 type User = {
   firstName: string | undefined;
@@ -149,7 +150,7 @@ const Profile = (props: any): JSX.Element => {
     residingFrom: '',
     leftAt: null,
   });
-
+  const [showImage, setShowImage] = useState(true);
   const [locationObj, setLocationObj] = useState<userLocationObj>();
 
   const [openLocationModalState, setOpenLocationModalState] = useState(false);
@@ -281,6 +282,7 @@ const Profile = (props: any): JSX.Element => {
             setStateValue(true);
             setToastSuccess(true);
             setToastMessage('Data updated successfully');
+            handleClose1()
           } else {
             setToastError(true);
             setToastMessage('Something went wrong');
@@ -840,6 +842,7 @@ const Profile = (props: any): JSX.Element => {
           setStateValue(true);
           setToastSuccess(true);
           setToastMessage('Data updated successfully');
+          handleCloseLanguageForm()
         } else {
           setToastError(true);
           setToastMessage('Something went wrong');
@@ -863,6 +866,7 @@ const Profile = (props: any): JSX.Element => {
           setStateValue(true);
           setToastSuccess(true);
           setToastMessage('Data updated successfully');
+          handleCloseFormForHobby()
         } else {
           setToastError(true);
           setToastMessage('Something went wrong');
@@ -1246,13 +1250,22 @@ const Profile = (props: any): JSX.Element => {
 
   const handleChange = (e: any) => {
     const files = e?.target?.files;
+    setShowImage(false)
     if (files?.length > 0) {
       UploadProfilePictureCall(files[0], userToken).then((response: any) => {
         if (response?.status === 200) {
           setImage({
             preview: URL?.createObjectURL(files[0]),
           });
+          setToastMessage('Image Updated successfully');
+          setToastSuccess(true);
+          setShowImage(true)
+        }else{
+          setToastMessage('Something Went Wrong');
+          setToastError(true);
+          setShowImage(false)
         }
+        setShowNofitication(true)
       });
     }
   };
@@ -1285,10 +1298,14 @@ const Profile = (props: any): JSX.Element => {
           </Link>
           <div className="imageContainer">
             {console.log('profilePictureUrl', tempUserData?.profilePictureUrl)}
-            <img
-              className="profilePic"
-              src={image?.preview !== '' ? image?.preview : tempUserData?.profilePictureUrl}
-            />
+            {showImage ? (
+              <img
+                className="profilePic"
+                src={image?.preview !== '' ? image?.preview : tempUserData?.profilePictureUrl}
+              />
+            ) : (
+              <DotLoader />
+            )}
             <label className="imageUpload" htmlFor="uploadbutton">
               <div className="cameraContainer">
                 <img className="camera" src={CameraImg?.src} />
