@@ -553,10 +553,103 @@ r .right_upper_section {
   color: #091329;
 }
 
-.reportPostBodyRow {
-  width: 20%;
+.reportPostHeaderRowName {
+  width: 14%;
   font-size: 18px;
   color: #091329;
+}
+
+.reportPostHeaderRowEmail {
+  width: 24%;
+  font-size: 18px;
+  color: #091329;
+}
+
+.reportPostHeaderSpeciality {
+  width: 15%;
+  font-size: 18px;
+  color: #091329;
+}
+
+.reportPostBodyRowName {
+  width: 14%;
+  padding-top: 15px;
+  font-size: 18px;
+  color: #091329;
+}
+
+.reportPostBodyRowEmail {
+  width: 25%;
+  padding-top: 15px;
+  font-size: 18px;
+  color: #091329;
+}
+
+.reportPostBodyRowSpeciality {
+  width: 15%;
+  padding-top: 15px;
+  font-size: 18px;
+  color: #091329;
+}
+
+.reportPostBodyRow {
+  width: 20%;
+  padding-top: 15px;
+  font-size: 18px;
+  color: #091329;
+}
+
+.accordionBodyRow {
+  width: 10vw;
+  font-size: 17px;
+  color: #091329;
+  word-wrap: break-word;
+}
+
+.reportPostHeaderEmptyRow {
+  width: 5%;
+}
+
+.accordionBodyEmptyBodyRow {
+  width: 2%;
+}
+
+.reportPostEmptyBodyRow {
+  width: 2%;
+}
+
+.reportedUserAccordion {
+  width: 100%;
+}
+
+.accordionHeader button::after {
+  position: absolute;
+  top: 40%;
+  left: 10px;
+  transform: translateY(-50%);
+}
+
+.accordionHeader button {
+  padding: 10px;
+}
+
+.accordionHeader button:not(.collapsed) {
+  background-color: white;
+  border: none;
+}
+
+.accordionBody {
+  width: 100%;
+}
+
+.reportedByRow {
+  display: block;
+  padding: 20px;
+}
+
+.popupContent {
+  display: flex;
+  flex-direction: column;
 }
 
 @media only screen and (max-width: 640px) {
@@ -738,6 +831,7 @@ r .right_upper_section {
   color: white !important;
   margin: 10px;
   width: 150px !important;
+  height: 40px !important;
   border-radius: 15px;
 }
 
@@ -753,6 +847,27 @@ r .right_upper_section {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.reportedUserListContainer {
+  height: 60vh;
+  overflow-y: scroll;
+}
+
+.reportedUserListContainer::-webkit-scrollbar {
+  overflow-y: auto;
+  width: 8px;
+}
+
+.reportedUserListContainer::-webkit-scrollbar-track {
+  border-radius: 2px;
+  background-color: white;
+  height: 1px;
+}
+
+.reportedUserListContainer::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 2px;
 }
 
 @media only screen and (max-width: 1500px) {
