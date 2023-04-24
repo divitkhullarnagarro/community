@@ -50,6 +50,7 @@
 .notificationHeaderRow {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .notificationHeaderAction {
@@ -57,11 +58,20 @@
   gap: 20px;
 }
 
-.notificationActionBtn {
+.notificationActionActiveBtn {
   width: 30x;
   height: 33px;
   background-color: #47d7ac;
   border: none;
+  border-radius: 15px;
+}
+
+.notificationActionBtn {
+  width: 40x;
+  height: 33px;
+  background-color: whitesmoke;
+  color: #000;
+  border: 1px solid lightgray;
   border-radius: 15px;
 }
 
@@ -84,7 +94,7 @@
   position: relative;
   display: inline-block;
   border: none;
-  width: 10%;
+  width: 15%;
 }
 
 .notificationIcon {
@@ -125,6 +135,12 @@
 
 .dropdownMoreMenu {
   width: 200px;
+  background-color: white;
+  border-radius: 15px;
+}
+
+.dropdownMoreMenuForNotificationItem {
+  width: 250px;
   background-color: white;
   border-radius: 15px;
 }
@@ -185,15 +201,19 @@
 
 .notificationTypeImage {
   position: absolute;
-  top: 23px;
-  right: -5px;
+  top: 38px;
+  right: -6px;
   background-color: #47d7ac;
   color: white;
-  width: 24px;
-  height: 24px;
+  width: 27px;
+  height: 27px;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   z-index: 1;
   border-radius: 50%;
+}
+
+.dropdownMenuOptionsLabel {
+  margin-left: 7px;
 }
