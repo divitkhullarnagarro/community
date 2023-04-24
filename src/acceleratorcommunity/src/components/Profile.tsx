@@ -12,7 +12,6 @@ import PersaonalDetailsOfUser from './PersaonalDetailsOfUser';
 import ContactDetails from './ContactDetails';
 import EductionDetails from './EductionDetails';
 import UserWorkExperience from './UserWorkExperience';
-import Link from 'next/link';
 import React from 'react';
 
 type User = {
