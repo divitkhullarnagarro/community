@@ -49,4 +49,24 @@ export const getAllReportUserCall = async (userToken : string | undefined) => {
     return response;
 };
 
+export const getReportedUserReportersDetailsCall = async (userToken : string | undefined, reportedUserId : string) => {
+    let URL = `https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/reported-user-reason/${reportedUserId}`;
+    var config = {
+        url: URL,
+        headers: {
+            Authorization: `Bearer ${userToken}`,
+        },
+    };
+    const response = await Axios.get<any, AxiosResponse<any>>(URL, config)
+        .then((response: any) => {
+            console.log("reportUserReportersDetailsResponse", response);
+            return response?.data;
+        })
+        .catch((error: any) => {
+            console.error(error);
+        });
+    
+    return response;
+};
+
 export default reportUserCall;

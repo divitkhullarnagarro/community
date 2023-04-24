@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { ComponentProps } from 'lib/component-props';
 import WebContext from 'src/Context/WebContext';
 import styles from '../assets/users.module.css';
-import { Button, Modal, Table } from 'react-bootstrap';
+import { Accordion, Button, Modal, Table } from 'react-bootstrap';
 import Flag from '../assets/images/flag-icon.svg';
 import { Dropdown } from 'react-bootstrap';
 import { getAllReportPostCall, getReportedPostReportersDetailsCall } from 'src/API/reportPostCall';
@@ -22,7 +22,7 @@ import {
   graphqlQueryWrapper,
 } from 'assets/helpers/helperFunctions';
 import { getEmailTemplatesGraphqlQuery } from './Queries';
-import { getAllReportUserCall } from 'src/API/reportUserCall';
+import { getAllReportUserCall, getReportedUserReportersDetailsCall } from 'src/API/reportUserCall';
 
 const EmailTemplateFolder = '02989F59-CFEB-4CC9-90FB-C0DA8A7FE7B5';
 const WarnUserEmailTemplate = '16937DB73C124028877AAA49C0BE30CA';
@@ -31,6 +31,7 @@ const SuspendUserEmailTemplate = '71C5EDC72EB3474191904768EED4C591';
 const SuspendUserEmailTemplateBody = 'DD033BE99AD5406699A18F9956ED029F';
 const WarnUserForPostEmailTemplate = 'A5A0180DB2824B4694FBDCC305157ED7';
 const WarnUserForPostEmailTemplateBody = 'DD033BE99AD5406699A18F9956ED029F';
+
 type reportPostFields = {
   id: string;
   description: string;
@@ -105,11 +106,6 @@ type emailTemplateFields = {
 
 type reportUserFields = {
   reason: string;
-  reportedBy: {
-    objectId: string;
-    firstName: string;
-    lastName: string;
-  };
   reportedUser: {
     objectId: string;
     firstName: string;
@@ -118,23 +114,52 @@ type reportUserFields = {
   };
 };
 
-const Users = (props: UserProps): JSX.Element => {
-  const router = useRouter();
+type reportedByUserFields = {
+  reportedBy: {
+    objectId: string;
+    firstName: string;
+    lastName: string;
+  };
+  reason: string;
+};
 
+const Users = (props: UserProps): JSX.Element => {
+  const { userToken, setUserToken } = {
+    ...useContext(WebContext),
+  };
+  const router = useRouter();
+  const [showSpinner, setShowSpinner] = useState(false);
+
+  // Reported Post State variable
   const [showReportedPosts, setShowReportedPosts] = useState(false);
   const [reportPostList, setReportedPostList] = useState<reportPostFields[]>([]);
   const [reportedPostReporterDetails, setReportedPostReporterDetails] = useState<
     reportedPostReporterFields[]
   >([]);
-  const [showSpinner, setShowSpinner] = useState(false);
-
   const [numberOfReportedItemsToShow, setNumberOfReportedItemsToShow] = useState(5);
-  const { userToken, setUserToken } = {
-    ...useContext(WebContext),
-  };
 
+  // Reported User State variable
   const [showReportedUserList, setShowReportedUserList] = useState(false);
   const [reportUserList, setReportedUserList] = useState<reportUserFields[]>([]);
+  const [reportedUserReporterDetails, setReportedUserReporterDetails] = useState<
+    reportedByUserFields[]
+  >([]);
+  const [activeAccordionIndex, setActiveAccordionIndex] = useState<string>();
+
+  useEffect(() => {
+    if (userToken == '') {
+      if (
+        typeof localStorage !== 'undefined' &&
+        localStorage.getItem('UserToken') != '' &&
+        localStorage.getItem('UserToken') != null
+      ) {
+        let token = localStorage.getItem('UserToken');
+        if (token != null && setUserToken != undefined) {
+          setUserToken(token);
+        }
+      } else router.push('/login');
+    }
+  }, []);
 
   const getReportedUserList = async () => {
     setShowReportedPosts(false);
@@ -146,16 +171,31 @@ const Users = (props: UserProps): JSX.Element => {
     }
   };
 
+  const getReportedUserReporterDetails = async (event: any, userId: string, index: string) => {
+    if (event?.target?.parentNode?.parentNode?.getAttribute('aria-expanded') === 'false') {
+      setActiveAccordionIndex(index);
+      setReportedUserReporterDetails([]);
+      let response = await getReportedUserReportersDetailsCall(userToken, userId);
+      if (response?.success) {
+        console.log('reportUserReportersDetailsResponse', response?.data);
+        setReportedUserReporterDetails(response?.data);
+      }
+    } else {
+      setActiveAccordionIndex(undefined);
+    }
+  };
+
   const ReportedUserListTable = () => {
     return (
-      <div>
+      <div className={styles.reportedUserListContainer}>
         <h3 className={styles.userListHeader}>{'Reported User List'}</h3>
         <Table hover className={styles.userListTable}>
           <thead>
             <tr className={styles.header}>
-              <td className={styles.reportPostHeaderRow}>Name</td>
-              <td className={styles.reportPostHeaderRow}>Email</td>
-              <td className={styles.reportPostHeaderRow}>Speciality</td>
+              <td className={styles.reportPostHeaderEmptyRow}></td>
+              <td className={styles.reportPostHeaderRowName}>Name</td>
+              <td className={styles.reportPostHeaderRowEmail}>Email</td>
+              <td className={styles.reportPostHeaderSpeciality}>Speciality</td>
               <td className={styles.reportPostHeaderRow}>Reported By</td>
               <td className={styles.reportPostHeaderRow}>Reported By Email</td>
               <td className={styles.reportPostHeaderRow}>Report Reason</td>
@@ -163,31 +203,77 @@ const Users = (props: UserProps): JSX.Element => {
             </tr>
           </thead>
           <tbody>
-            {reportUserList.map((item, index) => {
+            {reportUserList?.map((item, index) => {
               return (
                 <tr key={index.toString()} className={styles.row}>
-                  <td className={styles.reportPostBodyRow}>
-                    {item?.reportedUser?.firstName + ' ' + item?.reportedUser?.lastName}
-                  </td>
-                  <td className={styles.reportPostBodyRow}>{item?.reportedUser?.objectId}</td>
-                  <td className={styles.reportPostBodyRow}>{item?.reportedUser?.speciality}</td>
-                  <td className={styles.reportPostBodyRow}>
-                    {item?.reportedBy.firstName + ' ' + item?.reportedBy?.lastName}
-                  </td>
-                  <td className={styles.reportPostBodyRow}>{item?.reportedBy?.objectId}</td>
-                  <td className={styles.reportPostBodyRow}>{item?.reason}</td>
-                  <button
-                    className={styles.actionWarningButton}
-                    onClick={() => setShowWarnUserPopup(true)}
+                  <Accordion
+                    className={styles.reportedUserAccordion}
+                    activeKey={activeAccordionIndex}
                   >
-                    Warning
-                  </button>
-                  <button
-                    className={styles.actionButton}
-                    onClick={() => setShowSuspendUserPopup(true)}
-                  >
-                    Suspension
-                  </button>
+                    <Accordion.Item
+                      className={styles.accordionItem}
+                      eventKey={index.toString()}
+                      onClick={(e) =>
+                        getReportedUserReporterDetails(
+                          e,
+                          item?.reportedUser?.objectId,
+                          index.toString()
+                        )
+                      }
+                    >
+                      <Accordion.Header className={styles.accordionHeader}>
+                        <tr key={index.toString()} className={styles.row}>
+                          <td className={styles.reportPostEmptyBodyRow}></td>
+                          <td className={styles.reportPostBodyRowName}>
+                            {item?.reportedUser?.firstName + ' ' + item?.reportedUser?.lastName}
+                          </td>
+                          <td className={styles.reportPostBodyRowEmail}>
+                            {item?.reportedUser?.objectId}
+                          </td>
+                          <td className={styles.reportPostBodyRowSpeciality}>
+                            {item?.reportedUser?.speciality ?? 'Engineer'}
+                          </td>
+                          <td className={styles.reportPostBodyRow}></td>
+                          <td className={styles.reportPostBodyRow}></td>
+                          <td className={styles.reportPostBodyRow}></td>
+                          <button
+                            className={styles.actionWarningButton}
+                            onClick={() => setShowWarnUserPopup(true)}
+                          >
+                            Warning
+                          </button>
+                          <button
+                            className={styles.actionButton}
+                            onClick={() => setShowSuspendUserPopup(true)}
+                          >
+                            Suspension
+                          </button>
+                        </tr>
+                      </Accordion.Header>
+                      <Accordion.Body className={styles.accordionBody}>
+                        {reportedUserReporterDetails.map((reportedByItem, index) => {
+                          return (
+                            <tr key={index.toString()} className={styles.reportedByRow}>
+                              <td className={styles.accordionBodyEmptyBodyRow}></td>
+                              <td className={styles.accordionBodyRow}></td>
+                              <td className={styles.accordionBodyRow}></td>
+                              <td className={styles.accordionBodyRow}></td>
+                              <td className={styles.accordionBodyRow}>
+                                {reportedByItem?.reportedBy.firstName +
+                                  ' ' +
+                                  reportedByItem?.reportedBy?.lastName}
+                              </td>
+                              <td className={styles.accordionBodyRow}>
+                                {reportedByItem?.reportedBy?.objectId}
+                              </td>
+                              <td className={styles.accordionBodyRow}>{reportedByItem?.reason}</td>
+                              <hr />
+                            </tr>
+                          );
+                        })}
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
                 </tr>
               );
             })}
@@ -198,6 +284,7 @@ const Users = (props: UserProps): JSX.Element => {
   };
 
   const [emailTemplates, setEmailTemplates] = useState<emailTemplate[]>([]);
+
   const getEmailTemplates = async () => {
     if (emailTemplates === undefined || emailTemplates.length === 0) {
       const emailTemplateQuery = getEmailTemplatesGraphqlQuery();
@@ -277,7 +364,7 @@ const Users = (props: UserProps): JSX.Element => {
         centered
         scrollable={true}
       >
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div className={styles.popupContent}>
           <Modal.Header closeButton className={styles.reportPostModalHeader}>
             <Modal.Title>{'Warn user'}</Modal.Title>
           </Modal.Header>
@@ -319,7 +406,7 @@ const Users = (props: UserProps): JSX.Element => {
         centered
         scrollable={true}
       >
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div className={styles.popupContent}>
           <Modal.Header closeButton className={styles.reportPostModalHeader}>
             <Modal.Title>{'Suspend user account'}</Modal.Title>
           </Modal.Header>
@@ -361,7 +448,7 @@ const Users = (props: UserProps): JSX.Element => {
         centered
         scrollable={true}
       >
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div className={styles.popupContent}>
           <Modal.Header closeButton className={styles.reportPostModalHeader}>
             <Modal.Title>{'Warn user'}</Modal.Title>
           </Modal.Header>
@@ -390,21 +477,6 @@ const Users = (props: UserProps): JSX.Element => {
       </Modal>
     );
   };
-
-  useEffect(() => {
-    if (userToken == '') {
-      if (
-        typeof localStorage !== 'undefined' &&
-        localStorage.getItem('UserToken') != '' &&
-        localStorage.getItem('UserToken') != null
-      ) {
-        let token = localStorage.getItem('UserToken');
-        if (token != null && setUserToken != undefined) {
-          setUserToken(token);
-        }
-      } else router.push('/login');
-    }
-  }, []);
 
   const getReportedPosts = async () => {
     setReportedPostList([]);
