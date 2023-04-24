@@ -13,3 +13,11 @@ export enum ReportPostOptionsTypeLabel {
     FalseInformation = "False information",
     InappropriateContent = "Inappropriate Content",
 }
+
+export enum ReportUserOptionsTypeLabel {
+    FakeAccount = "Fake Account",
+    Inappropriate = "Posting Inappropriate things",
+    Harassment = "Harassment or Hate Speech",
+    PretendingSomeone = "Pretending to be someone",
+    Violence = "Violence",
+}
