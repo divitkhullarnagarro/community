@@ -61,7 +61,7 @@ const GroupList = (props: GroupListProps): JSX.Element => {
                         />
                         <h5 className={style.groupListName}>{ele.name}</h5>
                       </div>
-                      <div>
+                      <div className={style.groupListDropdown}>
                         <Image
                           src={moreLogo}
                           alt=""
