@@ -56,8 +56,8 @@ r .right_upper_section {
   border-style: solid;
   border-color: #edeff1;
 }
-.spinner{
-  color:#283895
+.spinner {
+  color: #283895;
 }
 .right_lower_section_spinner {
   font-size: 25px;
@@ -200,9 +200,9 @@ r .right_upper_section {
   border: none;
   background: none;
 }
-.sidenavbar .center ul li {
-  /* background-color: white; */
-}
+/* .sidenavbar .center ul li {
+  background-color: white;
+} */
 .sidenavbar .center ul li .icon {
   font-size: 18px;
   color: black;
@@ -245,12 +245,12 @@ r .right_upper_section {
   margin-top: 20px;
 }
 
-.reportPostWrapper {
-  /* max-height: 80vh; */
-  /* width: 75vw; */
-  /* overflow-x: hidden;
-  overflow-y: auto; */
-}
+/* .reportPostWrapper {
+  max-height: 80vh;
+  width: 75vw;
+  overflow-x: hidden;
+  overflow-y: auto;
+} */
 
 .reportPostModalContainer {
   background-color: rgba(211, 211, 211, 0.096) !important;
@@ -262,7 +262,7 @@ r .right_upper_section {
   align-items: center;
   /* margin: 5px;
   font-size: 20px; */
-  color: #283895; 
+  color: #283895;
   /* display: flex;
   justify-content: center;
   align-items: center;
@@ -392,10 +392,10 @@ r .right_upper_section {
   align-items: center;
 }
 
-.reportPostContent {
-  /* font-size: 18px;
-  margin: 20px 20px 20px 0px; */
-}
+/* .reportPostContent {
+  font-size: 18px;
+  margin: 20px 20px 20px 0px;
+} */
 .postDescription {
   padding: 15px;
   padding-top: 0;
@@ -489,14 +489,14 @@ r .right_upper_section {
   font-weight: 500;
   font-size: 16px;
   margin-right: 10px;
-  color: #000E46;
+  color: #000e46;
 }
 
 .footerRowContent {
   display: flex;
   font-size: 16px;
   justify-content: space-between;
-  color: #000E46;
+  color: #000e46;
 }
 
 .reportedDate {
@@ -513,8 +513,7 @@ r .right_upper_section {
 .docPreviewContainer {
   margin-bottom: 10px;
 }
-.seeMoreReportedPostBtn {
-}
+
 .seeMoreBtn {
   margin-bottom: 1px;
   padding: 10px;
@@ -557,13 +556,13 @@ r .right_upper_section {
 .dropdownMenu {
   padding: 0px 16px;
 }
-.reportTitle{
+.reportTitle {
   margin-left: 140px;
   font-size: 24px;
   color: #283895;
   font-weight: 500;
 }
-.reportBody{
+.reportBody {
   padding: 10px;
 }
 @media only screen and (max-width: 640px) {
@@ -654,7 +653,6 @@ r .right_upper_section {
     height: max-content;
     overflow-y: auto;
     border: none;
-   
   }
 
   .reportPostModalHeader {
@@ -672,10 +670,10 @@ r .right_upper_section {
     margin-bottom: 0.1875rem;
     font-size: 0.625rem;
   }
-  .reportPostImage {
-    /* height: 438px;
-    width: 100%; */
-  }
+  /* .reportPostImage {
+    height: 438px;
+    width: 100%;
+  } */
   .dropdownImage {
     width: 15px;
     height: 15px;

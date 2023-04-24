@@ -125,10 +125,6 @@ const Notification = (props: NotificationProps): JSX.Element => {
     }
   });
 
-  const simulateNotification = (notificationType: string) => {
-    socket?.emit('api@user.com', { notificationType });
-  };
-
   const NotificationBodyHeader = () => {
     return (
       <>
@@ -305,15 +301,6 @@ const Notification = (props: NotificationProps): JSX.Element => {
   return (
     <>
       <div className={notificationCss.container}>
-        <Button style={{ marginRight: '20px' }} onClick={() => simulateNotification('like')}>
-          Simulate Like
-        </Button>
-        <Button style={{ marginRight: '20px' }} onClick={() => simulateNotification('comment')}>
-          Simulate Comment
-        </Button>
-        <Button style={{ marginRight: '20px' }} onClick={() => simulateNotification('post')}>
-          Simulate ReplyComment
-        </Button>
         <Dropdown className={notificationCss.dropdownContainer}>
           <Dropdown.Toggle
             variant="secondary"
