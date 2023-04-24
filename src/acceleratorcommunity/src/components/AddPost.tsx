@@ -4,7 +4,6 @@ import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
 import Form from 'react-bootstrap/Form';
 import WebContext from '../Context/WebContext';
-import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 import likePostCall from '../API/likePostCall';
@@ -12,7 +11,6 @@ import getAllPostsCall from '../API/getAllPostsCall';
 import Spinner from 'react-bootstrap/Spinner';
 import getPostByIdCall from '../API/getPostByIdCall';
 import addPostCall from '../API/addPostCall';
-import getUserCall from 'src/API/getUserCall';
 import addPostCommentCall from 'src/API/addPostCommentCall';
 import Link from 'next/link';
 import ShowShareCss from '../assets/ShowShare.module.css';
@@ -93,11 +91,23 @@ type BlockUserFields = {
 };
 
 const AddPost = (props: AddPostProps | any): JSX.Element => {
-  const { userToken, setUserToken, objectId, setObjectId, userObject, setUserObject } = {
+  const { userToken, objectId, userObject } = {
     ...useContext(WebContext),
   };
 
-  const router = useRouter();
+  interface ItemImage {
+    [key: string]: string;
+  }
+
+  const EventImage: ItemImage = {
+    Seminar:
+      'https://higherlogicdownload.s3.amazonaws.com/APSNET/UploadedImages/tAiEB79vTYq1gz2UEGu1_IMG_2866-L.jpg',
+    Conference: 'https://th.bing.com/th/id/OIP.IXdC6XgETCp5RaM3iQCb6QHaE8?pid=ImgDet&rs=1',
+    Announcement: 'https://th.bing.com/th/id/OIP.zPaWJzUBQwbXDjhCtCtI1gHaE8?pid=ImgDet&rs=1',
+    'Launch Event': 'https://live.staticflickr.com/808/39724254630_e9cdcb8e77_b.jpg',
+    Celebration: 'https://th.bing.com/th/id/OIP.E1RiHHXMHUcq0L0KvprXfQHaEn?pid=ImgDet&rs=1',
+  };
+
   const [showForm1, setShowForm1] = useState(false);
   let myPostArray: ReactElement<any, any>[] = [];
   let [posts, setPosts] = useState(myPostArray);
@@ -133,7 +143,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   let [disableAddEvent, setDisableAddevent] = useState(false);
   let [disableAddPoll, setDisableAddPoll] = useState(false);
   let [globalPostType, setGlobalPostType] = useState('TEXT_POST');
-  let isExpEditorActive = props?.sitecoreContext?.pageEditing;
 
   console.log('GLOBALPOSTTYPE', globalPostType);
   console.log('PollPost', pollPost);
@@ -243,32 +252,28 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   };
   // console.log('mention', addedPeers);
 
-  useEffect(() => {
-    if (userToken == '' && !isExpEditorActive) {
-      if (
-        typeof localStorage !== 'undefined' &&
-        localStorage.getItem('UserToken') != '' &&
-        localStorage.getItem('UserToken') != null
-      ) {
-        let token = localStorage.getItem('UserToken');
-        let userId = localStorage.getItem('ObjectId');
-        if (token != null && setUserToken != undefined) {
-          setUserToken(token);
-        }
-        if (userId != null && setObjectId != undefined) {
-          setObjectId(userId);
-        }
-      } else router.push('/login');
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (userToken == '' && !isExpEditorActive) {
+  //     if (
+  //       typeof localStorage !== 'undefined' &&
+  //       localStorage.getItem('UserToken') != '' &&
+  //       localStorage.getItem('UserToken') != null
+  //     ) {
+  //       let token = localStorage.getItem('UserToken');
+  //       if (token != null && setUserToken != undefined) {
+  //         setUserToken(token);
+  //       }
+  //     } else router.push('/login');
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    getUserCall(userToken, objectId).then((response) => {
-      if (setUserObject != undefined) {
-        setUserObject(response?.data?.data);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   getUserCall(userToken, objectId).then((response) => {
+  //     if (setUserObject != undefined) {
+  //       setUserObject(response?.data?.data);
+  //     }
+  //   });
+  // }, []);
 
   console.log('USEROBJECT', userObject);
 
@@ -1156,6 +1161,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   description={post?.event?.description}
                   date={post?.event?.eventDate}
                   eventType={post?.event?.eventType}
+                  url={EventImage[post?.event?.eventType]}
                 />
               </>
             ) : (
@@ -1989,6 +1995,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           createdBy: {
             firstName: userObject?.firstName,
             lastName: userObject?.lastName,
+            objectId: objectId,
           },
           event: eventPost?.event,
           createdOn: timestamp,
@@ -2000,6 +2007,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         },
       },
     };
+    setShowForm1(false);
     setMyAnotherArr((prevState: any) => {
       return [obj?.data?.data, ...prevState];
     });
@@ -2014,13 +2022,17 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       if (response?.data?.data) {
         addLatestCreatedPost(response?.data?.data, uniqId);
         // Empty Post Values
-        setShowForm1(false);
         setFile([]);
         setPostText('');
         setVideoLink([]);
         setDocs([]);
         setEditorState(() => EditorState.createEmpty());
+        setEventPost('');
+        setPollPost('');
+        setGlobalPostType('TEXT_POST');
+        setShowForm1(false);
       } else {
+        setShowForm1(true);
         setShowNofitication(true);
         setToastError(true);
         setToastMessage('Post Not Created !');
@@ -2428,19 +2440,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     'https://chinchincelebration.com/wp-content/uploads/2019/08/product-launch-events-min.png'
   );
 
-  interface ItemImage {
-    [key: string]: string;
-  }
-
-  const EventImage: ItemImage = {
-    Seminar:
-      'https://higherlogicdownload.s3.amazonaws.com/APSNET/UploadedImages/tAiEB79vTYq1gz2UEGu1_IMG_2866-L.jpg',
-    Conference: 'https://th.bing.com/th/id/OIP.IXdC6XgETCp5RaM3iQCb6QHaE8?pid=ImgDet&rs=1',
-    Announcement: 'https://th.bing.com/th/id/OIP.zPaWJzUBQwbXDjhCtCtI1gHaE8?pid=ImgDet&rs=1',
-    'Launch Event': 'https://live.staticflickr.com/808/39724254630_e9cdcb8e77_b.jpg',
-    Celebration: 'https://th.bing.com/th/id/OIP.E1RiHHXMHUcq0L0KvprXfQHaEn?pid=ImgDet&rs=1',
-  };
-
   useEffect(() => {
     props?.fields?.data?.datasource?.eventType?.targetItems.map((item: any) => {
       if (item?.title?.jsonValue?.value === 'Seminar')
@@ -2457,6 +2456,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       return item;
     });
   }, [props]);
+
+  if (typeof window !== 'undefined')
+    window?.addEventListener('scroll', () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      if (scrollTop + clientHeight >= scrollHeight) {
+        HandleScrollEvent();
+      }
+    });
 
   return (
     <>
@@ -2639,6 +2646,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                 description={eventPost?.event?.description}
                                 date={eventPost?.event?.eventDate}
                                 eventType={eventPost?.event?.eventType}
+                                url={EventImage[eventPost?.event?.eventType]}
                               />
                             </div>
                           ) : (
@@ -3212,34 +3220,36 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           ) : (
             posts
           )}
-          {ifReachedEnd ? (
-            !ifNoMoreData ? (
-              <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
-                <span style={{ marginRight: '15px', fontWeight: '600' }}>Loading.. </span>{' '}
-                <Spinner animation="border" />
-              </span>
+          <div style={{ height: '50px' }}>
+            {ifReachedEnd ? (
+              !ifNoMoreData ? (
+                <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
+                  <span style={{ marginRight: '15px', fontWeight: '600' }}>Loading.. </span>{' '}
+                  <Spinner animation="border" />
+                </span>
+              ) : (
+                <span
+                  style={{
+                    display: 'flex',
+                    padding: '10px',
+                    justifyContent: 'center',
+                    backgroundColor: 'lightBlue',
+                    borderRadius: '20px',
+                  }}
+                >
+                  No More Posts Available{' '}
+                  <img
+                    style={{ marginLeft: '10px' }}
+                    width="25px"
+                    src="https://cdn-icons-png.flaticon.com/512/927/927567.png"
+                    alt="smile"
+                  ></img>
+                </span>
+              )
             ) : (
-              <span
-                style={{
-                  display: 'flex',
-                  padding: '10px',
-                  justifyContent: 'center',
-                  backgroundColor: 'lightBlue',
-                  borderRadius: '20px',
-                }}
-              >
-                No More Posts Available{' '}
-                <img
-                  style={{ marginLeft: '10px' }}
-                  width="25px"
-                  src="https://cdn-icons-png.flaticon.com/512/927/927567.png"
-                  alt="smile"
-                ></img>
-              </span>
-            )
-          ) : (
-            ''
-          )}
+              ''
+            )}
+          </div>
         </div>
       </div>
       {showDeletePostPopup ? (
