@@ -1125,7 +1125,10 @@ const Profile = (props: any): JSX.Element => {
 
   const getUser = () => {
     getUserCall(userToken, objectId).then((response: any) => {
-      console.log('response', response);
+      console.log(
+        'response?.data?.data?.profilePictureUrl',
+        response?.data?.data?.profilePictureUrl
+      );
       setTempUserData({
         firstName: response?.data?.data?.firstName,
         lastName: response?.data?.data?.lastName,
@@ -1245,9 +1248,11 @@ const Profile = (props: any): JSX.Element => {
     const files = e?.target?.files;
     if (files?.length > 0) {
       UploadProfilePictureCall(files[0], userToken).then((response: any) => {
-        setImage({
-          preview: response?.data?.data,
-        });
+        if (response?.status === 200) {
+          setImage({
+            preview: URL?.createObjectURL(files[0]),
+          });
+        }
       });
     }
   };
@@ -1270,7 +1275,6 @@ const Profile = (props: any): JSX.Element => {
   } else {
     var name = tempUserData.firstName?.concat(' ' + tempUserData?.lastName);
   }
-
   return (
     <>
       <div className="profileAndImageContainer"></div>
@@ -1280,7 +1284,11 @@ const Profile = (props: any): JSX.Element => {
             <a className="backbtn">Back</a>
           </Link>
           <div className="imageContainer">
-            <img className="profilePic" src={tempUserData?.profilePictureUrl}></img>
+            {console.log('profilePictureUrl', tempUserData?.profilePictureUrl)}
+            <img
+              className="profilePic"
+              src={image?.preview !== '' ? image?.preview : tempUserData?.profilePictureUrl}
+            />
             <label className="imageUpload" htmlFor="uploadbutton">
               <div className="cameraContainer">
                 <img className="camera" src={CameraImg?.src} />
