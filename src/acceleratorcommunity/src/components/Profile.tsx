@@ -282,7 +282,7 @@ const Profile = (props: any): JSX.Element => {
             setStateValue(true);
             setToastSuccess(true);
             setToastMessage('Data updated successfully');
-            handleClose1()
+            handleClose1();
           } else {
             setToastError(true);
             setToastMessage('Something went wrong');
@@ -842,7 +842,7 @@ const Profile = (props: any): JSX.Element => {
           setStateValue(true);
           setToastSuccess(true);
           setToastMessage('Data updated successfully');
-          handleCloseLanguageForm()
+          handleCloseLanguageForm();
         } else {
           setToastError(true);
           setToastMessage('Something went wrong');
@@ -866,7 +866,7 @@ const Profile = (props: any): JSX.Element => {
           setStateValue(true);
           setToastSuccess(true);
           setToastMessage('Data updated successfully');
-          handleCloseFormForHobby()
+          handleCloseFormForHobby();
         } else {
           setToastError(true);
           setToastMessage('Something went wrong');
@@ -1250,7 +1250,7 @@ const Profile = (props: any): JSX.Element => {
 
   const handleChange = (e: any) => {
     const files = e?.target?.files;
-    setShowImage(false)
+    setShowImage(false);
     if (files?.length > 0) {
       UploadProfilePictureCall(files[0], userToken).then((response: any) => {
         if (response?.status === 200) {
@@ -1259,13 +1259,13 @@ const Profile = (props: any): JSX.Element => {
           });
           setToastMessage('Image Updated successfully');
           setToastSuccess(true);
-          setShowImage(true)
-        }else{
+          setShowImage(true);
+        } else {
           setToastMessage('Something Went Wrong');
           setToastError(true);
-          setShowImage(false)
+          setShowImage(false);
         }
-        setShowNofitication(true)
+        setShowNofitication(true);
       });
     }
   };
