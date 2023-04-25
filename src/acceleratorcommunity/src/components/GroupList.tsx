@@ -3,6 +3,8 @@ import { ComponentProps } from 'lib/component-props';
 import Image from 'next/image';
 import groupLogo from '../assets/images/groupLogo.svg';
 import moreLogo from '../assets/images/moreLogo.svg';
+import exploreGroup from '../assets/images/ExploreGroup_icon.svg';
+import joinGroup from '../assets/images/JoinGroup_icon.svg';
 import style from '../assets/groupList.module.css';
 import { useState } from 'react';
 import CreateGroup from './helperComponents/CreateGroup';
@@ -94,10 +96,10 @@ const GroupList = (props: GroupListProps): JSX.Element => {
                             <button
                               className={style.moreOptionButton}
                               onClick={() => handleExploreOnClick(ele.name)}
-                            >
+                            ><img className={style.imgJoinGroup} src = {exploreGroup.src}/>
                               Explore the group
                             </button>
-                            <button className={style.moreOptionButton}>Join Group</button>
+                            <button className={style.moreOptionButton}><img className ={style.imgGrouplist} src = {joinGroup.src} />Join Group</button>
                           </div>
                         )}
                       </div>
