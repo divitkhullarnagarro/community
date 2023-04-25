@@ -77,6 +77,9 @@ const EductionDetails = (props: any): JSX.Element => (
               autoFocus
               required
             >
+              <option selected disabled hidden value="">
+                Please Select Your Standard
+              </option>
               <option value="HIGH_SCHOOL" selected>
                 High School
               </option>
@@ -117,6 +120,10 @@ const EductionDetails = (props: any): JSX.Element => (
               placeholder="Grade"
               autoFocus
             >
+              {' '}
+              <option selected disabled hidden value="">
+                Please Select Your Grade
+              </option>
               <option value="A" selected>
                 A
               </option>
