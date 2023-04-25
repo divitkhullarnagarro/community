@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import WebContext from './WebContext';
 import { useRouter } from 'next/router';
+import { decryptString } from '../components/HelperFunctions/EncryptDecrypt';
 
 function WebProvider(props: any) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,6 +15,7 @@ function WebProvider(props: any) {
   useEffect(() => {
     if (userToken == '') {
       let token = localStorage.getItem('UserToken');
+      token ? (token = decryptString(token)) : '';
       if (typeof localStorage !== 'undefined' && token != '' && token != null) {
         setUserToken(token);
       } else router.push('/login');
@@ -24,6 +26,7 @@ function WebProvider(props: any) {
     if (userToken == '') {
       let obj = localStorage.getItem('UserObject') as any;
       if (typeof localStorage !== 'undefined' && obj != '' && obj != null) {
+        obj = decryptString(obj);
         obj = JSON.parse(obj);
         let objId = obj?.objectId;
         setObjectId(objId);

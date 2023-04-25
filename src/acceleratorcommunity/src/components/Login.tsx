@@ -10,6 +10,7 @@ import loginCss from '../assets/login.module.css';
 import Spinner from 'react-bootstrap/Spinner';
 import SocketContext from 'src/Context/SocketContext';
 import getUserCall from 'src/API/getUserCall';
+import { encryptString } from './HelperFunctions/EncryptDecrypt';
 // import star from '../assets/images/star.png';
 
 type LoginProps = ComponentProps & {
@@ -64,7 +65,9 @@ const Login = (props: LoginProps): JSX.Element => {
   });
   const targetItems = props?.fields?.data?.datasource;
   const router = useRouter();
-  const { setIsLoggedIn, setUserToken, setObjectId, userToken } = { ...useContext(WebContext) };
+  const { setIsLoggedIn, setUserToken, setObjectId, userToken, setUserObject } = {
+    ...useContext(WebContext),
+  };
 
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
@@ -119,20 +122,22 @@ const Login = (props: LoginProps): JSX.Element => {
       let response = await loginUserCall(email, password);
       if (response?.status == 200 && setIsLoggedIn != undefined && setUserToken != undefined) {
         setIsLoggedIn(true);
+        let encTok = await encryptString(response?.data?.data?.access_token);
+        let encObjId = await encryptString(email);
         setUserToken(response?.data?.data?.access_token);
         if (typeof localStorage !== 'undefined') {
-          localStorage.setItem('UserToken', response?.data?.data?.access_token);
-          localStorage.setItem('ObjectId', email);
+          localStorage.setItem('UserToken', encTok);
+          localStorage.setItem('ObjectId', encObjId);
         }
-        if (setObjectId != undefined) {
-          setObjectId(email);
-        }
+        if (setObjectId) setObjectId(email);
         let getUserResp = await getUserCall(response?.data?.data?.access_token, email);
+        if (setUserObject) setUserObject(getUserResp?.data?.data);
         if (getUserResp?.data?.success == true) {
-          localStorage.setItem('UserObject', JSON.stringify(getUserResp?.data?.data));
+          let encUserObj = encryptString(JSON.stringify(getUserResp?.data?.data));
+          localStorage.setItem('UserObject', encUserObj);
         }
         if (typeof localStorage !== 'undefined' && typeof document !== 'undefined') {
-          document.cookie = `UserToken=${response?.data?.data?.access_token};path=/;`;
+          document.cookie = `UserToken=${encTok};path=/;`;
           let routeToUrl = getRouteToUrlFromCookie();
           if (routeToUrl !== '' && routeToUrl != null) {
             router.push(decodeURIComponent(routeToUrl));
