@@ -83,11 +83,12 @@ function CreateGroup({
         <Modal.Header closeButton>
           <Modal.Title className={style.modalTitle}>Create Group</Modal.Title>
         </Modal.Header>
+        <form className="form" onSubmit={() => createGroupSubmit()}>
         <Modal.Body>
           <p className="text-danger" style={{ fontSize: '10px' }}>
-            Mendatory Fields *
+            Mandatory Fields *
           </p>
-          <form className="form">
+         
             <div className="form-group">
               {/* <label className={`${style.requiredField} form-label`}>Name</label> */}
               <input
@@ -176,7 +177,7 @@ function CreateGroup({
               onClick={addMemberButtonClick}
                
             > */}
-            <button
+            <button type='button'
               className={style.addMemberButton}
               // style={{ fontSize: '15px', marginLeft: '15px', marginTop: '2px' }}
               onClick={addMemberButtonClick}
@@ -185,21 +186,23 @@ function CreateGroup({
               + Add Member 
             </button>
             {/* </button> */}
-          </form>
+          
         </Modal.Body>
         <Modal.Footer>
-          <button className={style.closeButton} onClick={() => setCreateGroupVisibel(false)}>
+        
+          <button type='button' className={style.closeButton} onClick={() => setCreateGroupVisibel(false)}>
             Close
           </button>
-          <button
+          <button type='submit'
             // variant="primary"
             className={style.saveButton}
-            onClick={() => createGroupSubmit()}
-            disabled={!(nameValue && descriptionValue && addMemberList.length > 0)}
+           // onClick={() => createGroupSubmit()}
+            // disabled={!(nameValue && descriptionValue && addMemberList.length > 0)}
           >
             Save
           </button>
         </Modal.Footer>
+        </form>
       </Modal>
     </div>
   );
