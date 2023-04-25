@@ -1,6 +1,12 @@
 import { Button, Form, Modal } from 'react-bootstrap';
 
 const PersaonalDetailsOfUser = (props: any): JSX.Element => (
+  <>
+    <div className="editBtn">
+      <Button className="profileBtn" onClick={props.handleShow1}>
+        <img src="https://cdn-icons-png.flaticon.com/16/1827/1827933.png" alt="edit" width="20px" />
+      </Button>
+    </div>
     <div>
       <Modal show={props.showForm1} onHide={props.handleClose1}>
         <Modal.Header closeButton>
@@ -282,84 +288,84 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => (
         </Modal.Footer>
       </Modal>
 
-    <Modal show={props.intrestForm} onHide={props.handleCloseFormForIntrest}>
-      <Modal.Header closeButton>
-        <Modal.Title>Intrest</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Intrest</Form.Label>
-            <Form.Control
-              onChange={(e) => props.handleIntrest(e.target.value)}
-              value={props.editUserData?.intrest}
-              type="text"
-              placeholder="All intrest should be comma seperated"
-            />
-          </Form.Group>
-        </Form>
-        <button className="addLanguageBtn" onClick={props.addInterest}>
-          Add Interest
-        </button>
-        <div className="languageConatiner">
-          {props?.userInterests?.length > 0 &&
-            props?.userInterests?.map((interest: any, index: number) => {
-              return (
-                <div className="specificLanguage" key={index}>
-                  {interest}
-                  <div onClick={() => props.filterInterest(interest)}>
-                    <img
-                      className="cross"
-                      src="https://cdn-icons-png.flaticon.com/512/10396/10396993.png"
-                      alt="delete"
-                    />
+      <Modal show={props.intrestForm} onHide={props.handleCloseFormForIntrest}>
+        <Modal.Header closeButton>
+          <Modal.Title>Intrest</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+              <Form.Label>Intrest</Form.Label>
+              <Form.Control
+                onChange={(e) => props.handleIntrest(e.target.value)}
+                value={props.editUserData?.intrest}
+                type="text"
+                placeholder="All intrest should be comma seperated"
+              />
+            </Form.Group>
+          </Form>
+          <button className="addLanguageBtn" onClick={props.addInterest}>
+            Add Interest
+          </button>
+          <div className="languageConatiner">
+            {props?.userInterests?.length > 0 &&
+              props?.userInterests?.map((interest: any, index: number) => {
+                return (
+                  <div className="specificLanguage" key={index}>
+                    {interest}
+                    <div onClick={() => props.filterInterest(interest)}>
+                      <img
+                        className="cross"
+                        src="https://cdn-icons-png.flaticon.com/512/10396/10396993.png"
+                        alt="delete"
+                      />
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={props.handleCloseFormForIntrest}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={props.IntrestFormData}>
-          Save Changes
-        </Button>
-      </Modal.Footer>
-    </Modal>
+                );
+              })}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={props.handleCloseFormForIntrest}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={props.IntrestFormData}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-    <Modal show={props.showForm2} onHide={props.handleCloseForm2}>
-      <Modal.Header closeButton>
-        <Modal.Title>Summary</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Summary</Form.Label>
-            <Form.Control
-              onChange={(e) => props.setSummaryValue(e.target.value)}
-              value={props.editUserData?.summary}
-              as="textarea"
-              rows={5}
-            />
-            {props.errorState?.summary ? (
-              <span className="error">Max limit is 200 characters</span>
-            ) : (
-              ' '
-            )}
-          </Form.Group>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={props.handleCloseForm2}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={props.submitForm2}>
-          Save Changes
-        </Button>
-      </Modal.Footer>
-    </Modal>
+      <Modal show={props.showForm2} onHide={props.handleCloseForm2}>
+        <Modal.Header closeButton>
+          <Modal.Title>Summary</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+              <Form.Label>Summary</Form.Label>
+              <Form.Control
+                onChange={(e) => props.setSummaryValue(e.target.value)}
+                value={props.editUserData?.summary}
+                as="textarea"
+                rows={5}
+              />
+              {props.errorState?.summary ? (
+                <span className="error">Max limit is 200 characters</span>
+              ) : (
+                ' '
+              )}
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={props.handleCloseForm2}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={props.submitForm2}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <div className="personalInformationParentContainer">
         <div className="personaleInformationContainer">
@@ -465,6 +471,7 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => (
         </div>
       </div>
     </div>
+  </>
 );
 
 export default PersaonalDetailsOfUser;
