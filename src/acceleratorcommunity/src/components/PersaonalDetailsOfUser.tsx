@@ -372,7 +372,6 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => (
             </div>
             <div className="infomationContainer">
               <div className="infoTag">Gender</div>
-              {console.log('props?.tempUserData?.gender', props?.tempUserData?.gender)}
               <div className="infoTagValue">{props?.tempUserData?.gender}</div>
             </div>
             <div className="infomationContainer">
@@ -403,7 +402,6 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => (
               <div className="infoTag">Website</div>
               <div className="infoTagValue">
                 <a className="websiteUrl" href={props?.tempUserData?.websiteUrl} target="_blank">
-                  {console.log("props?.tempUserData?.websiteUrl",props?.tempUserData?.websiteUrl)}
                   {props?.tempUserData?.websiteUrl}
                 </a>
               </div>
