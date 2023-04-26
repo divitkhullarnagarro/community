@@ -15,6 +15,7 @@ import UserWorkExperience from './UserWorkExperience';
 // import Link from 'next/link';
 import React from 'react';
 import DotLoader from './DotLoader';
+import EventListing from './helperComponents/EventListing';
 
 type User = {
   firstName: string | undefined;
@@ -1374,6 +1375,14 @@ const Profile = (props: any): JSX.Element => {
             >
               Work Details
             </div>
+            <div
+              className={
+                details === 'events' ? 'personalDetails personalDetailsActive' : 'personalDetails'
+              }
+              onClick={() => handlePersonalDetails('events')}
+            >
+              Events
+            </div>
             {/* <div
               className={
                 details === 'banner' ? 'personalDetails personalDetailsActive' : 'personalDetails'
@@ -1385,7 +1394,9 @@ const Profile = (props: any): JSX.Element => {
           </div>
         </div>
         <div className="leftContainerForProfile">
-          <div className="leftContainerForProfileHeadng">Edit Profile</div>
+          {!(details == 'events') && (
+            <div className="leftContainerForProfileHeadng">Edit Profile</div>
+          )}
           <div className="infoContainerForProfile">
             {details === 'personal' ? (
               <div className="profileInfo">
@@ -1535,6 +1546,10 @@ const Profile = (props: any): JSX.Element => {
                   checkboxRef={checkboxRef}
                   userLocationState={userLocationState}
                 />
+              </div>
+            ) : details === 'events' ? (
+              <div className="profileInfo">
+                <EventListing />
               </div>
             ) : (
               <div className="bannerContainerForProfile">

@@ -32,6 +32,8 @@ import getCommentsReplyCall from 'src/API/getCommentsReplyCall';
 import postCommentReplyCall from 'src/API/postCommentReplyCall';
 import downVote from '../assets/images/dislikeIcon.svg';
 import CreateModalPopup from './helperComponents/CreateModalPopup';
+import AxiosRequest from 'src/API/AxiosRequest';
+import { editCommentUrl } from '../assets/helpers/constants';
 import videoIcon from '../assets/images/AddVideo_icon.svg';
 import pollIcon from '../assets/images/CreatePoll_icon.svg';
 import addBlogIcon from '../assets/images/AddBlogPost_icon.svg';
@@ -773,6 +775,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       createdOn: timestamp,
       isRespPending: true,
       isLoadingReplies: false,
+      isEditOn: false,
     };
     setMyAnotherArr((prevState: any) => {
       const updatedPosts = prevState.map((post: any) => {
@@ -941,6 +944,67 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       setToastSuccess(true);
       setToastMessage('Post Deleted Successfully !');
     }
+  }
+
+  //Edit Comment Open
+  function commentEditOn(postId: any, commentId: any, show: boolean) {
+    setMyAnotherArr((prevPosts: any) => {
+      return prevPosts.map((post: any) => {
+        if (post?.id === postId) {
+          const updatedComments = post?.comments?.map((comment: any) => {
+            if (comment.id === commentId) {
+              return {
+                ...comment,
+                isEditOn: show,
+              };
+            }
+            return comment;
+          });
+          return {
+            ...post,
+            comments: updatedComments,
+          };
+        }
+        return post;
+      });
+    });
+  }
+
+  //Edit Update Comment Open
+  function updateComment(postId: any, commentId: any, updatedString: any) {
+    setMyAnotherArr((prevPosts: any) => {
+      return prevPosts.map((post: any) => {
+        if (post?.id === postId) {
+          const updatedComments = post?.comments?.map((comment: any) => {
+            if (comment.id === commentId) {
+              return {
+                ...comment,
+                text: updatedString,
+              };
+            }
+            return comment;
+          });
+          return {
+            ...post,
+            comments: updatedComments,
+          };
+        }
+        return post;
+      });
+    });
+  }
+
+  //Edit Comment
+  async function editComment(event: any, postId: any, commentId: any) {
+    event.preventDefault();
+    let editComm = event?.target[0].value;
+    commentEditOn(postId, commentId, false);
+    updateComment(postId, commentId, editComm);
+    await AxiosRequest({
+      method: 'PUT',
+      url: editCommentUrl,
+      data: { id: commentId, text: editComm },
+    });
   }
 
   //Function To Handle Posts Feed and Construct React.jsx using data
@@ -1372,7 +1436,49 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         <h5 className="commentHeadingTop">
                           {comment?.createdBy?.firstName} {comment?.createdBy?.lastName}
                         </h5>
-                        <p className="commentHeading">{comment?.text}</p>
+                        {comment?.isEditOn ? (
+                          <>
+                            <Form
+                              style={{ display: 'flex', marginTop: '8px' }}
+                              onSubmit={(e) => editComment(e, post?.id, comment?.id)}
+                            >
+                              <Form.Group style={{ width: '100%' }} controlId="formBasicEmail">
+                                <Form.Control type="text" defaultValue={comment?.text} />
+                              </Form.Group>
+                              <Button
+                                style={{
+                                  marginLeft: '10px',
+                                  backgroundColor: '#47D7AC',
+                                  color: 'white',
+                                  borderRadius: '5px',
+                                  border: 'none',
+                                }}
+                                variant="primary"
+                                type="submit"
+                              >
+                                Save
+                              </Button>
+                            </Form>
+                            {/* <span>
+                              <p className="commentHeading" contentEditable={comment?.isEditOn}>
+                                {comment?.text}
+                              </p>{' '}
+                              <button
+                                style={{
+                                  border: 'none',
+                                  backgroundColor: '#47D7AC',
+                                  color: 'white',
+                                  borderRadius: '5px',
+                                  marginTop: '5px',
+                                }}
+                              >
+                                save
+                              </button>
+                            </span> */}
+                          </>
+                        ) : (
+                          <p className="commentHeading">{comment?.text}</p>
+                        )}
                         <div
                           onClick={() => getAllupVotesAndDownVotes(comment?.id)}
                           className="upvoteDownvoteContainer"
@@ -1441,6 +1547,20 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                             className="commentReply"
                           >
                             Delete
+                          </button>
+                        ) : (
+                          ''
+                        )}
+                        {comment?.createdBy.objectId === objectId && objectId ? (
+                          <button
+                            disabled={comment?.isRespPending}
+                            style={comment?.isRespPending ? { opacity: 0.5 } : {}}
+                            onClick={() => {
+                              commentEditOn(post?.id, comment?.id, !comment?.isEditOn);
+                            }}
+                            className="commentReply"
+                          >
+                            Edit
                           </button>
                         ) : (
                           ''
@@ -2832,7 +2952,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 }}
               >
                 <div className={styles.eventPostContainer}>
-                  <Form onSubmit={(e: any) => submitEventForm(e)} style={{ fontSize: '14px'}}>
+                  <Form onSubmit={(e: any) => submitEventForm(e)} style={{ fontSize: '14px' }}>
                     <Modal.Header closeButton>
                       <Modal.Title className={styles.AddEventModalHeader}>
                         Create Event Post
