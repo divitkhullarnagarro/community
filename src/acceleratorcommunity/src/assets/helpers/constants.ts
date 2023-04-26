@@ -6,6 +6,7 @@ export const updatePasswordUrl = `${javaHost}/user-service/api/v1/users/change-p
 export const addAllPeersUrl = `${javaHost}/graph-service/api/v1/graph/peers`;
 export const addPeersBySearchUrl = `${javaHost}/graph-service/api/v1/graph/peers?keyword=`;
 export const addPeersPaginationUrl = `${javaHost}/graph-service/api/v1/graph/peers?`;
+export const editCommentUrl = `${javaHost}/graph-service/api/v1/graph/post/comment`;
 
 export const Algorithm = 'aes-256-cbc';
 export const Key = [

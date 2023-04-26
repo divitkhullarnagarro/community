@@ -10,7 +10,7 @@ import loginCss from '../assets/login.module.css';
 import Spinner from 'react-bootstrap/Spinner';
 import SocketContext from 'src/Context/SocketContext';
 import getUserCall from 'src/API/getUserCall';
-import { encryptString } from './HelperFunctions/EncryptDecrypt';
+import { encryptString } from '../assets/helpers/EncryptDecrypt';
 // import star from '../assets/images/star.png';
 
 type LoginProps = ComponentProps & {

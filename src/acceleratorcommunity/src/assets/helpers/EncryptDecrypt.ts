@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-import { Key, Algorithm } from '../../assets/helpers/constants';
+import { Key, Algorithm } from './constants';
 const iv = crypto.randomBytes(16);
 
 export function encryptString(input: string): string {

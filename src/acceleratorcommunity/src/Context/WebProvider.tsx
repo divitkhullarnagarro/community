@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import WebContext from './WebContext';
 import { useRouter } from 'next/router';
-import { decryptString } from '../components/HelperFunctions/EncryptDecrypt';
+import { decryptString } from '../assets/helpers/EncryptDecrypt';
 
 function WebProvider(props: any) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
