@@ -36,7 +36,7 @@ SharedFields:
           }
                 eventType{
             targetItems{
-              ... on ContainerItem
+              ... on EventData
               {
                 title{
                   jsonValue
@@ -85,11 +85,11 @@ Languages:
       Value: 20230309T071347Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "6ac76c34-bcf1-4f48-a6eb-6595740a65be"
+      Value: "f0ca3f82-48d7-456d-92cc-7ec7bc0402b5"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\ankit.rastogi@nagarro.com
+        sitecore\nishant.tiwari@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230406T062656Z
+      Value: 20230419T071113Z

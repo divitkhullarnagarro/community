@@ -34,6 +34,10 @@ import downVote from '../assets/images/dislikeIcon.svg';
 import CreateModalPopup from './helperComponents/CreateModalPopup';
 import AxiosRequest from 'src/API/AxiosRequest';
 import { editCommentUrl } from '../assets/helpers/constants';
+import videoIcon from '../assets/images/AddVideo_icon.svg';
+import pollIcon from '../assets/images/CreatePoll_icon.svg';
+import addBlogIcon from '../assets/images/AddBlogPost_icon.svg';
+import createEventIcon from '../assets/images/CreateEventPost_icon.svg';
 
 // Rich Text Editor Files Import Start
 import { EditorState, convertToRaw } from 'draft-js';
@@ -52,19 +56,18 @@ const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mo
 import Deleteimage from '../assets/images/deleteImg.png';
 import BlockUserImage from '../assets/images/BlockUser.jpg';
 import React from 'react';
-import upVoteCall from 'src/API/upVote';
-import downVoteCall from 'src/API/downVote';
+// import upVoteCall from 'src/API/upVote';
+// import downVoteCall from 'src/API/downVote';
 import getAllDownVotesCall from 'src/API/getAllDownVotesCall';
 import getAllUpVotesCall from 'src/API/getAllUpVotes';
 import Profile from '../assets/images/profile.png';
 import addPostCss from '../assets/addPosts.module.css';
 import blockUserCall from 'src/API/blockUnblockUserCall';
 import user from '../assets/images/user.png';
-import location from '../assets/images/Location.png';
-import camera from '../assets/images/Rounded.png';
+// import location from '../assets/images/Location.png';
 import image from '../assets/images/Vector.png';
 import pin from '../assets/images/Vectorpin.png';
-import smile from '../assets/images/Vectorsmile.png';
+// import smile from '../assets/images/Vectorsmile.png';
 import like from '../assets/images/like.png';
 import comment from '../assets/images/comment.png';
 import share from '../assets/images/share.png';
@@ -73,7 +76,7 @@ import EventCard from './EventCard';
 import PollCard from './PollCard';
 import deletePostCall from 'src/API/deletePostCall';
 import deleteCommentCall from 'src/API/deleteCommentCall';
-import articleIcon from '../assets/images/ArticleIcon.svg';
+// import articleIcon from '../assets/images/ArticleIcon.svg';
 // import PollCard from './PollCard';
 import reportUserCall from 'src/API/reportUserCall';
 
@@ -435,17 +438,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setShowSpinner(false);
   };
 
-  const handleUpvote = (commentId: string) => {
-    upVoteCall(userToken, commentId);
-  };
-  const handleDownvote = (commentId: string) => {
-    downVoteCall(userToken, commentId);
-  };
-
-  //RemoveMe and Implement Upvote & DownVote
-  handleDownvote;
-  handleUpvote;
-
+  // const handleUpvote = (commentId: string) => {
+  //   upVoteCall(userToken, commentId);
+  // };
+  // const handleDownvote = (commentId: string) => {
+  //   downVoteCall(userToken, commentId);
+  // };
   const BlockUserPopup = () => {
     return (
       <>
@@ -1303,7 +1301,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu className={ShowShareCss.dropdownMenu}>
-                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                  <Dropdown.Item
+                    className={ShowShareCss.dropdownItem}
+                    target="_blank"
+                    href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
+                  >
                     <div className={ShowShareCss.overlayItem}>
                       <div className={ShowShareCss.dropdownImage}>
                         <NextImage
@@ -1314,16 +1316,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           height={25}
                         />
                       </div>
-                      <Link
-                        href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
-                      >
-                        <a className={ShowShareCss.targetIcon} target="_blank">
-                          Share on WhatsApp
-                        </a>
-                      </Link>
+                      <span className={ShowShareCss.targetIcon}>Share on WhatsApp</span>
                     </div>
                   </Dropdown.Item>
-                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                  <Dropdown.Item
+                    className={ShowShareCss.dropdownItem}
+                    target="_blank"
+                    href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
+                  >
                     <div className={ShowShareCss.overlayItem}>
                       <div className={ShowShareCss.dropdownImage}>
                         <NextImage
@@ -1334,16 +1334,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           height={25}
                         />
                       </div>
-                      <Link
-                        href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
-                      >
-                        <a className={ShowShareCss.targetIcon} target="_blank">
-                          Share on Twitter
-                        </a>
-                      </Link>
+                      <span className={ShowShareCss.targetIcon}>Share on Twitter</span>
                     </div>
                   </Dropdown.Item>
-                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                  <Dropdown.Item
+                    className={ShowShareCss.dropdownItem}
+                    target="_blank"
+                    href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
+                  >
                     <div className={ShowShareCss.overlayItem}>
                       <div className={ShowShareCss.dropdownImage}>
                         <NextImage
@@ -1354,16 +1352,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           height={25}
                         />
                       </div>
-                      <Link
-                        href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
-                      >
-                        <a className={ShowShareCss.targetIcon} target="_blank">
-                          Share on LinkedIn
-                        </a>
-                      </Link>
+                      <span className={ShowShareCss.targetIcon}>Share on LinkedIn</span>
                     </div>
                   </Dropdown.Item>
-                  <Dropdown.Item className={ShowShareCss.dropdownItem}>
+                  <Dropdown.Item
+                    className={ShowShareCss.dropdownItem}
+                    target="_blank"
+                    href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
+                  >
                     <div className={ShowShareCss.overlayItem}>
                       <div className={ShowShareCss.dropdownImage}>
                         <NextImage
@@ -1374,13 +1370,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           height={25}
                         />
                       </div>
-                      <Link
-                        href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
-                      >
-                        <a className={ShowShareCss.targetIcon} target="_blank">
-                          Share on Facebook
-                        </a>
-                      </Link>
+                      <span className={ShowShareCss.targetIcon}>Share on Facebook</span>
                     </div>
                   </Dropdown.Item>
                 </Dropdown.Menu>
@@ -2842,7 +2832,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 {/* <span>Image</span> */}
                 <NextImage
-                  field={camera}
+                  field={image}
                   editable={true}
                   style={{ opacity: disableAddImage ? '0.2' : '1' }}
                   alt="Profile-Pic"
@@ -2866,6 +2856,38 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 </Form.Group>
               </button>
               <button
+                className={styles.addPostFileButtons}
+                onClick={() => {
+                  setShowForm1(true);
+                  clickmebuttonHandler3();
+                }}
+                disabled={disableAddVideo}
+                type="button"
+              >
+                {/* <span>Video</span> */}
+                <NextImage
+                  field={videoIcon}
+                  editable={true}
+                  alt="PostItems"
+                  width={18}
+                  height={18}
+                  style={{ opacity: disableAddVideo ? '0.2' : '1' }}
+                />
+                <Form.Group
+                // className="mb-3"
+                >
+                  <Form.Control
+                    style={{ display: 'none' }}
+                    onChange={(e) => setPostVideoValue(e)}
+                    type="file"
+                    placeholder="Post Video"
+                    // multiple
+                    accept=".mp4"
+                    id="clickmebutton3"
+                  />
+                </Form.Group>
+              </button>
+              <button
                 disabled={disableAddVideo}
                 className={styles.addPostFileButtons}
                 onClick={() => {
@@ -2876,7 +2898,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 {/* <span>Doc</span> */}
                 <NextImage
-                  field={image}
+                  field={pin}
                   editable={true}
                   alt="PostItems"
                   width={18}
@@ -2902,38 +2924,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 className={styles.addPostFileButtons}
                 onClick={() => {
                   setShowForm1(true);
-                  clickmebuttonHandler3();
-                }}
-                disabled={disableAddVideo}
-                type="button"
-              >
-                {/* <span>Video</span> */}
-                <NextImage
-                  field={pin}
-                  editable={true}
-                  alt="PostItems"
-                  width={18}
-                  height={18}
-                  style={{ opacity: disableAddVideo ? '0.2' : '1' }}
-                />
-                <Form.Group
-                // className="mb-3"
-                >
-                  <Form.Control
-                    style={{ display: 'none' }}
-                    onChange={(e) => setPostVideoValue(e)}
-                    type="file"
-                    placeholder="Post Video"
-                    // multiple
-                    accept=".mp4"
-                    id="clickmebutton3"
-                  />
-                </Form.Group>
-              </button>
-              <button
-                className={styles.addPostFileButtons}
-                onClick={() => {
-                  setShowForm1(true);
                   setShowEvent(true);
                 }}
                 type="button"
@@ -2941,7 +2931,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 {/* <span>Event</span> */}
                 <NextImage
-                  field={location}
+                  field={createEventIcon}
                   style={{ opacity: disableAddEvent ? '0.2' : '1' }}
                   editable={true}
                   alt="PostItems"
@@ -2961,8 +2951,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   setEventType('Select Event Type');
                 }}
               >
-                <div>
-                  <Form onSubmit={(e: any) => submitEventForm(e)} style={{ fontSize: '15px' }}>
+                <div className={styles.eventPostContainer}>
+                  <Form onSubmit={(e: any) => submitEventForm(e)} style={{ fontSize: '14px' }}>
                     <Modal.Header closeButton>
                       <Modal.Title className={styles.AddEventModalHeader}>
                         Create Event Post
@@ -2977,7 +2967,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           <img src={Profile.src} />
                         </div>
                         <div style={{ alignSelf: 'center' }}>
-                          <div style={{ fontSize: '14px', fontWeight: '600' }}>
+                          <div style={{ fontSize: '1rem', fontWeight: '600' }}>
                             {userObject?.firstName
                               ? `${userObject?.firstName} ${userObject?.lastName}`
                               : 'John Doe'}
@@ -3103,7 +3093,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 {/* <span>Poll</span> */}
                 <NextImage
-                  field={smile}
+                  field={pollIcon}
                   editable={true}
                   alt="PostItems"
                   style={{ opacity: disableAddPoll ? '0.2' : '1' }}
@@ -3231,14 +3221,21 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </Form>
                 </div>
               </Modal>
-              <button className={styles.pollButton} type="button">
+              <button
+                className={styles.addPostFileButtons}
+                onClick={() => {
+                  setShowForm1(true);
+                }}
+                type="button"
+              >
                 <Link href="/addblogpost">
                   <NextImage
-                    field={articleIcon}
+                    field={addBlogIcon}
                     editable={true}
                     alt="PostItems"
                     width={18}
                     height={18}
+                    style={{ opacity: disableAddDoc ? '0.2' : '1' }}
                   />
                 </Link>
               </button>

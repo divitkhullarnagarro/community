@@ -3,42 +3,40 @@ import { Button, Form, Modal } from 'react-bootstrap';
 const EductionDetails = (props: any): JSX.Element => (
   <>
     <div className="EducationContainer">
-      <Button className="profileBtn" onClick={props.addEducationDetails}>
-        <img
-          src="https://www.svgrepo.com/show/170952/add-button.svg"
-          alt="edit"
-          width="30px"
-          style={{ marginRight: '20px' }}
-        />
-      </Button>
       {props.qualifications?.length > 0
-        ? props.qualifications?.map((data: any) => {
+        ? props.qualifications?.map((data: any, index: number) => {
             return (
-              <div>
-                <Button className="profileBtn" onClick={() => props?.editEducationmData(data?.qid)}>
+              <div key={index} className="itemContainer">
+                <div className="instituteDetails">
+                  <div className="instituteFields instituteName">{data?.instituteName}</div>
+                  <div className="instituteFields">
+                    {data?.city}, {data?.state} - {data?.pincode}
+                  </div>
+                  <div className="instituteFields">{data?.country}</div>
+                  <div className="instituteFields">{data?.standard}</div>
+                  <div className="instituteFields instituteTenure">
+                    {data?.startDate || '20XX'} - {data?.endDate || '20XX'}
+                  </div>
+                  <div className="instituteFields">{data?.grade}</div>
+                  <div className="instituteFields">{data?.percentage}</div>
+                  <div className="instituteFields">{data?.remarks}</div>
+                </div>
+                <button className="itemEditBtn"   onClick={() => props?.editEducationmData(data?.qid)}>
                   <img
                     src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
                     alt="edit"
-                    width="30px"
-                    style={{ marginRight: '20px' }}
+                    width="20px"
                   />
-                </Button>
-                <div>{data?.city}</div>
-                <div>{data?.country}</div>
-                <div>{data?.endDate}</div>
-                <div>{data?.grade}</div>
-                <div>{data?.instituteName}</div>
-                <div>{data?.percentage}</div>
-                <div>{data?.pincode}</div>
-                <div>{data?.remarks}</div>
-                <div>{data?.standard}</div>
-                <div>{data?.startDate}</div>
-                <div>{data?.state}</div>
-                <div className="border"></div>
+                </button>
               </div>
             );
           })
         : ''}
+      <div className="addNewItem">
+        <Button onClick={props.addEducationDetails}>
+          <span>Add Institute</span>
+        </Button>
+      </div>
     </div>
 
     <Modal show={props.showEducationModal} onHide={props.handleCloseForEducation}>
@@ -79,6 +77,9 @@ const EductionDetails = (props: any): JSX.Element => (
               autoFocus
               required
             >
+              <option selected disabled hidden value="">
+                Please Select Your Standard
+              </option>
               <option value="HIGH_SCHOOL" selected>
                 High School
               </option>
@@ -119,6 +120,10 @@ const EductionDetails = (props: any): JSX.Element => (
               placeholder="Grade"
               autoFocus
             >
+              {' '}
+              <option selected disabled hidden value="">
+                Please Select Your Grade
+              </option>
               <option value="A" selected>
                 A
               </option>

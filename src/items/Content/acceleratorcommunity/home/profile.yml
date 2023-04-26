@@ -23,10 +23,42 @@ Languages:
           <d
             id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
             <r
+              uid="{1325E204-81C8-4FA4-ADB0-B57AA4C737E7}"
+              p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
+              s:ds="{94AD1290-B1EA-4C4E-8507-B22B02E68B19}"
+              s:id="{78BAF5D7-D604-454E-B796-8CBB67AA4FE2}"
+              s:par="CSSStyles"
+              s:ph="/jss-header/col2-{E74FD470-62D5-4535-ADDE-AA69547B15BC}-0"
+              s:ccb="Clear on publish" />
+            <r
+              uid="{E8EC5A0A-C1B5-45ED-831B-DA2119C35BB2}"
+              p:after="r[@uid='{1325E204-81C8-4FA4-ADB0-B57AA4C737E7}']"
+              s:ds="{60828F2C-A954-413B-B5DE-FC77AF7C9F13}"
+              s:id="{67F9F9E6-8533-467F-B7D7-13CC8EE7498F}"
+              s:par="CSSStyles"
+              s:ph="/jss-header/col1-{E74FD470-62D5-4535-ADDE-AA69547B15BC}-0"
+              s:ccb="Clear on publish" />
+            <r
               uid="{AF962EDD-C780-4DE1-9D62-A3E748A56483}"
-              p:after="*[1=2]"
+              p:after="r[@uid='{E8EC5A0A-C1B5-45ED-831B-DA2119C35BB2}']"
               s:id="{724D46F4-60DD-4733-A17E-FFA536D42BBE}"
               s:ph="jss-main" />
+            <r
+              uid="{E74FD470-62D5-4535-ADDE-AA69547B15BC}"
+              p:after="r[@uid='{AF962EDD-C780-4DE1-9D62-A3E748A56483}']"
+              s:ds="{AB3AEF4C-1276-4441-83D2-810D05708880}"
+              s:id="{44F40912-35E3-43E6-8C36-6488DC75421E}"
+              s:par="CSSStyles"
+              s:ph="jss-header"
+              s:ccb="Clear on publish" />
+            <r
+              uid="{BE27F674-015E-4AAA-8D61-5C6721F6957B}"
+              p:after="*[1=2]"
+              s:ds="{A85E619F-7F82-4795-9E12-85783900263D}"
+              s:id="{66B09AA5-3A20-4FB1-ABC2-D1AE2DF6BE09}"
+              s:par="CSSStyles"
+              s:ph="/jss-header/col2-{E74FD470-62D5-4535-ADDE-AA69547B15BC}-0"
+              s:ccb="Clear on publish" />
           </d>
         </r>
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
@@ -48,7 +80,7 @@ Languages:
         sitecore\admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "d9181e53-d96a-4124-a62d-5641132d2716"
+      Value: "e625b9e9-aa49-4f3b-9705-fe79fe67b4c0"
     - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
       Hint: twitterDescription
       Value: "Social Community - Create your social profile"
@@ -61,10 +93,10 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\ankit.rastogi@nagarro.com
+        sitecore\damyanti.wakchaure@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230403T075312Z
+      Value: 20230424T070013Z
     - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
       Hint: ogTitle
       Value: Create your social profile

@@ -10,7 +10,7 @@
 }
 
 .dropdownItem:after {
-  content: "";
+  content: "" !important;
   display: inline-block;
   width: 85%;
   height: 1px;

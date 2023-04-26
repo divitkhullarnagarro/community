@@ -4,6 +4,9 @@ Parent: "d93be888-edb2-48c6-b660-eb474f415d0b"
 Template: "260ab92e-b8dc-467d-b1bf-e0ec47163461"
 Path: /sitecore/content/acceleratorcommunity/Components/Grid/Header Grid/Two Column/Col 2 2
 SharedFields:
+- ID: "331e2929-3995-480d-99f3-6735f472159c"
+  Hint: rowExtraCss
+  Value: "m-0"
 - ID: "fceb2f6c-667b-449c-8352-cecbe931db17"
   Hint: heading
   Value: New GridRow
@@ -25,11 +28,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "c92e2af4-ad8b-4118-8210-605e378e9d50"
+      Value: "11c390fe-6340-4996-be12-fc55b91efdba"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230321T104921Z
+      Value: 20230419T071342Z
