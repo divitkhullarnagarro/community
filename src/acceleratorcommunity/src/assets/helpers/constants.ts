@@ -6,6 +6,44 @@ export const updatePasswordUrl = `${javaHost}/user-service/api/v1/users/change-p
 export const addAllPeersUrl = `${javaHost}/graph-service/api/v1/graph/peers`;
 export const addPeersBySearchUrl = `${javaHost}/graph-service/api/v1/graph/peers?keyword=`;
 export const addPeersPaginationUrl = `${javaHost}/graph-service/api/v1/graph/peers?`;
+export const editCommentUrl = `${javaHost}/graph-service/api/v1/graph/post/comment`;
+
+export const Algorithm = 'aes-256-cbc';
+export const Key = [
+  4,
+  240,
+  99,
+  8,
+  217,
+  84,
+  168,
+  177,
+  175,
+  164,
+  29,
+  16,
+  228,
+  178,
+  206,
+  16,
+  95,
+  86,
+  240,
+  224,
+  64,
+  171,
+  105,
+  193,
+  182,
+  235,
+  136,
+  135,
+  211,
+  91,
+  39,
+  223
+]
+
 export const toolbar = {
   options: [
     'inline',
