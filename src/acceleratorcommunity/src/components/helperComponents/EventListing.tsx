@@ -43,7 +43,7 @@ const EventListing = (): JSX.Element => {
                 key={index}
                 className={style.eventTab}
                 onClick={() => setActiveTab(ele)}
-                style={activeTab === ele ? { background: '#47d7ac' } : {}}
+                style={activeTab === ele ? { background: '#47d7ac', color: 'white' } : {}}
               >
                 {ele}
               </div>
@@ -58,8 +58,8 @@ const EventListing = (): JSX.Element => {
                   style={{ cursor: 'pointer' }}
                   src={event.src}
                   alt={ele.name}
-                  height={120}
-                  width={200}
+                  height={180}
+                  width={280}
                   placeholder="blur"
                   //   blurDataURL={placeholderImg.src}
                   blurDataURL={'placeholderImg.src'}
