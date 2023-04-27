@@ -70,11 +70,13 @@
 .groupListHeadingLeft {
   display: flex;
   align-items: center;
+  width:100%;
 }
 .groupListName {
   margin-left: 12px;
   font-size: 14px;
   font-weight: 400;
+  border-radius:6px;
 }
 .moreOptionList {
   position: absolute;
@@ -107,7 +109,20 @@
   /* box-shadow: 5px 5px 2px rgb(156, 179, 179); */
   /* font-size: small; */ 
 }
+.groupListTitleLoader{
+  margin-bottom:16px;
+}
+.groupListBoxDataLoader{
+  overflow-x: hidden;
+}
+.cardloaderDetails {
+  display: flex;
+  width: 100%;
+}
 
+.cardloaderDetails>span {
+  width: 100%;
+}
 .moreOptionButton:hover {
   background: whitesmoke;
 }
