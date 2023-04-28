@@ -11,7 +11,9 @@ export const modifyHtml = (convertedContent: string) => {
       if (
         convertedContent.charAt(i) == ' ' ||
         convertedContent.substring(i, i + 6) == '&nbsp;' ||
-        convertedContent.substring(i, i + 4) == '</p>'
+        convertedContent.substring(i, i + 4) == '</p>' ||
+        convertedContent.substring(i, i + 4) == '<br>' ||
+        convertedContent.substring(i, i + 1) == '<'
       ) {
         modified =
           modified +
@@ -34,7 +36,6 @@ export const modifyHtml = (convertedContent: string) => {
   return modified;
 };
 
-
 export const getValueFromCookie = (key: string) => {
   if (typeof document !== 'undefined') {
     const cookieString = document.cookie;
@@ -47,7 +48,7 @@ export const getValueFromCookie = (key: string) => {
     return cookies[key] || null;
   }
   return null;
-}
+};
 
 export const openDoc = (base64: string) => {
   var base64pdf = base64;
@@ -56,7 +57,7 @@ export const openDoc = (base64: string) => {
     var pdfWindow = window.open('', '_blank');
     pdfWindow?.document.write(`<iframe width='100%' height='100%' src=${base64pdf}></iframe>`);
   }
-}
+};
 
 export const calculateTimeDifference = (postDate: any) => {
   postDate = new Date(postDate);
@@ -72,34 +73,34 @@ export const calculateTimeDifference = (postDate: any) => {
   } else {
     return `${timeDiffMinutes} ${timeDiffDays > 1 ? 'minutes' : 'minute'} ago`;
   }
-}
+};
 
-export const graphqlQueryWrapper = async<T> (query : DocumentNode,  dataSource : string) => {
+export const graphqlQueryWrapper = async <T>(query: DocumentNode, dataSource: string) => {
   const ServerLink = `${sitecoreApiHost}/sitecore/api/graph/edge?sc_apikey=${sitecore.apiKey}`;
   const store = 'default';
   const httpLink = new HttpLink({
-      uri: ServerLink,
+    uri: ServerLink,
   });
 
   const authLink = new ApolloLink((operation, forward) => {
-      operation.setContext({
-          headers: {
-              store: store,
-          },
-      });
-      return forward(operation);
+    operation.setContext({
+      headers: {
+        store: store,
+      },
+    });
+    return forward(operation);
   });
 
   const client1 = new ApolloClient({
-      link: authLink.concat(httpLink),
-      cache: new InMemoryCache(),
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache(),
   });
 
   const variables = {
-      datasource: dataSource,
-      language: 'en',
+    datasource: dataSource,
+    language: 'en',
   };
 
   let result = await client1?.query<T>({ query, variables });
-  return result
+  return result;
 };
