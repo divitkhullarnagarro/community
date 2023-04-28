@@ -7,6 +7,7 @@ import event from './../../assets/images/event.svg';
 import { Blog } from './../../assets/helpers/types';
 import AxiosRequest from 'src/API/AxiosRequest';
 import { AxiosResponse } from 'axios';
+import BlogListingSkeleton from 'components/skeletons/BlogListingSkeleton';
 const tablist = ['My Blogs', 'Suggested Blogs', 'Bookmarked Blogs'];
 
 function BlogListing() {
@@ -34,7 +35,7 @@ function BlogListing() {
   const navigateToEventPage = (event: string) => {
     router.push(`/event/${event}`);
   };
-  return (
+  return blogList.length > 0 ? (
     <>
       <div className={style.blogListingPage}>
         <div className={style.blogListNavbar}>
@@ -88,6 +89,8 @@ function BlogListing() {
         </div>
       </div>
     </>
+  ) : (
+    <BlogListingSkeleton />
   );
 }
 
