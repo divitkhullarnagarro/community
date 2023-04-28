@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { ComponentProps } from 'lib/component-props';
 import WebContext from 'src/Context/WebContext';
 import styles from '../assets/users.module.css';
-import { Accordion, Button, Modal, Table } from 'react-bootstrap';
+import { Accordion, Button, Modal } from 'react-bootstrap';
 import Flag from '../assets/images/flag-icon.svg';
 import { Dropdown } from 'react-bootstrap';
 import { getAllReportPostCall, getReportedPostReportersDetailsCall } from 'src/API/reportPostCall';
@@ -13,7 +13,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import ViewPost from '../assets/images/View_icon.svg';
 import WarningImage from '../assets/images/Send_warning.svg';
 import ReportPost from '../assets/images/report_post.svg';
-import HeadBanner from '../assets/images/HeadBanner.png';
+// import HeadBanner from '../assets/images/HeadBanner.png';
 import DropArrow from '../assets/images/droparrow.png';
 import ReportedUsers from '../assets/images/ReportedUsers.png';
 import {
@@ -110,7 +110,8 @@ type reportUserFields = {
     objectId: string;
     firstName: string;
     lastName: string;
-    speciality: string;
+    gender: string;
+    phoneNumber: string;
   };
 };
 
@@ -119,6 +120,8 @@ type reportedByUserFields = {
     objectId: string;
     firstName: string;
     lastName: string;
+    gender: string;
+    phoneNumber: string;
   };
   reason: string;
 };
@@ -189,55 +192,54 @@ const Users = (props: UserProps): JSX.Element => {
     return (
       <div className={styles.reportedUserListContainer}>
         <h3 className={styles.userListHeader}>{'Reported User List'}</h3>
-        <Table hover className={styles.userListTable}>
-          <thead>
-            <tr className={styles.header}>
-              <td className={styles.reportPostHeaderEmptyRow}></td>
-              <td className={styles.reportPostHeaderRowName}>Name</td>
-              <td className={styles.reportPostHeaderRowEmail}>Email</td>
-              <td className={styles.reportPostHeaderSpeciality}>Speciality</td>
-              <td className={styles.reportPostHeaderRow}>Reported By</td>
-              <td className={styles.reportPostHeaderRow}>Reported By Email</td>
-              <td className={styles.reportPostHeaderRow}>Report Reason</td>
-              <td className={styles.reportPostHeaderRow}>Action</td>
-            </tr>
-          </thead>
-          <tbody>
+        <div className={styles.tableContainer}>
+          <div className={styles.tableHeader}>
+            <h6 className={`${styles.tableField} ${styles.nameColumn}`}>Name</h6>
+            <h6 className={`${styles.tableField} ${styles.genderColumn}`}>Gender</h6>
+            <h6 className={`${styles.tableField} ${styles.emailColumn}`}>Email</h6>
+            <h6 className={`${styles.tableField} ${styles.phoneNumberColumn}`}>Phone Number</h6>
+            <h6 className={`${styles.tableField} ${styles.reasonsColumn}`}>Reason</h6>
+            <h6 className={styles.tableField}>Action</h6>
+          </div>
+          <div className={styles.tableBody}>
             {reportUserList?.map((item, index) => {
               return (
-                <tr key={index.toString()} className={styles.row}>
-                  <Accordion
-                    className={styles.reportedUserAccordion}
-                    activeKey={activeAccordionIndex}
+                <Accordion
+                  key={index}
+                  className={styles.reportedUserAccordion}
+                  activeKey={activeAccordionIndex}
+                >
+                  <Accordion.Item
+                    className={styles.accordionItem}
+                    eventKey={index.toString()}
+                    onClick={(e) =>
+                      getReportedUserReporterDetails(
+                        e,
+                        item?.reportedUser?.objectId,
+                        index.toString()
+                      )
+                    }
                   >
-                    <Accordion.Item
-                      className={styles.accordionItem}
-                      eventKey={index.toString()}
-                      onClick={(e) =>
-                        getReportedUserReporterDetails(
-                          e,
-                          item?.reportedUser?.objectId,
-                          index.toString()
-                        )
-                      }
-                    >
-                      <Accordion.Header className={styles.accordionHeader}>
-                        <tr key={index.toString()} className={styles.row}>
-                          <td className={styles.reportPostEmptyBodyRow}></td>
-                          <td className={styles.reportPostBodyRowName}>
-                            {item?.reportedUser?.firstName + ' ' + item?.reportedUser?.lastName}
-                          </td>
-                          <td className={styles.reportPostBodyRowEmail}>
-                            {item?.reportedUser?.objectId}
-                          </td>
-                          <td className={styles.reportPostBodyRowSpeciality}>
-                            {item?.reportedUser?.speciality ?? 'Engineer'}
-                          </td>
-                          <td className={styles.reportPostBodyRow}></td>
-                          <td className={styles.reportPostBodyRow}></td>
-                          <td className={styles.reportPostBodyRow}></td>
+                    <Accordion.Header className={styles.accordionHeader}>
+                      <div key={index.toString()} className={styles.tableContentRow}>
+                        <span className={`${styles.tableField} ${styles.nameColumn}`}>
+                          {item?.reportedUser?.firstName + ' ' + item?.reportedUser?.lastName}
+                        </span>
+                        <span className={`${styles.tableField} ${styles.genderColumn}`}>
+                          {item?.reportedUser?.gender || 'NA'}
+                        </span>
+                        <span className={`${styles.tableField} ${styles.emailColumn}`}>
+                          {item?.reportedUser?.objectId}
+                        </span>
+                        <span className={`${styles.tableField} ${styles.phoneNumberColumn}`}>
+                          {item?.reportedUser?.phoneNumber || 'NA'}
+                        </span>
+                        <span className={`${styles.tableField} ${styles.reasonsColumn}`}>
+                          {item?.reason || 'NA'}
+                        </span>
+                        <span className={`${styles.tableField} ${styles.actionButtonsContainer}`}>
                           <button
-                            className={styles.actionWarningButton}
+                            className={styles.actionButton}
                             onClick={() => setShowWarnUserPopup(true)}
                           >
                             Warning
@@ -248,37 +250,47 @@ const Users = (props: UserProps): JSX.Element => {
                           >
                             Suspension
                           </button>
-                        </tr>
-                      </Accordion.Header>
-                      <Accordion.Body className={styles.accordionBody}>
-                        {reportedUserReporterDetails.map((reportedByItem, index) => {
-                          return (
-                            <tr key={index.toString()} className={styles.reportedByRow}>
-                              <td className={styles.accordionBodyEmptyBodyRow}></td>
-                              <td className={styles.accordionBodyRow}></td>
-                              <td className={styles.accordionBodyRow}></td>
-                              <td className={styles.accordionBodyRow}></td>
-                              <td className={styles.accordionBodyRow}>
-                                {reportedByItem?.reportedBy.firstName +
-                                  ' ' +
-                                  reportedByItem?.reportedBy?.lastName}
-                              </td>
-                              <td className={styles.accordionBodyRow}>
-                                {reportedByItem?.reportedBy?.objectId}
-                              </td>
-                              <td className={styles.accordionBodyRow}>{reportedByItem?.reason}</td>
-                              <hr />
-                            </tr>
-                          );
-                        })}
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  </Accordion>
-                </tr>
+                        </span>
+                      </div>
+                    </Accordion.Header>
+                    <Accordion.Body className={styles.accordionBody}>
+                      <div className={styles.accordionBodyHeader}>
+                        <span className={styles.accordionBodyName}>Name</span>
+                        <span className={styles.accordionBodyGender}>Gender</span>
+                        <span className={styles.accordionBodyEmail}>Email</span>
+                        <span className={styles.accordionBodyPhone}>Phone Number</span>
+                        <span className={styles.accordionBodyReason}>Reason</span>
+                      </div>
+                      {reportedUserReporterDetails.map((reportedByItem, index) => {
+                        return (
+                          <div key={index} className={styles.accordionBodyItem}>
+                            <span className={styles.accordionBodyName}>
+                              {reportedByItem?.reportedBy.firstName +
+                                ' ' +
+                                reportedByItem?.reportedBy?.lastName}
+                            </span>
+                            <span className={styles.accordionBodyGender}>
+                              {reportedByItem?.reportedBy?.gender || 'NA'}
+                            </span>
+                            <span className={styles.accordionBodyEmail}>
+                              {reportedByItem?.reportedBy?.objectId || 'NA'}
+                            </span>
+                            <span className={styles.accordionBodyPhone}>
+                              {reportedByItem?.reportedBy?.phoneNumber || 'NA'}
+                            </span>
+                            <span className={styles.accordionBodyReason}>
+                              {reportedByItem?.reason || 'NA'}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
               );
             })}
-          </tbody>
-        </Table>
+          </div>
+        </div>
       </div>
     );
   };
@@ -773,7 +785,7 @@ const Users = (props: UserProps): JSX.Element => {
       <div className={styles.reportPostWrapper}>
         <div className={styles.reportPostHeader}>
           <h3 className={styles.reportPostTitle}>
-            {reportPostList?.length > 0 ? ' Reported Posts' : ''}
+            {reportPostList?.length > 0 ? 'Reported Posts' : ''}
           </h3>
         </div>
         {reportPostList.slice(0, numberOfReportedItemsToShow).map((item) => {
@@ -782,8 +794,8 @@ const Users = (props: UserProps): JSX.Element => {
               <div className={styles.reportPostHeading}>
                 <div className={styles.reportPostHeaderLeft}>
                   <img
-                    className="postUserImage"
-                    src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                    className={styles.postUserImage}
+                    src="https://cdn-icons-png.flaticon.com/32/3177/3177440.png"
                     alt="User-Pic"
                   ></img>
                   <div className={styles.reportPostDetailContainer}>
@@ -795,7 +807,7 @@ const Users = (props: UserProps): JSX.Element => {
                     <h6 className={styles.postCreateDate}>
                       <img
                         width="9px"
-                        src="https://cdn-icons-png.flaticon.com/512/2088/2088617.png"
+                        src="https://cdn-icons-png.flaticon.com/32/2088/2088617.png"
                         alt="post time"
                         style={{ opacity: '0.4', marginRight: '4px' }}
                       ></img>
@@ -957,20 +969,17 @@ const Users = (props: UserProps): JSX.Element => {
     );
   };
 
-  const Dashboard = () => {
+  /* const Dashboard = () => {
     return (
       <>
         <div className={styles.dashboardWrapper}>
           <div className={styles.imgContainer}>
             <img src={HeadBanner.src} width="100%" />
-            {/* {props?.fields?.data?.datasource?.mainHeaderLabel?.jsonValue?.value ??
-              'Welcome to the Dashboard'} */}
           </div>
         </div>
-        {/* <hr style={{ fontWeight: 'bold' }} /> */}
       </>
     );
-  };
+  }; */
 
   const SideNavbar = () => {
     return (
@@ -985,22 +994,22 @@ const Users = (props: UserProps): JSX.Element => {
           <p className={styles.title}>{ListLabel}</p>
           <div className={styles.center}>
             <ul>
-              <button
-                onClick={() => {
-                  getReportedPosts();
-                }}
-              >
-                <li className={styles.row}>
+              <li className={styles.row}>
+                <button
+                  onClick={() => {
+                    getReportedPosts();
+                  }}
+                >
                   <NextImage contentEditable={true} field={Flag} height={18} width={18}></NextImage>
                   <span>{'Reported Posts'}</span>
-                </li>
-              </button>
-              <button
-                onClick={() => {
-                  getReportedUserList();
-                }}
-              >
-                <li className={styles.row}>
+                </button>
+              </li>
+              <li className={styles.row}>
+                <button
+                  onClick={() => {
+                    getReportedUserList();
+                  }}
+                >
                   <NextImage
                     contentEditable={true}
                     field={ReportedUsers}
@@ -1008,8 +1017,8 @@ const Users = (props: UserProps): JSX.Element => {
                     width={20}
                   ></NextImage>
                   <span>{'Reported Users'}</span>
-                </li>
-              </button>
+                </button>
+              </li>
             </ul>
           </div>
         </div>
@@ -1026,7 +1035,7 @@ const Users = (props: UserProps): JSX.Element => {
         <SideNavbar />
       </div>
       <div className={styles.right_column}>
-        <div className={styles.right_upper_section}>{<Dashboard />}</div>
+        {/* <div className={styles.right_upper_section}>{<Dashboard />}</div> */}
         <div
           className={
             reportPostList?.length > 0 ? styles.right_lower_section : styles.right_lower_section
@@ -1034,7 +1043,7 @@ const Users = (props: UserProps): JSX.Element => {
         >
           {showReportedPosts ? (
             reportPostList?.length > 0 ? (
-              <div>
+              <div className={styles.reportedPostsContainer}>
                 <ReportedPostList />
                 <ReportPostPopup />
                 <WarnUserForPostReportPopUp />
@@ -1050,14 +1059,14 @@ const Users = (props: UserProps): JSX.Element => {
           )}
           {showReportedUserList ? (
             reportUserList?.length > 0 ? (
-              <div>
+              <div className={styles.tableWrapper}>
                 <ReportedUserListTable />
                 <WarnUserPopUp />
                 <SuspendUserPopup />
               </div>
             ) : (
               <span className={styles.reportedPostContainer}>
-                <span className={styles.reportPostContainerHeader}>Getting Reported Users ...</span>
+                <span className={styles.reportPostContainerHeader}>Getting Reported Users...</span>
                 <Spinner animation="border" className={styles.spinner} />
               </span>
             )
