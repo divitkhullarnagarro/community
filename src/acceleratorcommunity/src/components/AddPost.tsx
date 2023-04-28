@@ -33,7 +33,7 @@ import postCommentReplyCall from 'src/API/postCommentReplyCall';
 import downVote from '../assets/images/dislikeIcon.svg';
 import CreateModalPopup from './helperComponents/CreateModalPopup';
 import AxiosRequest from 'src/API/AxiosRequest';
-import { editCommentUrl } from '../assets/helpers/constants';
+import { editCommentUrl, voteInPollUrl } from '../assets/helpers/constants';
 import videoIcon from '../assets/images/AddVideo_icon.svg';
 import pollIcon from '../assets/images/CreatePoll_icon.svg';
 import addBlogIcon from '../assets/images/AddBlogPost_icon.svg';
@@ -1082,6 +1082,46 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     });
   }
 
+  //Function for Voting in a poll
+  const voteInAPoll = async (pollId: any, pollOptionId: any) => {
+    updatePollPost(pollId, pollOptionId);
+    await AxiosRequest({
+      method: 'PUT',
+      url: `${voteInPollUrl}${pollId}/poll-option/${pollOptionId}`,
+    });
+  };
+
+  //Function to update with latest data of poll
+  function updatePollPost(pollId: any, pollOptionId: any) {
+    const updatedPollPosts = myAnotherArr.map((pollPost: any) => {
+      if (pollPost?.poll?.id === pollId) {
+        const updatedPollOptions = pollPost?.poll?.pollOptions?.map((option: any) => {
+          if (option?.id === pollOptionId) {
+            const updatedOption = { ...option };
+            updatedOption.responseCount = updatedOption.responseCount + 1 || 1;
+            return updatedOption;
+          } else {
+            return option;
+          }
+        });
+        return {
+          ...pollPost,
+          poll: {
+            ...pollPost.poll,
+            pollResponseCount: pollPost?.poll?.pollResponseCount
+              ? pollPost?.poll?.pollResponseCount + 1
+              : 1,
+            pollOptions: updatedPollOptions,
+            optedPollOptionID: pollOptionId,
+          },
+        };
+      } else {
+        return pollPost;
+      }
+    });
+    setMyAnotherArr(updatedPollPosts);
+  }
+
   //Function To Handle Posts Feed and Construct React.jsx using data
   function postStructCreate() {
     let locArr2: ReactElement<any, any>[] = [];
@@ -1301,6 +1341,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   eventType={post?.event?.eventType}
                   url={EventImage[post?.event?.eventType]}
                 />
+              </>
+            ) : post?.postType === 'POLL' ? (
+              <>
+                <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
+                <PollCard pollPost={{ poll: post?.poll }} voteInAPoll={voteInAPoll} />
               </>
             ) : (
               <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
@@ -2177,10 +2222,28 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         setMyAnotherArr((prevPosts: any) => {
           return prevPosts.map((post: any) => {
             if (post?.id === localId) {
+              let updatedPoll = null;
+              if (post?.postType === 'POLL') {
+                let updatedOptions: any[] = [];
+                post.poll.pollOptions.forEach((option: any) => {
+                  let matchingOption = resp.poll.pollOptions.find(
+                    (opt: any) => opt.optionText === option.optionText
+                  );
+                  if (matchingOption) {
+                    updatedOptions.push({ ...option, id: matchingOption.id });
+                  } else {
+                    updatedOptions.push(option);
+                  }
+                });
+                updatedPoll = { ...post.poll, pollOptions: updatedOptions, id: resp?.poll?.id };
+              } else {
+                updatedPoll = post.poll;
+              }
               return {
                 ...post,
                 id: resp.id,
                 isRespPending: false,
+                poll: updatedPoll,
               };
             }
             return post;
@@ -2596,24 +2659,24 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   let [pollQuestion, setPollQuestion] = useState('');
 
   function addPollOption() {
-    setPollOptionCount((prevCount) => {
-      return prevCount + 1;
-    });
-    let option = {
-      id: option2Id,
-      name: pollOptionCount + 1,
-      placeholder: pollOptionCount + 1,
-      optionText: '',
-      optionSequence: pollOptionCount,
-    };
-    setPollFormOptions((prevState: any) => {
-      return [...prevState, option];
-    });
+    if (pollOptionCount < 4) {
+      setPollOptionCount((prevCount) => {
+        return prevCount + 1;
+      });
+      let option = {
+        id: option2Id,
+        name: pollOptionCount + 1,
+        placeholder: pollOptionCount + 1,
+        optionText: '',
+        optionSequence: pollOptionCount,
+      };
+      setPollFormOptions((prevState: any) => {
+        return [...prevState, option];
+      });
 
-    if (pollOptionCount + 1 > 4) {
-      setoptionsThreshold(true);
-    }
-    if (pollOptionCount + 1 > 2) {
+      if (pollOptionCount + 1 >= 4) {
+        setoptionsThreshold(true);
+      }
       setIsDeleteOptionThreshold(false);
     }
   }
@@ -2628,12 +2691,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       });
       setPollOptionCount((prevCount) => prevCount - 1);
     }
-    if (pollOptionCount - 1 < 5) {
+    if (pollOptionCount - 1 < 4) {
       setoptionsThreshold(false);
     }
-    if (pollOptionCount - 1 <= 2) {
-      setIsDeleteOptionThreshold(true);
-    }
+    setIsDeleteOptionThreshold(pollOptionCount - 1 <= 2);
   }
 
   function clearPollForm() {

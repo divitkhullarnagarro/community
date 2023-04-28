@@ -7,6 +7,7 @@ export const addAllPeersUrl = `${javaHost}/graph-service/api/v1/graph/peers`;
 export const addPeersBySearchUrl = `${javaHost}/graph-service/api/v1/graph/peers?keyword=`;
 export const addPeersPaginationUrl = `${javaHost}/graph-service/api/v1/graph/peers?`;
 export const editCommentUrl = `${javaHost}/graph-service/api/v1/graph/post/comment`;
+export const voteInPollUrl = `${javaHost}/graph-service/api/v1/graph/post/poll/`
 
 export const Algorithm = 'aes-256-cbc';
 export const Key = [
