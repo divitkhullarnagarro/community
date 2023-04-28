@@ -1223,6 +1223,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   url={EventImage[post?.event?.eventType]}
                 />
               </>
+            ) : post?.postType === 'BLOG_POST' ? (
+              <>
+                <div className="postDescription">{parser(modifyHtml(post?.blog?.description))}</div>
+                <div className="postHeading">{post?.blog?.heading}</div>
+                <NextImage src={post?.blog?.imageUrl}></NextImage>
+              </>
             ) : (
               <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
             )}

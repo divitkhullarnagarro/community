@@ -3,12 +3,18 @@ import Axios, { AxiosResponse } from 'axios';
 const addArticleCall = async (userToken: string | undefined, postObject: any) => {
   var data = {
     // id: "post_Id12",
-    description: postObject?.description,
-    mediaList: postObject?.mediaList,
+    blog : {
+      heading : postObject?.heading,
+      description: postObject?.description,
+      imageUrl: postObject?.imageUrl
+    },
+    // heading : postObject?.heading,
+    // description: postObject?.description,
+    // imageUrl: postObject?.imageUrl,
     postType: postObject?.type,
     taggedPeers: postObject?.taggedPeers,
-    event: postObject?.event,
-    poll: postObject?.poll,
+    // event: postObject?.event,
+    // poll: postObject?.poll,
     createdBy: 'objectId',
     updatedBy: 'objectId',
     createdOn: 23032023,
