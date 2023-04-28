@@ -98,7 +98,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
       <div className={styles.wrapper}>
         <div className={styles.header}>
         <div className={styles.cardloaderHeader}>        
-          <Skeleton height={30} width={100 + '%'} />
+          <Skeleton height={30}/>
           </div>
         </div>
         <div className={styles.listContainer}>
