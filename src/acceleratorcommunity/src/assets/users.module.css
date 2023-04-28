@@ -327,6 +327,42 @@
   gap: 10px;
 }
 
+.reportPostModalFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.footerContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.footerSecondRow,
+.footerFirstRow {
+  display: flex;
+  gap: 10px;
+}
+
+.footerRowHeader {
+  font-weight: 500;
+  font-size: 14px;
+  color: #000e46;
+}
+.footerRowContent {
+  display: flex;
+  font-size: 14px;
+  justify-content: space-between;
+  color: #000e46;
+}
+.reportedDate {
+  font-size: 12px;
+  font-weight: 300;
+  margin-left: 10px;
+  color: #A5A5A5;
+}
+
 @media only screen and (max-width: 768px) {
   .dropdownMenu {
     inset: 0 0 auto auto !important;
