@@ -11,6 +11,7 @@ import event from './../../assets/images/event.svg';
 import interestedLogo from './../../assets/images/interestedLogo.svg';
 // import placeholderImg from './../../assets/images/placeholderImg.png';
 import { Event } from './../../assets/helpers/types';
+import EventListingSkeleton from 'components/skeletons/EventListingSkeleton';
 const tablist = ['My Events', 'Upcoming Events', 'Bookmarked Events'];
 
 const EventListing = (): JSX.Element => {
@@ -18,7 +19,9 @@ const EventListing = (): JSX.Element => {
   const [eventList, setEventList] = useState<Event>([] as Event);
   useEffect(() => {
     if (activeTab == 'My Events') {
-      setEventList(demoMyEventList);
+      setTimeout(() => {
+        setEventList(demoMyEventList);
+      }, 2000);
     } else if (activeTab == 'Upcoming Events') {
       setEventList(demoSuggestedEventList);
     } else {
@@ -33,7 +36,7 @@ const EventListing = (): JSX.Element => {
   const navigateToEventPage = (event: string) => {
     router.push(`/event/${event}`);
   };
-  return (
+  return eventList.length > 0 ? (
     <>
       <div className={style.eventListingPage}>
         <div className={style.eventListNavbar}>
@@ -43,7 +46,7 @@ const EventListing = (): JSX.Element => {
                 key={index}
                 className={style.eventTab}
                 onClick={() => setActiveTab(ele)}
-                style={activeTab === ele ? { background: '#47d7ac' } : {}}
+                style={activeTab === ele ? { background: '#47d7ac', color: 'white' } : {}}
               >
                 {ele}
               </div>
@@ -58,8 +61,8 @@ const EventListing = (): JSX.Element => {
                   style={{ cursor: 'pointer' }}
                   src={event.src}
                   alt={ele.name}
-                  height={120}
-                  width={200}
+                  height={180}
+                  width={280}
                   placeholder="blur"
                   //   blurDataURL={placeholderImg.src}
                   blurDataURL={'placeholderImg.src'}
@@ -89,6 +92,8 @@ const EventListing = (): JSX.Element => {
         </div>
       </div>
     </>
+  ) : (
+    <EventListingSkeleton />
   );
 };
 
