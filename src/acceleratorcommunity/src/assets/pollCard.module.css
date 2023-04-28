@@ -17,7 +17,41 @@
 }
 
 .polloptions {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(49%, 1fr));
-    grid-gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.pollOptionText {
+    white-space: nowrap;
+    position: absolute;
+    left: 10px;
+    top: 25%;
+    color: white;
+    font-weight: 600;
+}
+
+.polloption {
+    display: flex;
+}
+
+.voteCount {
+    align-self: center;
+    font-weight: 600;
+}
+
+.voteButton {
+    padding: 0;
+    margin: 5px;
+    border-radius: 8px;
+    background-color: #184148;
+    color: white;
+    border: none;
+    width: 85%;
+}
+
+.pollBar {
+    position: relative;
+    height: 50px;
+    background-color: cadetblue;
+    border-radius: 5px;
 }
