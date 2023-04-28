@@ -764,11 +764,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const timestamp = new Date().getTime();
     let obj = {
       id: uniqId,
-      createdBy: {
-        firstName: userObject?.firstName,
-        lastName: userObject?.lastName,
-        objectId: objectId,
-      },
+      createdBy: { ...userObject },
       text: commStr,
       replies: [],
       isOpenReply: false,
@@ -970,6 +966,85 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     });
   }
 
+  //Edit Update Reply Open
+  function replyEditOn(postId: any, commentId: any, replyId: any, show: boolean) {
+    setMyAnotherArr((prevPosts: any) => {
+      return prevPosts.map((post: any) => {
+        if (post?.id === postId) {
+          const updatedComments = post?.comments?.map((comment: any) => {
+            if (comment.id === commentId) {
+              const updatedReplies = comment?.replies?.map((reply: any) => {
+                if (replyId === reply?.id) {
+                  return {
+                    ...reply,
+                    isEditOn: show,
+                  };
+                }
+                return reply;
+              });
+              return {
+                ...comment,
+                replies: updatedReplies,
+              };
+            }
+            return comment;
+          });
+          return {
+            ...post,
+            comments: updatedComments,
+          };
+        }
+        return post;
+      });
+    });
+  }
+
+  //Edit Reply
+  async function editReply(event: any, postId: any, commentId: any, replyId: any) {
+    event.preventDefault();
+    let editReply = event?.target[0].value;
+    replyEditOn(postId, commentId, replyId, false);
+    updateReply(postId, commentId, replyId, editReply);
+    await AxiosRequest({
+      method: 'PUT',
+      url: editCommentUrl,
+      data: { id: replyId, text: editReply },
+    });
+  }
+
+  //Update Reply with edited text
+  function updateReply(postId: any, commentId: any, replyId: any, updatedString: any) {
+    setMyAnotherArr((prevPosts: any) => {
+      return prevPosts.map((post: any) => {
+        if (post?.id === postId) {
+          const updatedComments = post?.comments?.map((comment: any) => {
+            if (comment.id === commentId) {
+              const updatedReplies = comment?.replies?.map((reply: any) => {
+                if (reply.id === replyId) {
+                  return {
+                    ...reply,
+                    text: updatedString,
+                  };
+                }
+                return reply;
+              });
+              return {
+                ...comment,
+                replies: updatedReplies,
+              };
+            }
+            return comment;
+          });
+          return {
+            ...post,
+            comments: updatedComments,
+          };
+        }
+        return post;
+      });
+    });
+  }
+
   //Edit Update Comment Open
   function updateComment(postId: any, commentId: any, updatedString: any) {
     setMyAnotherArr((prevPosts: any) => {
@@ -1017,7 +1092,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             <div className="postHeaderLeft">
               <img
                 className="postUserImage"
-                src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                src={
+                  post?.createdBy?.profilePictureUrl
+                    ? post?.createdBy?.profilePictureUrl
+                    : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
+                }
                 alt="User-Pic"
               ></img>
               <div className="postDetailContainer">
@@ -1399,7 +1478,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 >
                   <img
                     className="commentUserImage"
-                    src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                    src={
+                      userObject?.profilePictureUrl
+                        ? userObject?.profilePictureUrl
+                        : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
+                    }
                     alt="User-Pic"
                     style={{ marginLeft: '0' }}
                   ></img>
@@ -1423,7 +1506,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       <figure>
                         <img
                           className="commentUserImage"
-                          src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                          src={
+                            comment?.createdBy?.profilePictureUrl
+                              ? comment?.createdBy?.profilePictureUrl
+                              : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
+                          }
                           alt="User-Pic"
                           style={{
                             marginLeft: '0',
@@ -1587,7 +1674,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                               <img
                                 width="32px"
                                 className="commentUserImage"
-                                src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                                src={
+                                  userObject?.profilePictureUrl
+                                    ? userObject?.profilePictureUrl
+                                    : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
+                                }
                                 alt="User-Pic"
                                 style={{ marginLeft: '0' }}
                               ></img>
@@ -1611,7 +1702,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                   <figure>
                                     <img
                                       className="commentUserImage"
-                                      src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                                      src={
+                                        reply?.createdBy?.profilePictureUrl
+                                          ? reply?.createdBy?.profilePictureUrl
+                                          : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
+                                      }
                                       alt="User-Pic"
                                       style={{
                                         marginLeft: '0',
@@ -1630,7 +1725,36 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                     <h5 className="commentHeadingTop">
                                       {reply?.createdBy?.firstName} {reply?.createdBy?.lastName}{' '}
                                     </h5>
-                                    <p className="commentHeading">{reply?.text}</p>
+                                    {reply?.isEditOn ? (
+                                      <Form
+                                        style={{ display: 'flex', marginTop: '8px' }}
+                                        onSubmit={(e) =>
+                                          editReply(e, post?.id, comment?.id, reply?.id)
+                                        }
+                                      >
+                                        <Form.Group
+                                          style={{ width: '100%' }}
+                                          controlId="formBasicEmail"
+                                        >
+                                          <Form.Control type="text" defaultValue={reply?.text} />
+                                        </Form.Group>
+                                        <Button
+                                          style={{
+                                            marginLeft: '10px',
+                                            backgroundColor: '#47D7AC',
+                                            color: 'white',
+                                            borderRadius: '5px',
+                                            border: 'none',
+                                          }}
+                                          variant="primary"
+                                          type="submit"
+                                        >
+                                          Save
+                                        </Button>
+                                      </Form>
+                                    ) : (
+                                      <p className="commentHeading">{reply?.text}</p>
+                                    )}
                                     <div
                                       onClick={() => getAllupVotesAndDownVotes(reply?.id)}
                                       className="upvoteDownvoteContainer"
@@ -1716,6 +1840,25 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                   ) : (
                                     ''
                                   )}
+                                  {reply?.createdBy?.objectId === objectId && objectId ? (
+                                    <button
+                                      disabled={reply?.isRespPending}
+                                      style={reply?.isRespPending ? { opacity: 0.5 } : {}}
+                                      onClick={() => {
+                                        replyEditOn(
+                                          post?.id,
+                                          comment?.id,
+                                          reply?.id,
+                                          !reply?.isEditOn
+                                        );
+                                      }}
+                                      className="commentReply"
+                                    >
+                                      Edit
+                                    </button>
+                                  ) : (
+                                    ''
+                                  )}
                                 </div>
                                 <Collapse in={reply?.isOpenReplyOfReply}>
                                   <div style={{ position: 'relative', left: '10%', width: '88%' }}>
@@ -1729,7 +1872,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                         <img
                                           width="32px"
                                           className="commentUserImage"
-                                          src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                                          src={
+                                            userObject?.profilePictureUrl
+                                              ? userObject?.profilePictureUrl
+                                              : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
+                                          }
                                           alt="User-Pic"
                                           style={{ marginLeft: '0' }}
                                         ></img>
@@ -1866,12 +2013,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const timestamp = new Date().getTime();
     let replyObj = {
       id: uniqId,
-      createdBy: { firstName: userObject?.firstName, lastName: userObject?.lastName },
+      createdBy: { ...userObject },
       text: commentString,
       hasReply: true,
       isOpenReplyOfReply: false,
       createdOn: timestamp,
       isRespPending: true,
+      isEditOn: false,
     };
     setMyAnotherArr((prevState: any) => {
       const updatedPosts = prevState.map((post: any) => {
@@ -1949,6 +2097,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     let locArr = myAnotherArr;
     resp?.data?.data.map((reply: any) => {
       reply.isOpenReplyOfReply = false;
+      reply.isEditOn = false;
     });
     locArr.map((post: any) => {
       if (post.comments?.length > 0) {
@@ -2105,11 +2254,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             commentCount: 0,
             repostCount: 0,
           },
-          createdBy: {
-            firstName: userObject?.firstName,
-            lastName: userObject?.lastName,
-            objectId: objectId,
-          },
+          createdBy: { ...userObject },
           event: eventPost?.event,
           createdOn: timestamp,
           isLikedByUser: false,

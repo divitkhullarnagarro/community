@@ -15,6 +15,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 // import { useRouter } from 'next/router';
 import { Button, Card } from 'react-bootstrap';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 type PeopleYouMayKnowProps = ComponentProps & {
   fields: {
@@ -37,16 +39,21 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   const { Title, LinkLabel, IsFullList } = props?.params;
   const [peopleYouMayKnowList, setPeopleYouMayKnowList] = useState<peopleYouMayKnowFields[]>([]);
   const { userToken, setUserToken } = { ...useContext(WebContext) };
-
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isFullPage] = useState(IsFullList === '1');
   const getPeopleYouMayKnowList = async (userToken: string | undefined) => {
     let response = await peopleYouMayKnowCall(userToken);
-    setPeopleYouMayKnowList(response?.data?.data);
+    if(response?.data?.success)
+    {
+      setIsDataLoaded(true);
+      setPeopleYouMayKnowList(response?.data?.data);
+    }
+   
   };
-
-  const HalfPagePeopleYouMayKnow = () => {
+  const skeletonDummyArr = [1,2,3,4,5];
+  const HalfPagePeopleYouMayKnow= () => {
     return (
-      <div className={styles.wrapper}>
+       <div className={styles.wrapper}>
         <div className={styles.header}>
           <div className={styles.heading}>{Title}</div>
           {LinkLabel ? (
@@ -83,6 +90,35 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
           )}
         </div>
       </div>
+    );
+  }
+  // for loading skeleton
+  const HalfPagePeopleYouMayKnowSkeleton= () => {
+    return (
+      <div className={styles.wrapper}>
+        <div className={styles.header}>
+        <div className={styles.cardloaderHeader}>        
+          <Skeleton height={30}/>
+          </div>
+        </div>
+        <div className={styles.listContainer}>
+          {skeletonDummyArr?.length > 0 ? (
+            skeletonDummyArr?.slice(0, 5).map((item: any) => {
+              return (
+                <div key={item} className={styles.item}>
+                 <Skeleton height= {40} width={40} circle= {true}/>
+                  <div className={styles.cardloaderDetails}>
+                  <Skeleton className ={styles.name} height={30} />
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <></>
+          )}
+        </div>
+      </div>
+     
     );
   };
   // const PeopleYouMayKnowHalfPageItem = (item: peopleYouMayKnowFields) => {
@@ -159,6 +195,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
             onClick={() => setNumItems(numItems + 6)}
           >
             <div><span className={styles.seeMoreBtn}>See more</span></div><NextImage field={DropArrow} editable={true}/>
+            
           </Button>
         )}
       </div>
@@ -232,7 +269,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
         <FullPagePeopleYouMayKnow />
       ) : (
         <>
-          <HalfPagePeopleYouMayKnow />
+        {isDataLoaded? <HalfPagePeopleYouMayKnow />:<HalfPagePeopleYouMayKnowSkeleton />}         
         </>
       )}
     </>
