@@ -9,6 +9,7 @@ import style from '../assets/groupList.module.css';
 import { useState } from 'react';
 import CreateGroup from './helperComponents/CreateGroup';
 import { useRouter } from 'next/router';
+// import Skeleton from 'react-loading-skeleton';
 
 type GroupListProps = ComponentProps & {
   fields: {
@@ -29,103 +30,167 @@ const GroupList = (props: GroupListProps): JSX.Element => {
   console.log(props);
   const [isSelectedMoreOption, setIsSelectedMoreOption] = useState(-1);
   // const [isSelectedGroup, setIsSelectedGroup] = useState(0);
+  // const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [createGroupVisibel, setCreateGroupVisibel] = useState(false);
   const handleExploreOnClick = (name: string) => {
     router.push(`/group?groupName=${name}`);
   };
-  return (
-    <>
-      <div className={style.groupListContainer}>
-        <div className={style.groupList}>
-          <h3 className={style.groupListTitle}>Group List</h3>
-          <div className={style.groupListBox}>
-            <div className={style.groupListBoxData}>
-              {list.map((ele, index: number) => (
-                <>
-                  <div className={style.groupListBoxContainer}>
-                    <div
-                      className={style.groupListHeading}
-                      // style={isSelectedGroup == index ? { background: 'whitesmoke' } : {}}
-                    >
+//   useEffect(()=>{const Interval= setTimeout(()=>{setIsDataLoaded(true)},2000)
+// return()=> clearInterval(Interval)},[])
+
+  // const GroupListSkeleton= () => {
+  // return (
+  //   <>
+  //     <div className={style.groupListContainer}>
+  //       <div className={style.groupList}>
+  //         {/* <div className={style.groupListTitle}>Group List</div> */}
+          
+  //         <Skeleton className={style.groupListTitleLoader} height={35}/>
+  //         <div className={style.groupListBox}>
+  //           <div className={style.groupListBoxDataLoader}>
+  //             {list.map(() => (
+  //               <>
+  //                 <div className={style.groupListBoxContainer}>
+  //                   <div
+  //                     className={style.groupListHeading}
+  //                     // style={isSelectedGroup == index ? { background: 'whitesmoke' } : {}}
+  //                   >
+  //                     <div
+  //                       className={style.groupListHeadingLeft}
+  //                       onClick={() => {
+  //                         // setIsSelectedGroup(index);
+  //                         setIsSelectedMoreOption(-1);
+  //                       }}
+  //                       style={{ cursor: 'pointer' }}
+  //                     >
+  //                       <Skeleton height= {40} width={40} circle= {true}/>   
+  //                       <div className={style.cardloaderDetails}>                  
+  //                       <Skeleton className= {style.groupListName} height={35} />
+  //                       </div>  
+  //                     </div>                 
+  //                   </div>
+  //                 </div>
+  //               </>
+  //             ))}
+  //           </div>
+  //           {/* <div className={style.createGroupHeading}> */}
+  //             <Skeleton className={style.createGroupHeading} height={35} />
+  //             {/* <button className={style.createGroupBtn} onClick={() => setCreateGroupVisibel(true)}>
+  //               {' '}
+  //               + Create a Group
+  //             </button> */}
+  //           {/* </div> */}
+  //         </div>
+
+  //         {/* {
+  //           <CreateGroup
+  //             createGroupVisibel={createGroupVisibel}
+  //             setCreateGroupVisibel={setCreateGroupVisibel}
+  //           />
+  //         } */}
+  //       </div>
+  //     </div>
+  //   </>
+  // );
+  // }
+  const GroupList= () => {
+    return (
+      <>
+        <div className={style.groupListContainer}>
+          <div className={style.groupList}>
+            <h3 className={style.groupListTitle}>Group List</h3>
+            <div className={style.groupListBox}>
+              <div className={style.groupListBoxData}>
+                {list.map((ele, index: number) => (
+                  <>
+                    <div className={style.groupListBoxContainer}>
                       <div
-                        className={style.groupListHeadingLeft}
-                        onClick={() => {
-                          // setIsSelectedGroup(index);
-                          setIsSelectedMoreOption(-1);
-                        }}
-                        style={{ cursor: 'pointer' }}
+                        className={style.groupListHeading}
+                        // style={isSelectedGroup == index ? { background: 'whitesmoke' } : {}}
                       >
-                        <Image
-                          src={ele.img}
-                          alt={ele.name}
-                          className={style.groupListLogo}
-                          height={50}
-                        />
-                        <h5 className={style.groupListName}>{ele.name}</h5>
-                      </div>
-                      <div className={style.groupListDropdown}>
-                        <Image
-                          src={moreLogo}
-                          alt=""
-                          className={style.groupListMoreLogo}
+                        <div
+                          className={style.groupListHeadingLeft}
                           onClick={() => {
-                            if (isSelectedMoreOption == index) {
-                              setIsSelectedMoreOption(-1);
-                            } else {
-                              setIsSelectedMoreOption(index);
-                            }
+                            // setIsSelectedGroup(index);
+                            setIsSelectedMoreOption(-1);
                           }}
-                          // onMouseLeave={() => {
-                          //   if (isSelectedMoreOption == index) {
-                          //     setIsSelectedMoreOption(-1);
-                          //   } else {
-                          //     setIsSelectedMoreOption(index);
-                          //   }
-                          // }}
-                        />
-                        {isSelectedMoreOption == index && (
-                          <div
-                            className={style.moreOptionList}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <Image
+                            src={ele.img}
+                            alt={ele.name}
+                            className={style.groupListLogo}
+                            height={50}
+                          />
+                          <h5 className={style.groupListName}>{ele.name}</h5>
+                        </div>
+                        <div className={style.groupListDropdown}>
+                          <Image
+                            src={moreLogo}
+                            alt=""
+                            className={style.groupListMoreLogo}
                             onClick={() => {
-                              setIsSelectedMoreOption(index);
+                              if (isSelectedMoreOption == index) {
+                                setIsSelectedMoreOption(-1);
+                              } else {
+                                setIsSelectedMoreOption(index);
+                              }
                             }}
                             // onMouseLeave={() => {
-                            //   setIsSelectedMoreOption(-1);
+                            //   if (isSelectedMoreOption == index) {
+                            //     setIsSelectedMoreOption(-1);
+                            //   } else {
+                            //     setIsSelectedMoreOption(index);
+                            //   }
                             // }}
-                          >
-                            <button
-                              className={style.moreOptionButton}
-                              onClick={() => handleExploreOnClick(ele.name)}
-                            ><img className={style.imgJoinGroup} src = {exploreGroup.src}/>
-                              Explore the group
-                            </button>
-                            <button className={style.moreOptionButton}><img className ={style.imgGrouplist} src = {joinGroup.src} />Join Group</button>
-                          </div>
-                        )}
+                          />
+                          {isSelectedMoreOption == index && (
+                            <div
+                              className={style.moreOptionList}
+                              onClick={() => {
+                                setIsSelectedMoreOption(index);
+                              }}
+                              // onMouseLeave={() => {
+                              //   setIsSelectedMoreOption(-1);
+                              // }}
+                            >
+                              <button
+                                className={style.moreOptionButton}
+                                onClick={() => handleExploreOnClick(ele.name)}
+                              ><img className={style.imgJoinGroup} src = {exploreGroup.src}/>
+                                Explore the group
+                              </button>
+                              <button className={style.moreOptionButton}><img className ={style.imgGrouplist} src = {joinGroup.src} />Join Group</button>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </>
-              ))}
+                  </>
+                ))}
+              </div>
+              <div className={style.createGroupHeading}>
+                <button className={style.createGroupBtn} onClick={() => setCreateGroupVisibel(true)}>
+                  {' '}
+                  + Create a Group
+                </button>
+              </div>
             </div>
-            <div className={style.createGroupHeading}>
-              <button className={style.createGroupBtn} onClick={() => setCreateGroupVisibel(true)}>
-                {' '}
-                + Create a Group
-              </button>
-            </div>
+  
+            {
+              <CreateGroup
+                createGroupVisibel={createGroupVisibel}
+                setCreateGroupVisibel={setCreateGroupVisibel}
+              />
+            }
           </div>
-
-          {
-            <CreateGroup
-              createGroupVisibel={createGroupVisibel}
-              setCreateGroupVisibel={setCreateGroupVisibel}
-            />
-          }
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+    }
+  
+  // return(<>{isDataLoaded?<GroupList/>:<GroupListSkeleton/>}</>)
+  return<GroupList/>
 };
 // export default withDatasourceCheck()<GroupListProps>(GroupList);
 export default GroupList;

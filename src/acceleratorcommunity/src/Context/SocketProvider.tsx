@@ -4,21 +4,21 @@ import SocketContext from './SocketContext';
 
 function SocketProvider(props: any) {
   const [socket, setSocket] = useState<any>();
-  const socketServerUrl =
-    'http://accelerator-notification-service-dev.eastus.cloudapp.azure.com:8878/';
+  const socketServerUrl = 'wss://20.244.37.209/';
   const [socketEndpoint, setSocketEndpoint] = useState(socketServerUrl);
-
   useEffect(() => {
     if (!socket) {
       const newSocket = io(socketEndpoint, {
         transports: ['websocket'],
         upgrade: false,
-        forceNew: true,
+        // secure: true,
+        rejectUnauthorized: false,
         query: {
           v: '2.0.0',
           // EIO: 3,
         },
       });
+
       setSocket(newSocket);
 
       return () => {
