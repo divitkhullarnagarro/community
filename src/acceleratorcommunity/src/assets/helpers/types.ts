@@ -6,3 +6,9 @@ export type Event = {
   location: string;
   interested: number;
 }[];
+export type Blog = {
+  imageUrl: string;
+  heading: string;
+  description: string;
+  id: string;
+}[];

@@ -22,6 +22,7 @@ import 'assets/rte.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'draft-js/dist/Draft.css';
 import '../assets/richTextEditor.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 import SocketProvider from 'src/Context/SocketProvider';
 
 NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
