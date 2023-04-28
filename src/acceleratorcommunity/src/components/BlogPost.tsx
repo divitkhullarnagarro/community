@@ -67,7 +67,6 @@ const TextEditor = (): JSX.Element => {
 
   useEffect(() => {
     const rawEditorContent = convertToRaw(editorState.getCurrentContent());
-    console.log('vicky rawEditorContent', rawEditorContent);
     const entityMap = rawEditorContent.entityMap;
     const addedPeerList = new Set<string>();
     Object.values(entityMap).map((entity) => {
@@ -111,12 +110,11 @@ const TextEditor = (): JSX.Element => {
     for (let i = 0; i < files.length; i++) {
       let resp = await UploadFilesToServer(files[i], 'IMAGE');
       let uniqueId = generateUniqueId();
-      // if (!resp?.data) break;
+      if (!resp?.data) break;
       fileArray.push({ id: uniqueId, url: resp?.data, mediaType: 'IMAGE', mediaSequence: 0 });
     }
     console.log(files, 'filearray1');
     if (fileArray.length === files.length) {
-      console.log(fileArray, 'filearray');
       setFile(fileArray);
       setPreviewState(true);
     }
@@ -152,7 +150,7 @@ const TextEditor = (): JSX.Element => {
     addArticleCall(userToken, {
       heading: headlineText,
       description: postText,
-      imageUrl: file[0]?.url,
+      imageUrl: file[0]?.url ? file[0]?.url : '',
       taggedPeers: addedPeers,
       type: postType,
     }).then((response) => {
@@ -160,6 +158,7 @@ const TextEditor = (): JSX.Element => {
         // Empty Post Values
         setFile([]);
         setPostText('');
+        setHeadlineText('');
         setEditorState(() => EditorState.createEmpty());
         router.push('/');
       } else {
