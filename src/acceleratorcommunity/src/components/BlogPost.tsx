@@ -70,7 +70,9 @@ const TextEditor = (): JSX.Element => {
     const entityMap = rawEditorContent.entityMap;
     const addedPeerList = new Set<string>();
     Object.values(entityMap).map((entity) => {
-      addedPeerList.add(entity.data.url.substring(9, entity.data.url.length));
+      if (entity?.data?.url?.substring(0, 8) === '/profile') {
+        addedPeerList.add(entity?.data?.url?.substring(9, entity?.data?.url?.length));
+      }
     });
     const addedpeersList = [...addedPeerList.values()];
     setAddedPeers(addedpeersList);
@@ -173,109 +175,113 @@ const TextEditor = (): JSX.Element => {
 
   return (
     <div className={styles.container}>
-      <form style={{ border: '1px', borderColor: 'black' }} onSubmit={handleSubmit}>
-        <Form.Group controlId="exampleForm.ControlInput1">
-          <input
-            className={styles.headlineText}
-            type="text"
-            placeholder="Headline"
-            onChange={(e) => onHeadlineStateChangeHandler(e)}
-            required
-          />
-          {previewState === false ? (
-            <button className={styles.imageButton} onClick={clickmebuttonHandler} type="button">
-              {/* <span>Image</span> */}
-              {/* <NextImage field={camera} editable={true} alt="Profile-Pic" width={18} height={18} /> */}
+      <div>
+        <form style={{ border: '1px', borderColor: 'black' }} onSubmit={handleSubmit}>
+          <Form.Group controlId="exampleForm.ControlInput1">
+            <input
+              className={styles.headlineText}
+              type="text"
+              placeholder="Headline"
+              onChange={(e) => onHeadlineStateChangeHandler(e)}
+              required
+            />
+            {previewState === false ? (
+              <button className={styles.imageButton} onClick={clickmebuttonHandler} type="button">
+                {/* <span>Image</span> */}
+                {/* <NextImage field={camera} editable={true} alt="Profile-Pic" width={18} height={18} /> */}
 
-              <div className={styles.subContainer}>
-                <img src={imagelogo.src} className={styles.imageCls}></img>
-                <div>Add a cover image that complements your article to attract more readers.</div>
-                <div>We recommend uploading an image that is 1920x1080 pixels.</div>
-                <p className={styles.uploadCls}>Upload</p>
-              </div>
-              <Form.Control
-                style={{ display: 'none' }}
-                onChange={(e) => setPostImageValue(e)}
-                // value={postImage}
-                type="file"
-                placeholder="Click to add image"
-                // multiple
-                accept="image/*"
-                id="clickmebutton"
-              />
-            </button>
-          ) : (
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {file.map((img: any, num: any) => {
-                return (
-                  <div
-                    className={styles.imageButton}
-                    key={num}
-                    // style={{
-                    //   borderRadius: '30px',
-                    //   margin: '0px 15px 15px 0px',
-                    // }}
-                  >
-                    <button
-                      type="button"
-                      style={{ position: 'absolute', border: 'none', borderRadius: '15px' }}
-                      onClick={() => clickCrossImageButton(img.id)}
-                    >
-                      <img
-                        width="30px"
-                        src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
-                        alt="cross_button"
-                        style={{ borderRadius: '30px' }}
-                      ></img>
-                    </button>
-                    <img className={styles.previewImageCls} src={preview1} alt={img?.id}></img>
-                    {console.log(img.url, 'imageuel')}
+                <div className={styles.subContainer}>
+                  <img src={imagelogo.src} className={styles.imageCls}></img>
+                  <div>
+                    Add a cover image that complements your article to attract more readers.
                   </div>
-                );
-              })}
-            </div>
-          )}
-        </Form.Group>
-        <Editor
-          editorState={editorState}
-          onEditorStateChange={(e) => onEditorStateChangeHandler(e)}
-          wrapperClassName="wrapper-class"
-          editorClassName="editor-class"
-          toolbarClassName="toolbar-class"
-          editorStyle={{ height: '200px' }}
-          placeholder="  Write here. You can also include @mentions or #hashtags."
-          toolbar={toolbar}
-          mention={{
-            separator: ' ',
-            trigger: '@',
-            suggestions: mentionUserData,
-          }}
-          hashtag={{}}
-        />
+                  <div>We recommend uploading an image that is 1920x1080 pixels.</div>
+                  <p className={styles.uploadCls}>Upload</p>
+                </div>
+                <Form.Control
+                  style={{ display: 'none' }}
+                  onChange={(e) => setPostImageValue(e)}
+                  // value={postImage}
+                  type="file"
+                  placeholder="Click to add image"
+                  // multiple
+                  accept="image/*"
+                  id="clickmebutton"
+                />
+              </button>
+            ) : (
+              <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                {file.map((img: any, num: any) => {
+                  return (
+                    <div
+                      className={styles.imageButton}
+                      key={num}
+                      // style={{
+                      //   borderRadius: '30px',
+                      //   margin: '0px 15px 15px 0px',
+                      // }}
+                    >
+                      <button
+                        type="button"
+                        style={{ position: 'absolute', border: 'none', borderRadius: '15px' }}
+                        onClick={() => clickCrossImageButton(img.id)}
+                      >
+                        <img
+                          width="30px"
+                          src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
+                          alt="cross_button"
+                          style={{ borderRadius: '30px' }}
+                        ></img>
+                      </button>
+                      <img className={styles.previewImageCls} src={preview1} alt={img?.id}></img>
+                      {console.log(img.url, 'imageuel')}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </Form.Group>
+          <Editor
+            editorState={editorState}
+            onEditorStateChange={(e) => onEditorStateChangeHandler(e)}
+            wrapperClassName="wrapper-class"
+            editorClassName="editor-class"
+            toolbarClassName="toolbar-class"
+            editorStyle={{ height: '200px' }}
+            placeholder="  Write here. You can also include @mentions or #hashtags."
+            toolbar={toolbar}
+            mention={{
+              separator: ' ',
+              trigger: '@',
+              suggestions: mentionUserData,
+            }}
+            hashtag={{}}
+          />
 
-        <Button
-          className={`btn btn-lg ${styles.publishButton}`}
-          variant="secondary"
-          style={{
-            boxShadow: !createNewPostError ? 'none' : '0 4px 8px 0 rgba(255, 0, 0, 0.6)',
-          }}
-          type="submit"
-        >
-          Publish
-        </Button>
-        <div className={styles.errorContainer}>
-          {createNewPostError ? (
-            <span style={{ fontWeight: 1000, color: 'red', fontSize: '8px' }}>
-              * Something Went Wrong. Post not uploaded !
-            </span>
-          ) : (
-            ''
-          )}
-          {/* </div>
+          <Button
+            className={`btn btn-lg ${styles.publishButton}`}
+            variant="secondary"
+            style={{
+              boxShadow: !createNewPostError ? 'none' : '0 4px 8px 0 rgba(255, 0, 0, 0.6)',
+            }}
+            type="submit"
+          >
+            Publish
+          </Button>
+          <div className={styles.errorContainer}>
+            {createNewPostError ? (
+              <span style={{ fontWeight: 1000, color: 'red', fontSize: '8px' }}>
+                * Something Went Wrong. Post not uploaded !
+              </span>
+            ) : (
+              ''
+            )}
+            {/* </div>
 
               <div> */}
-        </div>
-      </form>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

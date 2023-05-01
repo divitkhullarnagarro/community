@@ -241,7 +241,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const addedPeerList = new Set<string>();
     Object.values(entityMap).map((entity) => {
       // console.log('mention', entity.data.value, rawEditorContent, entityMap);
-      addedPeerList.add(entity.data.url.substring(9, entity.data.url.length));
+      if (entity?.data?.url?.substring(0, 8) === '/profile') {
+        addedPeerList.add(entity?.data?.url?.substring(9, entity?.data?.url?.length));
+      }
     });
     const addedpeersList = [...addedPeerList.values()];
     setAddedPeers(addedpeersList);
