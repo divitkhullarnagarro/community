@@ -1,0 +1,105 @@
+@font-face {
+  font-family: 'Equip-Regular';
+  src: url('../assets/fonts/EquipExtended-Regular.eot');
+  src: url('../assets/fonts/EquipExtended-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/EquipExtended-Regular.woff2') format('woff2'),
+    url('../assets/fonts/EquipExtended-Regular.woff') format('woff'),
+    url('../assets/fonts/EquipExtended-Regular.ttf') format('truetype');
+}
+
+/* Widget view CSS*/
+/* region start*/
+.wrapper {
+  margin-top: 20px;
+  background: #ffffff;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  overflow: hidden;
+  padding: 10px 16px;
+}
+
+.wrapper::-webkit-scrollbar {
+  width: 5px;
+}
+
+.wrapper::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #efefef;
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+  background-color: #c2c2c2;
+  border-radius: 4px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.header a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.heading {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: #283895;
+}
+
+.link {
+  font-weight: 400;
+  color: #47d7ac;
+  cursor: pointer;
+}
+
+.listContainer {
+  margin-left: 15px;
+}
+
+.img {
+  border-radius: 60%;
+  width: 36px;
+  height: 36px;
+}
+
+.name {
+  font-size: 14px;
+  line-height: 18px;
+  margin-left: 14px;
+  color: #091329;
+}
+
+.cardloaderDetails {
+  display: flex;
+  width: 100%;
+}
+
+.cardloaderDetails > span {
+  width: calc(100% - 16px);
+}
+
+.cardloaderHeader {
+  display: flex;
+  width: 100%;
+}
+
+.cardloaderHeader > span {
+  width: 100%;
+}
+
+.button {
+  margin-left: auto;
+}
+
+/* region end*/
