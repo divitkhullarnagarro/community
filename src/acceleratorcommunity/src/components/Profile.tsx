@@ -17,6 +17,7 @@ import React from 'react';
 import DotLoader from './DotLoader';
 import EventListing from './helperComponents/EventListing';
 import BlogListing from './helperComponents/BlogListing';
+import PeerFriendList from './PeerFriendList';
 
 type User = {
   firstName: string | undefined;
@@ -108,6 +109,7 @@ type personalDetails = {
 };
 
 const Profile = (props: any): JSX.Element => {
+  console.log('profileProps', props);
   const { isLoggedIn, userToken, setIsLoggedIn, setUserToken, objectId, setObjectId } = {
     ...useContext(WebContext),
   };
@@ -726,6 +728,8 @@ const Profile = (props: any): JSX.Element => {
     // setPlaceOfPracticeDetails({...placeOfPracticeDetails,data})
   };
 
+  const queryParamShowTab = router.query?.showTab?.toString();
+
   //Modal Variables
   const [showForm1, setShowForm1] = useState(false);
   const [showForm2, setShowForm2] = useState(false);
@@ -740,7 +744,7 @@ const Profile = (props: any): JSX.Element => {
   const [toastSuccess, setToastSuccess] = useState(false);
   const [toastError, setToastError] = useState(false);
   const [toastMessage, setToastMessage] = useState<string>();
-  const [details, setDetails] = useState<any>('personal');
+  const [details, setDetails] = useState<any>(queryParamShowTab ?? 'personal');
   const [language, setLanguage] = useState<any>([]);
   const [hobby, setHobby] = useState<any>([]);
 
@@ -1392,7 +1396,14 @@ const Profile = (props: any): JSX.Element => {
             >
               Blogs
             </div>
-
+            <div
+              className={
+                details === 'peers' ? 'personalDetails personalDetailsActive' : 'personalDetails'
+              }
+              onClick={() => handlePersonalDetails('peers')}
+            >
+              Peers
+            </div>
             {/* <div
               className={
                 details === 'banner' ? 'personalDetails personalDetailsActive' : 'personalDetails'
@@ -1564,6 +1575,10 @@ const Profile = (props: any): JSX.Element => {
             ) : details === 'blogs' ? (
               <div className="profileInfo">
                 <BlogListing />
+              </div>
+            ) : details === 'peers' ? (
+              <div className="profileInfo">
+                <PeerFriendList {...props} />
               </div>
             ) : (
               <div className="bannerContainerForProfile">
