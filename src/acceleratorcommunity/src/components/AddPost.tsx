@@ -241,7 +241,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const addedPeerList = new Set<string>();
     Object.values(entityMap).map((entity) => {
       // console.log('mention', entity.data.value, rawEditorContent, entityMap);
-      addedPeerList.add(entity.data.url.substring(9, entity.data.url.length));
+      if (entity?.data?.url?.substring(0, 8) === '/profile') {
+        addedPeerList.add(entity?.data?.url?.substring(9, entity?.data?.url?.length));
+      }
     });
     const addedpeersList = [...addedPeerList.values()];
     setAddedPeers(addedpeersList);
@@ -1349,9 +1351,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </>
             ) : post?.postType === 'BLOG_POST' ? (
               <>
-                <div className="postDescription">{parser(modifyHtml(post?.blog?.description))}</div>
-                <div className="postHeading">{post?.blog?.heading}</div>
+                <div className="blogHeading" style={{ fontWeight: 600, fontSize: '50px' }}>
+                  {post?.blog?.heading}
+                </div>
                 <NextImage src={post?.blog?.imageUrl}></NextImage>
+                <div className="postDescription">{parser(modifyHtml(post?.blog?.description))}</div>
               </>
             ) : (
               <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
