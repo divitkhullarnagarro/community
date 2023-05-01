@@ -103,3 +103,101 @@
 }
 
 /* region end*/
+
+/*Full page edit profile css */
+/* region start*/
+
+.mainContainer {
+  display: 'flex';
+  flex-direction: 'column';
+}
+
+.container {
+  margin-top: 20px;
+  display: flex;
+  height: 75vh;
+  justify-content: flex-start;
+}
+
+.mainFullPageItemWrapper {
+  width: 100%;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+.mainFullPageItemWrapper::-webkit-scrollbar {
+  overflow-y: auto;
+  width: 5px;
+}
+
+.mainFullPageItemWrapper::-webkit-scrollbar-track {
+  border-radius: 2px;
+  background-color: white;
+  height: 1px;
+}
+
+.mainFullPageItemWrapper::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 2px;
+}
+
+.listHeaderLabel {
+  font-weight: bold;
+  color: #3d3d3f;
+  font-size: 16px;
+  margin-left: 10px;
+  font-family: Equip-Regular;
+  margin-top: 8px;
+}
+
+.newgrid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.seeMoreBtn {
+  margin-bottom: 1px;
+  padding: 10px;
+  font-family: 'Equip-Regular';
+  font-size: 18px;
+  width: 100%;
+  font-size: 20px;
+  height: 50px;
+  background-color: #f9f9f9;
+  color: #2a86fd;
+  border: none;
+  font-weight: 500;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardItem {
+  flex-basis: 15%;
+  margin: 5px;
+  border-radius: 6px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.imageContainer {
+  width: 100%;
+}
+
+.imgProfile {
+  border-radius: 6px 6px 0px 0px;
+  width: 100%;
+}
+
+.cardTitle {
+  font-weight: 300;
+  font-size: 15px;
+  margin-bottom: 18px;
+  font-family: 'Equip-Regular';
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* region end*/
