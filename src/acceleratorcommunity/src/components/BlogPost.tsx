@@ -268,6 +268,15 @@ const TextEditor = (): JSX.Element => {
           >
             Publish
           </Button>
+          <Button
+            className={`btn btn-lg ${styles.publishButton}`}
+            onClick={() => router.push('/')}
+            variant="default"
+            style={{ outline: 'none', border: 'none', color: '#F58C60' }}
+            type="button"
+          >
+            Cancel
+          </Button>
           <div className={styles.errorContainer}>
             {createNewPostError ? (
               <span style={{ fontWeight: 1000, color: 'red', fontSize: '8px' }}>
