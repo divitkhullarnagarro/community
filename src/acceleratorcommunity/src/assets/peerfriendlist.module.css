@@ -1,0 +1,203 @@
+@font-face {
+  font-family: 'Equip-Regular';
+  src: url('../assets/fonts/EquipExtended-Regular.eot');
+  src: url('../assets/fonts/EquipExtended-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/EquipExtended-Regular.woff2') format('woff2'),
+    url('../assets/fonts/EquipExtended-Regular.woff') format('woff'),
+    url('../assets/fonts/EquipExtended-Regular.ttf') format('truetype');
+}
+
+/* Widget view CSS*/
+/* region start*/
+.wrapper {
+  margin-top: 20px;
+  background: #ffffff;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  overflow: hidden;
+  padding: 10px 16px;
+}
+
+.wrapper::-webkit-scrollbar {
+  width: 5px;
+}
+
+.wrapper::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #efefef;
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+  background-color: #c2c2c2;
+  border-radius: 4px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.header a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.heading {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: #283895;
+}
+
+.link {
+  font-weight: 400;
+  color: #47d7ac;
+  cursor: pointer;
+}
+
+.listContainer {
+  margin-left: 15px;
+}
+
+.img {
+  border-radius: 60%;
+  width: 36px;
+  height: 36px;
+}
+
+.name {
+  font-size: 14px;
+  line-height: 18px;
+  margin-left: 14px;
+  color: #091329;
+}
+
+.cardloaderDetails {
+  display: flex;
+  width: 100%;
+}
+
+.cardloaderDetails > span {
+  width: calc(100% - 16px);
+}
+
+.cardloaderHeader {
+  display: flex;
+  width: 100%;
+}
+
+.cardloaderHeader > span {
+  width: 100%;
+}
+
+.button {
+  margin-left: auto;
+}
+
+/* region end*/
+
+/*Full page edit profile css */
+/* region start*/
+
+.mainContainer {
+  display: 'flex';
+  flex-direction: 'column';
+}
+
+.container {
+  margin-top: 20px;
+  display: flex;
+  height: 75vh;
+  justify-content: flex-start;
+}
+
+.mainFullPageItemWrapper {
+  width: 100%;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+.mainFullPageItemWrapper::-webkit-scrollbar {
+  overflow-y: auto;
+  width: 5px;
+}
+
+.mainFullPageItemWrapper::-webkit-scrollbar-track {
+  border-radius: 2px;
+  background-color: white;
+  height: 1px;
+}
+
+.mainFullPageItemWrapper::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 2px;
+}
+
+.listHeaderLabel {
+  font-weight: bold;
+  color: #3d3d3f;
+  font-size: 16px;
+  margin-left: 10px;
+  font-family: Equip-Regular;
+  margin-top: 8px;
+}
+
+.newgrid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.seeMoreBtn {
+  margin-bottom: 1px;
+  padding: 10px;
+  font-family: 'Equip-Regular';
+  font-size: 18px;
+  width: 100%;
+  font-size: 20px;
+  height: 50px;
+  background-color: #f9f9f9;
+  color: #2a86fd;
+  border: none;
+  font-weight: 500;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardItem {
+  flex-basis: 15%;
+  margin: 5px;
+  border-radius: 6px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.imageContainer {
+  width: 100%;
+}
+
+.imgProfile {
+  border-radius: 6px 6px 0px 0px;
+  width: 100%;
+}
+
+.cardTitle {
+  font-weight: 300;
+  font-size: 15px;
+  margin-bottom: 18px;
+  font-family: 'Equip-Regular';
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* region end*/

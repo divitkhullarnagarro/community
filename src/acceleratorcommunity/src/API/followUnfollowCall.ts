@@ -1,6 +1,6 @@
 import Axios, { AxiosResponse } from "axios";
 
-const followCall = async (userName: string, userToken : string | undefined
+const followCall = async (userName: string| undefined, userToken : string | undefined
 ) => {
     let URL = `https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/follow/${userName}`;
     var config = {
@@ -24,7 +24,7 @@ const followCall = async (userName: string, userToken : string | undefined
 export default followCall;
 
 
-export const UnfollowCall = async (userName: string, userToken : string | undefined
+export const UnfollowCall = async (userName: string| undefined, userToken : string | undefined
     ) => {
         let URL = `https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/unfollow/${userName}`;
         var config = {
