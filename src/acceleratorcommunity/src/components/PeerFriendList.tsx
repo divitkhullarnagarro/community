@@ -8,7 +8,7 @@ import Skeleton from 'react-loading-skeleton';
 import Profile from '../assets/images/ProfilePic.jpeg';
 import allPeersCall from 'src/API/getPeers';
 import { Button, Card } from 'react-bootstrap';
-import DropArrow from '../assets/images/DropArrow.png';
+import DropArrow from '../assets/images/droparrow.png';
 import FollowUnfollowButton from './FollowUnfollowButton';
 
 type PeerFriendListProps = ComponentProps & {
