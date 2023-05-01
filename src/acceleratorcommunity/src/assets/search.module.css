@@ -33,6 +33,11 @@
     width: auto;
 }
 
+.searchBtn{
+    background-color: transparent;
+    border: none;
+}
+
 @media screen and (max-width: 768px) {
   .container  {
     gap: 10px;

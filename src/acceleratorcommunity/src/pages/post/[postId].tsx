@@ -778,12 +778,14 @@ export async function getServerSideProps(context: any) {
   };
   const res = await fetch(getAllPostURL, config)
     .then((response: any) => {
+      console.log("valueeeeeeeeeeeee",response?.data)
       return response;
     })
     .catch((error: any) => {
       console.error(error);
     });
   if (res !== undefined) {
+    console.log("res", res)
     var data = await res.json();
   }
   return {

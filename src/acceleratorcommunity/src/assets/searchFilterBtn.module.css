@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.btnActive {
+  background-color: #47d7ac;
+  color: white;
+  border-radius: 20px;
+  padding: 3px 25px;
+  border: 1px solid #47d7ac;
+}
+.btn {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 3px 25px;
+  color: #47d7ac;
+  border: 1px solid #47d7ac;
+}
