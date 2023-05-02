@@ -1,0 +1,92 @@
+@font-face {
+  font-family: 'Equip-Regular';
+  src: url('../assets/fonts/EquipExtended-Regular.eot');
+  src: url('../assets/fonts/EquipExtended-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/EquipExtended-Regular.woff2') format('woff2'),
+    url('../assets/fonts/EquipExtended-Regular.woff') format('woff'),
+    url('../assets/fonts/EquipExtended-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Equip-Medium';
+  src: url('../assets/fonts/EquipExtended-Medium.eot');
+  src: url('../assets/fonts/EquipExtended-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/EquipExtended-Medium.woff2') format('woff2'),
+    url('../assets/fonts/EquipExtended-Medium.woff') format('woff'),
+    url('../assets/fonts/EquipExtended-Medium.ttf') format('truetype');
+}
+
+.filterContainer {
+  padding: 20px;
+}
+
+.headingBtn {
+  background-color: transparent;
+  border: none;
+  font-size: 25px;
+}
+.filterHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filterHeading {
+  font-family: 'Equip-Regular';
+  font-weight: 400;
+  font-size: 20px;
+  color: #091329;
+}
+
+.filterBodyInput {
+  width: 100%;
+}
+
+.filterBodyInput > form > input {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #ced0d4;
+  border-radius: 6px;
+  outline: none;
+  padding: 10px 20px;
+  margin-bottom: 15px;
+}
+
+.filterBodyInput > form > input::placeholder {
+  color: #ced0d4;
+}
+
+.filterAction {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: 'Equip-Regular';
+  font-size: 18px;
+  font-weight: 400;
+  color: #091329;
+  margin-top: 5px;
+}
+
+.checkboxChecked:checked {
+  accent-color: #ced0d4;
+}
+
+.filters {
+  display: flex;
+  gap: 20px;
+}
+
+.searchBtn {
+  display: none;
+}
+
+.btnContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.clearBtn {
+  color: #f58c60;
+  background-color: transparent;
+  border: none;
+}
