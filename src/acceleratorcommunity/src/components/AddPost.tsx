@@ -82,7 +82,7 @@ import deleteCommentCall from 'src/API/deleteCommentCall';
 // import PollCard from './PollCard';
 import reportUserCall from 'src/API/reportUserCall';
 import { useRouter } from 'next/router';
-import PostSkeleton from './skeletons/PostSkeleton';
+// import PostSkeleton from './skeletons/PostSkeleton';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -3600,7 +3600,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 <Skeleton height={18} className='mb-2'/>
               </div>
               <div className='mb-3'>
-                <Skeleton className='mb-2' height={30}/>
+                <Skeleton className='mb-2' height={80}/>
                 <Skeleton height={20} width={100 + '%'}/>
                 <Skeleton height={20} width={100 + '%'}/>
                 <Skeleton height={20} width={100 + '%'}/>
