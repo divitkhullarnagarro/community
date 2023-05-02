@@ -1,6 +1,6 @@
 import { Field, ImageField, NextImage, RichTextField } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import loginUserCall from '../API/loginUserCall';
 // import '../assets/login.css';
@@ -8,9 +8,9 @@ import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';
 import loginCss from '../assets/login.module.css';
 import Spinner from 'react-bootstrap/Spinner';
-import SocketContext from 'src/Context/SocketContext';
 import getUserCall from 'src/API/getUserCall';
 import { encryptString } from '../assets/helpers/EncryptDecrypt';
+import firebaseCloudMessaging from 'src/firebase/firebase';
 // import star from '../assets/images/star.png';
 
 type LoginProps = ComponentProps & {
@@ -58,11 +58,9 @@ type DataSource = {
 };
 
 const Login = (props: LoginProps): JSX.Element => {
-  const { socket } = { ...useContext(SocketContext) };
-  console.log('socketRegister', socket);
-  socket?.on('kr62521@gmail.com', (data: any) => {
-    console.log('Received message:', data);
-  });
+  useEffect(() => {
+    firebaseCloudMessaging.init().then((data: any) => console.log('tokenFromFirebase1', data));
+  }, []);
   const targetItems = props?.fields?.data?.datasource;
   const router = useRouter();
   const { setIsLoggedIn, setUserToken, setObjectId, userToken, setUserObject } = {
