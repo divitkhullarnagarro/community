@@ -82,7 +82,7 @@ import deleteCommentCall from 'src/API/deleteCommentCall';
 // import PollCard from './PollCard';
 import reportUserCall from 'src/API/reportUserCall';
 import { useRouter } from 'next/router';
-// import PostSkeleton from './skeletons/PostSkeleton';
+import AddPostSkeleton from './skeletons/AddPostSkeleton';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -3588,65 +3588,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           ''
         )}
         <div className="AllPostscontainer" id="PostFeedList" style={{ maxWidth: '100%' }}>
-          {posts?.length == 0 ? (
-            // <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
-            //   {/* <span style={{ marginRight: '15px', fontWeight: '600' }}>Loading.. </span>{' '} */}
-            //   {/* <Spinner animation="border" /> */}
-            // </span>
-            <div>
-              <div className={styles.addPostHead}>
-                <Skeleton circle={true} className='mb-2' height={28} width={28}/>
-                <Skeleton height={18} className='mb-2'/>
-                <Skeleton height={18} className='mb-2'/>
-              </div>
-              <div className='mb-3'>
-                <Skeleton className='mb-2' height={80}/>
-                <Skeleton height={20} width={100 + '%'}/>
-                <Skeleton height={20} width={100 + '%'}/>
-                <Skeleton height={20} width={100 + '%'}/>
-                <Skeleton height={20} width={100 + '%'}/>
-                <Skeleton height={20} width={100 + '%'}/>
-                <Skeleton height={20} width={100 + '%'}/>
-                <Skeleton height={20} width={100 + '%'}/>
-              </div>
-              <div className={styles.addPostFooter}>
-                <Skeleton height={18} width={100 + '%'}/>
-                <Skeleton height={18} width={100 + '%'}/>
-                <Skeleton height={18} width={100 + '%'}/>
-              </div>
-            </div>
-          ) : (
-            posts
-          )}
-          <div style={{ height: '50px' }}>
+        {posts?.length == 0 ? <AddPostSkeleton count={3} /> : posts}
+          <div style={{ height: '250px' }}>
             {ifReachedEnd ? (
               !ifNoMoreData ? (
-                // <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
-                //   <span style={{ marginRight: '15px', fontWeight: '600' }}>Loading.. </span>{' '}
-                //   <Spinner animation="border" />
-                // </span>
-                <div>
-              <div className={styles.addPostHead}>
-                <Skeleton circle={true} className='mb-2' height={28} width={28}/>
-                <Skeleton height={18} className='mb-2'/>
-                <Skeleton height={18} className='mb-2'/>
-              </div>
-              <div className='mb-3'>
-                <Skeleton className='mb-2' height={30}/>
-                <Skeleton height={20} width={100 + '%'}/>
-                <Skeleton height={20} width={100 + '%'}/>
-                <Skeleton height={20} width={100 + '%'}/>
-                <Skeleton height={20} width={100 + '%'}/>
-                <Skeleton height={20} width={100 + '%'}/>
-                <Skeleton height={20} width={100 + '%'}/>
-                <Skeleton height={20} width={100 + '%'}/>
-              </div>
-              <div className={styles.addPostFooter}>
-                <Skeleton height={18} width={100 + '%'}/>
-                <Skeleton height={18} width={100 + '%'}/>
-                <Skeleton height={18} width={100 + '%'}/>
-              </div>
-            </div>
+                <AddPostSkeleton count={1} />
               ) : (
                 <span
                   style={{
