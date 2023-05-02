@@ -124,3 +124,31 @@
   color: #47D7AC;
   cursor: pointer;
 }
+.recentActivityHeaderLoader {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
+.recentActivityHeaderLoader > span {
+  width: 70%;
+}
+.recentActivityHeaderLoader > span:nth-child(2) {
+  width: 30%;
+  margin-left: 16px;
+}
+.recentActivityListHeadingLeftLoader {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.recentActivityListHeadingLeftLoader .recentActivityNameAndDate {
+  width: 100%;
+}
+.recentActivityListHeadingLoader {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+.recentActivityListHeadingLoader > span {
+  width: 100%;
+}

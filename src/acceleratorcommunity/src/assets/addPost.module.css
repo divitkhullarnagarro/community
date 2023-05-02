@@ -403,7 +403,28 @@
 .AddEventModalEventDates div {
   width: 100%;
 }
-
+.addPostHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.addPostHead>span:first-of-type {
+  width: 5%;
+}
+.addPostHead>span:nth-child(2) {
+  width: 80%;
+}
+.addPostHead>span:last-of-type {
+  width: 10%;
+}
+.addPostFooter>span {
+  width: 10%;
+  margin-right: 3%;
+}
+.addPostFooter {
+  display: flex;
+  align-items: center;
+}
 @media only screen and (max-width: 640px) {
   .dropdownBtn {
     background-color: white;
