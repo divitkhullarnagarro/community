@@ -1,0 +1,37 @@
+@font-face {
+  font-family: 'Equip-Regular';
+  src: url('../assets/fonts/EquipExtended-Regular.eot');
+  src: url('../assets/fonts/EquipExtended-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/EquipExtended-Regular.woff2') format('woff2'),
+    url('../assets/fonts/EquipExtended-Regular.woff') format('woff'),
+    url('../assets/fonts/EquipExtended-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Equip-Medium';
+  src: url('../assets/fonts/EquipExtended-Medium.eot');
+  src: url('../assets/fonts/EquipExtended-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/EquipExtended-Medium.woff2') format('woff2'),
+    url('../assets/fonts/EquipExtended-Medium.woff') format('woff'),
+    url('../assets/fonts/EquipExtended-Medium.ttf') format('truetype');
+}
+
+.container {
+  border-bottom: 1px solid #ced0d4;
+  padding-bottom: 15px;
+  margin-bottom: 10px;
+}
+.containerHeading {
+  color: #091329;
+  font-family: 'Equip-Regular';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.containerDescription {
+  color: #091329;
+  font-family: 'Equip-Regular';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+}

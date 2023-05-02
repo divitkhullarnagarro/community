@@ -316,10 +316,7 @@ background-color: #F7F7F6;
 
 }
 .container{
-  display: flex;
-    width: 100%;
-    justify-content: center;
-  overflow-x: hidden;
+  margin: 0 275px;
 }
 .subContainer{
   display: flex ;

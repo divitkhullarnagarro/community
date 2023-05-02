@@ -1,0 +1,105 @@
+@font-face {
+  font-family: 'Equip-Regular';
+  src: url('../assets/fonts/EquipExtended-Regular.eot');
+  src: url('../assets/fonts/EquipExtended-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/EquipExtended-Regular.woff2') format('woff2'),
+    url('../assets/fonts/EquipExtended-Regular.woff') format('woff'),
+    url('../assets/fonts/EquipExtended-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Equip-Medium';
+  src: url('../assets/fonts/EquipExtended-Medium.eot');
+  src: url('../assets/fonts/EquipExtended-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/EquipExtended-Medium.woff2') format('woff2'),
+    url('../assets/fonts/EquipExtended-Medium.woff') format('woff'),
+    url('../assets/fonts/EquipExtended-Medium.ttf') format('truetype');
+}
+
+.parentContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+  margin-top: 0.625rem;
+}
+.imgAndContentContainer {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.eventHeading {
+  font-family: 'Equip-Regular';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  color: #091329;
+}
+
+.eventTime {
+  font-weight: 300;
+  font-size: 14px;
+  color: #82888f;
+}
+.eventDescription {
+  font-family: 'Equip-Regular';
+  font-weight: 300;
+  font-size: 14px;
+  color: #000000;
+}
+.statsConatiner {
+  font-family: 'Equip-Regular';
+  font-weight: 300;
+  font-size: 14px;
+  color: #82888f;
+}
+.imgAndContentContainer > img {
+  width: 25%;
+  height: 100%;
+}
+
+/* 
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 30%;
+  margin-bottom: 10px;
+  background: #ffffff;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  border: 1px solid #ced0d4;
+  border-radius: 6px;
+}
+.eventContainerBody {
+  width: 100%;
+}
+
+.imageContainer {
+  width: 100%;
+}
+
+.imageContainer > img {
+  width: 100%;
+}
+
+.eventContainerHeader {
+  display: flex;
+  width: 100%;
+  padding: 10px;
+}
+.eventHeaderInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.eventHeaderInfo > img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+} */

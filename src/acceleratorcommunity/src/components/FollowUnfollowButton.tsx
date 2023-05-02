@@ -4,16 +4,21 @@ import styles from '../assets/followunfollowbutton.module.css';
 import followCall, { UnfollowCall } from 'src/API/followUnfollowCall';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-// import { Spinner } from 'react-bootstrap';
 
-const FollowUnfollowButton = (props: any): JSX.Element => {
+type FollowUnfollowButtonProps = {
+  userName?: string;
+  buttonText?: string;
+};
+
+const FollowUnfollowButton = (props: FollowUnfollowButtonProps): JSX.Element => {
+  console.log('FollowUnfollowButtonProps', props);
   const { isLoggedIn, userToken, setUserToken } = { ...useContext(WebContext) };
   console.log(isLoggedIn);
-  // const [showSpinner, setShowSpinner] = useState(false);
+
   // state variables
   const [showForm1, setShowForm] = useState(false);
   const handleClose1 = () => setShowForm(false);
-  const [followButtonText, setButtonText] = useState('Follow');
+  const [followButtonText, setButtonText] = useState(props?.buttonText ?? 'Follow');
   const changeText = (text: string) => setButtonText(text);
 
   const modalConfirmationDialog = () => {
@@ -54,14 +59,12 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
   };
 
   const onFollow = async (e: any) => {
-    //setShowSpinner(true);
     e.preventDefault();
     setTokenFromLocalStorage();
     let response = await followCall(props?.userName, userToken);
     if (response?.success) {
-      changeText('Following');
+      changeText(props?.buttonText ?? 'Following');
     }
-    //setShowSpinner(false);
   };
 
   const showConfirmationPopup = (e: any) => {
@@ -70,7 +73,6 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
   };
 
   const onUnfollow = async (e: any) => {
-   // setShowSpinner(true);
     e.preventDefault();
     modalConfirmationDialog();
     setTokenFromLocalStorage();
@@ -78,7 +80,6 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
     if (response?.success) {
       changeText('Follow');
     }
-    //setShowSpinner(false);
     setShowForm(false);
   };
 
@@ -87,11 +88,10 @@ const FollowUnfollowButton = (props: any): JSX.Element => {
       <div>
         <button type="button" className={styles.followButton} onClick={(e) => onFollow(e)}>
           {followButtonText}
-          {/* {showSpinner ? <Spinner style={{ marginLeft: '10px', height: '10px' }} /> : <></>} */}
         </button>
       </div>
     );
-  } else if (followButtonText == 'Following') {
+  } else if (followButtonText == 'Following' || followButtonText == 'Unfollow') {
     return (
       <div>
         <button
