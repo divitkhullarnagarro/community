@@ -82,6 +82,9 @@ import reportUserCall from 'src/API/reportUserCall';
 import { useRouter } from 'next/router';
 import PostSkeleton from './skeletons/PostSkeleton';
 
+//logging on logrocket
+import LogRocket from 'logrocket';
+
 type AddPostProps = ComponentProps & {
   fields: {
     heading: Field<string>;
@@ -98,7 +101,23 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const { userToken, objectId, userObject } = {
     ...useContext(WebContext),
   };
+  //logging on logrocket start
+  useEffect(() => {
+    console.log('asdfghjklasdfghjksdfghj', userObject);
+    LogRocket.init('5m0bj8/communitysolution');
+    LogRocket.identify(userObject.email, {
+      name: `${userObject.firstName} ${userObject.lastName}`,
+      email: userObject.email,
 
+      // Add your own custom user variables here, ie:
+      subscriptionType: 'pro',
+    });
+    // LogRocket.track('Button Clicked', {
+    //   buttonName: 'Submit',
+    //   formId: 'signupForm',
+    // });
+  }, []);
+  // logging on logrocket end
   interface ItemImage {
     [key: string]: string;
   }
@@ -260,6 +279,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const onEditorStateChangeHandler = (e: any) => {
     setEditorState(e);
     setPostTextValue(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+    console.log('asdfasdfasdfasdf', draftToHtml(convertToRaw(editorState.getCurrentContent())));
   };
   // console.log('mention', addedPeers);
 
