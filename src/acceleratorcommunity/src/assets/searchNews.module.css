@@ -16,9 +16,23 @@
 }
 
 .container {
+  display: flex;
+  align-items: center;
   border-bottom: 1px solid #ced0d4;
   padding-bottom: 15px;
   margin-bottom: 10px;
+  gap: 20px;
+}
+.imgContainer{
+  width: 50%;
+}
+.imgContainer > img {
+  width: 100%;
+  height: 100%;
+}
+.contentContainer{
+    display: flex;
+    flex-direction: column;
 }
 .containerHeading {
   color: #091329;
@@ -27,7 +41,12 @@
   font-weight: 600;
   font-size: 16px;
 }
-
+.containerTime{
+  font-family: 'Equip-Regular';
+  font-weight: 300;
+  font-size: 14px;
+  color: #82888F;
+}
 .containerDescription {
   color: #091329;
   font-family: 'Equip-Regular';

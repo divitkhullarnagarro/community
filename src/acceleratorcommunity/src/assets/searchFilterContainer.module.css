@@ -1,7 +1,7 @@
 .parentContainer {
   width: 100%;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   background-color: #f0f2f5;
   gap: 20px;
@@ -15,4 +15,35 @@
   padding: 15px 25px;
   display: flex;
   flex-direction: column;
+  max-height: 46.875rem;
+  overflow-y: auto;
+}
+
+.generalcontainer::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.generalcontainer::-webkit-scrollbar-track {
+  border-radius: 2px;
+  background-color: white;
+  height: 1px;
+}
+
+.generalcontainer::-webkit-scrollbar-thumb {
+  /* background-image: url('./../assets/images/arrow.png'); */
+  background-position: center top;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 50px;
+  background-color: #ced0d4;
+}
+
+.filterContainer {
+  display: flex;
+  height: 46.875rem;
+  background: #ffffff;
+  flex-direction: column;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  width: 30%;
+  margin-top: 50px;
 }
