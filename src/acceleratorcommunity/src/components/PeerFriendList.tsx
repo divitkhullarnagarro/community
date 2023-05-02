@@ -48,6 +48,14 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
     }
   }, [userToken]);
 
+  const NoPeersLabel = () => {
+    return (
+      <>
+        <div>You do not have any peers yet.</div>
+        <div>Explore the community to add peers.</div>
+      </>
+    );
+  };
   const WidgetViewPeerFriendList = () => {
     return (
       <div className={styles.wrapper}>
@@ -82,7 +90,9 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
               );
             })
           ) : (
-            <></>
+            <div className={styles.widgetViewNoPeerListHeader}>
+              <NoPeersLabel />
+            </div>
           )}
         </div>
       </div>
@@ -129,7 +139,9 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
                     return <FullPagePeerFriendListItem {...item} />;
                   })
                 ) : (
-                  <></>
+                  <div className={styles.fullPageNoPeerListHeader}>
+                    <NoPeersLabel />
+                  </div>
                 )
               ) : (
                 skeletonDummyArr.concat(skeletonDummyArr).map((item: any) => {
