@@ -79,6 +79,8 @@ import deleteCommentCall from 'src/API/deleteCommentCall';
 // import articleIcon from '../assets/images/ArticleIcon.svg';
 // import PollCard from './PollCard';
 import reportUserCall from 'src/API/reportUserCall';
+import { useRouter } from 'next/router';
+import PostSkeleton from './skeletons/PostSkeleton';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -146,8 +148,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   let [disableAddPoll, setDisableAddPoll] = useState(false);
   let [globalPostType, setGlobalPostType] = useState('TEXT_POST');
 
-  console.log('GLOBALPOSTTYPE', globalPostType);
-  console.log('PollPost', pollPost);
+  let [pageRoute, setPageroute] = useState('/viewProfile');
+  const router = useRouter();
+  useEffect(() => {
+    setPageroute(router.asPath);
+  }, []);
+
+  console.log('CURRENTPATH', pageRoute);
 
   useEffect(() => {
     if (file.length || docs.length || videoLink.length || eventPost != '' || pollPost != '') {
@@ -2791,46 +2798,58 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   return (
     <>
       <div className={styles.mainContainer}>
-        <div className={styles.addPostWidgetContainer}>
-          {/* <div style={{ marginBottom: '40px' }}> */}
-          <div className={styles.addPostFieldContainer}>
-            <div className={styles.addPostField}>
-              <div className={styles.addPostImage}>
-                <NextImage field={user} editable={true} alt="Profile-Pic" width={27} height={27} />
-              </div>
-              {showForm1 ? (
-                <Collapse in={showForm1}>
-                  <div
-                    className="AddPostEditorContainer"
-                    style={{ maxWidth: '100%' }}
-                    id="showAddPostEditorContainer"
-                  >
-                    <div className={styles.addTextEditor}>
-                      <Form style={{ border: '1px', borderColor: 'black' }}>
-                        <Form.Group controlId="exampleForm.ControlInput1">
-                          <Editor
-                            editorState={editorState}
-                            onEditorStateChange={(e) => onEditorStateChangeHandler(e)}
-                            wrapperClassName="wrapper-class"
-                            editorClassName="editor-class"
-                            toolbarClassName="toolbar-class"
-                            editorStyle={{ height: '200px', padding: '0px 10px', fontSize: '13px' }}
-                            placeholder="Share Your Thoughts..."
-                            toolbar={toolbar}
-                            // toolbarOnFocus={true}
-                            mention={{
-                              separator: ' ',
-                              trigger: '@',
-                              suggestions: mentionUserData,
-                            }}
-                            hashtag={{}}
-                          />
-                          {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        {!(pageRoute === '/viewProfile') ? (
+          <>
+            <div className={styles.addPostWidgetContainer}>
+              {/* <div style={{ marginBottom: '40px' }}> */}
+              <div className={styles.addPostFieldContainer}>
+                <div className={styles.addPostField}>
+                  <div className={styles.addPostImage}>
+                    <NextImage
+                      field={user}
+                      editable={true}
+                      alt="Profile-Pic"
+                      width={27}
+                      height={27}
+                    />
+                  </div>
+                  {showForm1 ? (
+                    <Collapse in={showForm1}>
+                      <div
+                        className="AddPostEditorContainer"
+                        style={{ maxWidth: '100%' }}
+                        id="showAddPostEditorContainer"
+                      >
+                        <div className={styles.addTextEditor}>
+                          <Form style={{ border: '1px', borderColor: 'black' }}>
+                            <Form.Group controlId="exampleForm.ControlInput1">
+                              <Editor
+                                editorState={editorState}
+                                onEditorStateChange={(e) => onEditorStateChangeHandler(e)}
+                                wrapperClassName="wrapper-class"
+                                editorClassName="editor-class"
+                                toolbarClassName="toolbar-class"
+                                editorStyle={{
+                                  height: '200px',
+                                  padding: '0px 10px',
+                                  fontSize: '13px',
+                                }}
+                                placeholder="Share Your Thoughts..."
+                                toolbar={toolbar}
+                                // toolbarOnFocus={true}
+                                mention={{
+                                  separator: ' ',
+                                  trigger: '@',
+                                  suggestions: mentionUserData,
+                                }}
+                                hashtag={{}}
+                              />
+                              {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                           <div>
                             {currentCount}/{5000} characters
                           </div>
                         </div> */}
-                          {/* <Form.Control
+                              {/* <Form.Control
                           onChange={(e) => setPostTextValue(e.target.value)}
                           value={postText}
                           as="textarea"
@@ -2839,422 +2858,424 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           required
                           style={{ border: 'none', resize: 'none' }}
                         /> */}
-                        </Form.Group>
-                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                          {file.map((img: any, num: any) => {
-                            return (
-                              <div
-                                key={num}
-                                style={{
-                                  borderRadius: '30px',
-                                  margin: '0px 15px 15px 0px',
-                                }}
-                              >
-                                <button
-                                  type="button"
-                                  style={{
-                                    position: 'absolute',
-                                    border: 'none',
-                                    borderRadius: '15px',
-                                  }}
-                                  onClick={() => clickCrossImageButton(img.id)}
-                                >
-                                  <img
-                                    width="30px"
-                                    src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
-                                    alt="cross_button"
-                                    style={{ borderRadius: '30px' }}
-                                  ></img>
-                                </button>
-                                <img width="300px" src={img?.url} alt={img?.id}></img>
-                              </div>
-                            );
-                          })}
-                        </div>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}>
-                          {docs.map((doc: any, num: any) => {
-                            return (
-                              <div className="docPreviewContainer" key={num}>
-                                <span className="openPrevButton">
-                                  <button
-                                    onClick={() => openDoc(doc?.url)}
+                            </Form.Group>
+                            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                              {file.map((img: any, num: any) => {
+                                return (
+                                  <div
+                                    key={num}
                                     style={{
-                                      padding: '5px',
-                                      borderRadius: '20px',
-                                      borderColor: 'white',
+                                      borderRadius: '30px',
+                                      margin: '0px 15px 15px 0px',
                                     }}
                                   >
-                                    <img
-                                      width="50px"
-                                      src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
-                                      alt={num}
-                                      style={{ margin: '10px' }}
-                                    ></img>
-                                    {doc.name}
-                                  </button>
-                                </span>
-
-                                <span>
-                                  <button
-                                    style={{ border: 'none', backgroundColor: 'white' }}
-                                    type="button"
-                                    onClick={() => clickCrossDocButton(doc.id)}
-                                  >
-                                    <img
-                                      width="30px"
-                                      src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
-                                      alt="cross_button"
-                                      style={{ marginLeft: '10px' }}
-                                    ></img>
-                                  </button>
-                                </span>
-                              </div>
-                            );
-                          })}
-                        </div>
-                        <div style={{ display: 'flex', flexWrap: 'wrap' }} id="setVideoPreview">
-                          {videoLink.map((video: any, num: any) => {
-                            return (
-                              <div key={num}>
-                                <video width="100%" src={video?.url} controls></video>
-                                <div>
-                                  <img
-                                    width="50px"
-                                    src="https://cdn-icons-png.flaticon.com/512/711/711245.png"
-                                    alt={num}
-                                    style={{ margin: '10px' }}
-                                  ></img>
-                                  <span>
-                                    {video.name}
                                     <button
-                                      style={{ border: 'none', backgroundColor: 'white' }}
                                       type="button"
-                                      onClick={clickCrossVideoButton}
+                                      style={{
+                                        position: 'absolute',
+                                        border: 'none',
+                                        borderRadius: '15px',
+                                      }}
+                                      onClick={() => clickCrossImageButton(img.id)}
                                     >
                                       <img
                                         width="30px"
                                         src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
                                         alt="cross_button"
-                                        style={{ marginLeft: '10px' }}
+                                        style={{ borderRadius: '30px' }}
                                       ></img>
                                     </button>
-                                  </span>
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                        <div>
-                          {eventPost?.event?.title ? (
-                            <div style={{ display: 'grid' }}>
-                              <button
-                                style={{
-                                  position: 'absolute',
-                                  justifySelf: 'flex-end',
-                                  marginTop: '20px',
-                                  border: 'none',
-                                  borderRadius: '20px',
-                                }}
-                                type="button"
-                                onClick={() => emptyEvent()}
-                              >
-                                <img
-                                  width="30px"
-                                  src="   https://cdn-icons-png.flaticon.com/512/1617/1617543.png "
-                                  alt="crossButton"
-                                />
-                              </button>
-                              <EventCard
-                                heading={eventPost?.event?.title}
-                                description={eventPost?.event?.description}
-                                date={eventPost?.event?.eventDate}
-                                eventType={eventPost?.event?.eventType}
-                                url={EventImage[eventPost?.event?.eventType]}
-                              />
+                                    <img width="300px" src={img?.url} alt={img?.id}></img>
+                                  </div>
+                                );
+                              })}
                             </div>
-                          ) : (
-                            ''
-                          )}
-                        </div>
-                        <div>
-                          {pollPost?.poll?.pollQuestion ? (
                             <div
-                              style={{
-                                padding: '12px',
-                                border: '1px solid darkgrey',
-                                borderRadius: '20px',
-                                margin: '16px',
-                              }}
+                              style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}
                             >
-                              <button
-                                type="button"
-                                onClick={() => emptyPollPost()}
-                                style={{
-                                  border: 'none',
-                                  backgroundColor: 'white',
-                                  position: 'relative',
-                                  float: 'right',
-                                  padding: '0px',
-                                  borderRadius: '30px',
-                                }}
-                              >
-                                <img
-                                  width="30px"
-                                  src="https://cdn-icons-png.flaticon.com/512/1617/1617543.png"
-                                  alt="crossButton"
-                                />
-                              </button>
-                              <PollCard pollPost={pollPost} />
+                              {docs.map((doc: any, num: any) => {
+                                return (
+                                  <div className="docPreviewContainer" key={num}>
+                                    <span className="openPrevButton">
+                                      <button
+                                        onClick={() => openDoc(doc?.url)}
+                                        style={{
+                                          padding: '5px',
+                                          borderRadius: '20px',
+                                          borderColor: 'white',
+                                        }}
+                                      >
+                                        <img
+                                          width="50px"
+                                          src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
+                                          alt={num}
+                                          style={{ margin: '10px' }}
+                                        ></img>
+                                        {doc.name}
+                                      </button>
+                                    </span>
+
+                                    <span>
+                                      <button
+                                        style={{ border: 'none', backgroundColor: 'white' }}
+                                        type="button"
+                                        onClick={() => clickCrossDocButton(doc.id)}
+                                      >
+                                        <img
+                                          width="30px"
+                                          src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
+                                          alt="cross_button"
+                                          style={{ marginLeft: '10px' }}
+                                        ></img>
+                                      </button>
+                                    </span>
+                                  </div>
+                                );
+                              })}
                             </div>
-                          ) : (
-                            ''
-                          )}
+                            <div style={{ display: 'flex', flexWrap: 'wrap' }} id="setVideoPreview">
+                              {videoLink.map((video: any, num: any) => {
+                                return (
+                                  <div key={num}>
+                                    <video width="100%" src={video?.url} controls></video>
+                                    <div>
+                                      <img
+                                        width="50px"
+                                        src="https://cdn-icons-png.flaticon.com/512/711/711245.png"
+                                        alt={num}
+                                        style={{ margin: '10px' }}
+                                      ></img>
+                                      <span>
+                                        {video.name}
+                                        <button
+                                          style={{ border: 'none', backgroundColor: 'white' }}
+                                          type="button"
+                                          onClick={clickCrossVideoButton}
+                                        >
+                                          <img
+                                            width="30px"
+                                            src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
+                                            alt="cross_button"
+                                            style={{ marginLeft: '10px' }}
+                                          ></img>
+                                        </button>
+                                      </span>
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                            <div>
+                              {eventPost?.event?.title ? (
+                                <div style={{ display: 'grid' }}>
+                                  <button
+                                    style={{
+                                      position: 'absolute',
+                                      justifySelf: 'flex-end',
+                                      marginTop: '20px',
+                                      border: 'none',
+                                      borderRadius: '20px',
+                                    }}
+                                    type="button"
+                                    onClick={() => emptyEvent()}
+                                  >
+                                    <img
+                                      width="30px"
+                                      src="   https://cdn-icons-png.flaticon.com/512/1617/1617543.png "
+                                      alt="crossButton"
+                                    />
+                                  </button>
+                                  <EventCard
+                                    heading={eventPost?.event?.title}
+                                    description={eventPost?.event?.description}
+                                    date={eventPost?.event?.eventDate}
+                                    eventType={eventPost?.event?.eventType}
+                                    url={EventImage[eventPost?.event?.eventType]}
+                                  />
+                                </div>
+                              ) : (
+                                ''
+                              )}
+                            </div>
+                            <div>
+                              {pollPost?.poll?.pollQuestion ? (
+                                <div
+                                  style={{
+                                    padding: '12px',
+                                    border: '1px solid darkgrey',
+                                    borderRadius: '20px',
+                                    margin: '16px',
+                                  }}
+                                >
+                                  <button
+                                    type="button"
+                                    onClick={() => emptyPollPost()}
+                                    style={{
+                                      border: 'none',
+                                      backgroundColor: 'white',
+                                      position: 'relative',
+                                      float: 'right',
+                                      padding: '0px',
+                                      borderRadius: '30px',
+                                    }}
+                                  >
+                                    <img
+                                      width="30px"
+                                      src="https://cdn-icons-png.flaticon.com/512/1617/1617543.png"
+                                      alt="crossButton"
+                                    />
+                                  </button>
+                                  <PollCard pollPost={pollPost} />
+                                </div>
+                              ) : (
+                                ''
+                              )}
+                            </div>
+                          </Form>
                         </div>
-                      </Form>
-                    </div>
-                  </div>
-                </Collapse>
-              ) : (
-                <button
-                  className={styles.addPostButton}
-                  onClick={() => setShowForm1(!showForm1)}
-                  aria-controls="showAddPostEditorContainer"
-                  aria-expanded={showForm1}
-                >
-                  <div className={styles.addPostHeading}>
-                    {props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
-                      ? props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
-                      : "What's on your mind"}
-                    {``}
-                    {/* <span>
+                      </div>
+                    </Collapse>
+                  ) : (
+                    <button
+                      className={styles.addPostButton}
+                      onClick={() => setShowForm1(!showForm1)}
+                      aria-controls="showAddPostEditorContainer"
+                      aria-expanded={showForm1}
+                    >
+                      <div className={styles.addPostHeading}>
+                        {props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
+                          ? props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
+                          : "What's on your mind"}
+                        {``}
+                        {/* <span>
                     {userObject?.firstName ? userObject?.firstName : ''}{' '}
                     {userObject?.lastName ? userObject?.lastName : ''}
                   </span> */}
-                  </div>
-                </button>
-              )}
-            </div>
-          </div>
-          <div className={styles.AddPostItems}>
-            <div>
-              <button
-                className={styles.addPostFileButtons}
-                onClick={() => {
-                  setShowForm1(true);
-                  clickmebuttonHandler();
-                }}
-                disabled={disableAddImage}
-                type="button"
-              >
-                {/* <span>Image</span> */}
-                <NextImage
-                  field={image}
-                  editable={true}
-                  style={{ opacity: disableAddImage ? '0.2' : '1' }}
-                  alt="Profile-Pic"
-                  width={18}
-                  height={18}
-                />
+                      </div>
+                    </button>
+                  )}
+                </div>
+              </div>
+              <div className={styles.AddPostItems}>
+                <div>
+                  <button
+                    className={styles.addPostFileButtons}
+                    onClick={() => {
+                      setShowForm1(true);
+                      clickmebuttonHandler();
+                    }}
+                    disabled={disableAddImage}
+                    type="button"
+                  >
+                    {/* <span>Image</span> */}
+                    <NextImage
+                      field={image}
+                      editable={true}
+                      style={{ opacity: disableAddImage ? '0.2' : '1' }}
+                      alt="Profile-Pic"
+                      width={18}
+                      height={18}
+                    />
 
-                <Form.Group
-                // className="mb-3"
-                >
-                  <Form.Control
-                    style={{ display: 'none' }}
-                    onChange={(e) => setPostImageValue(e)}
-                    // value={postImage}
-                    type="file"
-                    placeholder="Post Text"
-                    // multiple
-                    accept="image/*"
-                    id="clickmebutton"
-                  />
-                </Form.Group>
-              </button>
-              <button
-                className={styles.addPostFileButtons}
-                onClick={() => {
-                  setShowForm1(true);
-                  clickmebuttonHandler3();
-                }}
-                disabled={disableAddVideo}
-                type="button"
-              >
-                {/* <span>Video</span> */}
-                <NextImage
-                  field={videoIcon}
-                  editable={true}
-                  alt="PostItems"
-                  width={18}
-                  height={18}
-                  style={{ opacity: disableAddVideo ? '0.2' : '1' }}
-                />
-                <Form.Group
-                // className="mb-3"
-                >
-                  <Form.Control
-                    style={{ display: 'none' }}
-                    onChange={(e) => setPostVideoValue(e)}
-                    type="file"
-                    placeholder="Post Video"
-                    // multiple
-                    accept=".mp4"
-                    id="clickmebutton3"
-                  />
-                </Form.Group>
-              </button>
-              <button
-                disabled={disableAddVideo}
-                className={styles.addPostFileButtons}
-                onClick={() => {
-                  setShowForm1(true);
-                  clickmebuttonHandler2();
-                }}
-                type="button"
-              >
-                {/* <span>Doc</span> */}
-                <NextImage
-                  field={pin}
-                  editable={true}
-                  alt="PostItems"
-                  width={18}
-                  height={18}
-                  style={{ opacity: disableAddDoc ? '0.2' : '1' }}
-                />
-                <Form.Group
-                // className="mb-3"
-                >
-                  <Form.Control
-                    style={{ display: 'none' }}
-                    onChange={(e) => setPostDocValue(e)}
-                    // value={postImage}
-                    type="file"
-                    placeholder="Post Text"
-                    // multiple
-                    accept=".pdf,.doc,.docx,.txt"
-                    id="clickmebutton2"
-                  />
-                </Form.Group>
-              </button>
-              <button
-                className={styles.addPostFileButtons}
-                onClick={() => {
-                  setShowForm1(true);
-                  setShowEvent(true);
-                }}
-                type="button"
-                disabled={disableAddEvent}
-              >
-                {/* <span>Event</span> */}
-                <NextImage
-                  field={createEventIcon}
-                  style={{ opacity: disableAddEvent ? '0.2' : '1' }}
-                  editable={true}
-                  alt="PostItems"
-                  width={18}
-                  height={18}
-                />
-              </button>
-              <Modal
-                className={styles.AddEventModalContent}
-                show={showEvent}
-                onHide={() => setShowEvent(false)}
-                backdrop="static"
-                keyboard={false}
-                centered
-                scrollable={true}
-                onExit={() => {
-                  setEventType('Select Event Type');
-                }}
-              >
-                <div className={styles.eventPostContainer}>
-                  <Form onSubmit={(e: any) => submitEventForm(e)} style={{ fontSize: '14px' }}>
-                    <Modal.Header closeButton>
-                      <Modal.Title className={styles.AddEventModalHeader}>
-                        Create Event Post
-                      </Modal.Title>
-                    </Modal.Header>
-                    <div className={styles.AddEventModalBody}>
-                      <img width="100%" src={eventImage} />
-                    </div>
-                    <Modal.Body>
-                      <div className={styles.AddEventModalProfile}>
-                        <div className={styles.AddEventModalProfilePic}>
-                          <img src={Profile.src} />
+                    <Form.Group
+                    // className="mb-3"
+                    >
+                      <Form.Control
+                        style={{ display: 'none' }}
+                        onChange={(e) => setPostImageValue(e)}
+                        // value={postImage}
+                        type="file"
+                        placeholder="Post Text"
+                        // multiple
+                        accept="image/*"
+                        id="clickmebutton"
+                      />
+                    </Form.Group>
+                  </button>
+                  <button
+                    className={styles.addPostFileButtons}
+                    onClick={() => {
+                      setShowForm1(true);
+                      clickmebuttonHandler3();
+                    }}
+                    disabled={disableAddVideo}
+                    type="button"
+                  >
+                    {/* <span>Video</span> */}
+                    <NextImage
+                      field={videoIcon}
+                      editable={true}
+                      alt="PostItems"
+                      width={18}
+                      height={18}
+                      style={{ opacity: disableAddVideo ? '0.2' : '1' }}
+                    />
+                    <Form.Group
+                    // className="mb-3"
+                    >
+                      <Form.Control
+                        style={{ display: 'none' }}
+                        onChange={(e) => setPostVideoValue(e)}
+                        type="file"
+                        placeholder="Post Video"
+                        // multiple
+                        accept=".mp4"
+                        id="clickmebutton3"
+                      />
+                    </Form.Group>
+                  </button>
+                  <button
+                    disabled={disableAddVideo}
+                    className={styles.addPostFileButtons}
+                    onClick={() => {
+                      setShowForm1(true);
+                      clickmebuttonHandler2();
+                    }}
+                    type="button"
+                  >
+                    {/* <span>Doc</span> */}
+                    <NextImage
+                      field={pin}
+                      editable={true}
+                      alt="PostItems"
+                      width={18}
+                      height={18}
+                      style={{ opacity: disableAddDoc ? '0.2' : '1' }}
+                    />
+                    <Form.Group
+                    // className="mb-3"
+                    >
+                      <Form.Control
+                        style={{ display: 'none' }}
+                        onChange={(e) => setPostDocValue(e)}
+                        // value={postImage}
+                        type="file"
+                        placeholder="Post Text"
+                        // multiple
+                        accept=".pdf,.doc,.docx,.txt"
+                        id="clickmebutton2"
+                      />
+                    </Form.Group>
+                  </button>
+                  <button
+                    className={styles.addPostFileButtons}
+                    onClick={() => {
+                      setShowForm1(true);
+                      setShowEvent(true);
+                    }}
+                    type="button"
+                    disabled={disableAddEvent}
+                  >
+                    {/* <span>Event</span> */}
+                    <NextImage
+                      field={createEventIcon}
+                      style={{ opacity: disableAddEvent ? '0.2' : '1' }}
+                      editable={true}
+                      alt="PostItems"
+                      width={18}
+                      height={18}
+                    />
+                  </button>
+                  <Modal
+                    className={styles.AddEventModalContent}
+                    show={showEvent}
+                    onHide={() => setShowEvent(false)}
+                    backdrop="static"
+                    keyboard={false}
+                    centered
+                    scrollable={true}
+                    onExit={() => {
+                      setEventType('Select Event Type');
+                    }}
+                  >
+                    <div className={styles.eventPostContainer}>
+                      <Form onSubmit={(e: any) => submitEventForm(e)} style={{ fontSize: '14px' }}>
+                        <Modal.Header closeButton>
+                          <Modal.Title className={styles.AddEventModalHeader}>
+                            Create Event Post
+                          </Modal.Title>
+                        </Modal.Header>
+                        <div className={styles.AddEventModalBody}>
+                          <img width="100%" src={eventImage} />
                         </div>
-                        <div style={{ alignSelf: 'center' }}>
-                          <div style={{ fontSize: '1rem', fontWeight: '600' }}>
-                            {userObject?.firstName
-                              ? `${userObject?.firstName} ${userObject?.lastName}`
-                              : 'John Doe'}
+                        <Modal.Body>
+                          <div className={styles.AddEventModalProfile}>
+                            <div className={styles.AddEventModalProfilePic}>
+                              <img src={Profile.src} />
+                            </div>
+                            <div style={{ alignSelf: 'center' }}>
+                              <div style={{ fontSize: '1rem', fontWeight: '600' }}>
+                                {userObject?.firstName
+                                  ? `${userObject?.firstName} ${userObject?.lastName}`
+                                  : 'John Doe'}
+                              </div>
+                              {/* <div style={{ fontSize: '14px', color: 'grey' }}>Profile</div> */}
+                            </div>
                           </div>
-                          {/* <div style={{ fontSize: '14px', color: 'grey' }}>Profile</div> */}
-                        </div>
-                      </div>
-                      <Form.Group className="mb-3">
-                        <Form.Control
-                          className={styles.AddEventModalEventName}
-                          style={{ fontSize: '18px', color: 'black', fontWeight: '800px' }}
-                          required
-                          type="text"
-                          placeholder="Event Name"
-                        />
-                      </Form.Group>
-                      <div
-                        style={{ display: 'flex', gap: '12px' }}
-                        className={`${styles.AddEventModalEventDates} mb-3`}
-                      >
-                        <Form.Group>
-                          <Form.Control
-                            required
-                            type="date"
-                            placeholder="Event Date"
-                            className={styles.DateInput}
-                            min={minDate}
-                          />
-                        </Form.Group>
-                        <Form.Group>
-                          <Form.Control
-                            className={styles.TimeInput}
-                            required
-                            type="time"
-                            placeholder="Event Time"
-                          />
-                        </Form.Group>
-                      </div>
-                      <Form.Group className="mb-3">
-                        <Dropdown className="eventTypeDropdown">
-                          <Dropdown.Toggle
-                            variant="secondary"
-                            id="dropdown-basic"
-                            style={{
-                              width: '100%',
-                            }}
-                            className={styles.eventTypeDropdownToggle}
+                          <Form.Group className="mb-3">
+                            <Form.Control
+                              className={styles.AddEventModalEventName}
+                              style={{ fontSize: '18px', color: 'black', fontWeight: '800px' }}
+                              required
+                              type="text"
+                              placeholder="Event Name"
+                            />
+                          </Form.Group>
+                          <div
+                            style={{ display: 'flex', gap: '12px' }}
+                            className={`${styles.AddEventModalEventDates} mb-3`}
                           >
-                            {eventType}
-                          </Dropdown.Toggle>
+                            <Form.Group>
+                              <Form.Control
+                                required
+                                type="date"
+                                placeholder="Event Date"
+                                className={styles.DateInput}
+                                min={minDate}
+                              />
+                            </Form.Group>
+                            <Form.Group>
+                              <Form.Control
+                                className={styles.TimeInput}
+                                required
+                                type="time"
+                                placeholder="Event Time"
+                              />
+                            </Form.Group>
+                          </div>
+                          <Form.Group className="mb-3">
+                            <Dropdown className="eventTypeDropdown">
+                              <Dropdown.Toggle
+                                variant="secondary"
+                                id="dropdown-basic"
+                                style={{
+                                  width: '100%',
+                                }}
+                                className={styles.eventTypeDropdownToggle}
+                              >
+                                {eventType}
+                              </Dropdown.Toggle>
 
-                          <Dropdown.Menu>
-                            {props?.fields?.data?.datasource?.eventType?.targetItems?.map(
-                              (item: any) => {
-                                return (
-                                  <Dropdown.Item
-                                    href="#"
-                                    onClick={() => {
-                                      setEventType(item?.title?.jsonValue?.value);
-                                      setEventImage(EventImage[item?.title?.jsonValue?.value]);
-                                    }}
-                                    className={styles.eventModalDropdownItem}
-                                  >
-                                    {item?.title?.jsonValue?.value}
-                                  </Dropdown.Item>
-                                );
-                              }
-                            )}
-                          </Dropdown.Menu>
-                        </Dropdown>
-                        {/* <div style={{ height: '40px' }}>
+                              <Dropdown.Menu>
+                                {props?.fields?.data?.datasource?.eventType?.targetItems?.map(
+                                  (item: any) => {
+                                    return (
+                                      <Dropdown.Item
+                                        href="#"
+                                        onClick={() => {
+                                          setEventType(item?.title?.jsonValue?.value);
+                                          setEventImage(EventImage[item?.title?.jsonValue?.value]);
+                                        }}
+                                        className={styles.eventModalDropdownItem}
+                                      >
+                                        {item?.title?.jsonValue?.value}
+                                      </Dropdown.Item>
+                                    );
+                                  }
+                                )}
+                              </Dropdown.Menu>
+                            </Dropdown>
+                            {/* <div style={{ height: '40px' }}>
                           {eventTypeSelectError ? (
                             <div style={{ color: 'red', fontSize: '12px', fontWeight: '1000' }}>
                               * Please Select Valid Event Type
@@ -3263,246 +3284,246 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                             ''
                           )}
                         </div> */}
-                      </Form.Group>
-                      <Form.Group className="mb-3">
-                        <Form.Control
-                          className={`${styles.AddEventModalEventName} ${styles.AddEventModalEventDescription}`}
-                          required
-                          as="textarea"
-                          rows={2}
-                          placeholder="Description"
-                          style={{ resize: 'none' }}
-                        />
-                      </Form.Group>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button
-                        className={styles.eventModalCancel}
-                        variant="secondary"
-                        onClick={() => {
-                          setShowEvent(false);
-                          setEventType('Select Event Type');
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        className={styles.eventModalAddToPost}
-                        variant="secondary"
-                        type="submit"
-                        // onClick={onPostReported}
-                      >
-                        Add Event to Post
-                      </Button>
-                    </Modal.Footer>
-                  </Form>
-                </div>
-              </Modal>
-              <button
-                className={styles.addPostFileButtons}
-                onClick={() => {
-                  setShowForm1(true);
-                  setShowPollForm(true);
-                }}
-                type="button"
-                disabled={disableAddPoll}
-              >
-                {/* <span>Poll</span> */}
-                <NextImage
-                  field={pollIcon}
-                  editable={true}
-                  alt="PostItems"
-                  style={{ opacity: disableAddPoll ? '0.2' : '1' }}
-                  width={18}
-                  height={18}
-                />
-              </button>
-              <Modal
-                className={styles.reportPostModalContent}
-                show={showPollForm}
-                onHide={() => setShowPollForm(false)}
-                backdrop="static"
-                keyboard={false}
-                centered
-                scrollable={true}
-                onExit={() => {
-                  clearPollForm();
-                }}
-              >
-                <div>
-                  <Form
-                    onSubmit={(e: any) => submitPollForm(e)}
-                    style={{ fontSize: '15px', margin: '5px' }}
+                          </Form.Group>
+                          <Form.Group className="mb-3">
+                            <Form.Control
+                              className={`${styles.AddEventModalEventName} ${styles.AddEventModalEventDescription}`}
+                              required
+                              as="textarea"
+                              rows={2}
+                              placeholder="Description"
+                              style={{ resize: 'none' }}
+                            />
+                          </Form.Group>
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button
+                            className={styles.eventModalCancel}
+                            variant="secondary"
+                            onClick={() => {
+                              setShowEvent(false);
+                              setEventType('Select Event Type');
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            className={styles.eventModalAddToPost}
+                            variant="secondary"
+                            type="submit"
+                            // onClick={onPostReported}
+                          >
+                            Add Event to Post
+                          </Button>
+                        </Modal.Footer>
+                      </Form>
+                    </div>
+                  </Modal>
+                  <button
+                    className={styles.addPostFileButtons}
+                    onClick={() => {
+                      setShowForm1(true);
+                      setShowPollForm(true);
+                    }}
+                    type="button"
+                    disabled={disableAddPoll}
                   >
-                    <Modal.Header closeButton>
-                      <Modal.Title className={styles.reportPostModalHeader}>
-                        Create a Poll
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <div className={styles.reportPostModalBody}>Poll Parameters</div>
-                      <Form.Group className="mb-3">
-                        <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
-                          Question
-                        </Form.Label>
-                        <Form.Control
-                          value={pollQuestion}
-                          onChange={(e) => updatePollQuestion(e)}
-                          required
-                          type="text"
-                          placeholder="Write Poll Question"
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          Please select an event date.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                      <div
-                        style={{
-                          padding: '32px',
-                          border: '1px solid',
-                          borderRadius: '10px',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          height: '282px',
-                          overflowY: 'scroll',
-                          // justifyContent: 'space-between',
-                        }}
-                        className="CreatePollOptions mb-3"
+                    {/* <span>Poll</span> */}
+                    <NextImage
+                      field={pollIcon}
+                      editable={true}
+                      alt="PostItems"
+                      style={{ opacity: disableAddPoll ? '0.2' : '1' }}
+                      width={18}
+                      height={18}
+                    />
+                  </button>
+                  <Modal
+                    className={styles.reportPostModalContent}
+                    show={showPollForm}
+                    onHide={() => setShowPollForm(false)}
+                    backdrop="static"
+                    keyboard={false}
+                    centered
+                    scrollable={true}
+                    onExit={() => {
+                      clearPollForm();
+                    }}
+                  >
+                    <div>
+                      <Form
+                        onSubmit={(e: any) => submitPollForm(e)}
+                        style={{ fontSize: '15px', margin: '5px' }}
                       >
-                        {pollFormOptions.map((option: any) => {
-                          return (
-                            <Form.Group className="mb-3" id={option?.id}>
-                              <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
-                                Option - <span>{option?.name}</span>
-                              </Form.Label>
-                              <Form.Control
-                                required
-                                type="textarea"
-                                value={option?.optionText}
-                                onChange={(e) => pollOptionUpdate(option?.id, e)}
-                                placeholder={`Enter Option - ${option?.placeholder}`}
-                              />
-                            </Form.Group>
-                          );
-                        })}
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <button
-                          style={{
-                            padding: '12px',
-                            border: 'none',
-                            fontSize: '18px',
-                            borderRadius: '12px',
-                          }}
-                          type="button"
-                          onClick={() => addPollOption()}
-                          disabled={isOptionsThreshold}
-                        >
-                          + Add More option
-                        </button>
-                        <button
-                          style={{
-                            padding: '12px',
-                            border: 'none',
-                            fontSize: '18px',
-                            borderRadius: '12px',
-                          }}
-                          type="button"
-                          onClick={() => deleteLastPollOption()}
-                          disabled={isDeleteOptionThreshold}
-                        >
-                          - Delete option
-                        </button>
-                      </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button
-                        className={styles.footerBtn}
-                        variant="secondary"
-                        onClick={() => {
-                          clearPollForm();
-                        }}
-                      >
-                        Clear
-                      </Button>
-                      <Button
-                        className={styles.footerBtn}
-                        variant="secondary"
-                        type="submit"
-                        style={{ height: '44px', width: '121px' }}
-                      >
-                        <span>Add Poll to Post</span>
-                      </Button>
-                    </Modal.Footer>
-                  </Form>
+                        <Modal.Header closeButton>
+                          <Modal.Title className={styles.reportPostModalHeader}>
+                            Create a Poll
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <div className={styles.reportPostModalBody}>Poll Parameters</div>
+                          <Form.Group className="mb-3">
+                            <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
+                              Question
+                            </Form.Label>
+                            <Form.Control
+                              value={pollQuestion}
+                              onChange={(e) => updatePollQuestion(e)}
+                              required
+                              type="text"
+                              placeholder="Write Poll Question"
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              Please select an event date.
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                          <div
+                            style={{
+                              padding: '32px',
+                              border: '1px solid',
+                              borderRadius: '10px',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              height: '282px',
+                              overflowY: 'scroll',
+                              // justifyContent: 'space-between',
+                            }}
+                            className="CreatePollOptions mb-3"
+                          >
+                            {pollFormOptions.map((option: any) => {
+                              return (
+                                <Form.Group className="mb-3" id={option?.id}>
+                                  <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
+                                    Option - <span>{option?.name}</span>
+                                  </Form.Label>
+                                  <Form.Control
+                                    required
+                                    type="textarea"
+                                    value={option?.optionText}
+                                    onChange={(e) => pollOptionUpdate(option?.id, e)}
+                                    placeholder={`Enter Option - ${option?.placeholder}`}
+                                  />
+                                </Form.Group>
+                              );
+                            })}
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <button
+                              style={{
+                                padding: '12px',
+                                border: 'none',
+                                fontSize: '18px',
+                                borderRadius: '12px',
+                              }}
+                              type="button"
+                              onClick={() => addPollOption()}
+                              disabled={isOptionsThreshold}
+                            >
+                              + Add More option
+                            </button>
+                            <button
+                              style={{
+                                padding: '12px',
+                                border: 'none',
+                                fontSize: '18px',
+                                borderRadius: '12px',
+                              }}
+                              type="button"
+                              onClick={() => deleteLastPollOption()}
+                              disabled={isDeleteOptionThreshold}
+                            >
+                              - Delete option
+                            </button>
+                          </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button
+                            className={styles.footerBtn}
+                            variant="secondary"
+                            onClick={() => {
+                              clearPollForm();
+                            }}
+                          >
+                            Clear
+                          </Button>
+                          <Button
+                            className={styles.footerBtn}
+                            variant="secondary"
+                            type="submit"
+                            style={{ height: '44px', width: '121px' }}
+                          >
+                            <span>Add Poll to Post</span>
+                          </Button>
+                        </Modal.Footer>
+                      </Form>
+                    </div>
+                  </Modal>
+                  <button
+                    className={styles.addPostFileButtons}
+                    onClick={() => {
+                      setShowForm1(true);
+                    }}
+                    type="button"
+                  >
+                    <Link href="/addblogpost">
+                      <NextImage
+                        field={addBlogIcon}
+                        editable={true}
+                        alt="PostItems"
+                        width={18}
+                        height={18}
+                        style={{ opacity: disableAddDoc ? '0.2' : '1' }}
+                      />
+                    </Link>
+                  </button>
                 </div>
-              </Modal>
-              <button
-                className={styles.addPostFileButtons}
-                onClick={() => {
-                  setShowForm1(true);
-                }}
-                type="button"
-              >
-                <Link href="/addblogpost">
-                  <NextImage
-                    field={addBlogIcon}
-                    editable={true}
-                    alt="PostItems"
-                    width={18}
-                    height={18}
-                    style={{ opacity: disableAddDoc ? '0.2' : '1' }}
-                  />
-                </Link>
-              </button>
-            </div>
-            <div className={styles.errorContainer}>
-              <Button
-                className={styles.publishButton}
-                disabled={editorState.getCurrentContent().getPlainText() ? false : true}
-                variant="secondary"
-                style={{
-                  backgroundColor: editorState.getCurrentContent().getPlainText()
-                    ? '#47D7AC'
-                    : '#FFFFFF',
-                  color: editorState.getCurrentContent().getPlainText() ? '#FFFFFF' : '#A5A9AE',
-                  borderColor: editorState.getCurrentContent().getPlainText()
-                    ? '#47D7AC'
-                    : '#6c757d',
-                  // boxShadow: !createNewPostError ? 'none' : '0 4px 8px 0 rgba(255, 0, 0, 0.6)',
-                }}
-                type="button"
-                onClick={(e) => handleSubmit(e)}
-              >
-                Post
-              </Button>
-              <Collapse in={showForm1}>
-                <Button
-                  className={styles.publishButton}
-                  variant="default"
-                  style={{ outline: 'none', border: 'none', color: '#F58C60' }}
-                  type="button"
-                  onClick={() => {
-                    setShowForm1(false);
-                    setEditorState(() => EditorState.createEmpty());
-                  }}
-                >
-                  Cancel
-                </Button>
-              </Collapse>
-              {/* {createNewPostError ? (
+                <div className={styles.errorContainer}>
+                  <Button
+                    className={styles.publishButton}
+                    disabled={editorState.getCurrentContent().getPlainText() ? false : true}
+                    variant="secondary"
+                    style={{
+                      backgroundColor: editorState.getCurrentContent().getPlainText()
+                        ? '#47D7AC'
+                        : '#FFFFFF',
+                      color: editorState.getCurrentContent().getPlainText() ? '#FFFFFF' : '#A5A9AE',
+                      borderColor: editorState.getCurrentContent().getPlainText()
+                        ? '#47D7AC'
+                        : '#6c757d',
+                      // boxShadow: !createNewPostError ? 'none' : '0 4px 8px 0 rgba(255, 0, 0, 0.6)',
+                    }}
+                    type="button"
+                    onClick={(e) => handleSubmit(e)}
+                  >
+                    Post
+                  </Button>
+                  <Collapse in={showForm1}>
+                    <Button
+                      className={styles.publishButton}
+                      variant="default"
+                      style={{ outline: 'none', border: 'none', color: '#F58C60' }}
+                      type="button"
+                      onClick={() => {
+                        setShowForm1(false);
+                        setEditorState(() => EditorState.createEmpty());
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                  </Collapse>
+                  {/* {createNewPostError ? (
                 <span style={{ fontWeight: 1000, color: 'red', fontSize: '8px' }}>
                   * Something Went Wrong. Post not uploaded !
                 </span>
               ) : (
                 ''
               )} */}
-              {/* </div>
+                  {/* </div>
 
               <div> */}
-            </div>
-            {/* <Collapse in={showForm1}> */}
-            {/* <Button
+                </div>
+                {/* <Collapse in={showForm1}> */}
+                {/* <Button
                 className={styles.closeButton}
                 type="button"
                 variant="secondary"
@@ -3510,46 +3531,40 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               >
                 Close
               </Button> */}
-            {/* </Collapse> */}
-          </div>
-        </div>
-        <div className="postHead" style={{ marginBottom: '10px' }}>
-          <div className="postHeaderLeft">
-            <h5 className="postOwner mt-2" style={{ fontWeight: '1000' }}></h5>
-            <h4 className="postDate" style={{ fontWeight: '700' }}>
-              Your Posts
-            </h4>
-          </div>
-          <div className="postHeaderRight">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/3502/3502458.png"
-              alt="pan"
-              width="20px"
-            />
-            <img
-              style={{ marginLeft: '20px' }}
-              src="https://cdn-icons-png.flaticon.com/512/238/238910.png"
-              alt="pan"
-              width={20}
-            />
-          </div>
-        </div>
+                {/* </Collapse> */}
+              </div>
+            </div>
+            <div className="postHead" style={{ marginBottom: '10px' }}>
+              <div className="postHeaderLeft">
+                <h5 className="postOwner mt-2" style={{ fontWeight: '1000' }}></h5>
+                <h4 className="postDate" style={{ fontWeight: '700' }}>
+                  Your Posts
+                </h4>
+              </div>
+              <div className="postHeaderRight">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/3502/3502458.png"
+                  alt="pan"
+                  width="20px"
+                />
+                <img
+                  style={{ marginLeft: '20px' }}
+                  src="https://cdn-icons-png.flaticon.com/512/238/238910.png"
+                  alt="pan"
+                  width={20}
+                />
+              </div>
+            </div>{' '}
+          </>
+        ) : (
+          ''
+        )}
         <div className="AllPostscontainer" id="PostFeedList" style={{ maxWidth: '100%' }}>
-          {posts?.length == 0 ? (
-            <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
-              <span style={{ marginRight: '15px', fontWeight: '600' }}>Loading.. </span>{' '}
-              <Spinner animation="border" />
-            </span>
-          ) : (
-            posts
-          )}
-          <div style={{ height: '50px' }}>
+          {posts?.length == 0 ? <PostSkeleton count={3} /> : posts}
+          <div style={{ height: '250px' }}>
             {ifReachedEnd ? (
               !ifNoMoreData ? (
-                <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
-                  <span style={{ marginRight: '15px', fontWeight: '600' }}>Loading.. </span>{' '}
-                  <Spinner animation="border" />
-                </span>
+                <PostSkeleton count={1} />
               ) : (
                 <span
                   style={{
