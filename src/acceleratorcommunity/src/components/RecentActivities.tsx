@@ -8,6 +8,7 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 // import { useRouter } from 'next/router';
 // import Link from 'next/link';
+
 type RecentActivitiesProps = ComponentProps & {
   fields: {
     heading: string;
@@ -37,6 +38,12 @@ const list = [
 
 const RecentActivities = (props: RecentActivitiesProps): JSX.Element => {
   console.log(props);
+  console.log(
+    'asdfghjklqwertyuiop',
+    process.env.NEXT_PUBLIC_TEST_VAR,
+    process.env.NODE_ENV,
+    process.env.NEXT_PUBLIC_DB_HOST
+  );
   // const router = useRouter();
   // const onMemberClick = (email: string) => {
   //   router.push(`/profile/${email}`);
