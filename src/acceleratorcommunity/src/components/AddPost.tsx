@@ -1470,7 +1470,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </button>
                 </Dropdown.Toggle>
 
-                <Dropdown.Menu className={ShowShareCss.dropdownMenu}>
+                <Dropdown.Menu className={styles.dropdownMenu}>
                   <Dropdown.Item
                     className={ShowShareCss.dropdownItem}
                     target="_blank"
@@ -1563,11 +1563,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 >
                   <img
                     className="commentUserImage"
-                    src={
-                      userObject?.profilePictureUrl
-                        ? userObject?.profilePictureUrl
-                        : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
-                    }
+                    src={userObject?.profilePictureUrl ? userObject?.profilePictureUrl : user.src}
                     alt="User-Pic"
                     style={{ marginLeft: '0' }}
                   ></img>
@@ -1594,7 +1590,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           src={
                             comment?.createdBy?.profilePictureUrl
                               ? comment?.createdBy?.profilePictureUrl
-                              : user
+                              : user.src
                           }
                           alt="User-Pic"
                           style={{
@@ -1762,7 +1758,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                 src={
                                   userObject?.profilePictureUrl
                                     ? userObject?.profilePictureUrl
-                                    : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
+                                    : user.src
                                 }
                                 alt="User-Pic"
                                 style={{ marginLeft: '0' }}
@@ -1790,7 +1786,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                       src={
                                         reply?.createdBy?.profilePictureUrl
                                           ? reply?.createdBy?.profilePictureUrl
-                                          : user
+                                          : user.src
                                       }
                                       alt="User-Pic"
                                       style={{
@@ -1960,7 +1956,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                           src={
                                             userObject?.profilePictureUrl
                                               ? userObject?.profilePictureUrl
-                                              : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
+                                              : user.src
                                           }
                                           alt="User-Pic"
                                           style={{ marginLeft: '0' }}
@@ -3626,7 +3622,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         )}
         <div className="AllPostscontainer" id="PostFeedList" style={{ maxWidth: '100%' }}>
           {posts?.length == 0 ? <AddPostSkeleton count={3} /> : posts}
-          <div style={{ height: '250px' }}>
+          <div style={{ height: '50px' }}>
             {ifReachedEnd ? (
               !ifNoMoreData ? (
                 <AddPostSkeleton count={1} />
