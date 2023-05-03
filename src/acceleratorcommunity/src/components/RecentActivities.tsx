@@ -63,7 +63,7 @@ const RecentActivities = (props: RecentActivitiesProps): JSX.Element => {
             </div>
           </div>
           <div className={style.recentActivityList}>
-            {list.map((ele, index: number) => (
+            {list.map((_ele, index: number) => (
               <>
                 <div
                   key={index}
