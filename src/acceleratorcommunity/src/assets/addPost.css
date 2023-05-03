@@ -87,6 +87,13 @@
   margin-left: 20px;
 }
 
+.blogHeading {
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 600;
+  margin: 0 10px 10px 10px;
+}
+
 .postDescription {
   padding: 15px;
   padding-top: 0;
