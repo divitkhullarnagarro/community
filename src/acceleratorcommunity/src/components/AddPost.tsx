@@ -1463,7 +1463,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </button>
                 </Dropdown.Toggle>
 
-                <Dropdown.Menu className={ShowShareCss.dropdownMenu}>
+                <Dropdown.Menu className={styles.dropdownMenu}>
                   <Dropdown.Item
                     className={ShowShareCss.dropdownItem}
                     target="_blank"
@@ -3609,7 +3609,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         )}
         <div className="AllPostscontainer" id="PostFeedList" style={{ maxWidth: '100%' }}>
         {posts?.length == 0 ? <AddPostSkeleton count={3} /> : posts}
-          <div style={{ height: '250px' }}>
+          <div style={{ height: '50px' }}>
             {ifReachedEnd ? (
               !ifNoMoreData ? (
                 <AddPostSkeleton count={1} />
