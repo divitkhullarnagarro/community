@@ -187,3 +187,9 @@
     height: 15px;
   }
 }
+
+@media only screen and (max-width: 640px) {
+  .userProfileDropdownMenu {
+      inset: 0 0 auto auto !important;
+  }
+}
