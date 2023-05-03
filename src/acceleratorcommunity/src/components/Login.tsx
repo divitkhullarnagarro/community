@@ -59,11 +59,10 @@ type DataSource = {
 
 const Login = (props: LoginProps): JSX.Element => {
   const { requestForNotificationPermission } = { ...useContext(FirebaseContext) };
-  const [tempValue, setTempValue] = useState();
 
   useEffect(() => {
     requestForNotificationPermission().then((data: any) => {
-      setTempValue(data);
+      alert(data);
       console.log('tokenFromFirebaseProvider', data);
     });
   }, []);
@@ -181,9 +180,6 @@ const Login = (props: LoginProps): JSX.Element => {
               </h5>
               <div className={loginCss.welcomeTextDescription}>
                 {targetItems?.description?.jsonValue?.value}
-                <>
-                  <br /> <br /> {tempValue ?? ''}
-                </>
               </div>
             </div>
           </div>{' '}
