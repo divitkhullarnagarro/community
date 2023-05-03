@@ -38,8 +38,8 @@ import videoIcon from '../assets/images/AddVideo_icon.svg';
 import pollIcon from '../assets/images/CreatePoll_icon.svg';
 import addBlogIcon from '../assets/images/AddBlogPost_icon.svg';
 import createEventIcon from '../assets/images/CreateEventPost_icon.svg';
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 // Rich Text Editor Files Import Start
 import { EditorState, convertToRaw } from 'draft-js';
@@ -65,7 +65,7 @@ import getAllUpVotesCall from 'src/API/getAllUpVotes';
 import Profile from '../assets/images/profile.png';
 import addPostCss from '../assets/addPosts.module.css';
 import blockUserCall from 'src/API/blockUnblockUserCall';
-import user from '../assets/images/user.png';
+import user from '../assets/images/ProfilePic.jpeg';
 // import location from '../assets/images/Location.png';
 import image from '../assets/images/Vector.png';
 import pin from '../assets/images/Vectorpin.png';
@@ -174,6 +174,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   useEffect(() => {
     setPageroute(router.asPath);
   }, []);
+  console.log('All Posts List', myAnotherArr);
 
   console.log('CURRENTPATH', pageRoute);
 
@@ -1161,15 +1162,18 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         <div className="postContainer" key={post?.id}>
           <div className="postHeading">
             <div className="postHeaderLeft">
-              <img
-                className="postUserImage"
-                src={
-                  post?.createdBy?.profilePictureUrl
-                    ? post?.createdBy?.profilePictureUrl
-                    : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
-                }
-                alt="User-Pic"
-              ></img>
+              <Link href={`/profile/${post?.createdBy?.objectId}`}>
+                <img
+                  className="postUserImage"
+                  src={
+                    post?.createdBy?.profilePictureUrl
+                      ? post?.createdBy?.profilePictureUrl
+                      : user.src
+                  }
+                  alt="User-Pic"
+                ></img>
+              </Link>
+
               <div className="postDetailContainer">
                 <h5 className="postOwner">
                   <span>{post?.createdBy?.firstName ? post?.createdBy?.firstName : 'Unknown'}</span>
@@ -1380,7 +1384,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </>
             ) : post?.postType === 'BLOG_POST' ? (
               <>
-                <div className="blogHeading" style={{ fontWeight: 600, fontSize: '50px' }}>
+                <div
+                  className="blogHeading"
+                  style={{ fontWeight: 600, fontSize: '50px', margin: '8px 16px' }}
+                >
                   {post?.blog?.heading}
                 </div>
                 <NextImage src={post?.blog?.imageUrl}></NextImage>
@@ -1587,7 +1594,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           src={
                             comment?.createdBy?.profilePictureUrl
                               ? comment?.createdBy?.profilePictureUrl
-                              : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
+                              : user
                           }
                           alt="User-Pic"
                           style={{
@@ -1783,7 +1790,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                       src={
                                         reply?.createdBy?.profilePictureUrl
                                           ? reply?.createdBy?.profilePictureUrl
-                                          : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
+                                          : user
                                       }
                                       alt="User-Pic"
                                       style={{
@@ -1985,18 +1992,26 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                               {comment.isLoadingReplies ? (
                                 <div style={{ padding: '15px' }}>
                                   <div className={styles.addPostHead}>
-                                    <Skeleton circle={true} className='mb-2' height={28} width={28}/>
-                                    <Skeleton height={18} className='mb-2'/>
-                                    <Skeleton height={18} className='mb-2'/>
+                                    <Skeleton
+                                      circle={true}
+                                      className="mb-2"
+                                      height={28}
+                                      width={28}
+                                    />
+                                    <Skeleton height={18} className="mb-2" />
+                                    <Skeleton height={18} className="mb-2" />
                                   </div>
-                                  <div className={styles.addPostFooter} style={{ marginLeft: '7.5%' }}>
-                                    <Skeleton height={18} width={100 + '%'}/>
-                                    <Skeleton height={18} width={100 + '%'}/>
-                                    <Skeleton height={18} width={100 + '%'}/>
+                                  <div
+                                    className={styles.addPostFooter}
+                                    style={{ marginLeft: '7.5%' }}
+                                  >
+                                    <Skeleton height={18} width={100 + '%'} />
+                                    <Skeleton height={18} width={100 + '%'} />
+                                    <Skeleton height={18} width={100 + '%'} />
                                   </div>
                                 </div>
                               ) : (
-                                <div 
+                                <div
                                   style={{
                                     display: 'flex',
                                     justifyContent: 'center',
@@ -2030,14 +2045,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   {post.isLoadingComments ? (
                     <div style={{ padding: '15px' }}>
                       <div className={styles.addPostHead}>
-                        <Skeleton circle={true} className='mb-2' height={28} width={28}/>
-                        <Skeleton height={18} className='mb-2'/>
-                        <Skeleton height={18} className='mb-2'/>
+                        <Skeleton circle={true} className="mb-2" height={28} width={28} />
+                        <Skeleton height={18} className="mb-2" />
+                        <Skeleton height={18} className="mb-2" />
                       </div>
                       <div className={styles.addPostFooter} style={{ marginLeft: '7.5%' }}>
-                        <Skeleton height={18} width={100 + '%'}/>
-                        <Skeleton height={18} width={100 + '%'}/>
-                        <Skeleton height={18} width={100 + '%'}/>
+                        <Skeleton height={18} width={100 + '%'} />
+                        <Skeleton height={18} width={100 + '%'} />
+                        <Skeleton height={18} width={100 + '%'} />
                       </div>
                     </div>
                   ) : (
@@ -2853,13 +2868,15 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               <div className={styles.addPostFieldContainer}>
                 <div className={styles.addPostField}>
                   <div className={styles.addPostImage}>
-                    <NextImage
-                      field={user}
-                      editable={true}
-                      alt="Profile-Pic"
-                      width={27}
-                      height={27}
-                    />
+                    <Link href={`/profile`}>
+                      <NextImage
+                        field={user}
+                        editable={true}
+                        alt="Profile-Pic"
+                        width={27}
+                        height={27}
+                      />
+                    </Link>
                   </div>
                   {showForm1 ? (
                     <Collapse in={showForm1}>
@@ -3608,7 +3625,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           ''
         )}
         <div className="AllPostscontainer" id="PostFeedList" style={{ maxWidth: '100%' }}>
-        {posts?.length == 0 ? <AddPostSkeleton count={3} /> : posts}
+          {posts?.length == 0 ? <AddPostSkeleton count={3} /> : posts}
           <div style={{ height: '250px' }}>
             {ifReachedEnd ? (
               !ifNoMoreData ? (

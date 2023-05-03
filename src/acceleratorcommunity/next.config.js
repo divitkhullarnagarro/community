@@ -35,6 +35,17 @@ const nextConfig = {
   // Enable React Strict Mode
   reactStrictMode: false,
 
+  images: {
+    domains: [
+      'horizontal.blog',
+      'www.teleinfotoday.com',
+      'www.macaw.net',
+      'www.aceinfoway.com',
+      'wwwsitecorecom.azureedge.net',
+      'nkdramblog.files.wordpress.com',
+    ],
+  },
+
   async rewrites() {
     // When in connected mode we want to proxy Sitecore paths off to Sitecore
     return [

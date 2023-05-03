@@ -31,7 +31,7 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isWidgetView] = useState(props?.params?.IsWidgetView === '1');
   const skeletonDummyArr = [1, 2, 3, 4, 5, 6];
-  console.log('isWidgetView', isWidgetView);
+  console.log('isWidgetView', peerFriendList);
 
   const getAllPears = async () => {
     setIsDataLoaded(false);
@@ -73,13 +73,16 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
             peerFriendList?.slice(0, 5).map((item) => {
               return (
                 <div key={item?.objectId} className={styles.item}>
-                  <NextImage
-                    className={styles.img}
-                    field={Profile}
-                    editable={true}
-                    height={40}
-                    width={40}
-                  />
+                  <Link href={`/profile/${item.objectId}`}>
+                    <NextImage
+                      className={styles.img}
+                      field={item.profilePictureUrl ? item.profilePictureUrl : Profile}
+                      editable={true}
+                      height={40}
+                      width={40}
+                    />
+                  </Link>
+
                   <div>
                     <div className={styles.name}>{item?.firstName + ' ' + item?.lastName}</div>
                   </div>
