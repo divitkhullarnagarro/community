@@ -1,7 +1,7 @@
 // import { Text, Field, withDatasourceCheck } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import Image from 'next/image';
-import groupLogo from '../assets/images/groupLogo.svg';
+import groupLogo from '../assets/images/ProfilePic.jpeg';
 import style from '../assets/groupMemberList.module.css';
 import { useRouter } from 'next/router';
 // import Link from 'next/link';
@@ -26,9 +26,8 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
   return (
     <>
       <div className={style.groupMemberListBox}>
-      <h3 className={style.groupMemberTitle}>Members List</h3>
+        <h3 className={style.groupMemberTitle}>Members List</h3>
         <div className={style.groupMemberList}>
-          
           {list.map((ele) => (
             <>
               <div
@@ -44,6 +43,7 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
                     alt={ele.name}
                     className={style.groupMemberListLogo}
                     height={50}
+                    width={50}
                   />
                   <div className={`d-flex flex-column ${style.groupMemberNameAndEmail}`}>
                     <h5 className={style.groupMemberListName}>{ele.name}</h5>

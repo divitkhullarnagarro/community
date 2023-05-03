@@ -16,6 +16,7 @@ import addArticleCall from '../API/addArticleCall';
 import { useRouter } from 'next/router';
 import uploadFilesCall from 'src/API/uploadFilesCall';
 import imagelogo from '../assets/images/imagelogo.svg';
+import DotLoader from './DotLoader';
 const TextEditor = (): JSX.Element => {
   const router = useRouter();
   const { userToken } = {
@@ -30,7 +31,7 @@ const TextEditor = (): JSX.Element => {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const [addedPeers, setAddedPeers] = useState<string[]>([] as string[]);
   const [previewState, setPreviewState] = useState<boolean>(false);
-
+  const [showLoader, setShowLoader] = useState<boolean>(false);
   const [preview1, setPreview1] = useState<any>();
   const [mentionUserData, setMentionUserData] = useState<
     {
@@ -147,6 +148,7 @@ const TextEditor = (): JSX.Element => {
     e.preventDefault();
 
     let postType = 'BLOG_POST';
+    setShowLoader(true);
     console.log(headlineText, postText, file[0]?.url, addedPeers, 'abc');
 
     addArticleCall(userToken, {
@@ -162,10 +164,11 @@ const TextEditor = (): JSX.Element => {
         setPostText('');
         setHeadlineText('');
         setEditorState(() => EditorState.createEmpty());
+        setShowLoader(false);
         router.push('/');
       } else {
         setCreateNewPostError(true);
-
+        setShowLoader(false);
         setTimeout(() => {
           setCreateNewPostError(false);
         }, 2000);
@@ -291,6 +294,14 @@ const TextEditor = (): JSX.Element => {
           </div>
         </form>
       </div>
+      {showLoader && (
+        <div className={styles.loadingModal}>
+          <div className={styles.loadingContent}>
+            <span className={styles.loadingText}>Publishing</span>
+            <DotLoader />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

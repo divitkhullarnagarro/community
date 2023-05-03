@@ -15,12 +15,12 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 80px);
-  background: #F7F8FA;
+  background: #f7f8fa;
 }
 
 .top {
   font-size: 20px;
-  line-height: 26px;  
+  line-height: 26px;
   font-weight: 500;
   color: #283895;
 }
@@ -53,7 +53,7 @@
 }
 
 .sidenavbar .center ul button:hover {
- background: #F2F2F2;
+  background: #f2f2f2;
 }
 
 .right_lower_section {
@@ -84,7 +84,7 @@
 }
 
 .tableContainer {
-  border-top: 1px solid #CED0D4;
+  border-top: 1px solid #ced0d4;
   overflow: auto;
 }
 
@@ -113,30 +113,30 @@
 
 .nameColumn {
   padding-left: 30px;
-  color: #82888F;
+  color: #82888f;
   min-width: 150px;
 }
 
 .genderColumn {
   flex-basis: 8%;
-  color: #82888F;
+  color: #82888f;
 }
 
 .phoneNumberColumn {
   flex-basis: 12%;
-  color: #82888F;
+  color: #82888f;
   min-width: 150px;
 }
 
 .emailColumn {
   flex-basis: 24%;
-  color: #82888F;
+  color: #82888f;
   min-width: 250px;
 }
 
 .reasonsColumn {
   flex-basis: 20%;
-  color: #82888F;
+  color: #82888f;
   min-width: 300px;
 }
 
@@ -159,7 +159,7 @@
 }
 
 .accordionHeader button {
-  padding:0px;
+  padding: 0px;
 }
 
 .accordionHeader button:not(.collapsed) {
@@ -193,8 +193,8 @@
 
 .accordionHeader .tableContentRow .tableField .actionButton {
   font-size: 12px;
-  background-color: #47D7AC;
-  color: #FFFFFF;
+  background-color: #47d7ac;
+  color: #ffffff;
   padding: 5px;
   border-radius: 4px;
   /* z-index: 1; */
@@ -202,7 +202,7 @@
 
 .accordionBody {
   padding: 0 16px;
-  background-color: #EAF2F4;
+  background-color: #eaf2f4;
 }
 
 .accordionBodyHeader,
@@ -223,7 +223,7 @@
 }
 
 .accordionBodyItem span {
-  color: #82888F;
+  color: #82888f;
 }
 
 .accordionBodyHeader .accordionBodyName,
@@ -252,9 +252,10 @@
 }
 
 /* Report Post */
-.reportPostWrapper {}
+.reportPostWrapper {
+}
 
-.reportedPostsContainer{
+.reportedPostsContainer {
   width: 100%;
   padding: 20px;
 }
@@ -278,7 +279,7 @@
   background: #fff;
   margin-bottom: 20px;
   border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
 
 .postOwner {
@@ -303,6 +304,7 @@
 .postUserImage {
   width: 30px;
   height: 30px;
+  cursor: pointer;
 }
 
 .dropdownItem {
@@ -310,7 +312,7 @@
 }
 
 .dropdownItem:after {
-  content: "" !important;
+  content: '' !important;
 }
 
 .dropdownImage {
@@ -360,7 +362,7 @@
   font-size: 12px;
   font-weight: 300;
   margin-left: 10px;
-  color: #A5A5A5;
+  color: #a5a5a5;
 }
 
 @media only screen and (max-width: 768px) {
@@ -381,7 +383,7 @@
   .left_column {
     flex-basis: 100%;
     min-width: 100%;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
   }
 
   .right_column {
@@ -392,7 +394,7 @@
   .sidenavbar .center ul button {
     font-size: 12px;
   }
-  
+
   .sidenavbar .center ul {
     flex-direction: row;
   }

@@ -3,8 +3,9 @@ import styles from '../assets/searchFilterContainer.module.css';
 import eventImg from '../assets/images/event.png';
 import Event from './Event';
 import SideSearchFilter from './sideSearchFilter';
+import { SearchSkeletonForEvents } from './skeletons/SearchSkeleton';
 
-const EventSearchContainer = () => {
+const EventSearchContainer = (props: any) => {
   const eventArray = [
     {
       eventImg: eventImg,
@@ -182,7 +183,11 @@ const EventSearchContainer = () => {
         />
       </div>
       <div className={styles.generalcontainer}>
-        <Event events={Events} getFormatedDate={getFormatedDate} />
+        {props?.success ? (
+          <SearchSkeletonForEvents count={5} />
+        ) : (
+          <Event events={Events} getFormatedDate={getFormatedDate} />
+        )}
       </div>
     </div>
   );

@@ -43,10 +43,17 @@
     gap: 10px;
     margin: 5px 0;
   }
+
   .searchBox {
     padding: 2px 5px 2px 0;
   }
+
+  .searchBtn {
+    padding: 0;
+  }
+
   .searchBoxText {
+    margin-left: 5px;
     width: calc(100% - 27px);
     height: auto;
   }

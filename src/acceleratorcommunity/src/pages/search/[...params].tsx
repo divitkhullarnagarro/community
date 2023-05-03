@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 // import Event from 'components/Event';
 import SearchFlters from 'components/SearchFlters';
@@ -10,6 +10,11 @@ import SearchGroupContainer from 'components/SearchGroupContainer';
 import SearchUserContainer from 'components/SearchUserContainer';
 import EventSearchContainer from 'components/EventSearchContainer';
 import NewSearchContainer from 'components/NewSearchContainer';
+import searchCall from 'src/API/searchCall';
+import { getValueFromCookie } from 'assets/helpers/helperFunctions';
+import WebContext from 'src/Context/WebContext';
+import JournalSearchContainer from 'components/JournalSearchContainer';
+import ArticleSearchContainer from 'components/ArticleSearchContainer';
 // import JournalContainer from 'components/JournalContainer';
 
 const Search = () => {
@@ -49,10 +54,35 @@ const Search = () => {
   const handleClick = (type: string) => {
     setActiveState(type);
   };
+  const { userToken, setUserToken } = {
+    ...useContext(WebContext),
+  };
+
+  useEffect(() => {
+    if (userToken == '') {
+      let token = getValueFromCookie('UserToken');
+      if (typeof document !== 'undefined' && token != '' && token != null) {
+        if (setUserToken != undefined) {
+          setUserToken(token);
+        }
+      } else {
+        router.push('/login');
+      }
+    }
+  }, []);
+
+  const [success, setSuccess] = useState(true);
 
   const router = useRouter();
-  const { params = [] } = router?.query;
-  console.log(params);
+  const [params] = useState<any>(router?.query);
+  useEffect(() => {
+    searchCall(params[0], 'ALL', userToken).then((response: any) => {
+      if (response?.data?.success === true) {
+        setSuccess(false);
+      }
+      console.log('-------------------------', response?.data?.success);
+    });
+  }, [params]);
   return (
     <div className={styles.container}>
       <div className={styles.pageHeadingContainer}>
@@ -60,17 +90,17 @@ const Search = () => {
       </div>
       <SearchFlters activeState={activeState} filter={filter} handleClick={handleClick} />
       {activeState === 'Groups' ? (
-        <SearchGroupContainer />
+        <SearchGroupContainer success={success} />
       ) : activeState === 'User' ? (
-        <SearchUserContainer />
+        <SearchUserContainer success={success} />
       ) : activeState === 'Events' ? (
-        <EventSearchContainer />
+        <EventSearchContainer success={success} />
       ) : activeState === 'News' ? (
-        <NewSearchContainer />
+        <NewSearchContainer success={success} />
       ) : activeState === 'Journals' ? (
-        <NewSearchContainer />
+        <JournalSearchContainer success={success}/>
       ) : activeState === 'Articles' ? (
-        <NewSearchContainer />
+        <ArticleSearchContainer success={success} />
       ) : (
         ''
       )}
