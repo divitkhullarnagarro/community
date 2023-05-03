@@ -236,7 +236,104 @@ background-color: #F7F7F6;
   display: flex;
   gap: 10px;
 }
+
+.loadingModal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingContent{
+  display: flex;
+  align-items: baseline;
+}
+
+.loadingText{
+  color: #47d7ac;
+  font-size: 36px;
+  font-weight: 700;
+  text-shadow: 0px 0px 4px #47d7ac;
+}
+
+.headlineText{
+  height: 100px; 
+  width: 100% ;
+  font-size: 50px;
+  font-weight: 600; 
+  border: none;
+  
+}
+.headlineText:focus{
+  border: 4px solid black;
+  border-radius: 3px;
+}
+.headlineText::placeholder{
+  font-size: 50px;
+  font-weight: 600; 
+  opacity: 0.5 !important;
+  color: rgb(7, 7, 7);
+
+}
+.container{
+  margin: 0 275px;
+}
+.subContainer{
+  display: flex ;
+  flex-direction: column ;
+
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgb(84, 83, 83);
+}
+.imageCls{
+  height: 150px;
+  width: 150px;
+}
+.uploadCls{
+  padding: 10px 40px;
+  border: 3px solid rgb(110, 109, 109);
+  border-radius: 1.6rem;
+}
+
+.previewImageCls
+{
+  width: 100%;
+  height: 500px;  
+}
+
 @media only screen and (max-width: 640px) {
+  .container {
+    margin: 20px;
+  }
+
+  .headlineText {
+    font-size: 24px;
+    height: auto;
+    margin-bottom: 10px;
+    outline: 0;
+  }
+
+  .headlineText::placeholder {
+    font-size: 24px;
+  }
+
+  .imageButton {
+    padding: 20px;
+    height: auto;
+  }
+
+  .subContainer {
+    font-size: 14px;
+  }
 
   .dropdownBtn {
     background-color: white;
@@ -295,51 +392,4 @@ background-color: #F7F7F6;
   .postFooterContainer{
     gap: 5px;
   }
-}
-.headlineText{
-  height: 100px; 
-  width: 100% ;
-  font-size: 50px;
-  font-weight: 600; 
-  border: none;
-  
-}
-.headlineText:focus{
-  border: 4px solid black;
-  border-radius: 3px;
-}
-.headlineText::placeholder{
-  font-size: 50px;
-  font-weight: 600; 
-  opacity: 0.5 !important;
-  color: rgb(7, 7, 7);
-
-}
-.container{
-  margin: 0 275px;
-}
-.subContainer{
-  display: flex ;
-  flex-direction: column ;
-
-  align-items: center;
-  gap: 10px;
-  font-size: 20px;
-  font-weight: 600;
-  color: rgb(84, 83, 83);
-}
-.imageCls{
-  height: 150px;
-  width: 150px;
-}
-.uploadCls{
-  padding: 10px 40px;
-  border: 3px solid rgb(110, 109, 109);
-  border-radius: 1.6rem;
-}
-.previewImageCls
-{
-  width: 100%;
-  height: 500px;
-  
 }

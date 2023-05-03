@@ -1380,9 +1380,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </>
             ) : post?.postType === 'BLOG_POST' ? (
               <>
-                <div className="blogHeading" style={{ fontWeight: 600, fontSize: '50px' }}>
-                  {post?.blog?.heading}
-                </div>
+                <div className="blogHeading">{post?.blog?.heading}</div>
                 <NextImage src={post?.blog?.imageUrl}></NextImage>
                 <div className="postDescription">{parser(modifyHtml(post?.blog?.description))}</div>
               </>

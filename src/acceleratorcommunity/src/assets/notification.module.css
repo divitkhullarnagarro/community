@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  padding: 8px;
+  padding: 0px;
   margin: 0;
   background: #f9f9f9;
   border: 1px solid #f3f3f3;
@@ -106,7 +106,10 @@
   display: inline-block;
   border: none;
   background-color: #47d7ac;
-  border-radius: 30px;
+  border-radius: 50%;
+  padding: 0;
+  height: 32px;
+  width: 32px;
 }
 
 .notificationCount {
@@ -190,6 +193,11 @@
   padding: 0;
   display: inline-block;
   position: relative;
+}
+
+.notificationDropdownToggle::after {
+  content: "" !important;
+  display: none;
 }
 
 .noNotifications {
