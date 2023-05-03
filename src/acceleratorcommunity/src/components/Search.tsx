@@ -25,7 +25,8 @@ const Search = (props: SearchProps): JSX.Element => {
   console.log('Search', props);
   const router = useRouter();
   const [searchText, setSearchText] = useState('');
-  const handleSearch = () => {
+  const handleSearch = (e: any) => {
+    e.preventDefault();
     if (searchText !== '') {
       router.push(`/search/${searchText}`);
     }
@@ -38,22 +39,23 @@ const Search = (props: SearchProps): JSX.Element => {
         </a>
       </div>
       <div className={searchCss.searchBox}>
-        <button className={searchCss.searchBtn} onClick={handleSearch}>
-          <NextImage
-            className={searchCss.img}
-            field={props?.fields?.data?.datasource?.image?.jsonValue?.value}
-            editable={true}
-            height={10}
-            width={15}
+        <form>
+          <button type="submit" className={searchCss.searchBtn} onClick={handleSearch}>
+            <NextImage
+              className={searchCss.img}
+              field={props?.fields?.data?.datasource?.image?.jsonValue?.value}
+              editable={true}
+              height={10}
+              width={15}
+            />
+          </button>
+          <input
+            type="text"
+            className={searchCss.searchBoxText}
+            placeholder={props?.fields?.data?.datasource?.title?.jsonValue?.value}
+            onChange={(e: any) => setSearchText(e?.target?.value)}
           />
-        </button>
-
-        <input
-          type="text"
-          className={searchCss.searchBoxText}
-          placeholder={props?.fields?.data?.datasource?.title?.jsonValue?.value}
-          onChange={(e: any) => setSearchText(e?.target?.value)}
-        />
+        </form>
       </div>
     </div>
   );
