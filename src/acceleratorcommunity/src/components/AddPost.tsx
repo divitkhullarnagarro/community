@@ -99,19 +99,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     ...useContext(WebContext),
   };
 
-  interface ItemImage {
-    [key: string]: string;
-  }
-
-  const EventImage: ItemImage = {
-    Seminar:
-      'https://higherlogicdownload.s3.amazonaws.com/APSNET/UploadedImages/tAiEB79vTYq1gz2UEGu1_IMG_2866-L.jpg',
-    Conference: 'https://th.bing.com/th/id/OIP.IXdC6XgETCp5RaM3iQCb6QHaE8?pid=ImgDet&rs=1',
-    Announcement: 'https://th.bing.com/th/id/OIP.zPaWJzUBQwbXDjhCtCtI1gHaE8?pid=ImgDet&rs=1',
-    'Launch Event': 'https://live.staticflickr.com/808/39724254630_e9cdcb8e77_b.jpg',
-    Celebration: 'https://th.bing.com/th/id/OIP.E1RiHHXMHUcq0L0KvprXfQHaEn?pid=ImgDet&rs=1',
-  };
-
   const [showForm1, setShowForm1] = useState(false);
   let myPostArray: ReactElement<any, any>[] = [];
   let [posts, setPosts] = useState(myPostArray);
@@ -365,6 +352,20 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
   const [selectedBlockUserItem, setSelectedBlockUserItem] = useState<BlockUserFields>();
   const [showReportUserPopUp, setShowReportUserPopUp] = useState(false);
+
+  function getEventImage(eventType: string) {
+    console.log('eventType', eventType, props);
+    let itemImage =
+      'https://chinchincelebration.com/wp-content/uploads/2019/08/product-launch-events-min.png';
+    props?.fields?.data?.datasource?.eventType?.targetItems?.map((item: any) => {
+      if (item?.title?.jsonValue?.value === eventType) {
+        itemImage = item?.image?.jsonValue?.value?.href
+          ? item?.image?.jsonValue?.value?.href
+          : 'https://chinchincelebration.com/wp-content/uploads/2019/08/product-launch-events-min.png';
+      }
+    });
+    return itemImage;
+  }
 
   const ReportUserPopup = () => {
     const reportTypeList = Object.values(ReportUserOptionsTypeLabel);
@@ -1389,7 +1390,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       description={post?.event?.description}
                       date={post?.event?.eventDate}
                       eventType={post?.event?.eventType}
-                      url={EventImage[post?.event?.eventType]}
+                      url={getEventImage(post?.event?.eventType)}
                     />
                   </>
                 ) : post?.postType === 'POLL' ? (
@@ -2832,23 +2833,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     'https://chinchincelebration.com/wp-content/uploads/2019/08/product-launch-events-min.png'
   );
 
-  useEffect(() => {
-    props?.fields?.data?.datasource?.eventType?.targetItems.map((item: any) => {
-      if (item?.title?.jsonValue?.value === 'Seminar')
-        item.image =
-          'https://higherlogicdownload.s3.amazonaws.com/APSNET/UploadedImages/tAiEB79vTYq1gz2UEGu1_IMG_2866-L.jpg';
-      if (item?.title?.jsonValue?.value === 'Conference')
-        item.image = 'https://th.bing.com/th/id/OIP.IXdC6XgETCp5RaM3iQCb6QHaE8?pid=ImgDet&rs=1';
-      if (item?.title?.jsonValue?.value === 'Announcement')
-        item.image = 'https://th.bing.com/th/id/OIP.zPaWJzUBQwbXDjhCtCtI1gHaE8?pid=ImgDet&rs=1';
-      if (item?.title?.jsonValue?.value === 'Launch Event')
-        item.image = 'https://live.staticflickr.com/808/39724254630_e9cdcb8e77_b.jpg';
-      if (item?.title?.jsonValue?.value === 'Celebration')
-        item.image = 'https://th.bing.com/th/id/OIP.E1RiHHXMHUcq0L0KvprXfQHaEn?pid=ImgDet&rs=1';
-      return item;
-    });
-  }, [props]);
-
   if (typeof window !== 'undefined')
     window?.addEventListener('scroll', () => {
       const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
@@ -3052,7 +3036,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                     description={eventPost?.event?.description}
                                     date={eventPost?.event?.eventDate}
                                     eventType={eventPost?.event?.eventType}
-                                    url={EventImage[eventPost?.event?.eventType]}
+                                    url={getEventImage(eventPost?.event?.eventType)}
                                   />
                                 </div>
                               ) : (
@@ -3326,7 +3310,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                         href="#"
                                         onClick={() => {
                                           setEventType(item?.title?.jsonValue?.value);
-                                          setEventImage(EventImage[item?.title?.jsonValue?.value]);
+                                          setEventImage(item?.image?.jsonValue?.value?.href);
                                         }}
                                         className={styles.eventModalDropdownItem}
                                       >
