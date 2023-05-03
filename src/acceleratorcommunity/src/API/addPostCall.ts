@@ -1,4 +1,5 @@
 import Axios, { AxiosResponse } from 'axios';
+import LogRocket from 'logrocket';
 
 const addPostCall = async (userToken: string | undefined, postObject: any) => {
   var data = {
@@ -29,6 +30,14 @@ const addPostCall = async (userToken: string | undefined, postObject: any) => {
       return response;
     })
     .catch((error: any) => {
+      LogRocket.error(error, {
+        // sessionURL: sessionURL,
+        userId: 'USER_ID',
+        pageName: 'MyPage',
+      });
+      Axios.post<any, AxiosResponse<any>>('/api/loggerApi', { error: error }).then((res) => {
+        console.log('res', res);
+      });
       console.error(error);
     });
   return response;

@@ -181,6 +181,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
   };
 
   const pastArticle = () => {
+    console.log("=====================",completeList)
     let nowDateArticle = completeList?.filter((item: any) => {
       let date: any = timeToDateParsing(item?.date?.jsonValue?.value);
       let datee: any = timeToDateParsing(new Date().toISOString());
