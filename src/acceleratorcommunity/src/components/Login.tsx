@@ -10,7 +10,7 @@ import loginCss from '../assets/login.module.css';
 import Spinner from 'react-bootstrap/Spinner';
 import getUserCall from 'src/API/getUserCall';
 import { encryptString } from '../assets/helpers/EncryptDecrypt';
-import firebaseCloudMessaging from 'src/firebase/firebase';
+import FirebaseContext from 'src/Context/FirebaseContext';
 // import star from '../assets/images/star.png';
 
 type LoginProps = ComponentProps & {
@@ -58,9 +58,14 @@ type DataSource = {
 };
 
 const Login = (props: LoginProps): JSX.Element => {
+  const { requestForNotificationPermission } = { ...useContext(FirebaseContext) };
+
   useEffect(() => {
-    firebaseCloudMessaging.init().then((data: any) => console.log('tokenFromFirebase1', data));
+    requestForNotificationPermission().then((data: any) => {
+      console.log('tokenFromFirebaseProvider', data);
+    });
   }, []);
+
   const targetItems = props?.fields?.data?.datasource;
   const router = useRouter();
   const { setIsLoggedIn, setUserToken, setObjectId, userToken, setUserObject } = {
