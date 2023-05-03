@@ -24,6 +24,7 @@ import 'draft-js/dist/Draft.css';
 import '../assets/richTextEditor.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import SocketProvider from 'src/Context/SocketProvider';
+import FirebaseProvider from 'src/Context/FirebaseProvider';
 
 NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
 
@@ -40,9 +41,11 @@ function App({ Component, pageProps }: AppProps<SitecorePageProps>): JSX.Element
     // If your app is not multilingual, next-localization and references to it can be removed.
     <I18nProvider lngDict={dictionary} locale={pageProps.locale}>
       <SocketProvider>
-        <WebProvider>
-          <Component {...rest} />
-        </WebProvider>
+        <FirebaseProvider>
+          <WebProvider>
+            <Component {...rest} />
+          </WebProvider>
+        </FirebaseProvider>
       </SocketProvider>
     </I18nProvider>
   );

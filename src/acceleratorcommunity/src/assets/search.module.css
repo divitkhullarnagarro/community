@@ -29,9 +29,9 @@
 .searchBoxText::placeholder{
     color: #B4B7BB;
 }
-.searchBox input:active{
+/* .searchBox input:active{
     width: auto;
-}
+} */
 
 .searchBtn{
     background-color: transparent;
@@ -42,5 +42,12 @@
   .container  {
     gap: 10px;
     margin: 5px 0;
+  }
+  .searchBox {
+    padding: 2px 5px 2px 0;
+  }
+  .searchBoxText {
+    width: calc(100% - 27px);
+    height: auto;
   }
 }
