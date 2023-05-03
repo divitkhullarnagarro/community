@@ -38,6 +38,8 @@ import videoIcon from '../assets/images/AddVideo_icon.svg';
 import pollIcon from '../assets/images/CreatePoll_icon.svg';
 import addBlogIcon from '../assets/images/AddBlogPost_icon.svg';
 import createEventIcon from '../assets/images/CreateEventPost_icon.svg';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 // Rich Text Editor Files Import Start
 import { EditorState, convertToRaw } from 'draft-js';
@@ -80,7 +82,10 @@ import deleteCommentCall from 'src/API/deleteCommentCall';
 // import PollCard from './PollCard';
 import reportUserCall from 'src/API/reportUserCall';
 import { useRouter } from 'next/router';
-import PostSkeleton from './skeletons/PostSkeleton';
+import AddPostSkeleton from './skeletons/AddPostSkeleton';
+
+//logging on logrocket
+import LogRocket from 'logrocket';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -98,7 +103,23 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const { userToken, objectId, userObject } = {
     ...useContext(WebContext),
   };
+  //logging on logrocket start
+  useEffect(() => {
+    console.log('asdfghjklasdfghjksdfghj', userObject);
+    LogRocket.init('5m0bj8/communitysolution');
+    LogRocket.identify(userObject.email, {
+      name: `${userObject.firstName} ${userObject.lastName}`,
+      email: userObject.email,
 
+      // Add your own custom user variables here, ie:
+      subscriptionType: 'pro',
+    });
+    // LogRocket.track('Button Clicked', {
+    //   buttonName: 'Submit',
+    //   formId: 'signupForm',
+    // });
+  }, []);
+  // logging on logrocket end
   interface ItemImage {
     [key: string]: string;
   }
@@ -260,6 +281,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const onEditorStateChangeHandler = (e: any) => {
     setEditorState(e);
     setPostTextValue(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+    console.log('asdfasdfasdfasdf', draftToHtml(convertToRaw(editorState.getCurrentContent())));
   };
   // console.log('mention', addedPeers);
 
@@ -1959,26 +1981,39 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                             );
                           })}
                           {comment?.hasReply ? (
-                            <div
-                              style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                marginBottom: '16px',
-                                marginTop: '16px',
-                              }}
-                            >
+                            <div>
                               {comment.isLoadingReplies ? (
-                                <Spinner animation="border" />
+                                <div style={{ padding: '15px' }}>
+                                  <div className={styles.addPostHead}>
+                                    <Skeleton circle={true} className='mb-2' height={28} width={28}/>
+                                    <Skeleton height={18} className='mb-2'/>
+                                    <Skeleton height={18} className='mb-2'/>
+                                  </div>
+                                  <div className={styles.addPostFooter} style={{ marginLeft: '7.5%' }}>
+                                    <Skeleton height={18} width={100 + '%'}/>
+                                    <Skeleton height={18} width={100 + '%'}/>
+                                    <Skeleton height={18} width={100 + '%'}/>
+                                  </div>
+                                </div>
                               ) : (
-                                <button
-                                  onClick={() => loadCommentReplies(post?.id, comment?.id)}
-                                  className="postCommentButton"
+                                <div 
                                   style={{
-                                    marginLeft: '0',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    marginBottom: '16px',
+                                    marginTop: '16px',
                                   }}
                                 >
-                                  <span>Load Replies...</span>
-                                </button>
+                                  <button
+                                    onClick={() => loadCommentReplies(post?.id, comment?.id)}
+                                    className="postCommentButton"
+                                    style={{
+                                      marginLeft: '0',
+                                    }}
+                                  >
+                                    <span>Load Replies...</span>
+                                  </button>
+                                </div>
                               )}
                             </div>
                           ) : (
@@ -1991,20 +2026,33 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 );
               })}
               {post?.postMeasures?.commentCount > 0 ? (
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div>
                   {post.isLoadingComments ? (
-                    <Spinner animation="border" />
+                    <div style={{ padding: '15px' }}>
+                      <div className={styles.addPostHead}>
+                        <Skeleton circle={true} className='mb-2' height={28} width={28}/>
+                        <Skeleton height={18} className='mb-2'/>
+                        <Skeleton height={18} className='mb-2'/>
+                      </div>
+                      <div className={styles.addPostFooter} style={{ marginLeft: '7.5%' }}>
+                        <Skeleton height={18} width={100 + '%'}/>
+                        <Skeleton height={18} width={100 + '%'}/>
+                        <Skeleton height={18} width={100 + '%'}/>
+                      </div>
+                    </div>
                   ) : (
-                    <button
-                      onClick={() => loadComments(post.id)}
-                      className="postCommentButton"
-                      style={{
-                        marginBottom: '16px',
-                        marginLeft: '0',
-                      }}
-                    >
-                      <span>Load Comments...</span>
-                    </button>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <button
+                        onClick={() => loadComments(post.id)}
+                        className="postCommentButton"
+                        style={{
+                          marginBottom: '16px',
+                          marginLeft: '0',
+                        }}
+                      >
+                        <span>Load Comments...</span>
+                      </button>
+                    </div>
                   )}
                 </div>
               ) : (
@@ -3560,11 +3608,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           ''
         )}
         <div className="AllPostscontainer" id="PostFeedList" style={{ maxWidth: '100%' }}>
-          {posts?.length == 0 ? <PostSkeleton count={3} /> : posts}
+        {posts?.length == 0 ? <AddPostSkeleton count={3} /> : posts}
           <div style={{ height: '250px' }}>
             {ifReachedEnd ? (
               !ifNoMoreData ? (
-                <PostSkeleton count={1} />
+                <AddPostSkeleton count={1} />
               ) : (
                 <span
                   style={{

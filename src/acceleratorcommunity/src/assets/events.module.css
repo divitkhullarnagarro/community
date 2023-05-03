@@ -21,6 +21,8 @@
   justify-content: space-between;
   /* align-items: center; */
   margin-top: 0.625rem;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ced0d4;
 }
 .imgAndContentContainer {
   width: 80%;
@@ -62,6 +64,11 @@
 .imgAndContentContainer > img {
   width: 25%;
   height: 100%;
+}
+
+.timeContainer{
+  display: flex;
+  gap: 5px;
 }
 
 /* 

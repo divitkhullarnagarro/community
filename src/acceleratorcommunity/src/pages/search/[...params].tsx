@@ -10,7 +10,7 @@ import SearchGroupContainer from 'components/SearchGroupContainer';
 import SearchUserContainer from 'components/SearchUserContainer';
 import EventSearchContainer from 'components/EventSearchContainer';
 import NewSearchContainer from 'components/NewSearchContainer';
-import JournalContainer from 'components/JournalContainer';
+// import JournalContainer from 'components/JournalContainer';
 
 const Search = () => {
   const filter = [
@@ -68,7 +68,9 @@ const Search = () => {
       ) : activeState === 'News' ? (
         <NewSearchContainer />
       ) : activeState === 'Journals' ? (
-        <JournalContainer />
+        <NewSearchContainer />
+      ) : activeState === 'Articles' ? (
+        <NewSearchContainer />
       ) : (
         ''
       )}

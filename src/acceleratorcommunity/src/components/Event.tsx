@@ -2,7 +2,6 @@ import React from 'react';
 import styles from '../assets/events.module.css';
 
 const Event = (props: any) => {
-  console.log('+++++++++++++++++++++++++++++++', props);
   return (
     <>
       {props?.events?.length > 0 &&
@@ -13,14 +12,18 @@ const Event = (props: any) => {
                 <img src={event?.eventImg?.src} alt="eventImg" />
                 <div className={styles.content}>
                   <div className={styles.eventHeading}>Understading Accounts Level Attribution</div>
-                  <div className={styles.eventTime}>Today 6:00 PM IST</div>
+                  <div className={styles.timeContainer}>
+                    <div className={styles.eventTime}>
+                      {props?.getFormatedDate(event?.startDate)}
+                    </div>
+                    <div className={styles.eventTime}>to</div>
+                    <div className={styles.eventTime}>{props?.getFormatedDate(event?.endDate)}</div>
+                  </div>
                   <div className={styles.eventDescription}>
                     Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium quibusdam
-                    excepturi hic dolorum a quas similique, nisi veniam illo ad.  
+                    excepturi hic dolorum a quas similique, nisi veniam illo ad.
                   </div>
-                  <div className={styles.statsConatiner}>
-                    155 intrested | 40 going
-                  </div>
+                  <div className={styles.statsConatiner}>155 intrested | 40 going</div>
                 </div>
               </div>
               {/* <div className="actonContainer">anmol</div> */}
