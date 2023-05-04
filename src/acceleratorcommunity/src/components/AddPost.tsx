@@ -3083,6 +3083,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                       float: 'right',
                                       padding: '0px',
                                       borderRadius: '30px',
+                                      marginTop: '5%',
+                                      marginRight: '5%',
                                     }}
                                   >
                                     <img
