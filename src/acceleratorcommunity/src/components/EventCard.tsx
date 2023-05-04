@@ -26,38 +26,17 @@ function EventCard(props: any) {
         <div className={eventCard.eventType}>{props?.eventType}</div>
       </div>
       <div className={eventCard.rightContainer}>
+        <div className={eventCard.date}>
+          &nbsp;
+          {weekday},&nbsp;{day}&nbsp;
+          {monthName}&nbsp;
+          {year}
+          &nbsp;<span>AT</span>&nbsp;
+          {time}
+        </div>
         <div className={eventCard.heading}>{props?.heading}</div>
         <div className={eventCard.description}>{props?.description}</div>
-        <div className={eventCard.date}>
-          <div>
-            <span>
-              <img
-                width="40px"
-                src="https://cdn-icons-png.flaticon.com/128/591/591576.png"
-                alt="Date"
-              />
-            </span>
-            &nbsp;
-            <span>
-              {weekday}-{day},&nbsp;
-              {monthName}&nbsp;
-              {year}
-            </span>
-          </div>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <div>
-            <span>
-              {' '}
-              <img
-                width="40px"
-                src="https://cdn-icons-png.flaticon.com/512/850/850960.png"
-                alt="Time"
-              />
-            </span>
-            &nbsp;
-            <span>&nbsp;{time}</span>
-          </div>
-        </div>
+        {/* <button className={eventCard.interestedButton}>Interested</button> */}
       </div>
     </div>
   );

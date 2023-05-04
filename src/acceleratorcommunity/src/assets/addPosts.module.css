@@ -1,131 +1,193 @@
 .comments {
-    padding: 1.25rem;
-    background-color: lightgray;
-    margin: 0.3125rem;
-    border-bottom-left-radius: 1.875rem;
-    border-top-right-radius: 1.875rem;
-    border-bottom-right-radius: 1.875rem;
-    margin-top: 1.25rem;
-    position: relative;
-  }
-  
-  .upVoteDownVoteContainer{
-      position:absolute;
-      top: -15px;
-      background-color: rgb(231, 231, 231);
-      padding: 5px ;
-      border-radius: 10px;
-      right: -10px;
-      cursor: pointer;
-  
-  }
-  .filter{
-    display: flex;
-    gap: 1.875rem;
-    margin-bottom: 1.25rem;
-    border-bottom: 1px solid #dee2e6;
-    padding-bottom: 0.3125rem;
-  }
-  .filterBtn{
-    background-color: transparent;
-    border: none;
-  }
-  
-  .upVoteDownVote{
-      display: flex;
-      gap:10px;
-  }
-  
-  .modalUserContainer{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .modalUserDetailContainer{
-    display: flex;
-    gap: 20px;
-  
-  }
-  
-  .userImg{
-    height: 2rem;
-    width: 2rem;
-    border-radius: 50%;
-  }
-  
-  .logo{
-    height: 0.9375rem;
-    width: 0.9375rem;
-    /* filter: invert(0.5); */
-  }
-  .active{
-    background-color: transparent;
-    border: none;
-    border-bottom:  0.125rem solid black;
-  
-  }
-  .modal{
-    background-color:rgba(211, 211, 211, 0.096)!important;
-  }
-  
-  .modalBody{
-    height: 21.875rem;
-    /* background-color: pink; */
-  }
+  padding: 1.25rem;
+  background-color: lightgray;
+  margin: 0.3125rem;
+  border-bottom-left-radius: 1.875rem;
+  border-top-right-radius: 1.875rem;
+  border-bottom-right-radius: 1.875rem;
+  margin-top: 1.25rem;
+  position: relative;
+}
 
-  .btnConatiner{
-    box-sizing: border-box;
-    width: 100%;
-    display: flex;
-    height: 35px;
-   gap: 50px;
-   margin-bottom: 15px;
-   border-bottom: 1px solid rgb(230, 227, 227);
-  }
-  
-  .logoContainer{
-    display: flex;
-    gap:0.3125rem;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .likeDislikeContainer{
-    margin-left: 1.875rem;
-    display: flex;
-    gap:0.625rem;
-    justify-content: flex-start;
-    cursor: pointer;
-    align-items: center;
-    position: relative;
-  }
-  
-  .actionContainer{
-    position: absolute;
-    display: flex;
-    top: -1.25rem;
-    width: 5.625rem;
-    height: 1.5625rem;
-    background-color: rgb(231, 229, 229);
-    border-radius: 0.625rem;
-    justify-content: space-around;
-    align-items: center;
-    opacity: 0;
-  
-  }
-  
-  .likeDislikeContainer :hover .actionContainer{
-    opacity: 1;
-    pointer-events: auto;
-  }
-  .actionBtn{
-    background-color: transparent;
-    border: none;
-  }
-  
-  .actionBtn:hover{
-    transform: translateY(-5px);
-  }
-  
-  
+.upVoteDownVoteContainer {
+  position: absolute;
+  top: -15px;
+  background-color: rgb(231, 231, 231);
+  padding: 5px;
+  border-radius: 10px;
+  right: -10px;
+  cursor: pointer;
+
+}
+
+.filter {
+  display: flex;
+  gap: 1.875rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 0.3125rem;
+}
+
+.filterBtn {
+  background-color: transparent;
+  border: none;
+}
+
+.upVoteDownVote {
+  display: flex;
+  gap: 10px;
+}
+
+.modalUserContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modalUserDetailContainer {
+  display: flex;
+  gap: 20px;
+
+}
+
+.userImg {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+}
+
+.logo {
+  height: 0.9375rem;
+  width: 0.9375rem;
+  /* filter: invert(0.5); */
+}
+
+.active {
+  background-color: transparent;
+  border: none;
+  border-bottom: 0.125rem solid black;
+
+}
+
+.modal {
+  background-color: rgba(211, 211, 211, 0.096) !important;
+}
+
+.modalBody {
+  height: 21.875rem;
+  /* background-color: pink; */
+}
+
+.btnConatiner {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  height: 35px;
+  gap: 50px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgb(230, 227, 227);
+}
+
+.logoContainer {
+  display: flex;
+  gap: 0.3125rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.likeDislikeContainer {
+  margin-left: 1.875rem;
+  display: flex;
+  gap: 0.625rem;
+  justify-content: flex-start;
+  cursor: pointer;
+  align-items: center;
+  position: relative;
+}
+
+.actionContainer {
+  position: absolute;
+  display: flex;
+  top: -1.25rem;
+  width: 5.625rem;
+  height: 1.5625rem;
+  background-color: rgb(231, 229, 229);
+  border-radius: 0.625rem;
+  justify-content: space-around;
+  align-items: center;
+  opacity: 0;
+
+}
+
+.likeDislikeContainer :hover .actionContainer {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.actionBtn {
+  background-color: transparent;
+  border: none;
+}
+
+.actionBtn:hover {
+  transform: translateY(-5px);
+}
+
+.pollQuestion {
+  border: none;
+  font-size: 18px;
+  height: 60px;
+}
+
+.pollQuestion::placeholder {
+  color: black;
+  font-weight: 400;
+}
+
+.pollOptionContainer {
+  padding: 18px;
+  border: 1px solid rgb(157, 157, 157);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 280px;
+  overflow-Y: scroll;
+}
+
+.addOptionButton {
+  padding: 12px;
+  border: none;
+  font-size: 18px;
+  border-radius: 12px;
+  width: 100%;
+  color: white;
+}
+
+.pollFormInput {
+  width: 92%;
+  height: 60px;
+}
+
+.pollFormInput::placeholder {
+  color: black;
+  font-weight: 500;
+}
+
+.addPollFormContainer {
+  overflow-Y: scroll;
+}
+
+.addPollFormContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.addPollFormContainer::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #EFEFEF;
+}
+
+.addPollFormContainer::-webkit-scrollbar-thumb {
+  background-color: #C2C2C2;
+  border-radius: 4px;
+}

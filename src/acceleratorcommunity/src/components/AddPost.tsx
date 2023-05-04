@@ -7,7 +7,7 @@ import WebContext from '../Context/WebContext';
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 import likePostCall from '../API/likePostCall';
-import getAllPostsCall from '../API/getAllPostsCall';
+// import getAllPostsCall from '../API/getAllPostsCall';
 import Spinner from 'react-bootstrap/Spinner';
 import getPostByIdCall from '../API/getPostByIdCall';
 import addPostCall from '../API/addPostCall';
@@ -38,7 +38,8 @@ import videoIcon from '../assets/images/AddVideo_icon.svg';
 import pollIcon from '../assets/images/CreatePoll_icon.svg';
 import addBlogIcon from '../assets/images/AddBlogPost_icon.svg';
 import createEventIcon from '../assets/images/CreateEventPost_icon.svg';
-import Skeleton from 'react-loading-skeleton';
+import pollCross from '../assets/images/pollCross.svg';
+// import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 // Rich Text Editor Files Import Start
@@ -169,14 +170,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   let [disableAddPoll, setDisableAddPoll] = useState(false);
   let [globalPostType, setGlobalPostType] = useState('TEXT_POST');
 
-  let [pageRoute, setPageroute] = useState('/viewProfile');
   const router = useRouter();
-  useEffect(() => {
-    setPageroute(router.asPath);
-  }, []);
-  console.log('All Posts List', myAnotherArr);
 
-  console.log('CURRENTPATH', pageRoute);
+  let [isEditorHidden, setIsEditorVisible] = useState(false);
+
+  useEffect(() => {
+    props?.params?.withoutEditor ? setIsEditorVisible(true) : '';
+  }, [props]);
 
   useEffect(() => {
     if (file.length || docs.length || videoLink.length || eventPost != '' || pollPost != '') {
@@ -315,26 +315,50 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     postStructCreate();
   }, [myAnotherArr]);
 
+  const [id, setId] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    const { query } = router;
+    const idValue = query.id as string;
+    setId(idValue);
+  }, [router]);
+
+  console.log('QueryParameterId', id);
+
   useEffect(() => {
     if (userToken != '' && userToken != undefined) {
-      getAllPostsCall(userToken, postPageNum).then((response: any) => {
-        let newArr = response?.data?.data;
-        newArr?.map((post: any) => {
-          post.isOpenComment = false;
-          post.comments = [];
-          post.showShare = false;
-          post.isLoadingComments = false;
-          if (post.postMeasures == null || post.postMeasures == 'undefined') {
-            post.postMeasures = {
-              commentCount: 0,
-              likeCount: 0,
-            };
+      AxiosRequest({
+        method: 'GET',
+        url: `${props?.params?.URL}?${id ? `id=${id}&` : ''}page=${postPageNum}&size=10`,
+      })
+        .then((response: any) => {
+          let newArr = response?.data;
+          newArr?.map((post: any) => {
+            post.isOpenComment = false;
+            post.comments = [];
+            post.showShare = false;
+            post.isLoadingComments = false;
+            if (post.postMeasures == null || post.postMeasures == 'undefined') {
+              post.postMeasures = {
+                commentCount: 0,
+                likeCount: 0,
+              };
+            }
+          });
+          setMyAnotherArr(newArr);
+        })
+        .catch((err: any) => {
+          if (err === 'API Call Failed !') {
+            setMyAnotherArr([
+              {
+                postType: 'ERRORPOST',
+                description: 'Microservice URL Configuration Incorrect !',
+              },
+            ]);
           }
         });
-        setMyAnotherArr(newArr);
-      });
     }
-  }, [userToken]);
+  }, [props]);
 
   useEffect(() => {
     if (ifNoMoreData == true) {
@@ -364,6 +388,20 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const [showBlockUserPopUp, setShowBlockUserPopUp] = useState(false);
   const [selectedBlockUserItem, setSelectedBlockUserItem] = useState<BlockUserFields>();
   const [showReportUserPopUp, setShowReportUserPopUp] = useState(false);
+
+  function getEventImage(eventType: string) {
+    console.log('eventType', eventType, props);
+    let itemImage =
+      'https://chinchincelebration.com/wp-content/uploads/2019/08/product-launch-events-min.png';
+    props?.fields?.data?.datasource?.eventType?.targetItems?.map((item: any) => {
+      if (item?.title?.jsonValue?.value === eventType) {
+        itemImage = item?.image?.jsonValue?.value?.href
+          ? item?.image?.jsonValue?.value?.href
+          : 'https://chinchincelebration.com/wp-content/uploads/2019/08/product-launch-events-min.png';
+      }
+    });
+    return itemImage;
+  }
 
   const ReportUserPopup = () => {
     const reportTypeList = Object.values(ReportUserOptionsTypeLabel);
@@ -653,9 +691,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setPostPageNum((prev) => {
       return prev + 1;
     });
-    getAllPostsCall(userToken, postPageNum + 1).then((response: any) => {
-      if (response?.data?.data?.length != 0 && response?.data?.data?.length) {
-        let newArr = response?.data?.data;
+    AxiosRequest({
+      method: 'GET',
+      url: `${props?.params?.URL}?page=${postPageNum + 1}&size=10`,
+    }).then((response: any) => {
+      if (response?.data?.length != 0 && response?.data?.length) {
+        let newArr = response?.data;
         newArr?.map((post: any) => {
           post.isOpenComment = false;
           post.comments = [];
@@ -1159,288 +1200,310 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     let locArr2: ReactElement<any, any>[] = [];
     myAnotherArr?.map((post: any) => {
       locArr2.push(
-        <div className="postContainer" key={post?.id}>
-          <div className="postHeading">
-            <div className="postHeaderLeft">
-              <Link href={`/profile/${post?.createdBy?.objectId}`}>
-                <img
-                  className="postUserImage"
-                  src={
-                    post?.createdBy?.profilePictureUrl
-                      ? post?.createdBy?.profilePictureUrl
-                      : user.src
-                  }
-                  alt="User-Pic"
-                ></img>
-              </Link>
-
-              <div className="postDetailContainer">
-                <h5 className="postOwner">
-                  <span>{post?.createdBy?.firstName ? post?.createdBy?.firstName : 'Unknown'}</span>
-                  &nbsp;
-                  <span>{post?.createdBy?.lastName ? post?.createdBy?.lastName : 'User'}</span>
-                </h5>
-                <h6 className="postCreateDate">
-                  <img
-                    width="9px"
-                    src="https://cdn-icons-png.flaticon.com/512/2088/2088617.png"
-                    alt="post time"
-                    style={{ opacity: '0.4', marginRight: '4px' }}
-                  ></img>
-                  <span>
-                    {post?.createdOn != 0 &&
-                    post?.createdOn &&
-                    post?.createdOn != undefined &&
-                    post?.createdOn != null
-                      ? calculateTimeDifference(post?.createdOn)
-                      : 'Recently'}
-                  </span>
-                </h6>
+        <>
+          {post?.postType === 'ERRORPOST' ? (
+            <div className="postContainer" key={post?.id}>
+              <div style={{ padding: '40px', fontSize: '36px' }}>
+                {post.description}{' '}
+                <div style={{ color: 'red', fontSize: '12px' }}>
+                  Check Component rendering parameter : "MicoserviceURL"
+                </div>
               </div>
             </div>
-            <div className="postHeaderRight">
-              <Dropdown>
-                <Dropdown.Toggle
-                  variant="secondary"
-                  id="dropdown-basic"
-                  className={styles.dropdownBtn}
-                >
-                  <button
-                    onClick={() => {
-                      setReportPostId(post?.id);
-                      setReportPostType(post?.postType);
-                    }}
-                    style={{
-                      border: 'none',
-                      backgroundColor: 'white',
-                      padding: '0',
-                    }}
-                  >
+          ) : (
+            <div className="postContainer" key={post?.id}>
+              <div className="postHeading">
+                <div className="postHeaderLeft">
+                  <Link href={`/profile/${post?.createdBy?.objectId}`}>
                     <img
-                      className="postMoreOptionsImage"
-                      src="https://cdn-icons-png.flaticon.com/512/463/463292.png"
-                      alt="pan"
-                    />
-                  </button>
-                </Dropdown.Toggle>
+                      className="postUserImage"
+                      src={
+                        post?.createdBy?.profilePictureUrl
+                          ? post?.createdBy?.profilePictureUrl
+                          : user.src
+                      }
+                      alt="User-Pic"
+                    ></img>
+                  </Link>
 
-                <Dropdown.Menu className={styles.dropdownMenu}>
-                  <Dropdown.Item className={styles.dropdownItem}>
-                    <div className={styles.overlayItem}>
-                      <div className={styles.dropdownImage}>
-                        <NextImage field={bookmarkImage} editable={true} />
-                      </div>
-                      <div className={styles.reportContainerBtn}>Save Post</div>
-                    </div>
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    className={styles.dropdownItem}
-                    onClick={() => {
-                      copyPostLinkToClipboard(post?.id);
-                    }}
-                  >
-                    <div className={styles.overlayItem}>
-                      <div className={styles.dropdownImage}>
-                        <NextImage field={copylink} editable={true} />
-                      </div>
-                      <div className={styles.reportContainerBtn}>Copy link to post</div>
-                    </div>
-                  </Dropdown.Item>
-                  {post?.createdBy?.objectId !== objectId ? (
-                    <>
-                      <Dropdown.Item
-                        className={styles.dropdownItem}
-                        onClick={() => {
-                          showReportPostPopup();
-                        }}
-                      >
-                        <div className={styles.overlayItem}>
-                          <div className={styles.dropdownImage}>
-                            <NextImage field={reportPostImage} editable={true} />
-                          </div>
-                          <div className={styles.reportContainerBtn}>Report Post</div>
-                        </div>
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className={styles.dropdownItem}
-                        onClick={() => {
-                          setSelectedBlockUserItem(post?.createdBy);
-                          setShowBlockUserPopUp(true);
-                        }}
-                      >
-                        <div className={styles.overlayItem}>
-                          <div className={styles.dropdownImage}>
-                            <NextImage field={BlockUserImage} editable={true} />
-                          </div>
-                          <div className={styles.reportContainerBtn}>
-                            Block {post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName}
-                          </div>
-                        </div>
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className={styles.dropdownItem}
-                        onClick={() => {
-                          setSelectedBlockUserItem(post?.createdBy);
-                          setShowReportUserPopUp(true);
-                        }}
-                      >
-                        <div className={styles.overlayItem}>
-                          <div className={styles.dropdownImage}>
-                            <NextImage field={reportPostImage} editable={true} />
-                          </div>
-                          <div className={styles.reportContainerBtn}>
-                            Report {post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName}
-                          </div>
-                        </div>
-                      </Dropdown.Item>
-                    </>
-                  ) : (
-                    ''
-                  )}
-                  {post?.createdBy?.objectId === objectId ? (
-                    <Dropdown.Item
-                      className={styles.dropdownItem}
-                      onClick={() => {
-                        setDeletePostId(post?.id);
-                        setShowDeletePostPopup(true);
-                      }}
+                  <div className="postDetailContainer">
+                    <h5 className="postOwner">
+                      <span>
+                        {post?.createdBy?.firstName ? post?.createdBy?.firstName : 'Unknown'}
+                      </span>
+                      &nbsp;
+                      <span>{post?.createdBy?.lastName ? post?.createdBy?.lastName : 'User'}</span>
+                    </h5>
+                    <h6 className="postCreateDate">
+                      <img
+                        width="9px"
+                        src="https://cdn-icons-png.flaticon.com/512/2088/2088617.png"
+                        alt="post time"
+                        style={{ opacity: '0.4', marginRight: '4px' }}
+                      ></img>
+                      <span>
+                        {post?.createdOn != 0 &&
+                        post?.createdOn &&
+                        post?.createdOn != undefined &&
+                        post?.createdOn != null
+                          ? calculateTimeDifference(post?.createdOn)
+                          : 'Recently'}
+                      </span>
+                    </h6>
+                  </div>
+                </div>
+                <div className="postHeaderRight">
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      variant="secondary"
+                      id="dropdown-basic"
+                      className={styles.dropdownBtn}
                     >
-                      <div className={styles.overlayItem}>
-                        <div className={styles.dropdownImage}>
-                          <NextImage field={Deleteimage} editable={true} />
+                      <button
+                        onClick={() => {
+                          setReportPostId(post?.id);
+                          setReportPostType(post?.postType);
+                        }}
+                        style={{
+                          border: 'none',
+                          backgroundColor: 'white',
+                          padding: '0',
+                        }}
+                      >
+                        <img
+                          className="postMoreOptionsImage"
+                          src="https://cdn-icons-png.flaticon.com/512/463/463292.png"
+                          alt="pan"
+                        />
+                      </button>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu className={styles.dropdownMenu}>
+                      <Dropdown.Item className={styles.dropdownItem}>
+                        <div className={styles.overlayItem}>
+                          <div className={styles.dropdownImage}>
+                            <NextImage field={bookmarkImage} editable={true} />
+                          </div>
+                          <div className={styles.reportContainerBtn}>Save Post</div>
                         </div>
-                        <div className={styles.reportContainerBtn}>Delete Post</div>
-                      </div>
-                    </Dropdown.Item>
-                  ) : (
-                    ''
-                  )}
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </div>
-          <div className="postContent">
-            <div className="postMedia">
-              {post?.mediaList?.map((media: any, num: any) => {
-                if (media?.mediaType === 'VIDEO') {
-                  return (
-                    <div key={num}>
-                      <video width="100%" src={media?.url} controls></video>
-                    </div>
-                  );
-                } else if (media?.mediaType === 'DOCUMENT') {
-                  return (
-                    <div className="docPreviewContainer" key={num}>
-                      <span className="openPrevButton">
-                        <button
-                          onClick={() => openDoc(media?.url)}
-                          style={{
-                            padding: '5px',
-                            borderRadius: '20px',
-                            borderColor: 'white',
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className={styles.dropdownItem}
+                        onClick={() => {
+                          copyPostLinkToClipboard(post?.id);
+                        }}
+                      >
+                        <div className={styles.overlayItem}>
+                          <div className={styles.dropdownImage}>
+                            <NextImage field={copylink} editable={true} />
+                          </div>
+                          <div className={styles.reportContainerBtn}>Copy link to post</div>
+                        </div>
+                      </Dropdown.Item>
+                      {post?.createdBy?.objectId !== objectId ? (
+                        <>
+                          <Dropdown.Item
+                            className={styles.dropdownItem}
+                            onClick={() => {
+                              showReportPostPopup();
+                            }}
+                          >
+                            <div className={styles.overlayItem}>
+                              <div className={styles.dropdownImage}>
+                                <NextImage field={reportPostImage} editable={true} />
+                              </div>
+                              <div className={styles.reportContainerBtn}>Report Post</div>
+                            </div>
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            className={styles.dropdownItem}
+                            onClick={() => {
+                              setSelectedBlockUserItem(post?.createdBy);
+                              setShowBlockUserPopUp(true);
+                            }}
+                          >
+                            <div className={styles.overlayItem}>
+                              <div className={styles.dropdownImage}>
+                                <NextImage field={BlockUserImage} editable={true} />
+                              </div>
+                              <div className={styles.reportContainerBtn}>
+                                Block {post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName}
+                              </div>
+                            </div>
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            className={styles.dropdownItem}
+                            onClick={() => {
+                              setSelectedBlockUserItem(post?.createdBy);
+                              setShowReportUserPopUp(true);
+                            }}
+                          >
+                            <div className={styles.overlayItem}>
+                              <div className={styles.dropdownImage}>
+                                <NextImage field={reportPostImage} editable={true} />
+                              </div>
+                              <div className={styles.reportContainerBtn}>
+                                Report{' '}
+                                {post?.createdBy?.firstName + ' ' + post?.createdBy?.lastName}
+                              </div>
+                            </div>
+                          </Dropdown.Item>
+                        </>
+                      ) : (
+                        ''
+                      )}
+                      {post?.createdBy?.objectId === objectId ? (
+                        <Dropdown.Item
+                          className={styles.dropdownItem}
+                          onClick={() => {
+                            setDeletePostId(post?.id);
+                            setShowDeletePostPopup(true);
                           }}
                         >
-                          <img
-                            width="50px"
-                            src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
-                            alt={num}
-                            style={{ margin: '10px' }}
-                          ></img>
-                          {'DocFile'}
-                        </button>
-                      </span>
-                    </div>
-                  );
-                } else if (media?.mediaType === 'IMAGE') {
-                  return (
-                    <div key={num}>
-                      <img
-                        width="100%"
-                        src={media?.url}
-                        alt={media?.id}
-                        style={{ margin: '0 0 15px 0', objectFit: 'contain' }}
-                      ></img>
-                    </div>
-                  );
-                }
-                return '';
-              })}
-            </div>
-            {post?.postType === 'EVENT' ? (
-              <>
-                <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
-                <EventCard
-                  heading={post?.event?.title}
-                  description={post?.event?.description}
-                  date={post?.event?.eventDate}
-                  eventType={post?.event?.eventType}
-                  url={EventImage[post?.event?.eventType]}
-                />
-              </>
-            ) : post?.postType === 'POLL' ? (
-              <>
-                <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
-                <PollCard pollPost={{ poll: post?.poll }} voteInAPoll={voteInAPoll} />
-              </>
-            ) : post?.postType === 'BLOG_POST' ? (
-              <>
-                <div
-                  className="blogHeading"
-                  style={{ fontWeight: 600, fontSize: '50px', margin: '8px 16px' }}
-                >
-                  {post?.blog?.heading}
+                          <div className={styles.overlayItem}>
+                            <div className={styles.dropdownImage}>
+                              <NextImage field={Deleteimage} editable={true} />
+                            </div>
+                            <div className={styles.reportContainerBtn}>Delete Post</div>
+                          </div>
+                        </Dropdown.Item>
+                      ) : (
+                        ''
+                      )}
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </div>
-                <NextImage src={post?.blog?.imageUrl}></NextImage>
-                <div className="postDescription">{parser(modifyHtml(post?.blog?.description))}</div>
-              </>
-            ) : (
-              <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
-            )}
-          </div>
-
-          <div className={styles.postFooterContainer}>
-            <div className={styles.likeContainer}>
-              <button
-                className={styles.likeButton}
-                onClick={() => LikePost(post?.id)}
-                disabled={post?.isRespPending}
-              >
-                <NextImage
-                  field={post?.isLikedByUser ? like : greylikeimage}
-                  editable={true}
-                  alt="PostItems"
-                  width={18}
-                  height={18}
-                />
-                <span
-                  className={styles.likePost}
-                  style={post?.isLikedByUser ? { color: '#2e86f9' } : {}}
-                >
-                  {post?.isLikedByUser ? 'Liked Post' : 'Like Post'}
-                </span>
-              </button>
-
-              <div className={styles.likeCount}>
-                {post?.postMeasures?.likeCount ? post?.postMeasures?.likeCount : '0'}
               </div>
-            </div>
-            <div className={styles.commentContainer}>
-              <button
-                className={styles.commentButton}
-                onClick={() => setOpenComments(post.id, !post.isOpenComment)}
-                aria-controls="anotherCommentsContainer"
-                aria-expanded={post?.isOpenComment}
-                disabled={post?.isRespPending}
-              >
-                <NextImage field={comment} editable={true} alt="PostItems" width={18} height={18} />
-                <span className={styles.commentPost}>Comment</span>
-              </button>
-              <div className={styles.commentCount}>
-                {post?.postMeasures?.commentCount ? post?.postMeasures?.commentCount : '0'}
+              <div className="postContent">
+                <div className="postMedia">
+                  {post?.mediaList?.map((media: any, num: any) => {
+                    if (media?.mediaType === 'VIDEO') {
+                      return (
+                        <div key={num}>
+                          <video width="100%" src={media?.url} controls></video>
+                        </div>
+                      );
+                    } else if (media?.mediaType === 'DOCUMENT') {
+                      return (
+                        <div className="docPreviewContainer" key={num}>
+                          <span className="openPrevButton">
+                            <button
+                              onClick={() => openDoc(media?.url)}
+                              style={{
+                                padding: '5px',
+                                borderRadius: '20px',
+                                borderColor: 'white',
+                              }}
+                            >
+                              <img
+                                width="50px"
+                                src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
+                                alt={num}
+                                style={{ margin: '10px' }}
+                              ></img>
+                              {'DocFile'}
+                            </button>
+                          </span>
+                        </div>
+                      );
+                    } else if (media?.mediaType === 'IMAGE') {
+                      return (
+                        <div key={num}>
+                          <img
+                            width="100%"
+                            src={media?.url}
+                            alt={media?.id}
+                            style={{ margin: '0 0 15px 0', objectFit: 'contain' }}
+                          ></img>
+                        </div>
+                      );
+                    }
+                    return '';
+                  })}
+                </div>
+                {post?.postType === 'EVENT' ? (
+                  <>
+                    <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
+                    <EventCard
+                      heading={post?.event?.title}
+                      description={post?.event?.description}
+                      date={post?.event?.eventDate}
+                      eventType={post?.event?.eventType}
+                      url={EventImage[post?.event?.eventType]}
+                    />
+                  </>
+                ) : post?.postType === 'POLL' ? (
+                  <>
+                    <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
+                    <PollCard pollPost={{ poll: post?.poll }} voteInAPoll={voteInAPoll} />
+                  </>
+                ) : post?.postType === 'BLOG_POST' ? (
+                  <>
+                    <div
+                      className="blogHeading"
+                      style={{ fontWeight: 600, fontSize: '50px', margin: '8px 16px' }}
+                    >
+                      {post?.blog?.heading}
+                    </div>
+                    <NextImage src={post?.blog?.imageUrl}></NextImage>
+                    <div className="postDescription">
+                      {parser(modifyHtml(post?.blog?.description))}
+                    </div>
+                  </>
+                ) : (
+                  <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
+                )}
               </div>
-            </div>
 
-            {/* <div className={styles.shareContainer}>
+              <div className={styles.postFooterContainer}>
+                <div className={styles.likeContainer}>
+                  <button
+                    className={styles.likeButton}
+                    onClick={() => LikePost(post?.id)}
+                    disabled={post?.isRespPending}
+                  >
+                    <NextImage
+                      field={post?.isLikedByUser ? like : greylikeimage}
+                      editable={true}
+                      alt="PostItems"
+                      width={18}
+                      height={18}
+                    />
+                    <span
+                      className={styles.likePost}
+                      style={post?.isLikedByUser ? { color: '#2e86f9' } : {}}
+                    >
+                      {post?.isLikedByUser ? 'Liked Post' : 'Like Post'}
+                    </span>
+                  </button>
+
+                  <div className={styles.likeCount}>
+                    {post?.postMeasures?.likeCount ? post?.postMeasures?.likeCount : '0'}
+                  </div>
+                </div>
+                <div className={styles.commentContainer}>
+                  <button
+                    className={styles.commentButton}
+                    onClick={() => setOpenComments(post.id, !post.isOpenComment)}
+                    aria-controls="anotherCommentsContainer"
+                    aria-expanded={post?.isOpenComment}
+                    disabled={post?.isRespPending}
+                  >
+                    <NextImage
+                      field={comment}
+                      editable={true}
+                      alt="PostItems"
+                      width={18}
+                      height={18}
+                    />
+                    <span className={styles.commentPost}>Comment</span>
+                  </button>
+                  <div className={styles.commentCount}>
+                    {post?.postMeasures?.commentCount ? post?.postMeasures?.commentCount : '0'}
+                  </div>
+                </div>
+
+                {/* <div className={styles.shareContainer}>
               <button
                 className={styles.shareButton}
                 onClick={() => {}}
@@ -1453,187 +1516,191 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               <div className={styles.sharePost}>Share</div>
             </div> */}
 
-            <div className={styles.shareContainer}>
-              <Dropdown style={{ alignItems: 'center', display: 'flex' }}>
-                <Dropdown.Toggle
-                  variant="secondary"
-                  id="dropdown-basic"
-                  className={ShowShareCss.dropdownBtn}
-                >
-                  <button
-                    onClick={() => handleShowShare(post.id, !post?.showShare)}
-                    className={styles.shareButton}
-                    disabled={post?.isRespPending}
-                  >
-                    <img src={share.src} alt="SharePost" />
-                    <div className={styles.sharePost}>Share</div>
-                  </button>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu className={styles.dropdownMenu}>
-                  <Dropdown.Item
-                    className={ShowShareCss.dropdownItem}
-                    target="_blank"
-                    href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
-                  >
-                    <div className={ShowShareCss.overlayItem}>
-                      <div className={ShowShareCss.dropdownImage}>
-                        <NextImage
-                          className={ShowShareCss.whatsappImage}
-                          field={whatsapp}
-                          editable={true}
-                          width={25}
-                          height={25}
-                        />
-                      </div>
-                      <span className={ShowShareCss.targetIcon}>Share on WhatsApp</span>
-                    </div>
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    className={ShowShareCss.dropdownItem}
-                    target="_blank"
-                    href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
-                  >
-                    <div className={ShowShareCss.overlayItem}>
-                      <div className={ShowShareCss.dropdownImage}>
-                        <NextImage
-                          className={ShowShareCss.whatsappImage}
-                          field={twitter}
-                          editable={true}
-                          width={25}
-                          height={25}
-                        />
-                      </div>
-                      <span className={ShowShareCss.targetIcon}>Share on Twitter</span>
-                    </div>
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    className={ShowShareCss.dropdownItem}
-                    target="_blank"
-                    href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
-                  >
-                    <div className={ShowShareCss.overlayItem}>
-                      <div className={ShowShareCss.dropdownImage}>
-                        <NextImage
-                          className={ShowShareCss.whatsappImage}
-                          field={linkedin}
-                          editable={true}
-                          width={25}
-                          height={25}
-                        />
-                      </div>
-                      <span className={ShowShareCss.targetIcon}>Share on LinkedIn</span>
-                    </div>
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    className={ShowShareCss.dropdownItem}
-                    target="_blank"
-                    href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
-                  >
-                    <div className={ShowShareCss.overlayItem}>
-                      <div className={ShowShareCss.dropdownImage}>
-                        <NextImage
-                          className={ShowShareCss.whatsappImage}
-                          field={facebook}
-                          editable={true}
-                          width={25}
-                          height={25}
-                        />
-                      </div>
-                      <span className={ShowShareCss.targetIcon}>Share on Facebook</span>
-                    </div>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </div>
-
-          <Collapse in={post?.isOpenComment}>
-            <div id="anotherCommentsContainer" className="loadCommentContainer">
-              <Form
-                onSubmit={(e) => {
-                  postComments(post?.id, e);
-                }}
-                style={{ border: '1px', borderColor: 'black' }}
-              >
-                <Form.Group
-                  className="mb-2"
-                  controlId="comments"
-                  style={{ display: 'flex', padding: '5px 15px 0' }}
-                >
-                  <img
-                    className="commentUserImage"
-                    src={userObject?.profilePictureUrl ? userObject?.profilePictureUrl : user.src}
-                    alt="User-Pic"
-                    style={{ marginLeft: '0' }}
-                  ></img>
-                  <Form.Control
-                    // onChange={(e) => setPostCommentValue(e.target.value)}
-                    type="text"
-                    placeholder="Write a Comment..."
-                    required
-                    autoFocus
-                    style={{ width: '100%', fontSize: '13px', color: '#a5a9ae' }}
-                  />
-                  <button type="submit" className="postCommentButton">
-                    Post
-                  </button>
-                </Form.Group>
-              </Form>
-              {post?.comments?.map((comment: any) => {
-                return (
-                  <>
-                    <div className="commentSection">
-                      <figure>
-                        <img
-                          className="commentUserImage"
-                          src={
-                            comment?.createdBy?.profilePictureUrl
-                              ? comment?.createdBy?.profilePictureUrl
-                              : user.src
-                          }
-                          alt="User-Pic"
-                          style={{
-                            marginLeft: '0',
-                          }}
-                        ></img>
-                      </figure>
-                      <div
-                        className="commentContainer"
-                        id={comment?.id}
-                        style={{
-                          padding: '10px',
-                          backgroundColor: '#F0F0F0',
-                          borderRadius: '10px',
-                        }}
+                <div className={styles.shareContainer}>
+                  <Dropdown style={{ alignItems: 'center', display: 'flex' }}>
+                    <Dropdown.Toggle
+                      variant="secondary"
+                      id="dropdown-basic"
+                      className={ShowShareCss.dropdownBtn}
+                    >
+                      <button
+                        onClick={() => handleShowShare(post.id, !post?.showShare)}
+                        className={styles.shareButton}
+                        disabled={post?.isRespPending}
                       >
-                        <h5 className="commentHeadingTop">
-                          {comment?.createdBy?.firstName} {comment?.createdBy?.lastName}
-                        </h5>
-                        {comment?.isEditOn ? (
-                          <>
-                            <Form
-                              style={{ display: 'flex', marginTop: '8px' }}
-                              onSubmit={(e) => editComment(e, post?.id, comment?.id)}
-                            >
-                              <Form.Group style={{ width: '100%' }} controlId="formBasicEmail">
-                                <Form.Control type="text" defaultValue={comment?.text} />
-                              </Form.Group>
-                              <Button
-                                style={{
-                                  marginLeft: '10px',
-                                  backgroundColor: '#47D7AC',
-                                  color: 'white',
-                                  borderRadius: '5px',
-                                  border: 'none',
-                                }}
-                                variant="primary"
-                                type="submit"
-                              >
-                                Save
-                              </Button>
-                            </Form>
-                            {/* <span>
+                        <img src={share.src} alt="SharePost" />
+                        <div className={styles.sharePost}>Share</div>
+                      </button>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu className={ShowShareCss.dropdownMenu}>
+                      <Dropdown.Item
+                        className={ShowShareCss.dropdownItem}
+                        target="_blank"
+                        href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
+                      >
+                        <div className={ShowShareCss.overlayItem}>
+                          <div className={ShowShareCss.dropdownImage}>
+                            <NextImage
+                              className={ShowShareCss.whatsappImage}
+                              field={whatsapp}
+                              editable={true}
+                              width={25}
+                              height={25}
+                            />
+                          </div>
+                          <span className={ShowShareCss.targetIcon}>Share on WhatsApp</span>
+                        </div>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className={ShowShareCss.dropdownItem}
+                        target="_blank"
+                        href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
+                      >
+                        <div className={ShowShareCss.overlayItem}>
+                          <div className={ShowShareCss.dropdownImage}>
+                            <NextImage
+                              className={ShowShareCss.whatsappImage}
+                              field={twitter}
+                              editable={true}
+                              width={25}
+                              height={25}
+                            />
+                          </div>
+                          <span className={ShowShareCss.targetIcon}>Share on Twitter</span>
+                        </div>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className={ShowShareCss.dropdownItem}
+                        target="_blank"
+                        href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
+                      >
+                        <div className={ShowShareCss.overlayItem}>
+                          <div className={ShowShareCss.dropdownImage}>
+                            <NextImage
+                              className={ShowShareCss.whatsappImage}
+                              field={linkedin}
+                              editable={true}
+                              width={25}
+                              height={25}
+                            />
+                          </div>
+                          <span className={ShowShareCss.targetIcon}>Share on LinkedIn</span>
+                        </div>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className={ShowShareCss.dropdownItem}
+                        target="_blank"
+                        href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
+                      >
+                        <div className={ShowShareCss.overlayItem}>
+                          <div className={ShowShareCss.dropdownImage}>
+                            <NextImage
+                              className={ShowShareCss.whatsappImage}
+                              field={facebook}
+                              editable={true}
+                              width={25}
+                              height={25}
+                            />
+                          </div>
+                          <span className={ShowShareCss.targetIcon}>Share on Facebook</span>
+                        </div>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+              </div>
+
+              <Collapse in={post?.isOpenComment}>
+                <div id="anotherCommentsContainer" className="loadCommentContainer">
+                  <Form
+                    onSubmit={(e) => {
+                      postComments(post?.id, e);
+                    }}
+                    style={{ border: '1px', borderColor: 'black' }}
+                  >
+                    <Form.Group
+                      className="mb-2"
+                      controlId="comments"
+                      style={{ display: 'flex', padding: '5px 15px 0' }}
+                    >
+                      <img
+                        className="commentUserImage"
+                        src={
+                          userObject?.profilePictureUrl
+                            ? userObject?.profilePictureUrl
+                            : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
+                        }
+                        alt="User-Pic"
+                        style={{ marginLeft: '0' }}
+                      ></img>
+                      <Form.Control
+                        // onChange={(e) => setPostCommentValue(e.target.value)}
+                        type="text"
+                        placeholder="Write a Comment..."
+                        required
+                        autoFocus
+                        style={{ width: '100%', fontSize: '13px', color: '#a5a9ae' }}
+                      />
+                      <button type="submit" className="postCommentButton">
+                        Post
+                      </button>
+                    </Form.Group>
+                  </Form>
+                  {post?.comments?.map((comment: any) => {
+                    return (
+                      <>
+                        <div className="commentSection">
+                          <figure>
+                            <img
+                              className="commentUserImage"
+                              src={
+                                comment?.createdBy?.profilePictureUrl
+                                  ? comment?.createdBy?.profilePictureUrl
+                                  : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
+                              }
+                              alt="User-Pic"
+                              style={{
+                                marginLeft: '0',
+                              }}
+                            ></img>
+                          </figure>
+                          <div
+                            className="commentContainer"
+                            id={comment?.id}
+                            style={{
+                              padding: '10px',
+                              backgroundColor: '#F0F0F0',
+                              borderRadius: '10px',
+                            }}
+                          >
+                            <h5 className="commentHeadingTop">
+                              {comment?.createdBy?.firstName} {comment?.createdBy?.lastName}
+                            </h5>
+                            {comment?.isEditOn ? (
+                              <>
+                                <Form
+                                  style={{ display: 'flex', marginTop: '8px' }}
+                                  onSubmit={(e) => editComment(e, post?.id, comment?.id)}
+                                >
+                                  <Form.Group style={{ width: '100%' }} controlId="formBasicEmail">
+                                    <Form.Control type="text" defaultValue={comment?.text} />
+                                  </Form.Group>
+                                  <Button
+                                    style={{
+                                      marginLeft: '10px',
+                                      backgroundColor: '#47D7AC',
+                                      color: 'white',
+                                      borderRadius: '5px',
+                                      border: 'none',
+                                    }}
+                                    variant="primary"
+                                    type="submit"
+                                  >
+                                    Save
+                                  </Button>
+                                </Form>
+                                {/* <span>
                               <p className="commentHeading" contentEditable={comment?.isEditOn}>
                                 {comment?.text}
                               </p>{' '}
@@ -1649,31 +1716,31 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                 save
                               </button>
                             </span> */}
-                          </>
-                        ) : (
-                          <p className="commentHeading">{comment?.text}</p>
-                        )}
-                        <div
-                          onClick={() => getAllupVotesAndDownVotes(comment?.id)}
-                          className="upvoteDownvoteContainer"
-                        >
-                          <div className="likecomments">
-                            <img
-                              className="likecomments"
-                              src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
-                              alt="Like"
-                            />
-                          </div>
-                          <div className="likecomments">
-                            <img className="likecomments" src={downVote.src} alt="Dislike" />
+                              </>
+                            ) : (
+                              <p className="commentHeading">{comment?.text}</p>
+                            )}
+                            <div
+                              onClick={() => getAllupVotesAndDownVotes(comment?.id)}
+                              className="upvoteDownvoteContainer"
+                            >
+                              <div className="likecomments">
+                                <img
+                                  className="likecomments"
+                                  src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
+                                  alt="Like"
+                                />
+                              </div>
+                              <div className="likecomments">
+                                <img className="likecomments" src={downVote.src} alt="Dislike" />
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
 
-                    <div>
-                      <div style={{ marginLeft: '55px' }}>
-                        {/* <span onClick={() => handleUpvote(comment?.id)}>
+                        <div>
+                          <div style={{ marginLeft: '55px' }}>
+                            {/* <span onClick={() => handleUpvote(comment?.id)}>
                            <img
                               className="likecomments"
                               src={
@@ -1694,176 +1761,179 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                               alt="downVote"
                            />
                         </span> */}
-                        <button
-                          onClick={() =>
-                            openCommentReplies(post?.id, comment?.id, !comment?.isOpenReply)
-                          }
-                          aria-controls="repliesContainer"
-                          aria-expanded={comment?.isOpenReply}
-                          className="commentReply"
-                          disabled={comment?.isRespPending}
-                          style={comment?.isRespPending ? { opacity: 0.5 } : {}}
-                        >
-                          Reply
-                        </button>
-                        <span className="commentPostDate" style={{ fontSize: '12px' }}>
-                          {' '}
-                          {calculateTimeDifference(comment?.createdOn)}
-                        </span>
-                        {comment?.createdBy.objectId === objectId && objectId ? (
-                          <button
-                            disabled={comment?.isRespPending}
-                            style={comment?.isRespPending ? { opacity: 0.5 } : {}}
-                            onClick={() => {
-                              setDeleteCommentId({ postId: post?.id, commentId: comment?.id });
-                              setShowDeleteCommentPopup(true);
-                            }}
-                            className="commentReply"
-                          >
-                            Delete
-                          </button>
-                        ) : (
-                          ''
-                        )}
-                        {comment?.createdBy.objectId === objectId && objectId ? (
-                          <button
-                            disabled={comment?.isRespPending}
-                            style={comment?.isRespPending ? { opacity: 0.5 } : {}}
-                            onClick={() => {
-                              commentEditOn(post?.id, comment?.id, !comment?.isEditOn);
-                            }}
-                            className="commentReply"
-                          >
-                            Edit
-                          </button>
-                        ) : (
-                          ''
-                        )}
-                      </div>
-                      <Collapse in={comment?.isOpenReply}>
-                        <div style={{ position: 'relative', left: '10%', width: '88%' }}>
-                          <Form
-                            onSubmit={(e) => {
-                              postCommentReply(post?.id, comment?.id, e);
-                            }}
-                            style={{ border: '1px', borderColor: 'black' }}
-                          >
-                            <Form.Group
-                              controlId="comments"
-                              style={{ display: 'flex', padding: '5px 0 15px 15px' }}
+                            <button
+                              onClick={() =>
+                                openCommentReplies(post?.id, comment?.id, !comment?.isOpenReply)
+                              }
+                              aria-controls="repliesContainer"
+                              aria-expanded={comment?.isOpenReply}
+                              className="commentReply"
+                              disabled={comment?.isRespPending}
+                              style={comment?.isRespPending ? { opacity: 0.5 } : {}}
                             >
-                              <img
-                                width="32px"
-                                className="commentUserImage"
-                                src={
-                                  userObject?.profilePictureUrl
-                                    ? userObject?.profilePictureUrl
-                                    : user.src
-                                }
-                                alt="User-Pic"
-                                style={{ marginLeft: '0' }}
-                              ></img>
-                              <Form.Control
-                                // onChange={(e) => setPostCommentValue(e.target.value)}
-                                type="text"
-                                placeholder="Write a Reply..."
-                                required
-                                autoFocus
-                                style={{ width: '100%', color: '#a5a9ae', fontSize: '13px' }}
-                              />
-                              <button type="submit" className="postCommentButton">
-                                Reply
+                              Reply
+                            </button>
+                            <span className="commentPostDate" style={{ fontSize: '12px' }}>
+                              {' '}
+                              {calculateTimeDifference(comment?.createdOn)}
+                            </span>
+                            {comment?.createdBy.objectId === objectId && objectId ? (
+                              <button
+                                disabled={comment?.isRespPending}
+                                style={comment?.isRespPending ? { opacity: 0.5 } : {}}
+                                onClick={() => {
+                                  setDeleteCommentId({ postId: post?.id, commentId: comment?.id });
+                                  setShowDeleteCommentPopup(true);
+                                }}
+                                className="commentReply"
+                              >
+                                Delete
                               </button>
-                            </Form.Group>
-                          </Form>
-                          {comment?.replies?.map((reply: any) => {
-                            return (
-                              <>
-                                <div className="commentSection">
-                                  <figure>
-                                    <img
-                                      className="commentUserImage"
-                                      src={
-                                        reply?.createdBy?.profilePictureUrl
-                                          ? reply?.createdBy?.profilePictureUrl
-                                          : user.src
-                                      }
-                                      alt="User-Pic"
-                                      style={{
-                                        marginLeft: '0',
-                                      }}
-                                    ></img>
-                                  </figure>
-                                  <div
-                                    id={reply?.id}
-                                    style={{
-                                      padding: '10px',
-                                      backgroundColor: '#F0F0F0',
-                                      borderRadius: '10px',
-                                    }}
-                                    className="commentContainer"
-                                  >
-                                    <h5 className="commentHeadingTop">
-                                      {reply?.createdBy?.firstName} {reply?.createdBy?.lastName}{' '}
-                                    </h5>
-                                    {reply?.isEditOn ? (
-                                      <Form
-                                        style={{ display: 'flex', marginTop: '8px' }}
-                                        onSubmit={(e) =>
-                                          editReply(e, post?.id, comment?.id, reply?.id)
-                                        }
-                                      >
-                                        <Form.Group
-                                          style={{ width: '100%' }}
-                                          controlId="formBasicEmail"
-                                        >
-                                          <Form.Control type="text" defaultValue={reply?.text} />
-                                        </Form.Group>
-                                        <Button
+                            ) : (
+                              ''
+                            )}
+                            {comment?.createdBy.objectId === objectId && objectId ? (
+                              <button
+                                disabled={comment?.isRespPending}
+                                style={comment?.isRespPending ? { opacity: 0.5 } : {}}
+                                onClick={() => {
+                                  commentEditOn(post?.id, comment?.id, !comment?.isEditOn);
+                                }}
+                                className="commentReply"
+                              >
+                                Edit
+                              </button>
+                            ) : (
+                              ''
+                            )}
+                          </div>
+                          <Collapse in={comment?.isOpenReply}>
+                            <div style={{ position: 'relative', left: '10%', width: '88%' }}>
+                              <Form
+                                onSubmit={(e) => {
+                                  postCommentReply(post?.id, comment?.id, e);
+                                }}
+                                style={{ border: '1px', borderColor: 'black' }}
+                              >
+                                <Form.Group
+                                  controlId="comments"
+                                  style={{ display: 'flex', padding: '5px 0 15px 15px' }}
+                                >
+                                  <img
+                                    width="32px"
+                                    className="commentUserImage"
+                                    src={
+                                      userObject?.profilePictureUrl
+                                        ? userObject?.profilePictureUrl
+                                        : user.src
+                                    }
+                                    alt="User-Pic"
+                                    style={{ marginLeft: '0' }}
+                                  ></img>
+                                  <Form.Control
+                                    // onChange={(e) => setPostCommentValue(e.target.value)}
+                                    type="text"
+                                    placeholder="Write a Reply..."
+                                    required
+                                    autoFocus
+                                    style={{ width: '100%', color: '#a5a9ae', fontSize: '13px' }}
+                                  />
+                                  <button type="submit" className="postCommentButton">
+                                    Reply
+                                  </button>
+                                </Form.Group>
+                              </Form>
+                              {comment?.replies?.map((reply: any) => {
+                                return (
+                                  <>
+                                    <div className="commentSection">
+                                      <figure>
+                                        <img
+                                          className="commentUserImage"
+                                          src={
+                                            reply?.createdBy?.profilePictureUrl
+                                              ? reply?.createdBy?.profilePictureUrl
+                                              : user.src
+                                          }
+                                          alt="User-Pic"
                                           style={{
-                                            marginLeft: '10px',
-                                            backgroundColor: '#47D7AC',
-                                            color: 'white',
-                                            borderRadius: '5px',
-                                            border: 'none',
+                                            marginLeft: '0',
                                           }}
-                                          variant="primary"
-                                          type="submit"
+                                        ></img>
+                                      </figure>
+                                      <div
+                                        id={reply?.id}
+                                        style={{
+                                          padding: '10px',
+                                          backgroundColor: '#F0F0F0',
+                                          borderRadius: '10px',
+                                        }}
+                                        className="commentContainer"
+                                      >
+                                        <h5 className="commentHeadingTop">
+                                          {reply?.createdBy?.firstName} {reply?.createdBy?.lastName}{' '}
+                                        </h5>
+                                        {reply?.isEditOn ? (
+                                          <Form
+                                            style={{ display: 'flex', marginTop: '8px' }}
+                                            onSubmit={(e) =>
+                                              editReply(e, post?.id, comment?.id, reply?.id)
+                                            }
+                                          >
+                                            <Form.Group
+                                              style={{ width: '100%' }}
+                                              controlId="formBasicEmail"
+                                            >
+                                              <Form.Control
+                                                type="text"
+                                                defaultValue={reply?.text}
+                                              />
+                                            </Form.Group>
+                                            <Button
+                                              style={{
+                                                marginLeft: '10px',
+                                                backgroundColor: '#47D7AC',
+                                                color: 'white',
+                                                borderRadius: '5px',
+                                                border: 'none',
+                                              }}
+                                              variant="primary"
+                                              type="submit"
+                                            >
+                                              Save
+                                            </Button>
+                                          </Form>
+                                        ) : (
+                                          <p className="commentHeading">{reply?.text}</p>
+                                        )}
+                                        <div
+                                          onClick={() => getAllupVotesAndDownVotes(reply?.id)}
+                                          className="upvoteDownvoteContainer"
                                         >
-                                          Save
-                                        </Button>
-                                      </Form>
-                                    ) : (
-                                      <p className="commentHeading">{reply?.text}</p>
-                                    )}
-                                    <div
-                                      onClick={() => getAllupVotesAndDownVotes(reply?.id)}
-                                      className="upvoteDownvoteContainer"
-                                    >
-                                      <div className="likecomments">
-                                        <img
-                                          className="likecomments"
-                                          src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
-                                          alt="Like"
-                                        />
-                                      </div>
-                                      <div className="likecomments">
-                                        <img
-                                          className="likecomments"
-                                          src={downVote.src}
-                                          alt="Dislike"
-                                        />
+                                          <div className="likecomments">
+                                            <img
+                                              className="likecomments"
+                                              src="https://cdn-icons-png.flaticon.com/512/739/739231.png"
+                                              alt="Like"
+                                            />
+                                          </div>
+                                          <div className="likecomments">
+                                            <img
+                                              className="likecomments"
+                                              src={downVote.src}
+                                              alt="Dislike"
+                                            />
+                                          </div>
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                </div>
 
-                                <div
-                                  style={{
-                                    marginLeft: '55px',
-                                  }}
-                                >
-                                  {/* <span onClick={() => handleUpvote(reply?.id)}>
+                                    <div
+                                      style={{
+                                        marginLeft: '55px',
+                                      }}
+                                    >
+                                      {/* <span onClick={() => handleUpvote(reply?.id)}>
                                     <img
                                     style={{ margin: '5px' }}
                                     width="30px"
@@ -1881,132 +1951,117 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                     alt="downVote"
                                     />
                                  </span> */}
-                                  <button
-                                    aria-controls="replyOfReplyContainer"
-                                    aria-expanded={reply?.isOpenReplyOfReply}
-                                    className="commentReply"
-                                    onClick={() =>
-                                      openReplyOfReply(
-                                        post?.id,
-                                        comment?.id,
-                                        reply?.id,
-                                        !reply?.isOpenReplyOfReply
-                                      )
-                                    }
-                                    disabled={reply?.isRespPending}
-                                    style={reply?.isRespPending ? { opacity: 0.5 } : {}}
-                                  >
-                                    Reply
-                                  </button>
-                                  <span className="commentPostDate" style={{ fontSize: '12px' }}>
-                                    {' '}
-                                    {calculateTimeDifference(reply?.createdOn)}
-                                  </span>
-                                  {comment?.createdBy.objectId === objectId && objectId ? (
-                                    <button
-                                      disabled={comment?.isRespPending}
-                                      onClick={() => {
-                                        setDeleteCommentId({
-                                          postId: post?.id,
-                                          commentId: comment?.id,
-                                          replyId: reply?.id,
-                                        });
-                                        setShowDeleteCommentPopup(true);
-                                      }}
-                                      className="commentReply"
-                                      style={reply?.isRespPending ? { opacity: 0.5 } : {}}
-                                    >
-                                      Delete
-                                    </button>
-                                  ) : (
-                                    ''
-                                  )}
-                                  {reply?.createdBy?.objectId === objectId && objectId ? (
-                                    <button
-                                      disabled={reply?.isRespPending}
-                                      style={reply?.isRespPending ? { opacity: 0.5 } : {}}
-                                      onClick={() => {
-                                        replyEditOn(
-                                          post?.id,
-                                          comment?.id,
-                                          reply?.id,
-                                          !reply?.isEditOn
-                                        );
-                                      }}
-                                      className="commentReply"
-                                    >
-                                      Edit
-                                    </button>
-                                  ) : (
-                                    ''
-                                  )}
-                                </div>
-                                <Collapse in={reply?.isOpenReplyOfReply}>
-                                  <div style={{ position: 'relative', left: '10%', width: '88%' }}>
-                                    <Form
-                                      onSubmit={(e) => {
-                                        postCommentReply(post?.id, comment?.id, e);
-                                      }}
-                                      style={{ border: '1px', borderColor: 'black' }}
-                                    >
-                                      <Form.Group controlId="comments" style={{ display: 'flex' }}>
-                                        <img
-                                          width="32px"
-                                          className="commentUserImage"
-                                          src={
-                                            userObject?.profilePictureUrl
-                                              ? userObject?.profilePictureUrl
-                                              : user.src
-                                          }
-                                          alt="User-Pic"
-                                          style={{ marginLeft: '0' }}
-                                        ></img>
-                                        <Form.Control
-                                          // onChange={(e) => setPostCommentValue(e.target.value)}
-                                          type="text"
-                                          placeholder="Write a Reply..."
-                                          required
-                                          autoFocus
-                                          style={{
-                                            width: '100%',
-                                            color: '#a5a9ae',
-                                            fontSize: '13px',
+                                      <button
+                                        aria-controls="replyOfReplyContainer"
+                                        aria-expanded={reply?.isOpenReplyOfReply}
+                                        className="commentReply"
+                                        onClick={() =>
+                                          openReplyOfReply(
+                                            post?.id,
+                                            comment?.id,
+                                            reply?.id,
+                                            !reply?.isOpenReplyOfReply
+                                          )
+                                        }
+                                        disabled={reply?.isRespPending}
+                                        style={reply?.isRespPending ? { opacity: 0.5 } : {}}
+                                      >
+                                        Reply
+                                      </button>
+                                      <span
+                                        className="commentPostDate"
+                                        style={{ fontSize: '12px' }}
+                                      >
+                                        {' '}
+                                        {calculateTimeDifference(reply?.createdOn)}
+                                      </span>
+                                      {comment?.createdBy.objectId === objectId && objectId ? (
+                                        <button
+                                          disabled={comment?.isRespPending}
+                                          onClick={() => {
+                                            setDeleteCommentId({
+                                              postId: post?.id,
+                                              commentId: comment?.id,
+                                              replyId: reply?.id,
+                                            });
+                                            setShowDeleteCommentPopup(true);
                                           }}
-                                        />
-                                        <button type="submit" className="postCommentButton">
-                                          Reply
+                                          className="commentReply"
+                                          style={reply?.isRespPending ? { opacity: 0.5 } : {}}
+                                        >
+                                          Delete
                                         </button>
-                                      </Form.Group>
-                                    </Form>
-                                  </div>
-                                </Collapse>
-                              </>
-                            );
-                          })}
-                          {comment?.hasReply ? (
-                            <div>
-                              {comment.isLoadingReplies ? (
-                                <div style={{ padding: '15px' }}>
-                                  <div className={styles.addPostHead}>
-                                    <Skeleton
-                                      circle={true}
-                                      className="mb-2"
-                                      height={28}
-                                      width={28}
-                                    />
-                                    <Skeleton height={18} className="mb-2" />
-                                    <Skeleton height={18} className="mb-2" />
-                                  </div>
-                                  <div
-                                    className={styles.addPostFooter}
-                                    style={{ marginLeft: '7.5%' }}
-                                  >
-                                    <Skeleton height={18} width={100 + '%'} />
-                                    <Skeleton height={18} width={100 + '%'} />
-                                    <Skeleton height={18} width={100 + '%'} />
-                                  </div>
-                                </div>
-                              ) : (
+                                      ) : (
+                                        ''
+                                      )}
+                                      {reply?.createdBy?.objectId === objectId && objectId ? (
+                                        <button
+                                          disabled={reply?.isRespPending}
+                                          style={reply?.isRespPending ? { opacity: 0.5 } : {}}
+                                          onClick={() => {
+                                            replyEditOn(
+                                              post?.id,
+                                              comment?.id,
+                                              reply?.id,
+                                              !reply?.isEditOn
+                                            );
+                                          }}
+                                          className="commentReply"
+                                        >
+                                          Edit
+                                        </button>
+                                      ) : (
+                                        ''
+                                      )}
+                                    </div>
+                                    <Collapse in={reply?.isOpenReplyOfReply}>
+                                      <div
+                                        style={{ position: 'relative', left: '10%', width: '88%' }}
+                                      >
+                                        <Form
+                                          onSubmit={(e) => {
+                                            postCommentReply(post?.id, comment?.id, e);
+                                          }}
+                                          style={{ border: '1px', borderColor: 'black' }}
+                                        >
+                                          <Form.Group
+                                            controlId="comments"
+                                            style={{ display: 'flex' }}
+                                          >
+                                            <img
+                                              width="32px"
+                                              className="commentUserImage"
+                                              src={
+                                                userObject?.profilePictureUrl
+                                                  ? userObject?.profilePictureUrl
+                                                  : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
+                                              }
+                                              alt="User-Pic"
+                                              style={{ marginLeft: '0' }}
+                                            ></img>
+                                            <Form.Control
+                                              // onChange={(e) => setPostCommentValue(e.target.value)}
+                                              type="text"
+                                              placeholder="Write a Reply..."
+                                              required
+                                              autoFocus
+                                              style={{
+                                                width: '100%',
+                                                color: '#a5a9ae',
+                                                fontSize: '13px',
+                                              }}
+                                            />
+                                            <button type="submit" className="postCommentButton">
+                                              Reply
+                                            </button>
+                                          </Form.Group>
+                                        </Form>
+                                      </div>
+                                    </Collapse>
+                                  </>
+                                );
+                              })}
+                              {comment?.hasReply ? (
                                 <div
                                   style={{
                                     display: 'flex',
@@ -2015,63 +2070,54 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                     marginTop: '16px',
                                   }}
                                 >
-                                  <button
-                                    onClick={() => loadCommentReplies(post?.id, comment?.id)}
-                                    className="postCommentButton"
-                                    style={{
-                                      marginLeft: '0',
-                                    }}
-                                  >
-                                    <span>Load Replies...</span>
-                                  </button>
+                                  {comment.isLoadingReplies ? (
+                                    <Spinner animation="border" />
+                                  ) : (
+                                    <button
+                                      onClick={() => loadCommentReplies(post?.id, comment?.id)}
+                                      className="postCommentButton"
+                                      style={{
+                                        marginLeft: '0',
+                                      }}
+                                    >
+                                      <span>Load Replies...</span>
+                                    </button>
+                                  )}
                                 </div>
+                              ) : (
+                                ''
                               )}
                             </div>
-                          ) : (
-                            ''
-                          )}
+                          </Collapse>
                         </div>
-                      </Collapse>
-                    </div>
-                  </>
-                );
-              })}
-              {post?.postMeasures?.commentCount > 0 ? (
-                <div>
-                  {post.isLoadingComments ? (
-                    <div style={{ padding: '15px' }}>
-                      <div className={styles.addPostHead}>
-                        <Skeleton circle={true} className="mb-2" height={28} width={28} />
-                        <Skeleton height={18} className="mb-2" />
-                        <Skeleton height={18} className="mb-2" />
-                      </div>
-                      <div className={styles.addPostFooter} style={{ marginLeft: '7.5%' }}>
-                        <Skeleton height={18} width={100 + '%'} />
-                        <Skeleton height={18} width={100 + '%'} />
-                        <Skeleton height={18} width={100 + '%'} />
-                      </div>
+                      </>
+                    );
+                  })}
+                  {post?.postMeasures?.commentCount > 0 ? (
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      {post.isLoadingComments ? (
+                        <Spinner animation="border" />
+                      ) : (
+                        <button
+                          onClick={() => loadComments(post.id)}
+                          className="postCommentButton"
+                          style={{
+                            marginBottom: '16px',
+                            marginLeft: '0',
+                          }}
+                        >
+                          <span>Load Comments...</span>
+                        </button>
+                      )}
                     </div>
                   ) : (
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                      <button
-                        onClick={() => loadComments(post.id)}
-                        className="postCommentButton"
-                        style={{
-                          marginBottom: '16px',
-                          marginLeft: '0',
-                        }}
-                      >
-                        <span>Load Comments...</span>
-                      </button>
-                    </div>
+                    ''
                   )}
                 </div>
-              ) : (
-                ''
-              )}
+              </Collapse>
             </div>
-          </Collapse>
-        </div>
+          )}
+        </>
       );
     });
     setPosts(locArr2);
@@ -2720,6 +2766,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     placeholder: 1,
     optionSequence: 0,
     optionText: '',
+    cannotDelete: true,
   };
   let option2 = {
     id: option2Id,
@@ -2727,11 +2774,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     placeholder: 2,
     optionSequence: 1,
     optionText: '',
+    cannotDelete: true,
   };
   let [pollFormOptions, setPollFormOptions] = useState<any>([option1, option2]);
   let [pollOptionCount, setPollOptionCount] = useState(2);
   let [isOptionsThreshold, setoptionsThreshold] = useState(false);
-  let [isDeleteOptionThreshold, setIsDeleteOptionThreshold] = useState(true);
   let [pollQuestion, setPollQuestion] = useState('');
 
   function addPollOption() {
@@ -2745,6 +2792,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         placeholder: pollOptionCount + 1,
         optionText: '',
         optionSequence: pollOptionCount,
+        cannotDelete: false,
       };
       setPollFormOptions((prevState: any) => {
         return [...prevState, option];
@@ -2753,31 +2801,47 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       if (pollOptionCount + 1 >= 4) {
         setoptionsThreshold(true);
       }
-      setIsDeleteOptionThreshold(false);
     }
   }
-  function deleteLastPollOption() {
-    if (pollOptionCount > 2) {
-      setPollFormOptions((prev: any) => {
-        const newOptions = [];
-        for (let i = 0; i < prev.length - 1; i++) {
-          newOptions.push(prev[i]);
-        }
-        return newOptions;
-      });
+  function deleteLastPollOption(optionId: any, event: any) {
+    event.preventDefault();
+    // if (pollOptionCount > 2) {
+    //   setPollFormOptions((prev: any) => {
+    //     const newOptions = [];
+    //     for (let i = 0; i < prev.length - 1; i++) {
+    //       newOptions.push(prev[i]);
+    //     }
+    //     return newOptions;
+    //   });
+    //   setPollOptionCount((prevCount) => prevCount - 1);
+    // }
+    // if (pollOptionCount - 1 < 4) {
+    //   setoptionsThreshold(false);
+    // }
+    // setIsDeleteOptionThreshold(pollOptionCount - 1 <= 2);
+    const optionIndex = pollFormOptions.findIndex((option: any) => option.id === optionId);
+    if (optionIndex !== -1) {
+      const newOptions = [...pollFormOptions];
+      newOptions.splice(optionIndex, 1);
+      for (let i = 0; i < newOptions.length; i++) {
+        newOptions[i].optionSequence = i.toString();
+        newOptions[i].name = `${i + 1}`;
+        newOptions[i].placeholder = `${i + 1}`;
+      }
+      setPollFormOptions(newOptions);
       setPollOptionCount((prevCount) => prevCount - 1);
+      if (pollOptionCount - 1 < 4) {
+        setoptionsThreshold(false);
+      }
     }
-    if (pollOptionCount - 1 < 4) {
-      setoptionsThreshold(false);
-    }
-    setIsDeleteOptionThreshold(pollOptionCount - 1 <= 2);
   }
+
+  console.log('POLLOPTIONS', pollFormOptions);
 
   function clearPollForm() {
     setPollQuestion('');
     setPollFormOptions([option1, option2]);
     setPollOptionCount(2);
-    setIsDeleteOptionThreshold(true);
   }
 
   function pollOptionUpdate(id: any, e: any) {
@@ -2829,23 +2893,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     'https://chinchincelebration.com/wp-content/uploads/2019/08/product-launch-events-min.png'
   );
 
-  useEffect(() => {
-    props?.fields?.data?.datasource?.eventType?.targetItems.map((item: any) => {
-      if (item?.title?.jsonValue?.value === 'Seminar')
-        item.image =
-          'https://higherlogicdownload.s3.amazonaws.com/APSNET/UploadedImages/tAiEB79vTYq1gz2UEGu1_IMG_2866-L.jpg';
-      if (item?.title?.jsonValue?.value === 'Conference')
-        item.image = 'https://th.bing.com/th/id/OIP.IXdC6XgETCp5RaM3iQCb6QHaE8?pid=ImgDet&rs=1';
-      if (item?.title?.jsonValue?.value === 'Announcement')
-        item.image = 'https://th.bing.com/th/id/OIP.zPaWJzUBQwbXDjhCtCtI1gHaE8?pid=ImgDet&rs=1';
-      if (item?.title?.jsonValue?.value === 'Launch Event')
-        item.image = 'https://live.staticflickr.com/808/39724254630_e9cdcb8e77_b.jpg';
-      if (item?.title?.jsonValue?.value === 'Celebration')
-        item.image = 'https://th.bing.com/th/id/OIP.E1RiHHXMHUcq0L0KvprXfQHaEn?pid=ImgDet&rs=1';
-      return item;
-    });
-  }, [props]);
-
   if (typeof window !== 'undefined')
     window?.addEventListener('scroll', () => {
       const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
@@ -2857,7 +2904,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   return (
     <>
       <div className={styles.mainContainer}>
-        {!(pageRoute === '/viewProfile') ? (
+        {!isEditorHidden ? (
           <>
             <div className={styles.addPostWidgetContainer}>
               {/* <div style={{ marginBottom: '40px' }}> */}
@@ -3036,6 +3083,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                       marginTop: '20px',
                                       border: 'none',
                                       borderRadius: '20px',
+                                      marginRight: '20px',
                                     }}
                                     type="button"
                                     onClick={() => emptyEvent()}
@@ -3051,7 +3099,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                     description={eventPost?.event?.description}
                                     date={eventPost?.event?.eventDate}
                                     eventType={eventPost?.event?.eventType}
-                                    url={EventImage[eventPost?.event?.eventType]}
+                                    url={getEventImage(eventPost?.event?.eventType)}
                                   />
                                 </div>
                               ) : (
@@ -3078,6 +3126,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                       float: 'right',
                                       padding: '0px',
                                       borderRadius: '30px',
+                                      marginTop: '5%',
+                                      marginRight: '5%',
                                     }}
                                   >
                                     <img
@@ -3325,7 +3375,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                         href="#"
                                         onClick={() => {
                                           setEventType(item?.title?.jsonValue?.value);
-                                          setEventImage(EventImage[item?.title?.jsonValue?.value]);
+                                          setEventImage(item?.image?.jsonValue?.value?.href);
                                         }}
                                         className={styles.eventModalDropdownItem}
                                       >
@@ -3400,7 +3450,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     />
                   </button>
                   <Modal
-                    className={styles.reportPostModalContent}
+                    // className={styles.reportPostModalContent}
                     show={showPollForm}
                     onHide={() => setShowPollForm(false)}
                     backdrop="static"
@@ -3410,79 +3460,102 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     onExit={() => {
                       clearPollForm();
                     }}
+                    size="lg"
                   >
-                    <div>
+                    <div className={addPostCss.addPollFormContainer}>
                       <Form
                         onSubmit={(e: any) => submitPollForm(e)}
                         style={{ fontSize: '15px', margin: '5px' }}
                       >
                         <Modal.Header closeButton>
-                          <Modal.Title className={styles.reportPostModalHeader}>
-                            Create a Poll
+                          <Modal.Title className={styles.AddEventModalHeader}>
+                            Create Poll
                           </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                          <div className={styles.reportPostModalBody}>Poll Parameters</div>
+                          <div className={styles.AddEventModalProfile}>
+                            <div className={styles.AddEventModalProfilePic}>
+                              <img src={Profile.src} />
+                            </div>
+                            <div style={{ alignSelf: 'center' }}>
+                              <div style={{ fontSize: '1rem', fontWeight: '600' }}>
+                                {userObject?.firstName
+                                  ? `${userObject?.firstName} ${userObject?.lastName}`
+                                  : 'John Doe'}
+                              </div>
+                              {/* <div style={{ fontSize: '14px', color: 'grey' }}>Profile</div> */}
+                            </div>
+                          </div>
                           <Form.Group className="mb-3">
-                            <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
-                              Question
-                            </Form.Label>
                             <Form.Control
+                              className={addPostCss.pollQuestion}
                               value={pollQuestion}
                               onChange={(e) => updatePollQuestion(e)}
                               required
                               type="text"
-                              placeholder="Write Poll Question"
+                              placeholder="Write something..."
                             />
-                            <Form.Control.Feedback type="invalid">
-                              Please select an event date.
-                            </Form.Control.Feedback>
                           </Form.Group>
                           <div
-                            style={{
-                              padding: '32px',
-                              border: '1px solid',
-                              borderRadius: '10px',
-                              display: 'flex',
-                              flexDirection: 'column',
-                              height: '282px',
-                              overflowY: 'scroll',
-                              // justifyContent: 'space-between',
-                            }}
-                            className="CreatePollOptions mb-3"
+                            className={`CreatePollOptions mb-3 ${addPostCss.pollOptionContainer}`}
                           >
+                            <div
+                              style={{
+                                marginBottom: '10px',
+                                fontSize: '16px',
+                                fontWeight: '500',
+                                marginLeft: '5px',
+                              }}
+                            >
+                              Add Poll
+                            </div>
                             {pollFormOptions.map((option: any) => {
                               return (
                                 <Form.Group className="mb-3" id={option?.id}>
-                                  <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
-                                    Option - <span>{option?.name}</span>
-                                  </Form.Label>
-                                  <Form.Control
-                                    required
-                                    type="textarea"
-                                    value={option?.optionText}
-                                    onChange={(e) => pollOptionUpdate(option?.id, e)}
-                                    placeholder={`Enter Option - ${option?.placeholder}`}
-                                  />
+                                  <div style={{ display: 'flex' }}>
+                                    <Form.Control
+                                      required
+                                      type="textarea"
+                                      value={option?.optionText}
+                                      onChange={(e) => pollOptionUpdate(option?.id, e)}
+                                      placeholder={`Option ${option?.name}`}
+                                      className={addPostCss.pollFormInput}
+                                    />
+                                    <button
+                                      style={{
+                                        border: 'none',
+                                        backgroundColor: 'white',
+                                        marginLeft: '4px',
+                                        display: option?.cannotDelete ? 'none' : '',
+                                      }}
+                                      onClick={(e) => deleteLastPollOption(option?.id, e)}
+                                    >
+                                      <NextImage
+                                        field={pollCross}
+                                        editable={true}
+                                        alt="cross"
+                                        width={24}
+                                        height={24}
+                                      />
+                                    </button>
+                                  </div>
                                 </Form.Group>
                               );
                             })}
                           </div>
-                          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <div style={{ display: 'flex', justifyContent: 'center' }}>
                             <button
-                              style={{
-                                padding: '12px',
-                                border: 'none',
-                                fontSize: '18px',
-                                borderRadius: '12px',
-                              }}
+                              className={addPostCss.addOptionButton}
                               type="button"
                               onClick={() => addPollOption()}
                               disabled={isOptionsThreshold}
+                              style={{
+                                backgroundColor: isOptionsThreshold ? '#e8e8e8' : '#47D7AC',
+                              }}
                             >
-                              + Add More option
+                              + Add option
                             </button>
-                            <button
+                            {/* <button
                               style={{
                                 padding: '12px',
                                 border: 'none',
@@ -3494,12 +3567,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                               disabled={isDeleteOptionThreshold}
                             >
                               - Delete option
-                            </button>
+                            </button> */}
                           </div>
                         </Modal.Body>
                         <Modal.Footer>
                           <Button
-                            className={styles.footerBtn}
+                            className={styles.eventModalCancel}
                             variant="secondary"
                             onClick={() => {
                               clearPollForm();
@@ -3508,12 +3581,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                             Clear
                           </Button>
                           <Button
-                            className={styles.footerBtn}
+                            className={styles.eventModalAddToPost}
                             variant="secondary"
                             type="submit"
-                            style={{ height: '44px', width: '121px' }}
                           >
-                            <span>Add Poll to Post</span>
+                            <span>Add Poll</span>
                           </Button>
                         </Modal.Footer>
                       </Form>
