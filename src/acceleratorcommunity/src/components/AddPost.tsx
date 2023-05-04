@@ -3040,6 +3040,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                       marginTop: '20px',
                                       border: 'none',
                                       borderRadius: '20px',
+                                      marginRight: '20px',
                                     }}
                                     type="button"
                                     onClick={() => emptyEvent()}
