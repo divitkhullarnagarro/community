@@ -12,13 +12,11 @@ import PersaonalDetailsOfUser from './PersaonalDetailsOfUser';
 import ContactDetails from './ContactDetails';
 import EductionDetails from './EductionDetails';
 import UserWorkExperience from './UserWorkExperience';
-// import Link from 'next/link';
 import React from 'react';
 import DotLoader from './DotLoader';
 import EventListing from './helperComponents/EventListing';
 import BlogListing from './helperComponents/BlogListing';
 import PeerFriendList from './PeerFriendList';
-import Link from 'next/link';
 
 type User = {
   firstName: string | undefined;
@@ -111,7 +109,7 @@ type personalDetails = {
 
 const Profile = (props: any): JSX.Element => {
   console.log('profileProps', props);
-  const { isLoggedIn, userToken, setIsLoggedIn, setUserToken, objectId, setObjectId, darkMode, setDarkMode } = {
+  const { isLoggedIn, userToken, setIsLoggedIn, setUserToken, objectId, setObjectId, darkMode } = {
     ...useContext(WebContext),
   };
   const [personalInfoDetails, setPersonalInfoDetails] = useState<any>();
