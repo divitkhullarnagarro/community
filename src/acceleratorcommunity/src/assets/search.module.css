@@ -20,6 +20,7 @@
 .searchBoxText{
     outline: none;
     border: none;
+    background: transparent;
     padding: 0;
     font-size: 14px;
     line-height: 18px;
