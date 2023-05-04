@@ -8,8 +8,10 @@
 }
 
 .wrapper {
+  /* position: sticky;
+  top: 70px; */
   margin-top: 20px;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   overflow: hidden;
@@ -22,11 +24,11 @@
 
 .wrapper::-webkit-scrollbar-track {
   border-radius: 10px;
-  background-color: #EFEFEF;
+  background-color: #efefef;
 }
 
 .wrapper::-webkit-scrollbar-thumb {
-  background-color: #C2C2C2;
+  background-color: #c2c2c2;
   border-radius: 4px;
 }
 
@@ -41,6 +43,9 @@
   display: flex;
   align-items: center;
   margin-bottom: 12px;
+}
+.item .img {
+  cursor: pointer;
 }
 
 .itemHalfPage {
@@ -77,7 +82,7 @@
 
 .link {
   font-weight: 400;
-  color: #47D7AC;
+  color: #47d7ac;
   cursor: pointer;
 }
 
@@ -200,7 +205,7 @@
   /* border: 2px solid #c9c6c6; */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   height: 80vh;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
   margin-top: -1px;
   padding: 8px;
 }
@@ -240,7 +245,6 @@
     margin: 10px;
     background-color: lightgray;*/
   width: 100%;
-
 }
 
 .cardTitle {
@@ -279,7 +283,7 @@
 /* } */
 .rectContainer {
   /* padding:16px; */
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .sidenavbar .top {
@@ -297,7 +301,7 @@
   /* font-weight: bold; */
   /* color: black; */
   font-weight: bold;
-  color: #3D3D3F;
+  color: #3d3d3f;
   padding: 8px;
   /* margin-bottom:30px; */
   padding-left: 6px;
@@ -311,7 +315,7 @@
 
 .sidenavbar .center:hover {
   /* padding-left: 10px; */
-  background-color: #F0F2F5;
+  background-color: #f0f2f5;
 }
 
 .sidenavbar .center ul {
@@ -344,7 +348,6 @@
 }
 
 .sidenavbar .center ul li {
-
   border-radius: 8px;
 }
 
@@ -367,10 +370,9 @@
   font-size: 11px;
   font-weight: bold;
   /* color: #888; */
-  color: #3D3D3F;
+  color: #3d3d3f;
   margin-left: 8px;
   font-family: Equip-Regular;
-
 }
 
 .sidenavbar .bottom {
@@ -402,7 +404,7 @@
 
 .mainFullPageItemWrapper {
   overflow-y: auto;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
 }
 
 .mainFullPageItemWrapper::-webkit-scrollbar {
@@ -426,16 +428,15 @@
   width: 100%;
 }
 
-.cardloaderDetails>span {
+.cardloaderDetails > span {
   width: calc(100% - 16px);
 }
-.cardloaderHeader{
+.cardloaderHeader {
   display: flex;
   width: 100%;
 }
-.cardloaderHeader>span
-{
-  width:100%;
+.cardloaderHeader > span {
+  width: 100%;
 }
 
 .listHeaderLabel {
@@ -447,7 +448,7 @@
   border-radius: 20px;
   height: 50px; */
   font-weight: bold;
-  color: #3D3D3F;
+  color: #3d3d3f;
   font-size: 16px;
   /* background-color:#F9F9F9; */
   margin-left: 10px;
