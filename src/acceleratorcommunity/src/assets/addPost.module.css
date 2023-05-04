@@ -39,7 +39,7 @@
 .reportContainerBtn {
   font-size: 12px;
   line-height: 16px;
-  color: #A5A9AE;
+  color: #a5a9ae;
 }
 
 .copyLinkBtnStyle {
@@ -59,27 +59,27 @@
   display: none;
 }
 
-.dropdownMenu{
+.dropdownMenu {
   padding: 0;
-  box-shadow: 1px 1px 2px rgba(0,0,0,0.25);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
   overflow: hidden;
 }
 
-.dropdownItem{
+.dropdownItem {
   padding: 10px;
   position: relative;
 }
 
 .dropdownItem:after {
-  content: "";
+  content: '';
   display: inline-block;
   width: 85%;
   height: 1px;
-  border-bottom: 1px solid #DFDFDF;
+  border-bottom: 1px solid #dfdfdf;
   position: absolute;
   left: 50%;
   bottom: 0;
-  transform: translateX(-50% );
+  transform: translateX(-50%);
 }
 
 .dropdownImage {
@@ -88,13 +88,13 @@
 }
 
 .mainContainer {
-  background: #F9F9F9;
+  background: #f9f9f9;
   padding: 20px;
   /* box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25); */
 }
 
 .addPostWidgetContainer {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
   padding: 16px;
   border-radius: 6px;
@@ -109,6 +109,11 @@
 
 .addPostImage {
   min-width: 27px;
+  border-radius: 50%;
+}
+.addPostImage img {
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .addPostField {
@@ -186,7 +191,7 @@
 }
 
 .likePost {
-  color: #A5A9AE;
+  color: #a5a9ae;
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
@@ -197,15 +202,15 @@
   display: flex;
   border-radius: 10px;
   justify-content: center;
-  background-color: #F7F7F6;
-  color: #2E86F9;
+  background-color: #f7f7f6;
+  color: #2e86f9;
   font-size: 12px;
   line-height: normal;
   padding: 0px 5px;
 }
 
 .commentPost {
-  color: #A5A9AE;
+  color: #a5a9ae;
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
@@ -213,7 +218,7 @@
 }
 
 .sharePost {
-  color: #A5A9AE;
+  color: #a5a9ae;
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
@@ -233,11 +238,11 @@
 }
 
 .commentCount {
-  color: #3D3D3F;
+  color: #3d3d3f;
   display: flex;
   border-radius: 10px;
   justify-content: center;
-  background-color: #F7F7F6;
+  background-color: #f7f7f6;
   font-size: 12px;
   line-height: normal;
   padding: 0px 5px;
@@ -256,7 +261,7 @@
 .commentContainer {
   display: flex;
   align-items: center;
-  gap: 5px
+  gap: 5px;
 }
 
 .shareContainer {
@@ -268,10 +273,10 @@
 
 @media only screen and (max-width: 768px) {
   .mainContainer {
-    margin-top: 12px;
+    margin-top: 5px;
+    padding: 16px 0;
   }
 }
-
 
 .AddEventModalHeader {
   width: 100%;
@@ -292,11 +297,10 @@
 .AddEventModalBody {
   width: 920px;
 }  */
-.eventPostContainer
-{
+.eventPostContainer {
   height: 600px;
   /* width:100%;  */
-  overflow-y:auto;
+  overflow-y: auto;
 }
 .eventPostContainer::-webkit-scrollbar {
   width: 5px;
@@ -304,11 +308,11 @@
 
 .eventPostContainer::-webkit-scrollbar-track {
   border-radius: 10px;
-  background-color: #EFEFEF;
+  background-color: #efefef;
 }
 
 .eventPostContainer::-webkit-scrollbar-thumb {
-  background-color: #C2C2C2; 
+  background-color: #c2c2c2;
   border-radius: 4px;
 }
 
@@ -339,13 +343,13 @@
 }
 
 .DateInput::before {
-  content: "Start Date: ";
+  content: 'Start Date: ';
   font-size: 12px;
   /* color: black; */
 }
 
 .TimeInput::before {
-  content: "Start Time: ";
+  content: 'Start Time: ';
   font-size: 12px;
   /* color: black; */
 }
@@ -356,36 +360,36 @@
   justify-content: space-between;
   height: 54px;
   background-color: white;
-  color:#A5A9AE;
+  color: #a5a9ae;
   font-weight: 400;
 }
 
 .eventTypeDropdownToggle:hover {
-  background-color: #47D7AC;
+  background-color: #47d7ac;
 }
 
 .eventTypeDropdownToggle:active {
-  background-color: #47D7AC !important;
+  background-color: #47d7ac !important;
 }
 
 .eventTypeDropdownToggle:focus-visible {
-  background-color: #47D7AC;
+  background-color: #47d7ac;
 }
 
 .eventModalCancel {
   border: none;
   background-color: white;
-  color: #F58C60;
+  color: #f58c60;
 }
 
 .eventModalCancel:hover {
-  background-color: #F58C60;
+  background-color: #f58c60;
   color: white;
 }
 
 .eventModalAddToPost {
   border: none;
-  background-color: #47D7AC;
+  background-color: #47d7ac;
   color: white;
 }
 
@@ -395,7 +399,7 @@
 }
 
 .eventModalDropdownItem:active {
-  background-color: #47D7AC;
+  background-color: #47d7ac;
 }
 
 /* .AddEventModalEventDescription {} */
@@ -408,16 +412,16 @@
   justify-content: space-between;
   align-items: center;
 }
-.addPostHead>span:first-of-type {
+.addPostHead > span:first-of-type {
   width: 5%;
 }
-.addPostHead>span:nth-child(2) {
+.addPostHead > span:nth-child(2) {
   width: 80%;
 }
-.addPostHead>span:last-of-type {
+.addPostHead > span:last-of-type {
   width: 10%;
 }
-.addPostFooter>span {
+.addPostFooter > span {
   width: 10%;
   margin-right: 3%;
 }

@@ -116,7 +116,7 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
           />
         </Dropdown.Toggle>
 
-        <Dropdown.Menu>
+        <Dropdown.Menu className={userProfileCss.userProfileDropdownMenu}>
           <Dropdown.Item
             className={userProfileCss.userProfileDropdownItem}
             href={props.fields.LogoURL.value.href}

@@ -3,7 +3,7 @@ import styles from '../assets/searchFilterContainer.module.css';
 import SearchNews from './SearchNews';
 import { GenericSkeletonForSearch } from './skeletons/SearchSkeleton';
 
-const NewSearchContainer = (props:any) => {
+const JournalSearchContainer = (props:any) => {
   return (
     <div className={styles.generalcontainer}>
       {props?.success ? (
@@ -17,4 +17,4 @@ const NewSearchContainer = (props:any) => {
   );
 };
 
-export default NewSearchContainer;
+export default JournalSearchContainer;
