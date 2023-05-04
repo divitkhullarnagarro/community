@@ -1,10 +1,10 @@
 import { Field, ImageField } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
-import logo from '../assets/images/CommunityLogo.svg';
 import searchCss from '../assets/search.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Logo from './Logo';
 
 type SearchProps = ComponentProps & {
   fields: {
@@ -33,11 +33,6 @@ const Search = (props: SearchProps): JSX.Element => {
   };
   return (
     <div className={searchCss.container}>
-      <div className={searchCss.image}>
-        <a href="/">
-          <NextImage field={logo} editable={true} height={45} width={45} />
-        </a>
-      </div>
       <div className={searchCss.searchBox}>
         <form>
           <button type="submit" className={searchCss.searchBtn} onClick={handleSearch}>

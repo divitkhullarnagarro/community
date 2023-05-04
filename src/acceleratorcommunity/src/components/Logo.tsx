@@ -1,38 +1,15 @@
-import {
-  withDatasourceCheck,
-  NextImage,
-  LinkField,
-  ImageField,
-} from '@sitecore-jss/sitecore-jss-nextjs';
-import { ComponentProps } from 'lib/component-props';
+import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+import logo from '../assets/images/CommunityLogo.svg';
+import LogoStyles from '../assets/logo.module.css';
 
-type LogoProps = ComponentProps & {
-  fields: {
-    data: {
-      datasource: DataSource;
-    };
-  };
-};
-
-type DataSource = {
-  image: {
-    jsonValue: ImageField;
-  };
-  logoURL: {
-    jsonValue: LinkField;
-  };
-};
-
-const Logo = (props: LogoProps): JSX.Element => {
-  const { datasource } = props?.fields?.data;
-  console.log('logo', props);
+const Logo = (): JSX.Element => {
   return (
-    <div className="logo">
-      <a href={datasource?.logoURL?.jsonValue?.value?.href || '/#'} title="Nagarro">
-        <NextImage field={datasource?.image?.jsonValue?.value} editable={true} />
+    <div className={LogoStyles.container}>
+      <a href="/">
+        <NextImage field={logo} editable={true} height={45} width={45} />
       </a>
     </div>
   );
 };
 
-export default withDatasourceCheck()<LogoProps>(Logo);
+export default Logo;

@@ -4,10 +4,12 @@ import ThemeSwitcherCss from '../assets/themeSwitcher.module.css';
 
 const ThemeSwitcher = (): JSX.Element => {
   const { darkMode, setDarkMode } = { ...useContext(WebContext) };
-
+  const handleThemeSwitch = () => {
+    !!setDarkMode && setDarkMode(!darkMode);
+  };
   return (
     <div className={ThemeSwitcherCss.container}>
-      <button className={ThemeSwitcherCss.button} onClick={() => setDarkMode(!darkMode)}>
+      <button className={ThemeSwitcherCss.button} onClick={handleThemeSwitch}>
         {darkMode ? (
           <img
             src="https://cdn-icons-png.flaticon.com/32/3856/3856888.png"

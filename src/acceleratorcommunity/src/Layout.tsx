@@ -75,7 +75,9 @@ const Layout = ({ layoutData }: LayoutProps): JSX.Element => {
       >
         {route && <Placeholder name="jss-header" rendering={route} />}
       </div>
-      <div className="main">{route && <Placeholder name="jss-main" rendering={route} />}</div>
+      <div className={`main ${darkMode && 'darkTheme'}`}>
+        {route && <Placeholder name="jss-main" rendering={route} />}
+      </div>
       <div>{route && <Placeholder name="jss-footer" rendering={route} />}</div>
     </>
   );

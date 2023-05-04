@@ -1,13 +1,8 @@
 .container{
     display: flex;
     flex-direction: row;
-    margin: 12px 0 12px 50px;
-    gap: 4.5rem;
+    margin: 12px 0 12px 0px;
     align-items: center;
-}
-
-.image{
-    /* padding: 0.3125rem 0.625rem; */
 }
 .searchBox{
     border: 1px solid #B8B8B8;
@@ -30,9 +25,6 @@
 .searchBoxText::placeholder{
     color: #B4B7BB;
 }
-/* .searchBox input:active{
-    width: auto;
-} */
 
 .searchBtn{
     background-color: transparent;
@@ -41,12 +33,11 @@
 
 @media screen and (max-width: 768px) {
   .container  {
-    gap: 10px;
-    margin: 5px 0;
+    margin: 10px 0;
   }
 
   .searchBox {
-    padding: 2px 5px 2px 0;
+    padding: 2px;
   }
 
   .searchBtn {
