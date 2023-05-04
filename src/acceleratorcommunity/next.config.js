@@ -43,6 +43,7 @@ const nextConfig = {
       'www.aceinfoway.com',
       'wwwsitecorecom.azureedge.net',
       'nkdramblog.files.wordpress.com',
+      'images.pexels.com',
     ],
   },
 

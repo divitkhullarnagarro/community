@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import style from './../../assets/blogListing.module.css';
-import event from './../../assets/images/event.svg';
+// import event from './../../assets/images/event.svg';
 import { Blog } from './../../assets/helpers/types';
 import AxiosRequest from 'src/API/AxiosRequest';
 import { AxiosResponse } from 'axios';
@@ -36,6 +36,7 @@ function BlogListing() {
   const navigateToEventPage = (event: string) => {
     router.push(`/event/${event}`);
   };
+  console.log('ertyuirwerty', blogList);
   return blogList.length > 0 ? (
     <>
       <div className={style.blogListingPage}>
@@ -60,7 +61,11 @@ function BlogListing() {
                 <div className={style.BlogImage}>
                   <Image
                     style={{ cursor: 'pointer' }}
-                    src={event.src}
+                    src={
+                      ele.imageUrl
+                        ? ele.imageUrl
+                        : 'https://wwwsitecorecom.azureedge.net/-/media/sitecoresite/images/home/blog/content/sitecore-dx-2023-europe-shows-brands-how-to-get-on-a-composable-path/dx23-europe_blog-hero.jpg?md=20230425T191825Z?mw=716&mh=465&hash=DDF8137DC1F93BF9DA09D5213D6EC547'
+                    }
                     alt={ele.heading}
                     height={200}
                     width={300}

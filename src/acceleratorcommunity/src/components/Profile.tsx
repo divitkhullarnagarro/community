@@ -18,6 +18,7 @@ import DotLoader from './DotLoader';
 import EventListing from './helperComponents/EventListing';
 import BlogListing from './helperComponents/BlogListing';
 import PeerFriendList from './PeerFriendList';
+import Link from 'next/link';
 
 type User = {
   firstName: string | undefined;
@@ -1404,6 +1405,13 @@ const Profile = (props: any): JSX.Element => {
             >
               Peers
             </div>
+
+            <Link href="/profile/blockedusers">
+              <div className="personalDetails" style={{ textDecoration: 'none' }}>
+                Setting
+              </div>
+            </Link>
+
             {/* <div
               className={
                 details === 'banner' ? 'personalDetails personalDetailsActive' : 'personalDetails'

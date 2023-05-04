@@ -59,7 +59,7 @@ const EventListing = (): JSX.Element => {
               <div key={i} className={style.eventCard}>
                 <Image
                   style={{ cursor: 'pointer' }}
-                  src={event.src}
+                  src={ele.img ? ele.img : event.src}
                   alt={ele.name}
                   height={180}
                   width={280}
@@ -76,10 +76,14 @@ const EventListing = (): JSX.Element => {
                     <div className={style.eventTime}>
                       {ele.date} BY {ele.time}
                     </div>
-                    <div className={style.eventName}>{ele.name}</div>
+                    <div className={style.eventName} title={ele.name}>
+                      {ele?.name?.length < 22 ? ele?.name : ele?.name?.substring(0, 22) + '...'}
+                    </div>
                     <div className={style.eventLocation}>{ele.location}</div>
-                    <div className={style.eventInterested}>
-                      {ele.interested} Interested | 10 Joined
+                    <div className={style.eventInterested} title={ele.description}>
+                      {ele?.description?.length < 35
+                        ? ele?.description
+                        : ele?.description?.substring(0, 35) + '...'}
                     </div>
                   </div>
                   <button className={style.interestedButton} onClick={onInterestedButtonClick}>
