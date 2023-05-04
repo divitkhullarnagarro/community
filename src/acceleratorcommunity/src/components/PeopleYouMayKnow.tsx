@@ -145,7 +145,9 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
     return (
       <Card className={styles.cardItem}>
         <div className={styles.imageContainer}>
-          <img className={styles.imgProfile} contentEditable={true} src={Profile.src} />
+          <Link href={`/profile/${item?.objectId}`}>
+            <img className={styles.imgProfile} contentEditable={true} src={Profile.src} />
+          </Link>
         </div>
         <Card.Body>
           <Card.Title className={styles.cardTitle}>
