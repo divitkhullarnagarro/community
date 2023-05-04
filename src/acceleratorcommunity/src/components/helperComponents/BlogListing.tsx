@@ -8,6 +8,7 @@ import { Blog } from './../../assets/helpers/types';
 import AxiosRequest from 'src/API/AxiosRequest';
 import { AxiosResponse } from 'axios';
 import BlogListingSkeleton from 'components/skeletons/BlogListingSkeleton';
+import parser from 'html-react-parser';
 const tablist = ['My Blogs', 'Suggested Blogs', 'Bookmarked Blogs'];
 
 function BlogListing() {
@@ -77,9 +78,11 @@ function BlogListing() {
                         : ele.heading.substring(0, 30) + '...'}
                     </div>
                     <div className={style.blogDescription}>
-                      {ele.description.length <= 250
-                        ? ele.heading
-                        : ele.description.substring(0, 250) + '...'}
+                      {parser(
+                        ele.description.length <= 250
+                          ? ele.heading
+                          : ele.description.substring(0, 250) + '...'
+                      )}
                     </div>
                   </div>
                 </div>

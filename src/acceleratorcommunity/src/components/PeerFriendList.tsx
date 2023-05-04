@@ -31,7 +31,7 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isWidgetView] = useState(props?.params?.IsWidgetView === '1');
   const skeletonDummyArr = [1, 2, 3, 4, 5, 6];
-  console.log('isWidgetView', isWidgetView);
+  console.log('isWidgetView', peerFriendList);
 
   const getAllPears = async () => {
     setIsDataLoaded(false);
@@ -48,6 +48,14 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
     }
   }, [userToken]);
 
+  const NoPeersLabel = () => {
+    return (
+      <>
+        <div>You do not have any peers yet.</div>
+        <div>Explore the community to add peers.</div>
+      </>
+    );
+  };
   const WidgetViewPeerFriendList = () => {
     return (
       <div className={styles.wrapper}>
@@ -65,13 +73,16 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
             peerFriendList?.slice(0, 5).map((item) => {
               return (
                 <div key={item?.objectId} className={styles.item}>
-                  <NextImage
-                    className={styles.img}
-                    field={Profile}
-                    editable={true}
-                    height={40}
-                    width={40}
-                  />
+                  <Link href={`/profile/${item.objectId}`}>
+                    <NextImage
+                      className={styles.img}
+                      field={item.profilePictureUrl ? item.profilePictureUrl : Profile}
+                      editable={true}
+                      height={40}
+                      width={40}
+                    />
+                  </Link>
+
                   <div>
                     <div className={styles.name}>{item?.firstName + ' ' + item?.lastName}</div>
                   </div>
@@ -82,7 +93,9 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
               );
             })
           ) : (
-            <></>
+            <div className={styles.widgetViewNoPeerListHeader}>
+              <NoPeersLabel />
+            </div>
           )}
         </div>
       </div>
@@ -129,7 +142,9 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
                     return <FullPagePeerFriendListItem {...item} />;
                   })
                 ) : (
-                  <></>
+                  <div className={styles.fullPageNoPeerListHeader}>
+                    <NoPeersLabel />
+                  </div>
                 )
               ) : (
                 skeletonDummyArr.concat(skeletonDummyArr).map((item: any) => {

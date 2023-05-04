@@ -39,6 +39,8 @@ import pollIcon from '../assets/images/CreatePoll_icon.svg';
 import addBlogIcon from '../assets/images/AddBlogPost_icon.svg';
 import createEventIcon from '../assets/images/CreateEventPost_icon.svg';
 import pollCross from '../assets/images/pollCross.svg';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 // Rich Text Editor Files Import Start
 import { EditorState, convertToRaw } from 'draft-js';
@@ -64,7 +66,7 @@ import getAllUpVotesCall from 'src/API/getAllUpVotes';
 import Profile from '../assets/images/profile.png';
 import addPostCss from '../assets/addPosts.module.css';
 import blockUserCall from 'src/API/blockUnblockUserCall';
-import user from '../assets/images/user.png';
+import user from '../assets/images/ProfilePic.jpeg';
 // import location from '../assets/images/Location.png';
 import image from '../assets/images/Vector.png';
 import pin from '../assets/images/Vectorpin.png';
@@ -81,7 +83,10 @@ import deleteCommentCall from 'src/API/deleteCommentCall';
 // import PollCard from './PollCard';
 import reportUserCall from 'src/API/reportUserCall';
 import { useRouter } from 'next/router';
-import PostSkeleton from './skeletons/PostSkeleton';
+import AddPostSkeleton from './skeletons/AddPostSkeleton';
+
+//logging on logrocket
+import LogRocket from 'logrocket';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -98,6 +103,35 @@ type BlockUserFields = {
 const AddPost = (props: AddPostProps | any): JSX.Element => {
   const { userToken, objectId, userObject } = {
     ...useContext(WebContext),
+  };
+  //logging on logrocket start
+  useEffect(() => {
+    console.log('asdfghjklasdfghjksdfghj', userObject);
+    LogRocket.init('5m0bj8/communitysolution');
+    LogRocket.identify(userObject.email, {
+      name: `${userObject.firstName} ${userObject.lastName}`,
+      email: userObject.email,
+
+      // Add your own custom user variables here, ie:
+      subscriptionType: 'pro',
+    });
+    // LogRocket.track('Button Clicked', {
+    //   buttonName: 'Submit',
+    //   formId: 'signupForm',
+    // });
+  }, []);
+  // logging on logrocket end
+  interface ItemImage {
+    [key: string]: string;
+  }
+
+  const EventImage: ItemImage = {
+    Seminar:
+      'https://higherlogicdownload.s3.amazonaws.com/APSNET/UploadedImages/tAiEB79vTYq1gz2UEGu1_IMG_2866-L.jpg',
+    Conference: 'https://th.bing.com/th/id/OIP.IXdC6XgETCp5RaM3iQCb6QHaE8?pid=ImgDet&rs=1',
+    Announcement: 'https://th.bing.com/th/id/OIP.zPaWJzUBQwbXDjhCtCtI1gHaE8?pid=ImgDet&rs=1',
+    'Launch Event': 'https://live.staticflickr.com/808/39724254630_e9cdcb8e77_b.jpg',
+    Celebration: 'https://th.bing.com/th/id/OIP.E1RiHHXMHUcq0L0KvprXfQHaEn?pid=ImgDet&rs=1',
   };
 
   const [showForm1, setShowForm1] = useState(false);
@@ -248,6 +282,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const onEditorStateChangeHandler = (e: any) => {
     setEditorState(e);
     setPostTextValue(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+    console.log('asdfasdfasdfasdf', draftToHtml(convertToRaw(editorState.getCurrentContent())));
   };
   // console.log('mention', addedPeers);
 
@@ -1179,15 +1214,18 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             <div className="postContainer" key={post?.id}>
               <div className="postHeading">
                 <div className="postHeaderLeft">
-                  <img
-                    className="postUserImage"
-                    src={
-                      post?.createdBy?.profilePictureUrl
-                        ? post?.createdBy?.profilePictureUrl
-                        : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
-                    }
-                    alt="User-Pic"
-                  ></img>
+                  <Link href={`/profile/${post?.createdBy?.objectId}`}>
+                    <img
+                      className="postUserImage"
+                      src={
+                        post?.createdBy?.profilePictureUrl
+                          ? post?.createdBy?.profilePictureUrl
+                          : user.src
+                      }
+                      alt="User-Pic"
+                    ></img>
+                  </Link>
+
                   <div className="postDetailContainer">
                     <h5 className="postOwner">
                       <span>
@@ -1391,7 +1429,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       description={post?.event?.description}
                       date={post?.event?.eventDate}
                       eventType={post?.event?.eventType}
-                      url={getEventImage(post?.event?.eventType)}
+                      url={EventImage[post?.event?.eventType]}
                     />
                   </>
                 ) : post?.postType === 'POLL' ? (
@@ -1401,7 +1439,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </>
                 ) : post?.postType === 'BLOG_POST' ? (
                   <>
-                    <div className="blogHeading" style={{ fontWeight: 600, fontSize: '50px' }}>
+                    <div
+                      className="blogHeading"
+                      style={{ fontWeight: 600, fontSize: '50px', margin: '8px 16px' }}
+                    >
                       {post?.blog?.heading}
                     </div>
                     <NextImage src={post?.blog?.imageUrl}></NextImage>
@@ -1784,7 +1825,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                     src={
                                       userObject?.profilePictureUrl
                                         ? userObject?.profilePictureUrl
-                                        : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
+                                        : user.src
                                     }
                                     alt="User-Pic"
                                     style={{ marginLeft: '0' }}
@@ -1812,7 +1853,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                           src={
                                             reply?.createdBy?.profilePictureUrl
                                               ? reply?.createdBy?.profilePictureUrl
-                                              : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
+                                              : user.src
                                           }
                                           alt="User-Pic"
                                           style={{
@@ -2870,13 +2911,15 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               <div className={styles.addPostFieldContainer}>
                 <div className={styles.addPostField}>
                   <div className={styles.addPostImage}>
-                    <NextImage
-                      field={user}
-                      editable={true}
-                      alt="Profile-Pic"
-                      width={27}
-                      height={27}
-                    />
+                    <Link href={`/profile`}>
+                      <NextImage
+                        field={user}
+                        editable={true}
+                        alt="Profile-Pic"
+                        width={27}
+                        height={27}
+                      />
+                    </Link>
                   </div>
                   {showForm1 ? (
                     <Collapse in={showForm1}>
@@ -3650,11 +3693,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           ''
         )}
         <div className="AllPostscontainer" id="PostFeedList" style={{ maxWidth: '100%' }}>
-          {posts?.length == 0 ? <PostSkeleton count={3} /> : posts}
-          <div style={{ height: '250px' }}>
+          {posts?.length == 0 ? <AddPostSkeleton count={3} /> : posts}
+          <div style={{ height: '50px' }}>
             {ifReachedEnd ? (
               !ifNoMoreData ? (
-                <PostSkeleton count={1} />
+                <AddPostSkeleton count={1} />
               ) : (
                 <span
                   style={{

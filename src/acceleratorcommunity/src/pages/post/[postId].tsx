@@ -27,6 +27,7 @@ import ToastNotification from 'components/ToastNotification';
 import { ReportPostOptionsTypeLabel } from '../../assets/helpers/enums';
 import reportPostCall from 'src/API/reportPostCall';
 import blockUserCall from 'src/API/blockUnblockUserCall';
+import { decryptString } from 'assets/helpers/EncryptDecrypt';
 
 // import {calculateTimeDifference} from
 
@@ -764,33 +765,30 @@ export default viewSinglePost;
 export async function getServerSideProps(context: any) {
   const { params } = context;
   const { postId } = params;
-  const [name, value] = context?.req?.headers?.cookie?.split('=').map((c: any) => c.trim());
-  console.log(name);
   let getAllPostURL = `https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/post/${postId}`;
-
+  const [value] = context?.req?.headers?.cookie?.split('=').map((c: any) => c.trim());
+  const token = decryptString(value);
   var config = {
     method: 'GET',
     url: getAllPostURL,
     headers: {
-      Authorization: `Bearer ${value}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
   };
   const res = await fetch(getAllPostURL, config)
     .then((response: any) => {
-      console.log("valueeeeeeeeeeeee",response?.data)
       return response;
     })
     .catch((error: any) => {
       console.error(error);
     });
-  if (res !== undefined) {
-    console.log("res", res)
-    var data = await res.json();
+  if (res?.status === 200) {
+    var data = await res?.json();
   }
   return {
     props: {
-      data: data,
+      data: data || null,
     },
   };
 }
