@@ -4,7 +4,6 @@ import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import searchCss from '../assets/search.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import Logo from './Logo';
 
 type SearchProps = ComponentProps & {
   fields: {
