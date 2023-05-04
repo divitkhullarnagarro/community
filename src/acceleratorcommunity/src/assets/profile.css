@@ -4,16 +4,16 @@
 }
 
 .rightContainerForProfile {
-  width: 250px;
-  height: calc(100vh - 80px);
-  padding-left: 20px;
+  width: 270px;
+  height: calc(100% - 80px);
+  padding: 20px;
 }
 
 .leftContainerForProfile {
   flex: 1;
   background: #F9F9F9;
   padding: 20px;
-  height: calc(100vh - 80px);
+  height: calc(100% - 80px);
   overflow: auto;
 }
 
@@ -143,6 +143,9 @@
   font-size: 16px;
   color: #283895;
   margin: 0;
+}
+.darkMode_greenColor h3 {
+  color: #47d7ac;
 }
 
 .profrssionContainer span {
