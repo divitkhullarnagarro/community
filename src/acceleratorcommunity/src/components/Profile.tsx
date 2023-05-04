@@ -111,7 +111,7 @@ type personalDetails = {
 
 const Profile = (props: any): JSX.Element => {
   console.log('profileProps', props);
-  const { isLoggedIn, userToken, setIsLoggedIn, setUserToken, objectId, setObjectId } = {
+  const { isLoggedIn, userToken, setIsLoggedIn, setUserToken, objectId, setObjectId, darkMode, setDarkMode } = {
     ...useContext(WebContext),
   };
   const [personalInfoDetails, setPersonalInfoDetails] = useState<any>();
@@ -1297,8 +1297,8 @@ const Profile = (props: any): JSX.Element => {
   }
   return (
     <>
-      <div className="parentContainerForProfile">
-        <div className="rightContainerForProfile">
+      <div className={`parentContainerForProfile ${darkMode && 'darkMode_bg'}`}>
+        <div className={`rightContainerForProfile ${darkMode && 'darkMode_bgChild'}`}>
           <div className="imageContainer">
             {console.log('profilePictureUrl', tempUserData?.profilePictureUrl)}
             {showImage ? (
@@ -1323,11 +1323,11 @@ const Profile = (props: any): JSX.Element => {
             </label>
           </div>
           <div className="nameContainerForProfile">
-            <div className="nameContainer">
+            <div className={`nameContainer ${darkMode && 'darkMode_greenColor'}`}>
               <h3> {name}</h3>
             </div>
             <div className="profrssionContainer">
-              <span> {showStateValue && tempUserData?.role}</span>
+              <span className={`${darkMode && 'darkMode_textColor'}`}> {showStateValue && tempUserData?.role}</span>
             </div>
           </div>
           {/* <div className="postStatsContainerForProfile">
@@ -1347,7 +1347,9 @@ const Profile = (props: any): JSX.Element => {
           <div className="detailsContainer">
             <div
               className={
-                details === 'personal' ? 'personalDetails personalDetailsActive' : 'personalDetails'
+                details === 'personal'
+                ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'}`
+                : `personalDetails ${darkMode && 'darkMode_textBg'}`
               }
               onClick={() => handlePersonalDetails('personal')}
             >
@@ -1356,8 +1358,8 @@ const Profile = (props: any): JSX.Element => {
             <div
               className={
                 details === 'contactDetails'
-                  ? 'personalDetails personalDetailsActive'
-                  : 'personalDetails'
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'}`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'}`
               }
               onClick={() => handlePersonalDetails('contactDetails')}
             >
@@ -1366,8 +1368,8 @@ const Profile = (props: any): JSX.Element => {
             <div
               className={
                 details === 'educationDetails'
-                  ? 'personalDetails personalDetailsActive'
-                  : 'personalDetails'
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'}`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'}`
               }
               onClick={() => handlePersonalDetails('educationDetails')}
             >
@@ -1375,7 +1377,9 @@ const Profile = (props: any): JSX.Element => {
             </div>
             <div
               className={
-                details === 'work' ? 'personalDetails personalDetailsActive' : 'personalDetails'
+                details === 'work' 
+                ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'}` 
+                : `personalDetails ${darkMode && 'darkMode_textBg'}`
               }
               onClick={() => handlePersonalDetails('work')}
             >
@@ -1383,7 +1387,9 @@ const Profile = (props: any): JSX.Element => {
             </div>
             <div
               className={
-                details === 'events' ? 'personalDetails personalDetailsActive' : 'personalDetails'
+                details === 'events' 
+                ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'}`
+                : `personalDetails ${darkMode && 'darkMode_textBg'}`
               }
               onClick={() => handlePersonalDetails('events')}
             >
@@ -1391,7 +1397,9 @@ const Profile = (props: any): JSX.Element => {
             </div>
             <div
               className={
-                details === 'blogs' ? 'personalDetails personalDetailsActive' : 'personalDetails'
+                details === 'blogs' 
+                ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'}`
+                : `personalDetails ${darkMode && 'darkMode_textBg'}`
               }
               onClick={() => handlePersonalDetails('blogs')}
             >
@@ -1399,19 +1407,14 @@ const Profile = (props: any): JSX.Element => {
             </div>
             <div
               className={
-                details === 'peers' ? 'personalDetails personalDetailsActive' : 'personalDetails'
+                details === 'peers' 
+                ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'}` 
+                : `personalDetails ${darkMode && 'darkMode_textBg'}`
               }
               onClick={() => handlePersonalDetails('peers')}
             >
               Peers
             </div>
-
-            <Link href="/profile/blockedusers">
-              <div className="personalDetails" style={{ textDecoration: 'none' }}>
-                Setting
-              </div>
-            </Link>
-
             {/* <div
               className={
                 details === 'banner' ? 'personalDetails personalDetailsActive' : 'personalDetails'
@@ -1422,11 +1425,11 @@ const Profile = (props: any): JSX.Element => {
             </div> */}
           </div>
         </div>
-        <div className="leftContainerForProfile">
+        <div className={`leftContainerForProfile ${darkMode && 'darkMode_bgChild'}`}>
           {!(details == 'events' || details == 'blogs') && (
-            <div className="leftContainerForProfileHeadng">Edit Profile</div>
+            <div className={`leftContainerForProfileHeadng ${darkMode && 'darkMode_textColor'}`}>Edit Profile</div>
           )}
-          <div className="infoContainerForProfile">
+          <div className={`infoContainerForProfile ${darkMode && 'darkMode_textBg'}`}>
             {details === 'personal' ? (
               <div className="profileInfo">
                 {' '}
