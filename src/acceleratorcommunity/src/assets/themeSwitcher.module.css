@@ -1,0 +1,10 @@
+.container {}
+.button {
+  background: transparent;
+  border: 0;
+  padding: 6px;
+  border-radius: 50%;
+}
+.image {
+  display: block;
+}

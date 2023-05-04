@@ -11,6 +11,7 @@ import ToastNotification from './ToastNotification';
 import NotificationLike from '../assets/images/NotificationLike.png';
 import NotificationComment from '../assets/images/NotificationComment.png';
 import NotificationOpen from '../assets/images/NotificationOpen.png';
+import ThemeSwitcher from './ThemeSwitcher';
 
 const NotificationType = {
   LIKE_ON_POST: 'LIKE_ON_POST',
@@ -133,8 +134,8 @@ const Notification = (props: NotificationProps): JSX.Element => {
               <NextImage
                 field={NotificationPerson}
                 editable={true}
-                width={60}
-                height={60}
+                width={16}
+                height={16}
                 title="Notification"
               ></NextImage>
               <div className={notificationCss.notificationTypeImage}>
@@ -145,8 +146,8 @@ const Notification = (props: NotificationProps): JSX.Element => {
                       : NotificationComment
                   }
                   editable={true}
-                  width={40}
-                  height={40}
+                  width={16}
+                  height={16}
                   title="Notification"
                 ></NextImage>
               </div>
@@ -185,8 +186,8 @@ const Notification = (props: NotificationProps): JSX.Element => {
                   <NextImage
                     field={NotificationOpen}
                     editable={true}
-                    width={15}
-                    height={15}
+                    width={16}
+                    height={16}
                     title="Notification"
                   ></NextImage>
                   <span className={notificationCss.dropdownMenuOptionsLabel}>View post</span>
@@ -203,6 +204,9 @@ const Notification = (props: NotificationProps): JSX.Element => {
 
   return (
     <>
+      <div>
+        <ThemeSwitcher />
+      </div>
       <div className={notificationCss.container}>
         <Dropdown className={notificationCss.dropdownContainer}>
           <Dropdown.Toggle
@@ -214,8 +218,8 @@ const Notification = (props: NotificationProps): JSX.Element => {
                 className={notificationCss.notificationIcon}
                 field={datasource?.image?.jsonValue?.value}
                 editable={true}
-                width={28}
-                height={28}
+                width={16}
+                height={16}
                 title="Notification"
               ></NextImage>
               {notificationCount > 0 ? (

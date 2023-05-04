@@ -75,7 +75,7 @@
 }
 
 .userProfileDropdownBtn {
-  background-color: #FFF !important;
+  background-color: transparent !important;
   border:none;
   padding: 0;
   display: inline-block;
