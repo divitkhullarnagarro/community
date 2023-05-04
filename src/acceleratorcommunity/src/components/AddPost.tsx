@@ -38,6 +38,7 @@ import videoIcon from '../assets/images/AddVideo_icon.svg';
 import pollIcon from '../assets/images/CreatePoll_icon.svg';
 import addBlogIcon from '../assets/images/AddBlogPost_icon.svg';
 import createEventIcon from '../assets/images/CreateEventPost_icon.svg';
+import pollCross from '../assets/images/pollCross.svg';
 
 // Rich Text Editor Files Import Start
 import { EditorState, convertToRaw } from 'draft-js';
@@ -2724,6 +2725,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     placeholder: 1,
     optionSequence: 0,
     optionText: '',
+    cannotDelete: true,
   };
   let option2 = {
     id: option2Id,
@@ -2731,11 +2733,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     placeholder: 2,
     optionSequence: 1,
     optionText: '',
+    cannotDelete: true,
   };
   let [pollFormOptions, setPollFormOptions] = useState<any>([option1, option2]);
   let [pollOptionCount, setPollOptionCount] = useState(2);
   let [isOptionsThreshold, setoptionsThreshold] = useState(false);
-  let [isDeleteOptionThreshold, setIsDeleteOptionThreshold] = useState(true);
   let [pollQuestion, setPollQuestion] = useState('');
 
   function addPollOption() {
@@ -2749,6 +2751,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         placeholder: pollOptionCount + 1,
         optionText: '',
         optionSequence: pollOptionCount,
+        cannotDelete: false,
       };
       setPollFormOptions((prevState: any) => {
         return [...prevState, option];
@@ -2757,31 +2760,47 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       if (pollOptionCount + 1 >= 4) {
         setoptionsThreshold(true);
       }
-      setIsDeleteOptionThreshold(false);
     }
   }
-  function deleteLastPollOption() {
-    if (pollOptionCount > 2) {
-      setPollFormOptions((prev: any) => {
-        const newOptions = [];
-        for (let i = 0; i < prev.length - 1; i++) {
-          newOptions.push(prev[i]);
-        }
-        return newOptions;
-      });
+  function deleteLastPollOption(optionId: any, event: any) {
+    event.preventDefault();
+    // if (pollOptionCount > 2) {
+    //   setPollFormOptions((prev: any) => {
+    //     const newOptions = [];
+    //     for (let i = 0; i < prev.length - 1; i++) {
+    //       newOptions.push(prev[i]);
+    //     }
+    //     return newOptions;
+    //   });
+    //   setPollOptionCount((prevCount) => prevCount - 1);
+    // }
+    // if (pollOptionCount - 1 < 4) {
+    //   setoptionsThreshold(false);
+    // }
+    // setIsDeleteOptionThreshold(pollOptionCount - 1 <= 2);
+    const optionIndex = pollFormOptions.findIndex((option: any) => option.id === optionId);
+    if (optionIndex !== -1) {
+      const newOptions = [...pollFormOptions];
+      newOptions.splice(optionIndex, 1);
+      for (let i = 0; i < newOptions.length; i++) {
+        newOptions[i].optionSequence = i.toString();
+        newOptions[i].name = `${i + 1}`;
+        newOptions[i].placeholder = `${i + 1}`;
+      }
+      setPollFormOptions(newOptions);
       setPollOptionCount((prevCount) => prevCount - 1);
+      if (pollOptionCount - 1 < 4) {
+        setoptionsThreshold(false);
+      }
     }
-    if (pollOptionCount - 1 < 4) {
-      setoptionsThreshold(false);
-    }
-    setIsDeleteOptionThreshold(pollOptionCount - 1 <= 2);
   }
+
+  console.log('POLLOPTIONS', pollFormOptions);
 
   function clearPollForm() {
     setPollQuestion('');
     setPollFormOptions([option1, option2]);
     setPollOptionCount(2);
-    setIsDeleteOptionThreshold(true);
   }
 
   function pollOptionUpdate(id: any, e: any) {
@@ -3385,7 +3404,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     />
                   </button>
                   <Modal
-                    className={styles.reportPostModalContent}
+                    // className={styles.reportPostModalContent}
                     show={showPollForm}
                     onHide={() => setShowPollForm(false)}
                     backdrop="static"
@@ -3395,79 +3414,102 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     onExit={() => {
                       clearPollForm();
                     }}
+                    size="lg"
                   >
-                    <div>
+                    <div className={addPostCss.addPollFormContainer}>
                       <Form
                         onSubmit={(e: any) => submitPollForm(e)}
                         style={{ fontSize: '15px', margin: '5px' }}
                       >
                         <Modal.Header closeButton>
-                          <Modal.Title className={styles.reportPostModalHeader}>
-                            Create a Poll
+                          <Modal.Title className={styles.AddEventModalHeader}>
+                            Create Poll
                           </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                          <div className={styles.reportPostModalBody}>Poll Parameters</div>
+                          <div className={styles.AddEventModalProfile}>
+                            <div className={styles.AddEventModalProfilePic}>
+                              <img src={Profile.src} />
+                            </div>
+                            <div style={{ alignSelf: 'center' }}>
+                              <div style={{ fontSize: '1rem', fontWeight: '600' }}>
+                                {userObject?.firstName
+                                  ? `${userObject?.firstName} ${userObject?.lastName}`
+                                  : 'John Doe'}
+                              </div>
+                              {/* <div style={{ fontSize: '14px', color: 'grey' }}>Profile</div> */}
+                            </div>
+                          </div>
                           <Form.Group className="mb-3">
-                            <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
-                              Question
-                            </Form.Label>
                             <Form.Control
+                              className={addPostCss.pollQuestion}
                               value={pollQuestion}
                               onChange={(e) => updatePollQuestion(e)}
                               required
                               type="text"
-                              placeholder="Write Poll Question"
+                              placeholder="Write something..."
                             />
-                            <Form.Control.Feedback type="invalid">
-                              Please select an event date.
-                            </Form.Control.Feedback>
                           </Form.Group>
                           <div
-                            style={{
-                              padding: '32px',
-                              border: '1px solid',
-                              borderRadius: '10px',
-                              display: 'flex',
-                              flexDirection: 'column',
-                              height: '282px',
-                              overflowY: 'scroll',
-                              // justifyContent: 'space-between',
-                            }}
-                            className="CreatePollOptions mb-3"
+                            className={`CreatePollOptions mb-3 ${addPostCss.pollOptionContainer}`}
                           >
+                            <div
+                              style={{
+                                marginBottom: '10px',
+                                fontSize: '16px',
+                                fontWeight: '500',
+                                marginLeft: '5px',
+                              }}
+                            >
+                              Add Poll
+                            </div>
                             {pollFormOptions.map((option: any) => {
                               return (
                                 <Form.Group className="mb-3" id={option?.id}>
-                                  <Form.Label style={{ fontSize: '24px', fontWeight: '600' }}>
-                                    Option - <span>{option?.name}</span>
-                                  </Form.Label>
-                                  <Form.Control
-                                    required
-                                    type="textarea"
-                                    value={option?.optionText}
-                                    onChange={(e) => pollOptionUpdate(option?.id, e)}
-                                    placeholder={`Enter Option - ${option?.placeholder}`}
-                                  />
+                                  <div style={{ display: 'flex' }}>
+                                    <Form.Control
+                                      required
+                                      type="textarea"
+                                      value={option?.optionText}
+                                      onChange={(e) => pollOptionUpdate(option?.id, e)}
+                                      placeholder={`Option ${option?.name}`}
+                                      className={addPostCss.pollFormInput}
+                                    />
+                                    <button
+                                      style={{
+                                        border: 'none',
+                                        backgroundColor: 'white',
+                                        marginLeft: '4px',
+                                        display: option?.cannotDelete ? 'none' : '',
+                                      }}
+                                      onClick={(e) => deleteLastPollOption(option?.id, e)}
+                                    >
+                                      <NextImage
+                                        field={pollCross}
+                                        editable={true}
+                                        alt="cross"
+                                        width={24}
+                                        height={24}
+                                      />
+                                    </button>
+                                  </div>
                                 </Form.Group>
                               );
                             })}
                           </div>
-                          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <div style={{ display: 'flex', justifyContent: 'center' }}>
                             <button
-                              style={{
-                                padding: '12px',
-                                border: 'none',
-                                fontSize: '18px',
-                                borderRadius: '12px',
-                              }}
+                              className={addPostCss.addOptionButton}
                               type="button"
                               onClick={() => addPollOption()}
                               disabled={isOptionsThreshold}
+                              style={{
+                                backgroundColor: isOptionsThreshold ? '#e8e8e8' : '#47D7AC',
+                              }}
                             >
-                              + Add More option
+                              + Add option
                             </button>
-                            <button
+                            {/* <button
                               style={{
                                 padding: '12px',
                                 border: 'none',
@@ -3479,12 +3521,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                               disabled={isDeleteOptionThreshold}
                             >
                               - Delete option
-                            </button>
+                            </button> */}
                           </div>
                         </Modal.Body>
                         <Modal.Footer>
                           <Button
-                            className={styles.footerBtn}
+                            className={styles.eventModalCancel}
                             variant="secondary"
                             onClick={() => {
                               clearPollForm();
@@ -3493,12 +3535,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                             Clear
                           </Button>
                           <Button
-                            className={styles.footerBtn}
+                            className={styles.eventModalAddToPost}
                             variant="secondary"
                             type="submit"
-                            style={{ height: '44px', width: '121px' }}
                           >
-                            <span>Add Poll to Post</span>
+                            <span>Add Poll</span>
                           </Button>
                         </Modal.Footer>
                       </Form>
