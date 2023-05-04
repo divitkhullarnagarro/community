@@ -62,7 +62,6 @@ const Login = (props: LoginProps): JSX.Element => {
 
   useEffect(() => {
     requestForNotificationPermission().then((data: any) => {
-      alert(data);
       console.log('tokenFromFirebaseProvider', data);
     });
   }, []);
