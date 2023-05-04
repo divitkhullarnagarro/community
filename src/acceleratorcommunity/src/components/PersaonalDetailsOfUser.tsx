@@ -3,14 +3,17 @@ import WebContext from '../Context/WebContext';
 import { Button, Form, Modal } from 'react-bootstrap';
 
 const PersaonalDetailsOfUser = (props: any): JSX.Element => {
-  const { darkMode, setDarkMode } = {
-    ...useContext(WebContext),
-  };
+  const { darkMode } = { ...useContext(WebContext) };
   return (
     <>
       <div className="editBtn">
         <Button className="profileBtn" onClick={props.handleShow1}>
-          <img src="https://cdn-icons-png.flaticon.com/16/1827/1827933.png" alt="edit" width="20px" className={`${darkMode && 'darkMode_imageFilter'}`}/>
+          <img
+            src="https://cdn-icons-png.flaticon.com/16/1827/1827933.png"
+            alt="edit"
+            width="20px"
+            className={`${darkMode && 'darkMode_imageFilter'}`}
+          />
         </Button>
       </div>
       <div>
@@ -34,7 +37,11 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                 />
               </Form.Group>
               <span>
-                {props.errorState?.firstName ? <span className="error">Field is required</span> : ' '}
+                {props.errorState?.firstName ? (
+                  <span className="error">Field is required</span>
+                ) : (
+                  ' '
+                )}
               </span>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Middle Name</Form.Label>
@@ -60,7 +67,11 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                 />
               </Form.Group>
               <span>
-                {props.errorState?.lastName ? <span className="error">Field is required</span> : ' '}
+                {props.errorState?.lastName ? (
+                  <span className="error">Field is required</span>
+                ) : (
+                  ' '
+                )}
               </span>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Profession</Form.Label>
@@ -482,7 +493,7 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
         </div>
       </div>
     </>
-  )
+  );
 };
 
 export default PersaonalDetailsOfUser;
