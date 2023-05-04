@@ -41,7 +41,7 @@ const FirebaseProvider = (props: any) => {
               return fcm_token;
             }
           } else if (status && status === 'denied') {
-            alert('You denied for the notification');
+            //alert('You denied for the notification');
           }
         }
       } catch (error) {
