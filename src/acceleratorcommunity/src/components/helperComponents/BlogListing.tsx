@@ -1,4 +1,8 @@
-import { suggestedBlogs, bookmarkedBlogs } from 'assets/helpers/constants';
+import {
+  getMyBlogsUrl,
+  getSuggestedBlogsUrl,
+  getBookmarkedMyBlogsUrl,
+} from 'assets/helpers/constants';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -17,18 +21,34 @@ function BlogListing() {
   const getMyBlogs = async () => {
     const data: AxiosResponse<any> = await AxiosRequest({
       method: 'GET',
-      url: 'https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/post/my-blogs',
+      url: getMyBlogsUrl,
     });
     const myblogData = data.data.map((ele: any) => ele.blog);
     setBlogList(myblogData);
+  };
+  const getSuggestedBlogs = async () => {
+    const data: AxiosResponse<any> = await AxiosRequest({
+      method: 'GET',
+      url: getSuggestedBlogsUrl,
+    });
+    const suggesteBblogData = data.data.map((ele: any) => ele.blog);
+    setBlogList(suggesteBblogData);
+  };
+  const getBookmarkedMyBlogs = async () => {
+    const data: AxiosResponse<any> = await AxiosRequest({
+      method: 'GET',
+      url: getBookmarkedMyBlogsUrl,
+    });
+    const bookmarkedBlogData = data.data.map((ele: any) => ele.blog);
+    setBlogList(bookmarkedBlogData);
   };
   useEffect(() => {
     if (activeTab == 'My Blogs') {
       getMyBlogs();
     } else if (activeTab == 'Suggested Blogs') {
-      setBlogList(suggestedBlogs);
+      getSuggestedBlogs();
     } else {
-      setBlogList(bookmarkedBlogs);
+      getBookmarkedMyBlogs();
     }
   }, [activeTab]);
 
@@ -71,7 +91,11 @@ function BlogListing() {
                     width={300}
                     placeholder="blur"
                     //   blurDataURL={placeholderImg.src}
-                    blurDataURL={'placeholderImg.src'}
+                    blurDataURL={
+                      ele.imageUrl
+                        ? ele.imageUrl
+                        : 'https://wwwsitecorecom.azureedge.net/-/media/sitecoresite/images/home/blog/content/sitecore-dx-2023-europe-shows-brands-how-to-get-on-a-composable-path/dx23-europe_blog-hero.jpg?md=20230425T191825Z?mw=716&mh=465&hash=DDF8137DC1F93BF9DA09D5213D6EC547'
+                    }
                     onClick={() => navigateToEventPage(ele.heading)}
                   />
                 </div>
@@ -82,13 +106,7 @@ function BlogListing() {
                         ? ele.heading
                         : ele.heading.substring(0, 30) + '...'}
                     </div>
-                    <div className={style.blogDescription}>
-                      {parser(
-                        ele.description.length <= 250
-                          ? ele.heading
-                          : ele.description.substring(0, 250) + '...'
-                      )}
-                    </div>
+                    <div className={style.blogDescription}>{parser(ele.description)}</div>
                   </div>
                 </div>
               </div>
