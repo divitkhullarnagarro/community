@@ -10,6 +10,7 @@ import LogoutImage from '../assets/images/Logout.png';
 import { useRouter } from 'next/router';
 import logoutUserCall from 'src/API/logoutUserCall';
 import { getValueFromCookie } from 'assets/helpers/helperFunctions';
+import FirebaseContext from 'src/Context/FirebaseContext';
 
 type UserProfileProps = ComponentProps & {
   fields: {
@@ -24,6 +25,7 @@ type UserProfileProps = ComponentProps & {
 
 const UserProfile = (props: UserProfileProps): JSX.Element => {
   const { setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
+  const { deleteTokenFromFirebase } = { ...useContext(FirebaseContext) };
   console.log('profile', props);
   const router = useRouter();
 
@@ -44,9 +46,13 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
           <div>
             <Modal.Header className={userProfileCss.logoutModalHeader}>
               <Modal.Title className={userProfileCss.logoutModalTitle}>{'Logout'}</Modal.Title>
-              <CloseButton variant='default' className={userProfileCss.logoutModalClose} onClick={() => {
+              <CloseButton
+                variant="default"
+                className={userProfileCss.logoutModalClose}
+                onClick={() => {
                   setLogoutPopUp(false);
-                }}></CloseButton>
+                }}
+              ></CloseButton>
             </Modal.Header>
             <Modal.Body>
               <div className={userProfileCss.logoutModalBody}>{`Do you want to logout ?`}</div>
@@ -96,6 +102,7 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
         setIsLoggedIn(false);
         router.push('/login');
       }
+      deleteTokenFromFirebase();
     }
   };
 

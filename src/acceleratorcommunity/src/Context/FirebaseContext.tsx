@@ -3,6 +3,7 @@ type contextType = {
   firebaseInstance: any;
   requestForNotificationPermission: any;
   deleteTokenFromFirebase: any;
+  checkAndRegsiterServiceWorker: any;
 };
 
 const FirebaseContext = React.createContext<contextType | null | undefined>(null);

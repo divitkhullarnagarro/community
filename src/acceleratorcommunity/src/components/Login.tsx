@@ -58,10 +58,13 @@ type DataSource = {
 };
 
 const Login = (props: LoginProps): JSX.Element => {
-  const { requestForNotificationPermission } = { ...useContext(FirebaseContext) };
+  const { requestForNotificationPermission, checkAndRegsiterServiceWorker } = {
+    ...useContext(FirebaseContext),
+  };
 
   useEffect(() => {
     requestForNotificationPermission().then((data: any) => {
+      checkAndRegsiterServiceWorker();
       console.log('tokenFromFirebaseProvider', data);
     });
   }, []);
