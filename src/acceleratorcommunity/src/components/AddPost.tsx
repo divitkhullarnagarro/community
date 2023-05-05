@@ -135,44 +135,36 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   };
 
   const [showForm1, setShowForm1] = useState(false);
-  let myPostArray: ReactElement<any, any>[] = [];
-  let [posts, setPosts] = useState(myPostArray);
-
-  let [postText, setPostText] = useState('');
-
+  const myPostArray: ReactElement<any, any>[] = [];
+  const [posts, setPosts] = useState(myPostArray);
+  const [postText, setPostText] = useState('');
   const [file, setFile] = useState([]);
   const [docs, setDocs] = useState([]);
   const [videoLink, setVideoLink] = useState([]);
-  let [eventPost, setEventPost] = useState<any>('');
+  const [eventPost, setEventPost] = useState<any>('');
   const [pollPost, setPollPost] = useState<any>('');
-
-  let [myAnotherArr, setMyAnotherArr] = useState<any>([]);
-  let [postPageNum, setPostPageNum] = useState(0);
-  let [ifReachedEnd, setIfReachedEnd] = useState(false);
-  let [ifNoMoreData, setIfNoMoreData] = useState(false);
-  let [allUpVotes, setAllUpVotes] = useState([]);
-  let [allDownVote, setAllDownVote] = useState([]);
-  let [showUp, setShowup] = useState('up');
-  let [showDeletePostPopup, setShowDeletePostPopup] = useState(false);
-  let [showDeleteCommentPopup, setShowDeleteCommentPopup] = useState(false);
-
-  let [modalForData, setModalForData] = useState(false);
-
-  // let [allReactions, setAllReactions] = useState([]);
-
-  let [showEvent, setShowEvent] = useState(false);
-  let [eventType, setEventType] = useState('Select Event Type');
-
-  let [disableAddImage, setDisableAddImage] = useState(false);
-  let [disableAddVideo, setDisableAddVideo] = useState(false);
-  let [disableAddDoc, setDisableAddDoc] = useState(false);
-  let [disableAddEvent, setDisableAddevent] = useState(false);
-  let [disableAddPoll, setDisableAddPoll] = useState(false);
-  let [globalPostType, setGlobalPostType] = useState('TEXT_POST');
+  const [myAnotherArr, setMyAnotherArr] = useState<any>([]);
+  const [postPageNum, setPostPageNum] = useState(0);
+  const [ifReachedEnd, setIfReachedEnd] = useState(false);
+  const [ifNoMoreData, setIfNoMoreData] = useState(false);
+  const [allUpVotes, setAllUpVotes] = useState([]);
+  const [allDownVote, setAllDownVote] = useState([]);
+  const [showUp, setShowup] = useState('up');
+  const [showDeletePostPopup, setShowDeletePostPopup] = useState(false);
+  const [showDeleteCommentPopup, setShowDeleteCommentPopup] = useState(false);
+  const [modalForData, setModalForData] = useState(false);
+  // const [allReactions, setAllReactions] = useState([]);
+  const [showEvent, setShowEvent] = useState(false);
+  const [eventType, setEventType] = useState('Select Event Type');
+  const [disableAddImage, setDisableAddImage] = useState(false);
+  const [disableAddVideo, setDisableAddVideo] = useState(false);
+  const [disableAddDoc, setDisableAddDoc] = useState(false);
+  const [disableAddEvent, setDisableAddevent] = useState(false);
+  const [disableAddPoll, setDisableAddPoll] = useState(false);
+  const [globalPostType, setGlobalPostType] = useState('TEXT_POST');
+  const [isEditorHidden, setIsEditorVisible] = useState(false);
 
   const router = useRouter();
-
-  let [isEditorHidden, setIsEditorVisible] = useState(false);
 
   useEffect(() => {
     props?.params?.withoutEditor ? setIsEditorVisible(true) : '';
@@ -332,7 +324,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         url: `${props?.params?.URL}?${id ? `id=${id}&` : ''}page=${postPageNum}&size=10`,
       })
         .then((response: any) => {
-          let newArr = response?.data;
+          const newArr = response?.data;
           newArr?.map((post: any) => {
             post.isOpenComment = false;
             post.comments = [];
@@ -345,6 +337,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               };
             }
           });
+          console.log('newArr ====>>>>', newArr);
           setMyAnotherArr(newArr);
         })
         .catch((err: any) => {
@@ -476,7 +469,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         formRef.current.querySelector('input[name="radioGroup"]:checked') as HTMLInputElement
       )?.value;
     }
-    let response = await reportUserCall(selectedBlockUserItem?.objectId, reportReason, userToken);
+    const response = await reportUserCall(selectedBlockUserItem?.objectId, reportReason, userToken);
     if (response) {
       if (response?.success) {
         setToastSuccess(true);
@@ -493,7 +486,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   const onUserBlocked = async () => {
     setShowSpinner(true);
-    let response = await blockUserCall(userToken, selectedBlockUserItem?.objectId);
+    const response = await blockUserCall(userToken, selectedBlockUserItem?.objectId);
     if (response) {
       if (response?.success) {
         setToastSuccess(true);
@@ -561,7 +554,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   };
 
   async function copyTextToClipboard(postId: string) {
-    let postUrl = window.location.origin + '/post/' + postId;
+    const postUrl = window.location.origin + '/post/' + postId;
     if ('clipboard' in navigator) {
       return await navigator.clipboard.writeText(postUrl);
     } else {
@@ -672,7 +665,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       )?.value;
     }
 
-    let response = await reportPostCall(reportPostId, reportPostType, reportReason, userToken);
+    const response = await reportPostCall(reportPostId, reportPostType, reportReason, userToken);
     if (response) {
       if (response?.success) {
         setToastSuccess(true);
@@ -696,7 +689,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       url: `${props?.params?.URL}?page=${postPageNum + 1}&size=10`,
     }).then((response: any) => {
       if (response?.data?.length != 0 && response?.data?.length) {
-        let newArr = response?.data;
+        const newArr = response?.data;
         newArr?.map((post: any) => {
           post.isOpenComment = false;
           post.comments = [];
@@ -746,9 +739,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   //Function To Handle Likes
   function LikePost(id: any) {
-    let locArr = myAnotherArr;
+    const locArr = myAnotherArr;
     let ifLikedAlready = false;
-    let modPost = locArr.map((post: any) => {
+    const modPost = locArr.map((post: any) => {
       if (post.id == id) {
         if (post.isLikedByUser) {
           ifLikedAlready = true;
@@ -772,8 +765,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     if (!ifLikedAlready) {
       likePostCall(userToken, id).then((response) => {
         if (response?.data?.success == true) {
-          let locArr = myAnotherArr;
-          let modPost = locArr.map((post: any) => {
+          const locArr = myAnotherArr;
+          const modPost = locArr.map((post: any) => {
             if (post.id == id) {
               post.isLikedByUser = true;
               if (typeof post?.postMeasures?.likeCount === 'number') {
@@ -797,8 +790,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   //Function To Handle Open Comments Tray
   function setOpenComments(id: string, show: boolean) {
-    let locArr = myAnotherArr;
-    let modPost = locArr.map((post: any) => {
+    const locArr = myAnotherArr;
+    const modPost = locArr.map((post: any) => {
       if (post.id == id) {
         post.isOpenComment = show;
         return post;
@@ -812,8 +805,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     // loadComments(id);
   }
   function handleShowShare(id: string, val: any) {
-    let locArr = myAnotherArr;
-    let modPost = locArr.map((post: any) => {
+    const locArr = myAnotherArr;
+    const modPost = locArr.map((post: any) => {
       if (post.id == id) {
         post.showShare = val;
 
@@ -833,9 +826,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
     const commStr = e.target[0].value;
     e.currentTarget.reset();
-    let uniqId = generateUniqueId();
+    const uniqId = generateUniqueId();
     const timestamp = new Date().getTime();
-    let obj = {
+    const obj = {
       id: uniqId,
       createdBy: { ...userObject },
       text: commStr,
@@ -862,7 +855,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       });
       return updatedPosts;
     });
-    let resp = await addPostCommentCall(userToken, id, commStr);
+    const resp = await addPostCommentCall(userToken, id, commStr);
     if (!resp?.data?.data) {
       deleteCommentFromPost(id, uniqId);
     }
@@ -964,8 +957,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     });
   }
 
-  let [deletePostId, setDeletePostId] = useState('');
-  let [deleteCommentId, setDeleteCommentId] = useState<any>('');
+  const [deletePostId, setDeletePostId] = useState('');
+  const [deleteCommentId, setDeleteCommentId] = useState<any>('');
 
   //For Comment
   const confirmationForDeleteComment = (id: any) => {
@@ -1006,7 +999,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   //Delete Post Call
   async function deletePostByApi(id: any) {
-    let resp = await deletePostCall(userToken, id);
+    const resp = await deletePostCall(userToken, id);
     if (resp?.data?.success === true) {
       deletePostById(id);
       setShowNofitication(true);
@@ -1075,7 +1068,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   //Edit Reply
   async function editReply(event: any, postId: any, commentId: any, replyId: any) {
     event.preventDefault();
-    let editReply = event?.target[0].value;
+    const editReply = event?.target[0].value;
     replyEditOn(postId, commentId, replyId, false);
     updateReply(postId, commentId, replyId, editReply);
     await AxiosRequest({
@@ -1145,7 +1138,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   //Edit Comment
   async function editComment(event: any, postId: any, commentId: any) {
     event.preventDefault();
-    let editComm = event?.target[0].value;
+    const editComm = event?.target[0].value;
     commentEditOn(postId, commentId, false);
     updateComment(postId, commentId, editComm);
     await AxiosRequest({
@@ -1197,7 +1190,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   //Function To Handle Posts Feed and Construct React.jsx using data
   function postStructCreate() {
-    let locArr2: ReactElement<any, any>[] = [];
+    const locArr2: ReactElement<any, any>[] = [];
     myAnotherArr?.map((post: any) => {
       locArr2.push(
         <>
@@ -2124,7 +2117,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   }
 
   function openReplyOfReply(postId: string, commentId: string, replyId: string, open: boolean) {
-    let locArr = myAnotherArr;
+    const locArr = myAnotherArr;
     locArr.map((post: any) => {
       if (post?.id == postId && post.comments?.length > 0) {
         post.comments.map((comment: any) => {
@@ -2148,7 +2141,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   }
 
   function openCommentReplies(postId: string, commentid: any, open: boolean) {
-    let locArr = myAnotherArr;
+    const locArr = myAnotherArr;
     locArr.map((post: any) => {
       if (post.id === postId && post.comments?.length > 0) {
         post.comments.map((comment: any) => {
@@ -2170,9 +2163,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const commentString = e.target[0].value;
     e.currentTarget.reset();
 
-    let uniqId = generateUniqueId();
+    const uniqId = generateUniqueId();
     const timestamp = new Date().getTime();
-    let replyObj = {
+    const replyObj = {
       id: uniqId,
       createdBy: { ...userObject },
       text: commentString,
@@ -2203,7 +2196,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       });
       return updatedPosts;
     });
-    let resp = await postCommentReplyCall(userToken, postId, commentId, commentString);
+    const resp = await postCommentReplyCall(userToken, postId, commentId, commentString);
     if (!resp?.data?.data) {
       deleteReplyFromComment(postId, commentId, uniqId);
     }
@@ -2253,9 +2246,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   async function loadCommentReplies(postId: string, id: string) {
     loadingReplies(postId, id, true);
-    let resp = await getCommentsReplyCall(userToken, id, 0);
+    const resp = await getCommentsReplyCall(userToken, id, 0);
     loadingReplies(postId, id, false);
-    let locArr = myAnotherArr;
+    const locArr = myAnotherArr;
     resp?.data?.data.map((reply: any) => {
       reply.isOpenReplyOfReply = false;
       reply.isEditOn = false;
@@ -2317,18 +2310,18 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   async function loadComments(id: any) {
     loadingComments(id, true);
-    let resp = await getCommentsCall(userToken, id, 0);
+    const resp = await getCommentsCall(userToken, id, 0);
     loadingComments(id, false);
-    let respArr = resp?.data?.data;
+    const respArr = resp?.data?.data;
     respArr?.map((comment: any) => {
       comment.isOpenReply = false;
       comment.replies = [];
       comment.isLoadingReplies = false;
     });
-    let locArr = myAnotherArr;
+    const locArr = myAnotherArr;
     locArr.map((post: any) => {
       if (id === post?.id && respArr) {
-        let comm = [...respArr];
+        const comm = [...respArr];
         post.comments = comm;
         return post;
       }
@@ -2340,15 +2333,15 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     localId;
     getPostByIdCall(userToken, id).then((response) => {
       if (response?.data?.data != undefined) {
-        let resp = response?.data?.data;
+        const resp = response?.data?.data;
         setMyAnotherArr((prevPosts: any) => {
           return prevPosts.map((post: any) => {
             if (post?.id === localId) {
               let updatedPoll = null;
               if (post?.postType === 'POLL') {
-                let updatedOptions: any[] = [];
+                const updatedOptions: any[] = [];
                 post.poll.pollOptions.forEach((option: any) => {
-                  let matchingOption = resp.poll.pollOptions.find(
+                  const matchingOption = resp.poll.pollOptions.find(
                     (opt: any) => opt.optionText === option.optionText
                   );
                   if (matchingOption) {
@@ -2420,8 +2413,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     }
     // console.log('mention inside api call component', addedPeers);
     const timestamp = new Date().getTime();
-    let uniqId = generateUniqueId();
-    let obj = {
+    const uniqId = generateUniqueId();
+    const obj = {
       data: {
         data: {
           id: uniqId,
@@ -2486,21 +2479,21 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   function clickmebuttonHandler() {
     if (typeof document !== undefined) {
-      let buttEle = document.getElementById('clickmebutton');
+      const buttEle = document.getElementById('clickmebutton');
       buttEle?.click();
     }
   }
 
   function clickmebuttonHandler2() {
     if (typeof document !== undefined) {
-      let buttEle = document.getElementById('clickmebutton2');
+      const buttEle = document.getElementById('clickmebutton2');
       buttEle?.click();
     }
   }
 
   function clickmebuttonHandler3() {
     if (typeof document !== undefined) {
-      let buttEle = document.getElementById('clickmebutton3');
+      const buttEle = document.getElementById('clickmebutton3');
       buttEle?.click();
     }
   }
@@ -2517,9 +2510,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const fileArray: any = [];
     for (let i = 0; i < files.length; i++) {
       const temp = files[i];
-      let resp = await UploadFilesToServer(temp, 'IMAGE');
+      const resp = await UploadFilesToServer(temp, 'IMAGE');
       if (!resp?.data) break;
-      let uniqueId = generateUniqueId();
+      const uniqueId = generateUniqueId();
       fileArray.push({ id: uniqueId, url: resp?.data, mediaType: 'IMAGE', mediaSequence: 0 });
     }
     if (fileArray.length === files.length) {
@@ -2532,9 +2525,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const fileArray: any = [];
 
     for (let i = 0; i < files.length; i++) {
-      let resp = await UploadFilesToServer(files[i], 'DOC');
+      const resp = await UploadFilesToServer(files[i], 'DOC');
       if (!resp?.data) break;
-      let uniqueId = generateUniqueId();
+      const uniqueId = generateUniqueId();
       fileArray.push({
         id: uniqueId,
         url: resp?.data,
@@ -2554,9 +2547,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const fileArray: any = [];
 
     for (let i = 0; i < files?.length; i++) {
-      let resp = await UploadFilesToServer(files[i], 'VIDEO');
+      const resp = await UploadFilesToServer(files[i], 'VIDEO');
       if (!resp?.data) break;
-      let uniqueId = generateUniqueId();
+      const uniqueId = generateUniqueId();
       fileArray.push({
         id: uniqueId,
         url: resp?.data,
@@ -2581,7 +2574,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     );
 
     if (typeof document !== undefined) {
-      let buttEle: any = document.getElementById('clickmebutton');
+      const buttEle: any = document.getElementById('clickmebutton');
       if (buttEle != null) {
         buttEle.value = '';
       }
@@ -2599,7 +2592,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     );
 
     if (typeof document !== undefined) {
-      let buttEle: any = document.getElementById('clickmebutton2');
+      const buttEle: any = document.getElementById('clickmebutton2');
       if (buttEle != null) {
         buttEle.value = '';
       }
@@ -2610,7 +2603,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   function clickCrossVideoButton() {
     setVideoLink([]);
     if (typeof document !== undefined) {
-      let buttEle: any = document.getElementById('clickmebutton3');
+      const buttEle: any = document.getElementById('clickmebutton3');
       if (buttEle != null) {
         buttEle.value = '';
       }
@@ -2687,7 +2680,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 return (
                   <div key={id} className={addPostCss.modalUserContainer}>
                     <div className={addPostCss.modalUserDetailContainer}>
-                      <img className={addPostCss.userImg} src={Profile.src} />
+                      <img className={addPostCss.userImg} src={Profile.src} alt="Profile Image" />
                       <div>
                         <div>{user?.firstName}</div>
                         <div>{user?.objectId}</div>
@@ -2700,7 +2693,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 return (
                   <div key={id} className={addPostCss.modalUserContainer}>
                     <div className={addPostCss.modalUserDetailContainer}>
-                      <img className={addPostCss.userImg} src={Profile.src} />
+                      <img className={addPostCss.userImg} src={Profile.src} alt="Profile Image" />
                       <div>
                         <div>{user?.firstName}</div>
                         <div>{user?.objectId}</div>
@@ -2757,10 +2750,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setEventType('Select Event Type');
   }
 
-  let [showPollForm, setShowPollForm] = useState(false);
-  let option1Id = generateUniqueId();
-  let option2Id = generateUniqueId();
-  let option1 = {
+  const [showPollForm, setShowPollForm] = useState(false);
+  const option1Id = generateUniqueId();
+  const option2Id = generateUniqueId();
+  const option1 = {
     id: option1Id,
     name: 1,
     placeholder: 1,
@@ -2768,7 +2761,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     optionText: '',
     cannotDelete: true,
   };
-  let option2 = {
+  const option2 = {
     id: option2Id,
     name: 2,
     placeholder: 2,
@@ -2776,17 +2769,17 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     optionText: '',
     cannotDelete: true,
   };
-  let [pollFormOptions, setPollFormOptions] = useState<any>([option1, option2]);
-  let [pollOptionCount, setPollOptionCount] = useState(2);
-  let [isOptionsThreshold, setoptionsThreshold] = useState(false);
-  let [pollQuestion, setPollQuestion] = useState('');
+  const [pollFormOptions, setPollFormOptions] = useState<any>([option1, option2]);
+  const [pollOptionCount, setPollOptionCount] = useState(2);
+  const [isOptionsThreshold, setoptionsThreshold] = useState(false);
+  const [pollQuestion, setPollQuestion] = useState('');
 
   function addPollOption() {
     if (pollOptionCount < 4) {
       setPollOptionCount((prevCount) => {
         return prevCount + 1;
       });
-      let option = {
+      const option = {
         id: option2Id,
         name: pollOptionCount + 1,
         placeholder: pollOptionCount + 1,
@@ -2868,7 +2861,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   function submitPollForm(event: any) {
     event.preventDefault();
-    let newArr = pollFormOptions.map((options: any) => {
+    const newArr = pollFormOptions.map((options: any) => {
       return {
         optionSequence: options.optionSequence,
         optionText: options.optionText,
@@ -2876,7 +2869,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         responseCount: options.responseCount,
       };
     });
-    let pollVar = {
+    const pollVar = {
       poll: {
         pollQuestion: pollQuestion,
         pollOptions: newArr,
@@ -2889,7 +2882,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setShowPollForm(false);
   }
 
-  let [eventImage, setEventImage] = useState(
+  const [eventImage, setEventImage] = useState(
     'https://chinchincelebration.com/wp-content/uploads/2019/08/product-launch-events-min.png'
   );
 
@@ -2988,7 +2981,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                     >
                                       <img
                                         width="30px"
-                                        src="https://cdn-icons-png.flaticon.com/512/3416/3416079.png"
+                                        src="https://cdn-icons-png.flaticon.com/32/3416/3416079.png"
                                         alt="cross_button"
                                         style={{ borderRadius: '30px' }}
                                       ></img>
@@ -3090,7 +3083,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                   >
                                     <img
                                       width="30px"
-                                      src="   https://cdn-icons-png.flaticon.com/512/1617/1617543.png "
+                                      src="https://cdn-icons-png.flaticon.com/32/1617/1617543.png "
                                       alt="crossButton"
                                     />
                                   </button>
@@ -3132,7 +3125,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                   >
                                     <img
                                       width="30px"
-                                      src="https://cdn-icons-png.flaticon.com/512/1617/1617543.png"
+                                      src="https://cdn-icons-png.flaticon.com/32/1617/1617543.png"
                                       alt="crossButton"
                                     />
                                   </button>
@@ -3307,12 +3300,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           </Modal.Title>
                         </Modal.Header>
                         <div className={styles.AddEventModalBody}>
-                          <img width="100%" src={eventImage} />
+                          <img width="100%" src={eventImage} alt="Event Image" />
                         </div>
                         <Modal.Body>
                           <div className={styles.AddEventModalProfile}>
                             <div className={styles.AddEventModalProfilePic}>
-                              <img src={Profile.src} />
+                              <img src={Profile.src} alt="Profile Image" />
                             </div>
                             <div style={{ alignSelf: 'center' }}>
                               <div style={{ fontSize: '1rem', fontWeight: '600' }}>
@@ -3369,10 +3362,11 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
                               <Dropdown.Menu>
                                 {props?.fields?.data?.datasource?.eventType?.targetItems?.map(
-                                  (item: any) => {
+                                  (item: any, index: number) => {
                                     return (
                                       <Dropdown.Item
                                         href="#"
+                                        key={index}
                                         onClick={() => {
                                           setEventType(item?.title?.jsonValue?.value);
                                           setEventImage(item?.image?.jsonValue?.value?.href);
@@ -3475,7 +3469,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         <Modal.Body>
                           <div className={styles.AddEventModalProfile}>
                             <div className={styles.AddEventModalProfilePic}>
-                              <img src={Profile.src} />
+                              <img src={Profile.src} alt="Profile Image" />
                             </div>
                             <div style={{ alignSelf: 'center' }}>
                               <div style={{ fontSize: '1rem', fontWeight: '600' }}>
@@ -3509,9 +3503,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                             >
                               Add Poll
                             </div>
-                            {pollFormOptions.map((option: any) => {
+                            {pollFormOptions.map((option: any, index: number) => {
                               return (
-                                <Form.Group className="mb-3" id={option?.id}>
+                                <Form.Group className="mb-3" id={option?.id} key={index}>
                                   <div style={{ display: 'flex' }}>
                                     <Form.Control
                                       required

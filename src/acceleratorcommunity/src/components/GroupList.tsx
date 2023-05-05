@@ -1,14 +1,14 @@
-// import { Text, Field, withDatasourceCheck } from '@sitecore-jss/sitecore-jss-nextjs';
-import { ComponentProps } from 'lib/component-props';
 import Image from 'next/image';
-// import groupLogo from '../assets/images/groupLogo.svg';
-import moreLogo from '../assets/images/moreLogo.svg';
-import exploreGroup from '../assets/images/ExploreGroup_icon.svg';
-import joinGroup from '../assets/images/JoinGroup_icon.svg';
-import style from '../assets/groupList.module.css';
-import { useState } from 'react';
-import CreateGroup from './helperComponents/CreateGroup';
 import { useRouter } from 'next/router';
+import { useContext, useState } from 'react';
+import { ComponentProps } from 'lib/component-props';
+import CreateGroup from './helperComponents/CreateGroup';
+import moreLogo from '../assets/images/moreLogo.svg';
+import joinGroup from '../assets/images/JoinGroup_icon.svg';
+import exploreGroup from '../assets/images/ExploreGroup_icon.svg';
+import style from '../assets/groupList.module.css';
+import darkModeCss from '../assets/darkTheme.module.css';
+import WebContext from 'src/Context/WebContext';
 // import Skeleton from 'react-loading-skeleton';
 
 type GroupListProps = ComponentProps & {
@@ -47,6 +47,7 @@ const GroupList = (props: GroupListProps): JSX.Element => {
   // const [isSelectedGroup, setIsSelectedGroup] = useState(0);
   // const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [createGroupVisibel, setCreateGroupVisibel] = useState(false);
+  const { darkMode } = { ...useContext(WebContext) };
   const handleExploreOnClick = (name: string) => {
     router.push(`/group?groupName=${name}`);
   };
