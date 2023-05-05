@@ -8,6 +8,9 @@ export const addPeersBySearchUrl = `${javaHost}/graph-service/api/v1/graph/peers
 export const addPeersPaginationUrl = `${javaHost}/graph-service/api/v1/graph/peers?`;
 export const editCommentUrl = `${javaHost}/graph-service/api/v1/graph/post/comment`;
 export const voteInPollUrl = `${javaHost}/graph-service/api/v1/graph/post/poll/`;
+export const getMyBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/my-blogs`;
+export const getBookmarkedMyBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/my-blogs`;
+export const getSuggestedBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/bookmarked-blogs`;
 
 export const Algorithm = 'aes-256-cbc';
 export const Key = [
