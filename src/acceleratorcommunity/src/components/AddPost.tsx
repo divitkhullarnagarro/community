@@ -84,6 +84,7 @@ import deleteCommentCall from 'src/API/deleteCommentCall';
 import reportUserCall from 'src/API/reportUserCall';
 import { useRouter } from 'next/router';
 import AddPostSkeleton from './skeletons/AddPostSkeleton';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 //logging on logrocket
 import LogRocket from 'logrocket';
@@ -101,7 +102,7 @@ type BlockUserFields = {
 };
 
 const AddPost = (props: AddPostProps | any): JSX.Element => {
-  const { userToken, objectId, userObject } = {
+  const { userToken, objectId, userObject, darkMode } = {
     ...useContext(WebContext),
   };
   //logging on logrocket start
@@ -1195,7 +1196,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       locArr2.push(
         <>
           {post?.postType === 'ERRORPOST' ? (
-            <div className="postContainer" key={post?.id}>
+            <div className={`postContainer ${darkMode ? darkModeCss.grey_2 : ''}`} key={post?.id}>
               <div style={{ padding: '40px', fontSize: '36px' }}>
                 {post.description}{' '}
                 <div style={{ color: 'red', fontSize: '12px' }}>
@@ -1204,10 +1205,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </div>
             </div>
           ) : (
-            <div className="postContainer" key={post?.id}>
+            <div className={`postContainer ${darkMode ? darkModeCss.grey_2 : ''}`} key={post?.id}>
               <div className="postHeading">
                 <div className="postHeaderLeft">
-                  <Link href={`/profile/${post?.createdBy?.objectId}`}>
+                  <Link passHref={true} href={`/profile/${post?.createdBy?.objectId}`}>
                     <img
                       className="postUserImage"
                       src={
@@ -1220,7 +1221,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </Link>
 
                   <div className="postDetailContainer">
-                    <h5 className="postOwner">
+                    <h5 className={`postOwner ${darkMode ? darkModeCss.text_green : ''}`}>
                       <span>
                         {post?.createdBy?.firstName ? post?.createdBy?.firstName : 'Unknown'}
                       </span>
@@ -1232,7 +1233,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         width="9px"
                         src="https://cdn-icons-png.flaticon.com/512/2088/2088617.png"
                         alt="post time"
-                        style={{ opacity: '0.4', marginRight: '4px' }}
+                        style={darkMode ? { filter: 'invert(1)', opacity: 1 } : {}}
                       ></img>
                       <span>
                         {post?.createdOn != 0 &&
@@ -1259,7 +1260,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         }}
                         style={{
                           border: 'none',
-                          backgroundColor: 'white',
+                          backgroundColor: 'transparent',
                           padding: '0',
                         }}
                       >
@@ -1271,23 +1272,35 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       </button>
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu className={styles.dropdownMenu}>
-                      <Dropdown.Item className={styles.dropdownItem}>
+                    <Dropdown.Menu
+                      className={`${styles.dropdownMenu} ${darkMode ? darkModeCss.grey_1 : ''}`}
+                    >
+                      <Dropdown.Item
+                        className={`${styles.dropdownItem} ${darkMode ? darkModeCss.grey_2 : ''}`}
+                      >
                         <div className={styles.overlayItem}>
-                          <div className={styles.dropdownImage}>
+                          <div
+                            className={`${styles.dropdownImage} ${
+                              darkMode ? darkModeCss.invertFilter : ''
+                            }`}
+                          >
                             <NextImage field={bookmarkImage} editable={true} />
                           </div>
                           <div className={styles.reportContainerBtn}>Save Post</div>
                         </div>
                       </Dropdown.Item>
                       <Dropdown.Item
-                        className={styles.dropdownItem}
+                        className={`${styles.dropdownItem} ${darkMode ? darkModeCss.grey_2 : ''}`}
                         onClick={() => {
                           copyPostLinkToClipboard(post?.id);
                         }}
                       >
                         <div className={styles.overlayItem}>
-                          <div className={styles.dropdownImage}>
+                          <div
+                            className={`${styles.dropdownImage} ${
+                              darkMode ? darkModeCss.invertFilter : ''
+                            }`}
+                          >
                             <NextImage field={copylink} editable={true} />
                           </div>
                           <div className={styles.reportContainerBtn}>Copy link to post</div>
@@ -1296,27 +1309,39 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       {post?.createdBy?.objectId !== objectId ? (
                         <>
                           <Dropdown.Item
-                            className={styles.dropdownItem}
+                            className={`${styles.dropdownItem} ${
+                              darkMode ? darkModeCss.grey_2 : ''
+                            }`}
                             onClick={() => {
                               showReportPostPopup();
                             }}
                           >
                             <div className={styles.overlayItem}>
-                              <div className={styles.dropdownImage}>
+                              <div
+                                className={`${styles.dropdownImage} ${
+                                  darkMode ? darkModeCss.invertFilter : ''
+                                }`}
+                              >
                                 <NextImage field={reportPostImage} editable={true} />
                               </div>
                               <div className={styles.reportContainerBtn}>Report Post</div>
                             </div>
                           </Dropdown.Item>
                           <Dropdown.Item
-                            className={styles.dropdownItem}
+                            className={`${styles.dropdownItem} ${
+                              darkMode ? darkModeCss.grey_2 : ''
+                            }`}
                             onClick={() => {
                               setSelectedBlockUserItem(post?.createdBy);
                               setShowBlockUserPopUp(true);
                             }}
                           >
                             <div className={styles.overlayItem}>
-                              <div className={styles.dropdownImage}>
+                              <div
+                                className={`${styles.dropdownImage} ${
+                                  darkMode ? darkModeCss.invertFilter : ''
+                                }`}
+                              >
                                 <NextImage field={BlockUserImage} editable={true} />
                               </div>
                               <div className={styles.reportContainerBtn}>
@@ -1325,14 +1350,20 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                             </div>
                           </Dropdown.Item>
                           <Dropdown.Item
-                            className={styles.dropdownItem}
+                            className={`${styles.dropdownItem} ${
+                              darkMode ? darkModeCss.grey_2 : ''
+                            }`}
                             onClick={() => {
                               setSelectedBlockUserItem(post?.createdBy);
                               setShowReportUserPopUp(true);
                             }}
                           >
                             <div className={styles.overlayItem}>
-                              <div className={styles.dropdownImage}>
+                              <div
+                                className={`${styles.dropdownImage} ${
+                                  darkMode ? darkModeCss.invertFilter : ''
+                                }`}
+                              >
                                 <NextImage field={reportPostImage} editable={true} />
                               </div>
                               <div className={styles.reportContainerBtn}>
@@ -1347,7 +1378,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       )}
                       {post?.createdBy?.objectId === objectId ? (
                         <Dropdown.Item
-                          className={styles.dropdownItem}
+                          className={`${styles.dropdownItem} ${darkMode ? darkModeCss.grey_2 : ''}`}
                           onClick={() => {
                             setDeletePostId(post?.id);
                             setShowDeletePostPopup(true);
@@ -1416,7 +1447,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 </div>
                 {post?.postType === 'EVENT' ? (
                   <>
-                    <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
+                    <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
+                      {parser(modifyHtml(post?.description))}
+                    </div>
                     <EventCard
                       heading={post?.event?.title}
                       description={post?.event?.description}
@@ -1427,24 +1460,25 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                   </>
                 ) : post?.postType === 'POLL' ? (
                   <>
-                    <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
+                    <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
+                      {parser(modifyHtml(post?.description))}
+                    </div>
                     <PollCard pollPost={{ poll: post?.poll }} voteInAPoll={voteInAPoll} />
                   </>
                 ) : post?.postType === 'BLOG_POST' ? (
                   <>
-                    <div
-                      className="blogHeading"
-                      style={{ fontWeight: 600, fontSize: '50px', margin: '8px 16px' }}
-                    >
+                    <div className={`blogHeading ${darkMode ? darkModeCss.text_green : ''}`}>
                       {post?.blog?.heading}
                     </div>
-                    <img style={{ maxWidth: '100%' }} src={post?.blog?.imageUrl}></img>
-                    <div className="postDescription">
+                    <img style={{ width: '100%' }} src={post?.blog?.imageUrl} alt="Post Image" />
+                    <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
                       {parser(modifyHtml(post?.blog?.description))}
                     </div>
                   </>
                 ) : (
-                  <div className="postDescription">{parser(modifyHtml(post?.description))}</div>
+                  <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
+                    {parser(modifyHtml(post?.description))}
+                  </div>
                 )}
               </div>
 
@@ -1452,6 +1486,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 <div className={styles.likeContainer}>
                   <button
                     className={styles.likeButton}
+                    style={darkMode ? { backgroundColor: 'transparent' } : {}}
                     onClick={() => LikePost(post?.id)}
                     disabled={post?.isRespPending}
                   >
@@ -1477,6 +1512,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                 <div className={styles.commentContainer}>
                   <button
                     className={styles.commentButton}
+                    style={darkMode ? { backgroundColor: 'transparent' } : {}}
                     onClick={() => setOpenComments(post.id, !post.isOpenComment)}
                     aria-controls="anotherCommentsContainer"
                     aria-expanded={post?.isOpenComment}
@@ -1519,6 +1555,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       <button
                         onClick={() => handleShowShare(post.id, !post?.showShare)}
                         className={styles.shareButton}
+                        style={darkMode ? { backgroundColor: 'transparent' } : {}}
                         disabled={post?.isRespPending}
                       >
                         <img src={share.src} alt="SharePost" />
@@ -1526,9 +1563,15 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       </button>
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu className={ShowShareCss.dropdownMenu}>
+                    <Dropdown.Menu
+                      className={`${ShowShareCss.dropdownMenu} ${
+                        darkMode ? darkModeCss.grey_1 : ''
+                      }`}
+                    >
                       <Dropdown.Item
-                        className={ShowShareCss.dropdownItem}
+                        className={`${ShowShareCss.dropdownItem} ${
+                          darkMode ? ShowShareCss.darkModeActive : ''
+                        }`}
                         target="_blank"
                         href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
                       >
@@ -1546,7 +1589,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         </div>
                       </Dropdown.Item>
                       <Dropdown.Item
-                        className={ShowShareCss.dropdownItem}
+                        className={`${ShowShareCss.dropdownItem} ${
+                          darkMode ? ShowShareCss.darkModeActive : ''
+                        }`}
                         target="_blank"
                         href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
                       >
@@ -1564,7 +1609,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         </div>
                       </Dropdown.Item>
                       <Dropdown.Item
-                        className={ShowShareCss.dropdownItem}
+                        className={`${ShowShareCss.dropdownItem} ${
+                          darkMode ? ShowShareCss.darkModeActive : ''
+                        }`}
                         target="_blank"
                         href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
                       >
@@ -1582,7 +1629,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         </div>
                       </Dropdown.Item>
                       <Dropdown.Item
-                        className={ShowShareCss.dropdownItem}
+                        className={`${ShowShareCss.dropdownItem} ${
+                          darkMode ? ShowShareCss.darkModeActive : ''
+                        }`}
                         target="_blank"
                         href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
                       >
@@ -2896,15 +2945,17 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   return (
     <>
-      <div className={styles.mainContainer}>
+      <div className={`${styles.mainContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}>
         {!isEditorHidden ? (
           <>
-            <div className={styles.addPostWidgetContainer}>
+            <div
+              className={`${styles.addPostWidgetContainer} ${darkMode ? darkModeCss.grey_2 : ''}`}
+            >
               {/* <div style={{ marginBottom: '40px' }}> */}
               <div className={styles.addPostFieldContainer}>
                 <div className={styles.addPostField}>
                   <div className={styles.addPostImage}>
-                    <Link href={`/profile`}>
+                    <Link href={`/profile`} passHref={true}>
                       <NextImage
                         field={user}
                         editable={true}
