@@ -1,17 +1,6 @@
 importScripts('https://www.gstatic.com/firebasejs/9.20.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/9.20.0/firebase-messaging-compat.js');
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker
-    .register('../firebase-messaging-sw.js')
-    .then(function (registration) {
-      console.log('Registration successful, scope is:', registration.scope);
-    })
-    .catch(function (err) {
-      console.log('Service worker registration failed, error:', err);
-    });
-}
-
 const firebaseConfig = {
   apiKey: 'AIzaSyAnkIhfUD9aa1Z16Vwg9bc6ahl41-LGkI4',
   authDomain: 'communitysolutions-6fddd.firebaseapp.com',

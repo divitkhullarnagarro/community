@@ -53,6 +53,39 @@ const FirebaseProvider = (props: any) => {
     return null;
   };
 
+  const checkAndRegsiterServiceWorker = () => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .getRegistration('../firebase-messaging-sw.js')
+        .then((registration) => {
+          if (registration) {
+            registerServiceWorker();
+            console.log('Service worker is registered and active');
+          } else {
+            registerServiceWorker();
+          }
+        })
+        .catch((error) => {
+          console.error('Error checking service worker registration:', error);
+        });
+    }
+  };
+
+  const registerServiceWorker = () => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('../firebase-messaging-sw.js', {
+          scope: '/firebase-cloud-messaging-push-scope',
+        })
+        .then(function (registration) {
+          console.log('Registration successful, scope is:', registration.scope);
+        })
+        .catch(function (err) {
+          console.log('Service worker registration failed, error:', err);
+        });
+    }
+  };
+
   const deleteTokenFromFirebase = async () => {
     if (!firebase) {
       const messaging = getMessaging(firebaseInstance);
@@ -68,6 +101,7 @@ const FirebaseProvider = (props: any) => {
         firebaseInstance,
         requestForNotificationPermission,
         deleteTokenFromFirebase,
+        checkAndRegsiterServiceWorker,
       }}
     >
       {props?.children}
