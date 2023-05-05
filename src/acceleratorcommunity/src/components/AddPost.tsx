@@ -3186,6 +3186,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       alt="Profile-Pic"
                       width={18}
                       height={18}
+                      title="Add a Image"
                     />
 
                     <Form.Group
@@ -3220,6 +3221,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       width={18}
                       height={18}
                       style={{ opacity: disableAddVideo ? '0.2' : '1' }}
+                      title="Add a Video"
                     />
                     <Form.Group
                     // className="mb-3"
@@ -3252,6 +3254,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       width={18}
                       height={18}
                       style={{ opacity: disableAddDoc ? '0.2' : '1' }}
+                      title="Add a Attachment"
                     />
                     <Form.Group
                     // className="mb-3"
@@ -3285,6 +3288,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       alt="PostItems"
                       width={18}
                       height={18}
+                      title="Create a Event"
                     />
                   </button>
                   <Modal
@@ -3447,6 +3451,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       style={{ opacity: disableAddPoll ? '0.2' : '1' }}
                       width={18}
                       height={18}
+                      title="Create a Poll"
                     />
                   </button>
                   <Modal
@@ -3606,6 +3611,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         width={18}
                         height={18}
                         style={{ opacity: disableAddDoc ? '0.2' : '1' }}
+                        title="Create a Blog"
                       />
                     </Link>
                   </button>
