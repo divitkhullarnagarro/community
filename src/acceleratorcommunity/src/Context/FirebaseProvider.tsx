@@ -101,6 +101,7 @@ const FirebaseProvider = (props: any) => {
     <FirebaseContext.Provider
       value={{
         firebaseInstance,
+        getFcmTokenFromLocalStorage,
         requestForNotificationPermission,
         deleteTokenFromFirebase,
         checkAndRegsiterServiceWorker,

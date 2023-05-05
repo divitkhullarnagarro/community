@@ -12,6 +12,8 @@ import NotificationLike from '../assets/images/NotificationLike.png';
 import NotificationComment from '../assets/images/NotificationComment.png';
 import NotificationOpen from '../assets/images/NotificationOpen.png';
 import ThemeSwitcher from './ThemeSwitcher';
+import FirebaseContext from 'src/Context/FirebaseContext';
+import AxiosRequest from 'src/API/AxiosRequest';
 
 const NotificationType = {
   LIKE_ON_POST: 'LIKE_ON_POST',
@@ -48,6 +50,31 @@ const Notification = (props: NotificationProps): JSX.Element => {
   const { objectId, setObjectId } = {
     ...useContext(WebContext),
   };
+
+  const { requestForNotificationPermission, checkAndRegsiterServiceWorker } = {
+    ...useContext(FirebaseContext),
+  };
+
+  const mapFirebaseTokenToCurrentUser = (fcm_token: string) => {
+    AxiosRequest({
+      method: 'POST',
+      url: `https://accelerator-api-management.azure-api.net/graph-service/api/v1/map-uuid?uuid=${fcm_token}`,
+    })
+      .then((response: any) => {
+        console.log('APIResponseFCM', response);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    requestForNotificationPermission().then((data: any) => {
+      checkAndRegsiterServiceWorker();
+      mapFirebaseTokenToCurrentUser(data);
+      console.log('tokenFromFirebaseProvider', data);
+    });
+  }, []);
 
   const { socket } = { ...useContext(SocketContext) };
   const [notificationList, setNotificationList] = useState<ArticleNotificationType[]>([]);

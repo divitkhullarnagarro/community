@@ -108,9 +108,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   useEffect(() => {
     console.log('asdfghjklasdfghjksdfghj', userObject);
     LogRocket.init('5m0bj8/communitysolution');
-    LogRocket.identify(userObject.email, {
-      name: `${userObject.firstName} ${userObject.lastName}`,
-      email: userObject.email,
+    LogRocket.identify(userObject?.email, {
+      name: `${userObject?.firstName} ${userObject?.lastName}`,
+      email: userObject?.email,
 
       // Add your own custom user variables here, ie:
       subscriptionType: 'pro',
