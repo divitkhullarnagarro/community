@@ -1445,7 +1445,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     >
                       {post?.blog?.heading}
                     </div>
-                    <NextImage src={post?.blog?.imageUrl}></NextImage>
+                    <NextImage field={post?.blog?.imageUrl}></NextImage>
                     <div className="postDescription">
                       {parser(modifyHtml(post?.blog?.description))}
                     </div>
