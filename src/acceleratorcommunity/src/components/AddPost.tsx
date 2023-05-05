@@ -1445,7 +1445,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     >
                       {post?.blog?.heading}
                     </div>
-                    <img src={post?.blog?.imageUrl}></img>
+                    <img style={{ maxWidth: '100%' }} src={post?.blog?.imageUrl}></img>
                     <div className="postDescription">
                       {parser(modifyHtml(post?.blog?.description))}
                     </div>
