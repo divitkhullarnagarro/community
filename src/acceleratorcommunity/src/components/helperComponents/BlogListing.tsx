@@ -18,13 +18,16 @@ const tablist = ['My Blogs', 'Suggested Blogs', 'Bookmarked Blogs'];
 function BlogListing() {
   const [activeTab, setActiveTab] = useState('My Blogs');
   const [blogList, setBlogList] = useState<Blog>([] as Blog);
+  const [skeletonVisible, setSkeletonVisible] = useState(true);
   const getMyBlogs = async () => {
     const data: AxiosResponse<any> = await AxiosRequest({
       method: 'GET',
       url: getMyBlogsUrl,
     });
+
     const myblogData = data.data.map((ele: any) => ele.blog);
     setBlogList(myblogData);
+    setSkeletonVisible(false);
   };
   const getSuggestedBlogs = async () => {
     const data: AxiosResponse<any> = await AxiosRequest({
@@ -33,6 +36,7 @@ function BlogListing() {
     });
     const suggesteBblogData = data.data.map((ele: any) => ele.blog);
     setBlogList(suggesteBblogData);
+    setSkeletonVisible(false);
   };
   const getBookmarkedMyBlogs = async () => {
     const data: AxiosResponse<any> = await AxiosRequest({
@@ -41,13 +45,20 @@ function BlogListing() {
     });
     const bookmarkedBlogData = data.data.map((ele: any) => ele.blog);
     setBlogList(bookmarkedBlogData);
+    setSkeletonVisible(false);
   };
   useEffect(() => {
     if (activeTab == 'My Blogs') {
+      setSkeletonVisible(true);
+      setBlogList([]);
       getMyBlogs();
     } else if (activeTab == 'Suggested Blogs') {
+      setSkeletonVisible(true);
+      setBlogList([]);
       getSuggestedBlogs();
     } else {
+      setSkeletonVisible(true);
+      setBlogList([]);
       getBookmarkedMyBlogs();
     }
   }, [activeTab]);
@@ -57,7 +68,7 @@ function BlogListing() {
     router.push(`/event/${event}`);
   };
   console.log('ertyuirwerty', blogList);
-  return blogList.length > 0 ? (
+  return (
     <>
       <div className={style.blogListingPage}>
         <div className={style.blogListNavbar}>
@@ -75,48 +86,52 @@ function BlogListing() {
           </div>
         </div>
         <div className={style.blogListcontent}>
-          <div className={style.blogList}>
-            {blogList.map((ele, i) => (
-              <div key={i} className={style.blogCard}>
-                <div className={style.BlogImage}>
-                  <Image
-                    style={{ cursor: 'pointer' }}
-                    src={
-                      ele.imageUrl
-                        ? ele.imageUrl
-                        : 'https://wwwsitecorecom.azureedge.net/-/media/sitecoresite/images/home/blog/content/sitecore-dx-2023-europe-shows-brands-how-to-get-on-a-composable-path/dx23-europe_blog-hero.jpg?md=20230425T191825Z?mw=716&mh=465&hash=DDF8137DC1F93BF9DA09D5213D6EC547'
-                    }
-                    alt={ele.heading}
-                    height={200}
-                    width={300}
-                    placeholder="blur"
-                    //   blurDataURL={placeholderImg.src}
-                    blurDataURL={
-                      ele.imageUrl
-                        ? ele.imageUrl
-                        : 'https://wwwsitecorecom.azureedge.net/-/media/sitecoresite/images/home/blog/content/sitecore-dx-2023-europe-shows-brands-how-to-get-on-a-composable-path/dx23-europe_blog-hero.jpg?md=20230425T191825Z?mw=716&mh=465&hash=DDF8137DC1F93BF9DA09D5213D6EC547'
-                    }
-                    onClick={() => navigateToEventPage(ele.heading)}
-                  />
-                </div>
-                <div>
-                  <div className={style.blogCardContent}>
-                    <div className={style.blogHeading} title={ele.heading}>
-                      {ele.heading.length <= 30
-                        ? ele.heading
-                        : ele.heading.substring(0, 30) + '...'}
+          {blogList.length > 0 ? (
+            <div className={style.blogList}>
+              {blogList.map((ele, i) => (
+                <div key={i} className={style.blogCard}>
+                  <div className={style.BlogImage}>
+                    <Image
+                      style={{ cursor: 'pointer' }}
+                      src={
+                        ele.imageUrl
+                          ? ele.imageUrl
+                          : 'https://wwwsitecorecom.azureedge.net/-/media/sitecoresite/images/home/blog/content/sitecore-dx-2023-europe-shows-brands-how-to-get-on-a-composable-path/dx23-europe_blog-hero.jpg?md=20230425T191825Z?mw=716&mh=465&hash=DDF8137DC1F93BF9DA09D5213D6EC547'
+                      }
+                      alt={ele.heading}
+                      height={200}
+                      width={300}
+                      placeholder="blur"
+                      //   blurDataURL={placeholderImg.src}
+                      blurDataURL={
+                        ele.imageUrl
+                          ? ele.imageUrl
+                          : 'https://wwwsitecorecom.azureedge.net/-/media/sitecoresite/images/home/blog/content/sitecore-dx-2023-europe-shows-brands-how-to-get-on-a-composable-path/dx23-europe_blog-hero.jpg?md=20230425T191825Z?mw=716&mh=465&hash=DDF8137DC1F93BF9DA09D5213D6EC547'
+                      }
+                      onClick={() => navigateToEventPage(ele.heading)}
+                    />
+                  </div>
+                  <div>
+                    <div className={style.blogCardContent}>
+                      <div className={style.blogHeading} title={ele.heading}>
+                        {ele.heading.length <= 30
+                          ? ele.heading
+                          : ele.heading.substring(0, 30) + '...'}
+                      </div>
+                      <div className={style.blogDescription}>{parser(ele.description)}</div>
                     </div>
-                    <div className={style.blogDescription}>{parser(ele.description)}</div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : !skeletonVisible ? (
+            <div className={style.blogList}>No Blogs Found</div>
+          ) : (
+            <BlogListingSkeleton />
+          )}
         </div>
       </div>
     </>
-  ) : (
-    <BlogListingSkeleton />
   );
 }
 
