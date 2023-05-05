@@ -3,7 +3,7 @@ import FirebaseContext from './FirebaseContext';
 import firebase, { FirebaseApp, initializeApp } from 'firebase/app';
 import firebaseConfig, { vapidKey } from 'src/firebase/FirebaseConfig';
 import { decryptString, encryptString } from 'assets/helpers/EncryptDecrypt';
-import { deleteToken, getMessaging, getToken } from 'firebase/messaging';
+import { deleteToken, getMessaging, getToken, isSupported } from 'firebase/messaging';
 
 const FirebaseProvider = (props: any) => {
   const [firebaseInstance, setFirebaseInstance] = useState<FirebaseApp>();
@@ -28,17 +28,20 @@ const FirebaseProvider = (props: any) => {
             return fcmToken;
           }
 
-          const messaging = getMessaging(app);
           const status = await Notification.requestPermission();
           if (status && status === 'granted') {
-            const fcm_token = await getToken(messaging, {
-              vapidKey: vapidKey,
-            });
+            const isSupportedBrowser = await isSupported();
+            if (isSupportedBrowser) {
+              const messaging = getMessaging(app);
+              const fcm_token = await getToken(messaging, {
+                vapidKey: vapidKey,
+              });
 
-            if (fcm_token) {
-              let encryptedFcmToken = encryptString(fcm_token);
-              localStorage.setItem('fcm_token', encryptedFcmToken);
-              return fcm_token;
+              if (fcm_token) {
+                let encryptedFcmToken = encryptString(fcm_token);
+                localStorage.setItem('fcm_token', encryptedFcmToken);
+                return fcm_token;
+              }
             }
           } else if (status && status === 'denied') {
             //alert('You denied for the notification');
@@ -59,7 +62,6 @@ const FirebaseProvider = (props: any) => {
         .getRegistration('../firebase-messaging-sw.js')
         .then((registration) => {
           if (registration) {
-            registerServiceWorker();
             console.log('Service worker is registered and active');
           } else {
             registerServiceWorker();
@@ -75,7 +77,7 @@ const FirebaseProvider = (props: any) => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
         .register('../firebase-messaging-sw.js', {
-          scope: '/firebase-cloud-messaging-push-scope',
+          scope: '/',
         })
         .then(function (registration) {
           console.log('Registration successful, scope is:', registration.scope);
