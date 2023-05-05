@@ -11,6 +11,8 @@ import { useRouter } from 'next/router';
 import logoutUserCall from 'src/API/logoutUserCall';
 import { getValueFromCookie } from 'assets/helpers/helperFunctions';
 import Link from 'next/link';
+import FirebaseContext from 'src/Context/FirebaseContext';
+import AxiosRequest from 'src/API/AxiosRequest';
 
 type UserProfileProps = ComponentProps & {
   fields: {
@@ -25,6 +27,9 @@ type UserProfileProps = ComponentProps & {
 
 const UserProfile = (props: UserProfileProps): JSX.Element => {
   const { setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
+  const { deleteTokenFromFirebase, getFcmTokenFromLocalStorage } = {
+    ...useContext(FirebaseContext),
+  };
   console.log('profile', props);
   const router = useRouter();
 
@@ -45,9 +50,13 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
           <div>
             <Modal.Header className={userProfileCss.logoutModalHeader}>
               <Modal.Title className={userProfileCss.logoutModalTitle}>{'Logout'}</Modal.Title>
-              <CloseButton variant='default' className={userProfileCss.logoutModalClose} onClick={() => {
+              <CloseButton
+                variant="default"
+                className={userProfileCss.logoutModalClose}
+                onClick={() => {
                   setLogoutPopUp(false);
-                }}></CloseButton>
+                }}
+              ></CloseButton>
             </Modal.Header>
             <Modal.Body>
               <div className={userProfileCss.logoutModalBody}>{`Do you want to logout ?`}</div>
@@ -78,6 +87,19 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
     );
   };
 
+  const unMapFirebaseTokenFromCurrentUser = (fcm_token: string) => {
+    AxiosRequest({
+      method: 'POST',
+      url: `https://accelerator-api-management.azure-api.net/graph-service/api/v1/unmap-uuid?uuid=${fcm_token}`,
+    })
+      .then((response: any) => {
+        console.log('APIResponseFCM', response);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+
   const logOutUser = async () => {
     let response = await logoutUserCall();
     if (
@@ -86,6 +108,10 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
       setUserToken != undefined &&
       setIsLoggedIn != undefined
     ) {
+      const fcmToken = getFcmTokenFromLocalStorage();
+      if (fcmToken) {
+        unMapFirebaseTokenFromCurrentUser(fcmToken);
+      }
       let token = getValueFromCookie('UserToken');
       if (token != null) {
         document.cookie = `UserToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
@@ -97,6 +123,7 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
         setIsLoggedIn(false);
         router.push('/login');
       }
+      deleteTokenFromFirebase();
     }
   };
 

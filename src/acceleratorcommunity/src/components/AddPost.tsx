@@ -108,9 +108,9 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   useEffect(() => {
     console.log('asdfghjklasdfghjksdfghj', userObject);
     LogRocket.init('5m0bj8/communitysolution');
-    LogRocket.identify(userObject.email, {
-      name: `${userObject.firstName} ${userObject.lastName}`,
-      email: userObject.email,
+    LogRocket.identify(userObject?.email, {
+      name: `${userObject?.firstName} ${userObject?.lastName}`,
+      email: userObject?.email,
 
       // Add your own custom user variables here, ie:
       subscriptionType: 'pro',
@@ -1438,7 +1438,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     >
                       {post?.blog?.heading}
                     </div>
-                    <NextImage src={post?.blog?.imageUrl}></NextImage>
+                    <img style={{ maxWidth: '100%' }} src={post?.blog?.imageUrl}></img>
                     <div className="postDescription">
                       {parser(modifyHtml(post?.blog?.description))}
                     </div>
@@ -3179,6 +3179,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       alt="Profile-Pic"
                       width={18}
                       height={18}
+                      title="Add a Image"
                     />
 
                     <Form.Group
@@ -3213,6 +3214,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       width={18}
                       height={18}
                       style={{ opacity: disableAddVideo ? '0.2' : '1' }}
+                      title="Add a Video"
                     />
                     <Form.Group
                     // className="mb-3"
@@ -3245,6 +3247,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       width={18}
                       height={18}
                       style={{ opacity: disableAddDoc ? '0.2' : '1' }}
+                      title="Add a Attachment"
                     />
                     <Form.Group
                     // className="mb-3"
@@ -3278,6 +3281,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       alt="PostItems"
                       width={18}
                       height={18}
+                      title="Create a Event"
                     />
                   </button>
                   <Modal
@@ -3441,6 +3445,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       style={{ opacity: disableAddPoll ? '0.2' : '1' }}
                       width={18}
                       height={18}
+                      title="Create a Poll"
                     />
                   </button>
                   <Modal
@@ -3600,6 +3605,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         width={18}
                         height={18}
                         style={{ opacity: disableAddDoc ? '0.2' : '1' }}
+                        title="Create a Blog"
                       />
                     </Link>
                   </button>

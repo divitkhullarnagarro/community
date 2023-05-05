@@ -37,6 +37,7 @@ const nextConfig = {
 
   images: {
     domains: [
+      'sitecoreinfrasa.blob.core.windows.net',
       'horizontal.blog',
       'www.teleinfotoday.com',
       'www.macaw.net',
