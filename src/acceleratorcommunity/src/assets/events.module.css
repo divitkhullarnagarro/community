@@ -24,6 +24,10 @@
   padding-bottom: 15px;
   border-bottom: 1px solid #ced0d4;
 }
+.parentContainer:first-child {
+  border-top: 1px solid #ced0d4;
+  padding: 15px;
+}
 .imgAndContentContainer {
   width: 80%;
   display: flex;
@@ -65,8 +69,11 @@
   width: 25%;
   height: 100%;
 }
-
-.timeContainer{
+.imgAndContentContainer > video {
+  width: 25%;
+  height: 100%;
+}
+.timeContainer {
   display: flex;
   gap: 5px;
 }

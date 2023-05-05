@@ -766,7 +766,7 @@ export async function getServerSideProps(context: any) {
   const { params } = context;
   const { postId } = params;
   let getAllPostURL = `https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/post/${postId}`;
-  const [value] = context?.req?.headers?.cookie?.split('=').map((c: any) => c.trim());
+  const value = context?.req?.cookies?.UserToken;
   const token = decryptString(value);
   var config = {
     method: 'GET',

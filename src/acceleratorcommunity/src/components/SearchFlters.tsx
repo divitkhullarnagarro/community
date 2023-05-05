@@ -4,14 +4,14 @@ import style from '../assets/searchFilterBtn.module.css';
 const SearchFlters = (props: any) => {
   return (
     <div className={style.container}>
-      {
+      {/* {
         <button
-          onClick={props.handleAllClick}
+          onClick={props.handleClick("ALL")}
           className={props?.activeState === 'ALL' ? style.btnActive : style.btn}
         >
           ALL
         </button>
-      }
+      } */}
       {props?.filter?.map((fil: any) => {
         return (
           <button
