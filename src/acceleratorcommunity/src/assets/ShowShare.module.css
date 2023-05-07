@@ -66,12 +66,20 @@
   visibility: hidden;
 }
 
-.dropdownBtn{
-  background-color: white;
+.dropdownBtn {
+  background-color: transparent !important;
   border: none;
   width: auto;
   padding: 0;
   height: 18px;
+}
+
+.darkModeActive::after {
+  border-bottom: 1px solid #313131;
+}
+
+.dropdownBtn::after {
+  display: none;
 }
 
 @media screen and (max-width: 700px) {
