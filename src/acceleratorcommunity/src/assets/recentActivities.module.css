@@ -106,10 +106,10 @@
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 0;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  width: 300px;
+  width: 200px;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .recentActivityDate {
   font-size: 12px;
