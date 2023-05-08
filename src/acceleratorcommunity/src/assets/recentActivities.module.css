@@ -4,23 +4,25 @@
   border-radius: 5px;
 }
 .recentActivityListBox {
-  background-color: #F9F9F9;
+  position: sticky;
+  /* top: 400px; */
+  top: 70px;
+  background-color: #f9f9f9;
   /* margin-left: 10px; */
   margin-top: 20px;
   padding: 16px;
 }
-.recentActivityContainer{
+.recentActivityContainer {
   display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-   
+  flex-direction: row;
+  justify-content: space-between;
 }
 .recentActivityList {
   background-color: white;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
   border-radius: 6px;
   padding: 10px;
-  
+
   max-height: 310px;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -32,13 +34,13 @@
 
 .recentActivityList::-webkit-scrollbar-track {
   border-radius: 2px;
-  background-color:white;
-  height:1px;
+  background-color: white;
+  height: 1px;
 }
 .recentActivityList::-webkit-scrollbar-track:horizontal {
   border-radius: 2px;
-  background-color:white;
-  height:1px;
+  background-color: white;
+  height: 1px;
 }
 .recentActivityList::-webkit-scrollbar-thumb {
   /* background-image: url('./../assets/images/arrow.png'); */
@@ -104,10 +106,10 @@
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 0;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  width: 300px;
+  width: 200px;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .recentActivityDate {
   font-size: 12px;
@@ -121,7 +123,7 @@
 }
 .viewAllButton {
   font-weight: 400;
-  color: #47D7AC;
+  color: #47d7ac;
   cursor: pointer;
 }
 .recentActivityHeaderLoader {

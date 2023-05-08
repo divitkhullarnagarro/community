@@ -91,14 +91,26 @@
   line-height: 1.2;
   font-weight: 600;
   margin: 0 10px 10px 10px;
+  font-size: '50px';
+  margin: '8px 16px';
 }
 
 .postDescription {
   padding: 15px;
-  padding-top: 0;
   font-size: 14px;
   line-height: 32px;
   color: #091329;
+}
+
+.postDescription * {
+  margin: 0;
+  line-height: 1.4;
+  font-size: 14px !important;
+  background: transparent !important;
+}
+
+.darkModeDescription * {
+  color: #b8b8b8 !important;
 }
 
 .postDescription p {
@@ -187,8 +199,15 @@
   margin: 0;
 }
 
+.postCreateDate img {
+  opacity: 0.4;
+  margin-right: 4px;
+}
+
 .postUserImage {
-  width: 1.75rem;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
   border-radius: 50%;
   cursor: pointer;
 }

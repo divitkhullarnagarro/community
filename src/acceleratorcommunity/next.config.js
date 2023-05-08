@@ -37,12 +37,14 @@ const nextConfig = {
 
   images: {
     domains: [
+      'sitecoreinfrasa.blob.core.windows.net',
       'horizontal.blog',
       'www.teleinfotoday.com',
       'www.macaw.net',
       'www.aceinfoway.com',
       'wwwsitecorecom.azureedge.net',
       'nkdramblog.files.wordpress.com',
+      'images.pexels.com',
     ],
   },
 

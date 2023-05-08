@@ -4,7 +4,7 @@ export type Event = {
   time: string;
   name: string;
   location: string;
-  interested: number;
+  description: string;
 }[];
 export type Blog = {
   imageUrl: string;

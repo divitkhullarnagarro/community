@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Head from 'next/head';
 import {
   Placeholder,
@@ -7,6 +7,7 @@ import {
   LayoutServiceData,
 } from '@sitecore-jss/sitecore-jss-nextjs';
 import { useRouter } from 'next/router';
+import WebContext from './Context/WebContext';
 
 // Prefix public assets with a public URL to enable compatibility with Sitecore editors.
 // If you're not supporting Sitecore editors, you can remove this.
@@ -28,6 +29,7 @@ const Layout = ({ layoutData }: LayoutProps): JSX.Element => {
   if (typeof window !== 'undefined') {
     href = window?.location?.href;
   }
+  const { darkMode } = { ...useContext(WebContext) };
   const router = useRouter();
   return (
     <>
@@ -67,8 +69,15 @@ const Layout = ({ layoutData }: LayoutProps): JSX.Element => {
       */}
       <VisitorIdentification />
       {/* root placeholder for the app, which we add components to using route data */}
-      <div className="header">{route && <Placeholder name="jss-header" rendering={route} />}</div>
-      <div className="main">{route && <Placeholder name="jss-main" rendering={route} />}</div>
+      <div
+        className="header"
+        style={darkMode ? { background: '#242526' } : { background: '#FFFFFF' }}
+      >
+        {route && <Placeholder name="jss-header" rendering={route} />}
+      </div>
+      <div className={darkMode ? 'main darkMode_bg' : 'main'}>
+        {route && <Placeholder name="jss-main" rendering={route} />}
+      </div>
       <div>{route && <Placeholder name="jss-footer" rendering={route} />}</div>
     </>
   );
