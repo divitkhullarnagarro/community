@@ -279,20 +279,21 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   };
   // console.log('mention', addedPeers);
 
-  // useEffect(() => {
-  //   if (userToken == '' && !isExpEditorActive) {
-  //     if (
-  //       typeof localStorage !== 'undefined' &&
-  //       localStorage.getItem('UserToken') != '' &&
-  //       localStorage.getItem('UserToken') != null
-  //     ) {
-  //       let token = localStorage.getItem('UserToken');
-  //       if (token != null && setUserToken != undefined) {
-  //         setUserToken(token);
-  //       }
-  //     } else router.push('/login');
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (userToken == '' && typeof window !== 'undefined') {
+      if (
+        typeof localStorage === 'undefined' ||
+        localStorage.getItem('UserToken') == '' ||
+        localStorage.getItem('UserToken') == null
+      ) {
+        const params = new URLSearchParams(window?.location?.search);
+        let scMode = params.get('sc_mode');
+        if (scMode != 'preview' && scMode != 'edit') {
+          router.push('/login');
+        }
+      }
+    }
+  }, []);
 
   // useEffect(() => {
   //   getUserCall(userToken, objectId).then((response) => {
