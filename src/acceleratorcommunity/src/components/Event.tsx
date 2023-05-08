@@ -3,7 +3,7 @@ import styles from '../assets/events.module.css';
 
 const Event = (props: any) => {
   const data = props?.events?.event;
-  console.log('++++++++++++++++++++', data);
+  console.log("++++++++++++++++++++",data)
   const splitDateOnly = (date: any) => {
     const dateOnly = date?.split('T')[0];
     return dateOnly;

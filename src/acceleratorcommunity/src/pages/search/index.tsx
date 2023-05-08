@@ -19,14 +19,18 @@ import SearchALLConatiner from 'components/SearchALLConatiner';
 import HashtagContainer from 'components/HashtagContainer';
 import BlogContainer from 'components/BlogContainer';
 import PollConatiner from 'components/PollConatiner';
+import ToastNotification from 'components/ToastNotification';
 // import JournalContainer from 'components/JournalContainer';
 
 const Search = () => {
   const router = useRouter();
 
-  console.log(router?.query?.query);
-
   const { query, type } = router?.query;
+
+  const [showNotification, setShowNofitication] = useState(false);
+  const [toastSuccess, setToastSuccess] = useState(false);
+  const [toastError, setToastError] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string>();
 
   // const [query, setQuery] = useState(router?.query?.query);
   // const [type, setType] = useState(router?.query?.type);
@@ -77,6 +81,12 @@ const Search = () => {
   ];
 
   const [activeState, setActiveState] = useState(type);
+
+  const resetToastState = () => {
+    setShowNofitication(!showNotification);
+    setToastSuccess(false);
+    setToastError(false);
+  };
 
   const handleClick = (type: any, query: any) => {
     if (type === 'ALL' && query != undefined) {
@@ -192,9 +202,16 @@ const Search = () => {
             response?.data?.data?.totalHits?.value > 0
           ) {
             setSearchedData(response?.data?.data?.hits);
+          } else {
+            console.log('hellooooworld');
+            setSearchedData([]);
           }
         }
         setSuccess(false);
+      } else {
+        setToastMessage('Something Went Wrong please try again later');
+        setToastError(true);
+        setShowNofitication(true);
       }
     });
   };
@@ -231,7 +248,7 @@ const Search = () => {
       {activeState === 'ALL' ? (
         <SearchALLConatiner success={success} searchedData={searchedData} />
       ) : activeState === 'GROUP' ? (
-        <SearchGroupContainer success={success} />
+        <SearchGroupContainer searchedData={searchedData} success={success} />
       ) : activeState === 'USER' ? (
         <SearchUserContainer searchedData={searchedData} success={success} />
       ) : activeState === 'EVENT' ? (
@@ -250,6 +267,15 @@ const Search = () => {
         <PollConatiner success={success} searchedData={searchedData} />
       ) : (
         ''
+      )}
+      {showNotification && (
+        <ToastNotification
+          showNotification={showNotification}
+          success={toastSuccess}
+          error={toastError}
+          message={toastMessage}
+          handleCallback={resetToastState}
+        />
       )}
     </div>
   );

@@ -743,11 +743,15 @@ const Profile = (props: any): JSX.Element => {
   const [toastSuccess, setToastSuccess] = useState(false);
   const [toastError, setToastError] = useState(false);
   const [toastMessage, setToastMessage] = useState<string>();
-  const [details, setDetails] = useState<any>(queryParamShowTab ?? 'personal');
+  const [details, setDetails] = useState<any>('personal');
   const [language, setLanguage] = useState<any>([]);
   const [hobby, setHobby] = useState<any>([]);
 
   const [userInterests, setUserInterests] = useState<any>([]);
+
+useEffect(()=>{
+  setDetails(queryParamShowTab)
+},[queryParamShowTab])
 
   const addLanguage = (e: any) => {
     e.preventDefault();
@@ -1250,6 +1254,7 @@ const Profile = (props: any): JSX.Element => {
   };
 
   const handlePersonalDetails = (val: string) => {
+    router.push(`http://localhost:3000/profile?showTab=${val}`)
     setDetails(val);
   };
 
@@ -1589,24 +1594,24 @@ const Profile = (props: any): JSX.Element => {
               <div className="profileInfo">
                 <PeerFriendList {...props} />
               </div>
-            ) : (
-              <div className="bannerContainerForProfile">
-                <Banner imageBanner={imageBanner} />
-                <label className="updateBannerImage" htmlFor="uploadbuttonForBanner">
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                    alt="edit"
-                    width="30px"
-                  />
-                  <input
-                    id="uploadbuttonForBanner"
-                    className="fileUpload"
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => handleChangeForBanner(e)}
-                  />
-                </label>
-              </div>
+            ) : (""
+              // <div className="bannerContainerForProfile">
+              //   <Banner imageBanner={imageBanner} />
+              //   <label className="updateBannerImage" htmlFor="uploadbuttonForBanner">
+              //     <img
+              //       src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
+              //       alt="edit"
+              //       width="30px"
+              //     />
+              //     <input
+              //       id="uploadbuttonForBanner"
+              //       className="fileUpload"
+              //       type="file"
+              //       accept="image/*"
+              //       onChange={(e) => handleChangeForBanner(e)}
+              //     />
+              //   </label>
+              // </div>
             )}
           </div>
         </div>

@@ -92,7 +92,6 @@ const EventSearchContainer = (props: any) => {
     setFilterState([]);
     setEvents(props?.searchedData);
   };
-
   return (
     <div className={styles.parentContainer}>
       <div className={styles.filterContainer}>
@@ -112,13 +111,13 @@ const EventSearchContainer = (props: any) => {
         {props?.success ? (
           <SearchSkeletonForEvents count={5} />
         ) : (
-          Events.map((event: any) => {
+          Events.length > 0 ? Events.map((event: any) => {
             return event?.sourceAsMap?.postType === 'EVENT' ? (
               <Event events={event?.sourceAsMap} getFormatedDate={getFormatedDate} />
             ) : (
               ''
             );
-          })
+          }):"No Events Found"
         )}
       </div>
     </div>

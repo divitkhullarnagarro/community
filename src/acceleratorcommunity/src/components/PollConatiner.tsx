@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import PollCard from './PollCard';
 import styles from '../assets/searchFilterContainer.module.css';
 import { voteInPollUrl } from 'assets/helpers/constants';
 import AxiosRequest from 'src/API/AxiosRequest';
-import SearchPost from './SearchPost';
+import { SearchSkeletonForUser } from './skeletons/SearchSkeleton';
 
 const PollConatiner = (props: any) => {
   let [myAnotherArr, setMyAnotherArr] = useState<any>([]);
@@ -48,18 +49,24 @@ const PollConatiner = (props: any) => {
 
   return (
     <div className={styles.parentContainer}>
-      <div className={styles.filterContainer}>
-        {props?.searchedData?.map((data: any) => {
-          return data?.sourceAsMap?.postType === 'POLL' ? (
-            <SearchPost
-              pollPost={{ poll: data?.sourceAsMap?.poll }}
-              poll={data?.sourceAsMap?.poll}
-              voteInAPoll={voteInAPoll}
-            />
-          ) : (
-            ''
-          );
-        })}
+      <div className={styles.generalcontainer}>
+        {props?.success ? (
+          <SearchSkeletonForUser count={5} />
+        ) : props?.searchedData?.length > 0 ? (
+          props?.searchedData?.map((data: any) => {
+            return data?.sourceAsMap?.postType === 'POLL' ? (
+              <PollCard
+                pollPost={{ poll: data?.sourceAsMap?.poll }}
+                poll={data?.sourceAsMap?.poll}
+                voteInAPoll={voteInAPoll}
+              />
+            ) : (
+              ''
+            );
+          })
+        ) : (
+          'No Poll to show'
+        )}
       </div>
     </div>
   );

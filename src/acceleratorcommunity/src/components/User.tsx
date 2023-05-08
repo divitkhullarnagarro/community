@@ -5,7 +5,7 @@ import WebContext from 'src/Context/WebContext';
 import { Button, Modal } from 'react-bootstrap';
 const User = (props: any) => {
   console.log('users', props);
-  const { userToken, setUserToken } = { ...useContext(WebContext) };
+  const { userToken, setUserToken, objectId } = { ...useContext(WebContext) };
 
   const [followButtonText, setButtonText] = useState(props?.buttonText ?? 'Follow');
   const [showForm1, setShowForm] = useState(false);
@@ -81,12 +81,16 @@ const User = (props: any) => {
           </div>
         </div>
         <div>
-          <button
-            onClick={followButtonText === 'Follow' ? onFollow : onUnfollow}
-            className={styles.btn}
-          >
-            {followButtonText}
-          </button>
+          {props?.user?.objectId !== objectId ? (
+            <button
+              onClick={followButtonText === 'Follow' ? onFollow : onUnfollow}
+              className={styles.btn}
+            >
+              {followButtonText}
+            </button>
+          ) : (
+            ''
+          )}
         </div>
       </div>
     </>
