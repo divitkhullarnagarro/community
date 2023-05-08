@@ -2,66 +2,39 @@ import React from 'react';
 import styles from '../assets/events.module.css';
 
 const Event = (props: any) => {
+  const data = props?.events?.event;
+  const id = props?.events?.id;
+  console.log('++++++++++++++++++++', data);
+  const splitDateOnly = (date: any) => {
+    const dateOnly = date?.split('T')[0];
+    return dateOnly;
+  };
+  const splitTimeOnly = (date: any) => {
+    const timeOnly = date?.split('T')[1];
+    return timeOnly;
+  };
   return (
-    <>
-      {props?.events?.length > 0 &&
-        props?.events?.map((event: any) => {
-          return (
-            <div className={styles.parentContainer}>
-              <div className={styles.imgAndContentContainer}>
-                <img src={event?.eventImg?.src} alt="eventImg" />
-                <div className={styles.content}>
-                  <div className={styles.eventHeading}>Understading Accounts Level Attribution</div>
-                  <div className={styles.timeContainer}>
-                    <div className={styles.eventTime}>
-                      {props?.getFormatedDate(event?.startDate)}
-                    </div>
-                    <div className={styles.eventTime}>to</div>
-                    <div className={styles.eventTime}>{props?.getFormatedDate(event?.endDate)}</div>
-                  </div>
-                  <div className={styles.eventDescription}>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium quibusdam
-                    excepturi hic dolorum a quas similique, nisi veniam illo ad.
-                  </div>
-                  <div className={styles.statsConatiner}>155 intrested | 40 going</div>
-                </div>
+    <a href={`/post/${id}`} className={styles.link} target="_blank">
+      {props?.fromALL ? <div className={styles.typeHeading}>Event</div> : ''}
+      <div className={styles.parentContainer}>
+        <div className={styles.imgAndContentContainer}>
+          <img
+            src="https://chinchincelebration.com/wp-content/uploads/2019/08/product-launch-events-min.png"
+            alt="eventImg"
+          />
+          <div className={styles.content}>
+            <div className={styles.eventHeading}>{data?.title}</div>
+            <div className={styles.timeContainer}>
+              <div className={styles.eventTime}>
+                {splitDateOnly(data?.eventDate) + ' ' + splitTimeOnly(data?.eventDate)}
               </div>
-              {/* <div className="actonContainer">anmol</div> */}
             </div>
-          );
-        })}
-    </>
+            <div className={styles.eventDescription}>{data?.description}</div>
+          </div>
+        </div>
+      </div>
+    </a>
   );
 };
 
 export default Event;
-
-// <div className={styles.parentContainer}>
-//   {props?.events?.length > 0
-//     ? props?.events?.map((data: any) => {
-//         return (
-//           <div className={styles.container}>
-//             <div className={styles.eventContainerHeader}>
-//               <div className={styles.eventHeaderInfo}>
-//                 <img src={data?.eventImg?.src} />
-//                 <div>Anmol Chawla</div>
-//                 <div></div>
-//               </div>
-//               <div></div>
-//             </div>
-//             <div className={styles.eventContainerBody}>
-//               <div className={styles.imageContainer}>
-//                 <img src={data?.eventImg?.src} />
-//               </div>
-//               <div className={styles.eventContainerFooter}>
-//                 {data?.title}
-//                 {data?.description}
-//                 {data?.startDate}
-//                 {data?.endDate}
-//               </div>
-//             </div>
-//           </div>
-//         );
-//       })
-//     : ''}
-// </div>

@@ -19,16 +19,18 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
   margin-top: 0.625rem;
   padding-bottom: 15px;
   border-bottom: 1px solid #ced0d4;
+}
+.parentContainer:first-child {
+  border-top: 1px solid #ced0d4;
+  padding-top: 15px;
 }
 .imgAndContentContainer {
   width: 80%;
   display: flex;
   align-items: center;
-  gap: 50px;
 }
 
 .content {
@@ -64,49 +66,47 @@
 .imgAndContentContainer > img {
   width: 25%;
   height: 100%;
+  margin-right: 50px;
+}
+.imgAndContentContainer > video {
+  width: 25%;
+  height: 6rem;
+  background-position: center;
+  background-size: cover;
+}
+.video {
+  width: 25%;
+  height: 25rem;
+  background-position: center;
+  background-size: cover;
+  border-radius: 0.25rem;
+  margin-right: 50px;
+  box-shadow: none;
 }
 
-.timeContainer{
+.timeContainer {
   display: flex;
   gap: 5px;
 }
-
-/* 
-.container {
+.document {
+  margin-right: 100px;
   display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 30%;
-  margin-bottom: 10px;
-  background: #ffffff;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
-  border: 1px solid #ced0d4;
-  border-radius: 6px;
-}
-.eventContainerBody {
-  width: 100%;
+  flex-wrap: wrap;
+  gap: 0.3125rem;
 }
 
-.imageContainer {
-  width: 100%;
+.typeHeading {
+  color: #47d7ac;
+  font-weight: 600;
+  font-size: 25px;
 }
 
-.imageContainer > img {
-  width: 100%;
+.link {
+  text-decoration: none;
+  color: rgb(102, 102, 102)
+
 }
 
-.eventContainerHeader {
-  display: flex;
-  width: 100%;
-  padding: 10px;
+.link::after {
+  display: none;
 }
-.eventHeaderInfo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.eventHeaderInfo > img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-} */
