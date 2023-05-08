@@ -1,9 +1,7 @@
 .groupListContainer {
-  position: sticky;
-  top: 70px;
-  background-color: #f9f9f9;
-  /* margin-top: 20px; */
-  /* box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25) */
+  background-color: #F9F9F9;
+  /* position: sticky;
+  top: 70px; */
 }
 .groupListTitle {
   font-size: 20px;
@@ -13,16 +11,15 @@
 }
 .groupListBox {
   background-color: white;
-
-  height: 360px;
+  /* height: 360px; */
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
   border-radius: 6px;
   padding: 10px;
 }
 .groupListBoxData {
-  height: 300px;
-  overflow-x: auto;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .groupListBoxData::-webkit-scrollbar {
@@ -54,11 +51,9 @@
   border-radius: 50%;
 }
 .groupList {
-  background: #f9f9f9;
-  /* margin-top: 5px; */
   padding: 16px;
   padding-bottom: 16px;
-  height: 425px;
+  /* height: 425px; */
 }
 
 .groupListHeading {
@@ -66,8 +61,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* border-bottom: 1px solid black; */
-  padding: 5px 5px;
+  padding: 5px 10px;;
 }
 .groupListHeading:hover {
   background: whitesmoke;
@@ -75,13 +69,12 @@
 .groupListHeadingLeft {
   display: flex;
   align-items: center;
-  width: 100%;
+  gap: 10px;
 }
 .groupListName {
-  margin-left: 12px;
+  margin: 0px;
   font-size: 14px;
   font-weight: 400;
-  border-radius: 6px;
 }
 .moreOptionList {
   position: absolute;
@@ -162,6 +155,42 @@
   padding: 5px 10px;
   width: 100%;
 }
+
+.dropdownBtn {
+  background-color: transparent !important;
+  border: none;
+  width: auto;
+  padding: 0;
+}
+
+.dropdownBtn::after {
+  display: none;
+}
+
+.dropdownMenu {
+  inset: 0px 0px auto auto !important;
+  padding: 0;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.dropdownItem {
+  padding: 10px;
+  font-size: 12px;
+  position: relative;
+}
+
+.overlayItem {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.dropdownImage {
+  width: 16px;
+  height: 16px;
+}
+
 @media screen and (max-width: 768px) {
   .groupList {
     margin-top: 5px;

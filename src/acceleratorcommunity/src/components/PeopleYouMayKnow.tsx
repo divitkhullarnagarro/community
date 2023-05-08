@@ -17,6 +17,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Button, Card } from 'react-bootstrap';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 type PeopleYouMayKnowProps = ComponentProps & {
   fields: {
@@ -38,7 +39,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   // const router = useRouter();
   const { Title, LinkLabel, IsFullList } = props?.params;
   const [peopleYouMayKnowList, setPeopleYouMayKnowList] = useState<peopleYouMayKnowFields[]>([]);
-  const { userToken, setUserToken } = { ...useContext(WebContext) };
+  const { userToken, setUserToken, darkMode } = { ...useContext(WebContext) };
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isFullPage] = useState(IsFullList === '1');
   const getPeopleYouMayKnowList = async (userToken: string | undefined) => {
@@ -51,11 +52,13 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   const skeletonDummyArr = [1, 2, 3, 4, 5];
   const HalfPagePeopleYouMayKnow = () => {
     return (
-      <div className={styles.wrapper}>
+      <div className={`${styles.wrapper} ${darkMode ? darkModeCss.grey_2 : ''}`}>
         <div className={styles.header}>
-          <div className={styles.heading}>{Title}</div>
+          <div className={`${styles.heading} ${darkMode ? darkModeCss.text_green : ''}`}>
+            {Title}
+          </div>
           {LinkLabel ? (
-            <Link href={'/peopleyoumayknow'} className={styles.linkHeader}>
+            <Link href={'/peopleyoumayknow'} className={styles.linkHeader} passHref={true}>
               <span className={styles.link}> {LinkLabel}</span>
             </Link>
           ) : (
@@ -67,7 +70,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
             peopleYouMayKnowList?.slice(0, 5).map((item) => {
               return (
                 <div key={item?.objectId} className={styles.item}>
-                  <Link href={`/profile/${item.objectId}`}>
+                  <Link href={`/profile/${item.objectId}`} passHref={true}>
                     <NextImage
                       className={styles.img}
                       field={Profile ?? item?.imageData?.value}
@@ -77,7 +80,9 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
                     />
                   </Link>
                   <div>
-                    <div className={styles.name}>{item?.firstName + ' ' + item?.lastName}</div>
+                    <div className={`${styles.name} ${darkMode ? darkModeCss.text_light : ''}`}>
+                      {item?.firstName + ' ' + item?.lastName}
+                    </div>
                   </div>
                   <div className={styles.button}>
                     <FollowUnfollowButton userName={item?.objectId} />
