@@ -37,6 +37,8 @@ const Search = () => {
 
   console.log('qhhhhhhhhhhhhhhhhhhhqqqqqqqqqqqqhqhhqq', query, type);
 
+
+
   const filter = [
     {
       type: 'ALL',
@@ -243,8 +245,6 @@ const Search = () => {
   }, [query]);
 
   const [searchData, setSearch] = useState<any>('');
-
-
 
   const onSearch = (e: any) => {
     e.preventDefault();

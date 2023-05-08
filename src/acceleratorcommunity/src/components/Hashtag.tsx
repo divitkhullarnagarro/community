@@ -1,56 +1,56 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Event from './Event';
 import ImageConatiner from './ImageConatiner';
 import TextPost from './TextPost';
 import VideoContainer from './VideoContainer';
 import DocumentContainer from './DocumentContainer';
-import PollCard from './PollCard';
+// import PollCard from './PollCard';
 import Blog from './Blog';
 import User from './User';
-import { voteInPollUrl } from 'assets/helpers/constants';
-import AxiosRequest from 'src/API/AxiosRequest';
+// import { voteInPollUrl } from 'assets/helpers/constants';
+// import AxiosRequest from 'src/API/AxiosRequest';
 
 const Hashtag = (props: any) => {
-  let [myAnotherArr, setMyAnotherArr] = useState<any>([]);
+  // let [myAnotherArr, setMyAnotherArr] = useState<any>([]);
 
-  const voteInAPoll = async (pollId: any, pollOptionId: any) => {
-    updatePollPost(pollId, pollOptionId);
-    await AxiosRequest({
-      method: 'PUT',
-      url: `${voteInPollUrl}${pollId}/poll-option/${pollOptionId}`,
-    });
-  };
+  // const voteInAPoll = async (pollId: any, pollOptionId: any) => {
+  //   updatePollPost(pollId, pollOptionId);
+  //   await AxiosRequest({
+  //     method: 'PUT',
+  //     url: `${voteInPollUrl}${pollId}/poll-option/${pollOptionId}`,
+  //   });
+  // };
 
   //Function to update with latest data of poll
-  function updatePollPost(pollId: any, pollOptionId: any) {
-    const updatedPollPosts = myAnotherArr.map((pollPost: any) => {
-      if (pollPost?.poll?.id === pollId) {
-        const updatedPollOptions = pollPost?.poll?.pollOptions?.map((option: any) => {
-          if (option?.id === pollOptionId) {
-            const updatedOption = { ...option };
-            updatedOption.responseCount = updatedOption.responseCount + 1 || 1;
-            return updatedOption;
-          } else {
-            return option;
-          }
-        });
-        return {
-          ...pollPost,
-          poll: {
-            ...pollPost.poll,
-            pollResponseCount: pollPost?.poll?.pollResponseCount
-              ? pollPost?.poll?.pollResponseCount + 1
-              : 1,
-            pollOptions: updatedPollOptions,
-            optedPollOptionID: pollOptionId,
-          },
-        };
-      } else {
-        return pollPost;
-      }
-    });
-    setMyAnotherArr(updatedPollPosts);
-  }
+  // function updatePollPost(pollId: any, pollOptionId: any) {
+  //   const updatedPollPosts = myAnotherArr.map((pollPost: any) => {
+  //     if (pollPost?.poll?.id === pollId) {
+  //       const updatedPollOptions = pollPost?.poll?.pollOptions?.map((option: any) => {
+  //         if (option?.id === pollOptionId) {
+  //           const updatedOption = { ...option };
+  //           updatedOption.responseCount = updatedOption.responseCount + 1 || 1;
+  //           return updatedOption;
+  //         } else {
+  //           return option;
+  //         }
+  //       });
+  //       return {
+  //         ...pollPost,
+  //         poll: {
+  //           ...pollPost.poll,
+  //           pollResponseCount: pollPost?.poll?.pollResponseCount
+  //             ? pollPost?.poll?.pollResponseCount + 1
+  //             : 1,
+  //           pollOptions: updatedPollOptions,
+  //           optedPollOptionID: pollOptionId,
+  //         },
+  //       };
+  //     } else {
+  //       return pollPost;
+  //     }
+  //   });
+  //   setMyAnotherArr(updatedPollPosts);
+  // }
   const fromALL = true;
   return (
     <div>

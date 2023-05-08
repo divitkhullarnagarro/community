@@ -95,8 +95,18 @@
   gap: 0.3125rem;
 }
 
-.typeHeading{
+.typeHeading {
   color: #47d7ac;
   font-weight: 600;
   font-size: 25px;
+}
+
+.link {
+  text-decoration: none;
+  color: rgb(102, 102, 102)
+
+}
+
+.link::after {
+  display: none;
 }

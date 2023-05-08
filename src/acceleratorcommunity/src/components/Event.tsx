@@ -3,6 +3,7 @@ import styles from '../assets/events.module.css';
 
 const Event = (props: any) => {
   const data = props?.events?.event;
+  const id = props?.events?.id;
   console.log('++++++++++++++++++++', data);
   const splitDateOnly = (date: any) => {
     const dateOnly = date?.split('T')[0];
@@ -13,7 +14,7 @@ const Event = (props: any) => {
     return timeOnly;
   };
   return (
-    <>
+    <a href={`/post/${id}`} className={styles.link} target="_blank">
       {props?.fromALL ? <div className={styles.typeHeading}>Event</div> : ''}
       <div className={styles.parentContainer}>
         <div className={styles.imgAndContentContainer}>
@@ -32,7 +33,7 @@ const Event = (props: any) => {
           </div>
         </div>
       </div>
-    </>
+    </a>
   );
 };
 

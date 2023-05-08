@@ -5,8 +5,10 @@ import parser from 'html-react-parser';
 
 const ImageConatiner = (props: any) => {
   console.log('qqqqqqqqqqqqqqqqqqq', props?.events?.mediaInfoList[0]?.url);
+  const id = props?.events?.id;
+
   return (
-    <>
+    <a  href={`/post/${id}`} className={styles.link} target="_blank">
       {props?.fromALL ? <div className={styles.typeHeading}>Post</div> : ''}
       <div className={styles.parentContainer}>
         <div className={styles.imgAndContentContainer}>
@@ -17,7 +19,7 @@ const ImageConatiner = (props: any) => {
           </div>
         </div>
       </div>
-    </>
+    </a>
   );
 };
 

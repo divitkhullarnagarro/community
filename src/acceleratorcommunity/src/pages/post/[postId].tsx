@@ -28,6 +28,7 @@ import { ReportPostOptionsTypeLabel } from '../../assets/helpers/enums';
 import reportPostCall from 'src/API/reportPostCall';
 import blockUserCall from 'src/API/blockUnblockUserCall';
 import { decryptString } from 'assets/helpers/EncryptDecrypt';
+import EventCard from 'components/EventCard';
 
 // import {calculateTimeDifference} from
 
@@ -192,6 +193,14 @@ function viewSinglePost(props: any) {
       pdfWindow?.document.write(`<iframe width='100%' height='100%' src=${base64pdf}></iframe>`);
     }
   }
+  const EventImage: any = {
+    Seminar:
+      'https://higherlogicdownload.s3.amazonaws.com/APSNET/UploadedImages/tAiEB79vTYq1gz2UEGu1_IMG_2866-L.jpg',
+    Conference: 'https://th.bing.com/th/id/OIP.IXdC6XgETCp5RaM3iQCb6QHaE8?pid=ImgDet&rs=1',
+    Announcement: 'https://th.bing.com/th/id/OIP.zPaWJzUBQwbXDjhCtCtI1gHaE8?pid=ImgDet&rs=1',
+    'Launch Event': 'https://live.staticflickr.com/808/39724254630_e9cdcb8e77_b.jpg',
+    Celebration: 'https://th.bing.com/th/id/OIP.E1RiHHXMHUcq0L0KvprXfQHaEn?pid=ImgDet&rs=1',
+  };
 
   useEffect(() => {
     if (userToken == '') {
@@ -631,6 +640,23 @@ function viewSinglePost(props: any) {
                 );
               })}
             </div>
+            {props?.data?.data?.postType === 'EVENT' ? (
+              <EventCard
+                heading={props?.data?.data?.event?.title}
+                description={props?.data?.data?.event?.description}
+                date={props?.data?.data?.event?.eventDate}
+                eventType={props?.data?.data?.event?.eventType}
+                url={EventImage[props?.data?.data?.event?.eventType]}
+              />
+            ) : (
+              ''
+            )}
+
+            {/* {props?.data?.data?.postType === 'BLOG_POST' ? (
+              <img className={specificPostCss.bannerImg} src={} />
+            ) : (
+              ''
+            )} */}
             <div
               className={specificPostCss.body}
               dangerouslySetInnerHTML={{ __html: props?.data?.data?.description }}

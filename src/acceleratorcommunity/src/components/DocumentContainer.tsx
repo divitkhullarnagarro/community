@@ -5,6 +5,8 @@ import parser from 'html-react-parser';
 
 const DocumentContainer = (props: any) => {
   console.log('videooooooooooooooooooooooooooooooo', props?.events);
+  const id = props?.events?.id;
+
   const data = props?.events?.mediaInfoList[0]?.url;
   function openDoc(base64: string) {
     var base64pdf = base64;
@@ -14,7 +16,7 @@ const DocumentContainer = (props: any) => {
     }
   }
   return (
-    <>
+    <a  href={`/post/${id}`} className={styles.link} target="_blank">
       {props?.fromALL ? <div className={styles.typeHeading}>Post</div> : ''}
       <div className={styles.parentContainer}>
         <div className={styles.imgAndContentContainer}>
@@ -46,7 +48,7 @@ const DocumentContainer = (props: any) => {
           </div>
         </div>
       </div>
-    </>
+    </a>
   );
 };
 
