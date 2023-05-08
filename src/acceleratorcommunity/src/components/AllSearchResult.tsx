@@ -51,28 +51,31 @@ const AllSearchResult = (props: any) => {
     });
     setMyAnotherArr(updatedPollPosts);
   }
+  const fromALL = true;
+
   return (
     <div>
       {props?.searchedData?.length > 0
         ? props?.searchedData?.map((data: any) => {
             return data?.sourceAsMap?.postType === 'IMAGE' ? (
-              <ImageConatiner events={data?.sourceAsMap} flag={false} />
+              <ImageConatiner  fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
             ) : data?.sourceAsMap?.postType === 'EVENT' ? (
-              <Event events={data?.sourceAsMap} flag={false} />
+              <Event fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
             ) : data?.sourceAsMap?.postType === 'TEXT_POST' ? (
-              <TextPost events={data?.sourceAsMap} flag={false} />
+              <TextPost fromALL={fromALL}events={data?.sourceAsMap} flag={false} />
             ) : data?.sourceAsMap?.postType === 'VIDEO' ? (
-              <VideoContainer events={data?.sourceAsMap} flag={false} />
+              <VideoContainer  fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
             ) : data?.sourceAsMap?.postType === 'DOC' ? (
-              <DocumentContainer events={data?.sourceAsMap} flag={false} />
+              <DocumentContainer  fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
             ) : data?.sourceAsMap?.postType === 'BLOG_POST' ? (
-              <Blog success={props?.success} blog={data?.sourceAsMap?.blog} />
+              <Blog   fromALL={fromALL} success={props?.success} blog={data?.sourceAsMap?.blog} />
             ) : data?.sourceAsMap?.postType === 'POLL' ? (
-              <PollCard
-                pollPost={{ poll: data?.sourceAsMap?.poll }}
-                poll={data?.sourceAsMap?.poll}
-                voteInAPoll={voteInAPoll}
-              />
+              // <PollCard
+              //   pollPost={{ poll: data?.sourceAsMap?.poll }}
+              //   poll={data?.sourceAsMap?.poll}
+              //   voteInAPoll={voteInAPoll}
+              // />
+              ""
             ) : data?.index === 'accelerator-user' ? (
               <User user={data?.sourceAsMap} />
             ) : (

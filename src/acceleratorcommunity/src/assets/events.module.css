@@ -89,9 +89,14 @@
   gap: 5px;
 }
 .document {
-  margin-right: 100px  ;
+  margin-right: 100px;
   display: flex;
   flex-wrap: wrap;
   gap: 0.3125rem;
 }
 
+.typeHeading{
+  color: #47d7ac;
+  font-weight: 600;
+  font-size: 25px;
+}

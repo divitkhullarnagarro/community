@@ -18,7 +18,7 @@ import ArticleSearchContainer from 'components/ArticleSearchContainer';
 import SearchALLConatiner from 'components/SearchALLConatiner';
 import HashtagContainer from 'components/HashtagContainer';
 import BlogContainer from 'components/BlogContainer';
-import PollConatiner from 'components/PollConatiner';
+// import PollConatiner from 'components/PollConatiner';
 import ToastNotification from 'components/ToastNotification';
 // import JournalContainer from 'components/JournalContainer';
 
@@ -58,26 +58,26 @@ const Search = () => {
       type: 'HASHTAG',
       value: 'Hashtags',
     },
-    {
-      type: 'NEWS',
-      value: 'News',
-    },
-    {
-      type: 'JOURNAL',
-      value: 'Journals',
-    },
-    {
-      type: 'ARTICLE',
-      value: 'Articles',
-    },
+    // {
+    //   type: 'NEWS',
+    //   value: 'News',
+    // },
+    // {
+    //   type: 'JOURNAL',
+    //   value: 'Journals',
+    // },
+    // {
+    //   type: 'ARTICLE',
+    //   value: 'Articles',
+    // },
     {
       type: 'BLOG',
       value: 'BLOG',
     },
-    {
-      type: 'POLL',
-      value: 'POLL',
-    },
+    // {
+    //   type: 'POLL',
+    //   value: 'POLL',
+    // },
   ];
 
   const [activeState, setActiveState] = useState(type);
@@ -105,14 +105,15 @@ const Search = () => {
           'createdBy.lastName',
           'createdBy.objectId',
         ],
-        type
+        type,
+        query
       );
     }
     if (type === 'USER' && query !== undefined) {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
 
-      searchCallFunction(['firstName', 'lastName', 'objectId'], type);
+      searchCallFunction(['firstName', 'lastName', 'objectId'], type, query);
     }
     if (
       type === 'EVENT' &&
@@ -123,52 +124,52 @@ const Search = () => {
     ) {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
-      searchCallFunction(['description', 'blog.heading', 'blog.description'], type);
+      searchCallFunction(['description', 'blog.heading', 'blog.description'], type, query);
     }
     if (type === 'HASHTAG' && query !== undefined) {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
 
-      searchCallFunction(['description', 'blog.heading', 'blog.description'], type);
+      searchCallFunction(['description', 'blog.heading', 'blog.description'], type, query);
     }
     if (type === 'NEWS' && query !== undefined) {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
 
-      searchCallFunction(['description', 'blog.heading', 'blog.description'], type);
+      searchCallFunction(['description', 'blog.heading', 'blog.description'], type, query);
     }
     if (type === 'JOURNAL' && query !== undefined) {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
 
-      searchCallFunction(['description', 'blog.heading', 'blog.description'], type);
+      searchCallFunction(['description', 'blog.heading', 'blog.description'], type, query);
     }
     if (type === 'ARTICLE' && query !== undefined) {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
 
-      searchCallFunction(['description', 'blog.heading', 'blog.description'], type);
+      searchCallFunction(['description', 'blog.heading', 'blog.description'], type, query);
     }
     if (type === 'GROUP' && query !== undefined) {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
 
-      searchCallFunction(['description', 'blog.heading', 'blog.description'], type);
+      searchCallFunction(['description', 'blog.heading', 'blog.description'], type, query);
     }
     if (type === 'BLOG' && query !== undefined) {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
-      searchCallFunction(['description', 'blog.heading', 'blog.description'], type);
+      searchCallFunction(['description', 'blog.heading', 'blog.description'], type, query);
     }
     if (type === 'BLOG' && query !== undefined) {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
-      searchCallFunction(['description', 'blog.heading', 'blog.description'], type);
+      searchCallFunction(['description', 'blog.heading', 'blog.description'], type, query);
     }
     if (type === 'POLL' && query !== undefined) {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
-      searchCallFunction(['description', 'blog.heading', 'blog.description'], type);
+      searchCallFunction(['description', 'blog.heading', 'blog.description'], type, query);
     }
     setActiveState(type);
   };
@@ -192,8 +193,8 @@ const Search = () => {
   const [success, setSuccess] = useState(true);
   const [searchedData, setSearchedData] = useState<any>([]);
 
-  const searchCallFunction = (filter: any, type: string) => {
-    searchCall(query, type, userToken, filter).then((response: any) => {
+  const searchCallFunction = (filter: any, type: string, searchData: any) => {
+    searchCall(searchData, type, userToken, filter).then((response: any) => {
       if (response?.data?.success === true) {
         if (response?.data?.data !== null && response?.data?.data !== undefined) {
           if (
@@ -219,6 +220,7 @@ const Search = () => {
   useEffect(() => {
     setActiveState(type);
     handleClick(type, query);
+    setSearch(query);
   }, [query, type]);
   useEffect(() => {
     if (query !== undefined && query !== null && userToken !== undefined && userToken !== null) {
@@ -234,15 +236,51 @@ const Search = () => {
           'createdBy.lastName',
           'createdBy.objectId',
         ],
-        'ALL'
+        'ALL',
+        query
       );
     }
   }, [query]);
 
+  const [searchData, setSearch] = useState<any>('');
+
+
+
+  const onSearch = (e: any) => {
+    e.preventDefault();
+    router.push(`/search?query=${searchData}&type=${type}`);
+    console.log('searchData', searchData);
+    searchCallFunction(
+      [
+        'description',
+        'blog.heading',
+        'blog.description',
+        'firstName',
+        'lastName',
+        'objectId',
+        'createdBy.firstName',
+        'createdBy.lastName',
+        'createdBy.objectId',
+      ],
+      'ALL',
+      searchData
+    );
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.pageHeadingContainer}>
-        <div className={styles.pageHeading}>Search Results</div>
+        <div className={styles.pageHeading}>
+          <form>
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchData}
+              onChange={(e: any) => setSearch(e.target.value)}
+            />{' '}
+            <input onClick={onSearch} type="submit" hidden />
+          </form>
+        </div>
       </div>
       <SearchFlters activeState={activeState} filter={filter} handleClick={handleClick} />
       {activeState === 'ALL' ? (
@@ -264,8 +302,10 @@ const Search = () => {
       ) : activeState === 'BLOG' ? (
         <BlogContainer success={success} searchedData={searchedData} />
       ) : activeState === 'POLL' ? (
-        <PollConatiner success={success} searchedData={searchedData} />
+        ''
       ) : (
+        // <PollConatiner success={success} searchedData={searchedData} />
+
         ''
       )}
       {showNotification && (

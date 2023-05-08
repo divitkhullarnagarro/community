@@ -15,6 +15,7 @@ const DocumentContainer = (props: any) => {
   }
   return (
     <>
+      {props?.fromALL ? <div className={styles.typeHeading}>Post</div> : ''}
       <div className={styles.parentContainer}>
         <div className={styles.imgAndContentContainer}>
           <div className={styles.document}>

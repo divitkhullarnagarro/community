@@ -11,7 +11,7 @@ const SearchALLConatiner = (props: any) => {
           <SearchSkeletonForUser count={5} />
         ) : (
           <div>
-            <AllSearchResult searchedData={props?.searchedData} />
+            <AllSearchResult  searchedData={props?.searchedData} />
           </div>
         )}
       </div>

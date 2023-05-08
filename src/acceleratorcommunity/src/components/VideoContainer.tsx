@@ -7,6 +7,7 @@ const VideoContainer = (props: any) => {
   console.log('videooooooooooooooooooooooooooooooo', props?.events?.mediaInfoList[0]?.url);
   return (
     <>
+    {props?.fromALL?<div className={styles.typeHeading}>Post</div>:""}
       <div className={styles.parentContainer}>
         <div className={styles.imgAndContentContainer}>
           <video  className={styles.video} controls>  
