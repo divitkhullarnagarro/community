@@ -18,7 +18,11 @@ type blockedUserFields = {
   objectId: string;
 };
 
-function BlockedUser() {
+type blockedUserProps = {
+  showInProfilePage: boolean;
+};
+
+function BlockedUser(props: blockedUserProps) {
   const { userToken, setUserToken } = {
     ...useContext(WebContext),
   };
@@ -26,7 +30,7 @@ function BlockedUser() {
   const SideNavHeaderLabel = 'Blocked Users List';
   const NoUsersBlockedLabel = "You haven't blocked anyone";
   const FetchingUsersLabel = 'Fetching blocked users...';
-  const PreviewUserProfileLabel = "List of blocked members...";
+  const PreviewUserProfileLabel = 'List of blocked members...';
 
   const UnblockingUserEffectListLabel = [
     'See your posts on the timeline',
@@ -325,7 +329,13 @@ function BlockedUser() {
       <div className={styles.blockedUsercontainer}>
         <div className={styles.left_column}>
           <div className={styles.blockedUsersSideNav}>
-            <div className={styles.sideNavHeader}>{SideNavHeaderLabel}</div>
+            <div
+              className={
+                props?.showInProfilePage ? styles.sideNavHeaderForProfile : styles.sideNavHeader
+              }
+            >
+              {SideNavHeaderLabel}
+            </div>
             <hr />
             {blockedUserList?.length == 0 ? (
               <div className={styles.alignItemsCenter}>{NoUsersBlockedLabel}</div>
@@ -339,7 +349,11 @@ function BlockedUser() {
           </div>
         </div>
         <div className={styles.right_column}>
-          <div className={styles.rightContainer}>
+          <div
+            className={
+              props?.showInProfilePage ? styles.rightContainerForProfilePage : styles.rightContainer
+            }
+          >
             <div className={styles.emptyProfileWrapper}>
               <div className={styles.blockedUserPreviewImage}>
                 <NextImage field={BlockedUserPreviewImage} editable={true} width={60} height={60} />

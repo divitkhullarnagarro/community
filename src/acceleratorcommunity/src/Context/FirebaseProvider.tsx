@@ -110,7 +110,7 @@ const FirebaseProvider = (props: any) => {
   };
 
   const deleteTokenFromFirebase = async () => {
-    if (!firebase) {
+    if (!firebaseInstance) {
       try {
         const messaging = getMessaging(firebaseInstance);
         if (messaging !== undefined) {

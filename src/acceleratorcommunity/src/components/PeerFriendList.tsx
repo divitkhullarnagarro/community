@@ -22,7 +22,7 @@ type peerFriendFields = {
   objectId: string;
   firstName: string;
   lastName: string;
-  profilePictureUrl: string;
+  profilePictureUrl: string | undefined;
 };
 
 const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
@@ -78,13 +78,11 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
               return (
                 <div key={item?.objectId} className={styles.item}>
                   <Link href={`/profile/${item.objectId}`} passHref={true}>
-                    <NextImage
-                      className={styles.img}
-                      field={item.profilePictureUrl ? item.profilePictureUrl : Profile}
-                      editable={true}
-                      height={40}
-                      width={40}
-                    />
+                    <img
+                      className={styles.peerFriendUserImage}
+                      src={item.profilePictureUrl ? item.profilePictureUrl : Profile.src}
+                      alt="User-Pic"
+                    ></img>
                   </Link>
 
                   <div>
@@ -185,7 +183,7 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
             <img
               className={styles.imgProfile}
               contentEditable={true}
-              src={Profile.src}
+              src={item.profilePictureUrl ? item.profilePictureUrl : Profile.src}
               alt="Profile Image"
             />
           </Link>
