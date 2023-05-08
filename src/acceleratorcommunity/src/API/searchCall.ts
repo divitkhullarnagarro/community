@@ -1,6 +1,6 @@
 import Axios, { AxiosResponse } from "axios";
 
-const searchCall = async (searchText: string, contentType: string, token: string | undefined, keywords?: string,
+const searchCall = async (searchText: any, contentType: string, token: string | undefined, filter: string,
 ) => {
     // var data = qs.stringify({
     //     // client_id: "api-client",
@@ -11,9 +11,9 @@ const searchCall = async (searchText: string, contentType: string, token: string
     // });
     var data = {
 
-        filters: ["description"],
+        filters: filter,
         text: searchText,
-
+        type: contentType,
     }
     let searchURL = "https://accelerator-api-management.azure-api.net/graph-service/search";
     var config = {

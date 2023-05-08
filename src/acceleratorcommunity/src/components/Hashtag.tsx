@@ -3,10 +3,9 @@ import Event from './Event';
 import ImageConatiner from './ImageConatiner';
 import TextPost from './TextPost';
 import VideoContainer from './VideoContainer';
-import DocumentContainer from './DocumentContainer';
 
-const AllSearchResult = (props: any) => {
-  console.log('alllllllllllllcontainer', props);
+const Hashtag = (props: any) => {
+  console.log('hash', props);
   return (
     <div>
       {props?.searchedData?.length > 0
@@ -20,15 +19,15 @@ const AllSearchResult = (props: any) => {
               <Event events={data?.sourceAsMap} flag={false} />
             ) : data?.sourceAsMap?.postType === 'TEXT_POST' ? (
               <TextPost events={data?.sourceAsMap} flag={false} />
-            ) : data?.sourceAsMap?.postType === 'VIDEO'? (
+            ) : data?.sourceAsMap?.postType === 'VIDEO' ? (
               <VideoContainer events={data?.sourceAsMap} flag={false} />
-            ) :  data?.sourceAsMap?.postType === 'DOC'?(
-             <DocumentContainer events={data?.sourceAsMap} flag={false}/>
-            ):("");
+            ) : (
+              ''
+            );
           })
         : ''}
     </div>
   );
 };
 
-export default AllSearchResult;
+export default Hashtag;

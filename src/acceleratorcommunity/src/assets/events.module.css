@@ -19,20 +19,18 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
   margin-top: 0.625rem;
   padding-bottom: 15px;
   border-bottom: 1px solid #ced0d4;
 }
 .parentContainer:first-child {
   border-top: 1px solid #ced0d4;
-  padding: 15px;
+  padding-top: 15px;
 }
 .imgAndContentContainer {
   width: 80%;
   display: flex;
   align-items: center;
-  gap: 50px;
 }
 
 .content {
@@ -68,11 +66,24 @@
 .imgAndContentContainer > img {
   width: 25%;
   height: 100%;
+  margin-right: 50px;
 }
 .imgAndContentContainer > video {
   width: 25%;
-  height: 100%;
+  height: 6rem;
+  background-position: center;
+  background-size: cover;
 }
+.video {
+  width: 25%;
+  height: 25rem;
+  background-position: center;
+  background-size: cover;
+  border-radius: 0.25rem;
+  margin-right: 50px;
+  box-shadow: none;
+}
+
 .timeContainer {
   display: flex;
   gap: 5px;

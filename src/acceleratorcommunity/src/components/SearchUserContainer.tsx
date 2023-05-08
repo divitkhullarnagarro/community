@@ -10,8 +10,8 @@ const SearchUserContainer = (props: any) => {
         {props?.success ? (
           <SearchSkeletonForUser count={5} />
         ) : (
-          [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(() => {
-            return <User />;
+          props?.searchedData.map((data: any) => {
+            return data?.index === 'accelerator-user' ? <User user={data?.sourceAsMap} /> :"";
           })
         )}
       </div>
