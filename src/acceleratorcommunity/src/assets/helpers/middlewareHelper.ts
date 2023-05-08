@@ -4,6 +4,10 @@ import { getAllRoutes } from '../../components/Queries';
 import { sitecoreApiHost } from 'temp/config';
 import { sitecore } from 'scjssconfig.json';
 
+function compareStringsIgnoreCase(str1: string, str2: string): boolean {
+    return str1.toLowerCase() === str2.toLowerCase();
+}
+
 export const getPathList = async (request: NextRequest) => {
     //Graphql code for fetching Routes Data
     const ServerLink = `${sitecoreApiHost}/sitecore/api/graph/edge?sc_apikey=${sitecore.apiKey}`;
@@ -35,12 +39,12 @@ export const getPathList = async (request: NextRequest) => {
     };
     let result = await client1?.query({ query, variables });
     let resp = result?.data?.datasource?.children?.results?.filter((item: any) => {
-        if (request.nextUrl.pathname.startsWith(`/${item?.name}`) && !request.nextUrl.pathname.startsWith(`/login`) && !request.nextUrl.pathname.startsWith(`/register`) && !request.nextUrl.pathname.startsWith(`/forgotPassword`)) {
+        if (compareStringsIgnoreCase(`/${item?.name}`, request.nextUrl.pathname) && !request.nextUrl.pathname.startsWith(`/login`) && !request.nextUrl.pathname.startsWith(`/register`) && !request.nextUrl.pathname.startsWith(`/forgotPassword`)) {
             return true;
         }
         return false;
     });
-    if (resp.length > 0)
+    if (resp[0])
         return true;
     else return false;
 

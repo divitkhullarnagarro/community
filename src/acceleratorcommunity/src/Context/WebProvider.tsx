@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import WebContext from './WebContext';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { decryptString } from '../assets/helpers/EncryptDecrypt';
 
 function WebProvider(props: any) {
@@ -10,7 +10,7 @@ function WebProvider(props: any) {
   const [objectId, setObjectId] = useState('');
   const [userObject, setUserObject] = useState<any>('');
 
-  let router = useRouter();
+  // let router = useRouter();
 
   useEffect(() => {
     if (userToken == '') {
@@ -18,7 +18,8 @@ function WebProvider(props: any) {
       token ? (token = decryptString(token)) : '';
       if (typeof localStorage !== 'undefined' && token != '' && token != null) {
         setUserToken(token);
-      } else router.push('/login');
+      }
+      //  else router.push('/login');
     }
   }, []);
 
@@ -31,7 +32,8 @@ function WebProvider(props: any) {
         let objId = obj?.objectId;
         setObjectId(objId);
         setUserObject(obj);
-      } else router.push('/login');
+      }
+      // else router.push('/login');
     }
   }, []);
 

@@ -14,12 +14,20 @@ import { getPathList } from 'assets/helpers/middlewareHelper';
 
 export async function middleware(request: NextRequest, response: NextResponse) {
   let userToken = request.cookies.get("UserToken");
-
   let innerResp: any = false;
+  const params = new URLSearchParams(request.nextUrl.search);
+  let scMode = params.get('sc_mode');
+
+  if (!scMode && request.nextUrl.search.includes('sc_mode=edit')) {
+    scMode = 'edit';
+  } else if (!scMode && request.nextUrl.search.includes('sc_mode=preview')) {
+    scMode = 'preview';
+  }
+
   if (!userToken) {
     innerResp = await getPathList(request);
   }
-  if (innerResp) return NextResponse.rewrite(new URL('/login', request.url));
+  if (innerResp && (scMode != "edit" && scMode != "preview")) return NextResponse.rewrite(new URL('/login', request.url));
 
   if (request.nextUrl.pathname.startsWith('/post')) {
     if (request.cookies.get("UserToken") != '' && request.cookies.get("UserToken") != null)
