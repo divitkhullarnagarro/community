@@ -12,21 +12,26 @@ import { unBlockUserCall, getBlockedUserList } from 'src/API/blockUnblockUserCal
 import ToastNotification from './ToastNotification';
 import Image from 'next/image';
 import unBlockLogo from '../assets/images/UnblockUser.svg';
+import darkModeCss from '../assets/darkTheme.module.css';
 type blockedUserFields = {
   firstName: string;
   lastName: string;
   objectId: string;
 };
 
-function BlockedUser() {
-  const { userToken, setUserToken } = {
+type blockedUserProps = {
+  showInProfilePage: boolean;
+};
+
+function BlockedUser(props: blockedUserProps) {
+  const { userToken, setUserToken, darkMode } = {
     ...useContext(WebContext),
   };
 
   const SideNavHeaderLabel = 'Blocked Users List';
   const NoUsersBlockedLabel = "You haven't blocked anyone";
   const FetchingUsersLabel = 'Fetching blocked users...';
-  const PreviewUserProfileLabel = "List of blocked members...";
+  const PreviewUserProfileLabel = 'List of blocked members...';
 
   const UnblockingUserEffectListLabel = [
     'See your posts on the timeline',
@@ -322,15 +327,31 @@ function BlockedUser() {
       {/* <Button className={styles.backBtn} onClick={() => router.push('/')}>
         Back
       </Button> */}
-      <div className={styles.blockedUsercontainer}>
-        <div className={styles.left_column}>
-          <div className={styles.blockedUsersSideNav}>
-            <div className={styles.sideNavHeader}>{SideNavHeaderLabel}</div>
+      <div className={`${styles.blockedUsercontainer} ${darkMode ? darkModeCss.grey_3 : ''}`}>
+        <div className={`${styles.left_column} ${darkMode ? darkModeCss.grey_3 : ''}`}>
+          <div className={`${styles.blockedUsersSideNav} ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <div
+              className={
+                props?.showInProfilePage
+                  ? `${styles.sideNavHeaderForProfile} ${darkMode ? darkModeCss.text_light : ''}`
+                  : `${styles.sideNavHeader} ${darkMode ? darkModeCss.text_light : ''}`
+              }
+            >
+              {SideNavHeaderLabel}
+            </div>
             <hr />
             {blockedUserList?.length == 0 ? (
-              <div className={styles.alignItemsCenter}>{NoUsersBlockedLabel}</div>
+              <div
+                className={`${styles.alignItemsCenter} ${darkMode ? darkModeCss.text_light : ''}`}
+              >
+                {NoUsersBlockedLabel}
+              </div>
             ) : showFetchingUsers ? (
-              <div className={styles.alignItemsCenter}>{FetchingUsersLabel}</div>
+              <div
+                className={`${styles.alignItemsCenter} ${darkMode ? darkModeCss.text_light : ''}`}
+              >
+                {FetchingUsersLabel}
+              </div>
             ) : (
               blockedUserList?.map((item) => {
                 return <BlockedUserRow {...item} />;
@@ -339,12 +360,22 @@ function BlockedUser() {
           </div>
         </div>
         <div className={styles.right_column}>
-          <div className={styles.rightContainer}>
-            <div className={styles.emptyProfileWrapper}>
+          <div
+            className={
+              props?.showInProfilePage ? styles.rightContainerForProfilePage : styles.rightContainer
+            }
+          >
+            <div className={`${styles.emptyProfileWrapper} ${darkMode ? darkModeCss.grey_3 : ''}`}>
               <div className={styles.blockedUserPreviewImage}>
                 <NextImage field={BlockedUserPreviewImage} editable={true} width={60} height={60} />
               </div>
-              <div className={styles.blockedUserPreviewImage}>{PreviewUserProfileLabel}</div>
+              <div
+                className={`${styles.blockedUserPreviewImage} ${
+                  darkMode ? darkModeCss.text_light : ''
+                }`}
+              >
+                {PreviewUserProfileLabel}
+              </div>
             </div>
             {/* {showPreviewImage ? (
               

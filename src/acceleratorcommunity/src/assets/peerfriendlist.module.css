@@ -112,6 +112,14 @@
   align-items: center;
 }
 
+.peerFriendUserImage {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 /* region end*/
 
 /*Full page edit profile css */
