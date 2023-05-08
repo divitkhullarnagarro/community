@@ -1,3 +1,29 @@
+.darkMode_bg {
+    background-color: #18191A;
+}
+.darkMode_bgChild {
+    background-color: #323436;
+}
+.darkMode_textBg {
+    background-color: #242526;
+    color: #ffffff;
+}
+.darkMode_textBgActive {
+    background-color: #242526;
+    color: #FF3C3C;
+}
+.darkMode_textColor {
+    color: #ffffff;
+}
+.darkMode_imageFilter {
+    filter: invert(80%) sepia(5%) saturate(155%) hue-rotate(191deg) brightness(89%) contrast(87%);
+}
+.darkMode_greenColor {
+    color: #47d7ac;
+}
+.darkMode_greenColorBg {
+  background-color: #47d7ac;
+}
 .grey_1 {
   background-color: #18191A !important;
 }
@@ -13,6 +39,9 @@
 }
 .text_green {
   color: #47d7ac !important;
+}
+.greenBg {
+  background-color: #47d7ac !important;
 }
 .text_active {
   color: #FF3C3C !important;
