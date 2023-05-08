@@ -119,14 +119,14 @@ const EventListing = (): JSX.Element => {
                     // style={{ cursor: 'pointer' }}
                     //   onClick={() => navigateToEventPage(ele.name)}
                     >
-                      <div className={`${style.eventTime} ${darkMode && darkTheme.darkMode_greenColor}`}>
+                      <div className={`${style.eventTime} ${darkMode && darkTheme.text_green}`}>
                         {ele.date} BY {ele.time}
                       </div>
-                      <div className={`${style.eventName} ${darkMode && darkTheme.darkMode_greenColor}`} title={ele.name}>
+                      <div className={`${style.eventName} ${darkMode && darkTheme.text_green}`} title={ele.name}>
                         {ele?.name?.length < 22 ? ele?.name : ele?.name?.substring(0, 22) + '...'}
                       </div>
-                      <div className={`${style.eventLocation} ${darkMode && darkTheme.darkMode_textColor}`}>{ele.location}</div>
-                      <div className={`${style.eventInterested} ${darkMode && darkTheme.darkMode_textColor}`} title={ele.description}>
+                      <div className={`${style.eventLocation} ${darkMode && darkTheme.text_light}`}>{ele.location}</div>
+                      <div className={`${style.eventInterested} ${darkMode && darkTheme.text_light}`} title={ele.description}>
                         {ele?.description?.length < 35
                           ? ele?.description
                           : ele?.description?.substring(0, 35) + '...'}

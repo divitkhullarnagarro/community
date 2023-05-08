@@ -7,9 +7,11 @@ import loginUserCall from '../API/loginUserCall';
 import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';
 import loginCss from '../assets/login.module.css';
+import darkTheme from '../assets/darkTheme.module.css';
 import Spinner from 'react-bootstrap/Spinner';
 import getUserCall from 'src/API/getUserCall';
 import { encryptString } from '../assets/helpers/EncryptDecrypt';
+import ThemeSwitcher from './ThemeSwitcher';
 // import star from '../assets/images/star.png';
 
 type LoginProps = ComponentProps & {
@@ -59,7 +61,7 @@ type DataSource = {
 const Login = (props: LoginProps): JSX.Element => {
   const targetItems = props?.fields?.data?.datasource;
   const router = useRouter();
-  const { setIsLoggedIn, setUserToken, setObjectId, userToken, setUserObject } = {
+  const { setIsLoggedIn, setUserToken, setObjectId, userToken, setUserObject, darkMode } = {
     ...useContext(WebContext),
   };
 
@@ -151,7 +153,10 @@ const Login = (props: LoginProps): JSX.Element => {
   const heading = targetItems?.title?.jsonValue?.value?.split('<br>');
   return (
     <>
-      <div className={loginCss.container}>
+      <div className={loginCss.ThemeSwitcher}>
+        <ThemeSwitcher />
+      </div>
+      <div className={`${loginCss.container} ${darkMode && darkTheme.grey_1}`}>
         <div className={loginCss.leftContainer}>
           <div className={loginCss.leftGrid}>
             <div className={loginCss.welcomeText}>
@@ -163,12 +168,12 @@ const Login = (props: LoginProps): JSX.Element => {
                   height={50}
                 />
               </div>
-              <h5>
+              <h5 className={`${darkMode && darkTheme.text_green}`}>
                 {heading ? heading[0] : 'Welcome,'}
                 <br />
                 {heading ? heading[1] : 'Please Login Here'}
               </h5>
-              <div className={loginCss.welcomeTextDescription}>
+              <div className={`${loginCss.welcomeTextDescription} ${darkMode && darkTheme.text_light}`}>
                 {targetItems?.description?.jsonValue?.value}
               </div>
             </div>
@@ -206,12 +211,12 @@ const Login = (props: LoginProps): JSX.Element => {
           </div>
         </div>
 
-        <div className={loginCss.rightContainer}>
-          <div className={loginCss.formContainer}>
+        <div className={`${loginCss.rightContainer} ${darkMode && darkTheme.grey_1}`}>
+          <div className={`${loginCss.formContainer} ${darkMode && darkTheme.grey_3} ${darkMode && loginCss.formDarkBorder}`}>
             <form className={loginCss.login} onSubmit={(e) => onSubmitHandler(e)}>
               <div className={loginCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
-                <label className={loginCss.label}>
+                <label className={`${loginCss.label} ${darkMode && darkTheme.text_light}`}>
                   {targetItems?.userNameLabel?.jsonValue?.value}
                 </label>
                 <input
@@ -230,7 +235,7 @@ const Login = (props: LoginProps): JSX.Element => {
               </div>
               <div className={loginCss.loginField}>
                 <i className="login__icon fas fa-lock"></i>
-                <label className={loginCss.label}>
+                <label className={`${loginCss.label} ${darkMode && darkTheme.text_light}`}>
                   {targetItems?.passwordLabel?.jsonValue?.value}
                 </label>
                 <input
@@ -292,7 +297,7 @@ const Login = (props: LoginProps): JSX.Element => {
                 ''
               )} */}
             </form>
-            <div className={loginCss.loginOptionContainer}>
+            <div className={`${loginCss.loginOptionContainer} ${darkMode && darkTheme.text_green}`}>
               or sign in with other accounts?
               <div className={loginCss.otherLoginContainer}>
                 <div className={loginCss.otherLogin}>Google</div>
@@ -302,7 +307,7 @@ const Login = (props: LoginProps): JSX.Element => {
               </div>
             </div>
             <div className={loginCss.formContainerBottom}>
-              <div className={loginCss.formContainerButton}>
+              <div className={`${loginCss.formContainerButton} ${darkMode && darkTheme.greenBg}`}>
                 <div className={loginCss.text}>
                   {targetItems?.dontHaveAccountLabel?.jsonValue?.value}
                 </div>

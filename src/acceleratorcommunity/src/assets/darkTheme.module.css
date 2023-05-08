@@ -21,6 +21,9 @@
 .darkMode_greenColor {
     color: #47d7ac;
 }
+.darkMode_greenColorBg {
+  background-color: #47d7ac;
+}
 .grey_1 {
   background-color: #18191A !important;
 }
@@ -36,6 +39,9 @@
 }
 .text_green {
   color: #47d7ac !important;
+}
+.greenBg {
+  background-color: #47d7ac !important;
 }
 .text_active {
   color: #FF3C3C !important;
