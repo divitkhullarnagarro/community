@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FirebaseContext from './FirebaseContext';
 import firebase, { FirebaseApp, initializeApp } from 'firebase/app';
 import firebaseConfig, { vapidKey } from 'src/firebase/FirebaseConfig';
@@ -16,6 +16,27 @@ const FirebaseProvider = (props: any) => {
     }
     return null;
   };
+
+  const deleteFcmTokenFromLocalStorage = () => {
+    const tokenInLocalForage = localStorage.getItem('fcm_token');
+    if (tokenInLocalForage !== null) {
+      localStorage.removeItem('fcm_token');
+    }
+  };
+
+  // If user manually changes permission, then delete the token from firebase , not to send notifications.
+  useEffect(() => {
+    if ('permissions' in navigator) {
+      navigator.permissions.query({ name: 'notifications' }).then(function (notificationPerm) {
+        notificationPerm.onchange = function () {
+          if (notificationPerm.state === 'denied') {
+            deleteTokenFromFirebase();
+            deleteFcmTokenFromLocalStorage();
+          }
+        };
+      });
+    }
+  }, []);
 
   const requestForNotificationPermission = async () => {
     if (!firebase?.getApp('communitySolutionFirebaseInstance')) {
@@ -89,10 +110,17 @@ const FirebaseProvider = (props: any) => {
   };
 
   const deleteTokenFromFirebase = async () => {
-    if (!firebase) {
-      const messaging = getMessaging(firebaseInstance);
-      const isTokenDeleted = await deleteToken(messaging);
-      return isTokenDeleted;
+    if (!firebaseInstance) {
+      try {
+        const messaging = getMessaging(firebaseInstance);
+        if (messaging !== undefined) {
+          const isTokenDeleted = await deleteToken(messaging);
+          console.log('tokenDeleted', isTokenDeleted);
+          return isTokenDeleted;
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
     return false;
   };
@@ -101,6 +129,7 @@ const FirebaseProvider = (props: any) => {
     <FirebaseContext.Provider
       value={{
         firebaseInstance,
+        getFcmTokenFromLocalStorage,
         requestForNotificationPermission,
         deleteTokenFromFirebase,
         checkAndRegsiterServiceWorker,

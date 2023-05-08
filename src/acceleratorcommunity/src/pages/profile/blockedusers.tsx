@@ -4,7 +4,7 @@ import BlockedUser from 'components/BlockedUser';
 function BlockedUsers() {
   return (
     <>
-      <BlockedUser />
+      <BlockedUser showInProfilePage={false} />
     </>
   );
 }

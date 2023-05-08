@@ -10,7 +10,9 @@ import LogoutImage from '../assets/images/Logout.png';
 import { useRouter } from 'next/router';
 import logoutUserCall from 'src/API/logoutUserCall';
 import { getValueFromCookie } from 'assets/helpers/helperFunctions';
+import Link from 'next/link';
 import FirebaseContext from 'src/Context/FirebaseContext';
+import AxiosRequest from 'src/API/AxiosRequest';
 
 type UserProfileProps = ComponentProps & {
   fields: {
@@ -25,7 +27,9 @@ type UserProfileProps = ComponentProps & {
 
 const UserProfile = (props: UserProfileProps): JSX.Element => {
   const { setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
-  const { deleteTokenFromFirebase } = { ...useContext(FirebaseContext) };
+  const { deleteTokenFromFirebase, getFcmTokenFromLocalStorage } = {
+    ...useContext(FirebaseContext),
+  };
   console.log('profile', props);
   const router = useRouter();
 
@@ -83,6 +87,19 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
     );
   };
 
+  const unMapFirebaseTokenFromCurrentUser = (fcm_token: string) => {
+    AxiosRequest({
+      method: 'POST',
+      url: `https://accelerator-api-management.azure-api.net/graph-service/api/v1/unmap-uuid?uuid=${fcm_token}`,
+    })
+      .then((response: any) => {
+        console.log('APIResponseFCM', response);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+
   const logOutUser = async () => {
     let response = await logoutUserCall();
     if (
@@ -91,6 +108,10 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
       setUserToken != undefined &&
       setIsLoggedIn != undefined
     ) {
+      const fcmToken = getFcmTokenFromLocalStorage();
+      if (fcmToken) {
+        unMapFirebaseTokenFromCurrentUser(fcmToken);
+      }
       let token = getValueFromCookie('UserToken');
       if (token != null) {
         document.cookie = `UserToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
@@ -124,33 +145,31 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu className={userProfileCss.userProfileDropdownMenu}>
-          <Dropdown.Item
-            className={userProfileCss.userProfileDropdownItem}
-            href={props.fields.LogoURL.value.href}
-          >
-            <div className={userProfileCss.userProfileOverlayItem}>
-              <div className={userProfileCss.userProfileDropdownImage}>
-                <NextImage
-                  field={props.fields.Image.value}
-                  editable={true}
-                  width={30}
-                  height={30}
-                  title="Profile page"
-                />
+          <Dropdown.Item className={userProfileCss.userProfileDropdownItem}>
+            <Link href={props.fields.LogoURL.value.href} passHref={true}>
+              <div className={userProfileCss.userProfileOverlayItem}>
+                <div className={userProfileCss.userProfileDropdownImage}>
+                  <NextImage
+                    field={props.fields.Image.value}
+                    editable={true}
+                    width={30}
+                    height={30}
+                    title="Profile page"
+                  />
+                </div>
+                <div className={userProfileCss.userProfileBtn}> Edit Profile</div>
               </div>
-              <div className={userProfileCss.userProfileBtn}> Edit Profile</div>
-            </div>
+            </Link>
           </Dropdown.Item>
-          <Dropdown.Item
-            className={userProfileCss.userProfileDropdownItem}
-            href="/profile/blockedusers"
-          >
-            <div className={userProfileCss.userProfileOverlayItem}>
-              <div className={userProfileCss.userProfileDropdownImage}>
-                <NextImage field={BlockUserImage} editable={true} />
+          <Dropdown.Item className={userProfileCss.userProfileDropdownItem}> 
+            <Link href="/profile/blockedusers" passHref={true}>
+              <div className={userProfileCss.userProfileOverlayItem}>
+                <div className={userProfileCss.userProfileDropdownImage}>
+                  <NextImage field={BlockUserImage} editable={true} />
+                </div>
+                <div className={userProfileCss.userProfileBtn}>Blocked Users</div>
               </div>
-              <div className={userProfileCss.userProfileBtn}>Blocked Users</div>
-            </div>
+            </Link>
           </Dropdown.Item>
           <Dropdown.Item
             className={userProfileCss.userProfileDropdownItem}

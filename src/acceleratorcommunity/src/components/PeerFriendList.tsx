@@ -1,15 +1,16 @@
-import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
-import Link from 'next/link';
-import { ComponentProps } from 'lib/component-props';
-import styles from '../assets/peerfriendlist.module.css';
+import { Button, Card } from 'react-bootstrap';
 import { useContext, useEffect, useState } from 'react';
+import Link from 'next/link';
+import allPeersCall from 'src/API/getPeers';
 import WebContext from 'src/Context/WebContext';
 import Skeleton from 'react-loading-skeleton';
-import Profile from '../assets/images/ProfilePic.jpeg';
-import allPeersCall from 'src/API/getPeers';
-import { Button, Card } from 'react-bootstrap';
+import { ComponentProps } from 'lib/component-props';
 import DropArrow from '../assets/images/droparrow.png';
+import Profile from '../assets/images/ProfilePic.jpeg';
 import FollowUnfollowButton from './FollowUnfollowButton';
+import styles from '../assets/peerfriendlist.module.css';
+import darkModeCss from '../assets/darkTheme.module.css';
+import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 
 type PeerFriendListProps = ComponentProps & {
   fields: {
@@ -21,13 +22,13 @@ type peerFriendFields = {
   objectId: string;
   firstName: string;
   lastName: string;
-  profilePictureUrl: string;
+  profilePictureUrl: string | undefined;
 };
 
 const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
   console.log('PeerFriendList', props);
   const [peerFriendList, setPeerFriendList] = useState<peerFriendFields[]>([]);
-  const { userToken } = { ...useContext(WebContext) };
+  const { userToken, darkMode } = { ...useContext(WebContext) };
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isWidgetView] = useState(props?.params?.IsWidgetView === '1');
   const skeletonDummyArr = [1, 2, 3, 4, 5, 6];
@@ -58,11 +59,14 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
   };
   const WidgetViewPeerFriendList = () => {
     return (
-      <div className={styles.wrapper}>
+      <div className={`${styles.wrapper} ${darkMode ? darkModeCss.grey_3 : ''}`}>
         <div className={styles.header}>
-          <div className={styles.heading}>{'Peers'}</div>
+          <div className={`${styles.heading} ${darkMode ? darkModeCss.text_green : ''}`}>
+            {'Peers'}
+          </div>
           <Link
             href={{ pathname: '/profile', query: 'showTab=peers' }}
+            passHref={true}
             className={styles.linkHeader}
           >
             <span className={styles.link}> {'See All'}</span>
@@ -73,18 +77,18 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
             peerFriendList?.slice(0, 5).map((item) => {
               return (
                 <div key={item?.objectId} className={styles.item}>
-                  <Link href={`/profile/${item.objectId}`}>
-                    <NextImage
-                      className={styles.img}
-                      field={item.profilePictureUrl ? item.profilePictureUrl : Profile}
-                      editable={true}
-                      height={40}
-                      width={40}
-                    />
+                  <Link href={`/profile/${item.objectId}`} passHref={true}>
+                    <img
+                      className={styles.peerFriendUserImage}
+                      src={item.profilePictureUrl ? item.profilePictureUrl : Profile.src}
+                      alt="User-Pic"
+                    ></img>
                   </Link>
 
                   <div>
-                    <div className={styles.name}>{item?.firstName + ' ' + item?.lastName}</div>
+                    <div className={`${styles.name} ${darkMode ? darkModeCss.text_light : ''}`}>
+                      {item?.firstName + ' ' + item?.lastName}
+                    </div>
                   </div>
                   <div className={styles.button}>
                     <FollowUnfollowButton userName={item?.objectId} buttonText={'Unfollow'} />
@@ -93,7 +97,11 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
               );
             })
           ) : (
-            <div className={styles.widgetViewNoPeerListHeader}>
+            <div
+              className={`${styles.widgetViewNoPeerListHeader} ${
+                darkMode ? darkModeCss.text_light : ''
+              }`}
+            >
               <NoPeersLabel />
             </div>
           )}
@@ -104,7 +112,7 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
 
   const WidgetViewPeerFriendListSkeleton = () => {
     return (
-      <div className={styles.wrapper}>
+      <div className={`${styles.wrapper} ${darkMode ? darkModeCss.grey_3 : ''}`}>
         <div className={styles.header}>
           <div className={styles.cardloaderHeader}>
             <Skeleton height={30} />
@@ -132,9 +140,11 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
 
   const FullPagePeerFriendList = () => {
     return (
-      <div className={styles.mainContainer}>
+      <div className={`${styles.mainContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}>
         <div className={styles.container}>
-          <div className={styles.mainFullPageItemWrapper}>
+          <div
+            className={`${styles.mainFullPageItemWrapper} ${darkMode ? darkModeCss.grey_3 : ''}`}
+          >
             <div className={styles.newgrid}>
               {isDataLoaded ? (
                 peerFriendList?.length > 0 ? (
@@ -169,14 +179,19 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
 
   const FullPagePeerFriendListItem = (item: peerFriendFields) => {
     return (
-      <Card className={styles.cardItem}>
+      <Card className={`${styles.cardItem} ${darkMode ? darkModeCss.grey_3 : ''}`}>
         <div className={styles.imageContainer}>
-          <Link href={`/profile/${item?.objectId}`}>
-            <img className={styles.imgProfile} contentEditable={true} src={Profile.src} />
+          <Link href={`/profile/${item?.objectId}`} passHref={true}>
+            <img
+              className={styles.imgProfile}
+              contentEditable={true}
+              src={item.profilePictureUrl ? item.profilePictureUrl : Profile.src}
+              alt="Profile Image"
+            />
           </Link>
         </div>
         <Card.Body>
-          <Card.Title className={styles.cardTitle}>
+          <Card.Title className={`${styles.cardTitle} ${darkMode ? darkModeCss.text_light : ''}`}>
             {item?.firstName + ' ' + item?.lastName}
           </Card.Title>
           <FollowUnfollowButton userName={item?.objectId} buttonText={'Unfollow'} />

@@ -1,11 +1,12 @@
 import { ComponentProps } from 'lib/component-props';
-import { useEffect, useState } from 'react';
-
+import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 // import recentActivityLogo from '../assets/images/recentActivityLogo.svg';
 import style from '../assets/recentActivities.module.css';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import darkModeCss from '../assets/darkTheme.module.css';
+import WebContext from 'src/Context/WebContext';
 // import { useRouter } from 'next/router';
 // import Link from 'next/link';
 
@@ -72,6 +73,7 @@ const RecentActivities = (props: RecentActivitiesProps): JSX.Element => {
   //   router.push(`/profile/${email}`);
   // };
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const { darkMode } = { ...useContext(WebContext) };
   useEffect(() => {
     const Interval = setTimeout(() => {
       setIsDataLoaded(true);
@@ -82,7 +84,7 @@ const RecentActivities = (props: RecentActivitiesProps): JSX.Element => {
   const RecentActivitiesSkeleton = () => {
     return (
       <>
-        <div className={style.recentActivityListBox}>
+        <div className={`${style.recentActivityListBox} ${darkModeCss.grey_2}`}>
           <div className={style.recentActivityContainer}>
             <div className={style.recentActivityHeaderLoader}>
               <Skeleton className="mb-2" height={30} />
@@ -92,7 +94,11 @@ const RecentActivities = (props: RecentActivitiesProps): JSX.Element => {
           <div className={style.recentActivityList}>
             {list.map(() => (
               <>
-                <div className={style.recentActivityListHeading}>
+                <div
+                  className={`${style.recentActivityListHeading} ${
+                    darkMode ? darkModeCss.grey_3 : ''
+                  }`}
+                >
                   <div className={style.recentActivityListHeadingLeftLoader}>
                     <Skeleton height={50} width={50} circle={true} />
                     <div className={`d-flex ${style.recentActivityNameAndDate}`}>
@@ -113,17 +119,23 @@ const RecentActivities = (props: RecentActivitiesProps): JSX.Element => {
   const RecentActivities = () => {
     return (
       <>
-        <div className={style.recentActivityListBox}>
+        <div className={`${style.recentActivityListBox} ${darkMode ? darkModeCss.grey_2 : ''}`}>
           <div className={style.recentActivityContainer}>
-            <h3 className={style.recentActivityTitle}>Your Recent Activities</h3>
+            <h3
+              className={`${style.recentActivityTitle} ${darkMode ? darkModeCss.text_green : ''}`}
+            >
+              Your Recent Activities
+            </h3>
             <h6 className={style.viewAllButton}>See All</h6>
           </div>
-          <div className={style.recentActivityList}>
+          <div className={`${style.recentActivityList} ${darkMode ? darkModeCss.grey_3 : ''}`}>
             {list.map((ele, index: number) => (
               <>
                 <div
                   key={index}
-                  className={style.recentActivityListHeading}
+                  className={`${style.recentActivityListHeading} ${
+                    darkMode ? darkModeCss.grey_3 : ''
+                  }`}
                   // onClick={() => {
                   //   onMemberClick(ele.objectId);
                   // }}
@@ -137,7 +149,12 @@ const RecentActivities = (props: RecentActivitiesProps): JSX.Element => {
                       width={50}
                     />
                     <div className={`d-flex flex-column ${style.recentActivityNameAndDate}`}>
-                      <h5 className={style.recentActivityName} title={ele.activityName}>
+                      <h5
+                        className={`${style.recentActivityName} ${
+                          darkMode ? darkModeCss.text_light : ''
+                        }`}
+                        title={ele.activityName}
+                      >
                         {ele.activityName}
                       </h5>
                       <h6 className={style.recentActivityDate}>{ele.date}</h6>

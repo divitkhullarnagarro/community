@@ -21,3 +21,25 @@
 .darkMode_greenColor {
     color: #47d7ac;
 }
+.grey_1 {
+  background-color: #18191A !important;
+}
+.grey_2 {
+  background-color: #242526 !important;
+}
+.grey_3 {
+  background-color: #323436 !important;
+  /* box-shadow: 0px 1px 3px rgba(255, 255, 255, 0.75) !important; */
+}
+.text_light {
+  color: #ffffff !important;
+}
+.text_green {
+  color: #47d7ac !important;
+}
+.text_active {
+  color: #FF3C3C !important;
+}
+.invertFilter {
+  filter: invert(1) !important;
+}

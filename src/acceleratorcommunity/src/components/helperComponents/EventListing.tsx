@@ -1,4 +1,7 @@
 import {
+  getMyBlogsUrl,
+  getSuggestedBlogsUrl,
+  getBookmarkedMyBlogsUrl,
   demoBookmarkedEventList,
   demoMyEventList,
   demoSuggestedEventList,
@@ -7,6 +10,8 @@ import WebContext from '../../Context/WebContext';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
+import AxiosRequest from 'src/API/AxiosRequest';
+import { AxiosResponse } from 'axios';
 import style from './../../assets/eventListing.module.css';
 import darkTheme from './../../assets/darkTheme.module.css';
 import event from './../../assets/images/event.svg';
@@ -20,15 +25,52 @@ const EventListing = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState('My Events');
   const [eventList, setEventList] = useState<Event>([] as Event);
   const { darkMode } = { ...useContext(WebContext) };
+  const [skeletonVisible, setSkeletonVisible] = useState(true);
+  const getMyEvent = async () => {
+    const data: AxiosResponse<any> = await AxiosRequest({
+      method: 'GET',
+      url: getMyBlogsUrl,
+    });
+
+    const myblogData = data.data.map((ele: any) => ele.blog);
+    console.log(myblogData);
+    setEventList(demoMyEventList);
+    setSkeletonVisible(false);
+  };
+  const getUpcomingEvents = async () => {
+    const data: AxiosResponse<any> = await AxiosRequest({
+      method: 'GET',
+      url: getSuggestedBlogsUrl,
+    });
+    const suggesteBblogData = data.data.map((ele: any) => ele.blog);
+    console.log(suggesteBblogData);
+    setEventList(demoSuggestedEventList);
+    setSkeletonVisible(false);
+  };
+  const getBookmarkedEvents = async () => {
+    const data: AxiosResponse<any> = await AxiosRequest({
+      method: 'GET',
+      url: getBookmarkedMyBlogsUrl,
+    });
+    const bookmarkedBlogData = data.data.map((ele: any) => ele.blog);
+    console.log(bookmarkedBlogData);
+    setEventList(demoBookmarkedEventList);
+    setSkeletonVisible(false);
+  };
+
   useEffect(() => {
     if (activeTab == 'My Events') {
-      setTimeout(() => {
-        setEventList(demoMyEventList);
-      }, 2000);
+      setSkeletonVisible(true);
+      setEventList([]);
+      getMyEvent();
     } else if (activeTab == 'Upcoming Events') {
-      setEventList(demoSuggestedEventList);
+      setSkeletonVisible(true);
+      setEventList([]);
+      getUpcomingEvents();
     } else {
-      setEventList(demoBookmarkedEventList);
+      setSkeletonVisible(true);
+      setEventList([]);
+      getBookmarkedEvents();
     }
   }, [activeTab]);
 
@@ -39,7 +81,7 @@ const EventListing = (): JSX.Element => {
   const navigateToEventPage = (event: string) => {
     router.push(`/event/${event}`);
   };
-  return eventList.length > 0 ? (
+  return (
     <>
       <div className={style.eventListingPage}>
         <div className={style.eventListNavbar}>
@@ -57,50 +99,54 @@ const EventListing = (): JSX.Element => {
           </div>
         </div>
         <div className={`${style.eventListcontent} ${darkMode && darkTheme.darkMode_bgChild}`}>
-          <div className={style.eventList}>
-            {eventList.map((ele, i) => (
-              <div key={i} className={`${style.eventCard} ${darkMode && darkTheme.darkMode_textBg}`}>
-                <Image
-                  style={{ cursor: 'pointer' }}
-                  src={ele.img ? ele.img : event.src}
-                  alt={ele.name}
-                  height={180}
-                  width={280}
-                  placeholder="blur"
-                  //   blurDataURL={placeholderImg.src}
-                  blurDataURL={'placeholderImg.src'}
-                  onClick={() => navigateToEventPage(ele.name)}
-                />
-                <div className={style.eventCardContent}>
-                  <div
-                  // style={{ cursor: 'pointer' }}
-                  //   onClick={() => navigateToEventPage(ele.name)}
-                  >
-                    <div className={`${style.eventTime} ${darkMode && darkTheme.darkMode_greenColor}`}>
-                      {ele.date} BY {ele.time}
+          {eventList.length > 0 ? (
+            <div className={style.eventList}>
+              {eventList.map((ele, i) => (
+                <div key={i} className={`${style.eventCard} ${darkMode && darkTheme.darkMode_textBg}`}>
+                  <Image
+                    style={{ cursor: 'pointer' }}
+                    src={ele.img ? ele.img : event.src}
+                    alt={ele.name}
+                    height={180}
+                    width={280}
+                    placeholder="blur"
+                    //   blurDataURL={placeholderImg.src}
+                    blurDataURL={'placeholderImg.src'}
+                    onClick={() => navigateToEventPage(ele.name)}
+                  />
+                  <div className={style.eventCardContent}>
+                    <div
+                    // style={{ cursor: 'pointer' }}
+                    //   onClick={() => navigateToEventPage(ele.name)}
+                    >
+                      <div className={`${style.eventTime} ${darkMode && darkTheme.darkMode_greenColor}`}>
+                        {ele.date} BY {ele.time}
+                      </div>
+                      <div className={`${style.eventName} ${darkMode && darkTheme.darkMode_greenColor}`} title={ele.name}>
+                        {ele?.name?.length < 22 ? ele?.name : ele?.name?.substring(0, 22) + '...'}
+                      </div>
+                      <div className={`${style.eventLocation} ${darkMode && darkTheme.darkMode_textColor}`}>{ele.location}</div>
+                      <div className={`${style.eventInterested} ${darkMode && darkTheme.darkMode_textColor}`} title={ele.description}>
+                        {ele?.description?.length < 35
+                          ? ele?.description
+                          : ele?.description?.substring(0, 35) + '...'}
+                      </div>
                     </div>
-                    <div className={`${style.eventName} ${darkMode && darkTheme.darkMode_greenColor}`} title={ele.name}>
-                      {ele?.name?.length < 22 ? ele?.name : ele?.name?.substring(0, 22) + '...'}
-                    </div>
-                    <div className={`${style.eventLocation} ${darkMode && darkTheme.darkMode_textColor}`}>{ele.location}</div>
-                    <div className={`${style.eventInterested} ${darkMode && darkTheme.darkMode_textColor}`} title={ele.description}>
-                      {ele?.description?.length < 35
-                        ? ele?.description
-                        : ele?.description?.substring(0, 35) + '...'}
-                    </div>
+                    <button className={style.interestedButton} onClick={onInterestedButtonClick}>
+                      <Image src={interestedLogo} /> Subscribe
+                    </button>
                   </div>
-                  <button className={style.interestedButton} onClick={onInterestedButtonClick}>
-                    <Image src={interestedLogo} /> Subscribe
-                  </button>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : !skeletonVisible ? (
+            <div className={style.eventList}>No Event Found</div>
+          ) : (
+            <EventListingSkeleton />
+          )}
         </div>
       </div>
     </>
-  ) : (
-    <EventListingSkeleton />
   );
 };
 
