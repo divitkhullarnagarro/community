@@ -161,8 +161,8 @@ const Notification = (props: NotificationProps): JSX.Element => {
               <NextImage
                 field={NotificationPerson}
                 editable={true}
-                width={16}
-                height={16}
+                width={55}
+                height={55}
                 title="Notification"
               ></NextImage>
               <div className={notificationCss.notificationTypeImage}>
@@ -173,8 +173,8 @@ const Notification = (props: NotificationProps): JSX.Element => {
                       : NotificationComment
                   }
                   editable={true}
-                  width={16}
-                  height={16}
+                  width={23}
+                  height={23}
                   title="Notification"
                 ></NextImage>
               </div>

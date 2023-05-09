@@ -195,7 +195,7 @@
 }
 
 .notificationDropdownToggle::after {
-  content: "" !important;
+  content: '' !important;
   display: none;
 }
 
@@ -208,7 +208,7 @@
 
 .notificationTypeImage {
   position: absolute;
-  top: 38px;
+  top: 35px;
   right: -6px;
   background-color: #47d7ac;
   color: white;
