@@ -1209,7 +1209,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             <div className={`postContainer ${darkMode ? darkModeCss.grey_2 : ''}`} key={post?.id}>
               <div className="postHeading">
                 <div className="postHeaderLeft">
-                  <Link passHref={true} href={`/profile/${post?.createdBy?.objectId}`}>
+                  <Link passHref={true} href={`/viewProfile?id=${post?.createdBy?.objectId}`}>
                     <img
                       className="postUserImage"
                       src={
@@ -1667,16 +1667,16 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       controlId="comments"
                       style={{ display: 'flex', padding: '5px 15px 0' }}
                     >
-                      <img
-                        className="commentUserImage"
-                        src={
-                          userObject?.profilePictureUrl
-                            ? userObject?.profilePictureUrl
-                            : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
-                        }
-                        alt="User-Pic"
-                        style={{ marginLeft: '0' }}
-                      ></img>
+                      <Link passHref={true} href={`/viewProfile?id=${objectId}`}>
+                        <img
+                          className="commentUserImage"
+                          src={
+                            userObject?.profilePictureUrl ? userObject?.profilePictureUrl : user.src
+                          }
+                          alt="User-Pic"
+                          style={{ marginLeft: '0' }}
+                        ></img>
+                      </Link>
                       <Form.Control
                         // onChange={(e) => setPostCommentValue(e.target.value)}
                         type="text"
@@ -1695,18 +1695,23 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       <>
                         <div className="commentSection">
                           <figure>
-                            <img
-                              className="commentUserImage"
-                              src={
-                                comment?.createdBy?.profilePictureUrl
-                                  ? comment?.createdBy?.profilePictureUrl
-                                  : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
-                              }
-                              alt="User-Pic"
-                              style={{
-                                marginLeft: '0',
-                              }}
-                            ></img>
+                            <Link
+                              passHref={true}
+                              href={`/viewProfile?id=${comment?.createdBy?.objectId}`}
+                            >
+                              <img
+                                className="commentUserImage"
+                                src={
+                                  comment?.createdBy?.profilePictureUrl
+                                    ? comment?.createdBy?.profilePictureUrl
+                                    : user.src
+                                }
+                                alt="User-Pic"
+                                style={{
+                                  marginLeft: '0',
+                                }}
+                              ></img>
+                            </Link>
                           </figure>
                           <div
                             className="commentContainer"
@@ -1862,17 +1867,19 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                   controlId="comments"
                                   style={{ display: 'flex', padding: '5px 0 15px 15px' }}
                                 >
-                                  <img
-                                    width="32px"
-                                    className="commentUserImage"
-                                    src={
-                                      userObject?.profilePictureUrl
-                                        ? userObject?.profilePictureUrl
-                                        : user.src
-                                    }
-                                    alt="User-Pic"
-                                    style={{ marginLeft: '0' }}
-                                  ></img>
+                                  <Link passHref={true} href={`/viewProfile?id=${objectId}`}>
+                                    <img
+                                      width="32px"
+                                      className="commentUserImage"
+                                      src={
+                                        userObject?.profilePictureUrl
+                                          ? userObject?.profilePictureUrl
+                                          : user.src
+                                      }
+                                      alt="User-Pic"
+                                      style={{ marginLeft: '0' }}
+                                    ></img>
+                                  </Link>
                                   <Form.Control
                                     // onChange={(e) => setPostCommentValue(e.target.value)}
                                     type="text"
@@ -1891,18 +1898,23 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                   <>
                                     <div className="commentSection">
                                       <figure>
-                                        <img
-                                          className="commentUserImage"
-                                          src={
-                                            reply?.createdBy?.profilePictureUrl
-                                              ? reply?.createdBy?.profilePictureUrl
-                                              : user.src
-                                          }
-                                          alt="User-Pic"
-                                          style={{
-                                            marginLeft: '0',
-                                          }}
-                                        ></img>
+                                        <Link
+                                          passHref={true}
+                                          href={`/viewProfile?id=${reply?.createdBy?.objectId}`}
+                                        >
+                                          <img
+                                            className="commentUserImage"
+                                            src={
+                                              reply?.createdBy?.profilePictureUrl
+                                                ? reply?.createdBy?.profilePictureUrl
+                                                : user.src
+                                            }
+                                            alt="User-Pic"
+                                            style={{
+                                              marginLeft: '0',
+                                            }}
+                                          ></img>
+                                        </Link>
                                       </figure>
                                       <div
                                         id={reply?.id}
@@ -2071,17 +2083,22 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                             controlId="comments"
                                             style={{ display: 'flex' }}
                                           >
-                                            <img
-                                              width="32px"
-                                              className="commentUserImage"
-                                              src={
-                                                userObject?.profilePictureUrl
-                                                  ? userObject?.profilePictureUrl
-                                                  : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
-                                              }
-                                              alt="User-Pic"
-                                              style={{ marginLeft: '0' }}
-                                            ></img>
+                                            <Link
+                                              passHref={true}
+                                              href={`/viewProfile?id=${objectId}`}
+                                            >
+                                              <img
+                                                width="32px"
+                                                className="commentUserImage"
+                                                src={
+                                                  userObject?.profilePictureUrl
+                                                    ? userObject?.profilePictureUrl
+                                                    : user.src
+                                                }
+                                                alt="User-Pic"
+                                                style={{ marginLeft: '0' }}
+                                              ></img>
+                                            </Link>
                                             <Form.Control
                                               // onChange={(e) => setPostCommentValue(e.target.value)}
                                               type="text"
@@ -2944,6 +2961,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       }
     });
 
+  console.log('USEROBJECT', userObject);
+
   return (
     <>
       <div className={`${styles.mainContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}>
@@ -2956,13 +2975,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               <div className={styles.addPostFieldContainer}>
                 <div className={styles.addPostField}>
                   <div className={styles.addPostImage}>
-                    <Link href={`/profile`} passHref={true}>
-                      <NextImage
-                        field={user}
-                        editable={true}
+                    <Link href={`/viewProfile?id=${userObject?.objectId}`} passHref={true}>
+                      <img
+                        src={
+                          userObject?.profilePictureUrl ? userObject?.profilePictureUrl : user.src
+                        }
                         alt="Profile-Pic"
-                        width={27}
-                        height={27}
+                        width={40}
+                        height={40}
                       />
                     </Link>
                   </div>

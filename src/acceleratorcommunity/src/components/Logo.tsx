@@ -7,7 +7,13 @@ const Logo = (): JSX.Element => {
   return (
     <div className={LogoStyles.container}>
       <Link href="/" passHref={true}>
-        <NextImage field={logo} editable={true} height={45} width={45} />
+        <NextImage
+          style={{ cursor: 'pointer' }}
+          field={logo}
+          editable={true}
+          height={45}
+          width={45}
+        />
       </Link>
     </div>
   );

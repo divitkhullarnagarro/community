@@ -77,7 +77,7 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
             peerFriendList?.slice(0, 5).map((item) => {
               return (
                 <div key={item?.objectId} className={styles.item}>
-                  <Link href={`/profile/${item.objectId}`} passHref={true}>
+                  <Link href={`/viewProfile?id=${item?.objectId}`} passHref={true}>
                     <img
                       className={styles.peerFriendUserImage}
                       src={item.profilePictureUrl ? item.profilePictureUrl : Profile.src}
@@ -181,7 +181,7 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
     return (
       <Card className={`${styles.cardItem} ${darkMode ? darkModeCss.grey_3 : ''}`}>
         <div className={styles.imageContainer}>
-          <Link href={`/profile/${item?.objectId}`} passHref={true}>
+          <Link href={`/viewProfile?id=${item?.objectId}`} passHref={true}>
             <img
               className={styles.imgProfile}
               contentEditable={true}
