@@ -29,6 +29,9 @@ import reportPostCall from 'src/API/reportPostCall';
 import blockUserCall from 'src/API/blockUnblockUserCall';
 import { decryptString } from 'assets/helpers/EncryptDecrypt';
 import EventCard from 'components/EventCard';
+import PollCard from 'components/PollCard';
+import { voteInPollUrl } from 'assets/helpers/constants';
+import AxiosRequest from 'src/API/AxiosRequest';
 
 // import {calculateTimeDifference} from
 
@@ -141,6 +144,47 @@ function viewSinglePost(props: any) {
   //     }
   //   }
   // }, []);
+
+  const [myAnotherArr, setMyAnotherArr] = useState<any>([]);
+
+  const voteInAPoll = async (pollId: any, pollOptionId: any) => {
+    updatePollPost(pollId, pollOptionId);
+    await AxiosRequest({
+      method: 'PUT',
+      url: `${voteInPollUrl}${pollId}/poll-option/${pollOptionId}`,
+    });
+  };
+
+  //Function to update with latest data of poll
+  function updatePollPost(pollId: any, pollOptionId: any) {
+    const updatedPollPosts = myAnotherArr.map((pollPost: any) => {
+      if (pollPost?.poll?.id === pollId) {
+        const updatedPollOptions = pollPost?.poll?.pollOptions?.map((option: any) => {
+          if (option?.id === pollOptionId) {
+            const updatedOption = { ...option };
+            updatedOption.responseCount = updatedOption.responseCount + 1 || 1;
+            return updatedOption;
+          } else {
+            return option;
+          }
+        });
+        return {
+          ...pollPost,
+          poll: {
+            ...pollPost.poll,
+            pollResponseCount: pollPost?.poll?.pollResponseCount
+              ? pollPost?.poll?.pollResponseCount + 1
+              : 1,
+            pollOptions: updatedPollOptions,
+            optedPollOptionID: pollOptionId,
+          },
+        };
+      } else {
+        return pollPost;
+      }
+    });
+    setMyAnotherArr(updatedPollPosts);
+  }
 
   async function copyTextToClipboard(postId: string) {
     let postUrl = window.location.origin + '/post/' + postId;
@@ -651,7 +695,11 @@ function viewSinglePost(props: any) {
             ) : (
               ''
             )}
-
+            {props?.data?.data?.postType === 'POLL' ? (
+              <PollCard d pollPost={{ poll: props?.data?.data?.poll }} voteInAPoll={voteInAPoll} />
+            ) : (
+              ''
+            )}
             {/* {props?.data?.data?.postType === 'BLOG_POST' ? (
               <img className={specificPostCss.bannerImg} src={} />
             ) : (
