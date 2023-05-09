@@ -27,7 +27,7 @@ const Search = (props: SearchProps): JSX.Element => {
   const handleSearch = (e: any) => {
     e.preventDefault();
     if (searchText !== '') {
-      router.push(`/search/${searchText}`);
+      router.push(`/search?query=${searchText}&type=ALL`);
     }
   };
   return (

@@ -1,83 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../assets/searchFilterContainer.module.css';
-import eventImg from '../assets/images/event.png';
 import Event from './Event';
 import SideSearchFilter from './sideSearchFilter';
 import { SearchSkeletonForEvents } from './skeletons/SearchSkeleton';
 
 const EventSearchContainer = (props: any) => {
-  const eventArray = [
-    {
-      eventImg: eventImg,
-      title: 'Event1',
-      description: 'This is an event1',
-      startDate: '2023-04-07T00:00:00Z',
-      endDate: '2023-05-07T00:00:00Z',
-    },
-    {
-      eventImg: eventImg,
-      title: 'Event2',
-      description: 'This is an event2',
-      startDate: '2023-04-07T00:00:00Z',
-      endDate: '2023-04-07T00:00:00Z',
-    },
-    {
-      eventImg: eventImg,
-      title: 'Event3',
-      description: 'This is an event3',
-      startDate: '2023-05-02T00:00:00Z',
-      endDate: '2023-05-02T00:00:00Z',
-    },
-    {
-      eventImg: eventImg,
-      title: 'Event4',
-      description: 'This is an event4',
-      startDate: '2023-04-07T00:00:00Z',
-      endDate: '2023-04-07T00:00:00Z',
-    },
-    {
-      eventImg: eventImg,
-      title: 'Event5',
-      description: 'This is an event5',
-      startDate: '2023-04-07T00:00:00Z',
-      endDate: '2023-04-07T00:00:00Z',
-    },
-    {
-      eventImg: eventImg,
-      title: 'Event6',
-      description: 'This is an event6',
-      startDate: '2023-04-07T00:00:00Z',
-      endDate: '2023-04-07T00:00:00Z',
-    },
-    {
-      eventImg: eventImg,
-      title: 'Event7',
-      description: 'This is an event7',
-      startDate: '2023-04-07T00:00:00Z',
-      endDate: '2023-04-07T00:00:00Z',
-    },
-    {
-      eventImg: eventImg,
-      title: 'Event8',
-      description: 'This is an event8',
-      startDate: '2023-04-07T00:00:00Z',
-      endDate: '2023-04-07T00:00:00Z',
-    },
-    {
-      eventImg: eventImg,
-      title: 'Event9',
-      description: 'This is an event9',
-      startDate: '2023-04-07T00:00:00Z',
-      endDate: '2023-04-07T00:00:00Z',
-    },
-    {
-      eventImg: eventImg,
-      title: 'Event10',
-      description: 'This is an event10',
-      startDate: '2023-05-07T00:00:00Z',
-      endDate: '2023-05-07T00:00:00Z',
-    },
-  ];
+  console.log('propsdata', props?.searchedData);
+
+  useEffect(() => {
+    setEvents(props?.searchedData);
+  }, [props?.searchedData]);
 
   const getFormatedDate = (stringDate: string) => {
     const date = new Date(stringDate);
@@ -97,7 +29,7 @@ const EventSearchContainer = (props: any) => {
     return formattedDate;
   };
 
-  const [Events, setEvents] = useState<any>(eventArray);
+  const [Events, setEvents] = useState<any>(props?.searchedData);
   const [filterState, setFilterState] = useState<any>([]);
 
   const [filteredArray, setFilteredArray] = useState<any>(['Upcoming', 'Current', 'Past']);
@@ -128,45 +60,38 @@ const EventSearchContainer = (props: any) => {
     setFilteredArray(['Upcoming', 'Current', 'Past']);
   };
 
-  const timeToDateParsing = (date: any) => {
-    const isoString = date; // An ISO 8601 string representing August 1, 2022
-    const dateOnlyString = isoString.substring(0, 10); // Extract the date component as a string
-    return dateOnlyString;
-  };
-
   const filtration = (event: any) => {
     setFilterState([event]);
     if (event === 'Upcoming') {
-      let upcomingDateEvents = eventArray?.filter((item: any) => {
-        let date: any = timeToDateParsing(item?.startDate);
-        let datee: any = timeToDateParsing(new Date().toISOString());
-        return Date.parse(date) > Date.parse(datee);
+      let upcomingDateEvents = props?.searchedData?.filter((item: any) => {
+        return item?.sourceAsMap?.postType === 'EVENT'
+          ? new Date(item?.sourceAsMap?.event?.eventDate) > new Date()
+          : '';
       });
       setEvents(upcomingDateEvents);
     } else if (event === 'Current') {
-      let currentDateEvents = eventArray?.filter((item: any) => {
-        let date: any = timeToDateParsing(item?.startDate);
-        let datee: any = timeToDateParsing(new Date().toISOString());
-        return Date.parse(date) === Date.parse(datee);
+      let currentDateEvents = props?.searchedData?.filter((item: any) => {
+        return item?.sourceAsMap?.postType === 'EVENT'
+          ? new Date(item?.sourceAsMap?.event?.eventDate) === new Date()
+          : '';
       });
       setEvents(currentDateEvents);
     } else if (event === 'Past') {
-      let pastDateEvents = eventArray?.filter((item: any) => {
-        let date: any = timeToDateParsing(item?.startDate);
-        let datee: any = timeToDateParsing(new Date().toISOString());
-        return Date.parse(date) < Date.parse(datee);
+      let pastDateEvents = props?.searchedData?.filter((item: any) => {
+        return item?.sourceAsMap?.postType === 'EVENT'
+          ? new Date(item?.sourceAsMap?.event?.eventDate) < new Date()
+          : '';
       });
       setEvents(pastDateEvents);
     } else {
-      setEvents(eventArray);
+      setEvents(props?.searchedData);
     }
   };
 
   const clearFilter = () => {
     setFilterState([]);
-    setEvents(eventArray);
+    setEvents(props?.searchedData);
   };
-
   return (
     <div className={styles.parentContainer}>
       <div className={styles.filterContainer}>
@@ -186,7 +111,13 @@ const EventSearchContainer = (props: any) => {
         {props?.success ? (
           <SearchSkeletonForEvents count={5} />
         ) : (
-          <Event events={Events} getFormatedDate={getFormatedDate} />
+          Events.length > 0 ? Events.map((event: any) => {
+            return event?.sourceAsMap?.postType === 'EVENT' ? (
+              <Event events={event?.sourceAsMap} getFormatedDate={getFormatedDate} />
+            ) : (
+              ''
+            );
+          }):"No Events Found"
         )}
       </div>
     </div>

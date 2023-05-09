@@ -4,15 +4,16 @@ import styles from '../assets/searchFilterContainer.module.css';
 import { SearchSkeletonForUser } from './skeletons/SearchSkeleton';
 
 const SearchUserContainer = (props: any) => {
+  console.log("props?.searchedData",props)
   return (
     <div className={styles.parentContainer}>
       <div className={styles.generalcontainer}>
         {props?.success ? (
           <SearchSkeletonForUser count={5} />
         ) : (
-          [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(() => {
-            return <User />;
-          })
+          props?.searchedData.length > 0 ? props?.searchedData.map((data: any) => {
+            return data?.index === 'accelerator-user' ? <User user={data?.sourceAsMap} /> :"";
+          }):"No user Found"
         )}
       </div>
     </div>

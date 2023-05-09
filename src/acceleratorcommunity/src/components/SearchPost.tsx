@@ -3,7 +3,7 @@ import pollCard from '../assets/pollCard.module.css';
 import CheckedImage from '../assets/images/PollCheckedCiricle.svg';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 
-function PollCard(props: any) {
+function SearchPost(props: any) {
 
 
   console.log("========================================",props)
@@ -120,4 +120,4 @@ function PollCard(props: any) {
   );
 }
 
-export default PollCard;
+export default SearchPost;

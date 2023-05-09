@@ -37,3 +37,23 @@
   border-bottom: 1px solid #283895;
   color: #283895;
 }
+
+.pageHeading > form > input {
+  width: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.pageHeading > form > input::placeholder {
+  color: #47d7ac;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.pageHeading > form > button {
+  visibility: hidden;
+  padding: 0;
+
+}
+
