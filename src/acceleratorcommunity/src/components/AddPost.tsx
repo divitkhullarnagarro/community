@@ -1443,12 +1443,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     {post?.blog?.imageUrl && (
                       <img style={{ width: '100%' }} src={post?.blog?.imageUrl} alt="Post Image" />
                     )}
-                    <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
-                      {parser(modifyHtml(post?.blog?.description))}
-                    </div>
+                    <ViewPostDescription description={post?.blog?.description} />
                   </>
                 ) : (
-                  <ViewPostDescription post={post} />
+                  <ViewPostDescription description={post.description} />
                 )}
               </div>
 

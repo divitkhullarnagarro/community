@@ -4,10 +4,8 @@ import { modifyHtml } from 'assets/helpers/helperFunctions';
 import WebContext from 'src/Context/WebContext';
 import style from './../../assets/viewPostDescription.module.css';
 
-function ViewPostDescription({ post }: any) {
-  const [viewMoreVisible, setViewMoreVisible] = useState(
-    post?.description?.length > 500 ? true : false
-  );
+function ViewPostDescription({ description }: any) {
+  const [viewMoreVisible, setViewMoreVisible] = useState(description?.length > 500 ? true : false);
   const { darkMode } = {
     ...useContext(WebContext),
   };
@@ -17,7 +15,7 @@ function ViewPostDescription({ post }: any) {
         className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}
         style={viewMoreVisible ? { overflow: 'hidden', height: '5rem' } : {}}
       >
-        {parser(modifyHtml(post?.description))}
+        {parser(modifyHtml(description))}
       </div>
       {viewMoreVisible && (
         <div className="d-flex justify-content-end me-3">
