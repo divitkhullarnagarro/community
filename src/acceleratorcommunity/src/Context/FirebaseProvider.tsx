@@ -83,6 +83,7 @@ const FirebaseProvider = (props: any) => {
         .getRegistration('../firebase-messaging-sw.js')
         .then((registration) => {
           if (registration) {
+            registerServiceWorker();
             console.log('Service worker is registered and active');
           } else {
             registerServiceWorker();
