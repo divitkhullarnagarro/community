@@ -3381,7 +3381,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         <Modal.Body>
                           <div className={styles.AddEventModalProfile}>
                             <div className={styles.AddEventModalProfilePic}>
-                              <img src={Profile.src} alt="Profile Image" />
+                              <img
+                                src={
+                                  userObject?.profilePictureUrl
+                                    ? userObject?.profilePictureUrl
+                                    : Profile.src
+                                }
+                                alt="Profile Image"
+                              />
                             </div>
                             <div style={{ alignSelf: 'center' }}>
                               <div style={{ fontSize: '1rem', fontWeight: '600' }}>
@@ -3546,7 +3553,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         <Modal.Body>
                           <div className={styles.AddEventModalProfile}>
                             <div className={styles.AddEventModalProfilePic}>
-                              <img src={Profile.src} alt="Profile Image" />
+                              <img
+                                src={
+                                  userObject?.profilePictureUrl
+                                    ? userObject?.profilePictureUrl
+                                    : Profile.src
+                                }
+                                alt="Profile Image"
+                              />
                             </div>
                             <div style={{ alignSelf: 'center' }}>
                               <div style={{ fontSize: '1rem', fontWeight: '600' }}>
