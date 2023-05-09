@@ -37,8 +37,6 @@ const Search = () => {
 
   console.log('qhhhhhhhhhhhhhhhhhhhqqqqqqqqqqqqhqhhqq', query, type);
 
-
-
   const filter = [
     {
       type: 'ALL',
@@ -266,6 +264,29 @@ const Search = () => {
       searchData
     );
   };
+
+  // useEffect(() => {
+  //   const getData = setTimeout(() => {
+  //     searchCallFunction(
+  //       [
+  //         'description',
+  //         'blog.heading',
+  //         'blog.description',
+  //         'firstName',
+  //         'lastName',
+  //         'objectId',
+  //         'createdBy.firstName',
+  //         'createdBy.lastName',
+  //         'createdBy.objectId',
+  //       ],
+  //       'ALL',
+  //       searchData
+  //     );
+  //     router.push(`/search?query=${searchData}&type=${type}`);
+  //   }, 2000);
+
+  //   return () => clearTimeout(getData);
+  // }, [searchData]);
 
   return (
     <div className={styles.container}>
