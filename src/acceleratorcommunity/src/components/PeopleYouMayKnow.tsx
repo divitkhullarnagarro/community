@@ -29,7 +29,7 @@ type peopleYouMayKnowFields = {
   objectId: string;
   firstName: Field<string>;
   lastName: Field<string>;
-  imageData: Field<string>;
+  profilePictureUrl: string;
   speciality: Field<string>;
   city: Field<string>;
 };
@@ -44,6 +44,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   const [isFullPage] = useState(IsFullList === '1');
   const getPeopleYouMayKnowList = async (userToken: string | undefined) => {
     let response = await peopleYouMayKnowCall(userToken);
+    console.log('peopleYouMayKnowList', response);
     if (response?.data?.success) {
       setIsDataLoaded(true);
       setPeopleYouMayKnowList(response?.data?.data);
@@ -70,11 +71,11 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
             peopleYouMayKnowList?.slice(0, 5).map((item) => {
               return (
                 <div key={item?.objectId} className={styles.item}>
-                  <Link href={`/profile/${item.objectId}`} passHref={true}>
-                    <NextImage
+                  <Link href={`/viewProfile?id=${item.objectId}`} passHref={true}>
+                    <img
                       className={styles.img}
-                      field={Profile ?? item?.imageData?.value}
-                      editable={true}
+                      src={item?.profilePictureUrl ? item?.profilePictureUrl : Profile.src}
+                      // editable={true}
                       height={40}
                       width={40}
                     />
@@ -150,8 +151,12 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
     return (
       <Card className={styles.cardItem}>
         <div className={styles.imageContainer}>
-          <Link href={`/profile/${item?.objectId}`}>
-            <img className={styles.imgProfile} contentEditable={true} src={Profile.src} />
+          <Link href={`/viewProfile?id=${item?.objectId}`}>
+            <img
+              className={styles.imgProfile}
+              contentEditable={true}
+              src={item.profilePictureUrl ? item.profilePictureUrl : Profile.src}
+            />
           </Link>
         </div>
         <Card.Body>
