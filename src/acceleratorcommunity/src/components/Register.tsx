@@ -5,6 +5,7 @@ import Link from 'next/link';
 import registerUserCall from '../API/registerUserCall';
 import { useRouter } from 'next/router';
 import RegisterCss from '../assets/register.module.css';
+import { validateEmail, validatePassword, numberOnly } from 'assets/helpers/validations';
 // import starImage from '../assets/images/star.png';
 // import imageNotFound from '../assets/images/imageNot.png';
 
@@ -85,8 +86,11 @@ const Register = (props: RegisterProps): JSX.Element => {
   let [firstName, setFirstName] = useState('');
   let [lastName, setLastName] = useState('');
   let [email, setEmail] = useState('');
+  let [emailValidationMessage, setEmailValidationMessage] = useState('');
   let [phoneNumber, setPhoneNumber] = useState('');
+  let [phoneValidationMessage, setPhoneValidationMessage] = useState('');
   let [password, setPassword] = useState('');
+  let [passwordValidationMessage, setPasswordValidationMessage] = useState('');
   let [confirmPassword, setConfirmPassword] = useState('');
   let [error, isError] = useState(false);
   let [isRegistered, setIsRegistered] = useState(false);
@@ -113,8 +117,16 @@ const Register = (props: RegisterProps): JSX.Element => {
     setPhoneNumber(val);
     if (val === '') {
       setPhoneError(true);
+      setPhoneValidationMessage(`${targetItems?.phoneNoLabel?.jsonValue?.value} is mandatory`);
     } else {
-      setPhoneError(false);
+      if (!numberOnly(val)) {
+        setPhoneError(true);
+        setPhoneValidationMessage(
+          `${targetItems?.phoneNoLabel?.jsonValue?.value} can have digits only`
+        );
+      } else {
+        setPhoneError(false);
+      }
     }
   }
 
@@ -128,19 +140,33 @@ const Register = (props: RegisterProps): JSX.Element => {
   }
 
   function setEmailValue(val: any) {
-    setEmail(val);
-    if (val === '') setEmailError(true);
-    else {
-      setEmailError(false);
+    if (val === '') {
+      setEmailError(true);
+      setEmailValidationMessage(`${targetItems?.emailLabel?.jsonValue?.value} is mandatory`);
+    } else {
+      if (!validateEmail(val)) {
+        setEmailError(true);
+        setEmailValidationMessage(`${targetItems?.emailLabel?.jsonValue?.value} is not valid`);
+      } else {
+        setEmailError(false);
+      }
     }
+    setEmail(val);
   }
 
   function setPasswordValue(val: any) {
-    setPassword(val);
-    // if()
-    if (val === '') setPasswordError(true);
-    else {
-      setPasswordError(false);
+    if (val === '') {
+      setPasswordError(true);
+      setPasswordValidationMessage(`${targetItems?.passwordLabel?.jsonValue?.value} is mandatory`);
+    } else {
+      if (!validatePassword(val)) {
+        setPasswordError(true);
+        setPasswordValidationMessage(
+          `${targetItems?.passwordLabel?.jsonValue?.value} should be minimum of 8 letters with 1 upper, 1 lowercase, 1 digit, 1 special character`
+        );
+      } else {
+        setPasswordError(false);
+      }
     }
     if (confirmPassword != '') {
       if (val !== confirmPassword) {
@@ -151,7 +177,9 @@ const Register = (props: RegisterProps): JSX.Element => {
     } else if (confirmPassword == '') {
       isError(false);
     }
+    setPassword(val);
   }
+
   function setConfirmPasswordValue(val: any) {
     setConfirmPassword(val);
     if (password != '') {
@@ -183,11 +211,14 @@ const Register = (props: RegisterProps): JSX.Element => {
     }
     if (email === '') {
       setEmailError(true);
+      setEmailValidationMessage(`${targetItems?.emailLabel?.jsonValue?.value} is mandatory`);
     }
     if (phoneNumber == '') {
       setPhoneError(true);
+      setPhoneValidationMessage(`${targetItems?.phoneNoLabel?.jsonValue?.value} is mandatory`);
     }
     if (password === '') {
+      setPasswordValidationMessage(`${targetItems?.passwordLabel?.jsonValue?.value} is mandatory`);
       setPasswordError(true);
     }
     if (
@@ -229,9 +260,9 @@ const Register = (props: RegisterProps): JSX.Element => {
                 {/* <NextImage field={starImage}  editable={true} /> */}
               </div>
               <h5 className={RegisterCss.welcomeTextHeading}>
-                {heading?heading[0]:""}
+                {heading ? heading[0] : ''}
                 <br />
-                {heading?heading[1]:""}
+                {heading ? heading[1] : ''}
               </h5>
               <div className={RegisterCss?.welcomeTextDescription}>
                 {targetItems?.description?.jsonValue?.value}
@@ -287,7 +318,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   ''
                 ) : (
                   <span className={RegisterCss.passwordMismatchWarning}>
-                    * This field is mandatory
+                    * {targetItems.firstNameLabel.jsonValue.value} is mandatory
                   </span>
                 )}
               </div>
@@ -307,7 +338,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   ''
                 ) : (
                   <span className={RegisterCss.passwordMismatchWarning}>
-                    * This field is mandatory
+                    * {targetItems.lastNameLabel.jsonValue.value} is mandatory
                   </span>
                 )}
               </div>
@@ -328,7 +359,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   ''
                 ) : (
                   <span className={RegisterCss.passwordMismatchWarning}>
-                    * This field is mandatory
+                    *{emailValidationMessage}
                   </span>
                 )}
               </div>
@@ -348,7 +379,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   ''
                 ) : (
                   <span className={RegisterCss.passwordMismatchWarning}>
-                    * This field is mandatory
+                    *{phoneValidationMessage}
                   </span>
                 )}
               </div>
@@ -369,7 +400,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   ''
                 ) : (
                   <span className={RegisterCss.passwordMismatchWarning}>
-                    * This field is mandatory
+                    *{passwordValidationMessage}
                   </span>
                 )}
               </div>

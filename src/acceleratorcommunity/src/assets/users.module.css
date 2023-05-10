@@ -14,7 +14,7 @@
   flex: 1 1;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 80px);
+  height: calc(98vh - 80px);
   background: #f7f8fa;
 }
 
@@ -61,6 +61,22 @@
   display: flex;
   overflow: auto;
   justify-content: center;
+}
+
+.right_lower_section::-webkit-scrollbar {
+  overflow-y: auto;
+  width: 5px;
+}
+
+.right_lower_section::-webkit-scrollbar-track {
+  border-radius: 2px;
+  background-color: white;
+  height: 1px;
+}
+
+.right_lower_section::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 2px;
 }
 
 .reportedPostContainer {
@@ -252,12 +268,21 @@
 }
 
 /* Report Post */
-.reportPostWrapper {
-}
 
 .reportedPostsContainer {
   width: 100%;
   padding: 20px;
+}
+
+.reportedPostSkeletonContainer {
+  width: 100%;
+  padding: 20px;
+}
+
+.reportedPostSkeletonItemContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .reportPostTitle {

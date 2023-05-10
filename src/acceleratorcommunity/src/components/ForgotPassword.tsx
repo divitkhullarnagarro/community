@@ -7,7 +7,7 @@ import loginCss from '../assets/login.module.css';
 // import star from '../assets/images/star.png';
 // import imageNotFound from '../assets/images/imageNot.png';
 import Link from 'next/link';
-import { validateEmailOrPhone } from 'assets/helpers/validations';
+import { validateEmailOrPhone, validatePassword } from 'assets/helpers/validations';
 // import Axios, { AxiosResponse } from 'axios';
 // import { LogoutUrl } from 'assets/helpers/constants';
 import sendOtpCall, { updatePasswordCall, validateOtpCall } from 'src/API/forgotPasswordCalls';
@@ -138,15 +138,57 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
   let [passwordMatchError, setPasswordMatchError] = useState(false);
   let [passwordPage, setPasswordPage] = useState(false);
   let [password, setPassword] = useState('');
+  let [passwordValidationMessage, setPasswordValidationMessage] = useState('');
   let [confirmPassword, setConformPassword] = useState('');
   let [otpFieldVisible, setOtpFieldVisible] = useState(false);
   let [otp, setOtp] = useState('');
   let [otpError, setOtpError] = useState(false);
   let [emailValidateError, setEmailValidateError] = useState(false);
+  let [passwordError, setPasswordError] = useState(false);
   let [somethingWentWrongError, setSomethingWentWrongError] = useState(false);
 
   function setEmailValue(val: any) {
     setEmail(val);
+  }
+
+  function setPasswordValue(val: any) {
+    if (val === '') {
+      setPasswordError(true);
+      setPasswordValidationMessage(`${datasource?.passwordLabel?.jsonValue?.value} is mandatory`);
+    } else {
+      if (!validatePassword(val)) {
+        setPasswordError(true);
+        setPasswordValidationMessage(
+          `${datasource?.passwordLabel?.jsonValue?.value} should be minimum of 8 letters with 1 upper, 1 lowercase, 1 digit, 1 special character`
+        );
+      } else {
+        setPasswordError(false);
+      }
+    }
+
+    if (confirmPassword != '') {
+      if (val !== confirmPassword) {
+        setPasswordMatchError(true);
+      } else if (val == confirmPassword) {
+        setPasswordMatchError(false);
+      }
+    } else if (confirmPassword == '') {
+      setPasswordMatchError(false);
+    }
+
+    setPassword(val);
+  }
+
+  function setConfirmPasswordValue(val: any) {
+    setConformPassword(val);
+    if (password != '') {
+      if (password != val) setPasswordMatchError(true);
+      else if (password === val) {
+        setPasswordMatchError(false);
+      }
+    } else if (password == '') {
+      setPasswordMatchError(false);
+    }
   }
 
   const onSubmitHandler = async (e: any) => {
@@ -292,7 +334,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                     {datasource?.passwordLabel?.jsonValue?.value}
                   </label>
                   <input
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => setPasswordValue(e.target.value)}
                     value={password}
                     type="password"
                     className={loginCss.loginInput}
@@ -300,6 +342,15 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                     minLength={6}
                     required
                   />
+                  {passwordError ? (
+                    <span
+                      style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
+                    >
+                      {passwordValidationMessage}
+                    </span>
+                  ) : (
+                    ''
+                  )}
                 </div>
                 <div className={loginCss.loginField}>
                   <i className={loginCss['login__icon fas fa-lock']}></i>
@@ -307,29 +358,28 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                     {datasource?.confirmPasswordLabel?.jsonValue?.value}
                   </label>
                   <input
-                    onChange={(e) => setConformPassword(e.target.value)}
+                    onChange={(e) => setConfirmPasswordValue(e.target.value)}
                     value={confirmPassword}
                     type="password"
                     className={loginCss.loginInput}
                     placeholder={datasource?.confirmPasswordPlaceholder?.jsonValue?.value}
-                    minLength={6}
                     required
                   />
+                  {passwordMatchError ? (
+                    <span
+                      style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
+                    >
+                      {datasource?.passwordMatchingError?.jsonValue?.value}
+                    </span>
+                  ) : (
+                    ''
+                  )}
                 </div>
                 <button className={loginCss.formButton}>
                   {datasource?.updatePasswordBtnText?.jsonValue?.value}
                   <i className={loginCss['button__icon fas fa-chevron-right']}></i>
                 </button>
 
-                {passwordMatchError ? (
-                  <span
-                    style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
-                  >
-                    {datasource?.passwordMatchingError?.jsonValue?.value}
-                  </span>
-                ) : (
-                  ''
-                )}
                 {somethingWentWrongError ? (
                   <span
                     style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}

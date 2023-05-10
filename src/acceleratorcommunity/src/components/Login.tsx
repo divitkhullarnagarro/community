@@ -12,6 +12,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import getUserCall from 'src/API/getUserCall';
 import { encryptString } from '../assets/helpers/EncryptDecrypt';
 import ThemeSwitcher from './ThemeSwitcher';
+import { validateEmail } from 'assets/helpers/validations';
 // import star from '../assets/images/star.png';
 
 type LoginProps = ComponentProps & {
@@ -66,7 +67,9 @@ const Login = (props: LoginProps): JSX.Element => {
   };
 
   let [email, setEmail] = useState('');
+  let [emailValidationMessage, setEmailValidationMessage] = useState('');
   let [password, setPassword] = useState('');
+  let [passwordValidationMessage, setPasswordValidationMessage] = useState('');
   let [emailError, setEmailError] = useState(false);
   let [passwodError, setPasswordError] = useState(false);
   let [ifUnAuthorised, setIfUnauthorised] = useState(false);
@@ -75,8 +78,14 @@ const Login = (props: LoginProps): JSX.Element => {
   function setEmailValue(val: any) {
     if (val === '') {
       setEmailError(true);
+      setEmailValidationMessage(`${targetItems?.userNameLabel?.jsonValue?.value} is mandatory`);
     } else {
-      setEmailError(false);
+      if (!validateEmail(val)) {
+        setEmailError(true);
+        setEmailValidationMessage(`${targetItems?.userNameLabel?.jsonValue?.value} is not valid`);
+      } else {
+        setEmailError(false);
+      }
     }
     setEmail(val);
   }
@@ -84,6 +93,7 @@ const Login = (props: LoginProps): JSX.Element => {
   function setPasswordValue(val: any) {
     if (val === '') {
       setPasswordError(true);
+      setPasswordValidationMessage(`${targetItems?.passwordLabel?.jsonValue?.value} is mandatory`);
     } else {
       setPasswordError(false);
     }
@@ -173,7 +183,9 @@ const Login = (props: LoginProps): JSX.Element => {
                 <br />
                 {heading ? heading[1] : 'Please Login Here'}
               </h5>
-              <div className={`${loginCss.welcomeTextDescription} ${darkMode && darkTheme.text_light}`}>
+              <div
+                className={`${loginCss.welcomeTextDescription} ${darkMode && darkTheme.text_light}`}
+              >
                 {targetItems?.description?.jsonValue?.value}
               </div>
             </div>
@@ -212,7 +224,11 @@ const Login = (props: LoginProps): JSX.Element => {
         </div>
 
         <div className={`${loginCss.rightContainer} ${darkMode && darkTheme.grey_1}`}>
-          <div className={`${loginCss.formContainer} ${darkMode && darkTheme.grey_3} ${darkMode && loginCss.formDarkBorder}`}>
+          <div
+            className={`${loginCss.formContainer} ${darkMode && darkTheme.grey_3} ${
+              darkMode && loginCss.formDarkBorder
+            }`}
+          >
             <form className={loginCss.login} onSubmit={(e) => onSubmitHandler(e)}>
               <div className={loginCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
@@ -226,9 +242,7 @@ const Login = (props: LoginProps): JSX.Element => {
                   className={loginCss.loginInput}
                 />
                 {emailError ? (
-                  <span className={loginCss.error}>
-                    * {targetItems?.userNameLabel?.jsonValue?.value} Field is empty
-                  </span>
+                  <span className={loginCss.error}>*{emailValidationMessage}</span>
                 ) : (
                   ''
                 )}
@@ -245,9 +259,7 @@ const Login = (props: LoginProps): JSX.Element => {
                   className={loginCss.loginInput}
                 />
                 {passwodError ? (
-                  <span className={loginCss.error}>
-                    * {targetItems?.passwordLabel?.jsonValue?.value} Field is empty
-                  </span>
+                  <span className={loginCss.error}>*{passwordValidationMessage}</span>
                 ) : (
                   ''
                 )}

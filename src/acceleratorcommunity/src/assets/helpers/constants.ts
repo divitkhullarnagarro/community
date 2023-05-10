@@ -11,6 +11,7 @@ export const voteInPollUrl = `${javaHost}/graph-service/api/v1/graph/post/poll/`
 export const getMyBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/my-blogs`;
 export const getBookmarkedMyBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/my-blogs`;
 export const getSuggestedBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/bookmarked-blogs`;
+export const viewProfileLinkUrl = `/viewProfile?id=`;
 
 export const Algorithm = 'aes-256-cbc';
 export const Key = [

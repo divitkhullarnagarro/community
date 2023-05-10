@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import WebContext from './WebContext';
 // import { useRouter } from 'next/router';
-import { decryptString } from '../assets/helpers/EncryptDecrypt';
+import { decryptString, encryptString } from '../assets/helpers/EncryptDecrypt';
 
 function WebProvider(props: any) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,6 +35,15 @@ function WebProvider(props: any) {
         setUserObject(obj);
       }
       // else router.push('/login');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (localStorage && localStorage?.getItem('theme')) {
+      let themeValue = localStorage.getItem('theme') as any;
+      setDarkMode(JSON.parse(decryptString(themeValue)).darkTheme);
+    } else {
+      localStorage.setItem('theme', encryptString(JSON.stringify({ darkTheme: darkMode })));
     }
   }, []);
 
