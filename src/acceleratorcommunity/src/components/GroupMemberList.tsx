@@ -4,6 +4,7 @@ import Image from 'next/image';
 import groupLogo from '../assets/images/ProfilePic.jpeg';
 import style from '../assets/groupMemberList.module.css';
 import { useRouter } from 'next/router';
+import { viewProfileLinkUrl } from 'assets/helpers/constants';
 // import Link from 'next/link';
 
 type GroupMembersListProps = ComponentProps & {
@@ -21,7 +22,7 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
   console.log(props);
   const router = useRouter();
   const onMemberClick = (email: string) => {
-    router.push(`/profile/${email}`);
+    router.push(`${viewProfileLinkUrl}${email}`);
   };
   return (
     <>
