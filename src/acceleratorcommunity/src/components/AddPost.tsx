@@ -410,8 +410,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             </Modal.Body>
             <Modal.Footer>
               <Button
-                className={styles.footerBtn}
-                variant="secondary"
+                className={styles.footerBtnCancel}
+                variant="default"
                 onClick={() => setShowReportUserPopUp(false)}
               >
                 Cancel
@@ -495,13 +495,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             </Modal.Header>
             <Modal.Body>
               <div
-                className={styles.reportPostModalBody}
+                className={styles.blockuserModalBody}
               >{`Do you want to block ${selectedBlockUserItem?.firstName} ${selectedBlockUserItem?.lastName} ?`}</div>
             </Modal.Body>
             <Modal.Footer>
               <Button
-                className={styles.footerBtn}
-                variant="secondary"
+                className={styles.footerBtnCancel}
+                variant="default"
                 onClick={() => {
                   setShowBlockUserPopUp(false);
                 }}
@@ -602,7 +602,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </Form>
             </Modal.Body>
             <Modal.Footer>
-              <Button className={styles.footerBtn} variant="secondary" onClick={handleClose}>
+              <Button className={styles.footerBtnCancel} variant="default" onClick={handleClose}>
                 Cancel
               </Button>
               <Button className={styles.footerBtn} variant="secondary" onClick={onPostReported}>
