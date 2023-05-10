@@ -3,10 +3,12 @@ import {
   getSuggestedBlogsUrl,
   getBookmarkedMyBlogsUrl,
 } from 'assets/helpers/constants';
+import WebContext from '../../Context/WebContext';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import style from './../../assets/blogListing.module.css';
+import darkTheme from './../../assets/darkTheme.module.css';
 // import event from './../../assets/images/event.svg';
 import { Blog } from './../../assets/helpers/types';
 import AxiosRequest from 'src/API/AxiosRequest';
@@ -16,6 +18,7 @@ import parser from 'html-react-parser';
 const tablist = ['My Blogs', 'Suggested Blogs', 'Bookmarked Blogs'];
 
 function BlogListing() {
+  const { darkMode } = { ...useContext(WebContext) };
   const [activeTab, setActiveTab] = useState('My Blogs');
   const [blogList, setBlogList] = useState<Blog>([] as Blog);
   const [skeletonVisible, setSkeletonVisible] = useState(true);
@@ -85,11 +88,11 @@ function BlogListing() {
             ))}
           </div>
         </div>
-        <div className={style.blogListcontent}>
+        <div className={`${style.blogListcontent} ${darkMode && darkTheme.darkMode_bgChild}`}>
           {blogList.length > 0 ? (
             <div className={style.blogList}>
               {blogList.map((ele, i) => (
-                <div key={i} className={style.blogCard}>
+                <div key={i} className={`${style.blogCard} ${darkMode && darkTheme.darkMode_textBg}`}>
                   <div className={style.BlogImage}>
                     <Image
                       style={{ cursor: 'pointer' }}
@@ -113,12 +116,12 @@ function BlogListing() {
                   </div>
                   <div>
                     <div className={style.blogCardContent}>
-                      <div className={style.blogHeading} title={ele.heading}>
+                      <div className={`${style.blogHeading} ${darkMode && darkTheme.text_green}`} title={ele.heading}>
                         {ele.heading.length <= 30
                           ? ele.heading
                           : ele.heading.substring(0, 30) + '...'}
                       </div>
-                      <div className={style.blogDescription}>{parser(ele.description)}</div>
+                      <div className={`${style.blogDescription} ${darkMode && darkTheme.text_light}`}>{parser(ele.description)}</div>
                     </div>
                   </div>
                 </div>
