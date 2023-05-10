@@ -51,6 +51,7 @@ import draftToHtml from 'draftjs-to-html';
 import { toolbar } from 'assets/helpers/constants';
 import allPeersCall from 'src/API/getPeers';
 import { modifyHtml } from 'assets/helpers/helperFunctions';
+
 const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mod) => mod.Editor), {
   ssr: false,
 });
@@ -88,6 +89,7 @@ import darkModeCss from '../assets/darkTheme.module.css';
 
 //logging on logrocket
 import LogRocket from 'logrocket';
+import ViewPostDescription from './helperComponents/ViewPostDescription';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -107,7 +109,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   };
   //logging on logrocket start
   useEffect(() => {
-    console.log('asdfghjklasdfghjksdfghj', userObject);
     LogRocket.init('5m0bj8/communitysolution');
     LogRocket.identify(userObject?.email, {
       name: `${userObject?.firstName} ${userObject?.lastName}`,
@@ -227,15 +228,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   >([] as { text: string; value: string; url: string }[]);
   // const currentCount = editorState.getCurrentContent().getPlainText().length;
 
-  useEffect(() => {
-    const rawEditorContent = convertToRaw(editorState.getCurrentContent());
-    console.log('vicky rawEditorContent', rawEditorContent);
-    const entityMap = rawEditorContent.entityMap;
-    Object.values(entityMap).map((entity) => {
-      console.log('mention user', entity.data.value, rawEditorContent, entityMap, entity);
-    });
-  }, [editorState]);
-
   const getAllPears = async () => {
     const res = await allPeersCall(userToken);
     const data = res.data.data;
@@ -247,37 +239,29 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         objectId: ele.objectId,
       };
     });
-    // console.log('getAllPears', userData);
     setMentionUserData(userData);
   };
   useEffect(() => {
     getAllPears();
-
-    // console.log('getAllPears', getAllPears());
   }, []);
 
   useEffect(() => {
     const rawEditorContent = convertToRaw(editorState.getCurrentContent());
-    console.log('vicky rawEditorContent', rawEditorContent);
     const entityMap = rawEditorContent.entityMap;
     const addedPeerList = new Set<string>();
     Object.values(entityMap).map((entity) => {
-      // console.log('mention', entity.data.value, rawEditorContent, entityMap);
       if (entity?.data?.url?.substring(0, 8) === '/profile') {
         addedPeerList.add(entity?.data?.url?.substring(9, entity?.data?.url?.length));
       }
     });
     const addedpeersList = [...addedPeerList.values()];
     setAddedPeers(addedpeersList);
-    // console.log('mention', [...addedPeerList.values()]);
   }, [editorState]);
 
   const onEditorStateChangeHandler = (e: any) => {
     setEditorState(e);
     setPostTextValue(draftToHtml(convertToRaw(editorState.getCurrentContent())));
-    console.log('asdfasdfasdfasdf', draftToHtml(convertToRaw(editorState.getCurrentContent())));
   };
-  // console.log('mention', addedPeers);
 
   useEffect(() => {
     if (userToken == '' && typeof window !== 'undefined') {
@@ -295,16 +279,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   getUserCall(userToken, objectId).then((response) => {
-  //     if (setUserObject != undefined) {
-  //       setUserObject(response?.data?.data);
-  //     }
-  //   });
-  // }, []);
-
-  console.log('USEROBJECT', userObject);
-
   useEffect(() => {
     postStructCreate();
   }, [myAnotherArr]);
@@ -316,8 +290,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     const idValue = query.id as string;
     setId(idValue);
   }, [router]);
-
-  console.log('QueryParameterId', id);
 
   useEffect(() => {
     if (userToken != '' && userToken != undefined) {
@@ -339,7 +311,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               };
             }
           });
-          console.log('newArr ====>>>>', newArr);
           setMyAnotherArr(newArr);
         })
         .catch((err: any) => {
@@ -385,7 +356,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const [showReportUserPopUp, setShowReportUserPopUp] = useState(false);
 
   function getEventImage(eventType: string) {
-    console.log('eventType', eventType, props);
     let itemImage =
       'https://chinchincelebration.com/wp-content/uploads/2019/08/product-launch-events-min.png';
     props?.fields?.data?.datasource?.eventType?.targetItems?.map((item: any) => {
@@ -788,7 +758,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
       });
     }
   }
-  console.log('ALLPOSTS', myAnotherArr);
 
   //Function To Handle Open Comments Tray
   function setOpenComments(id: string, show: boolean) {
@@ -1209,7 +1178,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             <div className={`postContainer ${darkMode ? darkModeCss.grey_2 : ''}`} key={post?.id}>
               <div className="postHeading">
                 <div className="postHeaderLeft">
-                  <Link passHref={true} href={`/profile/${post?.createdBy?.objectId}`}>
+                  <Link passHref={true} href={`/viewProfile?id=${post?.createdBy?.objectId}`}>
                     <img
                       className="postUserImage"
                       src={
@@ -1471,15 +1440,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     <div className={`blogHeading ${darkMode ? darkModeCss.text_green : ''}`}>
                       {post?.blog?.heading}
                     </div>
-                    <img style={{ width: '100%' }} src={post?.blog?.imageUrl} alt="Post Image" />
-                    <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
-                      {parser(modifyHtml(post?.blog?.description))}
-                    </div>
+                    {post?.blog?.imageUrl && (
+                      <img style={{ width: '100%' }} src={post?.blog?.imageUrl} alt="Post Image" />
+                    )}
+                    <ViewPostDescription description={post?.blog?.description} />
                   </>
                 ) : (
-                  <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
-                    {parser(modifyHtml(post?.description))}
-                  </div>
+                  <ViewPostDescription description={post.description} />
                 )}
               </div>
 
@@ -1667,16 +1634,16 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       controlId="comments"
                       style={{ display: 'flex', padding: '5px 15px 0' }}
                     >
-                      <img
-                        className="commentUserImage"
-                        src={
-                          userObject?.profilePictureUrl
-                            ? userObject?.profilePictureUrl
-                            : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
-                        }
-                        alt="User-Pic"
-                        style={{ marginLeft: '0' }}
-                      ></img>
+                      <Link passHref={true} href={`/viewProfile?id=${objectId}`}>
+                        <img
+                          className="commentUserImage"
+                          src={
+                            userObject?.profilePictureUrl ? userObject?.profilePictureUrl : user.src
+                          }
+                          alt="User-Pic"
+                          style={{ marginLeft: '0' }}
+                        ></img>
+                      </Link>
                       <Form.Control
                         // onChange={(e) => setPostCommentValue(e.target.value)}
                         type="text"
@@ -1695,18 +1662,23 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       <>
                         <div className="commentSection">
                           <figure>
-                            <img
-                              className="commentUserImage"
-                              src={
-                                comment?.createdBy?.profilePictureUrl
-                                  ? comment?.createdBy?.profilePictureUrl
-                                  : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
-                              }
-                              alt="User-Pic"
-                              style={{
-                                marginLeft: '0',
-                              }}
-                            ></img>
+                            <Link
+                              passHref={true}
+                              href={`/viewProfile?id=${comment?.createdBy?.objectId}`}
+                            >
+                              <img
+                                className="commentUserImage"
+                                src={
+                                  comment?.createdBy?.profilePictureUrl
+                                    ? comment?.createdBy?.profilePictureUrl
+                                    : user.src
+                                }
+                                alt="User-Pic"
+                                style={{
+                                  marginLeft: '0',
+                                }}
+                              ></img>
+                            </Link>
                           </figure>
                           <div
                             className="commentContainer"
@@ -1862,17 +1834,19 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                   controlId="comments"
                                   style={{ display: 'flex', padding: '5px 0 15px 15px' }}
                                 >
-                                  <img
-                                    width="32px"
-                                    className="commentUserImage"
-                                    src={
-                                      userObject?.profilePictureUrl
-                                        ? userObject?.profilePictureUrl
-                                        : user.src
-                                    }
-                                    alt="User-Pic"
-                                    style={{ marginLeft: '0' }}
-                                  ></img>
+                                  <Link passHref={true} href={`/viewProfile?id=${objectId}`}>
+                                    <img
+                                      width="32px"
+                                      className="commentUserImage"
+                                      src={
+                                        userObject?.profilePictureUrl
+                                          ? userObject?.profilePictureUrl
+                                          : user.src
+                                      }
+                                      alt="User-Pic"
+                                      style={{ marginLeft: '0' }}
+                                    ></img>
+                                  </Link>
                                   <Form.Control
                                     // onChange={(e) => setPostCommentValue(e.target.value)}
                                     type="text"
@@ -1891,18 +1865,23 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                   <>
                                     <div className="commentSection">
                                       <figure>
-                                        <img
-                                          className="commentUserImage"
-                                          src={
-                                            reply?.createdBy?.profilePictureUrl
-                                              ? reply?.createdBy?.profilePictureUrl
-                                              : user.src
-                                          }
-                                          alt="User-Pic"
-                                          style={{
-                                            marginLeft: '0',
-                                          }}
-                                        ></img>
+                                        <Link
+                                          passHref={true}
+                                          href={`/viewProfile?id=${reply?.createdBy?.objectId}`}
+                                        >
+                                          <img
+                                            className="commentUserImage"
+                                            src={
+                                              reply?.createdBy?.profilePictureUrl
+                                                ? reply?.createdBy?.profilePictureUrl
+                                                : user.src
+                                            }
+                                            alt="User-Pic"
+                                            style={{
+                                              marginLeft: '0',
+                                            }}
+                                          ></img>
+                                        </Link>
                                       </figure>
                                       <div
                                         id={reply?.id}
@@ -2071,17 +2050,22 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                             controlId="comments"
                                             style={{ display: 'flex' }}
                                           >
-                                            <img
-                                              width="32px"
-                                              className="commentUserImage"
-                                              src={
-                                                userObject?.profilePictureUrl
-                                                  ? userObject?.profilePictureUrl
-                                                  : 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'
-                                              }
-                                              alt="User-Pic"
-                                              style={{ marginLeft: '0' }}
-                                            ></img>
+                                            <Link
+                                              passHref={true}
+                                              href={`/viewProfile?id=${objectId}`}
+                                            >
+                                              <img
+                                                width="32px"
+                                                className="commentUserImage"
+                                                src={
+                                                  userObject?.profilePictureUrl
+                                                    ? userObject?.profilePictureUrl
+                                                    : user.src
+                                                }
+                                                alt="User-Pic"
+                                                style={{ marginLeft: '0' }}
+                                              ></img>
+                                            </Link>
                                             <Form.Control
                                               // onChange={(e) => setPostCommentValue(e.target.value)}
                                               type="text"
@@ -2461,7 +2445,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     if (postText == '') {
       return;
     }
-    // console.log('mention inside api call component', addedPeers);
     const timestamp = new Date().getTime();
     const uniqId = generateUniqueId();
     const obj = {
@@ -2879,8 +2862,6 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     }
   }
 
-  console.log('POLLOPTIONS', pollFormOptions);
-
   function clearPollForm() {
     setPollQuestion('');
     setPollFormOptions([option1, option2]);
@@ -2956,13 +2937,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               <div className={styles.addPostFieldContainer}>
                 <div className={styles.addPostField}>
                   <div className={styles.addPostImage}>
-                    <Link href={`/profile`} passHref={true}>
-                      <NextImage
-                        field={user}
-                        editable={true}
+                    <Link href={`/viewProfile?id=${userObject?.objectId}`} passHref={true}>
+                      <img
+                        src={
+                          userObject?.profilePictureUrl ? userObject?.profilePictureUrl : user.src
+                        }
                         alt="Profile-Pic"
-                        width={27}
-                        height={27}
+                        width={40}
+                        height={40}
                       />
                     </Link>
                   </div>
@@ -3361,7 +3343,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         <Modal.Body>
                           <div className={styles.AddEventModalProfile}>
                             <div className={styles.AddEventModalProfilePic}>
-                              <img src={Profile.src} alt="Profile Image" />
+                              <img
+                                src={
+                                  userObject?.profilePictureUrl
+                                    ? userObject?.profilePictureUrl
+                                    : Profile.src
+                                }
+                                alt="Profile Image"
+                              />
                             </div>
                             <div style={{ alignSelf: 'center' }}>
                               <div style={{ fontSize: '1rem', fontWeight: '600' }}>
@@ -3526,7 +3515,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                         <Modal.Body>
                           <div className={styles.AddEventModalProfile}>
                             <div className={styles.AddEventModalProfilePic}>
-                              <img src={Profile.src} alt="Profile Image" />
+                              <img
+                                src={
+                                  userObject?.profilePictureUrl
+                                    ? userObject?.profilePictureUrl
+                                    : Profile.src
+                                }
+                                alt="Profile Image"
+                              />
                             </div>
                             <div style={{ alignSelf: 'center' }}>
                               <div style={{ fontSize: '1rem', fontWeight: '600' }}>

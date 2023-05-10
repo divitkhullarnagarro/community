@@ -26,7 +26,7 @@ type UserProfileProps = ComponentProps & {
 };
 
 const UserProfile = (props: UserProfileProps): JSX.Element => {
-  const { setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
+  const { setIsLoggedIn, setUserToken, userObject } = { ...useContext(WebContext) };
   const { deleteTokenFromFirebase, getFcmTokenFromLocalStorage } = {
     ...useContext(FirebaseContext),
   };
@@ -135,11 +135,15 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
           id="dropdown-basic"
           className={userProfileCss.userProfileDropdownBtn}
         >
-          <NextImage
-            field={props.fields.Image.value}
-            editable={true}
+          <img
+            src={
+              userObject?.profilePictureUrl
+                ? userObject?.profilePictureUrl
+                : props?.fields?.Image?.value?.src
+            }
             width={32}
             height={32}
+            style={{ borderRadius: '50%' }}
             title="Profile page"
           />
         </Dropdown.Toggle>
@@ -149,11 +153,15 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
             <Link href={props.fields.LogoURL.value.href} passHref={true}>
               <div className={userProfileCss.userProfileOverlayItem}>
                 <div className={userProfileCss.userProfileDropdownImage}>
-                  <NextImage
-                    field={props.fields.Image.value}
-                    editable={true}
-                    width={30}
-                    height={30}
+                  <img
+                    src={
+                      userObject?.profilePictureUrl
+                        ? userObject?.profilePictureUrl
+                        : props?.fields?.Image?.value?.src
+                    }
+                    width={20}
+                    height={20}
+                    style={{ borderRadius: '50%' }}
                     title="Profile page"
                   />
                 </div>
@@ -161,7 +169,7 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
               </div>
             </Link>
           </Dropdown.Item>
-          <Dropdown.Item className={userProfileCss.userProfileDropdownItem}> 
+          <Dropdown.Item className={userProfileCss.userProfileDropdownItem}>
             <Link href="/profile/blockedusers" passHref={true}>
               <div className={userProfileCss.userProfileOverlayItem}>
                 <div className={userProfileCss.userProfileDropdownImage}>
