@@ -1,3 +1,9 @@
+body {
+  font-family: 'Equip-Regular', sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Equip-Medium', sans-serif;
+}
 a[target='_blank']:after {
   content: '\1F5D7';
 }
