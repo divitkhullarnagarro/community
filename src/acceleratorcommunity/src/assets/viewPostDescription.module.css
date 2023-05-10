@@ -1,0 +1,16 @@
+.viewMoreButton {
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.6);
+}
+.viewMoreButtonDarkMode {
+  cursor: pointer;
+  color: rgba(225, 225, 225, 0.6);
+}
+.viewMoreButton:hover,
+.viewMoreButtonDarkMode:hover {
+  color: blue;
+}
+.hideContent {
+  overflow: hidden;
+  height: 2em;
+}
