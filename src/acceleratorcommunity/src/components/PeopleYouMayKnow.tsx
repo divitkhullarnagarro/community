@@ -149,7 +149,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
 
   const PeopleYouMayKnowFullPageItem = (item: peopleYouMayKnowFields) => {
     return (
-      <Card className={styles.cardItem}>
+      <Card className={`${styles.cardItem} ${darkMode ? darkModeCss.grey_1 : ''} ${darkMode ? darkModeCss.text_light : ''}`}>
         <div className={styles.imageContainer}>
           <Link href={`/viewProfile?id=${item?.objectId}`}>
             <img
@@ -176,8 +176,8 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
 
   const PeopleYouMayKnowList = () => {
     return (
-      <div className={styles.mainFullPageItemWrapper}>
-        <h2 className={styles.listHeaderLabel}>{Title ?? 'People You May Know'}</h2>
+      <div className={`${styles.mainFullPageItemWrapper} ${darkMode ? darkModeCss.grey_3 : ''}`}>
+        <h2 className={`${styles.listHeaderLabel} ${darkMode ? darkModeCss.text_light : ''}`}>{Title ?? 'People You May Know'}</h2>
         <div className={styles.newgrid}>
           {peopleYouMayKnowList?.length > 0 ? (
             peopleYouMayKnowList.slice(0, numItems).map((item) => {
@@ -190,9 +190,8 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
         {peopleYouMayKnowList === undefined || numItems >= peopleYouMayKnowList?.length ? null : (
           <Button
             style={{
-              width: '100%',
               fontSize: '20px',
-              height: '50px',
+              height: '40px',
               backgroundColor: '#F9F9F9',
               color: '#2A86FD',
               border: 'none',
@@ -201,12 +200,11 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              margin: '20px auto',
             }}
             onClick={() => setNumItems(numItems + 6)}
           >
-            <div>
-              <span className={styles.seeMoreBtn}>See more</span>
-            </div>
+            <span className={styles.seeMoreBtn}>See more</span>
             <NextImage field={DropArrow} editable={true} />
           </Button>
         )}
@@ -216,12 +214,12 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
 
   const SideNavbar = () => {
     return (
-      <div className={styles.sidenavbar}>
-        <div className={styles.rectContainer}>
+      <div className={`${styles.sidenavbar} ${darkMode ? darkModeCss.grey_3 : ''}`}>
+        <div className={`${styles.rectContainer} ${darkMode ? darkModeCss.grey_1 : ''}`}>
           <div className={styles.top}>
-            <span className={styles.logo}>Suggestions</span>
+          <span className={`${styles.logo} ${darkMode ? darkModeCss.text_light : ''}`}>Suggestions</span>
           </div>
-          <div className={styles.center}>
+          <div className={`${styles.center} ${darkMode ? styles.listHover : ''}`}>
             <ul>
               <button>
                 <li className={styles.rowItem}>
@@ -231,7 +229,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
                     height={18}
                     width={18}
                   ></NextImage>
-                  <span>{Title ?? 'People You May Know'}</span>
+                  <span className={`${darkMode ? darkModeCss.text_light : ''}`}>{Title ?? 'People You May Know'}</span>
                 </li>
               </button>
             </ul>
