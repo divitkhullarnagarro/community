@@ -11,3 +11,13 @@ export const validatePhone = (phone: string) => {
 export const validateEmailOrPhone = (emailOrPhone: string) => {
   return validateEmail(emailOrPhone) ? true : validatePhone(emailOrPhone) ? true : false;
 };
+
+export const validatePassword = (password: string) => {
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return regex.test(password);
+};
+
+export const numberOnly = (value : string)=> {
+  const regex = /^\d+$/;
+  return regex.test(value);
+}
