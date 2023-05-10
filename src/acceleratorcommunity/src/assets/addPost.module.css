@@ -7,7 +7,8 @@
   justify-content: center;
   align-items: center;
   margin: 5px;
-  font-size: 1.875rem;
+  font-size: 25px;
+  color: #283895;
 }
 
 .reportPostModalBody {
@@ -16,6 +17,14 @@
   justify-content: center;
   margin-bottom: 5px;
   font-size: 1.25rem;
+}
+
+.blockuserModalBody {
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+  font-size: 17px;
 }
 
 .reportItem {
@@ -28,6 +37,29 @@
 
 .footerBtn {
   font-size: 1.25rem;
+}
+
+.footerBtn {
+  background-color: #47d7ac;
+  border-color: #47d7ac;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+.footerBtn:hover,
+.footerBtn:active,
+.footerBtn:focus-visible {
+  background-color: #ffffff !important;
+  color: #47d7ac !important;
+  border-color: #47d7ac !important;
+}
+.footerBtnCancel {
+  font-size: 16px;
+  color: #f58c60;
+}
+.footerBtnCancel:hover,
+.footerBtnCancel:active,
+.footerBtnCancel:focus-visible {
+  color: #f58c60 !important;
 }
 
 .overlayItem {
