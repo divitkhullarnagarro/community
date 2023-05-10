@@ -5,7 +5,6 @@ import userProfileCss from '../assets/userProfile.module.css';
 import WebContext from '../Context/WebContext';
 import React, { useContext, useState } from 'react';
 import { Button, CloseButton, Dropdown, Modal } from 'react-bootstrap';
-import BlockUserImage from '../assets/images/BlockUser.jpg';
 import LogoutImage from '../assets/images/Logout.png';
 import { useRouter } from 'next/router';
 import logoutUserCall from 'src/API/logoutUserCall';
@@ -166,16 +165,6 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
                   />
                 </div>
                 <div className={userProfileCss.userProfileBtn}> Edit Profile</div>
-              </div>
-            </Link>
-          </Dropdown.Item>
-          <Dropdown.Item className={userProfileCss.userProfileDropdownItem}>
-            <Link href="/profile/blockedusers" passHref={true}>
-              <div className={userProfileCss.userProfileOverlayItem}>
-                <div className={userProfileCss.userProfileDropdownImage}>
-                  <NextImage field={BlockUserImage} editable={true} />
-                </div>
-                <div className={userProfileCss.userProfileBtn}>Blocked Users</div>
               </div>
             </Link>
           </Dropdown.Item>
