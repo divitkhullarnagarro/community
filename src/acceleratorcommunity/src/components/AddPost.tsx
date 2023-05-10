@@ -51,6 +51,7 @@ import draftToHtml from 'draftjs-to-html';
 import { toolbar } from 'assets/helpers/constants';
 import allPeersCall from 'src/API/getPeers';
 import { modifyHtml } from 'assets/helpers/helperFunctions';
+
 const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mod) => mod.Editor), {
   ssr: false,
 });
@@ -88,6 +89,7 @@ import darkModeCss from '../assets/darkTheme.module.css';
 
 //logging on logrocket
 import LogRocket from 'logrocket';
+import ViewPostDescription from './helperComponents/ViewPostDescription';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -1438,15 +1440,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     <div className={`blogHeading ${darkMode ? darkModeCss.text_green : ''}`}>
                       {post?.blog?.heading}
                     </div>
-                    <img style={{ width: '100%' }} src={post?.blog?.imageUrl} alt="Post Image" />
-                    <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
-                      {parser(modifyHtml(post?.blog?.description))}
-                    </div>
+                    {post?.blog?.imageUrl && (
+                      <img style={{ width: '100%' }} src={post?.blog?.imageUrl} alt="Post Image" />
+                    )}
+                    <ViewPostDescription description={post?.blog?.description} />
                   </>
                 ) : (
-                  <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
-                    {parser(modifyHtml(post?.description))}
-                  </div>
+                  <ViewPostDescription description={post.description} />
                 )}
               </div>
 
