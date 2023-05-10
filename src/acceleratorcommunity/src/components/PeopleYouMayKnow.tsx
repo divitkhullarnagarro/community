@@ -18,6 +18,7 @@ import { Button, Card } from 'react-bootstrap';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import darkModeCss from '../assets/darkTheme.module.css';
+import { viewProfileLinkUrl } from 'assets/helpers/constants';
 
 type PeopleYouMayKnowProps = ComponentProps & {
   fields: {
@@ -71,7 +72,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
             peopleYouMayKnowList?.slice(0, 5).map((item) => {
               return (
                 <div key={item?.objectId} className={styles.item}>
-                  <Link href={`/viewProfile?id=${item.objectId}`} passHref={true}>
+                  <Link href={`${viewProfileLinkUrl}${item.objectId}`} passHref={true}>
                     <img
                       className={styles.img}
                       src={item?.profilePictureUrl ? item?.profilePictureUrl : Profile.src}
@@ -149,9 +150,13 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
 
   const PeopleYouMayKnowFullPageItem = (item: peopleYouMayKnowFields) => {
     return (
-      <Card className={`${styles.cardItem} ${darkMode ? darkModeCss.grey_1 : ''} ${darkMode ? darkModeCss.text_light : ''}`}>
+      <Card
+        className={`${styles.cardItem} ${darkMode ? darkModeCss.grey_1 : ''} ${
+          darkMode ? darkModeCss.text_light : ''
+        }`}
+      >
         <div className={styles.imageContainer}>
-          <Link href={`/viewProfile?id=${item?.objectId}`}>
+          <Link href={`${viewProfileLinkUrl}${item?.objectId}`}>
             <img
               className={styles.imgProfile}
               contentEditable={true}
@@ -177,7 +182,9 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   const PeopleYouMayKnowList = () => {
     return (
       <div className={`${styles.mainFullPageItemWrapper} ${darkMode ? darkModeCss.grey_3 : ''}`}>
-        <h2 className={`${styles.listHeaderLabel} ${darkMode ? darkModeCss.text_light : ''}`}>{Title ?? 'People You May Know'}</h2>
+        <h2 className={`${styles.listHeaderLabel} ${darkMode ? darkModeCss.text_light : ''}`}>
+          {Title ?? 'People You May Know'}
+        </h2>
         <div className={styles.newgrid}>
           {peopleYouMayKnowList?.length > 0 ? (
             peopleYouMayKnowList.slice(0, numItems).map((item) => {
@@ -217,7 +224,9 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
       <div className={`${styles.sidenavbar} ${darkMode ? darkModeCss.grey_3 : ''}`}>
         <div className={`${styles.rectContainer} ${darkMode ? darkModeCss.grey_1 : ''}`}>
           <div className={styles.top}>
-          <span className={`${styles.logo} ${darkMode ? darkModeCss.text_light : ''}`}>Suggestions</span>
+            <span className={`${styles.logo} ${darkMode ? darkModeCss.text_light : ''}`}>
+              Suggestions
+            </span>
           </div>
           <div className={`${styles.center} ${darkMode ? styles.listHover : ''}`}>
             <ul>
@@ -229,7 +238,9 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
                     height={18}
                     width={18}
                   ></NextImage>
-                  <span className={`${darkMode ? darkModeCss.text_light : ''}`}>{Title ?? 'People You May Know'}</span>
+                  <span className={`${darkMode ? darkModeCss.text_light : ''}`}>
+                    {Title ?? 'People You May Know'}
+                  </span>
                 </li>
               </button>
             </ul>

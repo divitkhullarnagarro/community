@@ -33,7 +33,7 @@ import postCommentReplyCall from 'src/API/postCommentReplyCall';
 import downVote from '../assets/images/dislikeIcon.svg';
 import CreateModalPopup from './helperComponents/CreateModalPopup';
 import AxiosRequest from 'src/API/AxiosRequest';
-import { editCommentUrl, voteInPollUrl } from '../assets/helpers/constants';
+import { editCommentUrl, viewProfileLinkUrl, voteInPollUrl } from '../assets/helpers/constants';
 import videoIcon from '../assets/images/AddVideo_icon.svg';
 import pollIcon from '../assets/images/CreatePoll_icon.svg';
 import addBlogIcon from '../assets/images/AddBlogPost_icon.svg';
@@ -1184,7 +1184,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             <div className={`postContainer ${darkMode ? darkModeCss.grey_2 : ''}`} key={post?.id}>
               <div className="postHeading">
                 <div className="postHeaderLeft">
-                  <Link passHref={true} href={`/viewProfile?id=${post?.createdBy?.objectId}`}>
+                  <Link passHref={true} href={`${viewProfileLinkUrl}${post?.createdBy?.objectId}`}>
                     <img
                       className="postUserImage"
                       src={
@@ -1640,7 +1640,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       controlId="comments"
                       style={{ display: 'flex', padding: '5px 15px 0' }}
                     >
-                      <Link passHref={true} href={`/viewProfile?id=${objectId}`}>
+                      <Link passHref={true} href={`${viewProfileLinkUrl}${objectId}`}>
                         <img
                           className="commentUserImage"
                           src={
@@ -1670,7 +1670,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           <figure>
                             <Link
                               passHref={true}
-                              href={`/viewProfile?id=${comment?.createdBy?.objectId}`}
+                              href={`${viewProfileLinkUrl}${comment?.createdBy?.objectId}`}
                             >
                               <img
                                 className="commentUserImage"
@@ -1840,7 +1840,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                   controlId="comments"
                                   style={{ display: 'flex', padding: '5px 0 15px 15px' }}
                                 >
-                                  <Link passHref={true} href={`/viewProfile?id=${objectId}`}>
+                                  <Link passHref={true} href={`${viewProfileLinkUrl}${objectId}`}>
                                     <img
                                       width="32px"
                                       className="commentUserImage"
@@ -1873,7 +1873,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                       <figure>
                                         <Link
                                           passHref={true}
-                                          href={`/viewProfile?id=${reply?.createdBy?.objectId}`}
+                                          href={`${viewProfileLinkUrl}${reply?.createdBy?.objectId}`}
                                         >
                                           <img
                                             className="commentUserImage"
@@ -2058,7 +2058,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                           >
                                             <Link
                                               passHref={true}
-                                              href={`/viewProfile?id=${objectId}`}
+                                              href={`${viewProfileLinkUrl}${objectId}`}
                                             >
                                               <img
                                                 width="32px"
@@ -2946,7 +2946,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               <div className={styles.addPostFieldContainer}>
                 <div className={styles.addPostField}>
                   <div className={styles.addPostImage}>
-                    <Link href={`/viewProfile?id=${userObject?.objectId}`} passHref={true}>
+                    <Link href={`${viewProfileLinkUrl}${userObject?.objectId}`} passHref={true}>
                       <img
                         src={
                           userObject?.profilePictureUrl ? userObject?.profilePictureUrl : user.src
