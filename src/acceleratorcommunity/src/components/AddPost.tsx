@@ -107,6 +107,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const { userToken, objectId, userObject, darkMode } = {
     ...useContext(WebContext),
   };
+
+  //theme changes
+  useEffect(() => {
+    postStructCreate();
+  }, [darkMode]);
+
   //logging on logrocket start
   useEffect(() => {
     LogRocket.init('5m0bj8/communitysolution');
@@ -2927,7 +2933,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   return (
     <>
-      <div className={`${styles.mainContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}>
+      <div
+        className={`${styles.mainContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}
+        style={ifNoMoreData ? {} : { paddingBottom: '300px' }}
+      >
         {!isEditorHidden ? (
           <>
             <div
