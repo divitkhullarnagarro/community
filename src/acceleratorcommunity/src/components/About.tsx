@@ -3,8 +3,10 @@ import { ComponentProps } from 'lib/component-props';
 import Accordion from 'react-bootstrap/Accordion';
 import styles from '../assets/about.module.css';
 import Skeleton from 'react-loading-skeleton'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import WebContext from 'src/Context/WebContext';
 import 'react-loading-skeleton/dist/skeleton.css'
+import darkModeCss from '../assets/darkTheme.module.css';
 
 type AboutProps = ComponentProps & {
   fields: {
@@ -40,6 +42,8 @@ const About = (props: AboutProps): JSX.Element => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   useEffect(()=>{const Interval= setTimeout(()=>{setIsDataLoaded(true)},2000)
   return()=> clearInterval(Interval)},[])
+  const { darkMode } = { ...useContext(WebContext) };
+
   const AboutSkeleton= () => {
     return (
       <div className={styles.aboutContainer}>
@@ -63,14 +67,14 @@ const About = (props: AboutProps): JSX.Element => {
   }
 const About= () => {
   return (
-    <div className={styles.aboutContainer}>
-      <h3 className={styles.aboutHeader}>About</h3>
+    <div className={`${styles.aboutContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}>
+      <h3 className={`${styles.aboutHeader} ${darkMode ? darkModeCss.text_green : ''}`}>About</h3>
       <Accordion defaultActiveKey={['0']} alwaysOpen>
         {aboutContentList.map((item, index) => {
           return (
-            <Accordion.Item className={styles.accordionItem} eventKey={index.toString()}>
-              <Accordion.Header className={styles.accordionHeader}>{item.Header}</Accordion.Header>
-              <Accordion.Body className={styles.accordionBody}>{item.Body}</Accordion.Body>
+            <Accordion.Item className={`${styles.accordionItem} ${darkMode ? darkModeCss.grey_2 : ''}`} eventKey={index.toString()}>
+              <Accordion.Header className={`${styles.accordionHeader} ${darkMode ? styles.accordionHeaderTheme : ''}`}>{item.Header}</Accordion.Header>
+              <Accordion.Body className={`${styles.accordionBody} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>{item.Body}</Accordion.Body>
             </Accordion.Item>
           );
         })}

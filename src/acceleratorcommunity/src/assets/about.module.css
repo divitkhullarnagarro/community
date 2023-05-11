@@ -24,8 +24,18 @@
   box-shadow: none;
 }
 
+.accordionHeaderTheme button:not(.collapsed),
+.accordionHeaderTheme button.collapsed{
+  color: #ffffff;
+  background-color: #242526;
+}
+ 
 .accordionHeader .accordion-button:not(.collapsed)::after {
   filter: grayscale(1);
+}
+
+.accordionHeaderTheme .accordion-button::after {
+  filter: invert(73%) sepia(58%) saturate(425%) hue-rotate(107deg) brightness(91%) contrast(91%);
 }
 
 .accordionBody {

@@ -1,10 +1,13 @@
-import React from 'react';
+import { useContext } from 'react';
+import WebContext from 'src/Context/WebContext';
 import styles from '../assets/events.module.css';
+import darkModeCss from '../assets/darkTheme.module.css';
 import { modifyHtml } from 'assets/helpers/helperFunctions';
 import parser from 'html-react-parser';
 
 const DocumentContainer = (props: any) => {
   console.log('videooooooooooooooooooooooooooooooo', props?.events);
+  const { darkMode } = { ...useContext(WebContext) };
   const id = props?.events?.id;
 
   const data = props?.events?.mediaInfoList[0]?.url;
@@ -18,7 +21,7 @@ const DocumentContainer = (props: any) => {
   return (
     <a  href={`/post/${id}`} className={styles.link} target="_blank">
       {props?.fromALL ? <div className={styles.typeHeading}>Post</div> : ''}
-      <div className={styles.parentContainer}>
+      <div className={`${styles.parentContainer} ${darkMode && darkModeCss.grey_1}`}>
         <div className={styles.imgAndContentContainer}>
           <div className={styles.document}>
             <div className="docPreviewContainer">
@@ -44,7 +47,7 @@ const DocumentContainer = (props: any) => {
           </div>
           <div className={styles.content}>
             {parser(modifyHtml(props?.events?.description))}
-            <div className={styles.eventDescription}></div>
+            <div className={`${styles.eventDescription} ${darkMode && darkModeCss.text_light}`}></div>
           </div>
         </div>
       </div>
