@@ -5,6 +5,7 @@ import SearchFlters from 'components/SearchFlters';
 // import User from 'components/User';
 // import SearchGroupResult from 'components/SearchGroupResult';
 import styles from '../../assets/seacrhPage.module.css';
+import darkModeCss from '../../assets/darkTheme.module.css';
 // import SideSearchFilter from 'components/sideSearchFilter';
 import SearchGroupContainer from 'components/SearchGroupContainer';
 import SearchUserContainer from 'components/SearchUserContainer';
@@ -20,6 +21,7 @@ import HashtagContainer from 'components/HashtagContainer';
 import BlogContainer from 'components/BlogContainer';
 // import PollConatiner from 'components/PollConatiner';
 import ToastNotification from 'components/ToastNotification';
+import ThemeSwitcher from 'components/ThemeSwitcher';
 // import JournalContainer from 'components/JournalContainer';
 
 const Search = () => {
@@ -185,7 +187,7 @@ const Search = () => {
     }
     setActiveState(type);
   };
-  const { userToken, setUserToken } = {
+  const { userToken, setUserToken, darkMode } = {
     ...useContext(WebContext),
   };
 
@@ -300,7 +302,10 @@ const Search = () => {
   // }, [searchData]);
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${darkMode && darkModeCss.grey_1}`}>
+      <div className={styles.ThemeSwitcher}>
+        <ThemeSwitcher />
+      </div>
       <div className={styles.pageHeadingContainer}>
         <div className={styles.pageHeading}>
           <form>
@@ -309,6 +314,7 @@ const Search = () => {
               placeholder="Search"
               value={searchData}
               onChange={(e: any) => setSearch(e.target.value)}
+              className={`${darkMode && darkModeCss.darkMode_textColor}`}
             />{' '}
             <input onClick={onSearch} type="submit" hidden />
           </form>

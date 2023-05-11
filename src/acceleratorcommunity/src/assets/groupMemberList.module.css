@@ -3,7 +3,7 @@
   max-width: 100%;
   border-radius: 50%;
 }
-.groupMemberListBox{
+.groupMemberListBox {
   background-color: whitesmoke;
   /* margin-left: 10px; */
   margin-top: 20px;
@@ -13,8 +13,8 @@
 .groupMemberList {
   background-color: white;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
-    border-radius: 6px;
-    padding: 10px;
+  border-radius: 6px;
+  padding: 10px;
   /* margin-top: 15px;
   margin-left: 10px; */
   /* margin: 16px; */
@@ -31,9 +31,13 @@
 .groupMemberListHeading:hover {
   background: whitesmoke;
 }
+.groupMemberListHeadingDarkTheme:hover {
+  background-color: #2f3132 !important;
+}
 .groupMemberListHeadingLeft {
   display: flex;
   align-items: center;
+  width: 100%;
 }
 .groupMemberNameAndEmail {
   margin-left: 12px;

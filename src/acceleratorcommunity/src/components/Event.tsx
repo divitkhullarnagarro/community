@@ -1,5 +1,7 @@
-import React from 'react';
+import { useContext } from 'react';
+import WebContext from 'src/Context/WebContext';
 import styles from '../assets/events.module.css';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 const Event = (props: any) => {
   const data = props?.events?.event;
@@ -12,9 +14,9 @@ const Event = (props: any) => {
     const timeOnly = date?.split('T')[1];
     return timeOnly;
   };
-  const getTwoLines = (data: string) => {
-    console.log('data', data);
-  };
+  const { darkMode } = { ...useContext(WebContext) };
+
+
   const EventImage: any = {
     Seminar:
       'https://higherlogicdownload.s3.amazonaws.com/APSNET/UploadedImages/tAiEB79vTYq1gz2UEGu1_IMG_2866-L.jpg',
@@ -26,18 +28,18 @@ const Event = (props: any) => {
 
   return (
     <a href={`/post/${id}`} className={styles.link} target="_blank">
-      {props?.fromALL ? <div className={styles.typeHeading}>Event</div> : ''}
-      <div className={styles.parentContainer}>
+      {props?.fromALL ? <div className={`${styles.typeHeading} ${darkMode && darkModeCss.text_green}`}>Event</div> : ''}
+      <div className={`${styles.parentContainer} ${darkMode && darkModeCss.grey_1}`}>
         <div className={styles.imgAndContentContainer}>
           {props?.fromALL ? '' : <img src={EventImage[data?.eventType]} alt="eventImg" />}
           <div className={props?.fromALL ? styles.content : styles.eventContent}>
-            <div className={styles.eventHeading}>{data?.title}</div>
+            <div className={`${styles.eventHeading} ${darkMode && darkModeCss.text_green}`}>{data?.title}</div>
             <div className={styles.timeContainer}>
-              <div className={styles.eventTime}>
+              <div className={`${styles.eventTime} ${darkMode && darkModeCss.text_green}`}>
                 {splitDateOnly(data?.eventDate) + ' ' + splitTimeOnly(data?.eventDate)}
               </div>
             </div>
-            <div className={styles.eventDescription}>
+            <div className={`${styles.eventDescription} ${darkMode && darkModeCss.text_light}`}>
               {data?.description.length > 300 ? (
                 <div>
                   {data?.description.slice(0, 300)}

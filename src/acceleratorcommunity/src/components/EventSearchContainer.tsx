@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import WebContext from 'src/Context/WebContext';
 import styles from '../assets/searchFilterContainer.module.css';
+import darkModeCss from '../assets/darkTheme.module.css';
 import Event from './Event';
 import SideSearchFilter from './sideSearchFilter';
 import { SearchSkeletonForEvents } from './skeletons/SearchSkeleton';
@@ -90,9 +92,12 @@ const EventSearchContainer = (props: any) => {
     setFilterState([]);
     setEvents(props?.searchedData);
   };
+  const { darkMode } = {
+    ...useContext(WebContext),
+  };
   return (
-    <div className={styles.parentContainer}>
-      <div className={styles.filterContainer}>
+    <div className={`${styles.parentContainer} ${darkMode && darkModeCss.grey_1}`}>
+      <div className={`${styles.filterContainer} ${darkMode && darkModeCss.grey_3} ${darkMode && darkModeCss.text_light}`}>
         <SideSearchFilter
           filtration={filtration}
           filterState={filterState}
@@ -105,7 +110,7 @@ const EventSearchContainer = (props: any) => {
           handleFilters={handleFilters}
         />
       </div>
-      <div className={styles.generalcontainer}>
+      <div className={`${styles.generalcontainer} ${darkMode && darkModeCss.grey_3} ${darkMode && darkModeCss.text_light}`}>
         {props?.success ? (
           <SearchSkeletonForEvents count={5} />
         ) : (

@@ -1,11 +1,14 @@
-import React from 'react';
 import styles from '../assets/events.module.css';
 import { modifyHtml } from 'assets/helpers/helperFunctions';
 import parser from 'html-react-parser';
+import darkModeCss from '../assets/darkTheme.module.css';
+import { useContext } from 'react';
+import WebContext from 'src/Context/WebContext';
 
 const DocumentContainer = (props: any) => {
   console.log('videooooooooooooooooooooooooooooooo', props?.events);
   const id = props?.events?.id;
+  const { darkMode } = { ...useContext(WebContext) };
 
   const data = props?.events?.mediaInfoList[0]?.url;
   function openDoc(base64: string) {
@@ -40,7 +43,7 @@ const DocumentContainer = (props: any) => {
       ) : (
         ''
       )}
-      <div className={styles.parentContainer}>
+      <div  className={`${styles.parentContainer} ${darkMode && darkModeCss.grey_1}`}>
         <div className={styles.imgAndContentContainer}>
           {/* <div className={styles.document}>
             <div className="docPreviewContainer">
@@ -64,7 +67,7 @@ const DocumentContainer = (props: any) => {
               </span>
             </div>
           </div> */}
-          <div className={styles.content}>
+          <div className={`${styles.content} ${darkMode && darkModeCss.text_light}`}>
             {parser(
               modifyHtml(
                 props?.events?.description.length > 1000
