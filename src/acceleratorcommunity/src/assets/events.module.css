@@ -20,11 +20,11 @@
   display: flex;
   justify-content: space-between;
   margin-top: 0.625rem;
-  padding-bottom: 15px;
+  padding-bottom: 21px;
+  margin-bottom: 14px;
   border-bottom: 1px solid #ced0d4;
 }
 .parentContainer:first-child {
-  border-top: 1px solid #ced0d4;
   padding-top: 15px;
 }
 .imgAndContentContainer {
@@ -33,17 +33,43 @@
   align-items: flex-start;
   /* background-color: pink; */
 }
-
+.parentEventContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.625rem;
+  padding-bottom: 21px;
+  margin-bottom: 14px;
+}
 .content {
   display: flex;
   flex-direction: column;
+  /* height: 150px;
+  width: 100%;
+  border-bottom: 1px solid #ced0d4; */
+}
+
+.imgEventAndContentContainer {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  /* background-color: pink; */
+}
+
+.eventContent {
+  display: flex;
+  flex-direction: column;
+  height: 150px;
+  width: 100%;
+  border-bottom: 1px solid #ced0d4;
+  margin-top: 20px;
 }
 
 .eventHeading {
   font-family: 'Equip-Regular';
   font-style: normal;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 20px;
   color: #091329;
 }
 
@@ -64,10 +90,21 @@
   font-size: 14px;
   color: #82888f;
 }
+.imgEventAndContentContainer > img {
+  width: 20%;
+  height: 150px;
+  margin-right: 20px;
+}
+.imgEventAndContentContainer > video {
+  width: 25%;
+  height: 6rem;
+  background-position: center;
+  background-size: cover;
+}
 .imgAndContentContainer > img {
   width: 25%;
   height: 150px;
-  margin-right: 50px;
+  margin-right: 20px;
 }
 .imgAndContentContainer > video {
   width: 25%;
@@ -81,7 +118,7 @@
   background-position: center;
   background-size: cover;
   border-radius: 0.25rem;
-  margin-right: 50px;
+  margin-right: 20px;
   box-shadow: none;
 }
 
@@ -90,22 +127,24 @@
   gap: 5px;
 }
 .document {
-  margin-right: 100px;
+  width: 25%;
+  margin-right: 20px;
   display: flex;
   flex-wrap: wrap;
   gap: 0.3125rem;
 }
 
 .typeHeading {
-  color: #47d7ac;
-  font-weight: 600;
-  font-size: 25px;
+  color: #283895;
+  font-weight: 500;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .link {
   text-decoration: none;
-  color: rgb(102, 102, 102)
-
+  color: rgb(102, 102, 102);
 }
 
 .link::after {

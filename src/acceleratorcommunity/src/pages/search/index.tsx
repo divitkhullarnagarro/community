@@ -35,8 +35,6 @@ const Search = () => {
   // const [query, setQuery] = useState(router?.query?.query);
   // const [type, setType] = useState(router?.query?.type);
 
-  console.log('qhhhhhhhhhhhhhhhhhhhqqqqqqqqqqqqhqhhqq', query, type);
-
   const filter = [
     {
       type: 'ALL',
@@ -204,7 +202,6 @@ const Search = () => {
           ) {
             setSearchedData(response?.data?.data?.hits);
           } else {
-            console.log('hellooooworld');
             setSearchedData([]);
           }
         }

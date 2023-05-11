@@ -16,20 +16,26 @@ const Event = (props: any) => {
   return (
     <a href={`/post/${id}`} className={styles.link} target="_blank">
       {props?.fromALL ? <div className={styles.typeHeading}>Event</div> : ''}
-      <div className={styles.parentContainer}>
-        <div className={styles.imgAndContentContainer}>
+      <div className={props?.fromALL ? styles.parentContainer : styles.parentEventContainer}>
+        <div
+          className={
+            props?.fromALL ? styles.imgAndContentContainer : styles.imgEventAndContentContainer
+          }
+        >
           <img
             src="https://chinchincelebration.com/wp-content/uploads/2019/08/product-launch-events-min.png"
             alt="eventImg"
           />
-          <div className={styles.content}>
+          <div className={props?.fromALL ? styles.content : styles.eventContent}>
             <div className={styles.eventHeading}>{data?.title}</div>
             <div className={styles.timeContainer}>
               <div className={styles.eventTime}>
                 {splitDateOnly(data?.eventDate) + ' ' + splitTimeOnly(data?.eventDate)}
               </div>
             </div>
-            <div className={styles.eventDescription}>{data?.description}</div>
+            <div className={styles.eventDescription}>
+              {data?.description.length > 800 ? data?.description.slice(0, 800) : data?.description}
+            </div>
           </div>
         </div>
       </div>

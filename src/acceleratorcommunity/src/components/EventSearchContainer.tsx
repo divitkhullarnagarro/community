@@ -5,7 +5,6 @@ import SideSearchFilter from './sideSearchFilter';
 import { SearchSkeletonForEvents } from './skeletons/SearchSkeleton';
 
 const EventSearchContainer = (props: any) => {
-  console.log('propsdata', props?.searchedData);
 
   useEffect(() => {
     setEvents(props?.searchedData);
@@ -117,7 +116,7 @@ const EventSearchContainer = (props: any) => {
             ) : (
               ''
             );
-          }):"No Events Found"
+          }):<div className={styles.forNoData}>No Events Found</div>
         )}
       </div>
     </div>

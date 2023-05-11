@@ -20,7 +20,13 @@ const VideoContainer = (props: any) => {
             />
           </video>
           <div className={styles.content}>
-            {parser(modifyHtml(props?.events?.description))}
+            {parser(
+              modifyHtml(
+                props?.events?.description.length > 800
+                  ? props?.events?.description.slice(0, 800)
+                  : props?.events?.description
+              )
+            )}
           </div>
         </div>
       </div>

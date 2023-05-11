@@ -7,6 +7,8 @@ import DocumentContainer from './DocumentContainer';
 // import PollCard from './PollCard';
 import Blog from './Blog';
 import User from './User';
+import styles from '../assets/searchFilterContainer.module.css';
+
 // import { voteInPollUrl } from 'assets/helpers/constants';
 // import AxiosRequest from 'src/API/AxiosRequest';
 
@@ -54,34 +56,36 @@ const Hashtag = (props: any) => {
   const fromALL = true;
   return (
     <div>
-      {props?.searchedData?.length > 0
-        ? props?.searchedData?.map((data: any) => {
-            return data?.sourceAsMap?.postType === 'IMAGE' ? (
-              <ImageConatiner fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
-            ) : data?.sourceAsMap?.postType === 'EVENT' ? (
-              <Event events={data?.sourceAsMap} fromALL={fromALL} flag={false} />
-            ) : data?.sourceAsMap?.postType === 'TEXT_POST' ? (
-              <TextPost events={data?.sourceAsMap} fromALL={fromALL} flag={false} />
-            ) : data?.sourceAsMap?.postType === 'VIDEO' ? (
-              <VideoContainer events={data?.sourceAsMap} fromALL={fromALL} flag={false} />
-            ) : data?.sourceAsMap?.postType === 'DOC' ? (
-              <DocumentContainer events={data?.sourceAsMap} fromALL={fromALL} flag={false} />
-            ) : data?.sourceAsMap?.postType === 'BLOG_POST' ? (
-              <Blog success={props?.success} fromALL={fromALL} blog={data?.sourceAsMap?.blog} />
-            ) : data?.sourceAsMap?.postType === 'POLL' ? (
-              // <PollCard
-              //   pollPost={{ poll: data?.sourceAsMap?.poll }}
-              //   poll={data?.sourceAsMap?.poll}
-              //   voteInAPoll={voteInAPoll}
-              // />
-              ''
-            ) : data?.index === 'accelerator-user' ? (
-              <User user={data?.sourceAsMap} />
-            ) : (
-              ''
-            );
-          })
-        : 'No hashtags founds'}
+      {props?.searchedData?.length > 0 ? (
+        props?.searchedData?.map((data: any) => {
+          return data?.sourceAsMap?.postType === 'IMAGE' ? (
+            <ImageConatiner fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
+          ) : data?.sourceAsMap?.postType === 'EVENT' ? (
+            <Event events={data?.sourceAsMap} fromALL={fromALL} flag={false} />
+          ) : data?.sourceAsMap?.postType === 'TEXT_POST' ? (
+            <TextPost events={data?.sourceAsMap} fromALL={fromALL} flag={false} />
+          ) : data?.sourceAsMap?.postType === 'VIDEO' ? (
+            <VideoContainer events={data?.sourceAsMap} fromALL={fromALL} flag={false} />
+          ) : data?.sourceAsMap?.postType === 'DOC' ? (
+            <DocumentContainer events={data?.sourceAsMap} fromALL={fromALL} flag={false} />
+          ) : data?.sourceAsMap?.postType === 'BLOG_POST' ? (
+            <Blog success={props?.success} fromALL={fromALL} blog={data?.sourceAsMap?.blog} />
+          ) : data?.sourceAsMap?.postType === 'POLL' ? (
+            // <PollCard
+            //   pollPost={{ poll: data?.sourceAsMap?.poll }}
+            //   poll={data?.sourceAsMap?.poll}
+            //   voteInAPoll={voteInAPoll}
+            // />
+            ''
+          ) : data?.index === 'accelerator-user' ? (
+            <User user={data?.sourceAsMap} />
+          ) : (
+            ''
+          );
+        })
+      ) : (
+        <div className={styles.forNoData}>No hashtags founds</div>
+      )}
     </div>
   );
 };

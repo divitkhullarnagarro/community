@@ -1,27 +1,29 @@
 import React, { useState } from 'react';
 import styles from '../assets/searchsidefilter.module.css';
 import { Collapse } from 'react-bootstrap';
-const   SideSearchFilter = (props: any) => {
+import minimize from '../assets/images/minimize.png';
+const SideSearchFilter = (props: any) => {
   const [open, setOpen] = useState(true);
 
   return (
     <div className={styles.filterContainer}>
       <div className={styles.filterHeader}>
         <div className={styles.filterHeading}>Filters</div>
-        <button className={styles.headingBtn} onClick={() => setOpen(!open)}>
-          {open ? '-' : '+'}
+        <button className={styles.clearBtn} onClick={() => props?.clearFilter()}>
+          Clear filter
+        </button>
+      </div>
+      <div className={styles.btnContainer}>
+        {/* <button className={styles.clearBtn} onClick={() => props?.resetFilter()}>
+              Reset filter Search
+            </button> */}
+        <div className={styles.filterHeading}>Filter by Time</div>
+        <button onClick={() => setOpen(!open)}>
+          <img src={minimize.src} />{' '}
         </button>
       </div>
       <Collapse in={open}>
         <div>
-          <div className={styles.btnContainer}>
-            <button className={styles.clearBtn} onClick={() => props?.resetFilter()}>
-              Reset filter Search
-            </button>
-            <button className={styles.clearBtn} onClick={() => props?.clearFilter()}>
-              Clear filter
-            </button>
-          </div>
           <div className={styles.filterBody}>
             <div className={styles.filterBodyInput}>
               <form>
@@ -48,7 +50,7 @@ const   SideSearchFilter = (props: any) => {
                           checked={props?.filterState.includes(filter) ? true : false}
                           type="checkbox"
                         />
-                        <div>{filter}</div>
+                        <div className={styles.filterName}>{filter}</div>
                       </div>
                     </>
                   );

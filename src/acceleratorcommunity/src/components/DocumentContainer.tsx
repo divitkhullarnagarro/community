@@ -16,18 +16,40 @@ const DocumentContainer = (props: any) => {
     }
   }
   return (
-    <a  href={`/post/${id}`} className={styles.link} target="_blank">
-      {props?.fromALL ? <div className={styles.typeHeading}>Post</div> : ''}
+    <a href={`/post/${id}`} className={styles.link} target="_blank">
+      {props?.fromALL ? (
+        <div className={styles.typeHeading}>
+          <div>Post</div>
+          <div onClick={() => openDoc(data)}>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M18.433 20H5.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h12.933a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM5.44 11.768a1.5 1.5 0 0 1-.001-2.122l.353-.354 5.302 5.296V2h2v12.585l5.292-5.292.354.354a1.5 1.5 0 0 1 0 2.121l-6.646 6.646-6.654-6.647z"
+                fill="#283895"
+              ></path>
+            </svg>
+          </div>
+        </div>
+      ) : (
+        ''
+      )}
       <div className={styles.parentContainer}>
         <div className={styles.imgAndContentContainer}>
-          <div className={styles.document}>
+          {/* <div className={styles.document}>
             <div className="docPreviewContainer">
               <span className="openPrevButton">
                 <button
                   onClick={() => openDoc(data)}
                   style={{
-                    padding: '5px',
-                    borderRadius: '20px',
+                    padding: '0px 30px',
+                    borderRadius: '23px',
                     borderColor: 'white',
                   }}
                 >
@@ -41,9 +63,15 @@ const DocumentContainer = (props: any) => {
                 </button>
               </span>
             </div>
-          </div>
+          </div> */}
           <div className={styles.content}>
-            {parser(modifyHtml(props?.events?.description))}
+            {parser(
+              modifyHtml(
+                props?.events?.description.length > 800
+                  ? props?.events?.description.slice(0, 800)
+                  : props?.events?.description
+              )
+            )}
             <div className={styles.eventDescription}></div>
           </div>
         </div>

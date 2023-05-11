@@ -13,7 +13,13 @@ const TextPost = (props: any) => {
         <div className={styles.imgAndContentContainer}>
           <div className={styles.content}>
             <div className={styles.eventDescription}>
-              {parser(modifyHtml(props?.events?.description))}
+            {parser(
+              modifyHtml(
+                props?.events?.description.length > 800
+                  ? props?.events?.description.slice(0, 800) + " "  + "Read More"
+                  : props?.events?.description
+              )
+            )}
             </div>
           </div>
         </div>

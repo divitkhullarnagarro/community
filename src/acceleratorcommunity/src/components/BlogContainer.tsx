@@ -18,7 +18,7 @@ const BlogContainer = (props: any) => {
             );
           })
         ) : (
-          'No Blogs Found'
+          <div className={styles.forNoData}>No Blogs Found</div>
         )}
       </div>
     </div>

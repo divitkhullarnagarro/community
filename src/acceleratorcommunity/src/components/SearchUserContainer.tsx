@@ -2,6 +2,8 @@ import React from 'react';
 import User from './User';
 import styles from '../assets/searchFilterContainer.module.css';
 import { SearchSkeletonForUser } from './skeletons/SearchSkeleton';
+import style from '../assets/searchFilterContainer.module.css';
+
 
 const SearchUserContainer = (props: any) => {
   console.log("props?.searchedData",props)
@@ -13,7 +15,7 @@ const SearchUserContainer = (props: any) => {
         ) : (
           props?.searchedData.length > 0 ? props?.searchedData.map((data: any) => {
             return data?.index === 'accelerator-user' ? <User user={data?.sourceAsMap} /> :"";
-          }):"No user Found"
+          }):<div className={style.forNoData}>No User Found</div>
         )}
       </div>
     </div>
