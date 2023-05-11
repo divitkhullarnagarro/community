@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import WebContext from 'src/Context/WebContext';
 import styles from '../assets/searchsidefilter.module.css';
+import darkModeCss from '../assets/darkTheme.module.css';
 import { Collapse } from 'react-bootstrap';
 const   SideSearchFilter = (props: any) => {
   const [open, setOpen] = useState(true);
-
+  const { darkMode } = {
+    ...useContext(WebContext),
+  };
+  
   return (
     <div className={styles.filterContainer}>
       <div className={styles.filterHeader}>
-        <div className={styles.filterHeading}>Filters</div>
-        <button className={styles.headingBtn} onClick={() => setOpen(!open)}>
+        <div className={`${styles.filterHeading} ${darkMode && darkModeCss.text_green}`}>Filters</div>
+        <button className={`${styles.headingBtn} ${darkMode && darkModeCss.text_green}`} onClick={() => setOpen(!open)}>
           {open ? '-' : '+'}
         </button>
       </div>
@@ -37,7 +42,7 @@ const   SideSearchFilter = (props: any) => {
                   onClick={(e: any) => props?.filterdData(e)}
                 />
               </form>
-              <div className={styles.filterAction}>
+              <div className={`${styles.filterAction} ${darkMode && darkModeCss.text_green}`}>
                 {props?.filteredArray?.map((filter: string) => {
                   return (
                     <>
