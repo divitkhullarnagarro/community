@@ -4,6 +4,7 @@ import styles from '../assets/events.module.css';
 import darkModeCss from '../assets/darkTheme.module.css';
 import { modifyHtml } from 'assets/helpers/helperFunctions';
 import parser from 'html-react-parser';
+import DescriptionForSearch from './helperComponents/DescriptionForSearch';
 
 const Blog = (props: any) => {
   const { darkMode } = { ...useContext(WebContext) };
@@ -18,18 +19,19 @@ const Blog = (props: any) => {
             <div className={`${styles.eventHeading} ${darkMode && darkModeCss.text_green}`}>
               {parser(
                 modifyHtml(
-                  props?.blog?.heading.length > 900
-                    ? props?.blog?.heading.slice(0, 900)
+                  props?.blog?.heading.length > 1500
+                    ? props?.blog?.heading.slice(0, 1500)
                     : props?.blog?.heading
                 )
               )}
             </div>
             <div className={`${styles.eventDescription} ${darkMode && darkModeCss.text_light}`}>
-              {parser(
+              <DescriptionForSearch  description={props?.blog?.description}/>
+              {/* {parser(
                 modifyHtml(
-                  props?.blog?.description.length > 900 ? (
+                  props?.blog?.description.length > 2000 ? (
                     <div>
-                      {props?.events?.description.slice(0, 900)}
+                      {props?.events?.description.slice(0, 2000)}
                       <a href={`/post/${props?.id}`} className={styles.link} target="_blank">
                         {' '}
                         <span className={styles.link}>...See More</span>
@@ -39,7 +41,7 @@ const Blog = (props: any) => {
                     props?.blog?.description
                   )
                 )
-              )}
+              )} */}
             </div>
           </div>
         </div>

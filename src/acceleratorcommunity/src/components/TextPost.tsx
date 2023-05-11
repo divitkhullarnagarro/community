@@ -2,8 +2,9 @@ import { useContext } from 'react';
 import WebContext from 'src/Context/WebContext';
 import styles from '../assets/events.module.css';
 import darkModeCss from '../assets/darkTheme.module.css';
-import { modifyHtml } from 'assets/helpers/helperFunctions';
-import parser from 'html-react-parser';
+// import { modifyHtml } from 'assets/helpers/helperFunctions';
+// import parser from 'html-react-parser';
+import DescriptionForSearch from './helperComponents/DescriptionForSearch';
 
 const TextPost = (props: any) => {
   console.log('props', props);
@@ -16,13 +17,14 @@ const TextPost = (props: any) => {
         <div className={styles.imgAndContentContainer}>
           <div className={styles.content}>
             <div className={`${styles.eventDescription} ${darkMode && darkModeCss.text_light}`}>
-              {parser(
+            <DescriptionForSearch description={props?.events?.description} />
+              {/* {parser(
                 modifyHtml(
                   props?.events?.description.length > 800
                     ? props?.events?.description.slice(0, 800) + ' ' + 'Read More'
                     : props?.events?.description
                 )
-              )}
+              )} */}
             </div>
           </div>
         </div>

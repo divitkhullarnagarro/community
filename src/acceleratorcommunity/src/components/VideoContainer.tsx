@@ -2,8 +2,9 @@ import { useContext } from 'react';
 import WebContext from 'src/Context/WebContext';
 import styles from '../assets/events.module.css';
 import darkModeCss from '../assets/darkTheme.module.css';
-import { modifyHtml } from 'assets/helpers/helperFunctions';
-import parser from 'html-react-parser';
+// import { modifyHtml } from 'assets/helpers/helperFunctions';
+// import parser from 'html-react-parser';
+import DescriptionForSearch from './helperComponents/DescriptionForSearch';
 
 const VideoContainer = (props: any) => {
   const id = props?.events?.id;
@@ -13,7 +14,11 @@ const VideoContainer = (props: any) => {
 
   return (
     <a href={`/post/${id}`} className={styles.link} target="_blank">
-      {props?.fromALL ? <div className={`${styles.typeHeading} ${darkMode && darkModeCss.text_green}`}>Post</div> : ''}
+      {props?.fromALL ? (
+        <div className={`${styles.typeHeading} ${darkMode && darkModeCss.text_green}`}>Post</div>
+      ) : (
+        ''
+      )}
       <div className={`${styles.parentContainer} ${darkMode && darkModeCss.grey_1}`}>
         <div className={styles.imgAndContentContainer}>
           {props?.fromALL ? (
@@ -28,7 +33,8 @@ const VideoContainer = (props: any) => {
             </video>
           )}
           <div className={styles.content}>
-            {parser(
+            <DescriptionForSearch description={props?.events?.description} />
+            {/* {parser(
               modifyHtml(
                 props?.events?.description.length > 1000 ? (
                   <div>
@@ -47,7 +53,7 @@ const VideoContainer = (props: any) => {
                   props?.events?.description
                 )
               )
-            )}
+            )} */}
           </div>
         </div>
       </div>

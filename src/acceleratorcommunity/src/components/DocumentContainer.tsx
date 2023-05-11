@@ -4,6 +4,7 @@ import parser from 'html-react-parser';
 import darkModeCss from '../assets/darkTheme.module.css';
 import { useContext } from 'react';
 import WebContext from 'src/Context/WebContext';
+import DescriptionForSearch from './helperComponents/DescriptionForSearch';
 
 const DocumentContainer = (props: any) => {
   console.log('videooooooooooooooooooooooooooooooo', props?.events);
@@ -43,7 +44,7 @@ const DocumentContainer = (props: any) => {
       ) : (
         ''
       )}
-      <div  className={`${styles.parentContainer} ${darkMode && darkModeCss.grey_1}`}>
+      <div className={`${styles.parentContainer} ${darkMode && darkModeCss.grey_1}`}>
         <div className={styles.imgAndContentContainer}>
           {/* <div className={styles.document}>
             <div className="docPreviewContainer">
@@ -68,13 +69,15 @@ const DocumentContainer = (props: any) => {
             </div>
           </div> */}
           <div className={`${styles.content} ${darkMode && darkModeCss.text_light}`}>
+            <DescriptionForSearch description={props?.events?.description} />
+            {/* 
             {parser(
               modifyHtml(
                 props?.events?.description.length > 1000
                   ? props?.events?.description.slice(0, 1000)
                   : props?.events?.description
               )
-            )}
+            )} */}
           </div>
         </div>
       </div>
