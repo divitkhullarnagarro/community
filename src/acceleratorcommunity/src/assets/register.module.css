@@ -1,10 +1,9 @@
-
 .container {
   display: flex;
   gap: 1%;
   width: 100vw;
   height: 100vh;
-  background-color:whitesmoke
+  background-color: whitesmoke;
   /* gradient 1  */
   /* background-color: #2d3436;
    background-image: linear-gradient(315deg, #e5e2e2 53%, #909597 0%); */
@@ -14,29 +13,27 @@
   display: flex;
   width: 60%;
 }
-.leftGrid{
+.leftGrid {
   display: flex;
   width: 55%;
 }
-.rightGrid{
-  
+.rightGrid {
   width: 45%;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
- 
 }
-.rightGridBox{
+.rightGridBox {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction:column;
+  flex-direction: column;
   height: 500px;
 }
-.img2{
- margin-left: auto;
+.img2 {
+  margin-left: auto;
 }
 .welcomeText {
   width: 100%;
@@ -75,9 +72,8 @@
   height: auto;
   width: 80%;
   background-color: white;
-  border: 2px solid white
+  border: 2px solid white;
   /* box-shadow: 10px 5px 10px 0px rgb(121, 120, 120); */
-
 
   /* box-shadow: 10px 24px 30px 26px rgba(53, 52, 52, 0.13); */
 }
@@ -157,9 +153,29 @@
   justify-content: end;
 }
 
-.formButton[disabled]{
+.formButton[disabled] {
   background-color: gray;
   color: whitesmoke;
+}
+
+.ThemeSwitcher {
+  text-align: right;
+  position: absolute;
+  top: 15px;
+  right: 44px;
+}
+.formDarkBorder {
+  border-color: #323436;
+}
+.formContainerButton {
+  display: flex;
+  gap: 2px;
+  width: 80%;
+  padding: 10px 5px;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid rgba(152, 151, 151, 0.509);
+  background-color: white;
 }
 
 @media screen and (max-width: 999px) {
@@ -168,13 +184,12 @@
     align-items: center;
     width: 100%;
     height: 100vh;
-    gap:0.3125rem;
+    gap: 0.3125rem;
   }
-  .btn{
+  .btn {
     display: flex;
     justify-content: center;
     align-items: center;
-    
   }
   .leftContainer {
     width: 100%;
@@ -184,10 +199,10 @@
     padding: 0.9375rem;
     gap: 0.3125rem;
   }
-  .welcomeTextHeading{
+  .welcomeTextHeading {
     font-size: large;
   }
-  .welcomeTextDescription{
+  .welcomeTextDescription {
     font-size: small;
   }
   /* .img{
@@ -204,58 +219,54 @@
     width: 80%;
     padding: 0 1.25rem;
   }
-  .formContainerBottom{
+  .formContainerBottom {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .login{
+  .login {
     padding: 0.1875rem 0.75rem;
   }
-  .loginField{
+  .loginField {
     margin-bottom: 0rem;
   }
-  .label{
+  .label {
     font-size: small;
   }
   .loginInput {
     padding: 0.1875rem 0.3125rem;
     border-radius: 0.1875rem;
   }
-  .formContainerBottom{
+  .formContainerBottom {
     padding: 1px 12px;
   }
 
-  .text{
+  .text {
     font-size: 10px;
   }
-  .btn a{
-    
-     font-size: 10px;
-     /* font-weight: 300; */
+  .btn a {
+    font-size: 10px;
+    /* font-weight: 300; */
   }
-  .formButton{
+  .formButton {
     padding: 0.1875rem 0.3125rem;
     /* width: ; */
   }
-  .img1{
+  .img1 {
     width: 100px;
     height: 100px;
   }
-  .img2{
+  .img2 {
     width: 100px;
     height: 100px;
   }
-  .img3{
+  .img3 {
     width: 100px;
     height: 100px;
   }
 }
-@media screen and (max-height: 710px) and (max-width: 999px){
-  
-  .container{
+@media screen and (max-height: 710px) and (max-width: 999px) {
+  .container {
     height: 100vh;
   }
- 
 }
-

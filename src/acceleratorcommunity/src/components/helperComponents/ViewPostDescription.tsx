@@ -5,7 +5,7 @@ import WebContext from 'src/Context/WebContext';
 import style from './../../assets/viewPostDescription.module.css';
 
 function ViewPostDescription({ description }: any) {
-  const [viewMoreVisible, setViewMoreVisible] = useState(description?.length > 500 ? true : false);
+  const [viewMoreVisible, setViewMoreVisible] = useState(description?.length > 600 ? true : false);
   const { darkMode } = {
     ...useContext(WebContext),
   };
