@@ -390,6 +390,22 @@
   color: #a5a5a5;
 }
 
+.reportBody::-webkit-scrollbar {
+  overflow-y: auto;
+  width: 5px;
+}
+
+.reportBody::-webkit-scrollbar-track {
+  border-radius: 2px;
+  background-color: white;
+  height: 1px;
+}
+
+.reportBody::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 2px;
+}
+
 @media only screen and (max-width: 768px) {
   .dropdownMenu {
     inset: 0 0 auto auto !important;

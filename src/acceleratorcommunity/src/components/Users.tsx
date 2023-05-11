@@ -20,6 +20,7 @@ import {
   openDoc,
   calculateTimeDifference,
   graphqlQueryWrapper,
+  modifyHtml,
 } from 'assets/helpers/helperFunctions';
 import { getEmailTemplatesGraphqlQuery } from './Queries';
 import { getAllReportUserCall, getReportedUserReportersDetailsCall } from 'src/API/reportUserCall';
@@ -524,7 +525,6 @@ const Users = (props: UserProps): JSX.Element => {
   };
 
   const ReportPostPopup = () => {
-    console.log(reportedPostItem?.postType === 'TEXT_POST');
     return (
       <>
         <Modal
@@ -538,7 +538,7 @@ const Users = (props: UserProps): JSX.Element => {
         >
           {reportedPostItem?.postType === 'TEXT_POST' ? (
             <div>
-              <div style={{ height: '300px', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ height: '550px', display: 'flex', flexDirection: 'column' }}>
                 <Modal.Header closeButton className={styles.reportPostModalHeader}>
                   <Modal.Title className={styles.reportTitle}>{'Reported Post'}</Modal.Title>
                 </Modal.Header>
@@ -569,7 +569,7 @@ const Users = (props: UserProps): JSX.Element => {
                     </div>
                     <div className={styles.postContent}>
                       {reportedPostItem?.description
-                        ? parser(reportedPostItem?.description)
+                        ? parser(modifyHtml(reportedPostItem?.description))
                         : reportedPostItem?.description}
                     </div>
                     <div className="postMedia">
@@ -691,7 +691,7 @@ const Users = (props: UserProps): JSX.Element => {
                     </div>
                     <div className={styles.postContent}>
                       {reportedPostItem?.description
-                        ? parser(reportedPostItem?.description)
+                        ? parser(modifyHtml(reportedPostItem?.description))
                         : reportedPostItem?.description}
                     </div>
                     <div className="postMedia">
@@ -954,7 +954,7 @@ const Users = (props: UserProps): JSX.Element => {
                     return '';
                   })}
                 </div>
-                <div className="postDescription">{parser(item?.description)}</div>
+                <div className="postDescription">{parser(modifyHtml(item?.description))}</div>
               </div>
             </div>
           );
