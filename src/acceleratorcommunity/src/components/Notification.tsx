@@ -14,6 +14,7 @@ import NotificationOpen from '../assets/images/NotificationOpen.png';
 import ThemeSwitcher from './ThemeSwitcher';
 import FirebaseContext from 'src/Context/FirebaseContext';
 import AxiosRequest from 'src/API/AxiosRequest';
+import { calculateTimeDifference } from 'assets/helpers/helperFunctions';
 
 const NotificationType = {
   LIKE_ON_POST: 'LIKE_ON_POST',
@@ -41,8 +42,19 @@ type BaseNotificationType = {
   message: string;
 };
 
-type ArticleNotificationType = BaseNotificationType & {
+type NotificationType = BaseNotificationType & {
+  id?: string;
   articleId: string;
+  sourceAuthorId?: string;
+  notificationContent?: string;
+  read?: boolean;
+  createdOn?: number;
+};
+
+type NotificationContentType = {
+  articleId: string;
+  message: string;
+  type: string;
 };
 
 const Notification = (props: NotificationProps): JSX.Element => {
@@ -50,6 +62,13 @@ const Notification = (props: NotificationProps): JSX.Element => {
   const { objectId, setObjectId } = {
     ...useContext(WebContext),
   };
+
+  const { socket } = { ...useContext(SocketContext) };
+  const [notificationList, setNotificationList] = useState<NotificationType[]>([]);
+  const [notificationCount, setNotificationCount] = useState(0);
+  const [showNotification, setShowNofitication] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string>();
+  const [toastSuccess, setToastSuccess] = useState(false);
 
   const { requestForNotificationPermission, checkAndRegsiterServiceWorker } = {
     ...useContext(FirebaseContext),
@@ -68,6 +87,20 @@ const Notification = (props: NotificationProps): JSX.Element => {
       });
   };
 
+  const getNotificationList = () => {
+    AxiosRequest({
+      method: 'GET',
+      url: `https://accelerator-api-management.azure-api.net/notification-service/api/v1/get-notification`,
+    })
+      .then((response: any) => {
+        console.log('APIResponseNotificationList', response);
+        setNotificationList(response?.data);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     requestForNotificationPermission().then((data: any) => {
       checkAndRegsiterServiceWorker();
@@ -76,13 +109,9 @@ const Notification = (props: NotificationProps): JSX.Element => {
     });
   }, []);
 
-  const { socket } = { ...useContext(SocketContext) };
-  const [notificationList, setNotificationList] = useState<ArticleNotificationType[]>([]);
-
-  const [notificationCount, setNotificationCount] = useState(0);
-  const [showNotification, setShowNofitication] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string>();
-  const [toastSuccess, setToastSuccess] = useState(false);
+  useEffect(() => {
+    getNotificationList();
+  }, []);
 
   useEffect(() => {
     if (objectId === '') {
@@ -118,20 +147,31 @@ const Notification = (props: NotificationProps): JSX.Element => {
         setToastSuccess(true);
         setShowNofitication(true);
         setToastMessage('You have new notification');
-        setNotificationList([
-          ...notificationList,
-          { articleId: data?.articleId, message: data?.message, type: data?.type },
-        ]);
+        if (notificationList?.length > 0) {
+          setNotificationList([
+            ...notificationList,
+            { articleId: data?.articleId, message: data?.message, type: data?.type },
+          ]);
+        } else {
+          setNotificationList([
+            { articleId: data?.articleId, message: data?.message, type: data?.type },
+          ]);
+        }
+
         break;
       }
       case NotificationType.POST_AN_ARTICLE_PEER: {
         setToastSuccess(true);
         setShowNofitication(true);
         setToastMessage('You have new notification');
-        setNotificationList([
-          ...notificationList,
-          { articleId: '', message: data?.message, type: data?.type },
-        ]);
+        if (notificationList?.length > 0) {
+          setNotificationList([
+            ...notificationList,
+            { articleId: '', message: data?.message, type: data?.type },
+          ]);
+        } else {
+          setNotificationList([{ articleId: '', message: data?.message, type: data?.type }]);
+        }
       }
       default: {
         break;
@@ -152,7 +192,10 @@ const Notification = (props: NotificationProps): JSX.Element => {
     );
   };
 
-  const NotificationRow = (item: ArticleNotificationType) => {
+  const NotificationRow = (item: NotificationType) => {
+    const notificationContent: NotificationContentType = JSON.parse(
+      item?.notificationContent ?? '{}'
+    );
     return (
       <div style={{ display: 'flex' }}>
         <Dropdown.Item className={notificationCss.dropdownItem}>
@@ -168,7 +211,11 @@ const Notification = (props: NotificationProps): JSX.Element => {
               <div className={notificationCss.notificationTypeImage}>
                 <NextImage
                   field={
-                    item?.type === NotificationType.LIKE_ON_POST
+                    notificationContent?.type != undefined
+                      ? notificationContent?.type === NotificationType.LIKE_ON_POST
+                        ? NotificationLike
+                        : NotificationComment
+                      : item?.type === NotificationType.LIKE_ON_POST
                       ? NotificationLike
                       : NotificationComment
                   }
@@ -179,7 +226,19 @@ const Notification = (props: NotificationProps): JSX.Element => {
                 ></NextImage>
               </div>
             </div>
-            <div className={notificationCss.notificationMessage}>{item.message}</div>
+            <div className={notificationCss.notificationMessage}>
+              <div className={notificationCss.notificationAuthor}>
+                {item?.message ?? notificationContent?.message}
+              </div>
+              <div className={notificationCss.notificationCreatedOn}>
+                {item?.createdOn != 0 &&
+                item?.createdOn &&
+                item?.createdOn != undefined &&
+                item?.createdOn != null
+                  ? calculateTimeDifference(item?.createdOn)
+                  : 'Recently'}
+              </div>
+            </div>
           </div>
         </Dropdown.Item>
         {item?.type !== NotificationType.POST_AN_ARTICLE_PEER ? (
@@ -205,7 +264,7 @@ const Notification = (props: NotificationProps): JSX.Element => {
 
             <Dropdown.Menu className={notificationCss.dropdownMoreMenuForNotificationItem}>
               <Dropdown.Item
-                href={`/post/${item.articleId}`}
+                href={`/post/${notificationContent?.articleId ?? item?.articleId}`}
                 target="_blank"
                 className={notificationCss.dropdownItem}
               >

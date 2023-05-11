@@ -27,6 +27,22 @@
   width: 450px;
   background-color: white;
   border-radius: 15px;
+  max-height: 700px;
+  overflow-y: scroll;
+}
+
+.dropdownMenu::-webkit-scrollbar {
+  width: 5px;
+}
+
+.dropdownMenu::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #efefef;
+}
+
+.dropdownMenu::-webkit-scrollbar-thumb {
+  background-color: #c2c2c2;
+  border-radius: 4px;
 }
 
 .dropdownItem {
@@ -85,9 +101,15 @@
 }
 
 .notificationMessage {
+  display: flex;
+  flex-direction: column;
   margin-left: 15px;
   width: 83%;
   word-wrap: break-word;
+}
+
+.notificationCreatedOn {
+  font-size: 13px;
 }
 
 .notificationIconContainer {
