@@ -44,7 +44,7 @@ type BaseNotificationType = {
 
 type NotificationType = BaseNotificationType & {
   id?: string;
-  articleId: string;
+  articleId?: string;
   sourceAuthorId?: string;
   notificationContent?: string;
   read?: boolean;
@@ -65,6 +65,7 @@ const Notification = (props: NotificationProps): JSX.Element => {
 
   const { socket } = { ...useContext(SocketContext) };
   const [notificationList, setNotificationList] = useState<NotificationType[]>([]);
+  const [realTimeNotificationList, setRealTimeNotificationList] = useState<NotificationType[]>([]);
   const [notificationCount, setNotificationCount] = useState(0);
   const [showNotification, setShowNofitication] = useState(false);
   const [toastMessage, setToastMessage] = useState<string>();
@@ -93,7 +94,6 @@ const Notification = (props: NotificationProps): JSX.Element => {
       url: `https://accelerator-api-management.azure-api.net/notification-service/api/v1/get-notification`,
     })
       .then((response: any) => {
-        console.log('APIResponseNotificationList', response);
         setNotificationList(response?.data);
       })
       .catch((err: any) => {
@@ -131,8 +131,8 @@ const Notification = (props: NotificationProps): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    setNotificationCount(notificationList?.length);
-  }, [notificationList]);
+    setNotificationCount(notificationList?.length + realTimeNotificationList?.length);
+  }, [notificationList, realTimeNotificationList]);
 
   const resetToastState = () => {
     setShowNofitication(!showNotification);
@@ -147,13 +147,14 @@ const Notification = (props: NotificationProps): JSX.Element => {
         setToastSuccess(true);
         setShowNofitication(true);
         setToastMessage('You have new notification');
-        if (notificationList?.length > 0) {
-          setNotificationList([
-            ...notificationList,
+
+        if (realTimeNotificationList?.length > 0) {
+          setRealTimeNotificationList([
+            ...realTimeNotificationList,
             { articleId: data?.articleId, message: data?.message, type: data?.type },
           ]);
         } else {
-          setNotificationList([
+          setRealTimeNotificationList([
             { articleId: data?.articleId, message: data?.message, type: data?.type },
           ]);
         }
@@ -164,13 +165,16 @@ const Notification = (props: NotificationProps): JSX.Element => {
         setToastSuccess(true);
         setShowNofitication(true);
         setToastMessage('You have new notification');
-        if (notificationList?.length > 0) {
-          setNotificationList([
-            ...notificationList,
+
+        if (realTimeNotificationList?.length > 0) {
+          setRealTimeNotificationList([
+            ...realTimeNotificationList,
             { articleId: '', message: data?.message, type: data?.type },
           ]);
         } else {
-          setNotificationList([{ articleId: '', message: data?.message, type: data?.type }]);
+          setRealTimeNotificationList([
+            { articleId: '', message: data?.message, type: data?.type },
+          ]);
         }
       }
       default: {
@@ -211,7 +215,7 @@ const Notification = (props: NotificationProps): JSX.Element => {
               <div className={notificationCss.notificationTypeImage}>
                 <NextImage
                   field={
-                    notificationContent?.type != undefined
+                    notificationContent?.type != undefined && notificationContent?.type != null
                       ? notificationContent?.type === NotificationType.LIKE_ON_POST
                         ? NotificationLike
                         : NotificationComment
@@ -236,7 +240,7 @@ const Notification = (props: NotificationProps): JSX.Element => {
                 item?.createdOn != undefined &&
                 item?.createdOn != null
                   ? calculateTimeDifference(item?.createdOn)
-                  : 'Recently'}
+                  : 'Just now'}
               </div>
             </div>
           </div>
@@ -320,15 +324,31 @@ const Notification = (props: NotificationProps): JSX.Element => {
             <Dropdown.Header className={notificationCss.notificationHeader}>
               <NotificationBodyHeader />
             </Dropdown.Header>
-            {notificationList?.length > 0 ? (
-              notificationList.map((item) => {
-                return <NotificationRow {...item} />;
-              })
-            ) : (
-              <span className={notificationCss.noNotifications}>
-                You do not have any notifications yet
-              </span>
-            )}
+            <div className={notificationCss.realTimeNotificationContainer}>
+              {realTimeNotificationList?.length > 0 ? (
+                <>
+                  <div className={notificationCss.notificationTypeHeader}>New</div>
+                  {realTimeNotificationList.map((item) => {
+                    return <NotificationRow {...item} />;
+                  })}
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
+
+            <div className={notificationCss.earlierNotificationContainer}>
+              <div className={notificationCss.notificationTypeHeader}>Earlier</div>
+              {notificationList?.length > 0 ? (
+                notificationList.map((item) => {
+                  return <NotificationRow {...item} />;
+                })
+              ) : (
+                <span className={notificationCss.noNotifications}>
+                  You do not have any notifications yet
+                </span>
+              )}
+            </div>
           </Dropdown.Menu>
         </Dropdown>
       </div>
