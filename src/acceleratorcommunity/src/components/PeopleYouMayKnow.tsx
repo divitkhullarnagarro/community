@@ -18,6 +18,7 @@ import { Button, Card } from 'react-bootstrap';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import darkModeCss from '../assets/darkTheme.module.css';
+import { viewProfileLinkUrl } from 'assets/helpers/constants';
 
 type PeopleYouMayKnowProps = ComponentProps & {
   fields: {
@@ -29,7 +30,7 @@ type peopleYouMayKnowFields = {
   objectId: string;
   firstName: Field<string>;
   lastName: Field<string>;
-  imageData: Field<string>;
+  profilePictureUrl: string;
   speciality: Field<string>;
   city: Field<string>;
 };
@@ -44,6 +45,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   const [isFullPage] = useState(IsFullList === '1');
   const getPeopleYouMayKnowList = async (userToken: string | undefined) => {
     let response = await peopleYouMayKnowCall(userToken);
+    console.log('peopleYouMayKnowList', response);
     if (response?.data?.success) {
       setIsDataLoaded(true);
       setPeopleYouMayKnowList(response?.data?.data);
@@ -70,11 +72,11 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
             peopleYouMayKnowList?.slice(0, 5).map((item) => {
               return (
                 <div key={item?.objectId} className={styles.item}>
-                  <Link href={`/profile/${item.objectId}`} passHref={true}>
-                    <NextImage
+                  <Link href={`${viewProfileLinkUrl}${item.objectId}`} passHref={true}>
+                    <img
                       className={styles.img}
-                      field={Profile ?? item?.imageData?.value}
-                      editable={true}
+                      src={item?.profilePictureUrl ? item?.profilePictureUrl : Profile.src}
+                      // editable={true}
                       height={40}
                       width={40}
                     />
@@ -148,10 +150,18 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
 
   const PeopleYouMayKnowFullPageItem = (item: peopleYouMayKnowFields) => {
     return (
-      <Card className={styles.cardItem}>
+      <Card
+        className={`${styles.cardItem} ${darkMode ? darkModeCss.grey_1 : ''} ${
+          darkMode ? darkModeCss.text_light : ''
+        }`}
+      >
         <div className={styles.imageContainer}>
-          <Link href={`/profile/${item?.objectId}`}>
-            <img className={styles.imgProfile} contentEditable={true} src={Profile.src} />
+          <Link href={`${viewProfileLinkUrl}${item?.objectId}`}>
+            <img
+              className={styles.imgProfile}
+              contentEditable={true}
+              src={item.profilePictureUrl ? item.profilePictureUrl : Profile.src}
+            />
           </Link>
         </div>
         <Card.Body>
@@ -171,8 +181,10 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
 
   const PeopleYouMayKnowList = () => {
     return (
-      <div className={styles.mainFullPageItemWrapper}>
-        <h2 className={styles.listHeaderLabel}>{Title ?? 'People You May Know'}</h2>
+      <div className={`${styles.mainFullPageItemWrapper} ${darkMode ? darkModeCss.grey_3 : ''}`}>
+        <h2 className={`${styles.listHeaderLabel} ${darkMode ? darkModeCss.text_light : ''}`}>
+          {Title ?? 'People You May Know'}
+        </h2>
         <div className={styles.newgrid}>
           {peopleYouMayKnowList?.length > 0 ? (
             peopleYouMayKnowList.slice(0, numItems).map((item) => {
@@ -185,9 +197,8 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
         {peopleYouMayKnowList === undefined || numItems >= peopleYouMayKnowList?.length ? null : (
           <Button
             style={{
-              width: '100%',
               fontSize: '20px',
-              height: '50px',
+              height: '40px',
               backgroundColor: '#F9F9F9',
               color: '#2A86FD',
               border: 'none',
@@ -196,12 +207,11 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              margin: '20px auto',
             }}
             onClick={() => setNumItems(numItems + 6)}
           >
-            <div>
-              <span className={styles.seeMoreBtn}>See more</span>
-            </div>
+            <span className={styles.seeMoreBtn}>See more</span>
             <NextImage field={DropArrow} editable={true} />
           </Button>
         )}
@@ -211,12 +221,14 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
 
   const SideNavbar = () => {
     return (
-      <div className={styles.sidenavbar}>
-        <div className={styles.rectContainer}>
+      <div className={`${styles.sidenavbar} ${darkMode ? darkModeCss.grey_3 : ''}`}>
+        <div className={`${styles.rectContainer} ${darkMode ? darkModeCss.grey_1 : ''}`}>
           <div className={styles.top}>
-            <span className={styles.logo}>Suggestions</span>
+            <span className={`${styles.logo} ${darkMode ? darkModeCss.text_light : ''}`}>
+              Suggestions
+            </span>
           </div>
-          <div className={styles.center}>
+          <div className={`${styles.center} ${darkMode ? styles.listHover : ''}`}>
             <ul>
               <button>
                 <li className={styles.rowItem}>
@@ -226,7 +238,9 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
                     height={18}
                     width={18}
                   ></NextImage>
-                  <span>{Title ?? 'People You May Know'}</span>
+                  <span className={`${darkMode ? darkModeCss.text_light : ''}`}>
+                    {Title ?? 'People You May Know'}
+                  </span>
                 </li>
               </button>
             </ul>

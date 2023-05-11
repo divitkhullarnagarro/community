@@ -5,7 +5,6 @@ import userProfileCss from '../assets/userProfile.module.css';
 import WebContext from '../Context/WebContext';
 import React, { useContext, useState } from 'react';
 import { Button, CloseButton, Dropdown, Modal } from 'react-bootstrap';
-import BlockUserImage from '../assets/images/BlockUser.jpg';
 import LogoutImage from '../assets/images/Logout.png';
 import { useRouter } from 'next/router';
 import logoutUserCall from 'src/API/logoutUserCall';
@@ -26,7 +25,7 @@ type UserProfileProps = ComponentProps & {
 };
 
 const UserProfile = (props: UserProfileProps): JSX.Element => {
-  const { setIsLoggedIn, setUserToken } = { ...useContext(WebContext) };
+  const { setIsLoggedIn, setUserToken, userObject } = { ...useContext(WebContext) };
   const { deleteTokenFromFirebase, getFcmTokenFromLocalStorage } = {
     ...useContext(FirebaseContext),
   };
@@ -135,11 +134,15 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
           id="dropdown-basic"
           className={userProfileCss.userProfileDropdownBtn}
         >
-          <NextImage
-            field={props.fields.Image.value}
-            editable={true}
+          <img
+            src={
+              userObject?.profilePictureUrl
+                ? userObject?.profilePictureUrl
+                : props?.fields?.Image?.value?.src
+            }
             width={32}
             height={32}
+            style={{ borderRadius: '50%' }}
             title="Profile page"
           />
         </Dropdown.Toggle>
@@ -149,25 +152,19 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
             <Link href={props.fields.LogoURL.value.href} passHref={true}>
               <div className={userProfileCss.userProfileOverlayItem}>
                 <div className={userProfileCss.userProfileDropdownImage}>
-                  <NextImage
-                    field={props.fields.Image.value}
-                    editable={true}
-                    width={30}
-                    height={30}
+                  <img
+                    src={
+                      userObject?.profilePictureUrl
+                        ? userObject?.profilePictureUrl
+                        : props?.fields?.Image?.value?.src
+                    }
+                    width={20}
+                    height={20}
+                    style={{ borderRadius: '50%' }}
                     title="Profile page"
                   />
                 </div>
                 <div className={userProfileCss.userProfileBtn}> Edit Profile</div>
-              </div>
-            </Link>
-          </Dropdown.Item>
-          <Dropdown.Item className={userProfileCss.userProfileDropdownItem}> 
-            <Link href="/profile/blockedusers" passHref={true}>
-              <div className={userProfileCss.userProfileOverlayItem}>
-                <div className={userProfileCss.userProfileDropdownImage}>
-                  <NextImage field={BlockUserImage} editable={true} />
-                </div>
-                <div className={userProfileCss.userProfileBtn}>Blocked Users</div>
               </div>
             </Link>
           </Dropdown.Item>

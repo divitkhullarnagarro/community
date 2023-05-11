@@ -2,8 +2,9 @@ import { Field, ImageField } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import searchCss from '../assets/search.module.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
+import WebContext from 'src/Context/WebContext';
 
 type SearchProps = ComponentProps & {
   fields: {
@@ -30,6 +31,7 @@ const Search = (props: SearchProps): JSX.Element => {
       router.push(`/search?query=${searchText}&type=ALL`);
     }
   };
+  const { darkMode } = { ...useContext(WebContext) };
   return (
     <div className={searchCss.container}>
       <div className={searchCss.searchBox}>
@@ -45,7 +47,7 @@ const Search = (props: SearchProps): JSX.Element => {
           </button>
           <input
             type="text"
-            className={searchCss.searchBoxText}
+            className={`${searchCss.searchBoxText} ${darkMode ? 'darkMode_textColor' : ''}`}
             placeholder={props?.fields?.data?.datasource?.title?.jsonValue?.value}
             onChange={(e: any) => setSearchText(e?.target?.value)}
           />

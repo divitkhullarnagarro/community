@@ -84,7 +84,7 @@ const RecentActivities = (props: RecentActivitiesProps): JSX.Element => {
   const RecentActivitiesSkeleton = () => {
     return (
       <>
-        <div className={`${style.recentActivityListBox} ${darkModeCss.grey_2}`}>
+        <div className={`${style.recentActivityListBox} ${darkMode ? darkModeCss.grey_2 : ''}`}>
           <div className={style.recentActivityContainer}>
             <div className={style.recentActivityHeaderLoader}>
               <Skeleton className="mb-2" height={30} />
