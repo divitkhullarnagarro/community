@@ -34,3 +34,14 @@ const messaging = firebase.messaging();
 
 //   self.registration.showNotification(notificationTitle, notificationOptions);
 // });
+
+self.addEventListener('push', (event) => {
+  const data = event?.data?.json();
+  const jsonObjectData = JSON.parse(data?.notification?.body ?? '{}');
+  self.registration.showNotification(data?.notification?.title, {
+    body: jsonObjectData?.message,
+    data: {
+      message: jsonObjectData?.message,
+    },
+  });
+});

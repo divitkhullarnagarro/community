@@ -1,10 +1,13 @@
 import { useContext } from 'react';
 import WebContext from '../Context/WebContext';
 import ThemeSwitcherCss from '../assets/themeSwitcher.module.css';
+import { encryptString } from 'assets/helpers/EncryptDecrypt';
 
 const ThemeSwitcher = (): JSX.Element => {
   const { darkMode, setDarkMode } = { ...useContext(WebContext) };
   const handleThemeSwitch = () => {
+    localStorage &&
+      localStorage?.setItem('theme', encryptString(JSON.stringify({ darkTheme: !darkMode })));
     !!setDarkMode && setDarkMode(!darkMode);
   };
   return (

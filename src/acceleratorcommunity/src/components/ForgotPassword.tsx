@@ -7,10 +7,14 @@ import loginCss from '../assets/login.module.css';
 // import star from '../assets/images/star.png';
 // import imageNotFound from '../assets/images/imageNot.png';
 import Link from 'next/link';
-import { validateEmailOrPhone } from 'assets/helpers/validations';
+import { validateEmailOrPhone, validatePassword } from 'assets/helpers/validations';
 // import Axios, { AxiosResponse } from 'axios';
 // import { LogoutUrl } from 'assets/helpers/constants';
 import sendOtpCall, { updatePasswordCall, validateOtpCall } from 'src/API/forgotPasswordCalls';
+import ThemeSwitcher from './ThemeSwitcher';
+import darkTheme from '../assets/darkTheme.module.css';
+import ToastNotification from './ToastNotification';
+import Spinner from 'react-bootstrap/Spinner';
 
 type ForgotPasswordProps = ComponentProps & {
   fields: {
@@ -131,54 +135,131 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
   props; //delete Me
   console.log('props', props);
   const router = useRouter();
-  const { setIsLoggedIn, setUserToken, userToken } = { ...useContext(WebContext) };
+  const { setIsLoggedIn, setUserToken, userToken, darkMode } = { ...useContext(WebContext) };
 
-  let [email, setEmail] = useState('');
-  let [accountError, setAccountError] = useState(false);
-  let [passwordMatchError, setPasswordMatchError] = useState(false);
-  let [passwordPage, setPasswordPage] = useState(false);
-  let [password, setPassword] = useState('');
-  let [confirmPassword, setConformPassword] = useState('');
-  let [otpFieldVisible, setOtpFieldVisible] = useState(false);
-  let [otp, setOtp] = useState('');
-  let [otpError, setOtpError] = useState(false);
-  let [emailValidateError, setEmailValidateError] = useState(false);
-  let [somethingWentWrongError, setSomethingWentWrongError] = useState(false);
+  const [email, setEmail] = useState('');
+  const [accountError, setAccountError] = useState(false);
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
+  const [passwordPage, setPasswordPage] = useState(false);
+  const [password, setPassword] = useState('');
+  const [passwordValidationMessage, setPasswordValidationMessage] = useState('');
+  const [confirmPassword, setConformPassword] = useState('');
+  const [otpFieldVisible, setOtpFieldVisible] = useState(false);
+  const [otp, setOtp] = useState('');
+  const [otpError, setOtpError] = useState(false);
+  const [emailValidateError, setEmailValidateError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [somethingWentWrongError, setSomethingWentWrongError] = useState(false);
+  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
+  const [toastSuccess, setToastSuccess] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string>();
+  const [showNotification, setShowNofitication] = useState(false);
+  const [toastError, setToastError] = useState(false);
 
   function setEmailValue(val: any) {
     setEmail(val);
+  }
+
+  function setPasswordValue(val: any) {
+    if (val === '') {
+      setPasswordError(true);
+      setPasswordValidationMessage(`${datasource?.passwordLabel?.jsonValue?.value} is mandatory`);
+    } else {
+      if (!validatePassword(val)) {
+        setPasswordError(true);
+        setPasswordValidationMessage(
+          `${datasource?.passwordLabel?.jsonValue?.value} should be minimum of 8 letters with 1 upper, 1 lowercase, 1 digit, 1 special character`
+        );
+      } else {
+        setPasswordError(false);
+      }
+    }
+
+    if (confirmPassword != '') {
+      if (val !== confirmPassword) {
+        setPasswordMatchError(true);
+      } else if (val == confirmPassword) {
+        setPasswordMatchError(false);
+      }
+    } else if (confirmPassword == '') {
+      setPasswordMatchError(false);
+    }
+
+    setPassword(val);
+  }
+
+  function setConfirmPasswordValue(val: any) {
+    setConformPassword(val);
+    if (password != '') {
+      if (password != val) setPasswordMatchError(true);
+      else if (password === val) {
+        setPasswordMatchError(false);
+      }
+    } else if (password == '') {
+      setPasswordMatchError(false);
+    }
   }
 
   const onSubmitHandler = async (e: any) => {
     e.preventDefault();
 
     if (!otpFieldVisible) {
-      const res = await sendOtpCall(email);
-      if (res?.data?.errorCode != 404) {
-        setOtpFieldVisible(true);
-      } else {
-        setAccountError(true);
+      try {
+        setIsUpdatingPassword(true);
+        const res = await sendOtpCall(email);
+        if (res?.data?.errorCode != 404) {
+          setOtpFieldVisible(true);
+          setIsUpdatingPassword(false);
+        } else {
+          setAccountError(true);
+        }
+      } catch (err: any) {
+        console.log(err);
+        setIsUpdatingPassword(false);
       }
     } else {
-      const res = await validateOtpCall(email, otp);
-      if (res.data.errorCode != 404) {
-        setPasswordPage(true);
-      } else {
-        setOtpError(true);
+      try {
+        setIsUpdatingPassword(true);
+        const res = await validateOtpCall(email, otp);
+        if (res.data.errorCode != 404) {
+          setPasswordPage(true);
+          setIsUpdatingPassword(false);
+        } else {
+          setOtpError(true);
+        }
+      } catch (err: any) {
+        console.log(err);
+        setIsUpdatingPassword(false);
       }
     }
   };
   const onSubmitPasswordHandler = async (e: any) => {
+    setIsUpdatingPassword(true);
     e.preventDefault();
+    setIsUpdatingPassword(true);
     if (password !== confirmPassword) {
       setPasswordMatchError(true);
     } else {
-      const res = await updatePasswordCall(email, password);
-      if (!res?.data?.errorCode) {
-        alert('password Updated Successfully');
-        router.push('/login');
-      } else {
-        setSomethingWentWrongError(true);
+      try {
+        const res = await updatePasswordCall(email, password);
+        if (!res?.data?.errorCode) {
+          setIsUpdatingPassword(false);
+          // alert('password Updated Successfully');
+          router.push('/login');
+          setToastSuccess(true);
+          setToastMessage('User Registered Successfully');
+          setShowNofitication(true);
+        } else {
+          setIsUpdatingPassword(false);
+          setSomethingWentWrongError(true);
+        }
+      } catch (err: any) {
+        console.log(err);
+        setToastError(true);
+        setToastMessage(err?.message ?? 'Something went wrong');
+        setShowNofitication(true);
+        setIsUpdatingPassword(false);
+        setIsUpdatingPassword(false);
       }
     }
   };
@@ -220,10 +301,17 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
   //   }
   // };
   //{---------------Logout End----------------}
-
+  const resetToastState = () => {
+    setShowNofitication(!showNotification);
+    setToastSuccess(false);
+    setToastError(false);
+  };
   return (
     <>
-      <div className={loginCss.container}>
+      <div className={loginCss.ThemeSwitcher}>
+        <ThemeSwitcher />
+      </div>
+      <div className={`${loginCss.container} ${darkMode && darkTheme.grey_1}`}>
         <div className={loginCss.leftContainer}>
           <div className={loginCss.leftGrid}>
             <div className={loginCss.welcomeText}>
@@ -235,12 +323,14 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                   height={50}
                 />
               </div>
-              <h5>
+              <h5 className={`${darkMode && darkTheme.text_green}`}>
                 {datasource?.title?.jsonValue?.value.split('<br>')[0]}
                 <br />
                 {datasource?.title?.jsonValue?.value.split('<br>')[1]}
               </h5>
-              <div className={loginCss.welcomeTextDescription}>
+              <div
+                className={`${loginCss.welcomeTextDescription} ${darkMode && darkTheme.text_light}`}
+              >
                 {datasource?.description?.jsonValue?.value}
               </div>
             </div>
@@ -281,18 +371,22 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
           </div>
         </div>
 
-        <div className={loginCss.rightContainer}>
-          <div className={`${loginCss.formContainer} ${loginCss.forgotPasswordCard}`}>
+        <div className={`${loginCss.rightContainer} ${darkMode && darkTheme.grey_1}`}>
+          <div
+            className={`${loginCss.formContainer} ${loginCss.forgotPasswordCard} ${
+              darkMode && darkTheme.grey_3
+            } ${darkMode && loginCss.formDarkBorder}`}
+          >
             {/* <h4 className={loginCss.UpdatePasswordHeading}>Update Your Password</h4> */}
             {passwordPage ? (
               <form className={loginCss.login} onSubmit={(e) => onSubmitPasswordHandler(e)}>
                 <div className={loginCss.loginField}>
                   <i className={loginCss['login__icon fas fa-user']}></i>
-                  <label className={loginCss.label}>
+                  <label className={`${loginCss.label} ${darkMode && darkTheme.text_light}`}>
                     {datasource?.passwordLabel?.jsonValue?.value}
                   </label>
                   <input
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => setPasswordValue(e.target.value)}
                     value={password}
                     type="password"
                     className={loginCss.loginInput}
@@ -300,36 +394,51 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                     minLength={6}
                     required
                   />
+                  {passwordError ? (
+                    <span
+                      style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
+                    >
+                      {passwordValidationMessage}
+                    </span>
+                  ) : (
+                    ''
+                  )}
                 </div>
                 <div className={loginCss.loginField}>
                   <i className={loginCss['login__icon fas fa-lock']}></i>
-                  <label className={loginCss.label}>
+                  <label className={`${loginCss.label} ${darkMode && darkTheme.text_light}`}>
                     {datasource?.confirmPasswordLabel?.jsonValue?.value}
                   </label>
                   <input
-                    onChange={(e) => setConformPassword(e.target.value)}
+                    onChange={(e) => setConfirmPasswordValue(e.target.value)}
                     value={confirmPassword}
                     type="password"
                     className={loginCss.loginInput}
                     placeholder={datasource?.confirmPasswordPlaceholder?.jsonValue?.value}
-                    minLength={6}
                     required
                   />
+                  {passwordMatchError ? (
+                    <span
+                      style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
+                    >
+                      {datasource?.passwordMatchingError?.jsonValue?.value}
+                    </span>
+                  ) : (
+                    ''
+                  )}
                 </div>
                 <button className={loginCss.formButton}>
-                  {datasource?.updatePasswordBtnText?.jsonValue?.value}
+                  {isUpdatingPassword ? (
+                    <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
+                      {' '}
+                      <Spinner style={{ width: '15px', height: '15px' }} animation="border" />{' '}
+                    </span>
+                  ) : (
+                    datasource?.updatePasswordBtnText?.jsonValue?.value
+                  )}
                   <i className={loginCss['button__icon fas fa-chevron-right']}></i>
                 </button>
 
-                {passwordMatchError ? (
-                  <span
-                    style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
-                  >
-                    {datasource?.passwordMatchingError?.jsonValue?.value}
-                  </span>
-                ) : (
-                  ''
-                )}
                 {somethingWentWrongError ? (
                   <span
                     style={{ fontWeight: 1000, color: 'red', fontSize: '12px', padding: '10px' }}
@@ -344,7 +453,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
               <form className={loginCss.login} onSubmit={(e) => onSubmitHandler(e)}>
                 <div className={loginCss.loginField}>
                   <i className={loginCss['login__icon fas fa-user']}></i>
-                  <label className={loginCss.label}>
+                  <label className={`${loginCss.label} ${darkMode && darkTheme.text_light}`}>
                     {datasource?.userEmailLabel?.jsonValue?.value}
                   </label>
                   <input
@@ -371,7 +480,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                 {otpFieldVisible && (
                   <div className={loginCss.loginField}>
                     <i className={loginCss['login__icon fas fa-lock']}></i>
-                    <label className={loginCss.label}>
+                    <label className={`${loginCss.label} ${darkMode && darkTheme.text_light}`}>
                       {datasource?.oTPLabel?.jsonValue?.value}
                     </label>
                     <input
@@ -399,9 +508,16 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                   </div>
                 )}
                 <button className={loginCss.formButton}>
-                  {!otpFieldVisible
-                    ? datasource?.sendOTPPasswordBtnText?.jsonValue?.value
-                    : datasource?.submitBtnText?.jsonValue?.value}
+                  {isUpdatingPassword ? (
+                    <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
+                      {' '}
+                      <Spinner style={{ width: '15px', height: '15px' }} animation="border" />{' '}
+                    </span>
+                  ) : !otpFieldVisible ? (
+                    datasource?.sendOTPPasswordBtnText?.jsonValue?.value
+                  ) : (
+                    datasource?.submitBtnText?.jsonValue?.value
+                  )}
                   <i className={loginCss['button__icon fas fa-chevron-right']}></i>
                 </button>
                 {accountError && !otpFieldVisible ? (
@@ -430,12 +546,23 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
               </form>
             )}
             <div className={loginCss.formContainerBottom}>
-              <div className={loginCss.btn}>
-                <Link href={'/login'}>Back to Login?</Link>
+              <div className={`${loginCss.formContainerButton} ${darkMode && darkTheme.greenBg}`}>
+                <div className={loginCss.btn}>
+                  <Link href={'/login'}>Back to Login?</Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        {showNotification && (
+          <ToastNotification
+            showNotification={showNotification}
+            success={toastSuccess}
+            error={toastError}
+            message={toastMessage}
+            handleCallback={resetToastState}
+          />
+        )}
       </div>
     </>
   );

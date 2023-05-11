@@ -1,13 +1,18 @@
 import { Field, ImageField, NextImage, RichTextField } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import registerUserCall from '../API/registerUserCall';
 import { useRouter } from 'next/router';
 import RegisterCss from '../assets/register.module.css';
+import { validateEmail, validatePassword, numberOnly } from 'assets/helpers/validations';
 // import starImage from '../assets/images/star.png';
 // import imageNotFound from '../assets/images/imageNot.png';
-
+import ThemeSwitcher from './ThemeSwitcher';
+import darkTheme from '../assets/darkTheme.module.css';
+import WebContext from '../Context/WebContext';
+import Spinner from 'react-bootstrap/Spinner';
+import ToastNotification from './ToastNotification';
 type RegisterProps = ComponentProps & {
   fields: {
     // heading: Field<string>;
@@ -81,15 +86,21 @@ type DataSource = {
 };
 
 const Register = (props: RegisterProps): JSX.Element => {
+  const { darkMode } = {
+    ...useContext(WebContext),
+  };
   props;
   let [firstName, setFirstName] = useState('');
   let [lastName, setLastName] = useState('');
   let [email, setEmail] = useState('');
+  let [emailValidationMessage, setEmailValidationMessage] = useState('');
   let [phoneNumber, setPhoneNumber] = useState('');
+  let [phoneValidationMessage, setPhoneValidationMessage] = useState('');
   let [password, setPassword] = useState('');
+  let [passwordValidationMessage, setPasswordValidationMessage] = useState('');
   let [confirmPassword, setConfirmPassword] = useState('');
   let [error, isError] = useState(false);
-  let [isRegistered, setIsRegistered] = useState(false);
+  // let [isRegistered, setIsRegistered] = useState(false);
   const router = useRouter();
 
   let [firstNameError, setFirstNameError] = useState(false);
@@ -98,6 +109,12 @@ const Register = (props: RegisterProps): JSX.Element => {
   let [phoneError, setPhoneError] = useState(false);
   let [passwordError, setPasswordError] = useState(false);
   // let [confirmPasswordError, setConfirmPasswordError] = useState(false);
+
+  let [isSigningUp, setIsSigningUp] = useState(false);
+  const [toastSuccess, setToastSuccess] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string>();
+  const [showNotification, setShowNofitication] = useState(false);
+  const [toastError, setToastError] = useState(false);
 
   const targetItems = props?.fields?.data?.datasource;
   function setFirstNameValue(val: any) {
@@ -113,8 +130,16 @@ const Register = (props: RegisterProps): JSX.Element => {
     setPhoneNumber(val);
     if (val === '') {
       setPhoneError(true);
+      setPhoneValidationMessage(`${targetItems?.phoneNoLabel?.jsonValue?.value} is mandatory`);
     } else {
-      setPhoneError(false);
+      if (!numberOnly(val)) {
+        setPhoneError(true);
+        setPhoneValidationMessage(
+          `${targetItems?.phoneNoLabel?.jsonValue?.value} can have digits only`
+        );
+      } else {
+        setPhoneError(false);
+      }
     }
   }
 
@@ -128,19 +153,33 @@ const Register = (props: RegisterProps): JSX.Element => {
   }
 
   function setEmailValue(val: any) {
-    setEmail(val);
-    if (val === '') setEmailError(true);
-    else {
-      setEmailError(false);
+    if (val === '') {
+      setEmailError(true);
+      setEmailValidationMessage(`${targetItems?.emailLabel?.jsonValue?.value} is mandatory`);
+    } else {
+      if (!validateEmail(val)) {
+        setEmailError(true);
+        setEmailValidationMessage(`${targetItems?.emailLabel?.jsonValue?.value} is not valid`);
+      } else {
+        setEmailError(false);
+      }
     }
+    setEmail(val);
   }
 
   function setPasswordValue(val: any) {
-    setPassword(val);
-    // if()
-    if (val === '') setPasswordError(true);
-    else {
-      setPasswordError(false);
+    if (val === '') {
+      setPasswordError(true);
+      setPasswordValidationMessage(`${targetItems?.passwordLabel?.jsonValue?.value} is mandatory`);
+    } else {
+      if (!validatePassword(val)) {
+        setPasswordError(true);
+        setPasswordValidationMessage(
+          `${targetItems?.passwordLabel?.jsonValue?.value} should be minimum of 8 letters with 1 upper, 1 lowercase, 1 digit, 1 special character`
+        );
+      } else {
+        setPasswordError(false);
+      }
     }
     if (confirmPassword != '') {
       if (val !== confirmPassword) {
@@ -151,7 +190,9 @@ const Register = (props: RegisterProps): JSX.Element => {
     } else if (confirmPassword == '') {
       isError(false);
     }
+    setPassword(val);
   }
+
   function setConfirmPasswordValue(val: any) {
     setConfirmPassword(val);
     if (password != '') {
@@ -166,6 +207,7 @@ const Register = (props: RegisterProps): JSX.Element => {
 
   const onSubmitHandler = async (e: any) => {
     e.preventDefault();
+    setIsSigningUp(true);
     let userData = {
       firstName: firstName,
       lastName: lastName,
@@ -183,11 +225,14 @@ const Register = (props: RegisterProps): JSX.Element => {
     }
     if (email === '') {
       setEmailError(true);
+      setEmailValidationMessage(`${targetItems?.emailLabel?.jsonValue?.value} is mandatory`);
     }
     if (phoneNumber == '') {
       setPhoneError(true);
+      setPhoneValidationMessage(`${targetItems?.phoneNoLabel?.jsonValue?.value} is mandatory`);
     }
     if (password === '') {
+      setPasswordValidationMessage(`${targetItems?.passwordLabel?.jsonValue?.value} is mandatory`);
       setPasswordError(true);
     }
     if (
@@ -198,24 +243,43 @@ const Register = (props: RegisterProps): JSX.Element => {
       password !== '' &&
       password === confirmPassword
     ) {
-      let resp = await registerUserCall(userData);
-      if (resp?.data?.success == true) {
-        setIsRegistered(true);
-        // setTimeout(() => {
-        router.push('/login');
-        // }, 2000);
+      try {
+        let resp = await registerUserCall(userData);
+        if (resp?.data?.success == true) {
+          // setIsRegistered(true);
+          setToastSuccess(true);
+          setToastMessage('User Registered Successfully');
+          setShowNofitication(true);
+          // setTimeout(() => {
+          router.push('/login');
+          // }, 2000);
+          setIsSigningUp(false);
+        }
+        console.log('Register Response', resp);
+      } catch (err: any) {
+        console.log(err);
+        setToastError(true);
+        setToastMessage(err?.message ?? 'Something went wrong');
+        setShowNofitication(true);
+        setIsSigningUp(false);
       }
-
-      console.log('Register Response', resp);
     }
   };
 
   const heading = targetItems?.title?.jsonValue?.value?.split('<br>');
   // console.log("ggggggggggggggggg",heading)
   console.log(targetItems);
+  const resetToastState = () => {
+    setShowNofitication(!showNotification);
+    setToastSuccess(false);
+    setToastError(false);
+  };
   return (
     <>
-      <div className={RegisterCss.container}>
+      <div className={RegisterCss.ThemeSwitcher}>
+        <ThemeSwitcher />
+      </div>
+      <div className={`${RegisterCss.container} ${darkMode && darkTheme.grey_1}`}>
         <div className={RegisterCss.leftContainer}>
           <div className={RegisterCss.leftGrid}>
             <div className={RegisterCss.welcomeText}>
@@ -228,12 +292,18 @@ const Register = (props: RegisterProps): JSX.Element => {
                 />
                 {/* <NextImage field={starImage}  editable={true} /> */}
               </div>
-              <h5 className={RegisterCss.welcomeTextHeading}>
-                {heading?heading[0]:""}
+              <h5
+                className={`${RegisterCss.welcomeTextHeading} ${darkMode && darkTheme.text_green}`}
+              >
+                {heading ? heading[0] : ''}
                 <br />
-                {heading?heading[1]:""}
+                {heading ? heading[1] : ''}
               </h5>
-              <div className={RegisterCss?.welcomeTextDescription}>
+              <div
+                className={`${RegisterCss?.welcomeTextDescription} ${
+                  darkMode && darkTheme.text_light
+                }`}
+              >
                 {targetItems?.description?.jsonValue?.value}
               </div>
             </div>
@@ -267,12 +337,16 @@ const Register = (props: RegisterProps): JSX.Element => {
             </div>
           </div>
         </div>
-        <div className={RegisterCss.rightContainer}>
-          <div className={RegisterCss.formContainer}>
+        <div className={`${RegisterCss.rightContainer} ${darkMode && darkTheme.grey_1}`}>
+          <div
+            className={`${RegisterCss.formContainer} ${darkMode && darkTheme.grey_3} ${
+              darkMode && RegisterCss.formDarkBorder
+            }`}
+          >
             <form className={RegisterCss.login} onSubmit={(e) => onSubmitHandler(e)}>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
-                <label className={RegisterCss.label}>
+                <label className={`${RegisterCss.label} ${darkMode && darkTheme.text_light}`}>
                   {targetItems?.firstNameLabel?.jsonValue?.value}
                 </label>
                 <input
@@ -287,13 +361,13 @@ const Register = (props: RegisterProps): JSX.Element => {
                   ''
                 ) : (
                   <span className={RegisterCss.passwordMismatchWarning}>
-                    * This field is mandatory
+                    * {targetItems.firstNameLabel.jsonValue.value} is mandatory
                   </span>
                 )}
               </div>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
-                <label className={RegisterCss.label}>
+                <label className={`${RegisterCss.label} ${darkMode && darkTheme.text_light}`}>
                   {targetItems?.lastNameLabel?.jsonValue?.value}
                 </label>
                 <input
@@ -307,13 +381,13 @@ const Register = (props: RegisterProps): JSX.Element => {
                   ''
                 ) : (
                   <span className={RegisterCss.passwordMismatchWarning}>
-                    * This field is mandatory
+                    * {targetItems.lastNameLabel.jsonValue.value} is mandatory
                   </span>
                 )}
               </div>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
-                <label className={RegisterCss.label}>
+                <label className={`${RegisterCss.label} ${darkMode && darkTheme.text_light}`}>
                   {targetItems?.emailLabel?.jsonValue?.value}
                 </label>
                 <input
@@ -328,13 +402,13 @@ const Register = (props: RegisterProps): JSX.Element => {
                   ''
                 ) : (
                   <span className={RegisterCss.passwordMismatchWarning}>
-                    * This field is mandatory
+                    *{emailValidationMessage}
                   </span>
                 )}
               </div>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
-                <label className={RegisterCss.label}>
+                <label className={`${RegisterCss.label} ${darkMode && darkTheme.text_light}`}>
                   {targetItems?.phoneNoLabel?.jsonValue?.value}
                 </label>
                 <input
@@ -348,13 +422,13 @@ const Register = (props: RegisterProps): JSX.Element => {
                   ''
                 ) : (
                   <span className={RegisterCss.passwordMismatchWarning}>
-                    * This field is mandatory
+                    *{phoneValidationMessage}
                   </span>
                 )}
               </div>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
-                <label className={RegisterCss.label}>
+                <label className={`${RegisterCss.label} ${darkMode && darkTheme.text_light}`}>
                   {targetItems?.passwordLabel?.jsonValue?.value}
                 </label>
                 <input
@@ -369,13 +443,13 @@ const Register = (props: RegisterProps): JSX.Element => {
                   ''
                 ) : (
                   <span className={RegisterCss.passwordMismatchWarning}>
-                    * This field is mandatory
+                    *{passwordValidationMessage}
                   </span>
                 )}
               </div>
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-lock"></i>
-                <label className={RegisterCss.label}>
+                <label className={`${RegisterCss.label} ${darkMode && darkTheme.text_light}`}>
                   {targetItems?.confirmPasswordLabel?.jsonValue?.value}
                 </label>
                 <input
@@ -405,27 +479,47 @@ const Register = (props: RegisterProps): JSX.Element => {
                   passwordError
                 }
               >
-                {targetItems?.registerBtn?.jsonValue?.value}
+                {isSigningUp ? (
+                  <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
+                    {' '}
+                    <Spinner style={{ width: '15px', height: '15px' }} animation="border" />{' '}
+                  </span>
+                ) : (
+                  targetItems?.registerBtn?.jsonValue?.value
+                )}
                 <i className="button__icon fas fa-chevron-right"></i>
               </button>
             </form>
-            {isRegistered ? (
+            {/* {isRegistered ? (
               <span style={{ fontWeight: 1000, color: 'white', fontSize: '18px', padding: '10px' }}>
                 * User Registered Successfully
               </span>
             ) : (
               ''
-            )}
-            <div className={RegisterCss.formContainerBottom}>
-              <div className={RegisterCss.text}>
-                {targetItems?.haveAccountLabel?.jsonValue?.value}
-              </div>
-              <div className={RegisterCss.btn}>
-                <Link href={'/login'}>{targetItems?.loginBtn?.jsonValue?.value}</Link>
+            )} */}
+            <div className={`${RegisterCss.formContainerBottom}`}>
+              <div
+                className={`${RegisterCss.formContainerButton} ${darkMode && darkTheme.greenBg}`}
+              >
+                <div className={RegisterCss.text}>
+                  {targetItems?.haveAccountLabel?.jsonValue?.value}
+                </div>
+                <div className={RegisterCss.btn}>
+                  <Link href={'/login'}>{targetItems?.loginBtn?.jsonValue?.value}</Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        {showNotification && (
+          <ToastNotification
+            showNotification={showNotification}
+            success={toastSuccess}
+            error={toastError}
+            message={toastMessage}
+            handleCallback={resetToastState}
+          />
+        )}
       </div>
     </>
   );

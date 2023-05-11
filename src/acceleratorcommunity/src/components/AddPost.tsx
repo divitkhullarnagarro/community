@@ -33,7 +33,7 @@ import postCommentReplyCall from 'src/API/postCommentReplyCall';
 import downVote from '../assets/images/dislikeIcon.svg';
 import CreateModalPopup from './helperComponents/CreateModalPopup';
 import AxiosRequest from 'src/API/AxiosRequest';
-import { editCommentUrl, voteInPollUrl } from '../assets/helpers/constants';
+import { editCommentUrl, viewProfileLinkUrl, voteInPollUrl } from '../assets/helpers/constants';
 import videoIcon from '../assets/images/AddVideo_icon.svg';
 import pollIcon from '../assets/images/CreatePoll_icon.svg';
 import addBlogIcon from '../assets/images/AddBlogPost_icon.svg';
@@ -51,6 +51,7 @@ import draftToHtml from 'draftjs-to-html';
 import { toolbar } from 'assets/helpers/constants';
 import allPeersCall from 'src/API/getPeers';
 import { modifyHtml } from 'assets/helpers/helperFunctions';
+
 const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mod) => mod.Editor), {
   ssr: false,
 });
@@ -88,6 +89,7 @@ import darkModeCss from '../assets/darkTheme.module.css';
 
 //logging on logrocket
 import LogRocket from 'logrocket';
+import ViewPostDescription from './helperComponents/ViewPostDescription';
 
 type AddPostProps = ComponentProps & {
   fields: {
@@ -105,6 +107,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   const { userToken, objectId, userObject, darkMode } = {
     ...useContext(WebContext),
   };
+
+  //theme changes
+  useEffect(() => {
+    postStructCreate();
+  }, [darkMode]);
+
   //logging on logrocket start
   useEffect(() => {
     LogRocket.init('5m0bj8/communitysolution');
@@ -424,8 +432,8 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             </Modal.Body>
             <Modal.Footer>
               <Button
-                className={styles.footerBtn}
-                variant="secondary"
+                className={styles.footerBtnCancel}
+                variant="default"
                 onClick={() => setShowReportUserPopUp(false)}
               >
                 Cancel
@@ -509,13 +517,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             </Modal.Header>
             <Modal.Body>
               <div
-                className={styles.reportPostModalBody}
+                className={styles.blockuserModalBody}
               >{`Do you want to block ${selectedBlockUserItem?.firstName} ${selectedBlockUserItem?.lastName} ?`}</div>
             </Modal.Body>
             <Modal.Footer>
               <Button
-                className={styles.footerBtn}
-                variant="secondary"
+                className={styles.footerBtnCancel}
+                variant="default"
                 onClick={() => {
                   setShowBlockUserPopUp(false);
                 }}
@@ -616,7 +624,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               </Form>
             </Modal.Body>
             <Modal.Footer>
-              <Button className={styles.footerBtn} variant="secondary" onClick={handleClose}>
+              <Button className={styles.footerBtnCancel} variant="default" onClick={handleClose}>
                 Cancel
               </Button>
               <Button className={styles.footerBtn} variant="secondary" onClick={onPostReported}>
@@ -1199,7 +1207,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
             <div className={`postContainer ${darkMode ? darkModeCss.grey_2 : ''}`} key={post?.id}>
               <div className="postHeading">
                 <div className="postHeaderLeft">
-                  <Link passHref={true} href={`/viewProfile?id=${post?.createdBy?.objectId}`}>
+                  <Link passHref={true} href={`${viewProfileLinkUrl}${post?.createdBy?.objectId}`}>
                     <img
                       className="postUserImage"
                       src={
@@ -1461,15 +1469,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                     <div className={`blogHeading ${darkMode ? darkModeCss.text_green : ''}`}>
                       {post?.blog?.heading}
                     </div>
-                    <img style={{ width: '100%' }} src={post?.blog?.imageUrl} alt="Post Image" />
-                    <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
-                      {parser(modifyHtml(post?.blog?.description))}
-                    </div>
+                    {post?.blog?.imageUrl && (
+                      <img style={{ width: '100%' }} src={post?.blog?.imageUrl} alt="Post Image" />
+                    )}
+                    <ViewPostDescription description={post?.blog?.description} />
                   </>
                 ) : (
-                  <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
-                    {parser(modifyHtml(post?.description))}
-                  </div>
+                  <ViewPostDescription description={post.description} />
                 )}
               </div>
 
@@ -1657,7 +1663,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       controlId="comments"
                       style={{ display: 'flex', padding: '5px 15px 0' }}
                     >
-                      <Link passHref={true} href={`/viewProfile?id=${objectId}`}>
+                      <Link passHref={true} href={`${viewProfileLinkUrl}${objectId}`}>
                         <img
                           className="commentUserImage"
                           src={
@@ -1687,7 +1693,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                           <figure>
                             <Link
                               passHref={true}
-                              href={`/viewProfile?id=${comment?.createdBy?.objectId}`}
+                              href={`${viewProfileLinkUrl}${comment?.createdBy?.objectId}`}
                             >
                               <img
                                 className="commentUserImage"
@@ -1857,7 +1863,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                   controlId="comments"
                                   style={{ display: 'flex', padding: '5px 0 15px 15px' }}
                                 >
-                                  <Link passHref={true} href={`/viewProfile?id=${objectId}`}>
+                                  <Link passHref={true} href={`${viewProfileLinkUrl}${objectId}`}>
                                     <img
                                       width="32px"
                                       className="commentUserImage"
@@ -1890,7 +1896,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                       <figure>
                                         <Link
                                           passHref={true}
-                                          href={`/viewProfile?id=${reply?.createdBy?.objectId}`}
+                                          href={`${viewProfileLinkUrl}${reply?.createdBy?.objectId}`}
                                         >
                                           <img
                                             className="commentUserImage"
@@ -2075,7 +2081,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                           >
                                             <Link
                                               passHref={true}
-                                              href={`/viewProfile?id=${objectId}`}
+                                              href={`${viewProfileLinkUrl}${objectId}`}
                                             >
                                               <img
                                                 width="32px"
@@ -2950,7 +2956,10 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   return (
     <>
-      <div className={`${styles.mainContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}>
+      <div
+        className={`${styles.mainContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}
+        style={ifNoMoreData ? {} : { paddingBottom: '300px' }}
+      >
         {!isEditorHidden ? (
           <>
             <div
@@ -2960,7 +2969,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
               <div className={styles.addPostFieldContainer}>
                 <div className={styles.addPostField}>
                   <div className={styles.addPostImage}>
-                    <Link href={`/viewProfile?id=${userObject?.objectId}`} passHref={true}>
+                    <Link href={`${viewProfileLinkUrl}${userObject?.objectId}`} passHref={true}>
                       <img
                         src={
                           userObject?.profilePictureUrl ? userObject?.profilePictureUrl : user.src

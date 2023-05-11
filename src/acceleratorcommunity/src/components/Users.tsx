@@ -23,6 +23,7 @@ import {
 } from 'assets/helpers/helperFunctions';
 import { getEmailTemplatesGraphqlQuery } from './Queries';
 import { getAllReportUserCall, getReportedUserReportersDetailsCall } from 'src/API/reportUserCall';
+import Skeleton from 'react-loading-skeleton';
 
 const EmailTemplateFolder = '02989F59-CFEB-4CC9-90FB-C0DA8A7FE7B5';
 const WarnUserEmailTemplate = '16937DB73C124028877AAA49C0BE30CA';
@@ -148,6 +149,7 @@ const Users = (props: UserProps): JSX.Element => {
     reportedByUserFields[]
   >([]);
   const [activeAccordionIndex, setActiveAccordionIndex] = useState<string>();
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
     if (userToken == '') {
@@ -165,11 +167,13 @@ const Users = (props: UserProps): JSX.Element => {
   }, []);
 
   const getReportedUserList = async () => {
+    setIsDataLoaded(false);
     setShowReportedPosts(false);
     setShowReportedUserList(true);
     setReportedUserList([]);
     let response = await getAllReportUserCall(userToken);
     if (response?.success) {
+      setIsDataLoaded(true);
       setReportedUserList(response?.data);
     }
   };
@@ -491,11 +495,13 @@ const Users = (props: UserProps): JSX.Element => {
   };
 
   const getReportedPosts = async () => {
+    setIsDataLoaded(false);
     setReportedPostList([]);
     setShowReportedPosts(true);
     setShowReportedUserList(false);
     let response = await getAllReportPostCall(userToken);
     if (response?.success) {
+      setIsDataLoaded(true);
       setReportedPostList(response?.data);
     }
   };
@@ -969,18 +975,6 @@ const Users = (props: UserProps): JSX.Element => {
     );
   };
 
-  /* const Dashboard = () => {
-    return (
-      <>
-        <div className={styles.dashboardWrapper}>
-          <div className={styles.imgContainer}>
-            <img src={HeadBanner.src} width="100%" />
-          </div>
-        </div>
-      </>
-    );
-  }; */
-
   const SideNavbar = () => {
     return (
       <div className={styles.sidenavbar}>
@@ -1026,48 +1020,73 @@ const Users = (props: UserProps): JSX.Element => {
     );
   };
 
+  const skeletonDummyArr = [1, 2, 3, 4, 5, 6, 7];
+  const ReportedPostSkeleton = () => {
+    return (
+      <div>
+        <div className={styles.reportPostHeader}>
+          <h3 className={styles.reportPostTitle}>{'Reported Posts'}</h3>
+        </div>
+        <div className={styles.reportedPostSkeletonItemContainer}>
+          {skeletonDummyArr.map((_item) => {
+            return <Skeleton width={100 + '%'} height={90} />;
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  const ReportedUserSkeleton = () => {
+    return (
+      <div>
+        <h3 className={styles.userListHeader}>{'Reported User List'}</h3>
+        <div className={styles.tableContainer}>
+          <div className={styles.reportedPostSkeletonItemContainer}>
+            {skeletonDummyArr.map((_item) => {
+              return <Skeleton width={100 + '%'} height={50} />;
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className={styles.container}>
-      {/* <Button className={styles.backBtn} onClick={() => router.push('/')}>
-        Back
-      </Button> */}
       <div className={styles.left_column}>
         <SideNavbar />
       </div>
       <div className={styles.right_column}>
-        {/* <div className={styles.right_upper_section}>{<Dashboard />}</div> */}
         <div
           className={
             reportPostList?.length > 0 ? styles.right_lower_section : styles.right_lower_section
           }
         >
           {showReportedPosts ? (
-            reportPostList?.length > 0 ? (
+            isDataLoaded ? (
               <div className={styles.reportedPostsContainer}>
                 <ReportedPostList />
                 <ReportPostPopup />
                 <WarnUserForPostReportPopUp />
               </div>
             ) : (
-              <span className={styles.reportedPostContainer}>
-                <span className={styles.reportPostContainerHeader}>Getting Reported Posts ...</span>
-                <Spinner animation="border" className={styles.spinner} />
+              <span className={styles.reportedPostSkeletonContainer}>
+                <ReportedPostSkeleton />
               </span>
             )
           ) : (
             <></>
           )}
           {showReportedUserList ? (
-            reportUserList?.length > 0 ? (
+            isDataLoaded ? (
               <div className={styles.tableWrapper}>
                 <ReportedUserListTable />
                 <WarnUserPopUp />
                 <SuspendUserPopup />
               </div>
             ) : (
-              <span className={styles.reportedPostContainer}>
-                <span className={styles.reportPostContainerHeader}>Getting Reported Users...</span>
-                <Spinner animation="border" className={styles.spinner} />
+              <span className={styles.reportedPostSkeletonContainer}>
+                <ReportedUserSkeleton />
               </span>
             )
           ) : (

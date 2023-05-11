@@ -57,18 +57,36 @@
   font-size: 20px;
   font-weight: 400;
   color: #091329;
-  width: 400px;
 }
 .blogDescription {
   font-size: 16px;
   font-weight: 300;
   color: #091329;
-  width: 400px;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
-  max-height: 183px;
+}
+.BlogImage img {
+  max-width: 300px !important;
+  height: auto !important;
+  display: inline-block !important;
+}
+.BlogImageLoader {
+  display: flex;
+  width: 35%;
+  align-items: center;
+}
+.BlogImageLoader > span, .blogCardContentLoader > span {
+  width: 100%;
+}
+.blogCardContentLoader {
+  display: flex;
+  width: 60%;
+  flex-direction: column;
+}
+.blogCardLoader {
+  width: 100%;
 }
 
 @media only screen and (max-width: 640px) {
@@ -80,11 +98,5 @@
     align-items: center;
     padding: 8px;
     row-gap: 16px;
-  }
-  .blogHeading {
-    width: 100%;
-  }
-  .blogDescription {
-    width: 100%;
   }
 }

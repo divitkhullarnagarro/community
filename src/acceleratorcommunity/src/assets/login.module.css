@@ -203,7 +203,9 @@
 }
 .ThemeSwitcher {
   text-align: right;
-  margin-right: 44px;
+  position: absolute;
+  top: 15px;
+  right: 44px;
 }
 
 .forgotPasswordCard {
