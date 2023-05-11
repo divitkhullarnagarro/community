@@ -5,7 +5,6 @@ import SideSearchFilter from './sideSearchFilter';
 import { SearchSkeletonForEvents } from './skeletons/SearchSkeleton';
 
 const EventSearchContainer = (props: any) => {
-
   useEffect(() => {
     setEvents(props?.searchedData);
   }, [props?.searchedData]);
@@ -110,13 +109,32 @@ const EventSearchContainer = (props: any) => {
         {props?.success ? (
           <SearchSkeletonForEvents count={5} />
         ) : (
-          Events.length > 0 ? Events.map((event: any) => {
-            return event?.sourceAsMap?.postType === 'EVENT' ? (
-              <Event events={event?.sourceAsMap} getFormatedDate={getFormatedDate} />
+          <>
+            {Events.length > 0 ?<div className={styles.hashtagCount}>
+              <div>
+                <img
+                  src={
+                    'https://media.istockphoto.com/id/499517325/photo/a-man-speaking-at-a-business-conference.jpg?s=612x612&w=0&k=20&c=gWTTDs_Hl6AEGOunoQ2LsjrcTJkknf9G8BGqsywyEtE='
+                  }
+                />
+                {props?.query}
+              </div>
+              <div>
+                <div>We've found {Events?.length} results</div>
+              </div>
+            </div>:""}
+            {Events.length > 0 ? (
+              Events.map((event: any) => {
+                return event?.sourceAsMap?.postType === 'EVENT' ? (
+                  <Event events={event?.sourceAsMap} getFormatedDate={getFormatedDate} />
+                ) : (
+                  ''
+                );
+              })
             ) : (
-              ''
-            );
-          }):<div className={styles.forNoData}>No Events Found</div>
+              <div className={styles.forNoData}>No Events Found</div>
+            )}
+          </>
         )}
       </div>
     </div>

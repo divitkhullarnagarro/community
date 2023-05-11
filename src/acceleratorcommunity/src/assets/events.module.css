@@ -31,8 +31,13 @@
   width: 80%;
   display: flex;
   align-items: flex-start;
-  /* background-color: pink; */
 }
+
+.link:hover{
+  color: blue;
+
+}
+
 .parentEventContainer {
   width: 100%;
   display: flex;
@@ -61,7 +66,7 @@
   flex-direction: column;
   height: 150px;
   width: 100%;
-  border-bottom: 1px solid #ced0d4;
+  /* border-bottom: 1px solid #ced0d4; */
   margin-top: 20px;
 }
 
@@ -71,6 +76,7 @@
   font-weight: 400;
   font-size: 20px;
   color: #091329;
+  margin-bottom: 10px;
 }
 
 .eventTime {
@@ -150,3 +156,4 @@
 .link::after {
   display: none;
 }
+

@@ -57,6 +57,23 @@ const Hashtag = (props: any) => {
   return (
     <div>
       {props?.searchedData?.length > 0 ? (
+        <div className={styles.hashtagCount}>
+          <div>
+            <img
+              src={
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKSssZidC_xQKmQ5kBRhrHxy7L57lF_0SCLNmYWVcbmtCHH2mNWuUNH0thmJN-ZqZKjjE&usqp=CAU'
+              }
+            />
+            {props?.query}
+          </div>
+          <div>
+            <div>We've found {props?.searchedData?.length} results</div>
+          </div>
+        </div>
+      ) : (
+        ''
+      )}
+      {props?.searchedData?.length > 0 ? (
         props?.searchedData?.map((data: any) => {
           return data?.sourceAsMap?.postType === 'IMAGE' ? (
             <ImageConatiner fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
@@ -69,7 +86,7 @@ const Hashtag = (props: any) => {
           ) : data?.sourceAsMap?.postType === 'DOC' ? (
             <DocumentContainer events={data?.sourceAsMap} fromALL={fromALL} flag={false} />
           ) : data?.sourceAsMap?.postType === 'BLOG_POST' ? (
-            <Blog success={props?.success} fromALL={fromALL} blog={data?.sourceAsMap?.blog} />
+            <Blog success={props?.success} fromALL={fromALL} id={data?.sourceAsMap?.id} blog={data?.sourceAsMap?.blog} />
           ) : data?.sourceAsMap?.postType === 'POLL' ? (
             // <PollCard
             //   pollPost={{ poll: data?.sourceAsMap?.poll }}

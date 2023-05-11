@@ -3,6 +3,8 @@ import styles from '../assets/searchUser.module.css';
 import { useContext, useState } from 'react';
 import WebContext from 'src/Context/WebContext';
 import { Button, Modal } from 'react-bootstrap';
+import style from '../assets/events.module.css';
+
 const User = (props: any) => {
   console.log('users', props);
   const { userToken, setUserToken, objectId } = { ...useContext(WebContext) };
@@ -70,7 +72,7 @@ const User = (props: any) => {
   };
 
   return (
-    <>
+    <a href={`/viewProfile?id=${props?.user?.objectId}`} className={style.link} target="_blank">
       <div className={styles.container}>
         <div className={styles.userInfo}>
           <div className={styles.userImage}>
@@ -93,7 +95,7 @@ const User = (props: any) => {
           )}
         </div>
       </div>
-    </>
+    </a>
   );
 };
 

@@ -56,6 +56,15 @@ const AllSearchResult = (props: any) => {
 
   return (
     <div>
+      {props?.searchedData?.length > 0 ?<div className={styles.hashtagCount}>
+        <div>
+          {/* <img src={'https://cdn-icons-png.flaticon.com/512/149/149071.png'} /> */}
+          ALL Results
+        </div>
+        <div>
+          <div>We've found {props?.searchedData.length} results</div>
+        </div>
+      </div>:""}
       {props?.searchedData?.length > 0 ? (
         props?.searchedData?.map((data: any) => {
           return data?.sourceAsMap?.postType === 'IMAGE' ? (
@@ -69,7 +78,9 @@ const AllSearchResult = (props: any) => {
           ) : data?.sourceAsMap?.postType === 'DOC' ? (
             <DocumentContainer fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
           ) : data?.sourceAsMap?.postType === 'BLOG_POST' ? (
-            <Blog fromALL={fromALL} success={props?.success} blog={data?.sourceAsMap?.blog} />
+            <>
+            <Blog fromALL={fromALL} success={props?.success} blog={data?.sourceAsMap?.blog} id={data?.sourceAsMap?.id} />
+            </>
           ) : data?.sourceAsMap?.postType === 'POLL' ? (
             // <PollCard
             //   pollPost={{ poll: data?.sourceAsMap?.poll }}

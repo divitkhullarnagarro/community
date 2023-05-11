@@ -69,3 +69,25 @@
   font-weight: 500;
   font-size: 25px;
 }
+
+.hashtagCount {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ced0d4;
+  padding-bottom: 21px;
+}
+.hashtagCount > div {
+  display: flex;
+  gap: 10px;
+  font-weight: 500;
+  font-size: 18px;
+  color: #283895;
+  text-transform: capitalize;
+}
+.hashtagCount > div > img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}

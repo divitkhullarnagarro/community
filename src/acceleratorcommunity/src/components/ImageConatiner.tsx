@@ -12,14 +12,23 @@ const ImageConatiner = (props: any) => {
       {props?.fromALL ? <div className={styles.typeHeading}>Post</div> : ''}
       <div className={styles.parentContainer}>
         <div className={styles.imgAndContentContainer}>
-          <img src={props?.events?.mediaInfoList[0]?.url} alt="eventImg" />
+          {props?.fromALL ? '' : <img src={props?.events?.mediaInfoList[0]?.url} alt="eventImg" />}
           <div className={styles.content}>
             <div className={styles.eventDescription}>
+              {console.log("props?.events?.description",props?.events?.description)}
               {parser(
                 modifyHtml(
-                  props?.events?.description.length > 800
-                    ? props?.events?.description.slice(0, 800) + ' ' + 'Read More'
-                    : props?.events?.description
+                  props?.events?.description.length > 1200 ? (
+                    <div>
+                      {props?.events?.description.slice(0, 1200)}
+                      <a href={`/post/${id}`} className={styles.link} target="_blank">
+                        {' '}
+                        <span className={styles.link}>...See More</span>
+                      </a>
+                    </div>
+                  ) : (
+                    props?.events?.description
+                  )
                 )
               )}
             </div>

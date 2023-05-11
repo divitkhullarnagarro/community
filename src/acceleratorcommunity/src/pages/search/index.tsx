@@ -40,10 +40,10 @@ const Search = () => {
       type: 'ALL',
       value: 'ALL',
     },
-    {
-      type: 'GROUP',
-      value: 'Groups',
-    },
+    // {
+    //   type: 'GROUP',
+    //   value: 'Groups',
+    // },
     {
       type: 'USER',
       value: 'User',
@@ -122,7 +122,21 @@ const Search = () => {
     ) {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
-      searchCallFunction(['description', 'blog.heading', 'blog.description'], type, query);
+      searchCallFunction(
+        [
+          'description',
+          'blog.heading',
+          'blog.description',
+          'firstName',
+          'lastName',
+          'objectId',
+          'createdBy.firstName',
+          'createdBy.lastName',
+          'createdBy.objectId',
+        ],
+        type,
+        query
+      );
     }
     if (type === 'HASHTAG' && query !== undefined) {
       setSuccess(true);
@@ -134,7 +148,7 @@ const Search = () => {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
 
-      searchCallFunction(['description', 'blog.heading', 'blog.description'], type, query);
+      searchCallFunction(["description", "event.title", "Title", "ShortDescription"], type, query);
     }
     if (type === 'JOURNAL' && query !== undefined) {
       setSuccess(true);
@@ -302,23 +316,23 @@ const Search = () => {
       </div>
       <SearchFlters activeState={activeState} filter={filter} handleClick={handleClick} />
       {activeState === 'ALL' ? (
-        <SearchALLConatiner success={success} searchedData={searchedData} />
+        <SearchALLConatiner query={query} success={success} searchedData={searchedData} />
       ) : activeState === 'GROUP' ? (
-        <SearchGroupContainer searchedData={searchedData} success={success} />
+        <SearchGroupContainer query={query} searchedData={searchedData} success={success} />
       ) : activeState === 'USER' ? (
-        <SearchUserContainer searchedData={searchedData} success={success} />
+        <SearchUserContainer query={query} searchedData={searchedData} success={success} />
       ) : activeState === 'EVENT' ? (
-        <EventSearchContainer searchedData={searchedData} success={success} />
+        <EventSearchContainer query={query} searchedData={searchedData} success={success} />
       ) : activeState === 'NEWS' ? (
         <NewSearchContainer success={success} />
       ) : activeState === 'JOURNAL' ? (
-        <JournalSearchContainer success={success} />
+        <JournalSearchContainer query={query} success={success} />
       ) : activeState === 'ARTICLE' ? (
-        <ArticleSearchContainer success={success} />
+        <ArticleSearchContainer query={query} success={success} />
       ) : activeState === 'HASHTAG' ? (
-        <HashtagContainer success={success} searchedData={searchedData} />
+        <HashtagContainer query={query} success={success} searchedData={searchedData} />
       ) : activeState === 'BLOG' ? (
-        <BlogContainer success={success} searchedData={searchedData} />
+        <BlogContainer success={success} query={query} searchedData={searchedData} />
       ) : activeState === 'POLL' ? (
         ''
       ) : (

@@ -19,7 +19,7 @@ const DocumentContainer = (props: any) => {
     <a href={`/post/${id}`} className={styles.link} target="_blank">
       {props?.fromALL ? (
         <div className={styles.typeHeading}>
-          <div>Post</div>
+          <div>Doc Post</div>
           <div onClick={() => openDoc(data)}>
             <svg
               width="24"
@@ -67,12 +67,11 @@ const DocumentContainer = (props: any) => {
           <div className={styles.content}>
             {parser(
               modifyHtml(
-                props?.events?.description.length > 800
-                  ? props?.events?.description.slice(0, 800)
+                props?.events?.description.length > 1000
+                  ? props?.events?.description.slice(0, 1000)
                   : props?.events?.description
               )
             )}
-            <div className={styles.eventDescription}></div>
           </div>
         </div>
       </div>

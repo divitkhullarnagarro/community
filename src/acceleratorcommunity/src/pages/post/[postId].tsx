@@ -8,6 +8,8 @@ import styles from '../../assets/addPost.module.css';
 import bookmarkImage from '../../assets/images/bookmark-outline.svg';
 import reportPostImage from '../../assets/images/flag-icon.svg';
 import BlockUserImage from '../../assets/images/BlockUser.jpg';
+import { modifyHtml } from 'assets/helpers/helperFunctions';
+import parser from 'html-react-parser';
 
 // import Event from '../../assets/images/event.jpg';
 // import commentSvg from '../../assets/images/comment-svgrepo-com 1.svg';
@@ -700,15 +702,22 @@ function viewSinglePost(props: any) {
             ) : (
               ''
             )}
-            {/* {props?.data?.data?.postType === 'BLOG_POST' ? (
-              <img className={specificPostCss.bannerImg} src={} />
+            {props?.data?.data?.postType === 'BLOG_POST' ? (
+              <>
+                <img
+                  className={specificPostCss.bannerImg}
+                  src={props?.data?.data?.blog?.imageUrl}
+                />
+                <div className={specificPostCss.body}>
+                  {parser(modifyHtml(props?.data?.data?.blog?.description))}
+                </div>
+              </>
             ) : (
               ''
-            )} */}
-            <div
-              className={specificPostCss.body}
-              dangerouslySetInnerHTML={{ __html: props?.data?.data?.description }}
-            ></div>
+            )}
+            <div className={specificPostCss.body}>
+              {parser(modifyHtml(props?.data?.data?.description))}
+            </div>
             {/* <div className={specificPostCss.likeActionsContainer}>
             <div className={specificPostCss.actions}>
               <div className={specificPostCss.likeActions}>
