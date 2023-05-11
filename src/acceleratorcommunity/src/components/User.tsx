@@ -1,11 +1,12 @@
 import followCall, { UnfollowCall } from 'src/API/followUnfollowCall';
 import styles from '../assets/searchUser.module.css';
+import darkModeCss from '../assets/darkTheme.module.css';
 import { useContext, useState } from 'react';
 import WebContext from 'src/Context/WebContext';
 import { Button, Modal } from 'react-bootstrap';
 const User = (props: any) => {
   console.log('users', props);
-  const { userToken, setUserToken, objectId } = { ...useContext(WebContext) };
+  const { userToken, setUserToken, objectId, darkMode } = { ...useContext(WebContext) };
 
   const [followButtonText, setButtonText] = useState(props?.buttonText ?? 'Follow');
   const [showForm1, setShowForm] = useState(false);
@@ -71,7 +72,7 @@ const User = (props: any) => {
 
   return (
     <>
-      <div className={styles.container}>
+      <div className={`${styles.container} ${darkMode && darkModeCss.text_light}`}>
         <div className={styles.userInfo}>
           <div className={styles.userImage}>
             <img src={props?.user?.profilePictureUrl} />

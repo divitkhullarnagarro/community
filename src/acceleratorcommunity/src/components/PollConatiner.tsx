@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import WebContext from 'src/Context/WebContext';
 import PollCard from './PollCard';
 import styles from '../assets/searchFilterContainer.module.css';
+import darkModeCss from '../assets/darkTheme.module.css';
 import { voteInPollUrl } from 'assets/helpers/constants';
 import AxiosRequest from 'src/API/AxiosRequest';
 import { SearchSkeletonForUser } from './skeletons/SearchSkeleton';
@@ -14,6 +16,10 @@ const PollConatiner = (props: any) => {
       method: 'PUT',
       url: `${voteInPollUrl}${pollId}/poll-option/${pollOptionId}`,
     });
+  };
+
+  const { darkMode } = {
+    ...useContext(WebContext),
   };
 
   //Function to update with latest data of poll
@@ -48,8 +54,8 @@ const PollConatiner = (props: any) => {
   }
 
   return (
-    <div className={styles.parentContainer}>
-      <div className={styles.generalcontainer}>
+    <div className={`${styles.parentContainer} ${darkMode && darkModeCss.grey_1}`}>
+      <div className={`${styles.generalcontainer} ${darkMode && darkModeCss.grey_3}`}>
         {props?.success ? (
           <SearchSkeletonForUser count={5} />
         ) : props?.searchedData?.length > 0 ? (
