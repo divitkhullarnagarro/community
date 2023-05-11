@@ -1,6 +1,6 @@
 import styles from '../assets/events.module.css';
-import { modifyHtml } from 'assets/helpers/helperFunctions';
-import parser from 'html-react-parser';
+// import { modifyHtml } from 'assets/helpers/helperFunctions';
+// import parser from 'html-react-parser';
 import darkModeCss from '../assets/darkTheme.module.css';
 import { useContext } from 'react';
 import WebContext from 'src/Context/WebContext';
