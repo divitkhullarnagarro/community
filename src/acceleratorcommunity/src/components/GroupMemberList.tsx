@@ -5,6 +5,9 @@ import groupLogo from '../assets/images/ProfilePic.jpeg';
 import style from '../assets/groupMemberList.module.css';
 import { useRouter } from 'next/router';
 import { viewProfileLinkUrl } from 'assets/helpers/constants';
+import darkTheme from '../assets/darkTheme.module.css';
+import WebContext from '../Context/WebContext';
+import { useContext } from 'react';
 // import Link from 'next/link';
 
 type GroupMembersListProps = ComponentProps & {
@@ -19,6 +22,9 @@ const list = [
 ];
 
 const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
+  const { darkMode } = {
+    ...useContext(WebContext),
+  };
   console.log(props);
   const router = useRouter();
   const onMemberClick = (email: string) => {
@@ -26,19 +32,25 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
   };
   return (
     <>
-      <div className={style.groupMemberListBox}>
-        <h3 className={style.groupMemberTitle}>Members List</h3>
-        <div className={style.groupMemberList}>
+      <div className={`${style.groupMemberListBox} ${darkMode && darkTheme.grey_3}`}>
+        <h3 className={`${style.groupMemberTitle} ${darkMode && darkTheme.text_green}`}>
+          Members List
+        </h3>
+        <div className={`${style.groupMemberList} ${darkMode && darkTheme.grey_1}`}>
           {list.map((ele) => (
             <>
               <div
                 key={ele.objectId}
-                className={style.groupMemberListHeading}
+                className={`${style.groupMemberListHeading} ${darkMode && darkTheme.grey_1}`}
                 onClick={() => {
                   onMemberClick(ele.objectId);
                 }}
               >
-                <div className={style.groupMemberListHeadingLeft}>
+                <div
+                  className={`${style.groupMemberListHeadingLeft} ${
+                    darkMode && style.groupMemberListHeadingDarkTheme
+                  } ${darkMode && darkTheme.grey_2}`}
+                >
                   <Image
                     src={ele.img}
                     alt={ele.name}
@@ -46,9 +58,13 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
                     height={50}
                     width={50}
                   />
-                  <div className={`d-flex flex-column ${style.groupMemberNameAndEmail}`}>
-                    <h5 className={style.groupMemberListName}>{ele.name}</h5>
-                    <h6 className={style.groupMemberListEmail}>{ele.objectId}</h6>
+                  <div
+                    className={`d-flex flex-column ${style.groupMemberNameAndEmail}  ${
+                      darkMode && darkTheme.text_light
+                    }`}
+                  >
+                    <h5 className={`${style.groupMemberListName} `}>{ele.name}</h5>
+                    <h6 className={`${style.groupMemberListEmail}`}>{ele.objectId}</h6>
                   </div>
                 </div>
               </div>
