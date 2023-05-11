@@ -3,10 +3,12 @@ import { ComponentProps } from 'lib/component-props';
 import Accordion from 'react-bootstrap/Accordion';
 import styles from '../assets/about.module.css';
 import Skeleton from 'react-loading-skeleton';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import WebContext from 'src/Context/WebContext';
 import 'react-loading-skeleton/dist/skeleton.css';
 import AxiosRequest from 'src/API/AxiosRequest';
 import { getUserUrl } from 'assets/helpers/constants';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 type AboutProps = ComponentProps & {
   fields: {
@@ -41,6 +43,7 @@ const About = (props: AboutProps): JSX.Element => {
   props;
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [fetchUser, setfetchUser] = useState<any>({});
+  const { darkMode } = { ...useContext(WebContext) };
 
   const params =
     typeof window !== 'undefined'
@@ -88,20 +91,42 @@ const About = (props: AboutProps): JSX.Element => {
   const About = () => {
     return (
       <>
-        <div className={styles.aboutContainer}>
-          <h3 className={styles.aboutHeader}>About</h3>
+        <div className={`${styles.aboutContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}>
+          <h3 className={`${styles.aboutHeader} ${darkMode ? darkModeCss.text_green : ''}`}>
+            About
+          </h3>
           <Accordion defaultActiveKey={['0']} alwaysOpen>
-            <Accordion.Item className={styles.accordionItem} eventKey={'0'}>
-              <Accordion.Header className={styles.accordionHeader}>Summary</Accordion.Header>
-              <Accordion.Body className={styles.accordionBody}>
+            <Accordion.Item
+              className={`${styles.accordionItem} ${darkMode ? darkModeCss.grey_2 : ''}`}
+              eventKey={'0'}
+            >
+              <Accordion.Header
+                className={`${styles.accordionHeader} ${
+                  darkMode ? styles.accordionHeaderTheme : ''
+                }`}
+              >
+                Summary
+              </Accordion.Header>
+              <Accordion.Body
+                className={`${styles.accordionBody} ${darkMode ? darkModeCss.test_grey_4 : ''}`}
+              >
                 {fetchUser?.summary ? fetchUser?.summary : 'Nothing to Show.'}
               </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item className={styles.accordionItem} eventKey={'1'}>
-              <Accordion.Header className={styles.accordionHeader}>
+            <Accordion.Item
+              className={`${styles.accordionItem} ${darkMode ? darkModeCss.grey_2 : ''}`}
+              eventKey={'1'}
+            >
+              <Accordion.Header
+                className={`${styles.accordionHeader} ${
+                  darkMode ? styles.accordionHeaderTheme : ''
+                }`}
+              >
                 Contact Information
               </Accordion.Header>
-              <Accordion.Body className={styles.accordionBody}>
+              <Accordion.Body
+                className={`${styles.accordionBody} ${darkMode ? darkModeCss.test_grey_4 : ''}`}
+              >
                 {fetchUser?.phoneNo ? (
                   <div>
                     <div>Email : {fetchUser?.email}</div>
@@ -112,9 +137,20 @@ const About = (props: AboutProps): JSX.Element => {
                 )}
               </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item className={styles.accordionItem} eventKey={'2'}>
-              <Accordion.Header className={styles.accordionHeader}>Work</Accordion.Header>
-              <Accordion.Body className={styles.accordionBody}>
+            <Accordion.Item
+              className={`${styles.accordionItem} ${darkMode ? darkModeCss.grey_2 : ''}`}
+              eventKey={'2'}
+            >
+              <Accordion.Header
+                className={`${styles.accordionHeader} ${
+                  darkMode ? styles.accordionHeaderTheme : ''
+                }`}
+              >
+                Work
+              </Accordion.Header>
+              <Accordion.Body
+                className={`${styles.accordionBody} ${darkMode ? darkModeCss.test_grey_4 : ''}`}
+              >
                 {fetchUser?.placeOfPractice && fetchUser?.placeOfPractice.length > 0 ? (
                   <div>
                     <div>Company : {fetchUser?.placeOfPractice[0]?.orgName}</div>
@@ -125,9 +161,20 @@ const About = (props: AboutProps): JSX.Element => {
                 )}
               </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item className={styles.accordionItem} eventKey={'3'}>
-              <Accordion.Header className={styles.accordionHeader}>Hoobies</Accordion.Header>
-              <Accordion.Body className={styles.accordionBody}>
+            <Accordion.Item
+              className={`${styles.accordionItem} ${darkMode ? darkModeCss.grey_2 : ''}`}
+              eventKey={'3'}
+            >
+              <Accordion.Header
+                className={`${styles.accordionHeader} ${
+                  darkMode ? styles.accordionHeaderTheme : ''
+                }`}
+              >
+                Hoobies
+              </Accordion.Header>
+              <Accordion.Body
+                className={`${styles.accordionBody} ${darkMode ? darkModeCss.test_grey_4 : ''}`}
+              >
                 {fetchUser?.hobby && fetchUser?.hobby?.length > 0 ? (
                   <div>
                     {fetchUser?.hobby.map((hobby: any) => {
@@ -139,9 +186,20 @@ const About = (props: AboutProps): JSX.Element => {
                 )}
               </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item className={styles.accordionItem} eventKey={'4'}>
-              <Accordion.Header className={styles.accordionHeader}>Interests</Accordion.Header>
-              <Accordion.Body className={styles.accordionBody}>
+            <Accordion.Item
+              className={`${styles.accordionItem} ${darkMode ? darkModeCss.grey_2 : ''}`}
+              eventKey={'4'}
+            >
+              <Accordion.Header
+                className={`${styles.accordionHeader} ${
+                  darkMode ? styles.accordionHeaderTheme : ''
+                }`}
+              >
+                Interests
+              </Accordion.Header>
+              <Accordion.Body
+                className={`${styles.accordionBody} ${darkMode ? darkModeCss.test_grey_4 : ''}`}
+              >
                 {fetchUser?.interests && fetchUser?.interests?.length > 0 ? (
                   <div>
                     {fetchUser?.interests.map((interest: any) => {
