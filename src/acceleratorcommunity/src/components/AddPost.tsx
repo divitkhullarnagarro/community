@@ -289,36 +289,50 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     setId(idValue);
   }, [router]);
 
+  const params =
+    typeof window !== 'undefined'
+      ? new URLSearchParams(window?.location?.search)
+      : new URLSearchParams('');
+  let objectEmail = params.get('id');
+
   useEffect(() => {
     if (userToken != '' && userToken != undefined) {
       AxiosRequest({
         method: 'GET',
-        url: `${props?.params?.URL}?${id ? `id=${id}&` : ''}page=${postPageNum}&size=10`,
+        url:
+          objectEmail && objectEmail != ''
+            ? `${props?.params?.URL}/user-posts?objectId=${objectEmail}&page=${postPageNum}&size=10`
+            : `${props?.params?.URL}?${id ? `id=${id}&` : ''}page=${postPageNum}&size=10`,
       })
         .then((response: any) => {
+          console.log('POSTSCREATEDBYUSER', response);
           const newArr = response?.data;
-          newArr?.map((post: any) => {
-            post.isOpenComment = false;
-            post.comments = [];
-            post.showShare = false;
-            post.isLoadingComments = false;
-            if (post.postMeasures == null || post.postMeasures == 'undefined') {
-              post.postMeasures = {
-                commentCount: 0,
-                likeCount: 0,
-              };
-            }
-          });
-          setMyAnotherArr(newArr);
-        })
-        .catch((err: any) => {
-          if (err === 'API Call Failed !') {
+          if (response?.data?.length == 0) {
             setMyAnotherArr([
               {
                 postType: 'ERRORPOST',
-                description: 'Microservice URL Configuration Incorrect !',
+                description: 'No Posts Available !',
               },
             ]);
+          } else {
+            newArr?.map((post: any) => {
+              post.isOpenComment = false;
+              post.comments = [];
+              post.showShare = false;
+              post.isLoadingComments = false;
+              if (post.postMeasures == null || post.postMeasures == 'undefined') {
+                post.postMeasures = {
+                  commentCount: 0,
+                  likeCount: 0,
+                };
+              }
+            });
+            setMyAnotherArr(newArr);
+          }
+        })
+        .catch((err: any) => {
+          if (err === 'API Call Failed !') {
+            router.push('/login');
           }
         });
     }
@@ -656,7 +670,12 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
     });
     AxiosRequest({
       method: 'GET',
-      url: `${props?.params?.URL}?page=${postPageNum + 1}&size=10`,
+      url:
+        objectEmail && objectEmail != ''
+          ? `${props?.params?.URL}/user-posts?objectId=${objectEmail}&page=${
+              postPageNum + 1
+            }&size=10`
+          : `${props?.params?.URL}?${id ? `id=${id}&` : ''}page=${postPageNum + 1}&size=10`,
     }).then((response: any) => {
       if (response?.data?.length != 0 && response?.data?.length) {
         const newArr = response?.data;
@@ -680,7 +699,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           return prev - 1;
         });
       }
-      setIfReachedEnd(false);
+      // setIfReachedEnd(false);
     });
   }
 
@@ -1166,10 +1185,14 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
           {post?.postType === 'ERRORPOST' ? (
             <div className={`postContainer ${darkMode ? darkModeCss.grey_2 : ''}`} key={post?.id}>
               <div style={{ padding: '40px', fontSize: '36px' }}>
-                {post.description}{' '}
-                <div style={{ color: 'red', fontSize: '12px' }}>
-                  Check Component rendering parameter : "MicoserviceURL"
-                </div>
+                <span className={` ${darkMode ? darkModeCss.darkMode_textColor : ''}`}>
+                  {post.description}
+                </span>
+                {objectEmail === objectId ? (
+                  <div style={{ color: 'red', fontSize: '12px' }}>Try Posting Something :)</div>
+                ) : (
+                  ''
+                )}
               </div>
             </div>
           ) : (
@@ -3742,7 +3765,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         )}
         <div className="AllPostscontainer" id="PostFeedList" style={{ maxWidth: '100%' }}>
           {posts?.length == 0 ? <AddPostSkeleton count={3} /> : posts}
-          <div style={{ height: '50px' }}>
+          <div>
             {ifReachedEnd ? (
               !ifNoMoreData ? (
                 <AddPostSkeleton count={1} />
