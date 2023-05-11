@@ -37,6 +37,7 @@ const nextConfig = {
 
   images: {
     domains: [
+      'xmc-nagarro1-communityac830d-communityace1c7.sitecorecloud.io',
       'sitecoreinfrasa.blob.core.windows.net',
       'horizontal.blog',
       'www.teleinfotoday.com',
