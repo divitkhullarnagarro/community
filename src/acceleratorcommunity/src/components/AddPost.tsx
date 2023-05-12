@@ -701,6 +701,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
         setMyAnotherArr((prevState: any[]) => {
           return [...prevState, ...newArr];
         });
+        setIfReachedEnd(false);
       } else {
         setIfNoMoreData(true);
         setPostPageNum((prev) => {
