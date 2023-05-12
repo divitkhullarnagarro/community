@@ -15,7 +15,8 @@ const SearchGroupContainer = (props: any) => {
           return <SearchGroupResult />;
         }):"No Group Found"
       )} */}
-      No Group Found
+      
+   <div className={styles.forNoData}>No Groups Found</div>
     </div>
   );
 };

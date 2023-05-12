@@ -49,6 +49,10 @@
   white-space: normal;
 }
 
+.dropdownItem:hover {
+  background-color: transparent;
+}
+
 .dropdownItem:after {
   visibility: hidden;
   content: none !important;
@@ -178,9 +182,13 @@
 }
 
 .notificationMoreOptions {
-  background-color: #fff !important;
+  background-color: transparent !important;
   border: none;
   padding: 0;
+}
+
+.notificationMoreOptions::after {
+  display: none;
 }
 
 .dropdownToggle::before {

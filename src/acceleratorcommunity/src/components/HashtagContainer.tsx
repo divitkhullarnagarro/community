@@ -16,7 +16,7 @@ const HashtagContainer = (props: any) => {
           <SearchSkeletonForUser count={5} />
         ) : (
           <div>
-            <Hashtag searchedData={props?.searchedData} />
+            <Hashtag query={props?.query} searchedData={props?.searchedData} />
           </div>
         )}
       </div>

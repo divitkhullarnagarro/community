@@ -81,12 +81,30 @@
 .btnContainer {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  margin-top: 10px;
 }
 
 .clearBtn {
   color: #f58c60;
   background-color: transparent;
   border: none;
+}
+
+.btnContainer > button{
+  background-color: transparent;
+  border: none;
+}
+
+.filterHeading{
+  color: #091329;
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.filterName {
+  color: #091329;
+  font-weight: 300;
+  font-size: 16px;
 }

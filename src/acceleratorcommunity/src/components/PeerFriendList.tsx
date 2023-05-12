@@ -153,7 +153,11 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
                     return <FullPagePeerFriendListItem {...item} />;
                   })
                 ) : (
-                  <div className={styles.fullPageNoPeerListHeader}>
+                  <div
+                    className={`${styles.fullPageNoPeerListHeader} ${
+                      darkMode ? darkModeCss.text_light : ''
+                    }`}
+                  >
                     <NoPeersLabel />
                   </div>
                 )
