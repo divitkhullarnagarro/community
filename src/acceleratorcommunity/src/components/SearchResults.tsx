@@ -1,30 +1,30 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 // import Event from 'components/Event';
-import SearchFlters from 'components/SearchFlters';
+import SearchFlters from '../components/SearchFlters';
 // import User from 'components/User';
 // import SearchGroupResult from 'components/SearchGroupResult';
-import styles from '../../assets/seacrhPage.module.css';
-import darkModeCss from '../../assets/darkTheme.module.css';
+import styles from '../assets/seacrhPage.module.css';
+import darkModeCss from '../assets/darkTheme.module.css';
 // import SideSearchFilter from 'components/sideSearchFilter';
-import SearchGroupContainer from 'components/SearchGroupContainer';
-import SearchUserContainer from 'components/SearchUserContainer';
-import EventSearchContainer from 'components/EventSearchContainer';
-import NewSearchContainer from 'components/NewSearchContainer';
-import searchCall from 'src/API/searchCall';
-import { getValueFromCookie } from 'assets/helpers/helperFunctions';
-import WebContext from 'src/Context/WebContext';
-import JournalSearchContainer from 'components/JournalSearchContainer';
-import ArticleSearchContainer from 'components/ArticleSearchContainer';
-import SearchALLConatiner from 'components/SearchALLConatiner';
-import HashtagContainer from 'components/HashtagContainer';
-import BlogContainer from 'components/BlogContainer';
+import SearchGroupContainer from '../components/SearchGroupContainer';
+import SearchUserContainer from '../components/SearchUserContainer';
+import EventSearchContainer from '../components/EventSearchContainer';
+import NewSearchContainer from '../components/NewSearchContainer';
+import searchCall from '../../src/API/searchCall';
+import { getValueFromCookie } from '../assets/helpers/helperFunctions';
+import WebContext from '../../src/Context/WebContext';
+import JournalSearchContainer from '../components/JournalSearchContainer';
+import ArticleSearchContainer from '../components/ArticleSearchContainer';
+import SearchALLConatiner from '../components/SearchALLConatiner';
+import HashtagContainer from '../components/HashtagContainer';
+import BlogContainer from '../components/BlogContainer';
 // import PollConatiner from 'components/PollConatiner';
-import ToastNotification from 'components/ToastNotification';
-import ThemeSwitcher from 'components/ThemeSwitcher';
+import ToastNotification from '../components/ToastNotification';
+import ThemeSwitcher from '../components/ThemeSwitcher';
 // import JournalContainer from 'components/JournalContainer';
 
-const Search = () => {
+const SearchResults = () => {
   const router = useRouter();
 
   const { query, type } = router?.query;
@@ -359,4 +359,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchResults;
