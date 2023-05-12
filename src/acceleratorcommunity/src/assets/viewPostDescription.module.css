@@ -1,10 +1,36 @@
+@font-face {
+  font-family: 'Equip-Regular';
+  src: url('../assets/fonts/EquipExtended-Regular.eot');
+  src: url('../assets/fonts/EquipExtended-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/EquipExtended-Regular.woff2') format('woff2'),
+    url('../assets/fonts/EquipExtended-Regular.woff') format('woff'),
+    url('../assets/fonts/EquipExtended-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Equip-Medium';
+  src: url('../assets/fonts/EquipExtended-Medium.eot');
+  src: url('../assets/fonts/EquipExtended-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/EquipExtended-Medium.woff2') format('woff2'),
+    url('../assets/fonts/EquipExtended-Medium.woff') format('woff'),
+    url('../assets/fonts/EquipExtended-Medium.ttf') format('truetype');
+}
+
 .viewMoreButton {
   cursor: pointer;
   color: rgba(0, 0, 0, 0.6);
 }
-.viewMoreButtonDarkMode {
+.viewMoreButton::after {
+  display: none;
+}
+.viewMoreButtonDarkMode * {
   cursor: pointer;
   color: rgba(225, 225, 225, 0.6);
+  font-family: 'Equip-Regular';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: #000000;
 }
 .viewMoreButton:hover,
 .viewMoreButtonDarkMode:hover {

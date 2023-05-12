@@ -41,7 +41,13 @@ self.addEventListener('push', (event) => {
   self.registration.showNotification(data?.notification?.title, {
     body: jsonObjectData?.message,
     data: {
-      message: jsonObjectData?.message,
+      message: jsonObjectData,
     },
   });
+});
+
+self.addEventListener('notificationclick', (event) => {
+  console.log('notificationclick', event);
+  event.notification.close();
+  event.waitUntil(clients.openWindow(`/post/${event?.notification?.data?.message?.articleId}`));
 });

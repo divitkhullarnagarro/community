@@ -6,7 +6,6 @@ import SocketContext from 'src/Context/SocketContext';
 import { useContext, useEffect, useState } from 'react';
 import WebContext from 'src/Context/WebContext';
 import { Button, Dropdown } from 'react-bootstrap';
-import NotificationPerson from '../assets/images/NotificiationPerson.png';
 import ToastNotification from './ToastNotification';
 import NotificationLike from '../assets/images/NotificationLike.png';
 import NotificationComment from '../assets/images/NotificationComment.png';
@@ -15,6 +14,8 @@ import ThemeSwitcher from './ThemeSwitcher';
 import FirebaseContext from 'src/Context/FirebaseContext';
 import AxiosRequest from 'src/API/AxiosRequest';
 import { calculateTimeDifference } from 'assets/helpers/helperFunctions';
+import darkModeCss from '../assets/darkTheme.module.css';
+import NotificationProfilePic from '../assets/images/NotificationProfilePic.png';
 
 const NotificationType = {
   LIKE_ON_POST: 'LIKE_ON_POST',
@@ -59,7 +60,7 @@ type NotificationContentType = {
 
 const Notification = (props: NotificationProps): JSX.Element => {
   const { datasource } = props?.fields?.data;
-  const { objectId, setObjectId } = {
+  const { objectId, setObjectId, darkMode } = {
     ...useContext(WebContext),
   };
 
@@ -187,7 +188,13 @@ const Notification = (props: NotificationProps): JSX.Element => {
     return (
       <>
         <div className={notificationCss.notificationHeaderRow}>
-          <div className={notificationCss.notificationHeaderLabel}>Notifications</div>
+          <div
+            className={`${notificationCss.notificationHeaderLabel} ${
+              darkMode ? darkModeCss.text_green : ''
+            }`}
+          >
+            Notifications
+          </div>
         </div>
         <div className={notificationCss.notificationHeaderAction}>
           <Button className={notificationCss.notificationActionActiveBtn}>All</Button>
@@ -206,7 +213,7 @@ const Notification = (props: NotificationProps): JSX.Element => {
           <div className={notificationCss.notificationItem}>
             <div className={notificationCss.notificationIconContainer}>
               <NextImage
-                field={NotificationPerson}
+                field={NotificationProfilePic}
                 editable={true}
                 width={55}
                 height={55}
@@ -231,10 +238,18 @@ const Notification = (props: NotificationProps): JSX.Element => {
               </div>
             </div>
             <div className={notificationCss.notificationMessage}>
-              <div className={notificationCss.notificationAuthor}>
+              <div
+                className={`${notificationCss.notificationAuthor} ${
+                  darkMode ? darkModeCss.text_light : ''
+                }`}
+              >
                 {item?.message ?? notificationContent?.message}
               </div>
-              <div className={notificationCss.notificationCreatedOn}>
+              <div
+                className={`${notificationCss.notificationCreatedOn} ${
+                  darkMode ? darkModeCss.text_light : ''
+                }`}
+              >
                 {item?.createdOn != 0 &&
                 item?.createdOn &&
                 item?.createdOn != undefined &&
@@ -254,8 +269,9 @@ const Notification = (props: NotificationProps): JSX.Element => {
               <button
                 style={{
                   border: 'none',
-                  backgroundColor: 'white',
+                  backgroundColor: 'transparent',
                   padding: '0',
+                  marginRight: '5px',
                 }}
               >
                 <img
@@ -297,7 +313,7 @@ const Notification = (props: NotificationProps): JSX.Element => {
       <div>
         <ThemeSwitcher />
       </div>
-      <div className={notificationCss.container}>
+      <div className={`${notificationCss.container}`}>
         <Dropdown className={notificationCss.dropdownContainer}>
           <Dropdown.Toggle
             variant="secondary"
@@ -320,14 +336,22 @@ const Notification = (props: NotificationProps): JSX.Element => {
             </button>
           </Dropdown.Toggle>
 
-          <Dropdown.Menu className={notificationCss.dropdownMenu}>
+          <Dropdown.Menu
+            className={`${notificationCss.dropdownMenu} ${darkMode ? darkModeCss.grey_3 : ''}`}
+          >
             <Dropdown.Header className={notificationCss.notificationHeader}>
               <NotificationBodyHeader />
             </Dropdown.Header>
             <div className={notificationCss.realTimeNotificationContainer}>
               {realTimeNotificationList?.length > 0 ? (
                 <>
-                  <div className={notificationCss.notificationTypeHeader}>New</div>
+                  <div
+                    className={`${notificationCss.notificationTypeHeader} ${
+                      darkMode ? darkModeCss.text_light : ''
+                    }`}
+                  >
+                    New
+                  </div>
                   {realTimeNotificationList.map((item) => {
                     return <NotificationRow {...item} />;
                   })}
@@ -338,7 +362,13 @@ const Notification = (props: NotificationProps): JSX.Element => {
             </div>
 
             <div className={notificationCss.earlierNotificationContainer}>
-              <div className={notificationCss.notificationTypeHeader}>Earlier</div>
+              <div
+                className={`${notificationCss.notificationTypeHeader} ${
+                  darkMode ? darkModeCss.text_light : ''
+                }`}
+              >
+                Earlier
+              </div>
               {notificationList?.length > 0 ? (
                 notificationList.map((item) => {
                   return <NotificationRow {...item} />;

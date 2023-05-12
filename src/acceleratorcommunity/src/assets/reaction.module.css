@@ -1,0 +1,22 @@
+/* html {
+  height: 100%;
+  background: #3a5897;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+.container {
+  overflow: hidden;
+  border-radius: 90px;
+  background: white;
+}
+
+.container > img {
+  width: 100px;
+  transition: 0.2s ease;
+}
+.container > img:hover {
+  transform: scale(1.5);
+  cursor: pointer;
+}
