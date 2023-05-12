@@ -18,6 +18,7 @@ import EventListing from './helperComponents/EventListing';
 import BlogListing from './helperComponents/BlogListing';
 import PeerFriendList from './PeerFriendList';
 import BlockedUser from './BlockedUser';
+// import { decryptString } from 'assets/helpers/EncryptDecrypt';
 
 type User = {
   firstName: string | undefined;
@@ -160,29 +161,30 @@ const Profile = (props: any): JSX.Element => {
   const [openLocationModalState, setOpenLocationModalState] = useState(false);
   const checkboxRef = React.useRef<any>(null);
   useEffect(() => {
-    console.log('===========+++++++++++++++++++++', locationObj);
-    if (
-      errorState?.city === false &&
-      errorState?.address === false &&
-      errorState?.state === false &&
-      errorState?.country === false &&
-      errorState?.residingFrom === false
-    ) {
-      updateUuserCall(userToken, objectId, locationObj).then((response) => {
-        if (response) {
-          if (response?.data?.success) {
-            // setTempUserData(tempArray);
-            getUser();
-            setStateValue(true);
-            setToastSuccess(true);
-            setToastMessage('Data updated successfully');
-          } else {
-            setToastError(true);
-            setToastMessage('Something went wrong');
+    if (locationObj !== undefined) {
+      if (
+        errorState?.city === false &&
+        errorState?.address === false &&
+        errorState?.state === false &&
+        errorState?.country === false &&
+        errorState?.residingFrom === false
+      ) {
+        updateUuserCall(userToken, objectId, locationObj).then((response) => {
+          if (response) {
+            if (response?.data?.success) {
+              // setTempUserData(tempArray);
+              getUser();
+              setStateValue(true);
+              setToastSuccess(true);
+              setToastMessage('Data updated successfully');
+            } else {
+              setToastError(true);
+              setToastMessage('Something went wrong');
+            }
+            setShowNofitication(true);
           }
-          setShowNofitication(true);
-        }
-      });
+        });
+      }
     }
   }, [locationObj]);
   const openLocationMoadl = () => {
@@ -271,6 +273,7 @@ const Profile = (props: any): JSX.Element => {
   props;
   userToken;
   const submitPersonalInfoDetails = () => {
+    console.log('run2', personalInfoDetails);
     if (
       errorState?.firstName === false &&
       errorState?.lastName === false &&
@@ -297,7 +300,9 @@ const Profile = (props: any): JSX.Element => {
     }
   };
   useEffect(() => {
-    submitPersonalInfoDetails();
+    if (personalInfoDetails !== undefined) {
+      submitPersonalInfoDetails();
+    }
   }, [personalInfoDetails]);
   const submitPersonalDetails = () => {
     setPersonalInfoDetails({ ...personalInfo });
@@ -349,18 +354,19 @@ const Profile = (props: any): JSX.Element => {
   const [openWorkModal, setOpenWorkModal] = useState(false);
   const [placeOfPracticeDetails, setPlaceOfPracticeDetails] = useState<arrayOfPlaceOfPratice>();
   useEffect(() => {
-    console.log('placeOfPracticeDetails', placeOfPracticeDetails);
-    submitWork();
+    if (placeOfPracticeDetails !== undefined) {
+      console.log('placeOfPracticeDetails', placeOfPracticeDetails);
+      submitWork();
+    }
   }, [placeOfPracticeDetails]);
 
   const submitWork = () => {
-    console.log('placeOfPracticeDetails', placeOfPracticeDetails);
-
     if (
       errorState?.orgName === false &&
       errorState?.empId === false &&
       placeOfPracticeDetails?.userWorkDetails[0].orgName !== '' &&
-      placeOfPracticeDetails?.userWorkDetails[0].employeeId !== ''
+      placeOfPracticeDetails?.userWorkDetails[0].employeeId !== '' &&
+      placeOfPracticeDetails !== undefined
     ) {
       updateUuserCall(userToken, objectId, placeOfPracticeDetails).then((response) => {
         if (response) {
@@ -497,10 +503,13 @@ const Profile = (props: any): JSX.Element => {
 
   const [educationDetails, setEducationDetails] = useState<arrayofEducation>();
   useEffect(() => {
-    submitEducation();
+    if (educationDetails !== undefined) {
+      submitEducation();
+    }
   }, [educationDetails]);
 
   const submitEducation = () => {
+    console.log('education');
     if (
       errorState.instituteName === false &&
       errorState.standard === false &&
@@ -1130,7 +1139,9 @@ const Profile = (props: any): JSX.Element => {
     setToastError(false);
   };
   useEffect(() => {
-    getUser();
+    if (userToken !== undefined && objectId !== undefined) {
+      getUser();
+    }
   }, [userToken, objectId]);
 
   const getUser = () => {

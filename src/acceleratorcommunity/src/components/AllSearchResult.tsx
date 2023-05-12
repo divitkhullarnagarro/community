@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import Event from './Event';
 import ImageConatiner from './ImageConatiner';
 import TextPost from './TextPost';
@@ -9,6 +9,7 @@ import Blog from './Blog';
 // import { voteInPollUrl } from 'assets/helpers/constants';
 // import AxiosRequest from 'src/API/AxiosRequest';
 import User from './User';
+import styles from '../assets/searchFilterContainer.module.css';
 
 const AllSearchResult = (props: any) => {
   // let [myAnotherArr, setMyAnotherArr] = useState<any>([]);
@@ -55,34 +56,47 @@ const AllSearchResult = (props: any) => {
 
   return (
     <div>
-      {props?.searchedData?.length > 0
-        ? props?.searchedData?.map((data: any) => {
-            return data?.sourceAsMap?.postType === 'IMAGE' ? (
-              <ImageConatiner  fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
-            ) : data?.sourceAsMap?.postType === 'EVENT' ? (
-              <Event fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
-            ) : data?.sourceAsMap?.postType === 'TEXT_POST' ? (
-              <TextPost fromALL={fromALL}events={data?.sourceAsMap} flag={false} />
-            ) : data?.sourceAsMap?.postType === 'VIDEO' ? (
-              <VideoContainer  fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
-            ) : data?.sourceAsMap?.postType === 'DOC' ? (
-              <DocumentContainer  fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
-            ) : data?.sourceAsMap?.postType === 'BLOG_POST' ? (
-              <Blog   fromALL={fromALL} success={props?.success} blog={data?.sourceAsMap?.blog} />
-            ) : data?.sourceAsMap?.postType === 'POLL' ? (
-              // <PollCard
-              //   pollPost={{ poll: data?.sourceAsMap?.poll }}
-              //   poll={data?.sourceAsMap?.poll}
-              //   voteInAPoll={voteInAPoll}
-              // />
-              ""
-            ) : data?.index === 'accelerator-user' ? (
-              <User user={data?.sourceAsMap} />
-            ) : (
-              ''
-            );
-          })
-        : 'No data found for your search'}
+      {props?.searchedData?.length > 0 ?<div className={styles.hashtagCount}>
+        <div>
+          {/* <img src={'https://cdn-icons-png.flaticon.com/512/149/149071.png'} /> */}
+          ALL Results
+        </div>
+        <div>
+          <div>We've found {props?.searchedData.length} results</div>
+        </div>
+      </div>:""}
+      {props?.searchedData?.length > 0 ? (
+        props?.searchedData?.map((data: any) => {
+          return data?.sourceAsMap?.postType === 'IMAGE' ? (
+            <ImageConatiner fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
+          ) : data?.sourceAsMap?.postType === 'EVENT' ? (
+            <Event fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
+          ) : data?.sourceAsMap?.postType === 'TEXT_POST' ? (
+            <TextPost fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
+          ) : data?.sourceAsMap?.postType === 'VIDEO' ? (
+            <VideoContainer fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
+          ) : data?.sourceAsMap?.postType === 'DOC' ? (
+            <DocumentContainer fromALL={fromALL} events={data?.sourceAsMap} flag={false} />
+          ) : data?.sourceAsMap?.postType === 'BLOG_POST' ? (
+            <>
+            <Blog fromALL={fromALL} success={props?.success} blog={data?.sourceAsMap?.blog} id={data?.sourceAsMap?.id} />
+            </>
+          ) : data?.sourceAsMap?.postType === 'POLL' ? (
+            // <PollCard
+            //   pollPost={{ poll: data?.sourceAsMap?.poll }}
+            //   poll={data?.sourceAsMap?.poll}
+            //   voteInAPoll={voteInAPoll}
+            // />
+            ''
+          ) : data?.index === 'accelerator-user' ? (
+            <User user={data?.sourceAsMap} />
+          ) : (
+            ''
+          );
+        })
+      ) : (
+        <div className={styles.forNoData}>No data found for your search</div>
+      )}
     </div>
   );
 };
