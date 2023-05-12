@@ -12,7 +12,7 @@ const TextPost = (props: any) => {
 
   return (
     <a href={`/post/${props?.events?.id}`} className={styles.link} target="_blank">
-      {props?.fromALL ? <div className={styles.typeHeading}>Post</div> : ''}
+      {props?.fromALL ? <div className={`${styles.typeHeading} ${darkMode && darkModeCss.text_green}`}>Post</div> : ''}
       <div className={`${styles.parentContainer} ${darkMode && darkModeCss.grey_1}`}>
         <div className={styles.imgAndContentContainer}>
           <div className={styles.content}>
