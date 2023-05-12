@@ -102,6 +102,10 @@
   color: #091329;
 }
 
+.postDescription a[target='_blank']:after {
+  content: none;
+}
+
 .postDescription * {
   margin: 0;
   line-height: 1.4;
