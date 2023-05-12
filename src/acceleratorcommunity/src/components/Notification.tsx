@@ -22,6 +22,7 @@ const NotificationType = {
   COMMENT_ON_POST: 'COMMENT_ON_POST',
   REPLY_ON_COMMENT: 'REPLY_ON_COMMENT',
   POST_AN_ARTICLE_PEER: 'POST_AN_ARTICLE_PEER',
+  FOLLOW_BY_USER: 'FOLLOW_BY_USER',
 };
 
 type NotificationProps = ComponentProps & {
@@ -162,7 +163,8 @@ const Notification = (props: NotificationProps): JSX.Element => {
 
         break;
       }
-      case NotificationType.POST_AN_ARTICLE_PEER: {
+      case NotificationType.POST_AN_ARTICLE_PEER:
+      case NotificationType.FOLLOW_BY_USER: {
         setToastSuccess(true);
         setShowNofitication(true);
         setToastMessage('You have new notification');
@@ -260,7 +262,10 @@ const Notification = (props: NotificationProps): JSX.Element => {
             </div>
           </div>
         </Dropdown.Item>
-        {item?.type !== NotificationType.POST_AN_ARTICLE_PEER ? (
+        {(item?.type !== NotificationType.POST_AN_ARTICLE_PEER &&
+          item?.type !== NotificationType.FOLLOW_BY_USER) ||
+        (notificationContent?.type !== NotificationType.POST_AN_ARTICLE_PEER &&
+          notificationContent?.type !== NotificationType.FOLLOW_BY_USER) ? (
           <Dropdown>
             <Dropdown.Toggle
               variant="secondary"
