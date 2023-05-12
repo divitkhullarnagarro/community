@@ -49,5 +49,11 @@ self.addEventListener('push', (event) => {
 self.addEventListener('notificationclick', (event) => {
   console.log('notificationclick', event);
   event.notification.close();
-  event.waitUntil(clients.openWindow(`/post/${event?.notification?.data?.message?.articleId}`));
+  if (
+    event?.notification?.data?.message?.type === 'LIKE_ON_POST' ||
+    event?.notification?.data?.message?.type === 'COMMENT_ON_POST' ||
+    event?.notification?.data?.message?.type === 'REPLY_ON_COMMENT'
+  ) {
+    event.waitUntil(clients.openWindow(`/post/${event?.notification?.data?.message?.articleId}`));
+  }
 });

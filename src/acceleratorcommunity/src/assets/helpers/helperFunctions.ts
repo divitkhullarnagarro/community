@@ -17,7 +17,7 @@ export const modifyHtml = (convertedContent: string) => {
       ) {
         modified =
           modified +
-          `<a href='${hashtag}' class="wysiwyg-mention" data-mention data-value="${hashtag}">` +
+          `<a target='_blank' style="text-decoration:none;" href='/search?query=${hashtag.replace("#", "")}&type=HASHTAG' class="wysiwyg-mention" data-mention data-value="${hashtag}">` +
           hashtag +
           '<a>';
         flag = false;
