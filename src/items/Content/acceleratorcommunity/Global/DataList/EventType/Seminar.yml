@@ -22,13 +22,17 @@ Languages:
       Hint: __Created by
       Value: |
         sitecore\nishant.tiwari@nagarro.com
+    - ID: "870046d4-f00b-49c0-b979-18be7fe9968f"
+      Hint: Image
+      Value: |
+        <link linktype="external" url="https://higherlogicdownload.s3.amazonaws.com/APSNET/UploadedImages/tAiEB79vTYq1gz2UEGu1_IMG_2866-L.jpg" />
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "c59beeae-91b4-419a-b962-101996cf0b55"
+      Value: "2c1a2334-0be0-4e36-abad-e904a88dcc00"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\nishant.tiwari@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230419T065859Z
+      Value: 20230503T105741Z

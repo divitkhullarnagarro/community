@@ -1,0 +1,31 @@
+﻿---
+ID: "2dad650d-95c6-4cf1-97fc-b86f8db24a48"
+Parent: "d8b49499-193a-4e04-aeae-bdd5f68a6189"
+Template: "53dec80a-ee9d-4bcb-b577-d37b695473b0"
+Path: /sitecore/content/acceleratorcommunity/Components/Logo/Community/Logo
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230504T131523Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\damyanti.wakchaure@nagarro.com
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\damyanti.wakchaure@nagarro.com
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "e0d6390f-c472-4ad2-a129-a9f28b69c3bd"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\damyanti.wakchaure@nagarro.com
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230504T131523Z

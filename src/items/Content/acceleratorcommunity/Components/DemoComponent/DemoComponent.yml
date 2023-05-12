@@ -1,0 +1,46 @@
+﻿---
+ID: "90d954cb-20a3-4633-ae31-ef20ed3f1447"
+Parent: "1191d8f1-9ec9-4d57-9e99-597e45e57497"
+Template: "382c9757-2c6c-4f5c-9379-414437ef5b9a"
+Path: /sitecore/content/acceleratorcommunity/Components/DemoComponent/DemoComponent
+SharedFields:
+- ID: "87bdbb9d-2371-4399-a330-29e1e581fac1"
+  Hint: Image
+  Value: |
+    <image mediaid="{04DAD0FD-DB66-4070-881F-17264CA257E1}" />
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "1b8febdd-3839-4d7e-b192-67d635cdb50a"
+      Hint: Button
+      Value: |
+        <link text="google" linktype="external" url="http://www.google.com" anchor="" target="" />
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230427T063103Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\damyanti.wakchaure@nagarro.com
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\damyanti.wakchaure@nagarro.com
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "a79ada4b-b686-49c8-addd-34be89d9ff8b"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\damyanti.wakchaure@nagarro.com
+    - ID: "d61810f0-04fb-4f35-ba32-121ec6e282d2"
+      Hint: Title
+      Value: First Demo Component
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230427T063923Z
+    - ID: "e6d35ff3-4e10-4d92-958f-2c81a03340fb"
+      Hint: Description
+      Value: Description for Demo component
