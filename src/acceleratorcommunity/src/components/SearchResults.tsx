@@ -24,7 +24,7 @@ import ToastNotification from 'components/ToastNotification';
 import ThemeSwitcher from 'components/ThemeSwitcher';
 // import JournalContainer from 'components/JournalContainer';
 
-const Search = () => {
+const SearchResults = () => {
   const router = useRouter();
 
   const { query, type } = router?.query;
@@ -359,4 +359,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchResults;
