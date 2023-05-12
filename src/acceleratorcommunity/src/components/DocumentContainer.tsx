@@ -22,7 +22,7 @@ const DocumentContainer = (props: any) => {
   return (
     <a href={`/post/${id}`} className={styles.link} target="_blank">
       {props?.fromALL ? (
-        <div className={styles.typeHeading}>
+        <div className={`${styles.typeHeading} ${darkMode && darkModeCss.text_green}`}>
           <div>Doc Post</div>
           <div onClick={() => openDoc(data)}>
             <svg
