@@ -11,7 +11,7 @@ const Blog = (props: any) => {
 
   return (
     <a href={`/post/${props?.id}`} className={styles.link} target="_blank">
-      {props?.fromALL ? <div className={styles.typeHeading}>Blog</div> : ''}
+      {props?.fromALL ? <div className={`${styles.typeHeading} ${darkMode && darkModeCss.text_green}`}>Blog</div> : ''}
       <div className={`${styles.parentContainer} ${darkMode && darkModeCss.grey_1}`}>
         <div className={styles.imgAndContentContainer}>
           {props?.fromALL ? '' : <img src={props?.blog?.imageUrl} alt="eventImg" />}
