@@ -313,6 +313,9 @@
   color: #4294ff;
 }
 
+.dropdownBtn::after {
+  display: none;
+}
 .postCreateDate {
   margin: 0;
   font-size: 10px;
@@ -326,10 +329,39 @@
   gap: 10px;
 }
 
+.reportPostHeaderLeftSkeleton {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.reportPostDetailContainerSkeleton {
+  width: 100%;
+}
+
 .postUserImage {
   width: 30px;
   height: 30px;
   cursor: pointer;
+  border-radius: 50%;
+}
+
+.seeMoreReportedPostBtn {
+  color: black;
+  width: 100%;
+  font-size: 1.0625rem;
+  height: 50px;
+  background-color: white;
+  border: none;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.seeMoreBtn {
+  margin-left: 50px;
 }
 
 .dropdownItem {
@@ -352,6 +384,10 @@
 .overlayItem {
   display: flex;
   gap: 10px;
+}
+
+.dropdownItem:hover {
+  background: transparent;
 }
 
 .reportPostModalFooter {
@@ -381,7 +417,7 @@
   display: flex;
   font-size: 14px;
   justify-content: space-between;
-  color: #000e46;
+  color: #000000;
 }
 .reportedDate {
   font-size: 12px;
@@ -404,6 +440,29 @@
 .reportBody::-webkit-scrollbar-thumb {
   background-color: grey;
   border-radius: 2px;
+}
+
+.footerBtn {
+  background-color: #47d7ac;
+  border-color: #47d7ac;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+.footerBtn:hover,
+.footerBtn:active,
+.footerBtn:focus-visible {
+  background-color: #ffffff !important;
+  color: #47d7ac !important;
+  border-color: #47d7ac !important;
+}
+.footerBtnCancel {
+  font-size: 16px;
+  color: #f58c60;
+}
+
+.darkModeDescriptionReportedPost * {
+  color: #b8b8b8 !important;
+  background-color: transparent !important;
 }
 
 @media only screen and (max-width: 768px) {

@@ -25,6 +25,7 @@ import {
 import { getEmailTemplatesGraphqlQuery } from './Queries';
 import { getAllReportUserCall, getReportedUserReportersDetailsCall } from 'src/API/reportUserCall';
 import Skeleton from 'react-loading-skeleton';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 const EmailTemplateFolder = '02989F59-CFEB-4CC9-90FB-C0DA8A7FE7B5';
 const WarnUserEmailTemplate = '16937DB73C124028877AAA49C0BE30CA';
@@ -41,6 +42,7 @@ type reportPostFields = {
   createdBy: {
     firstName: string;
     lastName: string;
+    profilePictureUrl: string;
   };
   createdOn: string;
   mediaList: mediaType[];
@@ -129,7 +131,7 @@ type reportedByUserFields = {
 };
 
 const Users = (props: UserProps): JSX.Element => {
-  const { userToken, setUserToken } = {
+  const { userToken, setUserToken, darkMode } = {
     ...useContext(WebContext),
   };
   const router = useRouter();
@@ -196,15 +198,49 @@ const Users = (props: UserProps): JSX.Element => {
   const ReportedUserListTable = () => {
     return (
       <div className={styles.reportedUserListContainer}>
-        <h3 className={styles.userListHeader}>{'Reported User List'}</h3>
+        <h3 className={`${styles.userListHeader} ${darkMode ? darkModeCss.text_green : ''}`}>
+          {'Reported User List'}
+        </h3>
         <div className={styles.tableContainer}>
           <div className={styles.tableHeader}>
-            <h6 className={`${styles.tableField} ${styles.nameColumn}`}>Name</h6>
-            <h6 className={`${styles.tableField} ${styles.genderColumn}`}>Gender</h6>
-            <h6 className={`${styles.tableField} ${styles.emailColumn}`}>Email</h6>
-            <h6 className={`${styles.tableField} ${styles.phoneNumberColumn}`}>Phone Number</h6>
-            <h6 className={`${styles.tableField} ${styles.reasonsColumn}`}>Reason</h6>
-            <h6 className={styles.tableField}>Action</h6>
+            <h6
+              className={`${styles.tableField} ${styles.nameColumn} ${
+                darkMode ? darkModeCss.text_green : ''
+              }`}
+            >
+              Name
+            </h6>
+            <h6
+              className={`${styles.tableField} ${styles.genderColumn} ${
+                darkMode ? darkModeCss.text_green : ''
+              }`}
+            >
+              Gender
+            </h6>
+            <h6
+              className={`${styles.tableField} ${styles.emailColumn} ${
+                darkMode ? darkModeCss.text_green : ''
+              }`}
+            >
+              Email
+            </h6>
+            <h6
+              className={`${styles.tableField} ${styles.phoneNumberColumn} ${
+                darkMode ? darkModeCss.text_green : ''
+              }`}
+            >
+              Phone Number
+            </h6>
+            <h6
+              className={`${styles.tableField} ${styles.reasonsColumn} ${
+                darkMode ? darkModeCss.text_green : ''
+              }`}
+            >
+              Reason
+            </h6>
+            <h6 className={`${styles.tableField} ${darkMode ? darkModeCss.text_green : ''}`}>
+              Action
+            </h6>
           </div>
           <div className={styles.tableBody}>
             {reportUserList?.map((item, index) => {
@@ -227,22 +263,46 @@ const Users = (props: UserProps): JSX.Element => {
                   >
                     <Accordion.Header className={styles.accordionHeader}>
                       <div key={index.toString()} className={styles.tableContentRow}>
-                        <span className={`${styles.tableField} ${styles.nameColumn}`}>
+                        <span
+                          className={`${styles.tableField} ${styles.nameColumn} ${
+                            darkMode ? darkModeCss.text_light : ''
+                          }`}
+                        >
                           {item?.reportedUser?.firstName + ' ' + item?.reportedUser?.lastName}
                         </span>
-                        <span className={`${styles.tableField} ${styles.genderColumn}`}>
+                        <span
+                          className={`${styles.tableField} ${styles.genderColumn} ${
+                            darkMode ? darkModeCss.text_light : ''
+                          }`}
+                        >
                           {item?.reportedUser?.gender || 'NA'}
                         </span>
-                        <span className={`${styles.tableField} ${styles.emailColumn}`}>
+                        <span
+                          className={`${styles.tableField} ${styles.emailColumn} ${
+                            darkMode ? darkModeCss.text_light : ''
+                          }`}
+                        >
                           {item?.reportedUser?.objectId}
                         </span>
-                        <span className={`${styles.tableField} ${styles.phoneNumberColumn}`}>
+                        <span
+                          className={`${styles.tableField} ${styles.phoneNumberColumn} ${
+                            darkMode ? darkModeCss.text_light : ''
+                          }`}
+                        >
                           {item?.reportedUser?.phoneNumber || 'NA'}
                         </span>
-                        <span className={`${styles.tableField} ${styles.reasonsColumn}`}>
+                        <span
+                          className={`${styles.tableField} ${styles.reasonsColumn} ${
+                            darkMode ? darkModeCss.text_light : ''
+                          }`}
+                        >
                           {item?.reason || 'NA'}
                         </span>
-                        <span className={`${styles.tableField} ${styles.actionButtonsContainer}`}>
+                        <span
+                          className={`${styles.tableField} ${styles.actionButtonsContainer} ${
+                            darkMode ? darkModeCss.text_light : ''
+                          }`}
+                        >
                           <button
                             className={styles.actionButton}
                             onClick={() => setShowWarnUserPopup(true)}
@@ -258,32 +318,93 @@ const Users = (props: UserProps): JSX.Element => {
                         </span>
                       </div>
                     </Accordion.Header>
-                    <Accordion.Body className={styles.accordionBody}>
-                      <div className={styles.accordionBodyHeader}>
-                        <span className={styles.accordionBodyName}>Name</span>
-                        <span className={styles.accordionBodyGender}>Gender</span>
-                        <span className={styles.accordionBodyEmail}>Email</span>
-                        <span className={styles.accordionBodyPhone}>Phone Number</span>
-                        <span className={styles.accordionBodyReason}>Reason</span>
+                    <Accordion.Body
+                      className={`${styles.accordionBody} ${darkMode ? darkModeCss.grey_3 : ''}`}
+                    >
+                      <div
+                        className={`${styles.accordionBodyHeader} ${
+                          darkMode ? darkModeCss.grey_3 : ''
+                        }`}
+                      >
+                        <span
+                          className={`${styles.accordionBodyName} ${
+                            darkMode ? darkModeCss.text_green : ''
+                          }`}
+                        >
+                          Name
+                        </span>
+                        <span
+                          className={`${styles.accordionBodyGender} ${
+                            darkMode ? darkModeCss.text_green : ''
+                          }`}
+                        >
+                          Gender
+                        </span>
+                        <span
+                          className={`${styles.accordionBodyEmail} ${
+                            darkMode ? darkModeCss.text_green : ''
+                          }`}
+                        >
+                          Email
+                        </span>
+                        <span
+                          className={`${styles.accordionBodyPhone} ${
+                            darkMode ? darkModeCss.text_green : ''
+                          }`}
+                        >
+                          Phone Number
+                        </span>
+                        <span
+                          className={`${styles.accordionBodyReason} ${
+                            darkMode ? darkModeCss.text_green : ''
+                          }`}
+                        >
+                          Reason
+                        </span>
                       </div>
                       {reportedUserReporterDetails.map((reportedByItem, index) => {
                         return (
-                          <div key={index} className={styles.accordionBodyItem}>
-                            <span className={styles.accordionBodyName}>
+                          <div
+                            key={index}
+                            className={`${styles.accordionBodyItem} ${
+                              darkMode ? darkModeCss.grey_3 : ''
+                            }`}
+                          >
+                            <span
+                              className={`${styles.accordionBodyName} ${
+                                darkMode ? darkModeCss.text_light : ''
+                              }`}
+                            >
                               {reportedByItem?.reportedBy.firstName +
                                 ' ' +
                                 reportedByItem?.reportedBy?.lastName}
                             </span>
-                            <span className={styles.accordionBodyGender}>
+                            <span
+                              className={`${styles.accordionBodyGender} ${
+                                darkMode ? darkModeCss.text_light : ''
+                              }`}
+                            >
                               {reportedByItem?.reportedBy?.gender || 'NA'}
                             </span>
-                            <span className={styles.accordionBodyEmail}>
+                            <span
+                              className={`${styles.accordionBodyEmail} ${
+                                darkMode ? darkModeCss.text_light : ''
+                              }`}
+                            >
                               {reportedByItem?.reportedBy?.objectId || 'NA'}
                             </span>
-                            <span className={styles.accordionBodyPhone}>
+                            <span
+                              className={`${styles.accordionBodyPhone} ${
+                                darkMode ? darkModeCss.text_light : ''
+                              }`}
+                            >
                               {reportedByItem?.reportedBy?.phoneNumber || 'NA'}
                             </span>
-                            <span className={styles.accordionBodyReason}>
+                            <span
+                              className={`${styles.accordionBodyReason} ${
+                                darkMode ? darkModeCss.text_light : ''
+                              }`}
+                            >
                               {reportedByItem?.reason || 'NA'}
                             </span>
                           </div>
@@ -392,8 +513,8 @@ const Users = (props: UserProps): JSX.Element => {
           </Modal.Body>
           <Modal.Footer>
             <Button
-              className={styles.footerBtn}
-              variant="secondary"
+              className={styles.footerBtnCancel}
+              variant="default"
               onClick={() => setShowWarnUserPopup(false)}
             >
               Cancel
@@ -434,8 +555,8 @@ const Users = (props: UserProps): JSX.Element => {
           </Modal.Body>
           <Modal.Footer>
             <Button
-              className={styles.footerBtn}
-              variant="secondary"
+              className={styles.footerBtnCancel}
+              variant="default"
               onClick={() => setShowSuspendUserPopup(false)}
             >
               Cancel
@@ -476,8 +597,8 @@ const Users = (props: UserProps): JSX.Element => {
           </Modal.Body>
           <Modal.Footer>
             <Button
-              className={styles.footerBtn}
-              variant="secondary"
+              className={styles.footerBtnCancel}
+              variant="default"
               onClick={() => setShowWarnUserForPostReportPopUp(false)}
             >
               Cancel
@@ -538,21 +659,44 @@ const Users = (props: UserProps): JSX.Element => {
         >
           {reportedPostItem?.postType === 'TEXT_POST' ? (
             <div>
-              <div style={{ height: '550px', display: 'flex', flexDirection: 'column' }}>
+              <div
+                style={
+                  darkMode
+                    ? {
+                        background: '#323436',
+                        height: '550px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                      }
+                    : { height: '550px', display: 'flex', flexDirection: 'column' }
+                }
+              >
                 <Modal.Header closeButton className={styles.reportPostModalHeader}>
-                  <Modal.Title className={styles.reportTitle}>{'Reported Post'}</Modal.Title>
+                  <Modal.Title
+                    className={`${styles.reportTitle} ${darkMode ? darkModeCss.text_green : ''}`}
+                  >
+                    {'Reported Post'}
+                  </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.reportBody}>
                   <div className={styles.reportPostModal}>
                     <div className={styles.reportPostHeading}>
                       <div className={styles.reportPostHeaderLeft}>
                         <img
-                          src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                          src={
+                            reportedPostItem?.createdBy?.profilePictureUrl
+                              ? reportedPostItem?.createdBy?.profilePictureUrl
+                              : 'https://cdn-icons-png.flaticon.com/32/3177/3177440.png'
+                          }
                           alt="User-Pic"
                           width="30px"
                         ></img>
                         <div className={styles.reportPostDetailContainer}>
-                          <h4 className={styles.postOwner}>
+                          <h4
+                            className={`${styles.postOwner} ${
+                              darkMode ? darkModeCss.text_green : ''
+                            }`}
+                          >
                             <span>{reportedPostItem?.createdBy?.firstName}</span>
                             &nbsp;
                             <span>{reportedPostItem?.createdBy?.lastName}</span>
@@ -567,7 +711,11 @@ const Users = (props: UserProps): JSX.Element => {
                         </div>
                       </div>
                     </div>
-                    <div className={styles.postContent}>
+                    <div
+                      className={`${styles.postContent} ${
+                        darkMode ? styles.darkModeDescriptionReportedPost : ''
+                      }`}
+                    >
                       {reportedPostItem?.description
                         ? parser(modifyHtml(reportedPostItem?.description))
                         : reportedPostItem?.description}
@@ -624,8 +772,17 @@ const Users = (props: UserProps): JSX.Element => {
                 <Modal.Footer className={styles.reportPostModalFooter}>
                   {showSpinner ? (
                     <>
-                      {'Fetching users who reported the post...'}
-                      <Spinner animation="border" style={{ marginLeft: '5px', height: '30px' }} />
+                      <div className={`${darkMode ? darkModeCss.text_light : ''}`}>
+                        {'Fetching users who reported the post...'}
+                      </div>
+                      <Spinner
+                        animation="border"
+                        style={
+                          darkMode
+                            ? { marginLeft: '5px', height: '30px', filter: 'invert(1)' }
+                            : { marginLeft: '5px', height: '30px' }
+                        }
+                      />
                     </>
                   ) : (
                     reportedPostReporterDetails.map((reportDetails) => {
@@ -633,10 +790,22 @@ const Users = (props: UserProps): JSX.Element => {
                         <>
                           <div className={styles.footerContainer}>
                             <div className={styles.footerFirstRow}>
-                              <div className={styles.footerRowHeader}>Reported By :</div>
+                              <div
+                                className={`${styles.footerRowHeader} ${
+                                  darkMode ? darkModeCss.text_green : ''
+                                }`}
+                              >
+                                Reported By :
+                              </div>
                               <div className={styles.footerRowContent}>
-                                <div>{`${reportDetails?.reportedBy?.firstName} ${reportDetails?.reportedBy?.lastName}`}</div>
-                                <div className={styles.reportedDate}>
+                                <div
+                                  className={`${darkMode ? darkModeCss.text_light : ''}`}
+                                >{`${reportDetails?.reportedBy?.firstName} ${reportDetails?.reportedBy?.lastName}`}</div>
+                                <div
+                                  className={`${styles.reportedDate} ${
+                                    darkMode ? darkModeCss.text_light : ''
+                                  }`}
+                                >
                                   {reportDetails?.reportedAt
                                     ? calculateTimeDifference(reportDetails?.reportedAt)
                                     : 'Recently'}
@@ -644,8 +813,18 @@ const Users = (props: UserProps): JSX.Element => {
                               </div>
                             </div>
                             <div className={styles.footerSecondRow}>
-                              <div className={styles.footerRowHeader}>Reason :</div>
-                              <div className={styles.footerRowContent}>
+                              <div
+                                className={`${styles.footerRowHeader} ${
+                                  darkMode ? darkModeCss.text_green : ''
+                                }`}
+                              >
+                                Reason :
+                              </div>
+                              <div
+                                className={`${styles.footerRowContent} ${
+                                  darkMode ? darkModeCss.text_light : ''
+                                }`}
+                              >
                                 {reportDetails?.reason ?? 'Spam'}
                               </div>
                             </div>
@@ -660,21 +839,44 @@ const Users = (props: UserProps): JSX.Element => {
             </div>
           ) : (
             <div>
-              <div style={{ height: '660px', display: 'flex', flexDirection: 'column' }}>
+              <div
+                style={
+                  darkMode
+                    ? {
+                        background: '#323436',
+                        height: '600px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                      }
+                    : { height: '600px', display: 'flex', flexDirection: 'column' }
+                }
+              >
                 <Modal.Header closeButton className={styles.reportPostModalHeader}>
-                  <Modal.Title className={styles.reportTitle}>{'Reported Post'}</Modal.Title>
+                  <Modal.Title
+                    className={`${styles.reportTitle} ${darkMode ? darkModeCss.text_green : ''}`}
+                  >
+                    {'Reported Post'}
+                  </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.reportBody}>
                   <div className={styles.reportPostModal}>
                     <div className={styles.reportPostHeading}>
                       <div className={styles.reportPostHeaderLeft}>
                         <img
-                          src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                          src={
+                            reportedPostItem?.createdBy?.profilePictureUrl
+                              ? reportedPostItem?.createdBy?.profilePictureUrl
+                              : 'https://cdn-icons-png.flaticon.com/32/3177/3177440.png'
+                          }
                           alt="User-Pic"
                           width="30px"
                         ></img>
                         <div className={styles.reportPostDetailContainer}>
-                          <h4 className={styles.postOwner}>
+                          <h4
+                            className={`${styles.postOwner} ${
+                              darkMode ? darkModeCss.text_green : ''
+                            }`}
+                          >
                             <span>{reportedPostItem?.createdBy?.firstName}</span>
                             &nbsp;
                             <span>{reportedPostItem?.createdBy?.lastName}</span>
@@ -689,7 +891,11 @@ const Users = (props: UserProps): JSX.Element => {
                         </div>
                       </div>
                     </div>
-                    <div className={styles.postContent}>
+                    <div
+                      className={`${styles.postContent} ${
+                        darkMode ? styles.darkModeDescriptionReportedPost : ''
+                      }`}
+                    >
                       {reportedPostItem?.description
                         ? parser(modifyHtml(reportedPostItem?.description))
                         : reportedPostItem?.description}
@@ -746,8 +952,17 @@ const Users = (props: UserProps): JSX.Element => {
                 <Modal.Footer className={styles.reportPostModalFooter}>
                   {showSpinner ? (
                     <>
-                      {'Fetching users who reported the post...'}
-                      <Spinner animation="border" style={{ marginLeft: '5px', height: '30px' }} />
+                      <div className={`${darkMode ? darkModeCss.text_light : ''}`}>
+                        {'Fetching users who reported the post...'}
+                      </div>
+                      <Spinner
+                        animation="border"
+                        style={
+                          darkMode
+                            ? { marginLeft: '5px', height: '30px', filter: 'invert(1)' }
+                            : { marginLeft: '5px', height: '30px' }
+                        }
+                      />
                     </>
                   ) : (
                     reportedPostReporterDetails.map((reportDetails) => {
@@ -755,10 +970,22 @@ const Users = (props: UserProps): JSX.Element => {
                         <>
                           <div className={styles.footerContainer}>
                             <div className={styles.footerFirstRow}>
-                              <div className={styles.footerRowHeader}>Reported By :</div>
+                              <div
+                                className={`${styles.footerRowHeader} ${
+                                  darkMode ? darkModeCss.text_green : ''
+                                }`}
+                              >
+                                Reported By :
+                              </div>
                               <div className={styles.footerRowContent}>
-                                <div>{`${reportDetails?.reportedBy?.firstName} ${reportDetails?.reportedBy?.lastName}`}</div>
-                                <div className={styles.reportedDate}>
+                                <div
+                                  className={`${darkMode ? darkModeCss.text_light : ''}`}
+                                >{`${reportDetails?.reportedBy?.firstName} ${reportDetails?.reportedBy?.lastName}`}</div>
+                                <div
+                                  className={`${styles.reportedDate} ${
+                                    darkMode ? darkModeCss.text_light : ''
+                                  }`}
+                                >
                                   {reportDetails?.reportedAt
                                     ? calculateTimeDifference(reportDetails?.reportedAt)
                                     : 'Recently'}
@@ -766,8 +993,18 @@ const Users = (props: UserProps): JSX.Element => {
                               </div>
                             </div>
                             <div className={styles.footerSecondRow}>
-                              <div className={styles.footerRowHeader}>Reason :</div>
-                              <div className={styles.footerRowContent}>
+                              <div
+                                className={`${styles.footerRowHeader} ${
+                                  darkMode ? darkModeCss.text_green : ''
+                                }`}
+                              >
+                                Reason :
+                              </div>
+                              <div
+                                className={`${styles.footerRowContent} ${
+                                  darkMode ? darkModeCss.text_light : ''
+                                }`}
+                              >
                                 {reportDetails?.reason ?? 'Spam'}
                               </div>
                             </div>
@@ -790,32 +1027,47 @@ const Users = (props: UserProps): JSX.Element => {
     return (
       <div className={styles.reportPostWrapper}>
         <div className={styles.reportPostHeader}>
-          <h3 className={styles.reportPostTitle}>
+          <h3 className={`${styles.reportPostTitle} ${darkMode ? darkModeCss.text_green : ''}`}>
             {reportPostList?.length > 0 ? 'Reported Posts' : ''}
           </h3>
         </div>
         {reportPostList.slice(0, numberOfReportedItemsToShow).map((item) => {
           return (
-            <div key={item?.id} className={styles.reportPostContainer}>
+            <div
+              key={item?.id}
+              className={`${styles.reportPostContainer} ${darkMode ? darkModeCss.grey_1 : ''}`}
+            >
               <div className={styles.reportPostHeading}>
                 <div className={styles.reportPostHeaderLeft}>
                   <img
                     className={styles.postUserImage}
-                    src="https://cdn-icons-png.flaticon.com/32/3177/3177440.png"
+                    src={
+                      item?.createdBy?.profilePictureUrl
+                        ? item?.createdBy?.profilePictureUrl
+                        : 'https://cdn-icons-png.flaticon.com/32/3177/3177440.png'
+                    }
                     alt="User-Pic"
                   ></img>
                   <div className={styles.reportPostDetailContainer}>
-                    <h5 className={styles.postOwner}>
+                    <h5 className={`${styles.postOwner} ${darkMode ? darkModeCss.text_green : ''}`}>
                       <span>{item?.createdBy?.firstName}</span>
                       &nbsp;
                       <span>{item?.createdBy?.lastName}</span>
                     </h5>
-                    <h6 className={styles.postCreateDate}>
+                    <h6
+                      className={`${styles.postCreateDate} ${
+                        darkMode ? darkModeCss.text_light : ''
+                      }`}
+                    >
                       <img
                         width="9px"
                         src="https://cdn-icons-png.flaticon.com/32/2088/2088617.png"
                         alt="post time"
-                        style={{ opacity: '0.4', marginRight: '4px' }}
+                        style={
+                          darkMode
+                            ? { filter: 'invert(1)', marginRight: '4px' }
+                            : { opacity: '0.4', marginRight: '4px' }
+                        }
                       ></img>
                       <span style={{ fontWeight: '100' }}>
                         {item?.createdOn ? calculateTimeDifference(item?.createdOn) : 'Recently'}
@@ -829,12 +1081,12 @@ const Users = (props: UserProps): JSX.Element => {
                       variant="secondary"
                       id="dropdown-basic"
                       className={styles.dropdownBtn}
-                      style={{ backgroundColor: 'white', border: 'none', width: '50px' }}
+                      style={{ backgroundColor: 'transparent', border: 'none', width: '50px' }}
                     >
                       <button
                         style={{
                           border: 'none',
-                          backgroundColor: 'white',
+                          backgroundColor: 'transparent',
                           padding: '0',
                         }}
                       >
@@ -846,7 +1098,9 @@ const Users = (props: UserProps): JSX.Element => {
                       </button>
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu className={styles.dropdownMenu}>
+                    <Dropdown.Menu
+                      className={`${styles.dropdownMenu} ${darkMode ? darkModeCss.grey_3 : ''}`}
+                    >
                       <Dropdown.Item
                         className={styles.dropdownItem}
                         href={`/post/${item.id}`}
@@ -861,7 +1115,13 @@ const Users = (props: UserProps): JSX.Element => {
                               // width={30}
                             />
                           </div>
-                          <div className={styles.reportContainerHeader}>View Original Post</div>
+                          <div
+                            className={`${styles.reportContainerHeader} ${
+                              darkMode ? darkModeCss.text_light : ''
+                            }`}
+                          >
+                            View Original Post
+                          </div>
                         </div>
                       </Dropdown.Item>
                       <Dropdown.Item
@@ -877,7 +1137,11 @@ const Users = (props: UserProps): JSX.Element => {
                               width={30}
                             />
                           </div>
-                          <div className={styles.reportContainerHeader}>
+                          <div
+                            className={`${styles.reportContainerHeader} ${
+                              darkMode ? darkModeCss.text_light : ''
+                            }`}
+                          >
                             Send Warning to {item?.createdBy?.firstName}
                           </div>
                         </div>
@@ -893,7 +1157,13 @@ const Users = (props: UserProps): JSX.Element => {
                           <div className={styles.dropdownImage}>
                             <NextImage field={ReportPost} editable={true} />
                           </div>
-                          <div className={styles.reportContainerHeader}>Reported Post Details</div>
+                          <div
+                            className={`${styles.reportContainerHeader} ${
+                              darkMode ? darkModeCss.text_light : ''
+                            }`}
+                          >
+                            Reported Post Details
+                          </div>
                         </div>
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -954,7 +1224,9 @@ const Users = (props: UserProps): JSX.Element => {
                     return '';
                   })}
                 </div>
-                <div className="postDescription">{parser(modifyHtml(item?.description))}</div>
+                <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
+                  {parser(modifyHtml(item?.description))}
+                </div>
               </div>
             </div>
           );
@@ -962,11 +1234,11 @@ const Users = (props: UserProps): JSX.Element => {
         {reportPostList === undefined ||
         numberOfReportedItemsToShow >= reportPostList?.length ? null : (
           <button
-            className={styles.seeMoreReportedPostBtn}
+            className={`${styles.seeMoreReportedPostBtn} ${darkMode ? darkModeCss.grey_3 : ''}`}
             onClick={() => setNumberOfReportedItemsToShow(numberOfReportedItemsToShow + 5)}
           >
             <div>
-              <span className={styles.seeMoreBtn}>See more</span>
+              <span className={`${darkMode ? darkModeCss.text_light : ''}`}>See more</span>
             </div>
             <NextImage field={DropArrow} editable={true} />
           </button>
@@ -980,37 +1252,50 @@ const Users = (props: UserProps): JSX.Element => {
       <div className={styles.sidenavbar}>
         <div className={styles.blockContainer}>
           <div className={styles.top}>
-            <span className={styles.logo}>
+            <span className={`${styles.logo} ${darkMode ? darkModeCss.text_green : ''}`}>
               {props?.fields?.data?.datasource?.sideNavHeaderLabel?.jsonValue?.value ??
                 'Professional Dashboard'}
             </span>
           </div>
-          <p className={styles.title}>{ListLabel}</p>
+          <p className={`${styles.title} ${darkMode ? darkModeCss.text_light : ''}`}>{ListLabel}</p>
           <div className={styles.center}>
             <ul>
               <li className={styles.row}>
                 <button
+                  style={darkMode ? { background: 'transparent' } : {}}
                   onClick={() => {
                     getReportedPosts();
                   }}
                 >
-                  <NextImage contentEditable={true} field={Flag} height={18} width={18}></NextImage>
-                  <span>{'Reported Posts'}</span>
+                  <NextImage
+                    className={`${darkMode ? darkModeCss.invertFilter : ''}`}
+                    contentEditable={true}
+                    field={Flag}
+                    height={18}
+                    width={18}
+                  ></NextImage>
+                  <span className={`${darkMode ? darkModeCss.text_light : ''}`}>
+                    {'Reported Posts'}
+                  </span>
                 </button>
               </li>
               <li className={styles.row}>
                 <button
+                  style={darkMode ? { background: 'transparent' } : {}}
                   onClick={() => {
                     getReportedUserList();
                   }}
                 >
                   <NextImage
+                    className={`${darkMode ? darkModeCss.invertFilter : ''}`}
                     contentEditable={true}
                     field={ReportedUsers}
                     height={20}
                     width={20}
                   ></NextImage>
-                  <span>{'Reported Users'}</span>
+                  <span className={`${darkMode ? darkModeCss.text_light : ''}`}>
+                    {'Reported Users'}
+                  </span>
                 </button>
               </li>
             </ul>
@@ -1025,11 +1310,28 @@ const Users = (props: UserProps): JSX.Element => {
     return (
       <div>
         <div className={styles.reportPostHeader}>
-          <h3 className={styles.reportPostTitle}>{'Reported Posts'}</h3>
+          <h3 className={`${styles.reportPostTitle} ${darkMode ? darkModeCss.text_green : ''}`}>
+            {'Reported Posts'}
+          </h3>
         </div>
         <div className={styles.reportedPostSkeletonItemContainer}>
-          {skeletonDummyArr.map((_item) => {
+          {/* {skeletonDummyArr.map((_item) => {
             return <Skeleton width={100 + '%'} height={90} />;
+          })} */}
+
+          {skeletonDummyArr.map((_item) => {
+            return (
+              <>
+                <div className={styles.reportPostHeading}>
+                  <div className={styles.reportPostHeaderLeftSkeleton}>
+                    <Skeleton height={60} width={50} circle={true} />
+                    <div className={styles.reportPostDetailContainerSkeleton}>
+                      <Skeleton width={95 + '%'} height={90} />
+                    </div>
+                  </div>
+                </div>
+              </>
+            );
           })}
         </div>
       </div>
@@ -1039,7 +1341,9 @@ const Users = (props: UserProps): JSX.Element => {
   const ReportedUserSkeleton = () => {
     return (
       <div>
-        <h3 className={styles.userListHeader}>{'Reported User List'}</h3>
+        <h3 className={`${styles.userListHeader} ${darkMode ? darkModeCss.text_green : ''}`}>
+          {'Reported User List'}
+        </h3>
         <div className={styles.tableContainer}>
           <div className={styles.reportedPostSkeletonItemContainer}>
             {skeletonDummyArr.map((_item) => {
@@ -1057,14 +1361,12 @@ const Users = (props: UserProps): JSX.Element => {
         <SideNavbar />
       </div>
       <div className={styles.right_column}>
-        <div
-          className={
-            reportPostList?.length > 0 ? styles.right_lower_section : styles.right_lower_section
-          }
-        >
+        <div className={`${styles.right_lower_section} ${darkMode ? darkModeCss.grey_3 : ''}`}>
           {showReportedPosts ? (
             isDataLoaded ? (
-              <div className={styles.reportedPostsContainer}>
+              <div
+                className={`${styles.reportedPostsContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}
+              >
                 <ReportedPostList />
                 <ReportPostPopup />
                 <WarnUserForPostReportPopUp />
