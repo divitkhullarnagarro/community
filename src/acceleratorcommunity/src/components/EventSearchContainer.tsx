@@ -116,7 +116,7 @@ const EventSearchContainer = (props: any) => {
         ) : (
           <>
             {Events.length > 0 ?<div className={styles.hashtagCount}>
-              <div>
+              <div className={`${darkMode && darkModeCss.text_active}`}>
                 <img
                   src={
                     'https://media.istockphoto.com/id/499517325/photo/a-man-speaking-at-a-business-conference.jpg?s=612x612&w=0&k=20&c=gWTTDs_Hl6AEGOunoQ2LsjrcTJkknf9G8BGqsywyEtE='
@@ -124,7 +124,7 @@ const EventSearchContainer = (props: any) => {
                 />
                 {props?.query}
               </div>
-              <div>
+              <div className={`${darkMode && darkModeCss.text_active}`}>
                 <div>We've found {Events?.length} results</div>
               </div>
             </div>:""}
@@ -137,7 +137,7 @@ const EventSearchContainer = (props: any) => {
                 );
               })
             ) : (
-              <div className={styles.forNoData}>No Events Found</div>
+              <div className={`${styles.forNoData} ${darkMode && darkModeCss.text_light}`}>No Events Found</div>
             )}
           </>
         )}
