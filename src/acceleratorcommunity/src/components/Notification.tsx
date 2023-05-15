@@ -179,6 +179,8 @@ const Notification = (props: NotificationProps): JSX.Element => {
             { articleId: '', message: data?.message, type: data?.type },
           ]);
         }
+
+        break;
       }
       default: {
         break;
