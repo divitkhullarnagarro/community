@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'Equip-Regular';
-    src: url('/assets/fonts/EquipExtended-Regular.eot');   
-    src: url('/assets/fonts/EquipExtended-Regular.eot?#iefix') format('embedded-opentype'),
-        url('/assets/fonts/EquipExtended-Regular.woff2') format('woff2'),
-        url('/assets/fonts/EquipExtended-Regular.woff') format('woff'),
-        url('/assets/fonts/EquipExtended-Regular.ttf') format('truetype');    
+    src: url('../assets/fonts/EquipExtended-Regular.eot');   
+    src: url('../assets/fonts/EquipExtended-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/EquipExtended-Regular.woff2') format('woff2'),
+        url('../assets/fonts/EquipExtended-Regular.woff') format('woff'),
+        url('../assets/fonts/EquipExtended-Regular.ttf') format('truetype');    
 }
 
 @font-face {

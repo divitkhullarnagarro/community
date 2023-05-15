@@ -106,11 +106,14 @@
   content: none;
 }
 
-.postDescription * {
+.postDescription *:not(a[data-mention]) {
   margin: 0;
   line-height: 1.4;
   font-size: 14px !important;
   background: transparent !important;
+}
+.postDescription a[data-mention] {
+  color: #0d6efd !important;
 }
 
 .darkModeDescription * {
