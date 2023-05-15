@@ -18,6 +18,7 @@ import {
 } from 'assets/helpers/constants';
 import { Form, Modal } from 'react-bootstrap';
 import DotLoader from './DotLoader';
+import ToastNotification from './ToastNotification';
 
 type HeaderProfileProps = ComponentProps & {
   fields: {
@@ -40,6 +41,17 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
   const [followingList, setFollowingList] = useState<any>([]);
   const [followerFollowingSwitch, setFollowerFollowingSwitch] = useState(false);
   const [isfetchchingFollowerlist, setisfetchchingFollowerlist] = useState(false);
+  const [followersPageNo, setFollowersPageNo] = useState(0);
+  const [followingPageNo, setFollowingPageNo] = useState(0);
+  const [showNotification, setShowNofitication] = useState(false);
+  const [toastSuccess, setToastSuccess] = useState(false);
+  const [toastError, setToastError] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string>();
+  const resetToastState = () => {
+    setShowNofitication(!showNotification);
+    setToastSuccess(false);
+    setToastError(false);
+  };
 
   const onClickJoinButton = () => {
     setLeaveValue(true);
@@ -79,16 +91,23 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
 
   async function getFollowersFollowing() {
     if (objectEmail && objectEmail != '') {
-      await AxiosRequest({ url: `${getFollowersUrl}?objectId=${objectEmail}`, method: 'GET' }).then(
-        (response: any) => {
-          setFollowersList(response?.data);
-        }
-      );
-      await AxiosRequest({ url: `${getFollowingUrl}?objectId=${objectEmail}`, method: 'GET' }).then(
-        (response: any) => {
-          setFollowingList(response?.data);
-        }
-      );
+      await AxiosRequest({
+        url: `${getFollowersUrl}?objectId=${objectEmail}&page=${followersPageNo}&size=10`,
+        method: 'GET',
+      }).then((response: any) => {
+        setFollowersList((prev: any) => {
+          return [...prev, ...response?.data];
+        });
+      });
+
+      await AxiosRequest({
+        url: `${getFollowingUrl}?objectId=${objectEmail}&page=${followingPageNo}&size=10`,
+        method: 'GET',
+      }).then((response: any) => {
+        setFollowingList((prev: any) => {
+          return [...prev, ...response?.data];
+        });
+      });
       setisfetchchingFollowerlist(false);
     }
   }
@@ -98,15 +117,12 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
     setShow(true);
     getFollowersFollowing();
     key === 'followers' ? setFollowerFollowingSwitch(true) : setFollowerFollowingSwitch(false);
-    console.log('Key', key);
   }
 
   useEffect(() => {
     fetchUser?.bannerUrl ? setBannerImage(fetchUser.bannerUrl) : '';
     // setisProfilePicloaded(true);
   }, [fetchUser]);
-
-  console.log('FETCHUSER', fetchUser, bannerImage);
 
   function clickmebuttonHandler() {
     if (typeof document !== undefined) {
@@ -123,9 +139,15 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
       method: 'POST',
       data: formData,
       contentType: 'multipart/form-data',
-    }).then((response: any) => {
-      return response?.data;
-    });
+    })
+      .then((response: any) => {
+        return response?.data;
+      })
+      .catch(() => {
+        setToastMessage('Something Went Wrong !');
+        setToastError(true);
+        setShowNofitication(true);
+      });
   }
 
   //Function To Handle Load Image Files
@@ -144,6 +166,73 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
   }
 
   const [show, setShow] = useState(false);
+
+  //Pagination
+  const [ifReachedEndFollowers, setIfReachedEndFollowers] = useState(false);
+  const [noMoreFollowers, setNoMoreFollowers] = useState(false);
+  const [noMoreFollowing, setNoMoreFollowing] = useState(false);
+
+  const HandleScrollEventFollowers = () => {
+    if (
+      element?.scrollTop + element?.clientHeight >= element?.scrollHeight &&
+      ifReachedEndFollowers == false
+    ) {
+      setIfReachedEndFollowers(true);
+    }
+  };
+
+  let element: any = '';
+  if (typeof document !== 'undefined') {
+    element = document?.querySelector('#PopupListContainer');
+
+    element?.addEventListener('scroll', HandleScrollEventFollowers);
+  }
+
+  async function LoadMoreFollowersFollowing() {
+    followerFollowingSwitch
+      ? !noMoreFollowers &&
+        (await AxiosRequest({
+          url: `${getFollowersUrl}?objectId=${objectEmail}&page=${followersPageNo + 1}&size=10`,
+          method: 'GET',
+        }).then((response: any) => {
+          if (response?.data.length > 0) {
+            setFollowersList((prev: any) => {
+              return [...prev, ...response?.data];
+            });
+            setFollowersPageNo((prev) => {
+              return prev + 1;
+            });
+          } else {
+            setNoMoreFollowers(true);
+          }
+        }))
+      : !noMoreFollowing &&
+        (await AxiosRequest({
+          url: `${getFollowingUrl}?objectId=${objectEmail}&page=${followingPageNo + 1}&size=10`,
+          method: 'GET',
+        }).then((response: any) => {
+          if (response?.data.length > 0) {
+            setFollowingList((prev: any) => {
+              return [...prev, ...response?.data];
+            });
+            setFollowingPageNo((prev) => {
+              return prev + 1;
+            });
+          } else {
+            setNoMoreFollowing(true);
+          }
+        }));
+
+    setTimeout(() => {
+      setIfReachedEndFollowers(false);
+    }, 100);
+  }
+
+  useEffect(() => {
+    if (ifReachedEndFollowers == true) {
+      LoadMoreFollowersFollowing();
+    }
+  }, [ifReachedEndFollowers]);
 
   return (
     <div
@@ -329,7 +418,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                 Following
               </button>
             </div>
-            <div className={styles.popupListContainer}>
+            <div className={styles.popupListContainer} id="PopupListContainer">
               {followerFollowingSwitch ? (
                 isfetchchingFollowerlist ? (
                   <div style={{ position: 'relative', top: '50%' }}>
@@ -338,9 +427,10 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                 ) : (
                   <div className={styles.followersFollowingContainer}>
                     {followersList.length > 0 ? (
-                      followersList.map((follower: any) => {
+                      followersList.map((follower: any, index: any) => {
                         return (
                           <button
+                            key={index}
                             style={{ border: 'none', background: 'none', padding: '0' }}
                             onClick={() => gotoAnotherUser(follower?.objectId)}
                           >
@@ -370,6 +460,21 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                         Nothing to Show Here !
                       </span>
                     )}
+                    {noMoreFollowers && followerFollowingSwitch ? (
+                      <div
+                        style={{ position: 'absolute', top: '96%', left: '33%', fontSize: '12px' }}
+                      >
+                        No More Followers{' '}
+                        <img
+                          style={{ marginLeft: '10px' }}
+                          width="20px"
+                          src="https://cdn-icons-png.flaticon.com/512/927/927567.png"
+                          alt="smile"
+                        ></img>
+                      </div>
+                    ) : (
+                      ''
+                    )}
                   </div>
                 )
               ) : isfetchchingFollowerlist ? (
@@ -379,9 +484,10 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
               ) : (
                 <div className={styles.followersFollowingContainer}>
                   {followingList.length > 0 ? (
-                    followingList.map((follow: any) => {
+                    followingList.map((follow: any, index: any) => {
                       return (
                         <button
+                          key={index}
                           style={{ border: 'none', background: 'none', padding: '0' }}
                           onClick={() => gotoAnotherUser(follow?.objectId)}
                         >
@@ -409,12 +515,36 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                       Nothing to Show Here !
                     </span>
                   )}
+                  {noMoreFollowing && !followerFollowingSwitch ? (
+                    <div
+                      style={{ position: 'absolute', top: '96%', left: '33%', fontSize: '12px' }}
+                    >
+                      No More Followings{' '}
+                      <img
+                        style={{ marginLeft: '10px' }}
+                        width="20px"
+                        src="https://cdn-icons-png.flaticon.com/512/927/927567.png"
+                        alt="smile"
+                      ></img>
+                    </div>
+                  ) : (
+                    ''
+                  )}
                 </div>
               )}
             </div>
           </div>
         </Modal.Body>
       </Modal>
+      {showNotification && (
+        <ToastNotification
+          showNotification={showNotification}
+          success={toastSuccess}
+          error={toastError}
+          message={toastMessage}
+          handleCallback={resetToastState}
+        />
+      )}
     </div>
   );
 };
