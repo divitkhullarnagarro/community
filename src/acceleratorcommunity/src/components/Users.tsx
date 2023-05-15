@@ -26,6 +26,10 @@ import { getEmailTemplatesGraphqlQuery } from './Queries';
 import { getAllReportUserCall, getReportedUserReportersDetailsCall } from 'src/API/reportUserCall';
 import Skeleton from 'react-loading-skeleton';
 import darkModeCss from '../assets/darkTheme.module.css';
+import EventCard from './EventCard';
+import PollCard from './PollCard';
+import ViewPostDescription from './helperComponents/ViewPostDescription';
+import { EventImage } from 'assets/helpers/constants';
 
 const EmailTemplateFolder = '02989F59-CFEB-4CC9-90FB-C0DA8A7FE7B5';
 const WarnUserEmailTemplate = '16937DB73C124028877AAA49C0BE30CA';
@@ -43,6 +47,18 @@ type reportPostFields = {
     firstName: string;
     lastName: string;
     profilePictureUrl: string;
+  };
+  event: {
+    title: string;
+    description: string;
+    eventDate: string;
+    eventType: string;
+  };
+  poll: any;
+  blog: {
+    heading: string;
+    imageUrl: string;
+    description: string;
   };
   createdOn: string;
   mediaList: mediaType[];
@@ -1032,214 +1048,238 @@ const Users = (props: UserProps): JSX.Element => {
           </h3>
         </div>
         {reportPostList.slice(0, numberOfReportedItemsToShow).map((item) => {
-          if (
-            item?.postType === 'TEXT_POST' ||
-            item?.postType === 'IMAGE' ||
-            item?.postType === 'DOC' ||
-            item?.postType === 'VIDEO'
-          ) {
-            return (
-              <div
-                key={item?.id}
-                className={`${styles.reportPostContainer} ${darkMode ? darkModeCss.grey_1 : ''}`}
-              >
-                <div className={styles.reportPostHeading}>
-                  <div className={styles.reportPostHeaderLeft}>
-                    <img
-                      className={styles.postUserImage}
-                      src={
-                        item?.createdBy?.profilePictureUrl
-                          ? item?.createdBy?.profilePictureUrl
-                          : 'https://cdn-icons-png.flaticon.com/32/3177/3177440.png'
-                      }
-                      alt="User-Pic"
-                    ></img>
-                    <div className={styles.reportPostDetailContainer}>
-                      <h5
-                        className={`${styles.postOwner} ${darkMode ? darkModeCss.text_green : ''}`}
-                      >
-                        <span>{item?.createdBy?.firstName}</span>
-                        &nbsp;
-                        <span>{item?.createdBy?.lastName}</span>
-                      </h5>
-                      <h6
-                        className={`${styles.postCreateDate} ${
-                          darkMode ? darkModeCss.text_light : ''
-                        }`}
+          return (
+            <div
+              key={item?.id}
+              className={`${styles.reportPostContainer} ${darkMode ? darkModeCss.grey_1 : ''}`}
+            >
+              <div className={styles.reportPostHeading}>
+                <div className={styles.reportPostHeaderLeft}>
+                  <img
+                    className={styles.postUserImage}
+                    src={
+                      item?.createdBy?.profilePictureUrl
+                        ? item?.createdBy?.profilePictureUrl
+                        : 'https://cdn-icons-png.flaticon.com/32/3177/3177440.png'
+                    }
+                    alt="User-Pic"
+                  ></img>
+                  <div className={styles.reportPostDetailContainer}>
+                    <h5 className={`${styles.postOwner} ${darkMode ? darkModeCss.text_green : ''}`}>
+                      <span>{item?.createdBy?.firstName}</span>
+                      &nbsp;
+                      <span>{item?.createdBy?.lastName}</span>
+                    </h5>
+                    <h6
+                      className={`${styles.postCreateDate} ${
+                        darkMode ? darkModeCss.text_light : ''
+                      }`}
+                    >
+                      <img
+                        width="9px"
+                        src="https://cdn-icons-png.flaticon.com/32/2088/2088617.png"
+                        alt="post time"
+                        style={
+                          darkMode
+                            ? { filter: 'invert(1)', marginRight: '4px' }
+                            : { opacity: '0.4', marginRight: '4px' }
+                        }
+                      ></img>
+                      <span style={{ fontWeight: '100' }}>
+                        {item?.createdOn ? calculateTimeDifference(item?.createdOn) : 'Recently'}
+                      </span>
+                    </h6>
+                  </div>
+                </div>
+                <div className={styles.reportPostHeaderRight}>
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      variant="secondary"
+                      id="dropdown-basic"
+                      className={styles.dropdownBtn}
+                      style={{ backgroundColor: 'transparent', border: 'none', width: '50px' }}
+                    >
+                      <button
+                        style={{
+                          border: 'none',
+                          backgroundColor: 'transparent',
+                          padding: '0',
+                        }}
                       >
                         <img
-                          width="9px"
-                          src="https://cdn-icons-png.flaticon.com/32/2088/2088617.png"
-                          alt="post time"
-                          style={
-                            darkMode
-                              ? { filter: 'invert(1)', marginRight: '4px' }
-                              : { opacity: '0.4', marginRight: '4px' }
-                          }
-                        ></img>
-                        <span style={{ fontWeight: '100' }}>
-                          {item?.createdOn ? calculateTimeDifference(item?.createdOn) : 'Recently'}
-                        </span>
-                      </h6>
-                    </div>
-                  </div>
-                  <div className={styles.reportPostHeaderRight}>
-                    <Dropdown>
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className={styles.dropdownBtn}
-                        style={{ backgroundColor: 'transparent', border: 'none', width: '50px' }}
+                          className="postMoreOptionsImage"
+                          src="https://cdn-icons-png.flaticon.com/512/463/463292.png"
+                          alt="pan"
+                        />
+                      </button>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu
+                      className={`${styles.dropdownMenu} ${darkMode ? darkModeCss.grey_3 : ''}`}
+                    >
+                      <Dropdown.Item
+                        className={styles.dropdownItem}
+                        href={`/post/${item.id}`}
+                        target="_blank"
                       >
-                        <button
+                        <div className={styles.overlayItem}>
+                          <div className={styles.dropdownImage}>
+                            <NextImage
+                              field={ViewPost}
+                              editable={true}
+                              // height={30}
+                              // width={30}
+                            />
+                          </div>
+                          <div
+                            className={`${styles.reportContainerHeader} ${
+                              darkMode ? darkModeCss.text_light : ''
+                            }`}
+                          >
+                            View Original Post
+                          </div>
+                        </div>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className={styles.dropdownItem}
+                        onClick={() => setShowWarnUserForPostReportPopUp(true)}
+                      >
+                        <div className={styles.overlayItem}>
+                          <div className={styles.dropdownImage}>
+                            <NextImage
+                              field={WarningImage}
+                              editable={true}
+                              height={30}
+                              width={30}
+                            />
+                          </div>
+                          <div
+                            className={`${styles.reportContainerHeader} ${
+                              darkMode ? darkModeCss.text_light : ''
+                            }`}
+                          >
+                            Send Warning to {item?.createdBy?.firstName}
+                          </div>
+                        </div>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className={styles.dropdownItem}
+                        onClick={() => {
+                          getReportedPostReportersDetails(item?.id);
+                          setReportedPostItem(item);
+                        }}
+                      >
+                        <div className={styles.overlayItem}>
+                          <div className={styles.dropdownImage}>
+                            <NextImage field={ReportPost} editable={true} />
+                          </div>
+                          <div
+                            className={`${styles.reportContainerHeader} ${
+                              darkMode ? darkModeCss.text_light : ''
+                            }`}
+                          >
+                            Reported Post Details
+                          </div>
+                        </div>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+              </div>
+              <div className={styles.reportPostContent}>
+                <div className="postMedia">
+                  {item?.mediaList?.map((media: mediaType, num: any) => {
+                    if (media?.mediaType === 'VIDEO') {
+                      return (
+                        <div key={num}>
+                          <video width="100%" src={media?.url} controls></video>
+                        </div>
+                      );
+                    } else if (media?.mediaType === 'DOCUMENT') {
+                      return (
+                        <div className={styles.docPreviewContainer} key={num}>
+                          <span className="openPrevButton">
+                            <button
+                              onClick={() => openDoc(media?.url)}
+                              style={{
+                                padding: '5px',
+                                borderRadius: '20px',
+                                borderColor: 'white',
+                              }}
+                            >
+                              <img
+                                width="50px"
+                                src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
+                                alt={num}
+                                style={{ margin: '10px' }}
+                              ></img>
+                              {'DocFile'}
+                            </button>
+                          </span>
+                        </div>
+                      );
+                    } else if (media?.mediaType === 'IMAGE') {
+                      return (
+                        <div
+                          key={num}
                           style={{
-                            border: 'none',
-                            backgroundColor: 'transparent',
-                            padding: '0',
+                            borderRadius: '30px',
+                            margin: '0px 15px 15px 0px',
                           }}
                         >
                           <img
-                            className="postMoreOptionsImage"
-                            src="https://cdn-icons-png.flaticon.com/512/463/463292.png"
-                            alt="pan"
-                          />
-                        </button>
-                      </Dropdown.Toggle>
-
-                      <Dropdown.Menu
-                        className={`${styles.dropdownMenu} ${darkMode ? darkModeCss.grey_3 : ''}`}
-                      >
-                        <Dropdown.Item
-                          className={styles.dropdownItem}
-                          href={`/post/${item.id}`}
-                          target="_blank"
-                        >
-                          <div className={styles.overlayItem}>
-                            <div className={styles.dropdownImage}>
-                              <NextImage
-                                field={ViewPost}
-                                editable={true}
-                                // height={30}
-                                // width={30}
-                              />
-                            </div>
-                            <div
-                              className={`${styles.reportContainerHeader} ${
-                                darkMode ? darkModeCss.text_light : ''
-                              }`}
-                            >
-                              View Original Post
-                            </div>
-                          </div>
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          className={styles.dropdownItem}
-                          onClick={() => setShowWarnUserForPostReportPopUp(true)}
-                        >
-                          <div className={styles.overlayItem}>
-                            <div className={styles.dropdownImage}>
-                              <NextImage
-                                field={WarningImage}
-                                editable={true}
-                                height={30}
-                                width={30}
-                              />
-                            </div>
-                            <div
-                              className={`${styles.reportContainerHeader} ${
-                                darkMode ? darkModeCss.text_light : ''
-                              }`}
-                            >
-                              Send Warning to {item?.createdBy?.firstName}
-                            </div>
-                          </div>
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          className={styles.dropdownItem}
-                          onClick={() => {
-                            getReportedPostReportersDetails(item?.id);
-                            setReportedPostItem(item);
-                          }}
-                        >
-                          <div className={styles.overlayItem}>
-                            <div className={styles.dropdownImage}>
-                              <NextImage field={ReportPost} editable={true} />
-                            </div>
-                            <div
-                              className={`${styles.reportContainerHeader} ${
-                                darkMode ? darkModeCss.text_light : ''
-                              }`}
-                            >
-                              Reported Post Details
-                            </div>
-                          </div>
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </div>
+                            className={styles.reportPostImage}
+                            height="438px"
+                            width="100%"
+                            src={media?.url}
+                            alt={media?.id}
+                          ></img>
+                        </div>
+                      );
+                    }
+                    return '';
+                  })}
                 </div>
-                <div className={styles.reportPostContent}>
-                  <div className="postMedia">
-                    {item?.mediaList?.map((media: mediaType, num: any) => {
-                      if (media?.mediaType === 'VIDEO') {
-                        return (
-                          <div key={num}>
-                            <video width="100%" src={media?.url} controls></video>
-                          </div>
-                        );
-                      } else if (media?.mediaType === 'DOCUMENT') {
-                        return (
-                          <div className={styles.docPreviewContainer} key={num}>
-                            <span className="openPrevButton">
-                              <button
-                                onClick={() => openDoc(media?.url)}
-                                style={{
-                                  padding: '5px',
-                                  borderRadius: '20px',
-                                  borderColor: 'white',
-                                }}
-                              >
-                                <img
-                                  width="50px"
-                                  src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png"
-                                  alt={num}
-                                  style={{ margin: '10px' }}
-                                ></img>
-                                {'DocFile'}
-                              </button>
-                            </span>
-                          </div>
-                        );
-                      } else if (media?.mediaType === 'IMAGE') {
-                        return (
-                          <div
-                            key={num}
-                            style={{
-                              borderRadius: '30px',
-                              margin: '0px 15px 15px 0px',
-                            }}
-                          >
-                            <img
-                              className={styles.reportPostImage}
-                              height="438px"
-                              width="100%"
-                              src={media?.url}
-                              alt={media?.id}
-                            ></img>
-                          </div>
-                        );
-                      }
-                      return '';
-                    })}
-                  </div>
-                  <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
-                    {parser(modifyHtml(item?.description))}
-                  </div>
-                </div>
+                {item?.postType === 'EVENT' ? (
+                  <>
+                    <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
+                      {parser(modifyHtml(item?.description))}
+                    </div>
+                    <EventCard
+                      heading={item?.event?.title}
+                      description={item?.event?.description}
+                      date={item?.event?.eventDate}
+                      eventType={item?.event?.eventType}
+                      url={EventImage[item?.event?.eventType]}
+                    />
+                  </>
+                ) : item?.postType === 'POLL' ? (
+                  <>
+                    <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
+                      {parser(modifyHtml(item?.description))}
+                    </div>
+                    {/* <PollCard pollPost={{ poll: item?.poll }} voteInAPoll={voteInAPoll} /> */}
+                    <PollCard pollPost={{ poll: item?.poll }} />
+                  </>
+                ) : item?.postType === 'BLOG_POST' ? (
+                  <>
+                    <div className={`blogHeading ${darkMode ? darkModeCss.text_green : ''}`}>
+                      {item?.blog?.heading}
+                    </div>
+                    {item?.blog?.imageUrl && (
+                      <img style={{ width: '100%' }} src={item?.blog?.imageUrl} alt="Post Image" />
+                    )}
+                    <ViewPostDescription description={item?.blog?.description} />
+                  </>
+                ) : (
+                  <ViewPostDescription description={item?.description} />
+                )}
+                {/* <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
+                  {parser(modifyHtml(item?.description))}
+                </div> */}
               </div>
-            );
-          }
-          return;
+            </div>
+          );
         })}
         {reportPostList === undefined ||
         numberOfReportedItemsToShow >= reportPostList?.length ? null : (
