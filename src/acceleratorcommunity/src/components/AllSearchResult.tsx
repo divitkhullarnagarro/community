@@ -1,15 +1,17 @@
-import React from 'react';
+import { useContext } from 'react';
 import Event from './Event';
 import ImageConatiner from './ImageConatiner';
 import TextPost from './TextPost';
 import VideoContainer from './VideoContainer';
 import DocumentContainer from './DocumentContainer';
 import Blog from './Blog';
+import WebContext from 'src/Context/WebContext';
 // import PollCard from './PollCard';
 // import { voteInPollUrl } from 'assets/helpers/constants';
 // import AxiosRequest from 'src/API/AxiosRequest';
 import User from './User';
 import styles from '../assets/searchFilterContainer.module.css';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 const AllSearchResult = (props: any) => {
   // let [myAnotherArr, setMyAnotherArr] = useState<any>([]);
@@ -53,15 +55,18 @@ const AllSearchResult = (props: any) => {
   //   setMyAnotherArr(updatedPollPosts);
   // }
   const fromALL = true;
+  const { darkMode } = {
+    ...useContext(WebContext),
+  };
 
   return (
     <div>
       {props?.searchedData?.length > 0 ?<div className={styles.hashtagCount}>
-        <div>
+        <div className={`${darkMode && darkModeCss.text_active}`}>
           {/* <img src={'https://cdn-icons-png.flaticon.com/512/149/149071.png'} /> */}
           ALL Results
         </div>
-        <div>
+        <div className={`${darkMode && darkModeCss.text_active}`}>
           <div>We've found {props?.searchedData.length} results</div>
         </div>
       </div>:""}
@@ -95,7 +100,7 @@ const AllSearchResult = (props: any) => {
           );
         })
       ) : (
-        <div className={styles.forNoData}>No data found for your search</div>
+        <div className={`${styles.forNoData} ${darkMode && darkModeCss.text_light}`}>No data found for your search</div>
       )}
     </div>
   );

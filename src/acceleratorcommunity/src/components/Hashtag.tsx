@@ -1,13 +1,15 @@
-import React from 'react';
+import { useContext } from 'react';
 import Event from './Event';
 import ImageConatiner from './ImageConatiner';
 import TextPost from './TextPost';
 import VideoContainer from './VideoContainer';
 import DocumentContainer from './DocumentContainer';
+import WebContext from 'src/Context/WebContext';
 // import PollCard from './PollCard';
 import Blog from './Blog';
 import User from './User';
 import styles from '../assets/searchFilterContainer.module.css';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 // import { voteInPollUrl } from 'assets/helpers/constants';
 // import AxiosRequest from 'src/API/AxiosRequest';
@@ -54,19 +56,25 @@ const Hashtag = (props: any) => {
   //   setMyAnotherArr(updatedPollPosts);
   // }
   const fromALL = true;
+  const { darkMode } = {
+    ...useContext(WebContext),
+  };
   return (
     <div>
       {props?.searchedData?.length > 0 ? (
         <div className={styles.hashtagCount}>
-          <div>
+          <div className={`${darkMode && darkModeCss.text_active}`}>
             <img
               src={
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKSssZidC_xQKmQ5kBRhrHxy7L57lF_0SCLNmYWVcbmtCHH2mNWuUNH0thmJN-ZqZKjjE&usqp=CAU'
+                'https://icon-library.com/images/hashtag-icon-png/hashtag-icon-png-16.jpg'
               }
             />
             {props?.query}
           </div>
-          <div>
+          <div className={`${darkMode && darkModeCss.text_active}`}>
+            Trending Hashtag
+          </div>
+          <div className={`${darkMode && darkModeCss.text_active}`}>
             <div>We've found {props?.searchedData?.length} results</div>
           </div>
         </div>
@@ -101,7 +109,7 @@ const Hashtag = (props: any) => {
           );
         })
       ) : (
-        <div className={styles.forNoData}>No hashtags founds</div>
+        <div className={`${styles.forNoData} ${darkMode && darkModeCss.text_light}`}>No hashtags founds</div>
       )}
     </div>
   );

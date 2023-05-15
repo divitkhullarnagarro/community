@@ -1,10 +1,15 @@
-import React from 'react';
+import { useContext } from 'react';
 // import SearchGroupResult from './SearchGroupResult';
+import WebContext from 'src/Context/WebContext';
 import styles from '../assets/searchFilterContainer.module.css';
 // import { SearchSkeleton } from './skeletons/SearchSkeleton';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 const SearchGroupContainer = (props: any) => {
   console.log(props?.searchedData)
+  const { darkMode } = {
+    ...useContext(WebContext),
+  };
   return (
     
     <div className={styles.generalcontainer}>
@@ -16,7 +21,7 @@ const SearchGroupContainer = (props: any) => {
         }):"No Group Found"
       )} */}
       
-   <div className={styles.forNoData}>No Groups Found</div>
+   <div className={`${styles.forNoData} ${darkMode && darkModeCss.text_light}`}>No Groups Found</div>
     </div>
   );
 };

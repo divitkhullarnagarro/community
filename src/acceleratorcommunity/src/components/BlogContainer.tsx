@@ -16,12 +16,12 @@ const BlogContainer = (props: any) => {
           <div>
             {props?.searchedData.length > 0 ? (
               <div className={styles.hashtagCount}>
-                <div>
+                <div className={`${darkMode && darkModeCss.text_active}`}>
                   {/* <img src={'https://cdn-icons-png.flaticon.com/512/149/149071.png'} /> */}
                   Blogs
                   {/* {props?.query} */}
                 </div>
-                <div>
+                <div className={`${darkMode && darkModeCss.text_active}`}>
                   <div>We've found {props?.searchedData.length} results</div>
                 </div>
               </div>
@@ -38,7 +38,7 @@ const BlogContainer = (props: any) => {
                 );
               })
             ) : (
-              <div className={styles.forNoData}>No Blog Found</div>
+              <div className={`${styles.forNoData} ${darkMode && darkModeCss.text_light}`}>No Blog Found</div>
             )}
           </div>
         )}

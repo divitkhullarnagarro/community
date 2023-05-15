@@ -379,3 +379,16 @@ export const bookmarkedBlogs = [
     When you combine the data management capabilities of a CDP with the decision-making advantages of artificial intelligence (AI) and then take it all the way through to orchestration with a marketing hub, you have a futureproof approach to the next era of CX.`,
   },
 ];
+
+interface ItemImage {
+  [key: string]: string;
+}
+
+export const EventImage: ItemImage = {
+  Seminar:
+    'https://higherlogicdownload.s3.amazonaws.com/APSNET/UploadedImages/tAiEB79vTYq1gz2UEGu1_IMG_2866-L.jpg',
+  Conference: 'https://th.bing.com/th/id/OIP.IXdC6XgETCp5RaM3iQCb6QHaE8?pid=ImgDet&rs=1',
+  Announcement: 'https://th.bing.com/th/id/OIP.zPaWJzUBQwbXDjhCtCtI1gHaE8?pid=ImgDet&rs=1',
+  'Launch Event': 'https://live.staticflickr.com/808/39724254630_e9cdcb8e77_b.jpg',
+  Celebration: 'https://th.bing.com/th/id/OIP.E1RiHHXMHUcq0L0KvprXfQHaEn?pid=ImgDet&rs=1',
+};

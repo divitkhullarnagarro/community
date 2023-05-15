@@ -21,12 +21,12 @@ const SearchUserContainer = (props: any) => {
             {' '}
             {props?.searchedData.length > 0 ? (
               <div className={styles.hashtagCount}>
-                <div>
+                <div className={`${darkMode && darkModeCss.text_active}`}>
                   <img src={'https://cdn-icons-png.flaticon.com/512/149/149071.png'} />
                   Users
                   {/* {props?.query} */}
                 </div>
-                <div>
+                <div className={`${darkMode && darkModeCss.text_active}`}>
                   <div>We've found {props?.searchedData.length} results</div>
                 </div>
               </div>
@@ -38,7 +38,7 @@ const SearchUserContainer = (props: any) => {
                 return data?.index === 'accelerator-user' ? <User user={data?.sourceAsMap} /> : '';
               })
             ) : (
-              <div className={style.forNoData}>No User Found</div>
+              <div className={`${style.forNoData} ${darkMode && darkModeCss.text_light}`}>No User Found</div>
             )}
           </>
         )}
