@@ -16,6 +16,10 @@ export const getUserUrl = `${javaHost}/user-service/api/v1/users/`;
 export const uploadBannerUrl = `${javaHost}/user-service/api/v1/users/upload-profile-picture?banner=Y`;
 export const getFollowersUrl = `${javaHost}/graph-service/api/v1/graph/user/followers`;
 export const getFollowingUrl = `${javaHost}/graph-service/api/v1/graph/user/following`;
+export const getGroupListUrl = `${javaHost}/graph-service/api/v1/graph/group?`;
+export const getMemberListUrl = `${javaHost}/graph-service/api/v1/graph/group`;
+export const getFirstTenMemberListUrl = `${javaHost}/graph-service/api/v1/graph/group/group1/members?page=0&size=10`;
+export const getFirstTenGroupListUrl = `${javaHost}/graph-service/api/v1/graph/group?page=0&size=10`;
 
 export const Algorithm = 'aes-256-cbc';
 export const Key = [
