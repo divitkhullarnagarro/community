@@ -58,6 +58,11 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
       </>
     );
   };
+
+  function returnUserImage(e: any) {
+    e.target.src = Profile.src;
+  }
+
   const WidgetViewPeerFriendList = () => {
     return (
       <div className={`${styles.wrapper} ${darkMode ? darkModeCss.grey_3 : ''}`}>
@@ -83,6 +88,9 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
                       className={styles.peerFriendUserImage}
                       src={item.profilePictureUrl ? item.profilePictureUrl : Profile.src}
                       alt="User-Pic"
+                      onError={(e) => {
+                        returnUserImage(e);
+                      }}
                     ></img>
                   </Link>
 
@@ -192,6 +200,9 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
               contentEditable={true}
               src={item.profilePictureUrl ? item.profilePictureUrl : Profile.src}
               alt="Profile Image"
+              onError={(e) => {
+                returnUserImage(e);
+              }}
             />
           </Link>
         </div>
