@@ -45,8 +45,7 @@ const nextConfig = {
       'wwwsitecorecom.azureedge.net',
       'nkdramblog.files.wordpress.com',
       'images.pexels.com',
-      'xmc-nagarro1-communityac830d-communityace1c7.sitecorecloud.io',
-      'xmc-nagarro1-communityac2a8e-communityace478.sitecorecloud.io',
+      'xmc-nagarro1-communityac2a8e-communityace478.sitecorecloud.io'
     ],
   },
 
