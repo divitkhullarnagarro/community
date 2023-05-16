@@ -6,6 +6,16 @@ import getUserCall from 'src/API/getUserCall';
 import updateUuserCall from 'src/API/updateUser';
 import ToastNotification from './ToastNotification';
 import CameraImg from '../assets/images/camera1.png';
+import PersonalImg from '../assets/images/personalInformation.png';
+import ContactImg from '../assets/images/contactDetails.png';
+import EducationImg from '../assets/images/educationDetails.png';
+import WorkImg from '../assets/images/workDetails.png';
+import EventsImg from '../assets/images/events.png';
+import BlogsImg from '../assets/images/blogs.png';
+import PeersImg from '../assets/images/peers.png';
+import UserImg from '../assets/images/blockedUser.png';
+import Image from 'next/image';
+
 import Banner from './Banner';
 import UploadProfilePictureCall from 'src/API/uploadProfilePictureCall';
 import PersaonalDetailsOfUser from './PersaonalDetailsOfUser';
@@ -1360,81 +1370,129 @@ const Profile = (props: any): JSX.Element => {
             <div
               className={
                 details === 'personal'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
               }
               onClick={() => handlePersonalDetails('personal')}
             >
-              Personal Information
+              <Image
+                src={PersonalImg}
+                height={15}
+                width={15}
+                alt="Personal Information"
+              />
+                Personal Information
             </div>
             <div
               className={
                 details === 'contactDetails'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
               }
               onClick={() => handlePersonalDetails('contactDetails')}
             >
+              <Image
+                src={ContactImg}
+                height={15}
+                width={15}
+                alt="Contact Details"
+              />
               Contact Details
             </div>
             <div
               className={
                 details === 'educationDetails'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
               }
               onClick={() => handlePersonalDetails('educationDetails')}
             >
+              <Image
+                src={EducationImg}
+                height={15}
+                width={15}
+                alt="Education Details"
+              />
               Education Details
             </div>
             <div
               className={
                 details === 'work'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
               }
               onClick={() => handlePersonalDetails('work')}
             >
+              <Image
+                src={WorkImg}
+                height={15}
+                width={15}
+                alt="Work Details"
+              />
               Work Details
             </div>
             <div
               className={
                 details === 'events'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
               }
               onClick={() => handlePersonalDetails('events')}
             >
+              <Image
+                src={EventsImg}
+                height={15}
+                width={15}
+                alt="Events"
+              />
               Events
             </div>
             <div
               className={
                 details === 'blogs'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
               }
               onClick={() => handlePersonalDetails('blogs')}
             >
+              <Image
+                src={BlogsImg}
+                height={15}
+                width={15}
+                alt="Blogs"
+              />
               Blogs
             </div>
             <div
               className={
                 details === 'peers'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
               }
               onClick={() => handlePersonalDetails('peers')}
             >
+              <Image
+                src={PeersImg}
+                height={15}
+                width={15}
+                alt="Peers"
+              />
               Peers
             </div>
             <div
               className={
                 details === 'blockedusers'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
               }
               onClick={() => handlePersonalDetails('blockedusers')}
             >
+              <Image
+                src={UserImg}
+                height={15}
+                width={15}
+                alt="Blocked Users"
+              />
               Blocked Users
             </div>
             {/* <div
