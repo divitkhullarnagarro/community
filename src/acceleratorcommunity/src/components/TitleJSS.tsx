@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Link,
   Text,
@@ -20,6 +20,16 @@ interface Fields {
           editable: string;
         };
       };
+      title?: {
+        jsonValue: {
+          value: string;
+        };
+      };
+      description?: {
+        jsonValue: {
+          value: string;
+        };
+      };
     };
     contextItem: {
       url: {
@@ -36,27 +46,28 @@ interface Fields {
   };
 }
 
+// params: { [key: string]: string };
+
 type TitleProps = {
-  params: { [key: string]: string };
   fields: Fields;
 };
 
-type ComponentContentProps = {
-  id: string;
-  styles: string;
-  children: JSX.Element;
-};
+// type ComponentContentProps = {
+//   id: string;
+//   styles: string;
+//   children: JSX.Element;
+// };
 
-const ComponentContent = (props: ComponentContentProps) => {
-  const id = props.id;
-  return (
-    <div className={`component title ${props.styles}`} id={id ? id : undefined}>
-      <div className="component-content">
-        <div className="field-title">{props.children}</div>
-      </div>
-    </div>
-  );
-};
+// const ComponentContent = (props: ComponentContentProps) => {
+//   const id = props.id;
+//   return (
+//     <div className={`component title ${props.styles}`} id={id ? id : undefined}>
+//       <div className="component-content">
+//         <div className="field-title">{props.children}</div>
+//       </div>
+//     </div>
+//   );
+// };
 
 const TitleJSS = (props: TitleProps): JSX.Element => {
   const datasource = props.fields?.data?.datasource || props.fields?.data?.contextItem;
@@ -66,10 +77,19 @@ const TitleJSS = (props: TitleProps): JSX.Element => {
     value: datasource?.field?.jsonValue?.value,
     editable: datasource?.field?.jsonValue?.editable,
   };
-  const text2: TextField = {
+
+  const [text2, setText2] = useState<TextField>({
     value: 'Hello Sitecore',
     editable: 'Hello Sitecore',
-  };
+  });
+
+  useEffect(() => {
+    setText2({
+      value: props?.fields?.data?.datasource?.title?.jsonValue?.value,
+      editable: props?.fields?.data?.datasource?.title?.jsonValue?.value,
+    });
+  }, [props]);
+
   const link: LinkField = {
     value: {
       href: datasource?.url?.path,
@@ -86,21 +106,27 @@ const TitleJSS = (props: TitleProps): JSX.Element => {
   }
 
   return (
-    <ComponentContent styles={props.params.styles} id={props.params.RenderingIdentifier}>
-      <div>
-        <p>TitleJSS Component</p>
-        <>
-          {sitecoreContext.pageState === 'edit' ? (
+    <div style={{ marginLeft: '20px' }}>
+      <p>TitleJSS Component</p>
+      <>
+        {sitecoreContext.pageState === 'edit' ? (
+          <Text field={text} />
+        ) : (
+          <Link field={link}>
             <Text field={text} />
-          ) : (
-            <Link field={link}>
-              <Text field={text} />
-            </Link>
-          )}
-        </>
-        <Text field={text2} />
+          </Link>
+        )}
+      </>
+      <Text field={text2} editable={true} />
+      <br />
+      <Text field={text2} />
+      <br />
+      Title : {props?.fields?.data?.datasource?.title?.jsonValue?.value}
+      <div>
+        <span>Description : </span>
+        <span>{props?.fields?.data?.datasource?.description?.jsonValue?.value}</span>
       </div>
-    </ComponentContent>
+    </div>
   );
 };
 
