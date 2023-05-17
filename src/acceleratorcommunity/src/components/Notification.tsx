@@ -395,7 +395,7 @@ const Notification = (props: NotificationProps): JSX.Element => {
                 </div>
               </Dropdown.Item>
             )}
-            {!item?.read && (
+            {item?.id !== undefined && !item?.read && (
               <Dropdown.Item
                 onClick={() => markNotificationAsRead(item?.id)}
                 target="_blank"
