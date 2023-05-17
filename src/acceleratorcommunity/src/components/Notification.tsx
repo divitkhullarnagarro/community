@@ -16,6 +16,7 @@ import AxiosRequest from 'src/API/AxiosRequest';
 import { calculateTimeDifference } from 'assets/helpers/helperFunctions';
 import darkModeCss from '../assets/darkTheme.module.css';
 import NotificationProfilePic from '../assets/images/NotificationProfilePic.png';
+import MarkAsRead from '../assets/images/MarkAsRead.png';
 
 const NotificationType = {
   LIKE_ON_POST: 'LIKE_ON_POST',
@@ -59,19 +60,26 @@ type NotificationContentType = {
   type: string;
 };
 
+enum NotificationTabs {
+  All = 'all',
+  Unread = 'unread',
+}
+
 const Notification = (props: NotificationProps): JSX.Element => {
   const { datasource } = props?.fields?.data;
-  const { objectId, setObjectId, darkMode } = {
+  const { objectId, darkMode } = {
     ...useContext(WebContext),
   };
 
   const { socket } = { ...useContext(SocketContext) };
   const [notificationList, setNotificationList] = useState<NotificationType[]>([]);
+  const [notificationAllList, setNotificationAllList] = useState<NotificationType[]>([]);
   const [realTimeNotificationList, setRealTimeNotificationList] = useState<NotificationType[]>([]);
   const [notificationCount, setNotificationCount] = useState(0);
   const [showNotification, setShowNofitication] = useState(false);
   const [toastMessage, setToastMessage] = useState<string>();
   const [toastSuccess, setToastSuccess] = useState(false);
+  const [activeTab, setActiveTab] = useState(NotificationTabs.All);
 
   const { requestForNotificationPermission, checkAndRegsiterServiceWorker } = {
     ...useContext(FirebaseContext),
@@ -97,6 +105,27 @@ const Notification = (props: NotificationProps): JSX.Element => {
     })
       .then((response: any) => {
         setNotificationList(response?.data);
+        setNotificationAllList(response?.data);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+
+  const markNotificationAsRead = (notificationId: string | undefined) => {
+    AxiosRequest({
+      method: 'PUT',
+      url: `https://accelerator-api-management.azure-api.net/notification-service/api/v1/viewed-notification?id=${notificationId}`,
+    })
+      .then((response: any) => {
+        if (response?.success) {
+          setNotificationAllList((notificationAllList) =>
+            notificationAllList.map((item: NotificationType) =>
+              item?.id === notificationId ? { ...item, read: true } : item
+            )
+          );
+          console.log('markNotificationAsRead', response);
+        }
       })
       .catch((err: any) => {
         console.log(err);
@@ -116,25 +145,12 @@ const Notification = (props: NotificationProps): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    if (objectId === '') {
-      if (
-        typeof localStorage !== 'undefined' &&
-        localStorage.getItem('UserToken') != '' &&
-        localStorage.getItem('ObjectId') != '' &&
-        localStorage.getItem('UserToken') != null
-      ) {
-        let userId = localStorage.getItem('ObjectId');
-
-        if (userId != null && setObjectId != undefined) {
-          setObjectId(userId);
-        }
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     setNotificationCount(notificationList?.length + realTimeNotificationList?.length);
   }, [notificationList, realTimeNotificationList]);
+
+  useEffect(() => {
+    filterTabData(activeTab);
+  }, [notificationAllList]);
 
   const resetToastState = () => {
     setShowNofitication(!showNotification);
@@ -188,6 +204,16 @@ const Notification = (props: NotificationProps): JSX.Element => {
     }
   });
 
+  const filterTabData = (notificationTab: NotificationTabs) => {
+    if (notificationTab === NotificationTabs.Unread) {
+      setActiveTab(NotificationTabs.Unread);
+      setNotificationList(notificationAllList.filter((item) => !item.read));
+    } else {
+      setActiveTab(NotificationTabs.All);
+      setNotificationList(notificationAllList);
+    }
+  };
+
   const NotificationBodyHeader = () => {
     return (
       <>
@@ -201,16 +227,66 @@ const Notification = (props: NotificationProps): JSX.Element => {
           </div>
         </div>
         <div className={notificationCss.notificationHeaderAction}>
-          <Button className={notificationCss.notificationActionActiveBtn}>All</Button>
+          <Button
+            onClick={() => filterTabData(NotificationTabs.All)}
+            className={`${notificationCss.notificationActionBtn} ${
+              activeTab === NotificationTabs.All ? notificationCss.notificationActionActiveBtn : ''
+            }`}
+          >
+            All
+          </Button>
+          <Button
+            onClick={() => filterTabData(NotificationTabs.Unread)}
+            className={`${notificationCss.notificationActionBtn} ${
+              activeTab === NotificationTabs.Unread
+                ? notificationCss.notificationActionActiveBtn
+                : ''
+            }`}
+          >
+            Unread
+          </Button>
         </div>
       </>
     );
+  };
+
+  const showViewPostDropdownAction = (notificationItem: NotificationType) => {
+    const notificationContent: NotificationContentType = JSON.parse(
+      notificationItem?.notificationContent ?? '{}'
+    );
+    if (
+      (notificationItem?.type !== undefined &&
+        notificationItem?.type !== NotificationType.POST_AN_ARTICLE_PEER &&
+        notificationItem?.type !== NotificationType.FOLLOW_BY_USER) ||
+      (notificationContent?.type != undefined &&
+        notificationContent?.type !== NotificationType.POST_AN_ARTICLE_PEER &&
+        notificationContent?.type !== NotificationType.FOLLOW_BY_USER)
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  const showViewUserProfileDropdownAction = (notificationItem: NotificationType) => {
+    const notificationContent: NotificationContentType = JSON.parse(
+      notificationItem?.notificationContent ?? '{}'
+    );
+    if (
+      (notificationItem?.type !== undefined &&
+        notificationItem?.type === NotificationType.FOLLOW_BY_USER) ||
+      (notificationContent?.type != undefined &&
+        notificationContent?.type === NotificationType.FOLLOW_BY_USER)
+    ) {
+      return true;
+    }
+    return false;
   };
 
   const NotificationRow = (item: NotificationType) => {
     const notificationContent: NotificationContentType = JSON.parse(
       item?.notificationContent ?? '{}'
     );
+
     return (
       <div style={{ display: 'flex' }}>
         <Dropdown.Item className={notificationCss.dropdownItem}>
@@ -264,32 +340,26 @@ const Notification = (props: NotificationProps): JSX.Element => {
             </div>
           </div>
         </Dropdown.Item>
-        {(item?.type !== NotificationType.POST_AN_ARTICLE_PEER &&
-          item?.type !== NotificationType.FOLLOW_BY_USER) ||
-        (notificationContent?.type !== NotificationType.POST_AN_ARTICLE_PEER &&
-          notificationContent?.type !== NotificationType.FOLLOW_BY_USER) ? (
-          <Dropdown>
-            <Dropdown.Toggle
-              variant="secondary"
-              className={notificationCss.notificationMoreOptions}
+        <Dropdown>
+          <Dropdown.Toggle variant="secondary" className={notificationCss.notificationMoreOptions}>
+            <button
+              style={{
+                border: 'none',
+                backgroundColor: 'transparent',
+                padding: '0',
+                marginRight: '5px',
+              }}
             >
-              <button
-                style={{
-                  border: 'none',
-                  backgroundColor: 'transparent',
-                  padding: '0',
-                  marginRight: '5px',
-                }}
-              >
-                <img
-                  className="postMoreOptionsImage"
-                  src="https://cdn-icons-png.flaticon.com/512/463/463292.png"
-                  alt="pan"
-                />
-              </button>
-            </Dropdown.Toggle>
+              <img
+                className="postMoreOptionsImage"
+                src="https://cdn-icons-png.flaticon.com/512/463/463292.png"
+                alt="pan"
+              />
+            </button>
+          </Dropdown.Toggle>
 
-            <Dropdown.Menu className={notificationCss.dropdownMoreMenuForNotificationItem}>
+          <Dropdown.Menu className={notificationCss.dropdownMoreMenuForNotificationItem}>
+            {showViewPostDropdownAction(item) && (
               <Dropdown.Item
                 href={`/post/${notificationContent?.articleId ?? item?.articleId}`}
                 target="_blank"
@@ -306,11 +376,45 @@ const Notification = (props: NotificationProps): JSX.Element => {
                   <span className={notificationCss.dropdownMenuOptionsLabel}>View post</span>
                 </div>
               </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        ) : (
-          <></>
-        )}
+            )}
+            {showViewUserProfileDropdownAction(item) && (
+              <Dropdown.Item
+                href={`/viewProfile?id=${notificationContent?.articleId ?? item?.articleId}`}
+                target="_blank"
+                className={notificationCss.dropdownItem}
+              >
+                <div>
+                  <NextImage
+                    field={NotificationOpen}
+                    editable={true}
+                    width={16}
+                    height={16}
+                    title="Notification"
+                  ></NextImage>
+                  <span className={notificationCss.dropdownMenuOptionsLabel}>View Profile</span>
+                </div>
+              </Dropdown.Item>
+            )}
+            {!item?.read && (
+              <Dropdown.Item
+                onClick={() => markNotificationAsRead(item?.id)}
+                target="_blank"
+                className={notificationCss.dropdownItem}
+              >
+                <div>
+                  <NextImage
+                    field={MarkAsRead}
+                    editable={true}
+                    width={15}
+                    height={15}
+                    title="Notification"
+                  ></NextImage>
+                  <span className={notificationCss.dropdownMenuOptionsLabel}>Mark as read</span>
+                </div>
+              </Dropdown.Item>
+            )}
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
     );
   };

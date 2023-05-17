@@ -79,20 +79,15 @@
 }
 
 .notificationActionActiveBtn {
-  width: 30x;
-  height: 33px;
-  background-color: #47d7ac;
-  border: none;
-  border-radius: 15px;
+  background-color: #47d7ac !important;
 }
 
 .notificationActionBtn {
-  width: 40x;
+  width: 30x;
   height: 33px;
-  background-color: whitesmoke;
-  color: #000;
-  border: 1px solid lightgray;
+  border: none;
   border-radius: 15px;
+  background-color: grey;
 }
 
 .notificationHeaderLabel {
