@@ -3,7 +3,7 @@ import {
   ImageField,
   NextImage,
   RichTextField,
-  TextField,
+  Image,
 } from '@sitecore-jss/sitecore-jss-nextjs';
 import { Text } from '@sitecore-jss/sitecore-jss-react';
 import { ComponentProps } from 'lib/component-props';
@@ -31,6 +31,9 @@ type LoginProps = ComponentProps & {
 };
 type DataSource = {
   title: {
+    jsonValue: Field<string>;
+  };
+  alert: {
     jsonValue: Field<string>;
   };
   description: {
@@ -166,13 +169,6 @@ const Login = (props: LoginProps): JSX.Element => {
     }
   };
 
-  const HeadingArr = targetItems?.title?.jsonValue?.value?.split('<br>');
-  const headingPart1: TextField = {
-    value: HeadingArr[0],
-  };
-  const headingPart2: TextField = {
-    value: HeadingArr[1],
-  };
   return (
     <>
       <div className={loginCss.ThemeSwitcher}>
@@ -183,18 +179,29 @@ const Login = (props: LoginProps): JSX.Element => {
           <div className={loginCss.leftGrid}>
             <div className={loginCss.welcomeText}>
               <div className={loginCss.welcomeTextImage}>
-                <NextImage
-                  field={targetItems?.image?.jsonValue?.value}
+                <Image
+                  field={props?.fields?.data?.datasource?.image?.jsonValue}
                   editable={true}
                   width={50}
                   height={50}
                 />
               </div>
               <h5 className={`${darkMode && darkTheme.text_green}`}>
-                <Text field={HeadingArr ? headingPart1 : { value: 'Welcome,' }} editable={true} />
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.title?.jsonValue
+                      ? props?.fields?.data?.datasource?.title?.jsonValue
+                      : { value: 'Welcome,' }
+                  }
+                  editable={true}
+                />
                 <br />
                 <Text
-                  field={HeadingArr ? headingPart2 : { value: 'Please Login Here' }}
+                  field={
+                    props?.fields?.data?.datasource?.alert?.jsonValue
+                      ? props?.fields?.data?.datasource?.alert?.jsonValue
+                      : { value: 'Please Login Here' }
+                  }
                   editable={true}
                 />
               </h5>
@@ -203,8 +210,8 @@ const Login = (props: LoginProps): JSX.Element => {
               >
                 <Text
                   field={
-                    targetItems?.description?.jsonValue?.value
-                      ? { value: targetItems?.description?.jsonValue?.value }
+                    props?.fields?.data?.datasource?.description?.jsonValue
+                      ? props?.fields?.data?.datasource?.description?.jsonValue
                       : {
                           value:
                             "Please LoginWelcome to community solution! Please enter your username/ email and password to access your account. If you don't have an account yet, you can Register for free by clicking the 'Register Here' button",
@@ -218,9 +225,10 @@ const Login = (props: LoginProps): JSX.Element => {
           <div className={loginCss.rightGrid}>
             <div className={loginCss.rightGridBox}>
               <div className={loginCss.img1}>
-                <NextImage
+                <Image
                   field={
-                    targetItems?.loginFrameImageList?.targetItems[0]?.imageLogin?.jsonValue?.value
+                    props?.fields?.data?.datasource?.loginFrameImageList?.targetItems[0]?.imageLogin
+                      ?.jsonValue
                   }
                   height={150}
                   width={150}
@@ -228,9 +236,10 @@ const Login = (props: LoginProps): JSX.Element => {
                 />
               </div>
               <div className={loginCss.img2}>
-                <NextImage
+                <Image
                   field={
-                    targetItems?.loginFrameImageList?.targetItems[1]?.imageLogin?.jsonValue?.value
+                    props?.fields?.data?.datasource?.loginFrameImageList?.targetItems[1]?.imageLogin
+                      ?.jsonValue
                   }
                   height={150}
                   width={150}
@@ -240,7 +249,8 @@ const Login = (props: LoginProps): JSX.Element => {
               <div className={loginCss.img3}>
                 <NextImage
                   field={
-                    targetItems?.loginFrameImageList?.targetItems[2]?.imageLogin?.jsonValue?.value
+                    props?.fields?.data?.datasource?.loginFrameImageList?.targetItems[2]?.imageLogin
+                      ?.jsonValue
                   }
                   editable={true}
                   height={150}
@@ -263,8 +273,8 @@ const Login = (props: LoginProps): JSX.Element => {
                 <label className={`${loginCss.label} ${darkMode && darkTheme.text_light}`}>
                   <Text
                     field={
-                      targetItems?.userNameLabel?.jsonValue?.value
-                        ? { value: targetItems?.userNameLabel?.jsonValue?.value }
+                      props?.fields?.data?.datasource?.userNameLabel?.jsonValue
+                        ? props?.fields?.data?.datasource?.userNameLabel?.jsonValue
                         : { value: 'User Name / Email' }
                     }
                     editable={true}
@@ -297,8 +307,8 @@ const Login = (props: LoginProps): JSX.Element => {
                 <label className={`${loginCss.label} ${darkMode && darkTheme.text_light}`}>
                   <Text
                     field={
-                      targetItems?.passwordLabel?.jsonValue?.value
-                        ? { value: targetItems?.passwordLabel?.jsonValue?.value }
+                      props?.fields?.data?.datasource?.passwordLabel?.jsonValue
+                        ? props?.fields?.data?.datasource?.passwordLabel?.jsonValue
                         : { value: 'Password' }
                     }
                     editable={true}
@@ -342,6 +352,13 @@ const Login = (props: LoginProps): JSX.Element => {
                       ? targetItems.forgotPasswordLabel.jsonValue.value
                       : 'Forgot Password?'}
                   </Link>
+                  {/* <Text
+                      field={
+                        targetItems?.forgotPasswordLabel?.jsonValue
+                          ? targetItems.forgotPasswordLabel.jsonValue
+                          : { value: 'Forgot Password?' }
+                      }
+                    /> */}
                 </div>
               </div>
               <button
@@ -357,8 +374,8 @@ const Login = (props: LoginProps): JSX.Element => {
                 ) : (
                   <Text
                     field={
-                      targetItems?.signInBtn?.jsonValue?.value
-                        ? { value: targetItems?.signInBtn?.jsonValue?.value }
+                      props?.fields?.data?.datasource?.signInBtn?.jsonValue
+                        ? props?.fields?.data?.datasource?.signInBtn?.jsonValue
                         : { value: 'Sign In' }
                     }
                     editable={true}
@@ -390,8 +407,8 @@ const Login = (props: LoginProps): JSX.Element => {
                 <div className={loginCss.text}>
                   <Text
                     field={
-                      targetItems?.dontHaveAccountLabel?.jsonValue?.value
-                        ? { value: targetItems?.dontHaveAccountLabel?.jsonValue?.value }
+                      props?.fields?.data?.datasource?.dontHaveAccountLabel?.jsonValue
+                        ? props?.fields?.data?.datasource?.dontHaveAccountLabel?.jsonValue
                         : { value: "Don't have Account ?" }
                     }
                     editable={true}
@@ -405,8 +422,8 @@ const Login = (props: LoginProps): JSX.Element => {
                     <button className={loginCss.RegisterBtn}>
                       <Text
                         field={
-                          targetItems?.registerHereLabel?.jsonValue?.value
-                            ? { value: targetItems?.registerHereLabel?.jsonValue?.value }
+                          props?.fields?.data?.datasource?.registerHereLabel?.jsonValue
+                            ? props?.fields?.data?.datasource?.registerHereLabel?.jsonValue
                             : { value: 'Register' }
                         }
                         editable={true}
