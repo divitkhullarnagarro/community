@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Link,
   Text,
   useSitecoreContext,
   LinkField,
   TextField,
+  Field,
 } from '@sitecore-jss/sitecore-jss-nextjs';
 
 interface Fields {
@@ -21,14 +22,10 @@ interface Fields {
         };
       };
       title?: {
-        jsonValue: {
-          value: string;
-        };
+        jsonValue: Field<string>;
       };
       description?: {
-        jsonValue: {
-          value: string;
-        };
+        jsonValue: Field<string>;
       };
     };
     contextItem: {
@@ -78,18 +75,6 @@ const TitleJSS = (props: TitleProps): JSX.Element => {
     editable: datasource?.field?.jsonValue?.editable,
   };
 
-  const [text2, setText2] = useState<TextField>({
-    value: 'Hello Sitecore',
-    editable: 'Hello Sitecore',
-  });
-
-  useEffect(() => {
-    setText2({
-      value: props?.fields?.data?.datasource?.title?.jsonValue?.value,
-      editable: props?.fields?.data?.datasource?.title?.jsonValue?.value,
-    });
-  }, [props]);
-
   const link: LinkField = {
     value: {
       href: datasource?.url?.path,
@@ -117,14 +102,18 @@ const TitleJSS = (props: TitleProps): JSX.Element => {
           </Link>
         )}
       </>
-      <Text field={text2} editable={true} />
+      {/* <Text field={text2} editable={true} />
       <br />
-      <Text field={text2} />
+      <Text field={text2} /> */}
       <br />
-      Title : {props?.fields?.data?.datasource?.title?.jsonValue?.value}
+      Title : <Text field={props?.fields?.data?.datasource?.title?.jsonValue} editable={true} />
+      <br />
+      Title(Editable:"empty") : <Text field={props?.fields?.data?.datasource?.title?.jsonValue} />
       <div>
         <span>Description : </span>
-        <span>{props?.fields?.data?.datasource?.description?.jsonValue?.value}</span>
+        <span>
+          <Text field={props?.fields?.data?.datasource?.description?.jsonValue} />
+        </span>
       </div>
     </div>
   );
