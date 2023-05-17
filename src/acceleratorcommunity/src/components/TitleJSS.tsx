@@ -66,6 +66,10 @@ const TitleJSS = (props: TitleProps): JSX.Element => {
     value: datasource?.field?.jsonValue?.value,
     editable: datasource?.field?.jsonValue?.editable,
   };
+  const text2: TextField = {
+    value: 'Hello Sitecore',
+    editable: 'Hello Sitecore',
+  };
   const link: LinkField = {
     value: {
       href: datasource?.url?.path,
@@ -94,6 +98,7 @@ const TitleJSS = (props: TitleProps): JSX.Element => {
             </Link>
           )}
         </>
+        <Text field={text2} />
       </div>
     </ComponentContent>
   );
