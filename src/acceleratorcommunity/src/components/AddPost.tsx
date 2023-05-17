@@ -304,6 +304,7 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   let objectEmail = params.get('id');
 
   useEffect(() => {
+    setMyAnotherArr([]);
     if (userToken != '' && userToken != undefined) {
       AxiosRequest({
         method: 'GET',

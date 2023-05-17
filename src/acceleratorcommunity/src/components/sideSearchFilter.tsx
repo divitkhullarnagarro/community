@@ -13,7 +13,7 @@ const SideSearchFilter = (props: any) => {
   return (
     <div className={styles.filterContainer}>
       <div className={styles.filterHeader}>
-        <div className={styles.filterHeading}>Filters</div>
+        <div className={`${styles.filterHeading} ${darkMode && darkModeCss.text_green}`}>Filters</div>
         <button className={styles.clearBtn} onClick={() => props?.clearFilter()}>
           Clear filter
         </button>
@@ -22,9 +22,9 @@ const SideSearchFilter = (props: any) => {
         {/* <button className={styles.clearBtn} onClick={() => props?.resetFilter()}>
               Reset filter Search
             </button> */}
-        <div className={styles.filterHeading}>Filter by Time</div>
+        <div className={`${styles.filterHeading} ${darkMode && darkModeCss.text_green}`}>Filter by Time</div>
         <button onClick={() => setOpen(!open)}>
-          <img src={minimize.src} />{' '}
+          <img className={`${darkMode && darkModeCss.invertFilter}`} src={minimize.src} />{' '}
         </button>
       </div>
       <Collapse in={open}>
@@ -55,7 +55,7 @@ const SideSearchFilter = (props: any) => {
                           checked={props?.filterState.includes(filter) ? true : false}
                           type="checkbox"
                         />
-                        <div className={styles.filterName}>{filter}</div>
+                        <div className={`${styles.filterName} ${darkMode && darkModeCss.text_green}`}>{filter}</div>
                       </div>
                     </>
                   );

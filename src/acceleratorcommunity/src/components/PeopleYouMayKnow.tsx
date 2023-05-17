@@ -79,6 +79,9 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
                       // editable={true}
                       height={40}
                       width={40}
+                      onError={(e) => {
+                        returnUserImage(e);
+                      }}
                     />
                   </Link>
                   <div>
@@ -148,6 +151,10 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   //   );
   // };
 
+  function returnUserImage(e: any) {
+    e.target.src = Profile.src;
+  }
+
   const PeopleYouMayKnowFullPageItem = (item: peopleYouMayKnowFields) => {
     return (
       <Card
@@ -161,6 +168,9 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
               className={styles.imgProfile}
               contentEditable={true}
               src={item.profilePictureUrl ? item.profilePictureUrl : Profile.src}
+              onError={(e) => {
+                returnUserImage(e);
+              }}
             />
           </Link>
         </div>
