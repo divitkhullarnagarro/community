@@ -7,8 +7,8 @@ import BannerSitecore from '../assets/images/Banner-Sitecore.png';
 import { useRouter } from 'next/router';
 import { useState, useContext, useEffect } from 'react';
 import WebContext from '../Context/WebContext';
-import groupBackground from '../assets/images/groupBackground.svg';
-import groupLogoImg from '../assets/images/groupLogoImg.svg';
+// import groupBackground from '../assets/images/groupBackground.svg';
+// import groupLogoImg from '../assets/images/groupLogoImg.svg';
 import AxiosRequest from 'src/API/AxiosRequest';
 import {
   getFollowersUrl,
@@ -19,6 +19,7 @@ import {
 import { Form, Modal } from 'react-bootstrap';
 import DotLoader from './DotLoader';
 import ToastNotification from './ToastNotification';
+import groupIcon from '../assets/images/ProfilePic.jpeg';
 
 type HeaderProfileProps = ComponentProps & {
   fields: {
@@ -30,7 +31,8 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
   const { userObject } = {
     ...useContext(WebContext),
   };
-
+  const router = useRouter();
+  const isGroupPage = props?.params?.IsGroupList == '1' ? true : false;
   const [joinValue, setJoinValue] = useState(true);
   const [leaveValue, setLeaveValue] = useState(false);
   const [fetchUser, setfetchUser] = useState<any>({});
@@ -47,6 +49,9 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
   const [toastSuccess, setToastSuccess] = useState(false);
   const [toastError, setToastError] = useState(false);
   const [toastMessage, setToastMessage] = useState<string>();
+  // const [groupIcon, setGroupIcon] = useState<string>('');
+  // const [groupBanner, setGroupBanner] = useState<string>('');
+  const [groupInfo, setGroupInfo] = useState<any>({});
   const resetToastState = () => {
     setShowNofitication(!showNotification);
     setToastSuccess(false);
@@ -62,9 +67,6 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
     setJoinValue(true);
     setLeaveValue(false);
   };
-  const router = useRouter();
-  const { groupName } = router.query;
-  const isGroupPage = props?.params?.IsGroupList == '1' ? true : false;
 
   //get objectId from URL
   const params =
@@ -238,11 +240,72 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
     e.target.src = Profile.src;
   }
 
+  //group functionality start
+  const getGroupInfo = async (groupId: string) => {
+    try {
+      const res: any = await AxiosRequest({
+        url: `https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/group/${groupId}`,
+        method: 'GET',
+      });
+      if (res?.data) setGroupInfo(res.data);
+      // debugger;
+      console.log('groupInfo', res);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    const groupId = router?.query?.groupId as string;
+    const isGroupPage = props?.params?.IsGroupList == '1' ? true : false;
+    if (isGroupPage) {
+    }
+    // alert(groupId);
+    getGroupInfo(groupId);
+  }, []);
+
+  function changeGroupBannerbuttonHandler() {
+    if (typeof document !== undefined) {
+      const buttEle = document.getElementById('changeGroupBannerButton');
+      buttEle?.click();
+    }
+  }
+
+  async function UploadGroupBannerToServer(file: any) {
+    const formData = new FormData();
+    formData.append('multipleFiles', file);
+    return await AxiosRequest({
+      url: uploadBannerUrl,
+      method: 'POST',
+      data: formData,
+      contentType: 'multipart/form-data',
+    })
+      .then((response: any) => {
+        return response?.data;
+      })
+      .catch(() => {
+        setToastMessage('Something Went Wrong !');
+        setToastError(true);
+        setShowNofitication(true);
+      });
+  }
+  async function uploadGroupBannerFile(e: any) {
+    const files = e.target.files;
+
+    const temp = files[0];
+    const resp = await UploadGroupBannerToServer(temp);
+    console.log('bannerImageUrl', resp);
+  }
+  //group functionality End
   return (
     <div
       style={
         isGroupPage
-          ? { backgroundImage: `url(${groupBackground.src})` }
+          ? {
+              backgroundImage: `url(${
+                groupInfo.groupBannerUrl
+                  ? groupInfo.groupBannerUrl
+                  : 'https://user-images.githubusercontent.com/160484/173871463-97e30942-dafe-4b91-b158-1ecf3300c540.png'
+              })`,
+            }
           : isBannerLoaded
           ? {
               backgroundImage: `url(${
@@ -254,7 +317,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
       className={isGroupPage ? `${styles.groupHeaderWrapper}` : `${styles.headerWrapper}`}
       // style={{ marginBottom: '10px' }}
     >
-      {!isBannerLoaded ? (
+      {!isBannerLoaded && !isGroupPage ? (
         <span className={styles.dotLoaderBannerPic}>
           <DotLoader />
         </span>
@@ -265,7 +328,13 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
         <div className={styles.leftSection}>
           <div className={styles.profileImage}>
             {isGroupPage ? (
-              <Image src={groupLogoImg} height={100} width={110} className={styles.groupPageLogo} />
+              // <img src={groupLogoImg.src} height={150} width={150} />
+              <Image
+                src={groupInfo.groupIconUrl ? groupInfo.groupIconUrl : groupIcon.src}
+                height={150}
+                width={150}
+                className={styles.groupPageLogo}
+              />
             ) : isProfilePicloaded ? (
               <img
                 src={fetchUser?.profilePictureUrl ? fetchUser?.profilePictureUrl : Profile.src}
@@ -283,7 +352,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
           </div>
           <div className={styles.profileInfoSection}>
             {isGroupPage ? (
-              <div className={styles.groupName}>{groupName}</div>
+              <div className={styles.groupName}>{groupInfo.groupName}</div>
             ) : (
               <div className={styles.name}>
                 {userObject ? `${fetchUser?.firstName} ${fetchUser?.lastName}` : 'John Doe'}
@@ -332,8 +401,19 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
             Change Background
           </button>
         )}
+
         {isGroupPage && (
-          <>
+          <div className={`d-flex flex-column ${styles.buttonGroup}`}>
+            {isGroupPage && (
+              <button
+                className={styles.editGroupBannerBtn}
+                onClick={() => {
+                  changeGroupBannerbuttonHandler();
+                }}
+              >
+                Change Background
+              </button>
+            )}
             {joinValue && (
               <button className={`btn  ${styles.joinButton}`} onClick={onClickJoinButton}>
                 <svg
@@ -373,7 +453,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                 &nbsp; Leave
               </button>
             )}
-          </>
+          </div>
         )}
       </div>
       <Form>
@@ -388,6 +468,21 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
             placeholder="Post Text"
             accept="image/*"
             id="clickmebutton"
+          />
+        </Form.Group>
+      </Form>
+      <Form>
+        <Form.Group
+        // className="mb-3"
+        >
+          <Form.Control
+            style={{ display: 'none' }}
+            // value={bannerImage}
+            onChange={(e) => uploadGroupBannerFile(e)}
+            type="file"
+            placeholder="Post Text"
+            accept="image/*"
+            id="changeGroupBannerButton"
           />
         </Form.Group>
       </Form>
