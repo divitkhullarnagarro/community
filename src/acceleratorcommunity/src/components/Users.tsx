@@ -907,7 +907,7 @@ const Users = (props: UserProps): JSX.Element => {
                         </div>
                       </div>
                     </div>
-                    <div
+                    {/* <div
                       className={`${styles.postContent} ${
                         darkMode ? styles.darkModeDescriptionReportedPost : ''
                       }`}
@@ -915,7 +915,7 @@ const Users = (props: UserProps): JSX.Element => {
                       {reportedPostItem?.description
                         ? parser(modifyHtml(reportedPostItem?.description))
                         : reportedPostItem?.description}
-                    </div>
+                    </div> */}
                     <div className="postMedia">
                       {reportedPostItem?.mediaList?.map((media: mediaType, num: any) => {
                         if (media?.mediaType === 'VIDEO') {
@@ -963,6 +963,44 @@ const Users = (props: UserProps): JSX.Element => {
                         return '';
                       })}
                     </div>
+                    {reportedPostItem?.postType === 'EVENT' ? (
+                      <>
+                        <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
+                          {parser(modifyHtml(reportedPostItem?.description))}
+                        </div>
+                        <EventCard
+                          heading={reportedPostItem?.event?.title}
+                          description={reportedPostItem?.event?.description}
+                          date={reportedPostItem?.event?.eventDate}
+                          eventType={reportedPostItem?.event?.eventType}
+                          url={EventImage[reportedPostItem?.event?.eventType]}
+                        />
+                      </>
+                    ) : reportedPostItem?.postType === 'POLL' ? (
+                      <>
+                        <div className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}>
+                          {parser(modifyHtml(reportedPostItem?.description))}
+                        </div>
+                        {/* <PollCard pollPost={{ poll: item?.poll }} voteInAPoll={voteInAPoll} /> */}
+                        <PollCard pollPost={{ poll: reportedPostItem?.poll }} />
+                      </>
+                    ) : reportedPostItem?.postType === 'BLOG_POST' ? (
+                      <>
+                        <div className={`blogHeading ${darkMode ? darkModeCss.text_green : ''}`}>
+                          {reportedPostItem?.blog?.heading}
+                        </div>
+                        {reportedPostItem?.blog?.imageUrl && (
+                          <img
+                            style={{ width: '100%' }}
+                            src={reportedPostItem?.blog?.imageUrl}
+                            alt="Post Image"
+                          />
+                        )}
+                        <ViewPostDescription description={reportedPostItem?.blog?.description} />
+                      </>
+                    ) : (
+                      <ViewPostDescription description={reportedPostItem?.description} />
+                    )}
                   </div>
                 </Modal.Body>
                 <Modal.Footer className={styles.reportPostModalFooter}>

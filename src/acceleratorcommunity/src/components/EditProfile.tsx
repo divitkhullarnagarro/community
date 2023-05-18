@@ -236,6 +236,10 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
     }
   }, [ifReachedEndFollowers]);
 
+  function returnUserImage(e: any) {
+    e.target.src = Profile.src;
+  }
+
   //group functionality start
   const getGroupInfo = async (groupId: string) => {
     try {
@@ -336,6 +340,9 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                 src={fetchUser?.profilePictureUrl ? fetchUser?.profilePictureUrl : Profile.src}
                 height={150}
                 width={150}
+                onError={(e) => {
+                  returnUserImage(e);
+                }}
               />
             ) : (
               <div className={styles.dotLoaderProfilePic}>
@@ -530,16 +537,21 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                             onClick={() => gotoAnotherUser(follower?.objectId)}
                           >
                             <div className={styles.userCard}>
-                              <div
-                                className={styles.userImage}
-                                style={{
-                                  backgroundImage: `url(${
+                              <div className={styles.userImage}>
+                                <img
+                                  width="100%"
+                                  height="100%"
+                                  src={
                                     follower.profilePictureUrl
                                       ? follower.profilePictureUrl
                                       : Profile.src
-                                  })`,
-                                }}
-                              ></div>
+                                  }
+                                  alt="alt"
+                                  onError={(e) => {
+                                    returnUserImage(e);
+                                  }}
+                                />
+                              </div>
                               <div className={styles.userName}>
                                 {follower.firstName}&nbsp;{follower.lastName}
                               </div>
@@ -587,14 +599,19 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                           onClick={() => gotoAnotherUser(follow?.objectId)}
                         >
                           <div className={styles.userCard}>
-                            <div
-                              className={styles.userImage}
-                              style={{
-                                backgroundImage: `url(${
+                            <div className={styles.userImage}>
+                              <img
+                                width="100%"
+                                height="100%"
+                                src={
                                   follow.profilePictureUrl ? follow.profilePictureUrl : Profile.src
-                                })`,
-                              }}
-                            ></div>
+                                }
+                                alt="alt"
+                                onError={(e) => {
+                                  returnUserImage(e);
+                                }}
+                              />
+                            </div>
                             <div className={styles.userName}>
                               {follow.firstName}&nbsp;{follow.lastName}
                             </div>

@@ -236,13 +236,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
 
   const getAllPears = async () => {
     const res = await allPeersCall(userToken);
-    const data = res.data.data;
-    const userData = data.map((ele: any) => {
+    const data = res?.data?.data;
+    const userData = data?.map((ele: any) => {
       return {
-        text: ele.firstName + ' ' + ele.lastName,
-        value: ele.firstName + ' ' + ele.lastName,
-        url: '/profile/' + ele.objectId,
-        objectId: ele.objectId,
+        text: ele?.firstName + ' ' + ele?.lastName,
+        value: ele?.firstName + ' ' + ele?.lastName,
+        url: '/profile/' + ele?.objectId,
+        objectId: ele?.objectId,
       };
     });
     setMentionUserData(userData);

@@ -1,4 +1,11 @@
-import { Field, ImageField, NextImage, RichTextField } from '@sitecore-jss/sitecore-jss-nextjs';
+import {
+  Field,
+  ImageField,
+  NextImage,
+  RichTextField,
+  Image,
+} from '@sitecore-jss/sitecore-jss-nextjs';
+import { Text } from '@sitecore-jss/sitecore-jss-react';
 import { ComponentProps } from 'lib/component-props';
 import React, { useContext, useState } from 'react';
 import Link from 'next/link';
@@ -24,6 +31,9 @@ type LoginProps = ComponentProps & {
 };
 type DataSource = {
   title: {
+    jsonValue: Field<string>;
+  };
+  alert: {
     jsonValue: Field<string>;
   };
   description: {
@@ -62,7 +72,7 @@ type DataSource = {
 const Login = (props: LoginProps): JSX.Element => {
   const targetItems = props?.fields?.data?.datasource;
   const router = useRouter();
-  const { setIsLoggedIn, setUserToken, setObjectId, userToken, setUserObject, darkMode } = {
+  const { setIsLoggedIn, setUserToken, setObjectId, setUserObject, darkMode } = {
     ...useContext(WebContext),
   };
 
@@ -159,8 +169,6 @@ const Login = (props: LoginProps): JSX.Element => {
     }
   };
 
-  console.log('userToken', userToken);
-  const heading = targetItems?.title?.jsonValue?.value?.split('<br>');
   return (
     <>
       <div className={loginCss.ThemeSwitcher}>
@@ -171,50 +179,80 @@ const Login = (props: LoginProps): JSX.Element => {
           <div className={loginCss.leftGrid}>
             <div className={loginCss.welcomeText}>
               <div className={loginCss.welcomeTextImage}>
-                <NextImage
-                  field={targetItems?.image?.jsonValue?.value}
+                <Image
+                  field={props?.fields?.data?.datasource?.image?.jsonValue}
                   editable={true}
                   width={50}
                   height={50}
                 />
               </div>
               <h5 className={`${darkMode && darkTheme.text_green}`}>
-                {heading ? heading[0] : 'Welcome,'}
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.title?.jsonValue
+                      ? props?.fields?.data?.datasource?.title?.jsonValue
+                      : { value: 'Welcome,' }
+                  }
+                  editable={true}
+                />
                 <br />
-                {heading ? heading[1] : 'Please Login Here'}
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.alert?.jsonValue
+                      ? props?.fields?.data?.datasource?.alert?.jsonValue
+                      : { value: 'Please Login Here' }
+                  }
+                  editable={true}
+                />
               </h5>
               <div
                 className={`${loginCss.welcomeTextDescription} ${darkMode && darkTheme.text_light}`}
               >
-                {targetItems?.description?.jsonValue?.value}
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.description?.jsonValue
+                      ? props?.fields?.data?.datasource?.description?.jsonValue
+                      : {
+                          value:
+                            "Please LoginWelcome to community solution! Please enter your username/ email and password to access your account. If you don't have an account yet, you can Register for free by clicking the 'Register Here' button",
+                        }
+                  }
+                  editable={true}
+                />
               </div>
             </div>
           </div>{' '}
           <div className={loginCss.rightGrid}>
             <div className={loginCss.rightGridBox}>
               <div className={loginCss.img1}>
-                <NextImage
+                <Image
                   field={
-                    targetItems?.loginFrameImageList?.targetItems[0]?.imageLogin?.jsonValue?.value
+                    props?.fields?.data?.datasource?.loginFrameImageList?.targetItems[0]?.imageLogin
+                      ?.jsonValue
                   }
                   height={150}
                   width={150}
+                  editable={true}
                 />
               </div>
               <div className={loginCss.img2}>
-                <NextImage
+                <Image
                   field={
-                    targetItems?.loginFrameImageList?.targetItems[1]?.imageLogin?.jsonValue?.value
+                    props?.fields?.data?.datasource?.loginFrameImageList?.targetItems[1]?.imageLogin
+                      ?.jsonValue
                   }
                   height={150}
                   width={150}
+                  editable={true}
                 />
               </div>
               <div className={loginCss.img3}>
                 <NextImage
                   field={
-                    targetItems?.loginFrameImageList?.targetItems[2]?.imageLogin?.jsonValue?.value
+                    props?.fields?.data?.datasource?.loginFrameImageList?.targetItems[2]?.imageLogin
+                      ?.jsonValue
                   }
+                  editable={true}
                   height={150}
                   width={150}
                 />
@@ -233,7 +271,14 @@ const Login = (props: LoginProps): JSX.Element => {
               <div className={loginCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
                 <label className={`${loginCss.label} ${darkMode && darkTheme.text_light}`}>
-                  {targetItems?.userNameLabel?.jsonValue?.value}
+                  <Text
+                    field={
+                      props?.fields?.data?.datasource?.userNameLabel?.jsonValue
+                        ? props?.fields?.data?.datasource?.userNameLabel?.jsonValue
+                        : { value: 'User Name / Email' }
+                    }
+                    editable={true}
+                  />
                 </label>
                 <input
                   onChange={(e) => setEmailValue(e.target.value)}
@@ -242,7 +287,17 @@ const Login = (props: LoginProps): JSX.Element => {
                   className={loginCss.loginInput}
                 />
                 {emailError ? (
-                  <span className={loginCss.error}>*{emailValidationMessage}</span>
+                  <span className={loginCss.error}>
+                    *
+                    <Text
+                      field={
+                        emailValidationMessage
+                          ? { value: emailValidationMessage }
+                          : { value: 'User Name / Email is mandatory' }
+                      }
+                      editable={true}
+                    />
+                  </span>
                 ) : (
                   ''
                 )}
@@ -250,7 +305,14 @@ const Login = (props: LoginProps): JSX.Element => {
               <div className={loginCss.loginField}>
                 <i className="login__icon fas fa-lock"></i>
                 <label className={`${loginCss.label} ${darkMode && darkTheme.text_light}`}>
-                  {targetItems?.passwordLabel?.jsonValue?.value}
+                  <Text
+                    field={
+                      props?.fields?.data?.datasource?.passwordLabel?.jsonValue
+                        ? props?.fields?.data?.datasource?.passwordLabel?.jsonValue
+                        : { value: 'Password' }
+                    }
+                    editable={true}
+                  />
                 </label>
                 <input
                   onChange={(e) => setPasswordValue(e.target.value)}
@@ -259,7 +321,17 @@ const Login = (props: LoginProps): JSX.Element => {
                   className={loginCss.loginInput}
                 />
                 {passwodError ? (
-                  <span className={loginCss.error}>*{passwordValidationMessage}</span>
+                  <span className={loginCss.error}>
+                    *
+                    <Text
+                      field={
+                        passwordValidationMessage
+                          ? { value: passwordValidationMessage }
+                          : { value: 'Password is mandatory' }
+                      }
+                      editable={true}
+                    />
+                  </span>
                 ) : (
                   ''
                 )}
@@ -280,6 +352,13 @@ const Login = (props: LoginProps): JSX.Element => {
                       ? targetItems.forgotPasswordLabel.jsonValue.value
                       : 'Forgot Password?'}
                   </Link>
+                  {/* <Text
+                      field={
+                        targetItems?.forgotPasswordLabel?.jsonValue
+                          ? targetItems.forgotPasswordLabel.jsonValue
+                          : { value: 'Forgot Password?' }
+                      }
+                    /> */}
                 </div>
               </div>
               <button
@@ -292,11 +371,16 @@ const Login = (props: LoginProps): JSX.Element => {
                     {' '}
                     <Spinner style={{ width: '15px', height: '15px' }} animation="border" />{' '}
                   </span>
-                ) : targetItems?.signInBtn?.jsonValue?.value ? (
-                  targetItems?.signInBtn?.jsonValue?.value
                 ) : (
-                  'Sign In'
-                )}{' '}
+                  <Text
+                    field={
+                      props?.fields?.data?.datasource?.signInBtn?.jsonValue
+                        ? props?.fields?.data?.datasource?.signInBtn?.jsonValue
+                        : { value: 'Sign In' }
+                    }
+                    editable={true}
+                  />
+                )}
                 <i className="button__icon fas fa-chevron-right"></i>
               </button>
               {/* {isLoggedIn ? (
@@ -321,13 +405,33 @@ const Login = (props: LoginProps): JSX.Element => {
             <div className={loginCss.formContainerBottom}>
               <div className={`${loginCss.formContainerButton} ${darkMode && darkTheme.greenBg}`}>
                 <div className={loginCss.text}>
-                  {targetItems?.dontHaveAccountLabel?.jsonValue?.value}
+                  <Text
+                    field={
+                      props?.fields?.data?.datasource?.dontHaveAccountLabel?.jsonValue
+                        ? props?.fields?.data?.datasource?.dontHaveAccountLabel?.jsonValue
+                        : { value: "Don't have Account ?" }
+                    }
+                    editable={true}
+                  />
                 </div>
                 <div className={loginCss.btn}>
                   <Link href={'/register'}>
-                    {targetItems?.registerHereLabel?.jsonValue?.value
+                    {/* {targetItems?.registerHereLabel?.jsonValue?.value
                       ? targetItems.registerHereLabel.jsonValue.value
-                      : 'Register'}
+                      : 'Register'} */}
+                    <button className={loginCss.RegisterBtn}>
+                      <Text
+                        field={
+                          props?.fields?.data?.datasource?.registerHereLabel?.jsonValue
+                            ? props?.fields?.data?.datasource?.registerHereLabel?.jsonValue
+                            : { value: 'Register' }
+                        }
+                        editable={true}
+                        onClick={() => {
+                          router.push('/register');
+                        }}
+                      />
+                    </button>
                   </Link>
                 </div>
               </div>
