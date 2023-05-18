@@ -47,6 +47,7 @@ const nextConfig = {
       'nkdramblog.files.wordpress.com',
       'images.pexels.com',
       'xmc-nagarro1-communityac830d-communityace1c7.sitecorecloud.io',
+      'user-images.githubusercontent.com',
     ],
   },
 

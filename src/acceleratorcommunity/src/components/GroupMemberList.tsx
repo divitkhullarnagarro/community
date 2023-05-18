@@ -13,6 +13,7 @@ import WebContext from '../Context/WebContext';
 import { useContext, useEffect, useRef, useState } from 'react';
 import AxiosRequest from 'src/API/AxiosRequest';
 import DotLoader from './DotLoader';
+import MemberListSkeleton from './skeletons/MemberListSkeleton';
 
 type GroupMembersListProps = ComponentProps & {
   fields: {
@@ -29,6 +30,7 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
   const [loadingMore, setLoadingMore] = useState(false);
   const [showSeeMoreButton, setShowSeeMoreButton] = useState(false);
   const [pageNumber, setPageNumber] = useState(2);
+  const [skeletonVisible, setSkeletonVisible] = useState(true);
 
   const counter = useRef(0);
 
@@ -37,11 +39,13 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
   console.log('groupMemberquery', router.query.groupId);
   const getMemberList = async () => {
     try {
+      setSkeletonVisible(true);
       const res: any = await AxiosRequest({
         url: getFirstTenMemberListUrl,
         method: 'GET',
       });
       if (res.data) {
+        setSkeletonVisible(true);
         setMemberList(res.data);
         if (res.hasMorePage) {
           setShowSeeMoreButton(true);
@@ -50,11 +54,14 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
         }
       }
     } catch (error) {
+      setSkeletonVisible(true);
       console.log(error);
     }
   };
   useEffect(() => {
+    // setTimeout(() => {
     getMemberList();
+    // }, 5000);
   }, []);
   const getMoreMembers = async (e: any) => {
     counter.current = 1;
@@ -95,42 +102,48 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
           }`}
           onScroll={getMoreMembers}
         >
-          {memberList.map((ele: any) => (
-            <>
-              <div
-                key={ele.objectId}
-                className={`${style.groupMemberListHeading} ${darkMode && darkTheme.grey_1}`}
-                onClick={() => {
-                  onMemberClick(ele.objectId);
-                }}
-              >
+          {memberList.length > 0 ? (
+            memberList.map((ele: any) => (
+              <>
                 <div
-                  className={`${style.groupMemberListHeadingLeft} ${
-                    darkMode && style.groupMemberListHeadingDarkTheme
-                  } ${darkMode && darkTheme.grey_2}`}
+                  key={ele.objectId}
+                  className={`${style.groupMemberListHeading} ${darkMode && darkTheme.grey_1}`}
+                  onClick={() => {
+                    onMemberClick(ele.objectId);
+                  }}
                 >
-                  <Image
-                    // src={ele.profilePictureUrl ? ele.profilePictureUrl : groupLogo.src}
-                    src={groupLogo}
-                    alt={ele.name}
-                    className={style.groupMemberListLogo}
-                    height={50}
-                    width={50}
-                  />
                   <div
-                    className={`d-flex flex-column ${style.groupMemberNameAndEmail}  ${
-                      darkMode && darkTheme.text_light
-                    }`}
+                    className={`${style.groupMemberListHeadingLeft} ${
+                      darkMode && style.groupMemberListHeadingDarkTheme
+                    } ${darkMode && darkTheme.grey_2}`}
                   >
-                    <h5
-                      className={`${style.groupMemberListName} `}
-                    >{`${ele.firstName} ${ele.firstName}`}</h5>
-                    <h6 className={`${style.groupMemberListEmail}`}>{ele.objectId}</h6>
+                    <Image
+                      // src={ele.profilePictureUrl ? ele.profilePictureUrl : groupLogo.src}
+                      src={groupLogo}
+                      alt={ele.name}
+                      className={style.groupMemberListLogo}
+                      height={50}
+                      width={50}
+                    />
+                    <div
+                      className={`d-flex flex-column ${style.groupMemberNameAndEmail}  ${
+                        darkMode && darkTheme.text_light
+                      }`}
+                    >
+                      <h5
+                        className={`${style.groupMemberListName} `}
+                      >{`${ele.firstName} ${ele.firstName}`}</h5>
+                      <h6 className={`${style.groupMemberListEmail}`}>{ele.objectId}</h6>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </>
-          ))}
+              </>
+            ))
+          ) : !skeletonVisible ? (
+            <div>No Member Found</div>
+          ) : (
+            <MemberListSkeleton />
+          )}
           {loadingMore && (
             <div style={{ margin: '18px 0' }}>
               <DotLoader />
