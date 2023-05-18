@@ -1,4 +1,4 @@
-import { Field, ImageField, NextImage, RichTextField } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, ImageField, RichTextField, Image, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import React, { useContext, useState } from 'react';
 import WebContext from '../Context/WebContext';
@@ -21,14 +21,16 @@ type ForgotPasswordProps = ComponentProps & {
     data: {
       datasource: {
         title: {
-          jsonValue: {
-            value: string;
-          };
+          jsonValue: Field<string>;
+        };
+        backToLogin: {
+          jsonValue: Field<string>;
+        };
+        alert: {
+          jsonValue: Field<string>;
         };
         description: {
-          jsonValue: {
-            value: RichTextField;
-          };
+          jsonValue: RichTextField;
         };
         userEmailLabel: {
           jsonValue: {
@@ -44,9 +46,7 @@ type ForgotPasswordProps = ComponentProps & {
           jsonValue: ImageField;
         };
         oTPLabel: {
-          jsonValue: {
-            value: Field<string>;
-          };
+          jsonValue: Field<string>;
         };
         oTPPlaceholder: {
           jsonValue: {
@@ -109,14 +109,10 @@ type ForgotPasswordProps = ComponentProps & {
           };
         };
         sendOTPPasswordBtnText: {
-          jsonValue: {
-            value: Field<string>;
-          };
+          jsonValue: Field<string>;
         };
         submitBtnText: {
-          jsonValue: {
-            value: Field<string>;
-          };
+          jsonValue: Field<string>;
         };
         forgotFrameImageList: {
           targetItems: Array<{
@@ -316,22 +312,40 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
           <div className={loginCss.leftGrid}>
             <div className={loginCss.welcomeText}>
               <div className={loginCss.welcomeTextImage}>
-                <NextImage
-                  field={datasource?.image?.jsonValue?.value}
+                <Image
+                  field={props?.fields?.data?.datasource?.image?.jsonValue}
                   editable={true}
                   width={50}
                   height={50}
                 />
               </div>
               <h5 className={`${darkMode && darkTheme.text_green}`}>
-                {datasource?.title?.jsonValue?.value.split('<br>')[0]}
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.title?.jsonValue
+                      ? props?.fields?.data?.datasource?.title?.jsonValue
+                      : { value: 'Welcome to Community Solution' }
+                  }
+                />
                 <br />
-                {datasource?.title?.jsonValue?.value.split('<br>')[1]}
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.alert?.jsonValue
+                      ? props?.fields?.data?.datasource?.alert?.jsonValue
+                      : { value: 'Please Update Password' }
+                  }
+                />
               </h5>
               <div
                 className={`${loginCss.welcomeTextDescription} ${darkMode && darkTheme.text_light}`}
               >
-                {datasource?.description?.jsonValue?.value}
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.description?.jsonValue
+                      ? props?.fields?.data?.datasource?.description?.jsonValue
+                      : { value: 'Ready to reset password?' }
+                  }
+                />
               </div>
             </div>
           </div>{' '}
@@ -341,28 +355,22 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
           <div className={loginCss.rightGrid}>
             <div className={loginCss.rightGridBox}>
               <div className={loginCss.img1}>
-                <NextImage
-                  field={
-                    datasource?.forgotFrameImageList?.targetItems[0]?.imageLogin?.jsonValue?.value
-                  }
+                <Image
+                  field={datasource?.forgotFrameImageList?.targetItems[0]?.imageLogin?.jsonValue}
                   height={100}
                   width={100}
                 />
               </div>
               <div className={loginCss.img2}>
-                <NextImage
-                  field={
-                    datasource?.forgotFrameImageList?.targetItems[1]?.imageLogin?.jsonValue?.value
-                  }
+                <Image
+                  field={datasource?.forgotFrameImageList?.targetItems[1]?.imageLogin?.jsonValue}
                   height={100}
                   width={100}
                 />
               </div>
               <div className={loginCss.img3}>
-                <NextImage
-                  field={
-                    datasource?.forgotFrameImageList?.targetItems[2]?.imageLogin?.jsonValue?.value
-                  }
+                <Image
+                  field={datasource?.forgotFrameImageList?.targetItems[2]?.imageLogin?.jsonValue}
                   height={100}
                   width={100}
                 />
@@ -481,14 +489,22 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                   <div className={loginCss.loginField}>
                     <i className={loginCss['login__icon fas fa-lock']}></i>
                     <label className={`${loginCss.label} ${darkMode && darkTheme.text_light}`}>
-                      {datasource?.oTPLabel?.jsonValue?.value}
+                      <Text
+                        field={
+                          props?.fields?.data?.datasource?.oTPLabel?.jsonValue
+                            ? props?.fields?.data?.datasource?.oTPLabel?.jsonValue
+                            : { value: 'OTP' }
+                        }
+                      />
                     </label>
                     <input
                       onChange={(e) => setOtp(e.target.value)}
                       value={otp}
                       type="number"
                       className={loginCss.loginInput}
-                      placeholder={datasource?.oTPPlaceholder?.jsonValue?.value}
+                      placeholder={
+                        props?.fields?.data?.datasource?.oTPPlaceholder?.jsonValue?.value
+                      }
                       required
                     />
                     {otpFieldVisible ? (
@@ -510,13 +526,24 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                 <button className={loginCss.formButton}>
                   {isUpdatingPassword ? (
                     <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
-                      {' '}
                       <Spinner style={{ width: '15px', height: '15px' }} animation="border" />{' '}
                     </span>
                   ) : !otpFieldVisible ? (
-                    datasource?.sendOTPPasswordBtnText?.jsonValue?.value
+                    <Text
+                      field={
+                        props?.fields?.data?.datasource?.sendOTPPasswordBtnText?.jsonValue
+                          ? props?.fields?.data?.datasource?.sendOTPPasswordBtnText?.jsonValue
+                          : { value: 'Send OTP' }
+                      }
+                    />
                   ) : (
-                    datasource?.submitBtnText?.jsonValue?.value
+                    <Text
+                      field={
+                        props?.fields?.data?.datasource?.submitBtnText?.jsonValue
+                          ? props?.fields?.data?.datasource?.submitBtnText?.jsonValue
+                          : { value: 'Verify and Submit' }
+                      }
+                    />
                   )}
                   <i className={loginCss['button__icon fas fa-chevron-right']}></i>
                 </button>
@@ -548,7 +575,21 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
             <div className={loginCss.formContainerBottom}>
               <div className={`${loginCss.formContainerButton} ${darkMode && darkTheme.greenBg}`}>
                 <div className={loginCss.btn}>
-                  <Link href={'/login'}>Back to Login?</Link>
+                  <Link href={'/login'}>
+                    <button className={loginCss.RegisterBtn}>
+                      <Text
+                        field={
+                          props?.fields?.data?.datasource?.backToLogin?.jsonValue
+                            ? props?.fields?.data?.datasource?.backToLogin?.jsonValue
+                            : { value: 'Back to Login?' }
+                        }
+                        editable={true}
+                        onClick={() => {
+                          router.push('/login');
+                        }}
+                      />
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

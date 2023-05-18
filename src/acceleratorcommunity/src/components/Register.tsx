@@ -1,4 +1,4 @@
-import { Field, ImageField, NextImage, RichTextField } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, ImageField, RichTextField, Image, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import React, { useContext, useState } from 'react';
 import Link from 'next/link';
@@ -23,6 +23,9 @@ type RegisterProps = ComponentProps & {
 };
 type DataSource = {
   title: {
+    jsonValue: Field<string>;
+  };
+  alert: {
     jsonValue: Field<string>;
   };
   description: {
@@ -266,8 +269,6 @@ const Register = (props: RegisterProps): JSX.Element => {
     }
   };
 
-  const heading = targetItems?.title?.jsonValue?.value?.split('<br>');
-  // console.log("ggggggggggggggggg",heading)
   console.log(targetItems);
   const resetToastState = () => {
     setShowNofitication(!showNotification);
@@ -284,8 +285,8 @@ const Register = (props: RegisterProps): JSX.Element => {
           <div className={RegisterCss.leftGrid}>
             <div className={RegisterCss.welcomeText}>
               <div className={RegisterCss.welcomeTextImage}>
-                <NextImage
-                  field={targetItems?.image?.jsonValue?.value}
+                <Image
+                  field={props?.fields?.data?.datasource?.image?.jsonValue}
                   editable={true}
                   width={50}
                   height={50}
@@ -295,9 +296,21 @@ const Register = (props: RegisterProps): JSX.Element => {
               <h5
                 className={`${RegisterCss.welcomeTextHeading} ${darkMode && darkTheme.text_green}`}
               >
-                {heading ? heading[0] : ''}
+                <Text
+                  field={
+                    targetItems?.title?.jsonValue
+                      ? targetItems?.title?.jsonValue
+                      : { value: 'Welcome to Community Solution' }
+                  }
+                />
                 <br />
-                {heading ? heading[1] : ''}
+                <Text
+                  field={
+                    targetItems?.title?.jsonValue
+                      ? targetItems?.alert?.jsonValue
+                      : { value: 'Please Register Here' }
+                  }
+                />
               </h5>
               <div
                 className={`${RegisterCss?.welcomeTextDescription} ${
@@ -314,22 +327,31 @@ const Register = (props: RegisterProps): JSX.Element => {
           <div className={RegisterCss.rightGrid}>
             <div className={RegisterCss.rightGridBox}>
               <div className={RegisterCss.img1}>
-                <NextImage
-                  field={targetItems?.frameImageList?.targetItems[0]?.imageLogin?.jsonValue?.value}
+                <Image
+                  field={
+                    props?.fields?.data?.datasource?.frameImageList?.targetItems[0]?.imageLogin
+                      ?.jsonValue
+                  }
                   height={150}
                   width={150}
                 />
               </div>
               <div className={RegisterCss.img2}>
-                <NextImage
-                  field={targetItems?.frameImageList?.targetItems[1]?.imageLogin?.jsonValue?.value}
+                <Image
+                  field={
+                    props?.fields?.data?.datasource?.frameImageList?.targetItems[1]?.imageLogin
+                      ?.jsonValue
+                  }
                   height={150}
                   width={150}
                 />
               </div>
               <div className={RegisterCss.img3}>
-                <NextImage
-                  field={targetItems?.frameImageList?.targetItems[2]?.imageLogin?.jsonValue?.value}
+                <Image
+                  field={
+                    props?.fields?.data?.datasource?.frameImageList?.targetItems[2]?.imageLogin
+                      ?.jsonValue
+                  }
                   height={150}
                   width={150}
                 />
@@ -347,7 +369,13 @@ const Register = (props: RegisterProps): JSX.Element => {
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
                 <label className={`${RegisterCss.label} ${darkMode && darkTheme.text_light}`}>
-                  {targetItems?.firstNameLabel?.jsonValue?.value}
+                  <Text
+                    field={
+                      props?.fields?.data?.datasource?.firstNameLabel?.jsonValue
+                        ? props?.fields?.data?.datasource?.firstNameLabel?.jsonValue
+                        : { value: 'First Name' }
+                    }
+                  />
                 </label>
                 <input
                   type="text"
@@ -368,7 +396,13 @@ const Register = (props: RegisterProps): JSX.Element => {
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
                 <label className={`${RegisterCss.label} ${darkMode && darkTheme.text_light}`}>
-                  {targetItems?.lastNameLabel?.jsonValue?.value}
+                  <Text
+                    field={
+                      props?.fields?.data?.datasource?.lastNameLabel?.jsonValue
+                        ? props?.fields?.data?.datasource?.lastNameLabel?.jsonValue
+                        : { value: 'Last Name' }
+                    }
+                  />
                 </label>
                 <input
                   type="text"
@@ -388,7 +422,13 @@ const Register = (props: RegisterProps): JSX.Element => {
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
                 <label className={`${RegisterCss.label} ${darkMode && darkTheme.text_light}`}>
-                  {targetItems?.emailLabel?.jsonValue?.value}
+                  <Text
+                    field={
+                      props?.fields?.data?.datasource?.emailLabel?.jsonValue
+                        ? props?.fields?.data?.datasource?.emailLabel?.jsonValue
+                        : { value: 'Email' }
+                    }
+                  />
                 </label>
                 <input
                   type="email"
@@ -409,7 +449,13 @@ const Register = (props: RegisterProps): JSX.Element => {
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
                 <label className={`${RegisterCss.label} ${darkMode && darkTheme.text_light}`}>
-                  {targetItems?.phoneNoLabel?.jsonValue?.value}
+                  <Text
+                    field={
+                      props?.fields?.data?.datasource?.phoneNoLabel?.jsonValue
+                        ? props?.fields?.data?.datasource?.phoneNoLabel?.jsonValue
+                        : { value: 'Phone No.' }
+                    }
+                  />
                 </label>
                 <input
                   type="text"
@@ -429,7 +475,13 @@ const Register = (props: RegisterProps): JSX.Element => {
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-user"></i>
                 <label className={`${RegisterCss.label} ${darkMode && darkTheme.text_light}`}>
-                  {targetItems?.passwordLabel?.jsonValue?.value}
+                  <Text
+                    field={
+                      props?.fields?.data?.datasource?.passwordLabel?.jsonValue
+                        ? props?.fields?.data?.datasource?.passwordLabel?.jsonValue
+                        : { value: 'Password' }
+                    }
+                  />
                 </label>
                 <input
                   type="password"
@@ -450,7 +502,13 @@ const Register = (props: RegisterProps): JSX.Element => {
               <div className={RegisterCss.loginField}>
                 <i className="login__icon fas fa-lock"></i>
                 <label className={`${RegisterCss.label} ${darkMode && darkTheme.text_light}`}>
-                  {targetItems?.confirmPasswordLabel?.jsonValue?.value}
+                  <Text
+                    field={
+                      props?.fields?.data?.datasource?.confirmPasswordLabel?.jsonValue
+                        ? props?.fields?.data?.datasource?.confirmPasswordLabel?.jsonValue
+                        : { value: 'Confirm Password' }
+                    }
+                  />
                 </label>
                 <input
                   type="password"
@@ -485,7 +543,13 @@ const Register = (props: RegisterProps): JSX.Element => {
                     <Spinner style={{ width: '15px', height: '15px' }} animation="border" />{' '}
                   </span>
                 ) : (
-                  targetItems?.registerBtn?.jsonValue?.value
+                  <Text
+                    field={
+                      props?.fields?.data?.datasource?.registerBtn?.jsonValue
+                        ? props?.fields?.data?.datasource?.registerBtn?.jsonValue
+                        : { value: 'Register' }
+                    }
+                  />
                 )}
                 <i className="button__icon fas fa-chevron-right"></i>
               </button>
@@ -502,10 +566,30 @@ const Register = (props: RegisterProps): JSX.Element => {
                 className={`${RegisterCss.formContainerButton} ${darkMode && darkTheme.greenBg}`}
               >
                 <div className={RegisterCss.text}>
-                  {targetItems?.haveAccountLabel?.jsonValue?.value}
+                  <Text
+                    field={
+                      props?.fields?.data?.datasource?.haveAccountLabel?.jsonValue
+                        ? props?.fields?.data?.datasource?.haveAccountLabel?.jsonValue
+                        : { value: 'Have Account ?' }
+                    }
+                  />
                 </div>
                 <div className={RegisterCss.btn}>
-                  <Link href={'/login'}>{targetItems?.loginBtn?.jsonValue?.value}</Link>
+                  <Link href={'/login'}>
+                    <button className={RegisterCss.GotoLoginBtn}>
+                      <Text
+                        field={
+                          props?.fields?.data?.datasource?.loginBtn?.jsonValue
+                            ? props?.fields?.data?.datasource?.loginBtn?.jsonValue
+                            : { value: 'Goto Login' }
+                        }
+                        editable={true}
+                        onClick={() => {
+                          router.push('/login');
+                        }}
+                      />
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
