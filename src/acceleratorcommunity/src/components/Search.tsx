@@ -95,7 +95,7 @@ const Search = (props: SearchProps): JSX.Element => {
     <>
       <div className={searchCss.container}>
         <div className={searchCss.searchBox}>
-          <form>
+          <form className={searchCss.searchForm}>
             <button type="submit" className={searchCss.searchBtn} onClick={handleSearch}>
               <NextImage
                 className={searchCss.img}
@@ -114,14 +114,17 @@ const Search = (props: SearchProps): JSX.Element => {
             />
             {searchText !== '' && searchedData?.length > 0 ? (
               <div
-                className={darkMode ? searchCss.darkSuggesetionBox : searchCss.whiteSuggesetionBox}
+                className={`${searchCss.suggestionBox} ${
+                  darkMode ? searchCss.darkBackground : searchCss.lightBackground
+                }`}
               >
+                {console.log(searchedData)}
                 {searchedData?.map((data: any) => {
                   return data?.index === 'accelerator-blog' ? (
                     <li
-                      className={
-                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
-                      }
+                      className={`${searchCss.suggestionList} ${
+                        darkMode ? searchCss.darkText : searchCss.lightText
+                      }`}
                       onClick={() => handleSuggestiveSearch(data?.sourceAsMap?.blog?.heading)}
                     >
                       {data?.sourceAsMap?.blog?.heading}
@@ -129,9 +132,9 @@ const Search = (props: SearchProps): JSX.Element => {
                   ) : data?.index === 'accelerator-user' ? (
                     // console.log("data?.sourceAsMap?.firstName + data?.sourceAsMap?.lastName",data?.sourceAsMap?.firstName + data?.sourceAsMap?.lastName)
                     <li
-                      className={
-                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
-                      }
+                      className={`${searchCss.suggestionList} ${
+                        darkMode ? searchCss.darkText : searchCss.lightText
+                      }`}
                       onClick={() =>
                         handleSuggestiveSearch(
                           data?.sourceAsMap?.firstName + '  ' + data?.sourceAsMap?.lastName
@@ -142,9 +145,9 @@ const Search = (props: SearchProps): JSX.Element => {
                     </li>
                   ) : data?.index === 'accelerator-event' ? (
                     <li
-                      className={
-                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
-                      }
+                      className={`${searchCss.suggestionList} ${
+                        darkMode ? searchCss.darkText : searchCss.lightText
+                      }`}
                     >
                       {data?.sourceAsMap?.event?.title}
                     </li>
