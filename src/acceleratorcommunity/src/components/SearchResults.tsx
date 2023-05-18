@@ -12,7 +12,7 @@ import SearchUserContainer from '../components/SearchUserContainer';
 import EventSearchContainer from '../components/EventSearchContainer';
 import NewSearchContainer from '../components/NewSearchContainer';
 import searchCall from '../../src/API/searchCall';
-import { getValueFromCookie } from '../assets/helpers/helperFunctions';
+// import { getValueFromCookie } from '../assets/helpers/helperFunctions';
 import WebContext from '../../src/Context/WebContext';
 import JournalSearchContainer from '../components/JournalSearchContainer';
 import ArticleSearchContainer from '../components/ArticleSearchContainer';
@@ -150,7 +150,7 @@ const SearchResults = () => {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
 
-      searchCallFunction(["description", "event.title", "Title", "ShortDescription"], type, query);
+      searchCallFunction(['description', 'event.title', 'Title', 'ShortDescription'], type, query);
     }
     if (type === 'JOURNAL' && query !== undefined) {
       setSuccess(true);
@@ -187,22 +187,22 @@ const SearchResults = () => {
     }
     setActiveState(type);
   };
-  const { userToken, setUserToken, darkMode } = {
+  const { userToken, darkMode } = {
     ...useContext(WebContext),
   };
 
-  useEffect(() => {
-    if (userToken == '') {
-      let token = getValueFromCookie('UserToken');
-      if (typeof document !== 'undefined' && token != '' && token != null) {
-        if (setUserToken != undefined) {
-          setUserToken(token);
-        }
-      } else {
-        router.push('/login');
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (userToken == '') {
+  //     let token = getValueFromCookie('UserToken');
+  //     if (typeof document !== 'undefined' && token != '' && token != null) {
+  //       if (setUserToken != undefined) {
+  //         setUserToken(token);
+  //       }
+  //     } else {
+  //       router.push('/login');
+  //     }
+  //   }
+  // }, []);
 
   const [success, setSuccess] = useState(true);
   const [searchedData, setSearchedData] = useState<any>([]);

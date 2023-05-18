@@ -5,7 +5,7 @@ import searchCss from '../assets/search.module.css';
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import WebContext from 'src/Context/WebContext';
-import { getValueFromCookie } from 'assets/helpers/helperFunctions';
+// import { getValueFromCookie } from 'assets/helpers/helperFunctions';
 import SuggestiveSearchCall from 'src/API/SuggestiveApi';
 // import { modifyHtml } from 'assets/helpers/helperFunctions';
 // import parser from 'html-react-parser';
@@ -35,22 +35,22 @@ const Search = (props: SearchProps): JSX.Element => {
     }
   };
 
-  const { userToken, setUserToken } = {
+  const { userToken } = {
     ...useContext(WebContext),
   };
 
-  useEffect(() => {
-    if (userToken == '') {
-      let token = getValueFromCookie('UserToken');
-      if (typeof document !== 'undefined' && token != '' && token != null) {
-        if (setUserToken != undefined) {
-          setUserToken(token);
-        }
-      } else {
-        router.push('/login');
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (userToken == '') {
+  //     let token = getValueFromCookie('UserToken');
+  //     if (typeof document !== 'undefined' && token != '' && token != null) {
+  //       if (setUserToken != undefined) {
+  //         setUserToken(token);
+  //       }
+  //     } else {
+  //       router.push('/login');
+  //     }
+  //   }
+  // }, []);
   const [searchedData, setSearchedData] = useState<any>([]);
 
   const handleSuggestiveSearch = (data: any) => {
@@ -113,11 +113,15 @@ const Search = (props: SearchProps): JSX.Element => {
               onChange={(e: any) => setSearchText(e?.target?.value)}
             />
             {searchText !== '' && searchedData?.length > 0 ? (
-              <div className={darkMode ? searchCss.darkSuggesetionBox :searchCss.whiteSuggesetionBox}>
+              <div
+                className={darkMode ? searchCss.darkSuggesetionBox : searchCss.whiteSuggesetionBox}
+              >
                 {searchedData?.map((data: any) => {
                   return data?.index === 'accelerator-blog' ? (
                     <li
-                      className={darkMode? searchCss.darkSuggestionList:searchCss.whiteSuggesetionList}
+                      className={
+                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
+                      }
                       onClick={() => handleSuggestiveSearch(data?.sourceAsMap?.blog?.heading)}
                     >
                       {data?.sourceAsMap?.blog?.heading}
@@ -125,7 +129,9 @@ const Search = (props: SearchProps): JSX.Element => {
                   ) : data?.index === 'accelerator-user' ? (
                     // console.log("data?.sourceAsMap?.firstName + data?.sourceAsMap?.lastName",data?.sourceAsMap?.firstName + data?.sourceAsMap?.lastName)
                     <li
-                      className={darkMode? searchCss.darkSuggestionList:searchCss.whiteSuggesetionList}
+                      className={
+                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
+                      }
                       onClick={() =>
                         handleSuggestiveSearch(
                           data?.sourceAsMap?.firstName + '  ' + data?.sourceAsMap?.lastName
@@ -135,7 +141,13 @@ const Search = (props: SearchProps): JSX.Element => {
                       {data?.sourceAsMap?.firstName + '  ' + data?.sourceAsMap?.lastName}
                     </li>
                   ) : data?.index === 'accelerator-event' ? (
-                    <li className={darkMode? searchCss.darkSuggestionList:searchCss.whiteSuggesetionList}>{data?.sourceAsMap?.event?.title}</li>
+                    <li
+                      className={
+                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
+                      }
+                    >
+                      {data?.sourceAsMap?.event?.title}
+                    </li>
                   ) : (
                     // ) : data?.index === 'accelerator-media' ? (
                     //   <li
