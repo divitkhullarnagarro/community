@@ -7,8 +7,8 @@ import BannerSitecore from '../assets/images/Banner-Sitecore.png';
 import { useRouter } from 'next/router';
 import { useState, useContext, useEffect } from 'react';
 import WebContext from '../Context/WebContext';
-import groupBackground from '../assets/images/groupBackground.svg';
-import groupLogoImg from '../assets/images/groupLogoImg.svg';
+// import groupBackground from '../assets/images/groupBackground.svg';
+// import groupLogoImg from '../assets/images/groupLogoImg.svg';
 import AxiosRequest from 'src/API/AxiosRequest';
 import {
   getFollowersUrl,
@@ -50,7 +50,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
   const [toastError, setToastError] = useState(false);
   const [toastMessage, setToastMessage] = useState<string>();
   // const [groupIcon, setGroupIcon] = useState<string>('');
-  const [groupBanner, setGroupBanner] = useState<string>('');
+  // const [groupBanner, setGroupBanner] = useState<string>('');
   const [groupInfo, setGroupInfo] = useState<any>({});
   const resetToastState = () => {
     setShowNofitication(!showNotification);
@@ -288,7 +288,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
 
     const temp = files[0];
     const resp = await UploadGroupBannerToServer(temp);
-    console.log('bannerImageUrl');
+    console.log('bannerImageUrl', resp);
   }
   //group functionality End
   return (
