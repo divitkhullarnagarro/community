@@ -59,3 +59,51 @@
   /* margin-top: 8px; */
   /* text-shadow: 2px 2px 1px rgb(156, 179, 179); */
 }
+.seeMore {
+  background-color: #04aa6d;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid #04aa6d;
+  margin: 12px 30%;
+  border-radius: 8px;
+}
+.seeMore:hover {
+  background-color: #3e8e41;
+}
+.seeMore:active {
+  transform: translateY(4px);
+}
+.groupMemberWithMoreButton {
+  max-height: 200px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.groupMemberWithMoreButton::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.groupMemberWithMoreButton::-webkit-scrollbar-track {
+  border-radius: 2px;
+  background-color: white;
+  height: 1px;
+}
+.groupMemberWithMoreButton::-webkit-scrollbar-track:horizontal {
+  border-radius: 2px;
+  background-color: white;
+  height: 1px;
+}
+.groupMemberWithMoreButton::-webkit-scrollbar-thumb {
+  /* background-image: url('./../assets/images/arrow.png'); */
+  background-position: center top;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 50px;
+  background-color: grey;
+}
+.groupMemberWithMoreButton::-webkit-scrollbar-thumb:horizontal {
+  /* background-image: url('./../assets/images/arrowx.png'); */
+  background-position: center left;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 10px;
+}

@@ -13,11 +13,12 @@
   width: 100%;
   height: 55vh;
   /* margin: 10px; */
-  margin-bottom: 30px;
+  margin-bottom: 126px;
   padding: 20px;
   /* background-color: rgb(242, 240, 240); */
   /* background: url('../assets/images/groupBackground.svg') no-repeat; */
   background-size: cover;
+  background-position: center center;
 }
 
 .content {
@@ -71,7 +72,7 @@
 .editProfileBtn {
   margin-top: 25px;
   width: 105px;
-  background-color: #47D7AC;
+  background-color: #47d7ac;
   color: white;
   padding: 6px;
   border-radius: 5px;
@@ -163,11 +164,11 @@
 
 .popupListContainer::-webkit-scrollbar-track {
   border-radius: 10px;
-  background-color: #EFEFEF;
+  background-color: #efefef;
 }
 
 .popupListContainer::-webkit-scrollbar-thumb {
-  background-color: #C2C2C2;
+  background-color: #c2c2c2;
   border-radius: 4px;
 }
 
@@ -183,7 +184,7 @@
 
 .userCard {
   margin: 6px;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -208,7 +209,7 @@
 
 .seeProfileButton span {
   text-decoration: none !important;
-  background-color: #47D7AC;
+  background-color: #47d7ac;
   padding: 2px;
   color: white;
   font-size: 14px;
@@ -227,24 +228,37 @@
 .popupButtonActiveState {
   border: none;
   padding: 8px;
-  background-color: #47D7AC;
+  background-color: #47d7ac;
   color: white;
   border-radius: 25px;
   font-size: 14px;
 }
 
 .popupButtonInActiveState {
-  border: 1px solid #47D7AC;
+  border: 1px solid #47d7ac;
   padding: 8px;
   background-color: white;
-  color: #47D7AC;
+  color: #47d7ac;
   border-radius: 25px;
   font-size: 14px;
 }
-
+.editGroupBannerBtn {
+  margin-bottom: 40px;
+  margin-right: 10px;
+  border: 1px solid black;
+  padding: 6px;
+  border-radius: 5px;
+  color: black;
+  background: transparent;
+}
 /* .groupPageLogo {
  
 } */
+.buttonGroup {
+  position: relative;
+  top: 16px;
+  row-gap: 48px;
+}
 @media only screen and (max-width: 640px) {
   .groupHeaderWrapper {
     height: 16vh;
@@ -260,7 +274,7 @@
     font-size: 10px;
   }
 
-  .joinButton>svg {
+  .joinButton > svg {
     height: 14px;
     width: 14px;
   }
@@ -271,7 +285,7 @@
     font-size: 10px;
   }
 
-  .leaveButton>svg {
+  .leaveButton > svg {
     height: 14px;
     width: 14px;
   }
