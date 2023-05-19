@@ -14,12 +14,16 @@ import {
   getFollowersUrl,
   getFollowingUrl,
   getUserUrl,
+  joinGroupUrl,
+  leaveGroupUrl,
   uploadBannerUrl,
 } from 'assets/helpers/constants';
 import { Form, Modal } from 'react-bootstrap';
 import DotLoader from './DotLoader';
 import ToastNotification from './ToastNotification';
-import groupIcon from '../assets/images/ProfilePic.jpeg';
+import groupIcon from '../assets/images/groupLogo1.jpg';
+import uploadFilesCall from 'src/API/uploadFilesCall';
+import Spinner from 'react-bootstrap/Spinner';
 
 type HeaderProfileProps = ComponentProps & {
   fields: {
@@ -28,9 +32,17 @@ type HeaderProfileProps = ComponentProps & {
 };
 
 const EditProfile = (props: HeaderProfileProps): JSX.Element => {
-  const { userObject } = {
+  const { userObject, userToken } = {
     ...useContext(WebContext),
   };
+  //get objectId from URL
+  const params =
+    typeof window !== 'undefined'
+      ? new URLSearchParams(window?.location?.search)
+      : new URLSearchParams('');
+  let objectEmail = params.get('id');
+  let groupId = params.get('groupId') as string;
+
   const router = useRouter();
   const isGroupPage = props?.params?.IsGroupList == '1' ? true : false;
   const [joinValue, setJoinValue] = useState(true);
@@ -50,30 +62,58 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
   const [toastError, setToastError] = useState(false);
   const [toastMessage, setToastMessage] = useState<string>();
   // const [groupIcon, setGroupIcon] = useState<string>('');
-  // const [groupBanner, setGroupBanner] = useState<string>('');
+  const [groupBanner, setGroupBanner] = useState<string>('');
   const [groupInfo, setGroupInfo] = useState<any>({});
+  const [isGroupBannerUploading, setIsGroupBannerUploading] = useState<any>(false);
+  const [joinLeaveLoader, setJoinLeaveLoader] = useState<any>(false);
+
   const resetToastState = () => {
     setShowNofitication(!showNotification);
     setToastSuccess(false);
     setToastError(false);
   };
 
-  const onClickJoinButton = () => {
-    setLeaveValue(true);
-    setJoinValue(false);
+  const onClickJoinButton = async () => {
+    setJoinLeaveLoader(true);
+    // setTimeout(async () => {
+    const res: any = await AxiosRequest({
+      url: `${joinGroupUrl}${groupId}`,
+      method: 'PUT',
+    });
+    if (res.success) {
+      setLeaveValue(true);
+      setJoinValue(false);
+      setJoinLeaveLoader(false);
+    } else {
+      setToastMessage('Failed to join group. Please try again');
+      setToastError(true);
+      setShowNofitication(true);
+      setJoinLeaveLoader(false);
+    }
+    console.log('joinGroupCall', res);
+    // }, 75000);
+
+    // setLeaveValue(true);
+    // setJoinValue(false);
   };
 
-  const onLeaveButtonClick = () => {
-    setJoinValue(true);
-    setLeaveValue(false);
+  const onLeaveButtonClick = async () => {
+    setJoinLeaveLoader(true);
+    const res: any = await AxiosRequest({
+      url: `${leaveGroupUrl}${groupId}`,
+      method: 'PUT',
+    });
+    if (res.success) {
+      setJoinValue(true);
+      setLeaveValue(false);
+      setJoinLeaveLoader(false);
+    } else {
+      setToastMessage('Failed to Leave group. Please try again');
+      setToastError(true);
+      setShowNofitication(true);
+      setJoinLeaveLoader(false);
+    }
   };
-
-  //get objectId from URL
-  const params =
-    typeof window !== 'undefined'
-      ? new URLSearchParams(window?.location?.search)
-      : new URLSearchParams('');
-  let objectEmail = params.get('id');
 
   useEffect(() => {
     if (objectEmail && objectEmail != '')
@@ -247,14 +287,17 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
         url: `https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/group/${groupId}`,
         method: 'GET',
       });
-      if (res?.data) setGroupInfo(res.data);
+      if (res?.data) {
+        setGroupInfo(res.data);
+        setGroupBanner(res.data.groupBannerUrl);
+      }
       // debugger;
       console.log('groupInfo', res);
     } catch (error) {}
   };
 
   useEffect(() => {
-    const groupId = router?.query?.groupId as string;
+    // const groupId = router?.query?.groupId as string;
     const isGroupPage = props?.params?.IsGroupList == '1' ? true : false;
     if (isGroupPage) {
     }
@@ -269,30 +312,48 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
     }
   }
 
-  async function UploadGroupBannerToServer(file: any) {
-    const formData = new FormData();
-    formData.append('multipleFiles', file);
-    return await AxiosRequest({
-      url: uploadBannerUrl,
-      method: 'POST',
-      data: formData,
-      contentType: 'multipart/form-data',
-    })
-      .then((response: any) => {
-        return response?.data;
-      })
-      .catch(() => {
-        setToastMessage('Something Went Wrong !');
-        setToastError(true);
-        setShowNofitication(true);
-      });
+  // async function UploadGroupBannerToServer(file: any) {
+  //   const formData = new FormData();
+  //   formData.append('multipleFiles', file);
+  //   return await AxiosRequest({
+  //     url: uploadBannerUrl,
+  //     method: 'POST',
+  //     data: formData,
+  //     contentType: 'multipart/form-data',
+  //   })
+  //     .then((response: any) => {
+  //       return response?.data;
+  //     })
+  //     .catch(() => {
+  //       setToastMessage('Something Went Wrong !');
+  //       setToastError(true);
+  //       setShowNofitication(true);
+  //     });
+  // }
+
+  async function UploadGroupBannerToServer(file: any, type: string) {
+    return await uploadFilesCall(userToken, file, type).then((response) => {
+      return response?.data;
+    });
   }
   async function uploadGroupBannerFile(e: any) {
-    const files = e.target.files;
+    try {
+      setIsGroupBannerUploading(true);
+      const files = e.target.files;
+      const temp = files[0];
+      const resp = await UploadGroupBannerToServer(temp, 'IMAGE');
+      if (resp?.data) {
+        setGroupBanner(resp.data);
+        setIsGroupBannerUploading(false);
+      } else {
+        setIsGroupBannerUploading(false);
+        setToastMessage('Failed to Update Background. Please try again');
+        setToastError(true);
+        setShowNofitication(true);
+      }
 
-    const temp = files[0];
-    const resp = await UploadGroupBannerToServer(temp);
-    console.log('bannerImageUrl', resp);
+      console.log('bannerImageUrl', resp);
+    } catch (error) {}
   }
   //group functionality End
   return (
@@ -301,8 +362,8 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
         isGroupPage
           ? {
               backgroundImage: `url(${
-                groupInfo.groupBannerUrl
-                  ? groupInfo.groupBannerUrl
+                groupInfo.groupBannerUrl || groupBanner
+                  ? groupBanner || groupInfo.groupBannerUrl
                   : 'https://user-images.githubusercontent.com/160484/173871463-97e30942-dafe-4b91-b158-1ecf3300c540.png'
               })`,
             }
@@ -324,8 +385,15 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
       ) : (
         ''
       )}
+      {isGroupBannerUploading ? (
+        <span className={styles.dotLoaderBannerPic}>
+          <DotLoader />
+        </span>
+      ) : (
+        ''
+      )}
       <div className={isGroupPage ? `${styles.groupContent}` : `${styles.content}`}>
-        <div className={styles.leftSection}>
+        <div className={`${styles.leftSection} ${styles.groupLeftSection}`}>
           <div className={styles.profileImage}>
             {isGroupPage ? (
               // <img src={groupLogoImg.src} height={150} width={150} />
@@ -334,6 +402,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                 height={150}
                 width={150}
                 className={styles.groupPageLogo}
+                title={groupInfo.description}
               />
             ) : isProfilePicloaded ? (
               <img
@@ -352,7 +421,9 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
           </div>
           <div className={styles.profileInfoSection}>
             {isGroupPage ? (
-              <div className={styles.groupName}>{groupInfo.groupName}</div>
+              <div className={styles.groupName} title={groupInfo.description}>
+                {groupInfo.groupName}
+              </div>
             ) : (
               <div className={styles.name}>
                 {userObject ? `${fetchUser?.firstName} ${fetchUser?.lastName}` : 'John Doe'}
@@ -404,6 +475,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
 
         {isGroupPage && (
           <div className={`d-flex flex-column ${styles.buttonGroup}`}>
+            {/* {isGroupPage && userObject.objectId === groupInfo?.createdBy?.objectId && ( */}
             {isGroupPage && (
               <button
                 className={styles.editGroupBannerBtn}
@@ -416,41 +488,59 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
             )}
             {joinValue && (
               <button className={`btn  ${styles.joinButton}`} onClick={onClickJoinButton}>
-                <svg
-                  style={{ color: 'blue' }}
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                >
-                  <g>
-                    <path fill="none" d="M0 0h24v24H0z" />
-                    <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-11H7v2h4v4h2v-4h4v-2h-4V7h-2v4z" />{' '}
-                  </g>
-                </svg>
-                &nbsp; Join
+                {!joinLeaveLoader ? (
+                  <>
+                    <svg
+                      style={{ color: 'blue' }}
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <g>
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-11H7v2h4v4h2v-4h4v-2h-4V7h-2v4z" />{' '}
+                      </g>
+                    </svg>
+                    &nbsp; Join
+                  </>
+                ) : (
+                  <>
+                    &nbsp;
+                    <Spinner style={{ width: '15px', height: '15px' }} animation="border" />{' '}
+                  </>
+                )}
               </button>
             )}
             {leaveValue && (
               <button className={`btn  ${styles.leaveButton}`} onClick={onLeaveButtonClick}>
-                <svg
-                  style={{ color: 'red' }}
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m19 12-4-4m4 4-4 4m4-4H9m5 9a9 9 0 1 1 0-18"
-                    fill="red"
-                  ></path>
-                </svg>
-                &nbsp; Leave
+                {!joinLeaveLoader ? (
+                  <>
+                    <svg
+                      style={{ color: 'red' }}
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="m19 12-4-4m4 4-4 4m4-4H9m5 9a9 9 0 1 1 0-18"
+                        fill="red"
+                      ></path>
+                    </svg>
+                    &nbsp; Leave
+                  </>
+                ) : (
+                  <>
+                    &nbsp;
+                    <Spinner style={{ width: '15px', height: '15px' }} animation="border" />{' '}
+                  </>
+                )}
               </button>
             )}
           </div>
