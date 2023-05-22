@@ -22,6 +22,8 @@ export const getFirstTenMemberListUrl = `${javaHost}/graph-service/api/v1/graph/
 export const getFirstTenGroupListUrl = `${javaHost}/graph-service/api/v1/graph/group?page=0&size=10`;
 export const joinGroupUrl = `${javaHost}/graph-service/api/v1/graph/group/`;
 export const leaveGroupUrl = `${javaHost}/graph-service/api/v1/graph/group/`;
+export const updateGroupUrl = `${javaHost}/graph-service/api/v1/graph/group/`;
+export const createGroupUrl = `${javaHost}/graph-service/api/v1/graph/group`;
 
 export const Algorithm = 'aes-256-cbc';
 export const Key = [
