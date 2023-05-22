@@ -306,46 +306,48 @@ const SearchResults = () => {
       <div className={styles.ThemeSwitcher}>
         <ThemeSwitcher />
       </div>
-      <div className={styles.pageHeadingContainer}>
-        <div className={styles.pageHeading}>
-          <form>
-            <input
-              type="text"
-              placeholder="Search"
-              value={searchData}
-              onChange={(e: any) => setSearch(e.target.value)}
-              className={`${darkMode && darkModeCss.darkMode_textColor}`}
-            />{' '}
-            <input onClick={onSearch} type="submit" hidden />
-          </form>
+      <div className={styles.wrapper}>
+        <div className={styles.pageHeadingContainer}>
+          <div className={styles.pageHeading}>
+            <form>
+              <input
+                type="text"
+                placeholder="Search"
+                value={searchData}
+                onChange={(e: any) => setSearch(e.target.value)}
+                className={`${darkMode && darkModeCss.darkMode_textColor}`}
+              />{' '}
+              <input onClick={onSearch} type="submit" hidden />
+            </form>
+          </div>
         </div>
-      </div>
-      <SearchFlters activeState={activeState} filter={filter} handleClick={handleClick} />
-      {activeState === 'ALL' ? (
-        <SearchALLConatiner query={query} success={success} searchedData={searchedData} />
-      ) : activeState === 'GROUP' ? (
-        <SearchGroupContainer query={query} searchedData={searchedData} success={success} />
-      ) : activeState === 'USER' ? (
-        <SearchUserContainer query={query} searchedData={searchedData} success={success} />
-      ) : activeState === 'EVENT' ? (
-        <EventSearchContainer query={query} searchedData={searchedData} success={success} />
-      ) : activeState === 'NEWS' ? (
-        <NewSearchContainer success={success} />
-      ) : activeState === 'JOURNAL' ? (
-        <JournalSearchContainer query={query} success={success} />
-      ) : activeState === 'ARTICLE' ? (
-        <ArticleSearchContainer query={query} success={success} />
-      ) : activeState === 'HASHTAG' ? (
-        <HashtagContainer query={query} success={success} searchedData={searchedData} />
-      ) : activeState === 'BLOG' ? (
-        <BlogContainer success={success} query={query} searchedData={searchedData} />
-      ) : activeState === 'POLL' ? (
-        ''
-      ) : (
-        // <PollConatiner success={success} searchedData={searchedData} />
+        <SearchFlters activeState={activeState} filter={filter} handleClick={handleClick} />
+        {activeState === 'ALL' ? (
+          <SearchALLConatiner query={query} success={success} searchedData={searchedData} />
+        ) : activeState === 'GROUP' ? (
+          <SearchGroupContainer query={query} searchedData={searchedData} success={success} />
+        ) : activeState === 'USER' ? (
+          <SearchUserContainer query={query} searchedData={searchedData} success={success} />
+        ) : activeState === 'EVENT' ? (
+          <EventSearchContainer query={query} searchedData={searchedData} success={success} />
+        ) : activeState === 'NEWS' ? (
+          <NewSearchContainer success={success} />
+        ) : activeState === 'JOURNAL' ? (
+          <JournalSearchContainer query={query} success={success} />
+        ) : activeState === 'ARTICLE' ? (
+          <ArticleSearchContainer query={query} success={success} />
+        ) : activeState === 'HASHTAG' ? (
+          <HashtagContainer query={query} success={success} searchedData={searchedData} />
+        ) : activeState === 'BLOG' ? (
+          <BlogContainer success={success} query={query} searchedData={searchedData} />
+        ) : activeState === 'POLL' ? (
+          ''
+        ) : (
+          // <PollConatiner success={success} searchedData={searchedData} />
 
-        ''
-      )}
+          ''
+        )}
+      </div>
       {showNotification && (
         <ToastNotification
           showNotification={showNotification}
