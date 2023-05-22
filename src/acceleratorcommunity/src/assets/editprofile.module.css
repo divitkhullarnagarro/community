@@ -102,6 +102,7 @@
   bottom: 14px;
   color: black;
   border: 0.5px solid black;
+  min-width: 180px;
 }
 
 .joinButton:hover {
@@ -112,6 +113,7 @@
   position: relative;
   bottom: 14px;
   color: red;
+  min-width: 180px;
   border: 0.5px solid black;
 }
 

@@ -7,7 +7,7 @@ import { joinGroupUrl } from 'assets/helpers/constants';
 import ToastNotification from './../ToastNotification';
 
 function JoinLeaveGroup({ ele }: any) {
-  const [isJoined, setIsJoined] = useState(ele.isMember);
+  const [isJoined, setIsJoined] = useState(ele.member);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [toastMessage, setToastMessage] = useState<string>();
   const [showNotification, setShowNofitication] = useState(false);
@@ -16,7 +16,7 @@ function JoinLeaveGroup({ ele }: any) {
   const joinGroupClick = async (groupId: string, groupName: string) => {
     setIsJoined(true);
     const res: any = await AxiosRequest({
-      url: `${joinGroupUrl}${groupId}`,
+      url: `${joinGroupUrl}${groupId}/join`,
       method: 'PUT',
     });
     if (res.success) {
