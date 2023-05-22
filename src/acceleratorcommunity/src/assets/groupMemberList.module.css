@@ -75,7 +75,7 @@
   transform: translateY(4px);
 }
 .groupMemberWithMoreButton {
-  max-height: 200px;
+  max-height: 350px;
   overflow: scroll;
   overflow-x: hidden;
 }

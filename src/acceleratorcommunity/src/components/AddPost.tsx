@@ -31,7 +31,12 @@ import postCommentReplyCall from 'src/API/postCommentReplyCall';
 import downVote from '../assets/images/dislikeIcon.svg';
 import CreateModalPopup from './helperComponents/CreateModalPopup';
 import AxiosRequest from 'src/API/AxiosRequest';
-import { editCommentUrl, viewProfileLinkUrl, voteInPollUrl } from '../assets/helpers/constants';
+import {
+  addAllPeersUrl,
+  editCommentUrl,
+  viewProfileLinkUrl,
+  voteInPollUrl,
+} from '../assets/helpers/constants';
 import videoIcon from '../assets/images/AddVideo_icon.svg';
 import pollIcon from '../assets/images/CreatePoll_icon.svg';
 import addBlogIcon from '../assets/images/AddBlogPost_icon.svg';
@@ -47,7 +52,7 @@ import parser from 'html-react-parser';
 import dynamic from 'next/dynamic';
 import draftToHtml from 'draftjs-to-html';
 import { toolbar } from 'assets/helpers/constants';
-import allPeersCall from 'src/API/getPeers';
+// import allPeersCall from 'src/API/getPeers';
 import { modifyHtml } from 'assets/helpers/helperFunctions';
 
 const Editor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mod) => mod.Editor), {
@@ -310,13 +315,13 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   // const currentCount = editorState.getCurrentContent().getPlainText().length;
 
   const getAllPears = async () => {
-    const res = await allPeersCall(userToken);
-    const data = res?.data?.data;
+    const res: any = await AxiosRequest({ url: addAllPeersUrl, method: 'GET' });
+    const data = res?.data;
     const userData = data?.map((ele: any) => {
       return {
         text: ele?.firstName + ' ' + ele?.lastName,
         value: ele?.firstName + ' ' + ele?.lastName,
-        url: '/profile/' + ele?.objectId,
+        url: `${viewProfileLinkUrl}${ele?.objectId}`,
         objectId: ele?.objectId,
       };
     });
@@ -331,8 +336,9 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     const entityMap = rawEditorContent.entityMap;
     const addedPeerList = new Set<string>();
     Object.values(entityMap).map((entity) => {
-      if (entity?.data?.url?.substring(0, 8) === '/profile') {
-        addedPeerList.add(entity?.data?.url?.substring(9, entity?.data?.url?.length));
+      console.log('enitity value', entity?.data?.url?.substring(16, entity?.data?.url?.length));
+      if (entity?.data?.url?.substring(0, 16) === '/viewProfile?id=') {
+        addedPeerList.add(entity?.data?.url?.substring(16, entity?.data?.url?.length));
       }
     });
     const addedpeersList = [...addedPeerList.values()];
@@ -416,7 +422,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
         })
         .catch((err: any) => {
           if (err === 'API Call Failed !') {
-            router.push('/login');
+            // router.push('/login');
           }
         });
     }

@@ -95,8 +95,8 @@ function CreateGroup({
     e.preventDefault();
     try {
       if (nameValue && descriptionValue && addMemberList?.length > 0) {
-        const date = new Date();
-        const createdOn = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+        // const date = new Date();
+        // const createdOn = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
         const res: any = await AxiosRequest({
           url: 'https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/group',
           method: 'POST',
@@ -107,7 +107,7 @@ function CreateGroup({
             groupBannerUrl: '',
             members: [...addMemberList, userObject.objectId],
             createdBy: 'vicky@yopmail.com',
-            createdOn: createdOn,
+            createdOn: null,
           },
         });
         if (res?.success) {
