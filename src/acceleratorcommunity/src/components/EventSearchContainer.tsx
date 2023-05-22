@@ -7,6 +7,7 @@ import SideSearchFilter from './sideSearchFilter';
 import { SearchSkeletonForEvents } from './skeletons/SearchSkeleton';
 
 const EventSearchContainer = (props: any) => {
+  console.log('llqlalalalalalalaa', props);
   useEffect(() => {
     setEvents(props?.searchedData);
   }, [props?.searchedData]);
@@ -43,6 +44,8 @@ const EventSearchContainer = (props: any) => {
     setSearchedFilterState(e);
   };
 
+  console.log('EventsEventsEventsEventsEventsEventsEventsEventsEvents', Events);
+
   const filterdData = (e: any) => {
     e.preventDefault();
     if (searchedfilterState === '') {
@@ -60,27 +63,56 @@ const EventSearchContainer = (props: any) => {
     setFilteredArray(['Upcoming', 'Current', 'Past']);
   };
 
+  const convetSitecoreDateToMicroservicesType = (data: any, event: any) => {
+    var dateString = data;
+    var parts = dateString.split(/[- :]/);
+
+    // Note: JavaScript months are zero-based
+    var date = new Date(parts[2], parts[1] - 1, parts[0], parts[3], parts[4], parts[5]);
+
+    var isoDateString = date.toISOString();
+    var dateToCompare = new Date(isoDateString);
+
+    dateToCompare.setHours(0, 0, 0, 0);
+
+    var currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+
+    if (event === 'Upcoming') {
+      return currentDate < dateToCompare;
+    } else if (event === 'Current') {
+      return currentDate === dateToCompare;
+    }
+    return currentDate > dateToCompare;
+  };
   const filtration = (event: any) => {
     setFilterState([event]);
     if (event === 'Upcoming') {
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
       let upcomingDateEvents = props?.searchedData?.filter((item: any) => {
-        return item?.sourceAsMap?.postType === 'EVENT'
-          ? new Date(item?.sourceAsMap?.event?.eventDate) > new Date()
-          : '';
+        console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', item?.sourceAsMap?.event?.eventDate);
+        return item?.index === 'accelerator-event' || item?.index === 'accelerator-sitecore-event'
+          ? new Date(item?.sourceAsMap?.event?.eventDate) > today
+          : convetSitecoreDateToMicroservicesType(item?.sourceAsMap?.Date, event);
       });
       setEvents(upcomingDateEvents);
     } else if (event === 'Current') {
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
       let currentDateEvents = props?.searchedData?.filter((item: any) => {
-        return item?.sourceAsMap?.postType === 'EVENT'
-          ? new Date(item?.sourceAsMap?.event?.eventDate) === new Date()
-          : '';
+        return item?.index === 'accelerator-event' || item?.index === 'accelerator-sitecore-event'
+          ? new Date(item?.sourceAsMap?.event?.eventDate) === today
+          : convetSitecoreDateToMicroservicesType(item?.sourceAsMap?.Date, event);
       });
       setEvents(currentDateEvents);
     } else if (event === 'Past') {
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
       let pastDateEvents = props?.searchedData?.filter((item: any) => {
-        return item?.sourceAsMap?.postType === 'EVENT'
-          ? new Date(item?.sourceAsMap?.event?.eventDate) < new Date()
-          : '';
+        return item?.index === 'accelerator-event'
+          ? new Date(item?.sourceAsMap?.event?.eventDate) < today
+          : convetSitecoreDateToMicroservicesType(item?.sourceAsMap?.Date, event);
       });
       setEvents(pastDateEvents);
     } else {
@@ -97,7 +129,11 @@ const EventSearchContainer = (props: any) => {
   };
   return (
     <div className={`${styles.parentContainer} ${darkMode && darkModeCss.grey_1}`}>
-      <div className={`${styles.filterContainer} ${darkMode && darkModeCss.grey_3} ${darkMode && darkModeCss.text_light}`}>
+      <div
+        className={`${styles.filterContainer} ${darkMode && darkModeCss.grey_3} ${
+          darkMode && darkModeCss.text_light
+        }`}
+      >
         <SideSearchFilter
           filtration={filtration}
           filterState={filterState}
@@ -110,34 +146,27 @@ const EventSearchContainer = (props: any) => {
           handleFilters={handleFilters}
         />
       </div>
-      <div className={`${styles.generalcontainer} ${darkMode && darkModeCss.grey_3} ${darkMode && darkModeCss.text_light}`}>
+      <div
+        className={`${styles.generalcontainer} ${darkMode && darkModeCss.grey_3} ${
+          darkMode && darkModeCss.text_light
+        }`}
+      >
         {props?.success ? (
           <SearchSkeletonForEvents count={5} />
         ) : (
           <>
-            {Events.length > 0 ?<div className={styles.hashtagCount}>
-              <div className={`${darkMode && darkModeCss.text_active}`}>
-                <img
-                  src={
-                    'https://media.istockphoto.com/id/499517325/photo/a-man-speaking-at-a-business-conference.jpg?s=612x612&w=0&k=20&c=gWTTDs_Hl6AEGOunoQ2LsjrcTJkknf9G8BGqsywyEtE='
-                  }
-                />
-                {props?.query}
-              </div>
-              <div className={`${darkMode && darkModeCss.text_active}`}>
-                <div>We've found {Events?.length} results</div>
-              </div>
-            </div>:""}
             {Events.length > 0 ? (
               Events.map((event: any) => {
                 return event?.sourceAsMap?.postType === 'EVENT' ? (
+                  <Event events={event?.sourceAsMap} getFormatedDate={getFormatedDate} />
+                ) : event?.index === 'accelerator-sitecore-event' ? (
                   <Event events={event?.sourceAsMap} getFormatedDate={getFormatedDate} />
                 ) : (
                   ''
                 );
               })
             ) : (
-              <div className={`${styles.forNoData} ${darkMode && darkModeCss.text_light}`}>No Events Found</div>
+              <div className={styles.forNoData}>No Events Found</div>
             )}
           </>
         )}

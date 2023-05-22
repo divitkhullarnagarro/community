@@ -255,6 +255,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
         nowArticles={nowArticles}
         pastArticle={pastArticle}
         upComingArticle={upComingArticle}
+        flag={true}
       />
 
       <div className={bookmarkCss.heading}>

@@ -2,7 +2,7 @@ import Axios, { AxiosResponse } from 'axios';
 
 
 const bookmark = async (
-  objectId:string,
+  objectId:string|undefined,
   contentId: string,
   // url:string,
   title: string,
