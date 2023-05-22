@@ -75,8 +75,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
 
   const router = useRouter();
   const isGroupPage = props?.params?.IsGroupList == '1' ? true : false;
-  const [joinValue, setJoinValue] = useState(true);
-  const [leaveValue, setLeaveValue] = useState(false);
+
   const [fetchUser, setfetchUser] = useState<any>({});
   const [bannerImage, setBannerImage] = useState<any>('');
   const [isBannerLoaded, setIsBannerLoaded] = useState(false);
@@ -96,6 +95,8 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
   const [groupInfo, setGroupInfo] = useState<any>({});
   const [isGroupBannerUploading, setIsGroupBannerUploading] = useState<any>(false);
   const [joinLeaveLoader, setJoinLeaveLoader] = useState<any>(false);
+  const [joinValue, setJoinValue] = useState(groupInfo?.member);
+  const [leaveValue, setLeaveValue] = useState(!groupInfo?.member);
 
   const resetToastState = () => {
     setShowNofitication(!showNotification);
@@ -107,7 +108,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
     setJoinLeaveLoader(true);
     // setTimeout(async () => {
     const res: any = await AxiosRequest({
-      url: `${joinGroupUrl}${groupId}`,
+      url: `${joinGroupUrl}${groupId}/join`,
       method: 'PUT',
     });
     if (res.success) {
@@ -130,7 +131,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
   const onLeaveButtonClick = async () => {
     setJoinLeaveLoader(true);
     const res: any = await AxiosRequest({
-      url: `${leaveGroupUrl}${groupId}`,
+      url: `${leaveGroupUrl}${groupId}/leave`,
       method: 'PUT',
     });
     if (res.success) {
@@ -320,6 +321,9 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
       if (res?.data) {
         setGroupInfo(res.data);
         setGroupBanner(res.data.groupBannerUrl);
+
+        setJoinValue(!res?.data?.member);
+        setLeaveValue(res.data.member);
       }
       // debugger;
       console.log('groupInfo', res);
@@ -333,7 +337,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
     }
     // alert(groupId);
     getGroupInfo(groupId);
-  }, []);
+  }, [groupId]);
 
   function changeGroupBannerbuttonHandler() {
     if (typeof document !== undefined) {
@@ -569,8 +573,8 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
 
         {isGroupPage && (
           <div className={`d-flex flex-column ${styles.buttonGroup}`}>
-            {/* {isGroupPage && userObject.objectId === groupInfo?.createdBy?.objectId && ( */}
-            {isGroupPage && (
+            {isGroupPage && userObject.objectId === groupInfo?.createdBy?.objectId && (
+              // {isGroupPage && (
               <button
                 className={styles.editGroupBannerBtn}
                 onClick={() => {

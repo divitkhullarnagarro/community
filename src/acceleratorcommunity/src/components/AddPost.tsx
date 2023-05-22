@@ -416,7 +416,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
         })
         .catch((err: any) => {
           if (err === 'API Call Failed !') {
-            router.push('/login');
+            // router.push('/login');
           }
         });
     }

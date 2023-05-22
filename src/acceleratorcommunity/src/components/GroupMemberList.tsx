@@ -3,11 +3,7 @@ import Image from 'next/image';
 import groupLogo from '../assets/images/ProfilePic.jpeg';
 import style from '../assets/groupMemberList.module.css';
 import { useRouter } from 'next/router';
-import {
-  getFirstTenMemberListUrl,
-  getMemberListUrl,
-  viewProfileLinkUrl,
-} from 'assets/helpers/constants';
+import { getMemberListUrl, viewProfileLinkUrl } from 'assets/helpers/constants';
 import darkTheme from '../assets/darkTheme.module.css';
 import WebContext from '../Context/WebContext';
 import { useContext, useEffect, useRef, useState } from 'react';
@@ -41,30 +37,43 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
   const [showSeeMoreButton, setShowSeeMoreButton] = useState(false);
   const [pageNumber, setPageNumber] = useState(2);
   const [skeletonVisible, setSkeletonVisible] = useState(true);
+  const [reachedEnd, setReachedEnd] = useState(false);
 
-  const counter = useRef(0);
+  // const counter = useRef(0);
 
   console.log(props);
   const router = useRouter();
   console.log('groupMemberquery', router.query.groupId);
+  const params =
+    typeof window !== 'undefined'
+      ? new URLSearchParams(window?.location?.search)
+      : new URLSearchParams('');
+  let groupId = params.get('groupId') as string;
   const getMemberList = async () => {
     try {
+      // debugger;
       setSkeletonVisible(true);
       const res: any = await AxiosRequest({
-        url: getFirstTenMemberListUrl,
+        url: `${getMemberListUrl}/${groupId}/members?page=0&size=10`,
         method: 'GET',
       });
       if (res.data) {
-        setSkeletonVisible(true);
+        // debugger;
+        setSkeletonVisible(false);
         setMemberList(res.data);
         if (res.hasMorePage) {
           setShowSeeMoreButton(true);
+          setPageNumber(1);
         } else {
+          setReachedEnd(true);
           setShowSeeMoreButton(false);
         }
+      } else {
+        setSkeletonVisible(false);
       }
     } catch (error) {
-      setSkeletonVisible(true);
+      // debugger;
+      setSkeletonVisible(false);
       console.log(error);
     }
   };
@@ -72,21 +81,23 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
     // setTimeout(() => {
     getMemberList();
     // }, 5000);
-  }, []);
+  }, [groupId]);
   const getMoreMembers = async (e: any) => {
-    counter.current = 1;
+    // counter.current = 1;
     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-    if (bottom) {
+    if (bottom && !reachedEnd) {
       setLoadingMore(true);
       try {
         const res: any = await AxiosRequest({
-          url: `${getMemberListUrl}/${router?.query?.groupId}/members?page=${pageNumber}&size=10`,
+          url: `${getMemberListUrl}/${groupId}/members?page=${pageNumber}&size=10`,
           method: 'GET',
         });
         setLoadingMore(false);
         setMemberList([...memberList, ...res.data]);
-        setPageNumber((page) => page + 1);
-        if (!res.hasMorePage) {
+        if (res.hasMorePage) {
+          setPageNumber((page) => page + 1);
+        } else {
+          setReachedEnd(true);
           setShowSeeMoreButton(false);
           setLoadingMore(false);
         }
@@ -150,7 +161,7 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
                     >
                       <h5
                         className={`${style.groupMemberListName} `}
-                      >{`${ele.firstName} ${ele.firstName}`}</h5>
+                      >{`${ele.firstName} ${ele.lastName}`}</h5>
                       <h6 className={`${style.groupMemberListEmail}`}>{ele.objectId}</h6>
                     </div>
                   </div>
@@ -162,12 +173,12 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
           ) : (
             <MemberListSkeleton />
           )}
-          {loadingMore && (
+          {loadingMore && showSeeMoreButton && (
             <div style={{ margin: '18px 0' }}>
               <DotLoader />
             </div>
           )}
-          {showSeeMoreButton && !loadingMore && counter.current < 1 && (
+          {/* {showSeeMoreButton && !loadingMore && counter.current < 1 && (
             <div onClick={getMoreMembers} className={style.seeMore}>
               <Text
                 field={
@@ -179,7 +190,7 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
                 }
               />
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </>

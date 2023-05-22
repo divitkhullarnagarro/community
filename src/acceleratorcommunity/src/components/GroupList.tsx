@@ -1,6 +1,6 @@
 import Image from 'next/image';
 // import { useRouter } from 'next/router';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ComponentProps } from 'lib/component-props';
 import CreateGroup from './helperComponents/CreateGroup';
 // import joinGroup from '../assets/images/JoinGroup_icon.svg';
@@ -65,9 +65,10 @@ const GroupList = (props: GroupListProps): JSX.Element => {
   const [showSeeMoreButton, setShowSeeMoreButton] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [skeletonVisible, setSkeletonVisible] = useState(true);
+  const [reachedEnd, setReachedEnd] = useState(false);
 
   // const [reachedEnd, setReachedEnd] = useState(false);
-  const counter = useRef(0);
+  // const counter = useRef(0);
 
   const { darkMode } = { ...useContext(WebContext) };
 
@@ -83,16 +84,21 @@ const GroupList = (props: GroupListProps): JSX.Element => {
         url: getFirstTenGroupListUrl,
         method: 'GET',
       });
-      setGroupListData(res.data);
-      // setGroupListData([]);
-      setSkeletonVisible(false);
+      if (res.data) {
+        setGroupListData(res.data);
+        // setGroupListData([]);
+        setSkeletonVisible(false);
 
-      if (res.hasMorePage) {
-        setShowSeeMoreButton(true);
+        if (res.hasMorePage) {
+          setShowSeeMoreButton(true);
+          setPageNumber(1);
+        } else {
+          setShowSeeMoreButton(false);
+        }
+        console.log('groupListData', res.data);
       } else {
-        setShowSeeMoreButton(false);
+        setSkeletonVisible(false);
       }
-      console.log('groupListData', res.data);
     } catch (error) {
       console.log('groupListData', error);
     }
@@ -101,9 +107,9 @@ const GroupList = (props: GroupListProps): JSX.Element => {
     getGroupList();
   }, []);
   const getMoreGroups = async (e: any) => {
-    counter.current = 1;
+    // counter.current = 1;
     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-    if (bottom) {
+    if (bottom && !reachedEnd) {
       setLoadingMore(true);
       try {
         const res: any = await AxiosRequest({
@@ -112,8 +118,10 @@ const GroupList = (props: GroupListProps): JSX.Element => {
         });
         setLoadingMore(false);
         setGroupListData([...groupListData, ...res.data]);
-        setPageNumber((page) => page + 1);
-        if (!res.hasMorePage) {
+        if (res.hasMorePage) {
+          setPageNumber((page) => page + 1);
+        } else {
+          setReachedEnd(true);
           setShowSeeMoreButton(false);
           setLoadingMore(false);
         }
@@ -243,16 +251,16 @@ const GroupList = (props: GroupListProps): JSX.Element => {
                   <GroupListSkeleton />
                 )}
               </div>
-              {loadingMore && (
+              {loadingMore && showSeeMoreButton && (
                 <div style={{ margin: '18px 0' }}>
                   <DotLoader />
                 </div>
               )}
-              {showSeeMoreButton && !loadingMore && counter.current < 1 && (
+              {/* {showSeeMoreButton && !loadingMore && counter.current < 1 && (
                 <div onClick={getMoreGroups} className={style.seeMore}>
                   more+
                 </div>
-              )}
+              )} */}
             </div>
             <div className={style.createGroupHeading}>
               <button className={style.createGroupBtn} onClick={() => setCreateGroupVisibel(true)}>
