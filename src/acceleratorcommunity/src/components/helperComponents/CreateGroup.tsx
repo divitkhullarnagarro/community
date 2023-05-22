@@ -1,4 +1,8 @@
-import { addPeersBySearchUrl, addPeersPaginationUrl } from 'assets/helpers/constants';
+import {
+  addPeersBySearchUrl,
+  addPeersPaginationUrl,
+  createGroupUrl,
+} from 'assets/helpers/constants';
 import React, { useState, useEffect, useContext } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import AxiosRequest from 'src/API/AxiosRequest';
@@ -98,7 +102,7 @@ function CreateGroup({
         // const date = new Date();
         // const createdOn = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
         const res: any = await AxiosRequest({
-          url: 'https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/group',
+          url: `${createGroupUrl}`,
           method: 'POST',
           data: {
             groupName: nameValue,
