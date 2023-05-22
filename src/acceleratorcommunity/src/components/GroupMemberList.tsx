@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { getMemberListUrl, viewProfileLinkUrl } from 'assets/helpers/constants';
 import darkTheme from '../assets/darkTheme.module.css';
 import WebContext from '../Context/WebContext';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AxiosRequest from 'src/API/AxiosRequest';
 import DotLoader from './DotLoader';
 import MemberListSkeleton from './skeletons/MemberListSkeleton';
