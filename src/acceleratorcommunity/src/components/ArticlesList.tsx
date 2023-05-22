@@ -16,6 +16,7 @@ import WebContext from 'src/Context/WebContext';
 // import { useRouter } from 'next/router';
 import facebook from '../assets/images/facebook.svg';
 import SideBar from './SideBar';
+import SuggestiveSearchCall from 'src/API/SuggestiveApi';
 
 type ArticlesListProps = ComponentProps & {
   fields: {
@@ -87,60 +88,74 @@ type DataSource = {
   };
 };
 
-const getFormatedDate = (stringDate: string) => {
-  const date = new Date(stringDate);
-
-  // Get month abbreviation
-  const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date);
-
-  // Get day with leading zero if necessary
-  const day = String(date.getDate()).padStart(2, '0');
-
-  // Get full year
-  const year = date.getFullYear();
-
-  // Combine into formatted string
-  const formattedDate = `${month} ${day} ${year}`;
-
-  return formattedDate;
-};
+// const getFormatedDate = (stringDate: string) => {
+//   // const date = new Date(stringDate);
+//   // // Get month abbreviation
+//   // const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date);
+//   // // Get day with leading zero if necessary
+//   // const day = String(date.getDate()).padStart(2, '0');
+//   // // Get full year
+//   // const year = date.getFullYear();
+//   // // Combine into formatted string
+//   // const formattedDate = `${month} ${day} ${year}`;
+//   // return formattedDate;
+// };
 
 const ArticlesList = (props: ArticlesListProps): JSX.Element => {
-  const dataum = props?.fields?.data?.datasource?.articleContentType?.targetItems;
 
-  const { userToken, setUserToken } = { ...useContext(WebContext) };
+  const { userToken, objectId} = { ...useContext(WebContext) };
 
-  const setTokenFromLocalStorage = () => {
-    if (userToken === undefined || userToken === '') {
-      if (
-        typeof localStorage !== 'undefined' &&
-        localStorage.getItem('UserToken') != '' &&
-        localStorage.getItem('UserToken') != null
-      ) {
-        let token = localStorage.getItem('UserToken');
-        if (token != null && setUserToken != undefined) {
-          setUserToken(token);
+
+
+
+  useEffect(() => {
+    if (userToken !== null && userToken !== undefined && userToken !== '') {
+      SuggestiveSearchCall('*', 'ALL', userToken, ['ShortDescription', 'Title']).then(
+        (response: any) => {
+          if (response?.data?.success === true) {
+            if (response?.data?.data !== null && response?.data?.data !== undefined) {
+              if (
+                response?.data?.data?.totalHits !== null &&
+                response?.data?.data?.totalHits !== undefined &&
+                response?.data?.data?.totalHits?.value > 0
+              ) {
+                Buttons(response?.data?.data?.hits)
+                setBookmarkLists(response?.data?.data?.hits);
+                setCompleted(response?.data?.data?.hits);
+              } else {
+              }
+            }
+          }
         }
-      }
+      );
     }
-  };
+  }, [userToken]);
 
   const [bookmarkTYpeClicked, setbookmarkTYpeClicked] = useState<any>(['all']);
+  const [buttons, setButtons] = useState<any>([]);
 
-  const userIdTemp = 'a@gmail.com';
 
-  const timeToDateParsing = (date: any) => {
-    const isoString = date; // An ISO 8601 string representing August 1, 2022
-    const dateOnlyString = isoString.substring(0, 10); // Extract the date component as a string
-    return dateOnlyString;
-  };
+  // const timeToDateParsing = (date: any) => {
+  //   const isoString = date; // An ISO 8601 string representing August 1, 2022
+  //   const dateOnlyString = isoString.substring(0, 10); // Extract the date component as a string
+  //   return dateOnlyString;
+  // };
 
-  // const router = useRouter();
+  const Buttons = (Button:any) => {
+    console.log("buttonsbuttonsbuttonsbuttonsbuttonsbuttons",Button)
+    let button : any = []
+    Button.forEach((element:any) => {
+      if(!button.includes(element?.sourceAsMap?.ContentType)){
+        button.push(element?.sourceAsMap?.ContentType)
+      }
+    });
+    console.log("=========",button)
+    setButtons(button)
 
-  const { targetItems } = props?.fields?.data?.datasource?.articlesList;
+  }
 
-  const [bookmarkLists, setBookmarkLists] = useState<any>(targetItems);
-  const [completeList] = useState<any>(targetItems);
+  const [bookmarkLists, setBookmarkLists] = useState<any>([]);
+  const [completeList, setCompleted] = useState<any>([]);
 
   const [selectedArticle, setSelectedArticle] = useState<any>([]);
   const [shareArticle, setShareArticle] = useState<any>([]);
@@ -159,12 +174,6 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
   };
 
   const handleShareClick = (id: any) => {
-    // if (clicked) {
-    //   setShowPopup(false);
-    // } else {
-    //   setShowPopup(true);
-    // }
-    // setClicked(!clicked);
     if (shareArticle.includes(id)) {
       setShareArticle([]);
     } else {
@@ -172,67 +181,90 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     }
   };
 
+  const TodaysDate = () => {
+    var currentDate = new Date();
+
+    // Step 2: Extract the individual components
+    var year = currentDate.getFullYear();
+    var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+    var day = ('0' + currentDate.getDate()).slice(-2);
+
+    // Step 3: Format the components into the desired format
+    var formattedDate = day + '-' + month + '-' + year;
+    return formattedDate;
+  };
+
+  const splitDate = (date: string) => {
+    var parts = date.split(' ');
+    return parts[0];
+  };
+
   const twoFilters = (nowDateArticle: any) => {
     let doubleFilter = nowDateArticle?.filter((item: any) => {
-      return item?.contentType?.targetItem?.name === bookmarkTYpeClicked;
+      return item?.sourceAsMap?.ContentType === bookmarkTYpeClicked;
     });
-    console.log(doubleFilter);
     setBookmarkLists(doubleFilter);
   };
 
   const pastArticle = () => {
-    console.log("=====================",completeList)
-    let nowDateArticle = completeList?.filter((item: any) => {
-      let date: any = timeToDateParsing(item?.date?.jsonValue?.value);
-      let datee: any = timeToDateParsing(new Date().toISOString());
-      return Date.parse(date) < Date.parse(datee);
+    const upComing = completeList?.filter((item: any) => {
+      const date = splitDate(item?.sourceAsMap?.Date);
+      const TodayDate = TodaysDate();
+      return (
+        new Date(date.split('-').reverse().join('-')) <
+        new Date(TodayDate.split('-').reverse().join('-'))
+      );
     });
     if (bookmarkTYpeClicked[0] === 'all') {
-      setBookmarkLists(nowDateArticle);
+      setBookmarkLists(upComing);
     } else {
-      setBookmarkLists(nowDateArticle);
-      twoFilters(nowDateArticle);
+      setBookmarkLists(upComing);
+      twoFilters(upComing);
     }
-
-    console.log(bookmarkLists);
   };
   const nowArticles = () => {
-    let nowDateArticle = completeList?.filter((item: any) => {
-      let date: any = timeToDateParsing(item?.date?.jsonValue?.value);
-      let datee: any = timeToDateParsing(new Date().toISOString());
-      return Date.parse(date) === Date.parse(datee);
+    const upComing = completeList?.filter((item: any) => {
+      const date = splitDate(item?.sourceAsMap?.Date);
+      const TodayDate = TodaysDate();
+      return (
+        new Date(date.split('-').reverse().join('-')) ===
+        new Date(TodayDate.split('-').reverse().join('-'))
+      );
     });
     if (bookmarkTYpeClicked[0] === 'all') {
-      setBookmarkLists(nowDateArticle);
+      setBookmarkLists(upComing);
     } else {
-      setBookmarkLists(nowDateArticle);
-      twoFilters(nowDateArticle);
+      setBookmarkLists(upComing);
+      twoFilters(upComing);
     }
   };
 
   const upComingArticle = () => {
-    let nowDateArticle = completeList?.filter((item: any) => {
-      let date: any = timeToDateParsing(item?.date?.jsonValue?.value);
-      let datee: any = timeToDateParsing(new Date().toISOString());
-      return Date.parse(date) > Date.parse(datee);
+    const upComing = completeList?.filter((item: any) => {
+      const date = splitDate(item?.sourceAsMap?.Date);
+      const TodayDate = TodaysDate();
+      return (
+        new Date(date.split('-').reverse().join('-')) >
+        new Date(TodayDate.split('-').reverse().join('-'))
+      );
     });
     if (bookmarkTYpeClicked[0] === 'all') {
-      setBookmarkLists(nowDateArticle);
+      setBookmarkLists(upComing);
     } else {
-      setBookmarkLists(nowDateArticle);
-      twoFilters(nowDateArticle);
+      setBookmarkLists(upComing);
+      twoFilters(upComing);
     }
   };
   const bookmarkApi = async (
-    userIdTemp: string,
+    userIdTemp: string | undefined,
     contentId: string,
     title: string,
     comment: string | undefined,
     userToken: string | undefined
   ) => {
     let response = await bookmark(userIdTemp, contentId, title, comment, userToken);
-    // url,
     console.log(response);
+    // url,
   };
   const [scroll, setScroll] = useState(false);
   useEffect(() => {
@@ -248,7 +280,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     setbookmarkTYpeClicked(name);
     if (completeList.length > 0) {
       data = completeList?.filter((item: any) => {
-        return item?.contentType?.targetItem?.name === name;
+        return item?.sourceAsMap?.ContentType === name;
       });
     }
     setBookmarkLists(data);
@@ -259,23 +291,22 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     setBookmarkLists(completeList);
   };
   const submitBookmark = (
-    userIdTemp: string,
+    userIdTemp: string | undefined,
     contentId: string,
     // url: string,
     title: string,
     comment: string | undefined
   ) => {
-    setTokenFromLocalStorage();
+    // setTokenFromLocalStorage();
     bookmarkApi(userIdTemp, contentId, title, comment, userToken);
     // , url:string
     // handleClick();
     handleSelectedArticle(contentId);
   };
-  console.log(new URL('https://twitter.com/Betclic/status/1382074820628783116?s=20').pathname);
   return (
     <div className={ArticlesListCss.bodyContainer}>
       <SideBar
-        buttonTypes={dataum}
+        buttonTypes={buttons}
         handleAllClick={handleAllClick}
         handleClick={handleClick}
         scroll={scroll}
@@ -283,6 +314,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
         nowArticles={nowArticles}
         pastArticle={pastArticle}
         upComingArticle={upComingArticle}
+        flag={false}
       />
       <div className={ArticlesListCss.mainwrapper}>
         {/* <SideBar
@@ -300,19 +332,19 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                   <div className={ArticlesListCss.leftSection}>
                     <NextImage
                       className={ArticlesListCss.leftSectionImage}
-                      field={l?.image?.jsonValue?.value}
+                      field={l?.sourceAsMap?.Image}
                       editable={true}
                     />
                   </div>
                   <div className={ArticlesListCss.rightSection}>
-                    <div className={ArticlesListCss.title}>{l?.title?.jsonValue?.value}</div>
+                    <div className={ArticlesListCss.title}>{l?.sourceAsMap?.Title}</div>
                     <div className={ArticlesListCss.cardDescription}>
                       <p>
-                        {l?.shortDescription?.jsonValue?.value}
+                        {l?.sourceAsMap?.ShortDescription}
                         {/* <Link href="/readMorePage">Read More </Link> */}
                       </p>
                     </div>
-                    <div className={ArticlesListCss.cardTags}>
+                    {/* <div className={ArticlesListCss.cardTags}>
                       {l?.tags?.targetItems?.map((m: any, j: any) => {
                         return (
                           <div key={j} className={ArticlesListCss.cardTag}>
@@ -322,7 +354,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                           </div>
                         );
                       })}
-                    </div>
+                    </div> */}
                     <div className={ArticlesListCss.infoWrapper}>
                       <div className={ArticlesListCss.infoWrapperTag}>
                         <NextImage
@@ -331,7 +363,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                           editable={true}
                         />
                         <div className={ArticlesListCss.infoWrapperTagData}>
-                          {l?.authorName?.jsonValue?.value}{' '}
+                          {l?.sourceAsMap?.AuthorName}{' '}
                         </div>
                       </div>
                       <div className={ArticlesListCss.infoWrapperTag}>
@@ -341,7 +373,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                           editable={true}
                         />
                         <div className={ArticlesListCss.infoWrapperTagData}>
-                          {getFormatedDate(l?.date?.jsonValue?.value)}
+                          {splitDate(l?.sourceAsMap?.Date)}
                         </div>
                       </div>
                     </div>
@@ -351,11 +383,10 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                         className={ArticlesListCss.button}
                         onClick={() =>
                           submitBookmark(
-                            userIdTemp,
-                            l?.id,
-                            // l.title?.jsonValue.value, //This is for URL or Image value
-                            l?.title?.jsonValue?.value,
-                            l?.description?.jsonValue?.value
+                            objectId,
+                            l?.sourceAsMap?.Id,
+                            l?.sourceAsMap?.Title,
+                            l?.sourceAsMap?.ShortDescription
                           )
                         }
                       >
@@ -370,7 +401,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       </button>
                       <button
                         className={ArticlesListCss.button}
-                        onClick={() => handleShareClick(l?.id)}
+                        onClick={() => handleShareClick(l?.sourceAsMap?.Id)}
                       >
                         <NextImage field={shareImage} editable={true} title="Share" />
                       </button>
@@ -387,7 +418,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                             height={25}
                           />
                           <Link
-                            href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/news/${l.id}&utm_source=whatsapp&utm_medium=social&utm_term=${l.id}`}
+                            href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=whatsapp&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
                           >
                             <a className={ArticlesListCss.targetIcon} target="_blank">
                               WhatsApp
@@ -404,7 +435,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                             height={25}
                           />
                           <Link
-                            href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l.id}&utm_source=twitter&utm_medium=social&utm_term=${l.id}`}
+                            href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=twitter&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
                           >
                             <a className={ArticlesListCss.targetIcon} target="_blank">
                               Twitter
@@ -421,7 +452,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                             height={25}
                           />
                           <Link
-                            href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l.id}&utm_source=linkedIn&utm_medium=social&utm_term=${l.id}`}
+                            href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=linkedIn&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
                           >
                             <a className={ArticlesListCss.targetIcon} target="_blank">
                               LinkedIn
@@ -437,7 +468,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                             height={25}
                           />
                           <Link
-                            href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/news/${l.id}&utm_source=facebook&utm_medium=social&utm_term=${l.id}`}
+                            href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=facebook&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
                           >
                             <a className={ArticlesListCss.targetIcon} target="_blank">
                               Facebook

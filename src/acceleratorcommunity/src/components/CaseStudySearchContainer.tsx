@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
 import styles from '../assets/searchFilterContainer.module.css';
-// import SearchNews from './SearchNews';
+import SearchNews from './SearchNews';
 import { GenericSkeletonForSearch } from './skeletons/SearchSkeleton';
 import darkModeCss from '../assets/darkTheme.module.css';
 import WebContext from 'src/Context/WebContext';
-import SearchedJournal from './SearchedJournal';
 
-const JournalSearchContainer = (props: any) => {
+const CaseStudySearchContainer = (props: any) => {
   console.log('====================', props);
   const { darkMode } = {
     ...useContext(WebContext),
@@ -21,13 +20,13 @@ const JournalSearchContainer = (props: any) => {
         <GenericSkeletonForSearch count={5} />
       ) : props?.searchedData?.length > 0 ? (
         props?.searchedData?.map((data: any) => {
-          return <SearchedJournal journal={data?.sourceAsMap} />;
+          return <SearchNews journal={data?.sourceAsMap} />;
         })
       ) : (
-        <div className={styles.forNoData}>No Journals found</div>
+        <div className={styles.forNoData}>No Case study found</div>
       )}
     </div>
   );
 };
 
-export default JournalSearchContainer;
+export default CaseStudySearchContainer;
