@@ -13,6 +13,7 @@ SharedFields:
 - ID: "17bb046a-a32a-41b3-8315-81217947611b"
   Hint: ComponentQuery
   Value: |
+    # Write your query or mutation here
     # Editing here does not save the query on the item; copy it back when done!
     
     query AddPost($datasource: String!, $language: String!) {
@@ -39,6 +40,9 @@ SharedFields:
               ... on EventData
               {
                 title{
+                  jsonValue
+                }
+                image{
                   jsonValue
                 }
               }
@@ -72,6 +76,9 @@ SharedFields:
         }
       }
     }
+- ID: "a77e8568-1ab3-44f1-a664-b7c37ec7810d"
+  Hint: Parameters Template
+  Value: "{E0553632-EE1E-4894-88A1-9C1C201060EF}"
 - ID: "b5b27af1-25ef-405c-87ce-369b3a004016"
   Hint: Datasource Location
   Value: /sitecore/content/acceleratorcommunity/Components/AddPost/AddPost
@@ -85,11 +92,11 @@ Languages:
       Value: 20230309T071347Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "f0ca3f82-48d7-456d-92cc-7ec7bc0402b5"
+      Value: "bafc86c1-f4ce-428e-80ca-f4961ff5bd29"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\nishant.tiwari@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230419T071113Z
+      Value: 20230503T110225Z

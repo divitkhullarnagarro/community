@@ -22,13 +22,18 @@ Languages:
           p:p="1">
           <d
             id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
+            <p
+              uid="{EF5A1ACB-1028-47C3-9A1A-E1A441A5F899}"
+              p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
+              s:key="profilepeerlisting"
+              s:md="{3FD1C3BC-189B-4C11-964A-58C12211B1E2}" />
             <r
               uid="{1325E204-81C8-4FA4-ADB0-B57AA4C737E7}"
-              p:after="p[@uid='{B114D3F0-F504-51DF-B6BA-03D0FCEC087A}']"
+              p:after="p[@uid='{EF5A1ACB-1028-47C3-9A1A-E1A441A5F899}']"
               s:ds="{94AD1290-B1EA-4C4E-8507-B22B02E68B19}"
               s:id="{78BAF5D7-D604-454E-B796-8CBB67AA4FE2}"
               s:par="CSSStyles"
-              s:ph="/jss-header/col2-{E74FD470-62D5-4535-ADDE-AA69547B15BC}-0"
+              s:ph="/jss-header/col3-{E74FD470-62D5-4535-ADDE-AA69547B15BC}-0"
               s:ccb="Clear on publish" />
             <r
               uid="{E8EC5A0A-C1B5-45ED-831B-DA2119C35BB2}"
@@ -36,7 +41,7 @@ Languages:
               s:ds="{60828F2C-A954-413B-B5DE-FC77AF7C9F13}"
               s:id="{67F9F9E6-8533-467F-B7D7-13CC8EE7498F}"
               s:par="CSSStyles"
-              s:ph="/jss-header/col1-{E74FD470-62D5-4535-ADDE-AA69547B15BC}-0"
+              s:ph="/jss-header/col2-{E74FD470-62D5-4535-ADDE-AA69547B15BC}-0"
               s:ccb="Clear on publish" />
             <r
               uid="{AF962EDD-C780-4DE1-9D62-A3E748A56483}"
@@ -53,11 +58,24 @@ Languages:
               s:ccb="Clear on publish" />
             <r
               uid="{BE27F674-015E-4AAA-8D61-5C6721F6957B}"
-              p:after="*[1=2]"
+              p:after="r[@uid='{E74FD470-62D5-4535-ADDE-AA69547B15BC}']"
               s:ds="{A85E619F-7F82-4795-9E12-85783900263D}"
               s:id="{66B09AA5-3A20-4FB1-ABC2-D1AE2DF6BE09}"
               s:par="CSSStyles"
-              s:ph="/jss-header/col2-{E74FD470-62D5-4535-ADDE-AA69547B15BC}-0"
+              s:ph="/jss-header/col3-{E74FD470-62D5-4535-ADDE-AA69547B15BC}-0"
+              s:ccb="Clear on publish" />
+            <r
+              uid="{D3E63D58-DE61-475C-A145-DC7B6816ACC3}"
+              p:after="r[@uid='{BE27F674-015E-4AAA-8D61-5C6721F6957B}']"
+              s:id="{9F7A324E-5F98-4BEC-951C-0240C9D1CBB2}"
+              s:ph="profilepeerlisting" />
+            <r
+              uid="{3CA45244-1BEB-4C5E-83F2-0B77CBEEAAEE}"
+              p:after="*[1=2]"
+              s:ds="{D8B49499-193A-4E04-AEAE-BDD5F68A6189}"
+              s:id="{6DC8C62B-AE1B-44F0-8506-FECF599C345B}"
+              s:par="CSSStyles"
+              s:ph="/jss-header/col1-{E74FD470-62D5-4535-ADDE-AA69547B15BC}-0"
               s:ccb="Clear on publish" />
           </d>
         </r>
@@ -69,7 +87,7 @@ Languages:
       Value: "Social Community - User Profile"
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
-      Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
+      Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
@@ -80,7 +98,7 @@ Languages:
         sitecore\admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "e625b9e9-aa49-4f3b-9705-fe79fe67b4c0"
+      Value: "c736784b-9a63-4144-ac4d-9f529ff67763"
     - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
       Hint: twitterDescription
       Value: "Social Community - Create your social profile"
@@ -96,7 +114,7 @@ Languages:
         sitecore\damyanti.wakchaure@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230424T070013Z
+      Value: 20230504T133948Z
     - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
       Hint: ogTitle
       Value: Create your social profile

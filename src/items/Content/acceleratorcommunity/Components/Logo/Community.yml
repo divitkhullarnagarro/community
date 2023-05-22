@@ -11,7 +11,7 @@ SharedFields:
 - ID: "b1db66ee-da88-4a5d-9b48-3c33751eb7e6"
   Hint: Image
   Value: |
-    <image mediaid="{A999A125-48EE-49D0-8CD6-F642DF81869F}" />
+    <image mediaid="{540C3808-605C-45BF-A384-C515C035881F}" />
 Languages:
 - Language: en
   Versions:
@@ -22,11 +22,11 @@ Languages:
       Value: 20230306T161848Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "c8e1c3f8-b1ce-4f91-b0c6-08e83c7de996"
+      Value: "00cf0bee-9f85-4887-8349-3ad8946e612d"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\mohit.rajpal@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230306T162350Z
+      Value: 20230511T160745Z

@@ -1,0 +1,66 @@
+﻿---
+ID: "5243dc7e-2f86-42a1-9b88-a7b46e58ba1a"
+Parent: "9b2f2c61-b700-51dd-8f47-7600fc865200"
+Template: "0a24b14e-bbdd-4d84-8139-7d40e3b356fa"
+Path: /sitecore/content/acceleratorcommunity/home/dummy
+SharedFields:
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{6C59AE29-D0A1-4B77-9305-0ABAB21D5FE5}"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "03897511-7b06-4331-8ca0-1929bc3047ce"
+      Hint: Navigation Title
+      Value: dummy
+    - ID: "04bf00db-f5fb-41f7-8ab7-22408372a981"
+      Hint: __Final Renderings
+      Value: |
+        <r xmlns:p="p" xmlns:s="s"
+          p:p="1">
+          <d
+            id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
+            <r
+              uid="{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}"
+              s:ccb="Clear on publish"
+              s:par="CSSStyles" />
+            <r
+              uid="{73E733AA-0350-4EE5-9F9B-BF18421B77F0}">
+              <p:d />
+            </r>
+            <r
+              uid="{6076BC82-7AFD-48EB-A659-FF6DF5E8E32E}"
+              p:after="*[1=2]"
+              s:ds="{D8B49499-193A-4E04-AEAE-BDD5F68A6189}"
+              s:id="{6DC8C62B-AE1B-44F0-8506-FECF599C345B}"
+              s:par="CSSStyles"
+              s:ph="/jss-header/col1-{8A85A4E1-0C53-4C54-AB43-539E5DB92F09}-0"
+              s:ccb="Clear on publish" />
+          </d>
+        </r>
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230504T095019Z
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\damyanti.wakchaure@nagarro.com
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\damyanti.wakchaure@nagarro.com
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "5e0befa8-7c8f-4133-b9eb-007a08689851"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\damyanti.wakchaure@nagarro.com
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230504T133239Z
