@@ -245,10 +245,10 @@
 .editGroupBannerBtn {
   margin-bottom: 40px;
   margin-right: 10px;
-  border: 1px solid black;
+  border: 1px solid #47d7ac;
   padding: 6px;
   border-radius: 5px;
-  color: black;
+  color: #47d7ac;
   background: transparent;
 }
 /* .groupPageLogo {
@@ -257,8 +257,15 @@
 .buttonGroup {
   position: relative;
   top: 16px;
+  right: 10px;
   row-gap: 48px;
 }
+.groupLeftSection {
+  position: relative;
+  bottom: 50px;
+  left: 40px;
+}
+
 @media only screen and (max-width: 640px) {
   .groupHeaderWrapper {
     height: 16vh;
