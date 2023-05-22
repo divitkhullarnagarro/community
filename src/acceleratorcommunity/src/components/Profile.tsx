@@ -14,6 +14,7 @@ import EventsImg from '../assets/images/events.png';
 import BlogsImg from '../assets/images/blogs.png';
 import PeersImg from '../assets/images/peers.png';
 import UserImg from '../assets/images/blockedUser.png';
+import ChangePasswordIcon from '../assets/images/ChangePasswordIcon.png';
 import Image from 'next/image';
 
 import Banner from './Banner';
@@ -28,6 +29,7 @@ import EventListing from './helperComponents/EventListing';
 import BlogListing from './helperComponents/BlogListing';
 import PeerFriendList from './PeerFriendList';
 import BlockedUser from './BlockedUser';
+import ChangePassword from './ChangePassword';
 // import { decryptString } from 'assets/helpers/EncryptDecrypt';
 
 type User = {
@@ -1370,130 +1372,137 @@ const Profile = (props: any): JSX.Element => {
             <div
               className={
                 details === 'personal'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${
+                      darkMode && 'personalDetailsActiveImage'
+                    }`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${
+                      darkMode && 'personalDetailsImage'
+                    }`
               }
               onClick={() => handlePersonalDetails('personal')}
             >
-              <Image
-                src={PersonalImg}
-                height={15}
-                width={15}
-                alt="Personal Information"
-              />
-                Personal Information
+              <Image src={PersonalImg} height={15} width={15} alt="Personal Information" />
+              Personal Information
             </div>
             <div
               className={
                 details === 'contactDetails'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${
+                      darkMode && 'personalDetailsActiveImage'
+                    }`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${
+                      darkMode && 'personalDetailsImage'
+                    }`
               }
               onClick={() => handlePersonalDetails('contactDetails')}
             >
-              <Image
-                src={ContactImg}
-                height={15}
-                width={15}
-                alt="Contact Details"
-              />
+              <Image src={ContactImg} height={15} width={15} alt="Contact Details" />
               Contact Details
             </div>
             <div
               className={
                 details === 'educationDetails'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${
+                      darkMode && 'personalDetailsActiveImage'
+                    }`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${
+                      darkMode && 'personalDetailsImage'
+                    }`
               }
               onClick={() => handlePersonalDetails('educationDetails')}
             >
-              <Image
-                src={EducationImg}
-                height={15}
-                width={15}
-                alt="Education Details"
-              />
+              <Image src={EducationImg} height={15} width={15} alt="Education Details" />
               Education Details
             </div>
             <div
               className={
                 details === 'work'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${
+                      darkMode && 'personalDetailsActiveImage'
+                    }`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${
+                      darkMode && 'personalDetailsImage'
+                    }`
               }
               onClick={() => handlePersonalDetails('work')}
             >
-              <Image
-                src={WorkImg}
-                height={15}
-                width={15}
-                alt="Work Details"
-              />
+              <Image src={WorkImg} height={15} width={15} alt="Work Details" />
               Work Details
             </div>
             <div
               className={
                 details === 'events'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${
+                      darkMode && 'personalDetailsActiveImage'
+                    }`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${
+                      darkMode && 'personalDetailsImage'
+                    }`
               }
               onClick={() => handlePersonalDetails('events')}
             >
-              <Image
-                src={EventsImg}
-                height={15}
-                width={15}
-                alt="Events"
-              />
+              <Image src={EventsImg} height={15} width={15} alt="Events" />
               Events
             </div>
             <div
               className={
                 details === 'blogs'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${
+                      darkMode && 'personalDetailsActiveImage'
+                    }`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${
+                      darkMode && 'personalDetailsImage'
+                    }`
               }
               onClick={() => handlePersonalDetails('blogs')}
             >
-              <Image
-                src={BlogsImg}
-                height={15}
-                width={15}
-                alt="Blogs"
-              />
+              <Image src={BlogsImg} height={15} width={15} alt="Blogs" />
               Blogs
             </div>
             <div
               className={
                 details === 'peers'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${
+                      darkMode && 'personalDetailsActiveImage'
+                    }`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${
+                      darkMode && 'personalDetailsImage'
+                    }`
               }
               onClick={() => handlePersonalDetails('peers')}
             >
-              <Image
-                src={PeersImg}
-                height={15}
-                width={15}
-                alt="Peers"
-              />
+              <Image src={PeersImg} height={15} width={15} alt="Peers" />
               Peers
             </div>
             <div
               className={
                 details === 'blockedusers'
-                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${darkMode && 'personalDetailsActiveImage'}`
-                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${darkMode && 'personalDetailsImage'}`
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${
+                      darkMode && 'personalDetailsActiveImage'
+                    }`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${
+                      darkMode && 'personalDetailsImage'
+                    }`
               }
               onClick={() => handlePersonalDetails('blockedusers')}
             >
-              <Image
-                src={UserImg}
-                height={15}
-                width={15}
-                alt="Blocked Users"
-              />
+              <Image src={UserImg} height={15} width={15} alt="Blocked Users" />
               Blocked Users
+            </div>
+            <div
+              className={
+                details === 'changepassword'
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${
+                      darkMode && 'personalDetailsActiveImage'
+                    }`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${
+                      darkMode && 'personalDetailsImage'
+                    }`
+              }
+              onClick={() => handlePersonalDetails('changepassword')}
+            >
+              <Image src={ChangePasswordIcon} height={15} width={15} alt="Blocked Users" />
+              Change Password
             </div>
             {/* <div
               className={
@@ -1676,6 +1685,10 @@ const Profile = (props: any): JSX.Element => {
             ) : details === 'blockedusers' ? (
               <div className="profileInfo">
                 <BlockedUser showInProfilePage={true} />
+              </div>
+            ) : details === 'changepassword' ? (
+              <div className="profileInfo">
+                <ChangePassword />
               </div>
             ) : (
               <div className="bannerContainerForProfile">
