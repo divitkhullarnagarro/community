@@ -185,6 +185,22 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
               </div>
             </Link>
           </Dropdown.Item>
+          <Dropdown.Item className={userProfileCss.userProfileDropdownItem}>
+            <Link href={'/bookmarklisting'} passHref={true}>
+              <div className={userProfileCss.userProfileOverlayItem}>
+                <div className={userProfileCss.userProfileDropdownImage}>
+                  <img
+                    src={Community.src}
+                    width={20}
+                    height={20}
+                    style={{ borderRadius: '50%' }}
+                    title="Profile page"
+                  />
+                </div>
+                <div className={userProfileCss.userProfileBtn}>My Bookmarks</div>
+              </div>
+            </Link>
+          </Dropdown.Item>
           <Dropdown.Item
             className={userProfileCss.userProfileDropdownItem}
             onClick={() => setLogoutPopUp(true)}
