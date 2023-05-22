@@ -15,7 +15,6 @@ import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';
 import loginCss from '../assets/login.module.css';
 import darkTheme from '../assets/darkTheme.module.css';
-import Spinner from 'react-bootstrap/Spinner';
 import getUserCall from 'src/API/getUserCall';
 import { encryptString } from '../assets/helpers/EncryptDecrypt';
 import ThemeSwitcher from './ThemeSwitcher';
