@@ -27,12 +27,14 @@ type SearchProps = ComponentProps & {
 const Search = (props: SearchProps): JSX.Element => {
   console.log('Search', props);
   const router = useRouter();
+  const [searchListToggle, setSearchListToggle] = useState(false);
   const [searchText, setSearchText] = useState('');
   const handleSearch = (e: any) => {
     e.preventDefault();
     if (searchText !== '') {
       router.push(`/search?query=${searchText}&type=ALL`);
     }
+    setSearchListToggle(false);
   };
 
   const { userToken } = {
@@ -80,8 +82,10 @@ const Search = (props: SearchProps): JSX.Element => {
             response?.data?.data?.totalHits?.value > 0
           ) {
             setSearchedData(response?.data?.data?.hits);
+            setSearchListToggle(true);
           } else {
             setSearchedData([]);
+            setSearchListToggle(false);
           }
         }
         // setSuccess(false);
@@ -95,7 +99,7 @@ const Search = (props: SearchProps): JSX.Element => {
     <>
       <div className={searchCss.container}>
         <div className={searchCss.searchBox}>
-          <form>
+          <form className={searchCss.searchForm}>
             <button type="submit" className={searchCss.searchBtn} onClick={handleSearch}>
               <NextImage
                 className={searchCss.img}
@@ -112,39 +116,45 @@ const Search = (props: SearchProps): JSX.Element => {
               placeholder={props?.fields?.data?.datasource?.title?.jsonValue?.value}
               onChange={(e: any) => setSearchText(e?.target?.value)}
             />
-            {searchText !== '' && searchedData?.length > 0 ? (
+            {searchText !== '' && searchedData?.length > 0 && searchListToggle ? (
               <div
-                className={darkMode ? searchCss.darkSuggesetionBox : searchCss.whiteSuggesetionBox}
+                className={`${searchCss.suggestionBox} ${
+                  darkMode ? searchCss.darkBackground : searchCss.lightBackground
+                }`}
               >
                 {searchedData?.map((data: any) => {
                   return data?.index === 'accelerator-blog' ? (
                     <li
-                      className={
-                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
-                      }
-                      onClick={() => handleSuggestiveSearch(data?.sourceAsMap?.blog?.heading)}
+                      className={`${searchCss.suggestionList} ${
+                        darkMode ? searchCss.darkText : searchCss.lightText
+                      }`}
+                      onClick={() => {
+                        handleSuggestiveSearch(data?.sourceAsMap?.blog?.heading);
+                        setSearchListToggle(false);
+                      }}
                     >
                       {data?.sourceAsMap?.blog?.heading}
                     </li>
                   ) : data?.index === 'accelerator-user' ? (
                     // console.log("data?.sourceAsMap?.firstName + data?.sourceAsMap?.lastName",data?.sourceAsMap?.firstName + data?.sourceAsMap?.lastName)
                     <li
-                      className={
-                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
-                      }
-                      onClick={() =>
+                      className={`${searchCss.suggestionList} ${
+                        darkMode ? searchCss.darkText : searchCss.lightText
+                      }`}
+                      onClick={() => {
                         handleSuggestiveSearch(
-                          data?.sourceAsMap?.firstName + '  ' + data?.sourceAsMap?.lastName
-                        )
-                      }
+                          data?.sourceAsMap?.firstName + ' ' + data?.sourceAsMap?.lastName
+                        );
+                        setSearchListToggle(false);
+                      }}
                     >
                       {data?.sourceAsMap?.firstName + '  ' + data?.sourceAsMap?.lastName}
                     </li>
                   ) : data?.index === 'accelerator-event' ? (
                     <li
-                      className={
-                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
-                      }
+                      className={`${searchCss.suggestionList} ${
+                        darkMode ? searchCss.darkText : searchCss.lightText
+                      }`}
                     >
                       {data?.sourceAsMap?.event?.title}
                     </li>
