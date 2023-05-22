@@ -42,7 +42,8 @@ Languages:
             <r
               uid="{87A3F594-E2BA-4896-9999-78F7DA80E485}"
               p:after="r[@uid='{43EF3168-6ACE-4A09-B14D-5DAF51FEAE45}']"
-              s:id="{B9C67CBD-E307-4D0A-A06E-1898E050D8A6}"
+              s:id="{9F7A324E-5F98-4BEC-951C-0240C9D1CBB2}"
+              s:par="IsWidgetView=1"
               s:ph="/jss-main/col1-{E715BB4B-AB97-47E3-9204-4BE77AD1B821}-0" />
             <r
               uid="{B7A91572-7C2A-4215-AD95-53782737AE88}"
@@ -71,6 +72,9 @@ Languages:
               s:par="Title=People%20You%20May%20Know&amp;LinkLabel=See%20All&amp;Link=%3Clink%20text%3D%22%22%20anchor%3D%22%22%20linktype%3D%22internal%22%20class%3D%22%22%20title%3D%22%22%20target%3D%22%22%20querystring%3D%22%22%20id%3D%22%7B23443002-3E34-48EA-BD34-092986320648%7D%22%20%2F%3E&amp;IsFullList"
               s:ph="/jss-main/col3-{E715BB4B-AB97-47E3-9204-4BE77AD1B821}-0" />
             <r
+              uid="{73E733AA-0350-4EE5-9F9B-BF18421B77F0}"
+              p:after="r[@uid='{F67075C5-B4D8-45EA-86C9-48E4D71A1E9B}']" />
+            <r
               uid="{47AACBCB-5F90-4589-A0B8-EA69CAA53AE9}"
               p:after="*[1=2]"
               s:ds=""
@@ -94,7 +98,7 @@ Languages:
       Value: "{C55B483C-EA7F-4E76-A066-985F7D9396CA}"
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "e309d820-7794-4f2c-ba6f-f3b7e2e31838"
+      Value: "00be0da3-5f26-4886-965e-780928cf4cc2"
     - ID: "8cf72ac8-47c9-4d9b-9bc8-03773411ea03"
       Hint: twitterDescription
       Value: Post feeds for Social Community
@@ -107,10 +111,10 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\mohit.rajpal@nagarro.com
+        sitecore\damyanti.wakchaure@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230420T130348Z
+      Value: 20230504T133108Z
     - ID: "db6dea59-44dd-4448-8f6a-2095794d6f13"
       Hint: ogTitle
       Value: Social Community
