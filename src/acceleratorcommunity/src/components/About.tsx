@@ -1,4 +1,4 @@
-import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import Accordion from 'react-bootstrap/Accordion';
 import styles from '../assets/about.module.css';
@@ -12,7 +12,28 @@ import darkModeCss from '../assets/darkTheme.module.css';
 
 type AboutProps = ComponentProps & {
   fields: {
-    heading: Field<string>;
+    data: {
+      datasource: {
+        heading: {
+          jsonValue: Field<string>;
+        };
+        hobbiesLabel: {
+          jsonValue: Field<string>;
+        };
+        interestsLabel: {
+          jsonValue: Field<string>;
+        };
+        summaryLabel: {
+          jsonValue: Field<string>;
+        };
+        workLabel: {
+          jsonValue: Field<string>;
+        };
+        contactInfoLabel: {
+          jsonValue: Field<string>;
+        };
+      };
+    };
   };
 };
 
@@ -40,7 +61,6 @@ const aboutContentList = [
 ];
 
 const About = (props: AboutProps): JSX.Element => {
-  props;
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [fetchUser, setfetchUser] = useState<any>({});
   const { darkMode } = { ...useContext(WebContext) };
@@ -93,7 +113,15 @@ const About = (props: AboutProps): JSX.Element => {
       <>
         <div className={`${styles.aboutContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}>
           <h3 className={`${styles.aboutHeader} ${darkMode ? darkModeCss.text_green : ''}`}>
-            About
+            <Text
+              field={
+                props?.fields?.data?.datasource?.heading?.jsonValue
+                  ? props?.fields?.data?.datasource?.heading?.jsonValue
+                  : {
+                      value: 'About',
+                    }
+              }
+            />
           </h3>
           <Accordion defaultActiveKey={['0']} alwaysOpen>
             <Accordion.Item
@@ -105,7 +133,15 @@ const About = (props: AboutProps): JSX.Element => {
                   darkMode ? styles.accordionHeaderTheme : ''
                 }`}
               >
-                Summary
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.summaryLabel?.jsonValue
+                      ? props?.fields?.data?.datasource?.summaryLabel?.jsonValue
+                      : {
+                          value: 'Summary',
+                        }
+                  }
+                />
               </Accordion.Header>
               <Accordion.Body
                 className={`${styles.accordionBody} ${darkMode ? darkModeCss.test_grey_4 : ''}`}
@@ -122,7 +158,15 @@ const About = (props: AboutProps): JSX.Element => {
                   darkMode ? styles.accordionHeaderTheme : ''
                 }`}
               >
-                Contact Information
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.contactInfoLabel?.jsonValue
+                      ? props?.fields?.data?.datasource?.contactInfoLabel?.jsonValue
+                      : {
+                          value: 'Contact Information',
+                        }
+                  }
+                />
               </Accordion.Header>
               <Accordion.Body
                 className={`${styles.accordionBody} ${darkMode ? darkModeCss.test_grey_4 : ''}`}
@@ -146,7 +190,15 @@ const About = (props: AboutProps): JSX.Element => {
                   darkMode ? styles.accordionHeaderTheme : ''
                 }`}
               >
-                Work
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.workLabel?.jsonValue
+                      ? props?.fields?.data?.datasource?.workLabel?.jsonValue
+                      : {
+                          value: 'Work',
+                        }
+                  }
+                />
               </Accordion.Header>
               <Accordion.Body
                 className={`${styles.accordionBody} ${darkMode ? darkModeCss.test_grey_4 : ''}`}
@@ -170,7 +222,15 @@ const About = (props: AboutProps): JSX.Element => {
                   darkMode ? styles.accordionHeaderTheme : ''
                 }`}
               >
-                Hoobies
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.hobbiesLabel?.jsonValue
+                      ? props?.fields?.data?.datasource?.hobbiesLabel?.jsonValue
+                      : {
+                          value: 'Hobbies',
+                        }
+                  }
+                />
               </Accordion.Header>
               <Accordion.Body
                 className={`${styles.accordionBody} ${darkMode ? darkModeCss.test_grey_4 : ''}`}
@@ -195,7 +255,15 @@ const About = (props: AboutProps): JSX.Element => {
                   darkMode ? styles.accordionHeaderTheme : ''
                 }`}
               >
-                Interests
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.interestsLabel?.jsonValue
+                      ? props?.fields?.data?.datasource?.interestsLabel?.jsonValue
+                      : {
+                          value: 'Interests',
+                        }
+                  }
+                />
               </Accordion.Header>
               <Accordion.Body
                 className={`${styles.accordionBody} ${darkMode ? darkModeCss.test_grey_4 : ''}`}
