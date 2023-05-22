@@ -317,7 +317,16 @@ const Register = (props: RegisterProps): JSX.Element => {
                   darkMode && darkTheme.text_light
                 }`}
               >
-                {targetItems?.description?.jsonValue?.value}
+                <Text
+                  field={
+                    targetItems?.description?.jsonValue
+                      ? targetItems?.description?.jsonValue
+                      : {
+                          value:
+                            "Welcome to Community Solution! We're glad you're here. To get started, please fill out the form with your information. Once you've submitted the form, you'll redirected to login page. Thank you for choosing Community Solution!",
+                        }
+                  }
+                />
               </div>
             </div>
           </div>{' '}

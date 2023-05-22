@@ -10,12 +10,18 @@ import Profile from '../assets/images/ProfilePic.jpeg';
 import FollowUnfollowButton from './FollowUnfollowButton';
 import styles from '../assets/peerfriendlist.module.css';
 import darkModeCss from '../assets/darkTheme.module.css';
-import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, NextImage, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 import { viewProfileLinkUrl } from 'assets/helpers/constants';
 
 type PeerFriendListProps = ComponentProps & {
   fields: {
-    heading: Field<string>;
+    data: {
+      datasource: {
+        heading: {
+          jsonValue: Field<string>;
+        };
+      };
+    };
   };
 };
 
@@ -27,13 +33,11 @@ type peerFriendFields = {
 };
 
 const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
-  console.log('PeerFriendList', props);
   const [peerFriendList, setPeerFriendList] = useState<peerFriendFields[]>([]);
   const { userToken, darkMode } = { ...useContext(WebContext) };
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isWidgetView] = useState(props?.params?.IsWidgetView === '1');
   const skeletonDummyArr = [1, 2, 3, 4, 5, 6];
-  console.log('isWidgetView', peerFriendList);
 
   const getAllPears = async () => {
     setIsDataLoaded(false);
@@ -68,7 +72,15 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
       <div className={`${styles.wrapper} ${darkMode ? darkModeCss.grey_3 : ''}`}>
         <div className={styles.header}>
           <div className={`${styles.heading} ${darkMode ? darkModeCss.text_green : ''}`}>
-            {'Peers'}
+            <Text
+              field={
+                props.fields.data.datasource.heading.jsonValue
+                  ? props.fields.data.datasource.heading.jsonValue
+                  : {
+                      value: 'Peers',
+                    }
+              }
+            />
           </div>
           <Link
             href={{ pathname: '/profile', query: 'showTab=peers' }}
