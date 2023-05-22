@@ -33,9 +33,7 @@ type ForgotPasswordProps = ComponentProps & {
           jsonValue: RichTextField;
         };
         userEmailLabel: {
-          jsonValue: {
-            value: Field<string>;
-          };
+          jsonValue: Field<string>;
         };
         emailPlaceholder: {
           jsonValue: {
@@ -462,7 +460,13 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
                 <div className={loginCss.loginField}>
                   <i className={loginCss['login__icon fas fa-user']}></i>
                   <label className={`${loginCss.label} ${darkMode && darkTheme.text_light}`}>
-                    {datasource?.userEmailLabel?.jsonValue?.value}
+                    <Text
+                      field={
+                        datasource?.userEmailLabel?.jsonValue
+                          ? datasource?.userEmailLabel?.jsonValue
+                          : { value: 'User Email' }
+                      }
+                    />
                   </label>
                   <input
                     onChange={(e) => {

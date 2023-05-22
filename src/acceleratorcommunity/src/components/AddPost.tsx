@@ -1,7 +1,5 @@
-import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
-import { ComponentProps } from 'lib/component-props';
+import { Field, NextImage, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
-import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
 import Form from 'react-bootstrap/Form';
 import WebContext from '../Context/WebContext';
 import Button from 'react-bootstrap/Button';
@@ -91,9 +89,86 @@ import darkModeCss from '../assets/darkTheme.module.css';
 import LogRocket from 'logrocket';
 import ViewPostDescription from './helperComponents/ViewPostDescription';
 
-type AddPostProps = ComponentProps & {
+export interface EventType {
+  targetItems: TargetItem[];
+}
+
+export interface TargetItem {
+  title: Title;
+  image: Image;
+}
+
+export interface Image {
+  jsonValue: ImageJSONValue;
+}
+
+export interface ImageJSONValue {
+  value: Value;
+}
+
+export interface Value {
+  href: string;
+  linktype: string;
+  url: string;
+}
+
+export interface Title {
+  jsonValue: TitleJSONValue;
+}
+
+export interface TitleJSONValue {
+  value: string;
+}
+
+type AddPostProps = {
   fields: {
-    heading: Field<string>;
+    data: {
+      datasource: {
+        eventType: EventType;
+        reportPostTitle: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        reportPostHeader: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        whatsApp: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        facebook: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        linkedIn: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        twitter: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        placeholderText: {
+          jsonValue: Field<string>;
+        };
+        editorPlaceholder: {
+          jsonValue: {
+            value: string;
+          };
+        };
+      };
+    };
+  };
+  params: {
+    URL: string;
+    withoutEditor: boolean;
   };
 };
 
@@ -103,7 +178,7 @@ type BlockUserFields = {
   lastName: string;
 };
 
-const AddPost = (props: AddPostProps | any): JSX.Element => {
+const AddPost = (props: AddPostProps): JSX.Element => {
   const { userToken, objectId, userObject, darkMode } = {
     ...useContext(WebContext),
   };
@@ -3003,7 +3078,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                                   padding: '0px 10px',
                                   fontSize: '13px',
                                 }}
-                                placeholder="Share Your Thoughts..."
+                                placeholder={
+                                  props?.fields?.data?.datasource?.editorPlaceholder?.jsonValue
+                                    ?.value
+                                    ? props?.fields?.data?.datasource?.editorPlaceholder?.jsonValue
+                                        ?.value
+                                    : 'Share Your Thoughts...'
+                                }
                                 toolbar={toolbar}
                                 // toolbarOnFocus={true}
                                 mention={{
@@ -3215,14 +3296,13 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
                       aria-expanded={showForm1}
                     >
                       <div className={styles.addPostHeading}>
-                        {props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
-                          ? props?.fields?.data?.datasource?.placeholderText?.jsonValue?.value
-                          : "What's on your mind"}
-                        {``}
-                        {/* <span>
-                    {userObject?.firstName ? userObject?.firstName : ''}{' '}
-                    {userObject?.lastName ? userObject?.lastName : ''}
-                  </span> */}
+                        <Text
+                          field={
+                            props?.fields?.data?.datasource?.placeholderText?.jsonValue
+                              ? props?.fields?.data?.datasource?.placeholderText?.jsonValue
+                              : { value: "What's on your mind" }
+                          }
+                        />
                       </div>
                     </button>
                   )}
@@ -3852,4 +3932,4 @@ const AddPost = (props: AddPostProps | any): JSX.Element => {
   );
 };
 
-export default withSitecoreContext()(AddPost);
+export default AddPost;

@@ -7,12 +7,22 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import darkModeCss from '../assets/darkTheme.module.css';
 import WebContext from 'src/Context/WebContext';
+import { Field, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 // import { useRouter } from 'next/router';
 // import Link from 'next/link';
 
 type RecentActivitiesProps = ComponentProps & {
   fields: {
-    heading: string;
+    data: {
+      datasource: {
+        heading: {
+          jsonValue: Field<string>;
+        };
+        seeAllLabel: {
+          jsonValue: Field<string>;
+        };
+      };
+    };
   };
 };
 const list = [
@@ -124,9 +134,27 @@ const RecentActivities = (props: RecentActivitiesProps): JSX.Element => {
             <h3
               className={`${style.recentActivityTitle} ${darkMode ? darkModeCss.text_green : ''}`}
             >
-              Your Recent Activities
+              <Text
+                field={
+                  props?.fields?.data?.datasource?.heading?.jsonValue
+                    ? props?.fields?.data?.datasource?.heading?.jsonValue
+                    : {
+                        value: 'Your Recent Activities',
+                      }
+                }
+              />
             </h3>
-            <h6 className={style.viewAllButton}>See All</h6>
+            <h6 className={style.viewAllButton}>
+              <Text
+                field={
+                  props?.fields?.data?.datasource?.seeAllLabel?.jsonValue
+                    ? props?.fields?.data?.datasource?.seeAllLabel?.jsonValue
+                    : {
+                        value: 'See All',
+                      }
+                }
+              />
+            </h6>
           </div>
           <div className={`${style.recentActivityList} ${darkMode ? darkModeCss.grey_3 : ''}`}>
             {list.map((ele, index: number) => (

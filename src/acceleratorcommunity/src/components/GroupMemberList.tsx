@@ -14,10 +14,20 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import AxiosRequest from 'src/API/AxiosRequest';
 import DotLoader from './DotLoader';
 import MemberListSkeleton from './skeletons/MemberListSkeleton';
+import { Field, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 
 type GroupMembersListProps = ComponentProps & {
   fields: {
-    heading: string;
+    data: {
+      datasource: {
+        heading: {
+          jsonValue: Field<string>;
+        };
+        createGroupBtnLabel: {
+          jsonValue: Field<string>;
+        };
+      };
+    };
   };
 };
 
@@ -94,7 +104,15 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
     <>
       <div className={`${style.groupMemberListBox} ${darkMode && darkTheme.grey_3}`}>
         <h3 className={`${style.groupMemberTitle} ${darkMode && darkTheme.text_green}`}>
-          Members List
+          <Text
+            field={
+              props?.fields?.data?.datasource?.heading?.jsonValue
+                ? props?.fields?.data?.datasource?.heading?.jsonValue
+                : {
+                    value: 'Members List',
+                  }
+            }
+          />
         </h3>
         <div
           className={`${style.groupMemberList} ${darkMode && darkTheme.grey_1} ${
@@ -151,7 +169,15 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
           )}
           {showSeeMoreButton && !loadingMore && counter.current < 1 && (
             <div onClick={getMoreMembers} className={style.seeMore}>
-              more+
+              <Text
+                field={
+                  props?.fields?.data?.datasource?.createGroupBtnLabel?.jsonValue
+                    ? props?.fields?.data?.datasource?.createGroupBtnLabel?.jsonValue
+                    : {
+                        value: 'More +',
+                      }
+                }
+              />
             </div>
           )}
         </div>
