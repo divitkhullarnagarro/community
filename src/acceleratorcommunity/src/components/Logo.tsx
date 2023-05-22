@@ -15,8 +15,8 @@ const Logo = (props: LogoInterface): JSX.Element => {
           style={{ cursor: 'pointer' }}
           src={image?.jsonValue?.value?.src ? image?.jsonValue?.value?.src : logo}
           // editable={true}
-          height={80}
-          width={80}
+          height={60}
+          width={60}
         />
       </Link>
     </div>

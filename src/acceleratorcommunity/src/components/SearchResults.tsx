@@ -354,6 +354,7 @@ const SearchResults = () => {
       <div className={styles.ThemeSwitcher}>
         <ThemeSwitcher />
       </div>
+      <div className={styles.wrapper}>
       <div className={styles.pageHeadingContainer}>
         {/* <div className={styles.pageHeading}>
           <form>
@@ -396,8 +397,8 @@ const SearchResults = () => {
       ) : (
         // <PollConatiner success={success} searchedData={searchedData} />
 
-        ''
-      )}
+          ''
+        )}
       {showNotification && (
         <ToastNotification
           showNotification={showNotification}
@@ -407,6 +408,7 @@ const SearchResults = () => {
           handleCallback={resetToastState}
         />
       )}
+    </div>
     </div>
   );
 };

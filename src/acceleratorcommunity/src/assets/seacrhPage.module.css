@@ -17,12 +17,19 @@
 
 .container {
   background-color: #f0f2f5;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
+.wrapper {
+  width: 100%;
+  max-width: 990px;
+  padding-bottom: 20px;
+}
+
 .pageHeadingContainer {
   width: 100%;
   display: flex;
@@ -30,7 +37,7 @@
   margin-top: 30px;
 }
 .pageHeading {
-  width: 60%;
+  width: 100%;
   font-family: 'Equip-Regular';
   font-size: 24px;
   font-weight: 600;

@@ -29,12 +29,13 @@
   gap: 10px;
   position: relative;
 }
-.searchBox > form {
+
+.searchForm {
+  display: flex;
+  align-items: center;
   width: 100%;
 }
-.searchBox > form > input {
-  width: 92%;
-}
+
 .searchBoxText {
   outline: none;
   border: none;
@@ -43,6 +44,7 @@
   font-size: 14px;
   line-height: 18px;
   height: 18px;
+  flex: 1;
 }
 
 .searchBoxText::placeholder {
@@ -55,129 +57,95 @@
 }
 
 .suggestionBox {
-  height: 500px;
-  width: 100px;
-}
-
-.whiteSuggesetionBox {
   position: absolute;
   width: 100%;
   max-height: 200px;
-  background-color: white;
-  border-radius: 5px;
+  border-radius: 4px;
   overflow-y: auto;
-  padding: 15px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  right: 1px;
-  left: 1px;
-  top: 40px;
-  overflow-x: hidden;
+  left: 0;
+  top: calc(100% + 5px);
+  border: 1px solid #b8b8b8;
 }
 
-.darkSuggesetionBox {
-  position: absolute;
-  width: 100%;
-  max-height: 200px;
-  background: #323436 !important;
-  border-radius: 5px;
-  overflow-y: auto;
-  padding: 15px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  right: 1px;
-  left: 1px;
-  top: 40px;
-  overflow-x: hidden;
-}
-.darkSuggestionList {
+.suggestionList {
   padding: 10px;
   cursor: pointer;
   list-style: none;
-  border-bottom: 1px solid #535455;
-  margin-bottom: 10px;
   font-family: 'Equip-Regular';
   font-weight: 400;
-  font-size: 16px;
-  line-height: 16px;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.suggestionList:last-child {
+  border-bottom: none;
+}
+
+.suggestionBox::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.suggestionBox::-webkit-scrollbar-track {
+  border-radius: 2px;
+  background-color: white;
+  height: 1px;
+}
+
+.suggestionBox::-webkit-scrollbar-thumb {
+  /* background-image: url('./../assets/images/arrow.png'); */
+  background-position: center top;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 50px;
+  background-color: #ced0d4;
+}
+
+.darkBackground {
+  background: #323436;
+}
+
+.lightBackground {
+  background: #FFFFFF;
+}
+
+.darkText {
+  border-bottom: 1px solid #535455;
   color: #cccccc;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow-x: hidden;
 }
-.whiteSuggesetionList {
-  padding: 10px;
-  cursor: pointer;
-  list-style: none;
+
+.lightText {
   border-bottom: 1px solid #dfdfdf;
-  margin-bottom: 10px;
-  font-family: 'Equip-Regular';
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 16px;
   color: #a5a9ae;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow-x: hidden;
 }
 
-.whiteSuggesetionBox::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-.whiteSuggesetionBox::-webkit-scrollbar-track {
-  border-radius: 2px;
-  background-color: white;
-  height: 1px;
-}
-
-.whiteSuggesetionBox::-webkit-scrollbar-thumb {
-  /* background-image: url('./../assets/images/arrow.png'); */
-  background-position: center top;
-  background-repeat: no-repeat, no-repeat;
-  background-size: 50px;
-  background-color: #ced0d4;
-}
-
-.darkSuggesetionBox::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-.darkSuggesetionBox::-webkit-scrollbar-track {
-  border-radius: 2px;
-  background-color: white;
-  height: 1px;
-}
-
-.darkSuggesetionBox::-webkit-scrollbar-thumb {
-  /* background-image: url('./../assets/images/arrow.png'); */
-  background-position: center top;
-  background-repeat: no-repeat, no-repeat;
-  background-size: 50px;
-  background-color: #ced0d4;
-}
-
-.whiteSuggesetionList * {
+.lightText * {
   background-color: #f8f8f8 !important;
   color: #cccccc !important;
 }
 
-.whiteSuggesetionList:hover {
+.lightText:hover {
   background-color: #f8f8f8;
 }
 
-.whiteSuggesetionList *:hover {
+.lightText *:hover {
   background-color: #f8f8f8 !important;
 }
 
-.darkSuggestionList * {
+.darkText * {
   background-color: #323436 !important;
   color: #cccccc !important;
 }
 
-.darkSuggestionList:hover {
+.darkText:hover {
   background-color: rgba(204, 204, 204, 0.281);
 }
 
-.darkSuggestionList *:hover {
+.darkText *:hover {
   background-color: rgba(204, 204, 204, 0.281) !important;
 }
 

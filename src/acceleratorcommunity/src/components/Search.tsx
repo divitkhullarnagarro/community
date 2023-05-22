@@ -114,7 +114,7 @@ const Search = (props: SearchProps): JSX.Element => {
   const containsHtml = (string: any) => {
     var sanitizedQuery = string.replace(/<[^>]+>/g, '');
     if (sanitizedQuery !== string) {
-      console.log("contains html")
+      console.log('contains html');
       return true;
     }
     return false;
@@ -192,7 +192,7 @@ const Search = (props: SearchProps): JSX.Element => {
     <>
       <div className={searchCss.container}>
         <div className={searchCss.searchBox}>
-          <form>
+          <form className={searchCss.searchForm}>
             <button type="submit" className={searchCss.searchBtn} onClick={handleSearch}>
               <NextImage
                 className={searchCss.img}
@@ -202,90 +202,95 @@ const Search = (props: SearchProps): JSX.Element => {
                 width={15}
               />
             </button>
+            {console.log('searchText', searchText)}
             <input
               type="text"
-              value={searchText}
+              value={searchText === undefined ? '' : searchText}
               className={`${searchCss.searchBoxText} ${darkMode ? 'darkMode_textColor' : ''}`}
               placeholder={props?.fields?.data?.datasource?.title?.jsonValue?.value}
               onChange={(e: any) => handleSearchValue(e?.target?.value)}
             />
             {List && Text !== '' && searchedData?.length > 0 ? (
               <div
-                className={darkMode ? searchCss.darkSuggesetionBox : searchCss.whiteSuggesetionBox}
+                className={`${searchCss.suggestionBox} ${
+                  darkMode ? searchCss.darkBackground : searchCss.lightBackground
+                }`}
               >
                 {searchedData?.map((data: any) => {
                   return data?.index === 'accelerator-blog' ? (
                     <li
-                      className={
-                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
-                      }
-                      onClick={() => handleSuggestiveSearch(data?.sourceAsMap?.blog?.heading)}
+                      className={`${searchCss.suggestionList} ${
+                        darkMode ? searchCss.darkText : searchCss.lightText
+                      }`}
+                      onClick={() => {
+                        handleSuggestiveSearch(data?.sourceAsMap?.blog?.heading);
+                      }}
                     >
                       {data?.sourceAsMap?.blog?.heading}
                     </li>
                   ) : data?.index === 'accelerator-user' ? (
                     <li
-                      className={
-                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
-                      }
-                      onClick={() =>
+                      className={`${searchCss.suggestionList} ${
+                        darkMode ? searchCss.darkText : searchCss.lightText
+                      }`}
+                      onClick={() => {
                         handleSuggestiveSearch(
-                          data?.sourceAsMap?.firstName + '  ' + data?.sourceAsMap?.lastName
-                        )
-                      }
+                          data?.sourceAsMap?.firstName + ' ' + data?.sourceAsMap?.lastName
+                        );
+                      }}
                     >
                       {data?.sourceAsMap?.firstName + '  ' + data?.sourceAsMap?.lastName}
                     </li>
                   ) : data?.index === 'accelerator-event' ? (
                     <li
-                      className={
-                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
-                      }
+                      className={`${searchCss.suggestionList} ${
+                        darkMode ? searchCss.darkText : searchCss.lightText
+                      }`}
                       onClick={() => handleSuggestiveSearch(data?.sourceAsMap?.event?.title)}
                     >
                       {data?.sourceAsMap?.event?.title}
                     </li>
                   ) : data?.index === 'accelerator-sitecore-cs' ? (
                     <li
-                      className={
-                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
-                      }
+                      className={`${searchCss.suggestionList} ${
+                        darkMode ? searchCss.darkText : searchCss.lightText
+                      }`}
                       onClick={() => handleSuggestiveSearch(data?.sourceAsMap?.Title)}
                     >
                       {data?.sourceAsMap?.Title}
                     </li>
                   ) : data?.index === 'accelerator-sitecore-event' ? (
                     <li
-                      className={
-                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
-                      }
+                      className={`${searchCss.suggestionList} ${
+                        darkMode ? searchCss.darkText : searchCss.lightText
+                      }`}
                       onClick={() => handleSuggestiveSearch(data?.sourceAsMap?.Title)}
                     >
                       {data?.sourceAsMap?.Title}
                     </li>
                   ) : data?.index === 'accelerator-sitecore-journal' ? (
                     <li
-                      className={
-                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
-                      }
+                      className={`${searchCss.suggestionList} ${
+                        darkMode ? searchCss.darkText : searchCss.lightText
+                      }`}
                       onClick={() => handleSuggestiveSearch(data?.sourceAsMap?.Title)}
                     >
                       {data?.sourceAsMap?.Title}
                     </li>
                   ) : data?.index === 'accelerator-sitecore-news' ? (
                     <li
-                      className={
-                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
-                      }
+                      className={`${searchCss.suggestionList} ${
+                        darkMode ? searchCss.darkText : searchCss.lightText
+                      }`}
                       onClick={() => handleSuggestiveSearch(data?.sourceAsMap?.Title)}
                     >
                       {data?.sourceAsMap?.Title}
                     </li>
                   ) : (
                     <li
-                      className={
-                        darkMode ? searchCss.darkSuggestionList : searchCss.whiteSuggesetionList
-                      }
+                      className={`${searchCss.suggestionList} ${
+                        darkMode ? searchCss.darkText : searchCss.lightText
+                      }`}
                       onClick={() => handleForPost(data?.sourceAsMap?.description)}
                     >
                       {convertHtmlToText(data?.sourceAsMap?.description)}
