@@ -1,20 +1,25 @@
-import { useContext } from 'react';
+import React from 'react';
 import Event from './Event';
 import ImageConatiner from './ImageConatiner';
 import TextPost from './TextPost';
 import VideoContainer from './VideoContainer';
 import DocumentContainer from './DocumentContainer';
-import WebContext from 'src/Context/WebContext';
 // import PollCard from './PollCard';
 import Blog from './Blog';
 import User from './User';
 import styles from '../assets/searchFilterContainer.module.css';
+import { useContext } from 'react';
+import WebContext from 'src/Context/WebContext';
 import darkModeCss from '../assets/darkTheme.module.css';
+
+
 
 // import { voteInPollUrl } from 'assets/helpers/constants';
 // import AxiosRequest from 'src/API/AxiosRequest';
 
 const Hashtag = (props: any) => {
+  const { darkMode } = { ...useContext(WebContext) };
+
   // let [myAnotherArr, setMyAnotherArr] = useState<any>([]);
 
   // const voteInAPoll = async (pollId: any, pollOptionId: any) => {
@@ -56,9 +61,6 @@ const Hashtag = (props: any) => {
   //   setMyAnotherArr(updatedPollPosts);
   // }
   const fromALL = true;
-  const { darkMode } = {
-    ...useContext(WebContext),
-  };
   return (
     <div>
       {props?.searchedData?.length > 0 ? (
@@ -69,9 +71,6 @@ const Hashtag = (props: any) => {
                 'https://icon-library.com/images/hashtag-icon-png/hashtag-icon-png-16.jpg'
               }
             />
-            {props?.query}
-          </div>
-          <div className={`${darkMode && darkModeCss.text_active}`}>
             Trending Hashtag
           </div>
           <div className={`${darkMode && darkModeCss.text_active}`}>
@@ -109,7 +108,7 @@ const Hashtag = (props: any) => {
           );
         })
       ) : (
-        <div className={`${styles.forNoData} ${darkMode && darkModeCss.text_light}`}>No hashtags founds</div>
+        <div className={styles.forNoData}>No hashtags found</div>
       )}
     </div>
   );

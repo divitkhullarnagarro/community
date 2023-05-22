@@ -14,7 +14,7 @@ function CreateGroup({
   createGroupVisibel: any;
   setCreateGroupVisibel: any;
 }) {
-  const { userToken } = {
+  const { userToken, userObject } = {
     ...useContext(WebContext),
   };
 
@@ -94,7 +94,9 @@ function CreateGroup({
   const createGroupSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      if (nameValue && descriptionValue && imageURL && addMemberList?.length > 0) {
+      if (nameValue && descriptionValue && addMemberList?.length > 0) {
+        const date = new Date();
+        const createdOn = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
         const res: any = await AxiosRequest({
           url: 'https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/group',
           method: 'POST',
@@ -103,9 +105,9 @@ function CreateGroup({
             description: descriptionValue,
             groupIconUrl: imageURL,
             groupBannerUrl: '',
-            members: addMemberList,
+            members: [...addMemberList, userObject.objectId],
             createdBy: 'vicky@yopmail.com',
-            createdOn: new Date().getDate(),
+            createdOn: createdOn,
           },
         });
         if (res?.success) {
@@ -122,7 +124,15 @@ function CreateGroup({
         }
       } else {
         setToastError(true);
-        setToastMessage('All fields are required');
+        setToastMessage(
+          nameValue
+            ? descriptionValue
+              ? addMemberList.length > 0
+                ? ''
+                : 'Please add some member'
+              : 'Description Required'
+            : 'Name Nequired'
+        );
         setShowNofitication(true);
       }
     } catch (error) {
@@ -181,6 +191,7 @@ function CreateGroup({
     setCreateGroupVisibel(false);
     setImageUrl('');
   };
+  console.log('userObject', userObject);
   return (
     <div className={style.createGroup}>
       <Modal

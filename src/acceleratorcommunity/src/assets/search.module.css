@@ -110,11 +110,17 @@
 .darkText {
   border-bottom: 1px solid #535455;
   color: #cccccc;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
 }
 
 .lightText {
   border-bottom: 1px solid #dfdfdf;
   color: #a5a9ae;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
 }
 
 .lightText * {

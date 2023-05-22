@@ -3,9 +3,15 @@ import WebContext from 'src/Context/WebContext';
 import styles from '../assets/events.module.css';
 import darkModeCss from '../assets/darkTheme.module.css';
 import DescriptionForSearch from './helperComponents/DescriptionForSearch';
+import EventsFromSitecore from './EventsFromSitecore';
 
 const Event = (props: any) => {
-  const data = props?.events?.event;
+  if (props?.events?.event !== undefined) {
+    var data = props?.events?.event;
+  } else {
+    data = props?.events;
+  }
+  console.log("+++++++++++++++++++++++++++++++", props);
   const id = props?.events?.id;
   const splitDateOnly = (date: any) => {
     const dateOnly = date?.split('T')[0];
@@ -26,29 +32,30 @@ const Event = (props: any) => {
     Celebration: 'https://th.bing.com/th/id/OIP.E1RiHHXMHUcq0L0KvprXfQHaEn?pid=ImgDet&rs=1',
   };
 
-  return (
-    <a href={`/post/${id}`} className={styles.link} target="_blank">
-      {props?.fromALL ? (
-        <div className={`${styles.typeHeading} ${darkMode && darkModeCss.text_green}`}>Event</div>
-      ) : (
-        ''
-      )}
-      <div className={`${styles.parentContainer} ${darkMode && darkModeCss.grey_1}`}>
-        <div className={styles.imgAndContentContainer}>
-          {props?.fromALL ? '' : <img src={EventImage[data?.eventType]} alt="eventImg" />}
-          <div className={props?.fromALL ? styles.content : styles.eventContent}>
-            <div className={`${styles.eventHeading} ${darkMode && darkModeCss.text_green}`}>
-              {data?.title}
-            </div>
-            <div className={styles.timeContainer}>
-              <div className={`${styles.eventTime} ${darkMode && darkModeCss.text_green}`}>
-                {splitDateOnly(data?.eventDate) + ' ' + splitTimeOnly(data?.eventDate)}
+  return props?.events?.event !== undefined ? (
+    <>
+      <a href={`/post/${id}`} className={styles.link} target="_blank">
+        {props?.fromALL ? (
+          <div className={`${styles.typeHeading} ${darkMode && darkModeCss.text_green}`}>Event</div>
+        ) : (
+          ''
+        )}
+        <div className={`${styles.parentContainer} ${darkMode && darkModeCss.grey_1}`}>
+          <div className={styles.imgAndContentContainer}>
+            {props?.fromALL ? '' : <img src={EventImage[data?.eventType]} alt="eventImg" />}
+            <div className={props?.fromALL ? styles.content : styles.eventContent}>
+              <div className={`${styles.eventHeading} ${darkMode && darkModeCss.text_green}`}>
+                {data?.title}
               </div>
-            </div>
-            <div className={`${styles.eventDescription} ${darkMode && darkModeCss.text_light}`}>
-              <DescriptionForSearch description={data?.description} />
+              <div className={styles.timeContainer}>
+                <div className={`${styles.eventTime} ${darkMode && darkModeCss.text_green}`}>
+                  {splitDateOnly(data?.eventDate) + ' ' + splitTimeOnly(data?.eventDate)}
+                </div>
+              </div>
+              <div className={`${styles.eventDescription} ${darkMode && darkModeCss.text_light}`}>
+                <DescriptionForSearch description={data?.description} />
 
-              {/* {data?.description.length > 300 ? (
+                {/* {data?.description.length > 300 ? (
                 <div>
                   {data?.description.slice(0, 300)}
                   <a href={`/post/${id}`} className={styles.link} target="_blank">
@@ -58,11 +65,18 @@ const Event = (props: any) => {
               ) : (
                 data?.description
               )} */}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </a>
+      </a>
+    </>
+  ) : (
+    <>
+      <>
+        <EventsFromSitecore fromALL={props?.fromALL} journal={data} />
+      </>
+    </>
   );
 };
 

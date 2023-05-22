@@ -39,6 +39,8 @@
 
 } */
 .groupListDropdown {
+  cursor: pointer;
+  display: flex;
   position: relative;
 }
 .groupListDropdown img {

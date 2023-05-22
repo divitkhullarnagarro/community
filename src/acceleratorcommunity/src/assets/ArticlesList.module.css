@@ -38,7 +38,7 @@
   margin-top: 2%;
   margin-bottom: 2%;
   position: relative;
-  width: 60%
+  width: 60%;
 }
 .title {
   display: flex;
@@ -143,8 +143,8 @@
   height: 141px;
   width: 169px;
   position: absolute;
-  top: 8rem;
-  left: 11rem;
+  top: 7rem;
+  right: 3rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;

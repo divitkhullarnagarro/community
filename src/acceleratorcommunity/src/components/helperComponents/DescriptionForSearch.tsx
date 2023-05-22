@@ -12,7 +12,7 @@ function DescriptionForSearch({ description }: any) {
   return (
     <>
       <div
-        className={`postDescription ${darkMode ? 'darkModeDescription' : ''}`}
+        className={`${darkMode ? 'darkModeDescription' : ''}`}
         style={viewMoreVisible ? { overflow: 'hidden', height: '3.5rem' } : {}}
       >
         {parser(modifyHtml(description))}
