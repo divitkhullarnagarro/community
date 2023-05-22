@@ -1,5 +1,5 @@
 import { Field, Text } from '@sitecore-jss/sitecore-jss-nextjs';
-import Image from 'next/image';
+// import Image from 'next/image';
 import { ComponentProps } from 'lib/component-props';
 import styles from '../assets/editprofile.module.css';
 import Profile from '../assets/images/profile.png';
@@ -16,6 +16,7 @@ import {
   getUserUrl,
   joinGroupUrl,
   leaveGroupUrl,
+  updateGroupUrl,
   uploadBannerUrl,
 } from 'assets/helpers/constants';
 import { Form, Modal } from 'react-bootstrap';
@@ -377,8 +378,27 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
       const temp = files[0];
       const resp = await UploadGroupBannerToServer(temp, 'IMAGE');
       if (resp?.data) {
-        setGroupBanner(resp.data);
-        setIsGroupBannerUploading(false);
+        // setGroupBanner(resp.data);
+        // setIsGroupBannerUploading(false);
+        try {
+          const res: any = await AxiosRequest({
+            url: `${updateGroupUrl}${groupId}`,
+            method: 'PUT',
+            data: { groupBannerUrl: resp?.data },
+          });
+          if (res.data) {
+            setGroupBanner(res?.data?.groupBannerUrl);
+            setIsGroupBannerUploading(false);
+            console.log('updatedGroup', res.data);
+          } else {
+            setIsGroupBannerUploading(false);
+            setToastMessage('Failed to Update Background. Please try again');
+            setToastError(true);
+            setShowNofitication(true);
+          }
+        } catch (error) {
+          console.log('erroringroupupdate', error);
+        }
       } else {
         setIsGroupBannerUploading(false);
         setToastMessage('Failed to Update Background. Please try again');
@@ -431,7 +451,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
           <div className={styles.profileImage}>
             {isGroupPage ? (
               // <img src={groupLogoImg.src} height={150} width={150} />
-              <Image
+              <img
                 src={groupInfo.groupIconUrl ? groupInfo.groupIconUrl : groupIcon.src}
                 height={150}
                 width={150}
