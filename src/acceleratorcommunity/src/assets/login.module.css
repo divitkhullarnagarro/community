@@ -98,6 +98,7 @@
   margin-bottom: 0.125rem;
   font-weight: 700;
   height: 40px;
+  transition: all 0.3s ease;
 }
 
 .formButton[disabled] {
@@ -225,6 +226,19 @@
 
 .UpdatePasswordHeading {
   font-family: Georgia, monospace;
+}
+
+.loginLoaderWrapper {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.loginLoaderImage {
+  filter: invert(1);
+  width: 100%;
+  height: 16px;
+  object-fit: contain;
 }
 
 /* media queries */

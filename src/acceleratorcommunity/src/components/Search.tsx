@@ -27,12 +27,14 @@ type SearchProps = ComponentProps & {
 const Search = (props: SearchProps): JSX.Element => {
   console.log('Search', props);
   const router = useRouter();
+  const [searchListToggle, setSearchListToggle] = useState(false);
   const [searchText, setSearchText] = useState('');
   const handleSearch = (e: any) => {
     e.preventDefault();
     if (searchText !== '') {
       router.push(`/search?query=${searchText}&type=ALL`);
     }
+    setSearchListToggle(false);
   };
 
   const { userToken } = {
@@ -80,8 +82,10 @@ const Search = (props: SearchProps): JSX.Element => {
             response?.data?.data?.totalHits?.value > 0
           ) {
             setSearchedData(response?.data?.data?.hits);
+            setSearchListToggle(true);
           } else {
             setSearchedData([]);
+            setSearchListToggle(false);
           }
         }
         // setSuccess(false);
@@ -112,20 +116,22 @@ const Search = (props: SearchProps): JSX.Element => {
               placeholder={props?.fields?.data?.datasource?.title?.jsonValue?.value}
               onChange={(e: any) => setSearchText(e?.target?.value)}
             />
-            {searchText !== '' && searchedData?.length > 0 ? (
+            {searchText !== '' && searchedData?.length > 0 && searchListToggle ? (
               <div
                 className={`${searchCss.suggestionBox} ${
                   darkMode ? searchCss.darkBackground : searchCss.lightBackground
                 }`}
               >
-                {console.log(searchedData)}
                 {searchedData?.map((data: any) => {
                   return data?.index === 'accelerator-blog' ? (
                     <li
                       className={`${searchCss.suggestionList} ${
                         darkMode ? searchCss.darkText : searchCss.lightText
                       }`}
-                      onClick={() => handleSuggestiveSearch(data?.sourceAsMap?.blog?.heading)}
+                      onClick={() => {
+                        handleSuggestiveSearch(data?.sourceAsMap?.blog?.heading);
+                        setSearchListToggle(false);
+                      }}
                     >
                       {data?.sourceAsMap?.blog?.heading}
                     </li>
@@ -135,11 +141,12 @@ const Search = (props: SearchProps): JSX.Element => {
                       className={`${searchCss.suggestionList} ${
                         darkMode ? searchCss.darkText : searchCss.lightText
                       }`}
-                      onClick={() =>
+                      onClick={() => {
                         handleSuggestiveSearch(
-                          data?.sourceAsMap?.firstName + '  ' + data?.sourceAsMap?.lastName
-                        )
-                      }
+                          data?.sourceAsMap?.firstName + ' ' + data?.sourceAsMap?.lastName
+                        );
+                        setSearchListToggle(false);
+                      }}
                     >
                       {data?.sourceAsMap?.firstName + '  ' + data?.sourceAsMap?.lastName}
                     </li>
