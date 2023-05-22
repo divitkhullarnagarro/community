@@ -1,4 +1,4 @@
-import { Field } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 import Image from 'next/image';
 import { ComponentProps } from 'lib/component-props';
 import styles from '../assets/editprofile.module.css';
@@ -27,7 +27,37 @@ import Spinner from 'react-bootstrap/Spinner';
 
 type HeaderProfileProps = ComponentProps & {
   fields: {
-    heading: Field<string>;
+    data: {
+      datasource: {
+        changeBackground: {
+          jsonValue: Field<string>;
+        };
+        followers: {
+          jsonValue: Field<string>;
+        };
+        following: {
+          jsonValue: Field<string>;
+        };
+        popupHeading: {
+          jsonValue: Field<string>;
+        };
+        viewProfileButton: {
+          jsonValue: Field<string>;
+        };
+        editProfile: {
+          jsonValue: Field<string>;
+        };
+        emptyList: {
+          jsonValue: Field<string>;
+        };
+        noMoreFollowers: {
+          jsonValue: Field<string>;
+        };
+        noMoreFollowing: {
+          jsonValue: Field<string>;
+        };
+      };
+    };
   };
 };
 
@@ -437,9 +467,33 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                     className={styles.followersButton}
                     onClick={() => openFollowerFollowingPopup('followers')}
                   >
-                    {fetchUser?.followers_count
-                      ? `Followers - ${fetchUser?.followers_count}`
-                      : 'Followers - 0'}
+                    {fetchUser?.followers_count ? (
+                      <>
+                        <Text
+                          field={
+                            props?.fields?.data?.datasource?.followers?.jsonValue
+                              ? props?.fields?.data?.datasource?.followers?.jsonValue
+                              : {
+                                  value: 'Followers',
+                                }
+                          }
+                        />
+                        &nbsp;-&nbsp;{fetchUser?.followers_count}
+                      </>
+                    ) : (
+                      <>
+                        <Text
+                          field={
+                            props?.fields?.data?.datasource?.followers?.jsonValue
+                              ? props?.fields?.data?.datasource?.followers?.jsonValue
+                              : {
+                                  value: 'Followers',
+                                }
+                          }
+                        />
+                        - 0
+                      </>
+                    )}
                   </button>
                 </div>
                 <div>&nbsp;|&nbsp;</div>
@@ -448,16 +502,48 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                     className={styles.followersButton}
                     onClick={() => openFollowerFollowingPopup('following')}
                   >
-                    {fetchUser?.following_count
-                      ? `Following - ${fetchUser?.following_count}`
-                      : 'Following - 0'}
+                    {fetchUser?.following_count ? (
+                      <>
+                        <Text
+                          field={
+                            props?.fields?.data?.datasource?.following?.jsonValue
+                              ? props?.fields?.data?.datasource?.following?.jsonValue
+                              : {
+                                  value: 'Following',
+                                }
+                          }
+                        />
+                        &nbsp;-&nbsp;{fetchUser?.following_count}
+                      </>
+                    ) : (
+                      <>
+                        <Text
+                          field={
+                            props?.fields?.data?.datasource?.following?.jsonValue
+                              ? props?.fields?.data?.datasource?.following?.jsonValue
+                              : {
+                                  value: 'Following',
+                                }
+                          }
+                        />
+                        - 0
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
             )}
             {!isGroupPage && objectEmail === userObject?.objectId && (
               <button className={styles.editProfileBtn} onClick={() => router.push('/profile')}>
-                Edit Profile
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.editProfile?.jsonValue
+                      ? props?.fields?.data?.datasource?.editProfile?.jsonValue
+                      : {
+                          value: 'Edit Profile',
+                        }
+                  }
+                />
               </button>
             )}
           </div>
@@ -469,7 +555,15 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
               clickmebuttonHandler();
             }}
           >
-            Change Background
+            <Text
+              field={
+                props?.fields?.data?.datasource?.changeBackground?.jsonValue
+                  ? props?.fields?.data?.datasource?.changeBackground?.jsonValue
+                  : {
+                      value: 'Change Background',
+                    }
+              }
+            />
           </button>
         )}
 
@@ -483,7 +577,15 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                   changeGroupBannerbuttonHandler();
                 }}
               >
-                Change Background
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.changeBackground?.jsonValue
+                      ? props?.fields?.data?.datasource?.changeBackground?.jsonValue
+                      : {
+                          value: 'Change Background',
+                        }
+                  }
+                />
               </button>
             )}
             {joinValue && (
@@ -583,7 +685,17 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
         onHide={() => setShow(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title>People</Modal.Title>
+          <Modal.Title>
+            <Text
+              field={
+                props?.fields?.data?.datasource?.popupHeading?.jsonValue
+                  ? props?.fields?.data?.datasource?.popupHeading?.jsonValue
+                  : {
+                      value: 'People',
+                    }
+              }
+            />
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className={styles.popupMainContainer}>
@@ -597,7 +709,15 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                 onClick={() => setFollowerFollowingSwitch(true)}
                 style={{ marginRight: '15px' }}
               >
-                Followers
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.followers?.jsonValue
+                      ? props?.fields?.data?.datasource?.followers?.jsonValue
+                      : {
+                          value: 'Followers',
+                        }
+                  }
+                />
               </button>
               <button
                 className={
@@ -607,7 +727,15 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                 }
                 onClick={() => setFollowerFollowingSwitch(false)}
               >
-                Following
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.following?.jsonValue
+                      ? props?.fields?.data?.datasource?.following?.jsonValue
+                      : {
+                          value: 'Following',
+                        }
+                  }
+                />
               </button>
             </div>
             <div className={styles.popupListContainer} id="PopupListContainer">
@@ -646,7 +774,18 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                                 {follower.firstName}&nbsp;{follower.lastName}
                               </div>
                               <div className={styles.seeProfileButton}>
-                                <span>See profile</span>
+                                <span>
+                                  <Text
+                                    field={
+                                      props?.fields?.data?.datasource?.viewProfileButton?.jsonValue
+                                        ? props?.fields?.data?.datasource?.viewProfileButton
+                                            ?.jsonValue
+                                        : {
+                                            value: 'See Profile',
+                                          }
+                                    }
+                                  />
+                                </span>
                               </div>
                             </div>
                           </button>
@@ -654,14 +793,30 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                       })
                     ) : (
                       <span style={{ position: 'absolute', top: '50%', left: '40%' }}>
-                        Nothing to Show Here !
+                        <Text
+                          field={
+                            props?.fields?.data?.datasource?.emptyList?.jsonValue
+                              ? props?.fields?.data?.datasource?.emptyList?.jsonValue
+                              : {
+                                  value: 'Nothing to Show Here !',
+                                }
+                          }
+                        />
                       </span>
                     )}
                     {noMoreFollowers && followerFollowingSwitch ? (
                       <div
                         style={{ position: 'absolute', top: '96%', left: '33%', fontSize: '12px' }}
                       >
-                        No More Followers{' '}
+                        <Text
+                          field={
+                            props?.fields?.data?.datasource?.noMoreFollowers?.jsonValue
+                              ? props?.fields?.data?.datasource?.noMoreFollowers?.jsonValue
+                              : {
+                                  value: ' No More Followers',
+                                }
+                          }
+                        />
                         <img
                           style={{ marginLeft: '10px' }}
                           width="20px"
@@ -706,7 +861,18 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                               {follow.firstName}&nbsp;{follow.lastName}
                             </div>
                             <div className={styles.seeProfileButton}>
-                              <span>See profile</span>
+                              <span>
+                                <Text
+                                  field={
+                                    props?.fields?.data?.datasource?.viewProfileButton?.jsonValue
+                                      ? props?.fields?.data?.datasource?.viewProfileButton
+                                          ?.jsonValue
+                                      : {
+                                          value: 'See Profile',
+                                        }
+                                  }
+                                />
+                              </span>
                             </div>
                           </div>
                         </button>
@@ -714,14 +880,30 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                     })
                   ) : (
                     <span style={{ position: 'absolute', top: '50%', left: '40%' }}>
-                      Nothing to Show Here !
+                      <Text
+                        field={
+                          props?.fields?.data?.datasource?.emptyList?.jsonValue
+                            ? props?.fields?.data?.datasource?.emptyList?.jsonValue
+                            : {
+                                value: 'Nothing to Show Here !',
+                              }
+                        }
+                      />
                     </span>
                   )}
                   {noMoreFollowing && !followerFollowingSwitch ? (
                     <div
                       style={{ position: 'absolute', top: '96%', left: '33%', fontSize: '12px' }}
                     >
-                      No More Followings{' '}
+                      <Text
+                        field={
+                          props?.fields?.data?.datasource?.noMoreFollowing?.jsonValue
+                            ? props?.fields?.data?.datasource?.noMoreFollowing?.jsonValue
+                            : {
+                                value: '  No More Followings',
+                              }
+                        }
+                      />
                       <img
                         style={{ marginLeft: '10px' }}
                         width="20px"

@@ -9,7 +9,7 @@ import style from '../assets/groupList.module.css';
 import darkModeCss from '../assets/darkTheme.module.css';
 import WebContext from 'src/Context/WebContext';
 // import { Dropdown } from 'react-bootstrap';
-// import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 import AxiosRequest from 'src/API/AxiosRequest';
 import { getFirstTenGroupListUrl, getGroupListUrl } from 'assets/helpers/constants';
 import DotLoader from './DotLoader';
@@ -20,7 +20,16 @@ import JoinLeaveGroup from './helperComponents/JoinLeaveGroup';
 
 type GroupListProps = ComponentProps & {
   fields: {
-    heading: string;
+    data: {
+      datasource: {
+        heading: {
+          jsonValue: Field<string>;
+        };
+        createGroupBtnLabel: {
+          jsonValue: Field<string>;
+        };
+      };
+    };
   };
 };
 
@@ -121,7 +130,15 @@ const GroupList = (props: GroupListProps): JSX.Element => {
       <div className={`${style.groupListContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}>
         <div className={style.groupList}>
           <h3 className={`${style.groupListTitle} ${darkMode ? darkModeCss.text_green : ''}`}>
-            Group List
+            <Text
+              field={
+                props?.fields.data?.datasource?.heading?.jsonValue
+                  ? props?.fields.data?.datasource?.heading?.jsonValue
+                  : {
+                      value: 'Group List',
+                    }
+              }
+            />
           </h3>
           <div className={`${style.groupListBox} ${darkMode ? darkModeCss.grey_2 : ''}`}>
             <div className={style.groupListWithMoreButton} onScroll={getMoreGroups}>
@@ -239,8 +256,15 @@ const GroupList = (props: GroupListProps): JSX.Element => {
             </div>
             <div className={style.createGroupHeading}>
               <button className={style.createGroupBtn} onClick={() => setCreateGroupVisibel(true)}>
-                {' '}
-                + Create a Group
+                <Text
+                  field={
+                    props?.fields.data?.datasource?.createGroupBtnLabel?.jsonValue
+                      ? props?.fields.data?.datasource?.createGroupBtnLabel?.jsonValue
+                      : {
+                          value: '+ Create a Group',
+                        }
+                  }
+                />
               </button>
             </div>
           </div>

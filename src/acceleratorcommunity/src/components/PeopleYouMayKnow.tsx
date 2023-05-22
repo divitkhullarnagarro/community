@@ -1,4 +1,4 @@
-import { Field, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, NextImage, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import Profile from '../assets/images/ProfilePic.jpeg';
 // import PeopleProfile from '../assets/images/PeopleYouMayKnowProfileImage.png';
@@ -22,7 +22,19 @@ import { viewProfileLinkUrl } from 'assets/helpers/constants';
 
 type PeopleYouMayKnowProps = ComponentProps & {
   fields: {
-    data: {};
+    data: {
+      datasource: {
+        heading: {
+          jsonValue: Field<string>;
+        };
+        openListLabel: {
+          jsonValue: Field<string>;
+        };
+        suggestionLabel: {
+          jsonValue: Field<string>;
+        };
+      };
+    };
   };
 };
 
@@ -38,7 +50,7 @@ type peopleYouMayKnowFields = {
 const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   console.log('people you may know', props);
   // const router = useRouter();
-  const { Title, LinkLabel, IsFullList } = props?.params;
+  const { LinkLabel, IsFullList } = props?.params;
   const [peopleYouMayKnowList, setPeopleYouMayKnowList] = useState<peopleYouMayKnowFields[]>([]);
   const { userToken, setUserToken, darkMode } = { ...useContext(WebContext) };
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -57,11 +69,29 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
       <div className={`${styles.wrapper} ${darkMode ? darkModeCss.grey_2 : ''}`}>
         <div className={styles.header}>
           <div className={`${styles.heading} ${darkMode ? darkModeCss.text_green : ''}`}>
-            {Title}
+            <Text
+              field={
+                props?.fields?.data?.datasource?.heading?.jsonValue
+                  ? props?.fields?.data?.datasource?.heading?.jsonValue
+                  : {
+                      value: 'People You May Know',
+                    }
+              }
+            />
           </div>
           {LinkLabel ? (
             <Link href={'/peopleyoumayknow'} className={styles.linkHeader} passHref={true}>
-              <span className={styles.link}> {LinkLabel}</span>
+              <span className={styles.link}>
+                <Text
+                  field={
+                    props?.fields?.data?.datasource?.openListLabel?.jsonValue
+                      ? props?.fields?.data?.datasource?.openListLabel?.jsonValue
+                      : {
+                          value: 'See All',
+                        }
+                  }
+                />
+              </span>
             </Link>
           ) : (
             <></>
@@ -193,7 +223,15 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
     return (
       <div className={`${styles.mainFullPageItemWrapper} ${darkMode ? darkModeCss.grey_3 : ''}`}>
         <h2 className={`${styles.listHeaderLabel} ${darkMode ? darkModeCss.text_light : ''}`}>
-          {Title ?? 'People You May Know'}
+          <Text
+            field={
+              props?.fields?.data?.datasource?.heading?.jsonValue
+                ? props?.fields?.data?.datasource?.heading?.jsonValue
+                : {
+                    value: 'People You May Know',
+                  }
+            }
+          />
         </h2>
         <div className={styles.newgrid}>
           {peopleYouMayKnowList?.length > 0 ? (
@@ -221,7 +259,17 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
             }}
             onClick={() => setNumItems(numItems + 6)}
           >
-            <span className={styles.seeMoreBtn}>See more</span>
+            <span className={styles.seeMoreBtn}>
+              <Text
+                field={
+                  props?.fields?.data?.datasource?.openListLabel?.jsonValue
+                    ? props?.fields?.data?.datasource?.openListLabel?.jsonValue
+                    : {
+                        value: 'See All',
+                      }
+                }
+              />
+            </span>
             <NextImage field={DropArrow} editable={true} />
           </Button>
         )}
@@ -235,7 +283,15 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
         <div className={`${styles.rectContainer} ${darkMode ? darkModeCss.grey_1 : ''}`}>
           <div className={styles.top}>
             <span className={`${styles.logo} ${darkMode ? darkModeCss.text_light : ''}`}>
-              Suggestions
+              <Text
+                field={
+                  props?.fields?.data?.datasource?.suggestionLabel?.jsonValue
+                    ? props?.fields?.data?.datasource?.suggestionLabel?.jsonValue
+                    : {
+                        value: 'Suggestions',
+                      }
+                }
+              />
             </span>
           </div>
           <div className={`${styles.center} ${darkMode ? styles.listHover : ''}`}>
@@ -249,7 +305,15 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
                     width={18}
                   ></NextImage>
                   <span className={`${darkMode ? darkModeCss.text_light : ''}`}>
-                    {Title ?? 'People You May Know'}
+                    <Text
+                      field={
+                        props?.fields?.data?.datasource?.heading?.jsonValue
+                          ? props?.fields?.data?.datasource?.heading?.jsonValue
+                          : {
+                              value: 'People You May Know',
+                            }
+                      }
+                    />
                   </span>
                 </li>
               </button>
