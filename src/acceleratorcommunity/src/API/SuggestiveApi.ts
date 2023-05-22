@@ -1,6 +1,6 @@
 import Axios, { AxiosResponse } from "axios";
 
-const SuggestiveSearchCall = async (searchText: any, contentType: string, token: string | undefined, filter: any,
+const SuggestiveSearchCall = async (searchText: any, contentType: string, token: string | undefined, filter: any
 ) => {
     // var data = qs.stringify({
     //     // client_id: "api-client",
@@ -15,7 +15,7 @@ const SuggestiveSearchCall = async (searchText: any, contentType: string, token:
         text: searchText,
         type: contentType,
     }
-    let searchURL = "https://accelerator-api-management.azure-api.net/graph-service/search?wildcard=true";
+    let searchURL = `https://accelerator-api-management.azure-api.net/graph-service/search?wildcard=true`;
     var config = {
         // method: "post",
         url: searchURL,

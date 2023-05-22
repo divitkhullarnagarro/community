@@ -29,6 +29,12 @@
   gap: 10px;
   position: relative;
 }
+.searchBox > form {
+  width: 100%;
+}
+.searchBox > form > input {
+  width: 92%;
+}
 .searchBoxText {
   outline: none;
   border: none;
@@ -51,7 +57,6 @@
 .suggestionBox {
   height: 500px;
   width: 100px;
-  background-color: white;
 }
 
 .whiteSuggesetionBox {
@@ -66,6 +71,7 @@
   right: 1px;
   left: 1px;
   top: 40px;
+  overflow-x: hidden;
 }
 
 .darkSuggesetionBox {
@@ -80,6 +86,7 @@
   right: 1px;
   left: 1px;
   top: 40px;
+  overflow-x: hidden;
 }
 .darkSuggestionList {
   padding: 10px;
@@ -92,6 +99,9 @@
   font-size: 16px;
   line-height: 16px;
   color: #cccccc;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
 }
 .whiteSuggesetionList {
   padding: 10px;
@@ -104,6 +114,9 @@
   font-size: 16px;
   line-height: 16px;
   color: #a5a9ae;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
 }
 
 .whiteSuggesetionBox::-webkit-scrollbar {

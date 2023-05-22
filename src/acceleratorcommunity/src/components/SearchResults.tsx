@@ -15,14 +15,13 @@ import searchCall from '../../src/API/searchCall';
 // import { getValueFromCookie } from '../assets/helpers/helperFunctions';
 import WebContext from '../../src/Context/WebContext';
 import JournalSearchContainer from '../components/JournalSearchContainer';
-import ArticleSearchContainer from '../components/ArticleSearchContainer';
+import CaseStudySearchContainer from './CaseStudySearchContainer';
 import SearchALLConatiner from '../components/SearchALLConatiner';
 import HashtagContainer from '../components/HashtagContainer';
 import BlogContainer from '../components/BlogContainer';
 // import PollConatiner from 'components/PollConatiner';
 import ToastNotification from '../components/ToastNotification';
 import ThemeSwitcher from '../components/ThemeSwitcher';
-// import JournalContainer from 'components/JournalContainer';
 
 const SearchResults = () => {
   const router = useRouter();
@@ -58,18 +57,22 @@ const SearchResults = () => {
       type: 'HASHTAG',
       value: 'Hashtags',
     },
-    // {
-    //   type: 'NEWS',
-    //   value: 'News',
-    // },
-    // {
-    //   type: 'JOURNAL',
-    //   value: 'Journals',
-    // },
+    {
+      type: 'NEWS',
+      value: 'News',
+    },
+    {
+      type: 'JOURNAL',
+      value: 'Journals',
+    },
     // {
     //   type: 'ARTICLE',
     //   value: 'Articles',
     // },
+    {
+      type: 'CASESTUDY',
+      value: 'CaseStudy',
+    },
     {
       type: 'BLOG',
       value: 'BLOG',
@@ -104,6 +107,8 @@ const SearchResults = () => {
           'createdBy.firstName',
           'createdBy.lastName',
           'createdBy.objectId',
+          'ShortDescription',
+          'Title',
         ],
         type,
         query
@@ -135,6 +140,8 @@ const SearchResults = () => {
           'createdBy.firstName',
           'createdBy.lastName',
           'createdBy.objectId',
+          'ShortDescription',
+          'Title',
         ],
         type,
         query
@@ -150,13 +157,35 @@ const SearchResults = () => {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
 
-      searchCallFunction(['description', 'event.title', 'Title', 'ShortDescription'], type, query);
+      searchCallFunction(
+        [
+          'description',
+          'createdBy.firstName',
+          'firstName',
+          'objectId',
+          'ShortDescription',
+          'Title',
+        ],
+        type,
+        query
+      );
     }
     if (type === 'JOURNAL' && query !== undefined) {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
 
-      searchCallFunction(['description', 'blog.heading', 'blog.description'], type, query);
+      searchCallFunction(
+        [
+          'description',
+          'createdBy.firstName',
+          'firstName',
+          'objectId',
+          'ShortDescription',
+          'Title',
+        ],
+        type,
+        query
+      );
     }
     if (type === 'ARTICLE' && query !== undefined) {
       setSuccess(true);
@@ -175,10 +204,21 @@ const SearchResults = () => {
       router.push(`/search?query=${query}&type=${type}`);
       searchCallFunction(['description', 'blog.heading', 'blog.description'], type, query);
     }
-    if (type === 'BLOG' && query !== undefined) {
+    if (type === 'CASESTUDY' && query !== undefined) {
       setSuccess(true);
       router.push(`/search?query=${query}&type=${type}`);
-      searchCallFunction(['description', 'blog.heading', 'blog.description'], type, query);
+      searchCallFunction(
+        [
+          'description',
+          'createdBy.firstName',
+          'firstName',
+          'objectId',
+          'ShortDescription',
+          'Title',
+        ],
+        type,
+        query
+      );
     }
     if (type === 'POLL' && query !== undefined) {
       setSuccess(true);
@@ -207,7 +247,7 @@ const SearchResults = () => {
   const [success, setSuccess] = useState(true);
   const [searchedData, setSearchedData] = useState<any>([]);
 
-  const searchCallFunction = (filter: any, type: string, searchData: any) => {
+  const searchCallFunction = (filter: any, type: any, searchData: any) => {
     searchCall(searchData, type, userToken, filter).then((response: any) => {
       if (response?.data?.success === true) {
         if (response?.data?.data !== null && response?.data?.data !== undefined) {
@@ -230,10 +270,16 @@ const SearchResults = () => {
     });
   };
 
+  // useEffect(() => {
+  //   setActiveState(type);
+  //   handleClick(type, query);
+  //   // setSearch(query);
+  // }, [query, type]);
+
   useEffect(() => {
     setActiveState(type);
-    handleClick(type, query);
-    setSearch(query);
+    // handleClick(type, query);
+    // setSearch(query);
   }, [query, type]);
   useEffect(() => {
     if (query !== undefined && query !== null && userToken !== undefined && userToken !== null) {
@@ -248,35 +294,37 @@ const SearchResults = () => {
           'createdBy.firstName',
           'createdBy.lastName',
           'createdBy.objectId',
+          'ShortDescription',
+          'Title',
         ],
-        'ALL',
+        type,
         query
       );
     }
   }, [query]);
 
-  const [searchData, setSearch] = useState<any>('');
+  // const [searchData, setSearch] = useState<any>('');
 
-  const onSearch = (e: any) => {
-    e.preventDefault();
-    router.push(`/search?query=${searchData}&type=${type}`);
-    console.log('searchData', searchData);
-    searchCallFunction(
-      [
-        'description',
-        'blog.heading',
-        'blog.description',
-        'firstName',
-        'lastName',
-        'objectId',
-        'createdBy.firstName',
-        'createdBy.lastName',
-        'createdBy.objectId',
-      ],
-      'ALL',
-      searchData
-    );
-  };
+  // const onSearch = (e: any) => {
+  //   e.preventDefault();
+  //   router.push(`/search?query=${searchData}&type=${type}`);
+  //   console.log('searchData', searchData);
+  //   searchCallFunction(
+  //     [
+  //       'description',
+  //       'blog.heading',
+  //       'blog.description',
+  //       'firstName',
+  //       'lastName',
+  //       'objectId',
+  //       'createdBy.firstName',
+  //       'createdBy.lastName',
+  //       'createdBy.objectId',
+  //     ],
+  //     'ALL',
+  //     searchData
+  //   );
+  // };
 
   // useEffect(() => {
   //   const getData = setTimeout(() => {
@@ -307,7 +355,7 @@ const SearchResults = () => {
         <ThemeSwitcher />
       </div>
       <div className={styles.pageHeadingContainer}>
-        <div className={styles.pageHeading}>
+        {/* <div className={styles.pageHeading}>
           <form>
             <input
               type="text"
@@ -318,8 +366,12 @@ const SearchResults = () => {
             />{' '}
             <input onClick={onSearch} type="submit" hidden />
           </form>
-        </div>
+        </div> */}
       </div>
+      {console.log(
+        '=====================================>>>>>>>>>>>>>>>>>>>>>>>>>>>',
+        searchedData
+      )}
       <SearchFlters activeState={activeState} filter={filter} handleClick={handleClick} />
       {activeState === 'ALL' ? (
         <SearchALLConatiner query={query} success={success} searchedData={searchedData} />
@@ -330,11 +382,11 @@ const SearchResults = () => {
       ) : activeState === 'EVENT' ? (
         <EventSearchContainer query={query} searchedData={searchedData} success={success} />
       ) : activeState === 'NEWS' ? (
-        <NewSearchContainer success={success} />
+        <NewSearchContainer searchedData={searchedData} success={success} />
       ) : activeState === 'JOURNAL' ? (
-        <JournalSearchContainer query={query} success={success} />
-      ) : activeState === 'ARTICLE' ? (
-        <ArticleSearchContainer query={query} success={success} />
+        <JournalSearchContainer searchedData={searchedData} query={query} success={success} />
+      ) : activeState === 'CASESTUDY' ? (
+        <CaseStudySearchContainer query={query} searchedData={searchedData} success={success} />
       ) : activeState === 'HASHTAG' ? (
         <HashtagContainer query={query} success={success} searchedData={searchedData} />
       ) : activeState === 'BLOG' ? (

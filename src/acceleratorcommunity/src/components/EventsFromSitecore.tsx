@@ -3,31 +3,32 @@ import styles from '../assets/searchNews.module.css';
 import WebContext from 'src/Context/WebContext';
 import { useContext } from 'react';
 import darkModeCss from '../assets/darkTheme.module.css';
-// import style from '../assets/searchFilterContainer.module.css';
-
 // import eventImg from '../assets/images/event.png';
 import DescriptionForSearch from './helperComponents/DescriptionForSearch';
 
-const SearchNews = (props: any) => {
+const EventsFromSitecore = (props: any) => {
   const { darkMode } = { ...useContext(WebContext) };
 
   const data = props?.journal;
 
+  const splitDate = (date: string) => {
+    var parts = date.split(' ');
+    return parts[0];
+  };
+
   return (
     <>
       {props?.fromALL ? (
-        <div className={`${styles.typeHeading} ${darkMode && darkModeCss.text_green}`}>
-          {props?.index ? 'Case Study' : 'News'}
-        </div>
+        <div className={`${styles.typeHeading} ${darkMode && darkModeCss.text_green}`}>Event</div>
       ) : (
         ''
       )}
-      <div className={`${styles.container} ${darkMode && darkModeCss.grey_1}`}>
+      <div  className={`${styles.container} ${darkMode && darkModeCss.grey_1}`}>
         {props?.fromALL ? (
           ''
         ) : (
           <div className={styles.imgContainer}>
-            <img src={data?.Image} />
+            <img src={data?.Image} alt="sitecoreEvent" />
           </div>
         )}
         <div className={styles.contentContainer}>
@@ -35,7 +36,7 @@ const SearchNews = (props: any) => {
             {data?.Title}
           </div>
           <div className={`${styles.containerTime}  ${darkMode && darkModeCss.text_light}`}>
-            {data?.Date}
+          {splitDate(data?.Date)}
           </div>
           <div className={`${styles.containerDescription}  ${darkMode && darkModeCss.text_light}`}>
             <DescriptionForSearch description={data?.ShortDescription} />
@@ -46,4 +47,4 @@ const SearchNews = (props: any) => {
   );
 };
 
-export default SearchNews;
+export default EventsFromSitecore;

@@ -6,6 +6,7 @@ import WebContext from '../Context/WebContext';
 import React, { useContext, useState } from 'react';
 import { Button, CloseButton, Dropdown, Modal } from 'react-bootstrap';
 import LogoutImage from '../assets/images/Logout.png';
+import Community from '../assets/images/community.png';
 import { useRouter } from 'next/router';
 import logoutUserCall from 'src/API/logoutUserCall';
 import { getValueFromCookie } from 'assets/helpers/helperFunctions';
@@ -165,6 +166,22 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
                   />
                 </div>
                 <div className={userProfileCss.userProfileBtn}> Edit Profile</div>
+              </div>
+            </Link>
+          </Dropdown.Item>
+          <Dropdown.Item className={userProfileCss.userProfileDropdownItem}>
+            <Link href={'/explorecommunity'} passHref={true}>
+              <div className={userProfileCss.userProfileOverlayItem}>
+                <div className={userProfileCss.userProfileDropdownImage}>
+                  <img
+                    src={Community.src}
+                    width={20}
+                    height={20}
+                    style={{ borderRadius: '50%' }}
+                    title="Profile page"
+                  />
+                </div>
+                <div className={userProfileCss.userProfileBtn}>Explore Community</div>
               </div>
             </Link>
           </Dropdown.Item>
