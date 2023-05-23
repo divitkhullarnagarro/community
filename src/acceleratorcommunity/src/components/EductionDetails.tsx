@@ -1,4 +1,5 @@
 import { Button, Form, Modal } from 'react-bootstrap';
+import { Text } from '@sitecore-jss/sitecore-jss-nextjs';
 
 const EductionDetails = (props: any): JSX.Element => (
   <>
@@ -21,7 +22,10 @@ const EductionDetails = (props: any): JSX.Element => (
                   <div className="instituteFields">{data?.percentage}</div>
                   <div className="instituteFields">{data?.remarks}</div>
                 </div>
-                <button className="itemEditBtn"   onClick={() => props?.editEducationmData(data?.qid)}>
+                <button
+                  className="itemEditBtn"
+                  onClick={() => props?.editEducationmData(data?.qid)}
+                >
                   <img
                     src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
                     alt="edit"
@@ -34,7 +38,17 @@ const EductionDetails = (props: any): JSX.Element => (
         : ''}
       <div className="addNewItem">
         <Button onClick={props.addEducationDetails}>
-          <span>Add Institute</span>
+          <span>
+            <Text
+              field={
+                props?.labels?.addEducationBtn?.jsonValue
+                  ? props?.labels?.addEducationBtn?.jsonValue
+                  : {
+                      value: 'Add Institute',
+                    }
+              }
+            />
+          </span>
         </Button>
       </div>
     </div>

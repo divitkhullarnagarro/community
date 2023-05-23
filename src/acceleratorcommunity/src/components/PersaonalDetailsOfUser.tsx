@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import WebContext from '../Context/WebContext';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { Text } from '@sitecore-jss/sitecore-jss-nextjs';
 
 const PersaonalDetailsOfUser = (props: any): JSX.Element => {
   const { darkMode } = { ...useContext(WebContext) };
@@ -388,40 +389,129 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
           <div className="personaleInformationContainer">
             <div className="personalInfomation">
               <div className="infomationContainer">
-                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Age</div>
+                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                  <Text
+                    field={
+                      props?.labels?.age?.jsonValue
+                        ? props?.labels?.age?.jsonValue
+                        : {
+                            value: 'Age',
+                          }
+                    }
+                  />
+                </div>
                 <div className="infoTagValue">{props?.tempUserData?.age}</div>
               </div>
               <div className="infomationContainer">
-                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Gender</div>
-                {console.log('props?.tempUserData?.gender', props?.tempUserData?.gender)}
+                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                  <Text
+                    field={
+                      props?.labels?.gender?.jsonValue
+                        ? props?.labels?.gender?.jsonValue
+                        : {
+                            value: 'Gender',
+                          }
+                    }
+                  />
+                </div>
                 <div className="infoTagValue">{props?.tempUserData?.gender}</div>
               </div>
               <div className="infomationContainer">
-                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Date of Birth</div>
+                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                  <Text
+                    field={
+                      props?.labels?.dateOfBirth?.jsonValue
+                        ? props?.labels?.dateOfBirth?.jsonValue
+                        : {
+                            value: 'Date of Birth',
+                          }
+                    }
+                  />
+                </div>
                 <div className="infoTagValue">{props?.tempUserData?.dob}</div>
               </div>
               <div className="infomationContainer">
-                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Experience</div>
+                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                  <Text
+                    field={
+                      props?.labels?.experience?.jsonValue
+                        ? props?.labels?.experience?.jsonValue
+                        : {
+                            value: 'Experience',
+                          }
+                    }
+                  />
+                </div>
                 <div className="infoTagValue">{props?.tempUserData?.yearsOfExperience}</div>
               </div>
               <div className="infomationContainer">
-                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Designation</div>
+                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                  <Text
+                    field={
+                      props?.labels?.designation?.jsonValue
+                        ? props?.labels?.designation?.jsonValue
+                        : {
+                            value: ' Designation',
+                          }
+                    }
+                  />
+                </div>
                 <div className="infoTagValue">{props?.tempUserData?.designation}</div>
               </div>
               <div className="infomationContainer">
-                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Profession</div>
+                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                  <Text
+                    field={
+                      props?.labels?.profession?.jsonValue
+                        ? props?.labels?.profession?.jsonValue
+                        : {
+                            value: 'Profession',
+                          }
+                    }
+                  />
+                </div>
                 <div className="infoTagValue">{props?.tempUserData?.areaOfExpertise}</div>
               </div>
               <div className="infomationContainer">
-                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Domain</div>
+                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                  <Text
+                    field={
+                      props?.labels?.domain?.jsonValue
+                        ? props?.labels?.domain?.jsonValue
+                        : {
+                            value: 'Domain',
+                          }
+                    }
+                  />
+                </div>
                 <div className="infoTagValue">{props?.tempUserData?.domain}</div>
               </div>
               <div className="infomationContainer">
-                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Speciality</div>
+                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                  <Text
+                    field={
+                      props?.labels?.speciality?.jsonValue
+                        ? props?.labels?.speciality?.jsonValue
+                        : {
+                            value: 'Speciality',
+                          }
+                    }
+                  />
+                </div>
                 <div className="infoTagValue">{props?.tempUserData?.speciality}</div>
               </div>
               <div className="infomationContainer">
-                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Website</div>
+                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                  <Text
+                    field={
+                      props?.labels?.website?.jsonValue
+                        ? props?.labels?.website?.jsonValue
+                        : {
+                            value: 'Website',
+                          }
+                    }
+                  />
+                </div>
                 <div className="infoTagValue">
                   <a className="websiteUrl" href={props?.tempUserData?.websiteUrl} target="_blank">
                     {props?.tempUserData?.websiteUrl}
@@ -430,7 +520,17 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
               </div>
             </div>
             <div className="fieldListContainer">
-              <span className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Summary</span>
+              <span className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                <Text
+                  field={
+                    props?.labels?.summary?.jsonValue
+                      ? props?.labels?.summary?.jsonValue
+                      : {
+                          value: 'Summary',
+                        }
+                  }
+                />
+              </span>
               <div className="fieldValue">{props?.tempUserData?.summary}</div>
               <Button className="profileBtn" onClick={props.handleShowForm2}>
                 <img
@@ -442,7 +542,17 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
               </Button>
             </div>
             <div className="fieldListContainer">
-              <span className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Hobby</span>
+              <span className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                <Text
+                  field={
+                    props?.labels?.hobby?.jsonValue
+                      ? props?.labels?.hobby?.jsonValue
+                      : {
+                          value: 'Hobby',
+                        }
+                  }
+                />
+              </span>
               <div className="fieldValue">
                 {props?.tempUserData?.hobby?.map((hob: any) => {
                   return <div className="hobbyValue">{hob}</div>;
@@ -458,7 +568,17 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
               </Button>
             </div>
             <div className="fieldListContainer">
-              <span className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Language</span>
+              <span className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                <Text
+                  field={
+                    props?.labels?.languagesLabel?.jsonValue
+                      ? props?.labels?.languagesLabel?.jsonValue
+                      : {
+                          value: 'Language',
+                        }
+                  }
+                />
+              </span>
               <div className="fieldValue">
                 {props?.tempUserData?.language?.map((lang: any) => {
                   return <div className="languageValue">{lang}</div>;
@@ -474,7 +594,17 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
               </Button>
             </div>
             <div className="fieldListContainer">
-              <span className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Interest</span>
+              <span className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                <Text
+                  field={
+                    props?.labels?.interest?.jsonValue
+                      ? props?.labels?.interest?.jsonValue
+                      : {
+                          value: 'Interest',
+                        }
+                  }
+                />
+              </span>
               <div className="fieldValue">
                 {props?.tempUserData?.interests?.map((interest: any) => {
                   return <div className="interestValue">{interest}</div>;
