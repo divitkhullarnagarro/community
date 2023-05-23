@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import WebContext from '../Context/WebContext';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { Text } from '@sitecore-jss/sitecore-jss-nextjs';
 
 const ContactDetails = (props: any): JSX.Element => {
   const { darkMode } = { ...useContext(WebContext) };
@@ -181,13 +182,35 @@ const ContactDetails = (props: any): JSX.Element => {
           <div className="personaleInformationContainer">
             <div className="ContactDeatils">
               <div className="infomationContainer">
-                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Email :</div>
+                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                  <Text
+                    field={
+                      props?.labels?.email?.jsonValue
+                        ? props?.labels?.email?.jsonValue
+                        : {
+                            value: 'Email',
+                          }
+                    }
+                  />
+                  &nbsp;:
+                </div>
                 <div className="infoTagValue">
                   {props.showStateValue && props.tempUserData?.email}
                 </div>
               </div>
               <div className="infomationContainer">
-                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Alt Email :</div>
+                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                  <Text
+                    field={
+                      props?.labels?.altEmail?.jsonValue
+                        ? props?.labels?.altEmail?.jsonValue
+                        : {
+                            value: 'Alt Email',
+                          }
+                    }
+                  />
+                  &nbsp;:
+                </div>
                 <div className="infoTagValue">
                   {props.showStateValue && props.tempUserData?.alternateEmail !== ' '
                     ? props.tempUserData?.alternateEmail
@@ -195,7 +218,18 @@ const ContactDetails = (props: any): JSX.Element => {
                 </div>
               </div>
               <div className="infomationContainer">
-                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Phone number :</div>
+                <div className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                  <Text
+                    field={
+                      props?.labels?.phoneNumber?.jsonValue
+                        ? props?.labels?.phoneNumber?.jsonValue
+                        : {
+                            value: 'Phone Number',
+                          }
+                    }
+                  />
+                  &nbsp;:
+                </div>
                 <div className="infoTagValue">
                   {props.showStateValue && props.tempUserData?.phoneNumber !== ' '
                     ? props.tempUserData?.phoneNumber
@@ -203,7 +237,18 @@ const ContactDetails = (props: any): JSX.Element => {
                 </div>
               </div>
               <div className="fieldListContainer">
-                <span className={`infoTag ${darkMode && 'darkMode_textBg'}`}>Address :</span>
+                <span className={`infoTag ${darkMode && 'darkMode_textBg'}`}>
+                  <Text
+                    field={
+                      props?.labels?.address?.jsonValue
+                        ? props?.labels?.address?.jsonValue
+                        : {
+                            value: 'Address',
+                          }
+                    }
+                  />
+                  &nbsp;:
+                </span>
                 <div className="fieldValue">
                   {console.log('+++++++++++++++++++++', props.userResidenceInfo)}
                   {props.userResidenceInfo?.map((data: any) => {
