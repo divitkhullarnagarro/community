@@ -184,7 +184,7 @@ type BlockUserFields = {
 };
 
 const AddPost = (props: AddPostProps): JSX.Element => {
-  const { userToken, objectId, userObject, darkMode } = {
+  const { userToken, objectId, userObject, darkMode, wantRerender } = {
     ...useContext(WebContext),
   };
 
@@ -251,8 +251,35 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   const [disableAddPoll, setDisableAddPoll] = useState(false);
   const [globalPostType, setGlobalPostType] = useState('TEXT_POST');
   const [isEditorHidden, setIsEditorVisible] = useState(false);
-
+  const [isMember, setIsMember] = useState<any>(false);
+  console.log(isMember);
   const router = useRouter();
+  const params =
+    typeof window !== 'undefined'
+      ? new URLSearchParams(window?.location?.search)
+      : new URLSearchParams('');
+  let objectEmail = params.get('id');
+  let groupId = params.get('groupId') as string;
+  console.log('groupId', groupId);
+
+  const getGroupInfo = async (groupId: string) => {
+    try {
+      const res: any = await AxiosRequest({
+        url: `https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/group/${groupId}`,
+        method: 'GET',
+      });
+      if (res?.data) {
+        setIsMember(res?.data?.member);
+      }
+      console.log('groupInfo inside add post', res, res?.data?.member);
+    } catch (error) {
+      console.log('groupInfo inside add post', error);
+    }
+  };
+
+  useEffect(() => {
+    getGroupInfo(groupId);
+  }, [groupId, wantRerender]);
 
   useEffect(() => {
     props?.params?.withoutEditor ? setIsEditorVisible(true) : '';
@@ -378,20 +405,18 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     setId(idValue);
   }, [router]);
 
-  const params =
-    typeof window !== 'undefined'
-      ? new URLSearchParams(window?.location?.search)
-      : new URLSearchParams('');
-  let objectEmail = params.get('id');
-
   useEffect(() => {
     setMyAnotherArr([]);
     if (userToken != '' && userToken != undefined) {
+      // const getGroupUrl = `${props?.params?.URL}/group/${groupId}?page=${postPageNum}&size=10`;
+      // console.log('groupId', getGroupUrl);
       AxiosRequest({
         method: 'GET',
         url:
           objectEmail && objectEmail != ''
             ? `${props?.params?.URL}/user-posts?objectId=${objectEmail}&page=${postPageNum}&size=10`
+            : groupId
+            ? `${props?.params?.URL}/group/${groupId}?page=${postPageNum}&size=10`
             : `${props?.params?.URL}?${id ? `id=${id}&` : ''}page=${postPageNum}&size=10`,
       })
         .then((response: any) => {
@@ -765,6 +790,8 @@ const AddPost = (props: AddPostProps): JSX.Element => {
           ? `${props?.params?.URL}/user-posts?objectId=${objectEmail}&page=${
               postPageNum + 1
             }&size=10`
+          : groupId
+          ? `${props?.params?.URL}/group/${groupId}?page=${postPageNum + 1}&size=10`
           : `${props?.params?.URL}?${id ? `id=${id}&` : ''}page=${postPageNum + 1}&size=10`,
     }).then((response: any) => {
       if (response?.data?.length != 0 && response?.data?.length) {
@@ -2593,6 +2620,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
       type: globalPostType,
       event: eventPost?.event,
       poll: pollPost?.poll,
+      groupId: groupId ? groupId : null,
     }).then((response) => {
       if (response?.data?.data) {
         addLatestCreatedPost(response?.data?.data, uniqId);
@@ -3043,7 +3071,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
         className={`${styles.mainContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}
         style={ifNoMoreData ? {} : { paddingBottom: '300px' }}
       >
-        {!isEditorHidden ? (
+        {!isEditorHidden && isMember ? (
           <>
             <div
               className={`${styles.addPostWidgetContainer} ${darkMode ? darkModeCss.grey_2 : ''}`}
@@ -3765,17 +3793,31 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                     }}
                     type="button"
                   >
-                    <Link href="/addblogpost">
-                      <NextImage
-                        field={addBlogIcon}
-                        editable={true}
-                        alt="PostItems"
-                        width={18}
-                        height={18}
-                        style={{ opacity: disableAddDoc ? '0.2' : '1' }}
-                        title="Create a Blog"
-                      />
-                    </Link>
+                    {groupId ? (
+                      <Link href={{ pathname: '/addblogpost', query: { groupId: groupId } }}>
+                        <NextImage
+                          field={addBlogIcon}
+                          editable={true}
+                          alt="PostItems"
+                          width={18}
+                          height={18}
+                          style={{ opacity: disableAddDoc ? '0.2' : '1' }}
+                          title="Create a Blog"
+                        />
+                      </Link>
+                    ) : (
+                      <Link href="/addblogpost">
+                        <NextImage
+                          field={addBlogIcon}
+                          editable={true}
+                          alt="PostItems"
+                          width={18}
+                          height={18}
+                          style={{ opacity: disableAddDoc ? '0.2' : '1' }}
+                          title="Create a Blog"
+                        />
+                      </Link>
+                    )}
                   </button>
                 </div>
                 <div className={styles.errorContainer}>

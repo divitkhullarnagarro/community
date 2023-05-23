@@ -13,6 +13,8 @@ type contextType = {
   setUserObject: React.Dispatch<React.SetStateAction<any>>;
   darkMode: boolean;
   setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+  wantRerender: boolean;
+  setWantRerender: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const WebContext = React.createContext<contextType | null | undefined>(null);
 
