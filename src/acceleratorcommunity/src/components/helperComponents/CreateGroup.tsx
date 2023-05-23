@@ -10,6 +10,8 @@ import style from '../../assets/createGroup.module.css';
 import uploadFilesCall from 'src/API/uploadFilesCall';
 import WebContext from 'src/Context/WebContext';
 import ToastNotification from './../ToastNotification';
+// import Image from 'next/image';
+import { Spinner } from 'react-bootstrap';
 
 function CreateGroup({
   createGroupVisibel,
@@ -40,6 +42,7 @@ function CreateGroup({
   const [toastMessage, setToastMessage] = useState<string>();
   const [showNotification, setShowNofitication] = useState(false);
   const [toastError, setToastError] = useState(false);
+  const [creatingGroup, setCreatingGroup] = useState(false);
 
   const getPeersbyName = async (name: string) => {
     const res: any = await AxiosRequest({
@@ -104,6 +107,7 @@ function CreateGroup({
     e.preventDefault();
     try {
       if (nameValue && descriptionValue && addMemberList?.length > 0) {
+        setCreatingGroup(true);
         const res: any = await AxiosRequest({
           url: `${createGroupUrl}`,
           method: 'POST',
@@ -118,6 +122,7 @@ function CreateGroup({
           },
         });
         if (res?.success) {
+          setCreatingGroup(false);
           setWantToRerender(!wantToRerender);
           setToastSuccess(true);
           setToastMessage('Group Created Successfully');
@@ -132,6 +137,7 @@ function CreateGroup({
           setBannerImageURL('');
         }
       } else {
+        setCreatingGroup(false);
         setToastError(true);
         setToastMessage(
           nameValue
@@ -145,6 +151,7 @@ function CreateGroup({
         setShowNofitication(true);
       }
     } catch (error) {
+      setCreatingGroup(false);
       console.log('createGroupError', error);
     }
   };
@@ -359,6 +366,8 @@ function CreateGroup({
                 onChange={(e) => handleBannerChangeImage(e)}
               />
             </div>
+            <br />
+            {/* {bannerImageURL && <Image src={bannerImageURL} height={300} width={600} />} */}
           </Modal.Body>
           <Modal.Footer>
             <button
@@ -369,7 +378,11 @@ function CreateGroup({
               Close
             </button>
             <button type="submit" className={style.saveButton} disabled={disableButton}>
-              Save
+              {creatingGroup ? (
+                <Spinner style={{ width: '15px', height: '15px' }} animation="border" />
+              ) : (
+                'Save'
+              )}
             </button>
           </Modal.Footer>
         </form>

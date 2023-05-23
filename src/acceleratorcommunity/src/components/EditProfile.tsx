@@ -13,14 +13,14 @@ import {
   getUserUrl,
   joinGroupUrl,
   leaveGroupUrl,
-  updateGroupUrl,
+  // updateGroupUrl,
   uploadBannerUrl,
 } from 'assets/helpers/constants';
 import { Form, Modal } from 'react-bootstrap';
 import DotLoader from './DotLoader';
 import ToastNotification from './ToastNotification';
 import groupIcon from '../assets/images/groupLogo1.jpg';
-import uploadFilesCall from 'src/API/uploadFilesCall';
+// import uploadFilesCall from 'src/API/uploadFilesCall';
 import Spinner from 'react-bootstrap/Spinner';
 
 type HeaderProfileProps = ComponentProps & {
@@ -60,7 +60,8 @@ type HeaderProfileProps = ComponentProps & {
 };
 
 const EditProfile = (props: HeaderProfileProps): JSX.Element => {
-  const { userObject, userToken } = {
+  // const { userObject, userToken } = {
+  const { userObject } = {
     ...useContext(WebContext),
   };
   //get objectId from URL
@@ -90,7 +91,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
   const [toastMessage, setToastMessage] = useState<string>();
   const [groupBanner, setGroupBanner] = useState<string>('');
   const [groupInfo, setGroupInfo] = useState<any>({});
-  const [isGroupBannerUploading, setIsGroupBannerUploading] = useState<any>(false);
+  // const [isGroupBannerUploading, setIsGroupBannerUploading] = useState<any>(false);
   const [joinLeaveLoader, setJoinLeaveLoader] = useState<any>(false);
   const [joinValue, setJoinValue] = useState(groupInfo?.member);
   const [leaveValue, setLeaveValue] = useState(!groupInfo?.member);
@@ -327,54 +328,54 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
     getGroupInfo(groupId);
   }, [groupId]);
 
-  function changeGroupBannerbuttonHandler() {
-    if (typeof document !== undefined) {
-      const buttEle = document.getElementById('changeGroupBannerButton');
-      buttEle?.click();
-    }
-  }
+  // function changeGroupBannerbuttonHandler() {
+  //   if (typeof document !== undefined) {
+  //     const buttEle = document.getElementById('changeGroupBannerButton');
+  //     buttEle?.click();
+  //   }
+  // }
 
-  async function UploadGroupBannerToServer(file: any, type: string) {
-    return await uploadFilesCall(userToken, file, type).then((response) => {
-      return response?.data;
-    });
-  }
-  async function uploadGroupBannerFile(e: any) {
-    try {
-      setIsGroupBannerUploading(true);
-      const files = e.target.files;
-      const temp = files[0];
-      const resp = await UploadGroupBannerToServer(temp, 'IMAGE');
-      if (resp?.data) {
-        try {
-          const res: any = await AxiosRequest({
-            url: `${updateGroupUrl}${groupId}`,
-            method: 'PUT',
-            data: { groupBannerUrl: resp?.data },
-          });
-          if (res.data) {
-            setGroupBanner(res?.data?.groupBannerUrl);
-            setIsGroupBannerUploading(false);
-            console.log('updatedGroup', res.data);
-          } else {
-            setIsGroupBannerUploading(false);
-            setToastMessage('Failed to Update Background. Please try again');
-            setToastError(true);
-            setShowNofitication(true);
-          }
-        } catch (error) {
-          console.log('erroringroupupdate', error);
-        }
-      } else {
-        setIsGroupBannerUploading(false);
-        setToastMessage('Failed to Update Background. Please try again');
-        setToastError(true);
-        setShowNofitication(true);
-      }
+  // async function UploadGroupBannerToServer(file: any, type: string) {
+  //   return await uploadFilesCall(userToken, file, type).then((response) => {
+  //     return response?.data;
+  //   });
+  // }
+  // async function uploadGroupBannerFile(e: any) {
+  //   try {
+  //     setIsGroupBannerUploading(true);
+  //     const files = e.target.files;
+  //     const temp = files[0];
+  //     const resp = await UploadGroupBannerToServer(temp, 'IMAGE');
+  //     if (resp?.data) {
+  //       try {
+  //         const res: any = await AxiosRequest({
+  //           url: `${updateGroupUrl}${groupId}`,
+  //           method: 'PUT',
+  //           data: { groupBannerUrl: resp?.data },
+  //         });
+  //         if (res.data) {
+  //           setGroupBanner(res?.data?.groupBannerUrl);
+  //           setIsGroupBannerUploading(false);
+  //           console.log('updatedGroup', res.data);
+  //         } else {
+  //           setIsGroupBannerUploading(false);
+  //           setToastMessage('Failed to Update Background. Please try again');
+  //           setToastError(true);
+  //           setShowNofitication(true);
+  //         }
+  //       } catch (error) {
+  //         console.log('erroringroupupdate', error);
+  //       }
+  //     } else {
+  //       setIsGroupBannerUploading(false);
+  //       setToastMessage('Failed to Update Background. Please try again');
+  //       setToastError(true);
+  //       setShowNofitication(true);
+  //     }
 
-      console.log('bannerImageUrl', resp);
-    } catch (error) {}
-  }
+  //     console.log('bannerImageUrl', resp);
+  //   } catch (error) {}
+  // }
   //group functionality End
   return (
     <div
@@ -404,13 +405,13 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
       ) : (
         ''
       )}
-      {isGroupBannerUploading ? (
+      {/* {isGroupBannerUploading ? (
         <span className={styles.dotLoaderBannerPic}>
           <DotLoader />
         </span>
       ) : (
         ''
-      )}
+      )} */}
       <div className={isGroupPage ? `${styles.groupContent}` : `${styles.content}`}>
         <div className={`${styles.leftSection} ${styles.groupLeftSection}`}>
           <div className={styles.profileImage}>
@@ -557,7 +558,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
 
         {isGroupPage && (
           <div className={`d-flex flex-column ${styles.buttonGroup}`}>
-            {isGroupPage && userObject.objectId === groupInfo?.createdBy?.objectId && (
+            {/* {isGroupPage && userObject.objectId === groupInfo?.createdBy?.objectId && (
               <button
                 className={styles.editGroupBannerBtn}
                 onClick={() => {
@@ -574,7 +575,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                   }
                 />
               </button>
-            )}
+            )} */}
             {joinValue && (
               <button className={`btn  ${styles.joinButton}`} onClick={onClickJoinButton}>
                 {!joinLeaveLoader ? (
@@ -647,7 +648,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
           />
         </Form.Group>
       </Form>
-      <Form>
+      {/* <Form>
         <Form.Group>
           <Form.Control
             style={{ display: 'none' }}
@@ -658,7 +659,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
             id="changeGroupBannerButton"
           />
         </Form.Group>
-      </Form>
+      </Form> */}
       <Modal
         className={styles.followersPopup}
         size={'lg'}
