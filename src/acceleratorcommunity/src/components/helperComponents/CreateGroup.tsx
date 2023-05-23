@@ -10,13 +10,19 @@ import style from '../../assets/createGroup.module.css';
 import uploadFilesCall from 'src/API/uploadFilesCall';
 import WebContext from 'src/Context/WebContext';
 import ToastNotification from './../ToastNotification';
+// import Image from 'next/image';
+import { Spinner } from 'react-bootstrap';
 
 function CreateGroup({
   createGroupVisibel,
   setCreateGroupVisibel,
+  setWantToRerender,
+  wantToRerender,
 }: {
   createGroupVisibel: any;
   setCreateGroupVisibel: any;
+  setWantToRerender: any;
+  wantToRerender: any;
 }) {
   const { userToken, userObject } = {
     ...useContext(WebContext),
@@ -30,11 +36,13 @@ function CreateGroup({
   const [nameValue, setNameValue] = useState('');
   const [membersSuggestionsList, setmembersSuggestionsList] = useState<any>([]);
   const [imageURL, setImageUrl] = useState('');
+  const [bannerImageURL, setBannerImageURL] = useState('');
   const [disableButton, setDisableButton] = useState(false);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [toastMessage, setToastMessage] = useState<string>();
   const [showNotification, setShowNofitication] = useState(false);
   const [toastError, setToastError] = useState(false);
+  const [creatingGroup, setCreatingGroup] = useState(false);
 
   const getPeersbyName = async (name: string) => {
     const res: any = await AxiosRequest({
@@ -99,8 +107,7 @@ function CreateGroup({
     e.preventDefault();
     try {
       if (nameValue && descriptionValue && addMemberList?.length > 0) {
-        // const date = new Date();
-        // const createdOn = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+        setCreatingGroup(true);
         const res: any = await AxiosRequest({
           url: `${createGroupUrl}`,
           method: 'POST',
@@ -108,13 +115,15 @@ function CreateGroup({
             groupName: nameValue,
             description: descriptionValue,
             groupIconUrl: imageURL,
-            groupBannerUrl: '',
+            groupBannerUrl: bannerImageURL,
             members: [...addMemberList, userObject.objectId],
             createdBy: 'vicky@yopmail.com',
             createdOn: null,
           },
         });
         if (res?.success) {
+          setCreatingGroup(false);
+          setWantToRerender(!wantToRerender);
           setToastSuccess(true);
           setToastMessage('Group Created Successfully');
           setShowNofitication(true);
@@ -125,8 +134,10 @@ function CreateGroup({
           setNameValue('');
           setCreateGroupVisibel(false);
           setImageUrl('');
+          setBannerImageURL('');
         }
       } else {
+        setCreatingGroup(false);
         setToastError(true);
         setToastMessage(
           nameValue
@@ -140,6 +151,7 @@ function CreateGroup({
         setShowNofitication(true);
       }
     } catch (error) {
+      setCreatingGroup(false);
       console.log('createGroupError', error);
     }
   };
@@ -164,13 +176,11 @@ function CreateGroup({
       const res = await UploadFilesToServer(files[0], 'IMAGE');
       if (res?.success) {
         setImageUrl(res?.data);
-        // alert('got image url');
         setDisableButton(false);
       } else {
         setToastError(true);
         setToastMessage('Failed to upload Group Logo. Try another logo.');
         setShowNofitication(true);
-        // alert('failed to upload group url');
         setDisableButton(false);
       }
       console.log('createGroupimageupload', res);
@@ -182,6 +192,31 @@ function CreateGroup({
       setDisableButton(false);
     }
   };
+
+  const handleBannerChangeImage = async (e: any) => {
+    try {
+      setDisableButton(true);
+      const files = e.target.files;
+      const res = await UploadFilesToServer(files[0], 'IMAGE');
+      if (res?.success) {
+        setBannerImageURL(res?.data);
+        setDisableButton(false);
+      } else {
+        setToastError(true);
+        setToastMessage('Failed to upload Group Banner. Try another Banner.');
+        setShowNofitication(true);
+        setDisableButton(false);
+      }
+      console.log('createGroupimageupload', res);
+    } catch (error: any) {
+      setToastError(true);
+      setToastMessage(error?.message ?? 'Something went wrong');
+      setShowNofitication(true);
+      console.log('createGroupimageupload', error);
+      setDisableButton(false);
+    }
+  };
+
   const resetToastState = () => {
     setShowNofitication(!showNotification);
     setToastSuccess(false);
@@ -194,6 +229,7 @@ function CreateGroup({
     setNameValue('');
     setCreateGroupVisibel(false);
     setImageUrl('');
+    setBannerImageURL('');
   };
   console.log('userObject', userObject);
   return (
@@ -300,7 +336,6 @@ function CreateGroup({
             <button
               type="button"
               className={style.addMemberButton}
-              // style={{ fontSize: '15px', marginLeft: '15px', marginTop: '2px' }}
               onClick={addMemberButtonClick}
               disabled={invalidMemberError || addMemberValue.length < 1 || duplicateMemberError}
             >
@@ -308,10 +343,7 @@ function CreateGroup({
             </button>
             <br />
             <div className="form-group">
-              <label
-                className={`${style.requiredField} form-label`}
-                style={{ marginLeft: '5px', marginTop: '12px' }}
-              >
+              <label className={`form-label`} style={{ marginLeft: '5px', marginTop: '12px' }}>
                 Group Logo
               </label>
               <input
@@ -322,6 +354,20 @@ function CreateGroup({
                 onChange={(e) => handleChangeImage(e)}
               />
             </div>
+            <div className="form-group">
+              <label className={`form-label`} style={{ marginLeft: '5px', marginTop: '12px' }}>
+                Group Banner
+              </label>
+              <input
+                id="uploadbutton"
+                className="form-control"
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleBannerChangeImage(e)}
+              />
+            </div>
+            <br />
+            {/* {bannerImageURL && <Image src={bannerImageURL} height={300} width={600} />} */}
           </Modal.Body>
           <Modal.Footer>
             <button
@@ -331,13 +377,12 @@ function CreateGroup({
             >
               Close
             </button>
-            <button
-              type="submit"
-              className={style.saveButton}
-              // disabled={!(nameValue && descriptionValue && addMemberList.length > 0)}
-              disabled={disableButton}
-            >
-              Save
+            <button type="submit" className={style.saveButton} disabled={disableButton}>
+              {creatingGroup ? (
+                <Spinner style={{ width: '15px', height: '15px' }} animation="border" />
+              ) : (
+                'Save'
+              )}
             </button>
           </Modal.Footer>
         </form>
