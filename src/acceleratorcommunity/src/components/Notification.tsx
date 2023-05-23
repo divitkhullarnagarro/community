@@ -8,15 +8,15 @@ import WebContext from 'src/Context/WebContext';
 import { Button, Dropdown } from 'react-bootstrap';
 import ToastNotification from './ToastNotification';
 import NotificationLike from '../assets/images/NotificationLike.png';
-import NotificationComment from '../assets/images/NotificationComment.png';
+import NotificationComment from '../assets/images/comment1.png';
 import NotificationOpen from '../assets/images/NotificationOpen.png';
 import ThemeSwitcher from './ThemeSwitcher';
 import FirebaseContext from 'src/Context/FirebaseContext';
 import AxiosRequest from 'src/API/AxiosRequest';
 import { calculateTimeDifference } from 'assets/helpers/helperFunctions';
 import darkModeCss from '../assets/darkTheme.module.css';
-import NotificationProfilePic from '../assets/images/NotificationProfilePic.png';
 import MarkAsRead from '../assets/images/MarkAsRead.png';
+import Profile from '../assets/images/ProfilePic.jpeg';
 
 const NotificationType = {
   LIKE_ON_POST: 'LIKE_ON_POST',
@@ -65,6 +65,11 @@ enum NotificationTabs {
   Unread = 'unread',
 }
 
+type UserProfilePicMapping = {
+  objectId: string;
+  profileUrl: string;
+};
+
 const Notification = (props: NotificationProps): JSX.Element => {
   const { datasource } = props?.fields?.data;
   const { objectId, darkMode } = {
@@ -80,9 +85,41 @@ const Notification = (props: NotificationProps): JSX.Element => {
   const [toastMessage, setToastMessage] = useState<string>();
   const [toastSuccess, setToastSuccess] = useState(false);
   const [activeTab, setActiveTab] = useState(NotificationTabs.All);
+  const [usersProfileUrl, setUsersProfileUrl] = useState<Set<UserProfilePicMapping>>(new Set());
 
   const { requestForNotificationPermission, checkAndRegsiterServiceWorker } = {
     ...useContext(FirebaseContext),
+  };
+
+  let tempUsersProfileIds = new Set();
+
+  const addUsersProfileUrlMapping = (obj: any) => {
+    if (obj !== undefined && obj?.objectId !== undefined) {
+      setUsersProfileUrl((prevSet) => {
+        const newSet = new Set(prevSet);
+        newSet.add(obj);
+        return newSet;
+      });
+    }
+  };
+
+  const getProfileImage = (userObjectId: string | undefined) => {
+    if (userObjectId !== undefined && !tempUsersProfileIds.has(userObjectId)) {
+      tempUsersProfileIds.add(userObjectId);
+      AxiosRequest({
+        method: 'GET',
+        url: `https://accelerator-api-management.azure-api.net/user-service/api/v1/users/${userObjectId}`,
+      })
+        .then((response: any) => {
+          addUsersProfileUrlMapping({
+            objectId: response?.data?.objectId,
+            profileUrl: response?.data?.profilePictureUrl,
+          });
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
+    }
   };
 
   const mapFirebaseTokenToCurrentUser = (fcm_token: string) => {
@@ -106,6 +143,9 @@ const Notification = (props: NotificationProps): JSX.Element => {
       .then((response: any) => {
         setNotificationList(response?.data);
         setNotificationAllList(response?.data);
+        response?.data?.forEach((item: any) => {
+          getProfileImage(item?.sourceAuthorId);
+        });
       })
       .catch((err: any) => {
         console.log(err);
@@ -124,7 +164,6 @@ const Notification = (props: NotificationProps): JSX.Element => {
               item?.id === notificationId ? { ...item, read: true } : item
             )
           );
-          console.log('markNotificationAsRead', response);
         }
       })
       .catch((err: any) => {
@@ -136,7 +175,6 @@ const Notification = (props: NotificationProps): JSX.Element => {
     requestForNotificationPermission().then((data: any) => {
       checkAndRegsiterServiceWorker();
       mapFirebaseTokenToCurrentUser(data);
-      console.log('tokenFromFirebaseProvider', data);
     });
   }, []);
 
@@ -145,7 +183,9 @@ const Notification = (props: NotificationProps): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    setNotificationCount(notificationList?.length + realTimeNotificationList?.length);
+    setNotificationCount(
+      notificationList.filter((item) => !item.read)?.length + realTimeNotificationList?.length
+    );
   }, [notificationList, realTimeNotificationList]);
 
   useEffect(() => {
@@ -207,7 +247,7 @@ const Notification = (props: NotificationProps): JSX.Element => {
   const filterTabData = (notificationTab: NotificationTabs) => {
     if (notificationTab === NotificationTabs.Unread) {
       setActiveTab(NotificationTabs.Unread);
-      setNotificationList(notificationAllList.filter((item) => !item.read));
+      setNotificationList(notificationAllList?.filter((item) => !item.read));
     } else {
       setActiveTab(NotificationTabs.All);
       setNotificationList(notificationAllList);
@@ -282,23 +322,32 @@ const Notification = (props: NotificationProps): JSX.Element => {
     return false;
   };
 
+  function returnUserImage(e: any) {
+    e.target.src = Profile.src;
+  }
+
   const NotificationRow = (item: NotificationType) => {
     const notificationContent: NotificationContentType = JSON.parse(
       item?.notificationContent ?? '{}'
     );
 
+    const result = Array.from(usersProfileUrl)
+      .filter((tempItem: any) => tempItem?.objectId === item?.sourceAuthorId)
+      ?.find((tempItemSelect: any) => tempItemSelect);
     return (
       <div style={{ display: 'flex' }}>
         <Dropdown.Item className={notificationCss.dropdownItem}>
           <div className={notificationCss.notificationItem}>
             <div className={notificationCss.notificationIconContainer}>
-              <NextImage
-                field={NotificationProfilePic}
-                editable={true}
-                width={55}
+              <img
+                className={notificationCss.imgProfileNotification}
+                src={result?.profileUrl ?? Profile.src}
                 height={55}
-                title="Notification"
-              ></NextImage>
+                width={55}
+                onError={(e) => {
+                  returnUserImage(e);
+                }}
+              />
               <div className={notificationCss.notificationTypeImage}>
                 <NextImage
                   field={

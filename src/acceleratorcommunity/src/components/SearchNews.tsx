@@ -4,6 +4,7 @@ import WebContext from 'src/Context/WebContext';
 import { useContext } from 'react';
 import darkModeCss from '../assets/darkTheme.module.css';
 // import style from '../assets/searchFilterContainer.module.css';
+import config from '../temp/config';
 
 // import eventImg from '../assets/images/event.png';
 import DescriptionForSearch from './helperComponents/DescriptionForSearch';
@@ -27,7 +28,7 @@ const SearchNews = (props: any) => {
           ''
         ) : (
           <div className={styles.imgContainer}>
-            <img src={data?.Image} />
+            <img src={config?.sitecoreApiHost + data?.Image} />
           </div>
         )}
         <div className={styles.contentContainer}>
