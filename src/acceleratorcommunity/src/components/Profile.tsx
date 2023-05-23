@@ -14,6 +14,7 @@ import EventsImg from '../assets/images/events.png';
 import BlogsImg from '../assets/images/blogs.png';
 import PeersImg from '../assets/images/peers.png';
 import UserImg from '../assets/images/blockedUser.png';
+import ChangePasswordIcon from '../assets/images/ChangePasswordIcon.png';
 import Image from 'next/image';
 
 import Banner from './Banner';
@@ -28,6 +29,7 @@ import EventListing from './helperComponents/EventListing';
 import BlogListing from './helperComponents/BlogListing';
 import PeerFriendList from './PeerFriendList';
 import BlockedUser from './BlockedUser';
+import ChangePassword from './ChangePassword';
 import { ComponentProps } from 'lib/component-props';
 // import { decryptString } from 'assets/helpers/EncryptDecrypt';
 
@@ -1642,6 +1644,21 @@ const Profile = (props: ProfileProps): JSX.Element => {
                 }
               />
             </div>
+            <div
+              className={
+                details === 'changepassword'
+                  ? `personalDetails personalDetailsActive ${darkMode && 'darkMode_textBgActive'} ${
+                      darkMode && 'personalDetailsActiveImage'
+                    }`
+                  : `personalDetails ${darkMode && 'darkMode_textBg'} ${
+                      darkMode && 'personalDetailsImage'
+                    }`
+              }
+              onClick={() => handlePersonalDetails('changepassword')}
+            >
+              <Image src={ChangePasswordIcon} height={15} width={15} alt="Blocked Users" />
+              Change Password
+            </div>
             {/* <div
               className={
                 details === 'banner' ? 'personalDetails personalDetailsActive' : 'personalDetails'
@@ -1838,6 +1855,10 @@ const Profile = (props: ProfileProps): JSX.Element => {
                   showInProfilePage={true}
                   heading={props?.fields?.data?.datasource?.blockedUsersList}
                 />
+              </div>
+            ) : details === 'changepassword' ? (
+              <div className="profileInfo">
+                <ChangePassword />
               </div>
             ) : (
               <div className="bannerContainerForProfile">

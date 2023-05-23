@@ -1,0 +1,58 @@
+﻿---
+ID: "83260d69-2828-4350-8c5f-fc8a9df73bad"
+Parent: "9b2f2c61-b700-51dd-8f47-7600fc865200"
+Template: "0a24b14e-bbdd-4d84-8139-7d40e3b356fa"
+Path: /sitecore/content/acceleratorcommunity/home/DemoPage
+SharedFields:
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{6C59AE29-D0A1-4B77-9305-0ABAB21D5FE5}"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "03897511-7b06-4331-8ca0-1929bc3047ce"
+      Hint: Navigation Title
+      Value: DemoPage
+    - ID: "04bf00db-f5fb-41f7-8ab7-22408372a981"
+      Hint: __Final Renderings
+      Value: |
+        <r xmlns:p="p" xmlns:s="s"
+          p:p="1">
+          <d
+            id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
+            <r
+              uid="{E4F8B779-3182-4D4A-A745-CD75E1B64924}"
+              p:after="*[1=2]"
+              s:ds="{90D954CB-20A3-4633-AE31-EF20ED3F1447}"
+              s:id="{D0AD3887-ADF3-45AD-A97D-AF2A8C832284}"
+              s:par="CSSStyles"
+              s:ph="jss-main"
+              s:ccb="Clear on publish" />
+          </d>
+        </r>
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20230427T064456Z
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{AF32C98B-C828-42AF-A649-74C1DE3303FB}"
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\damyanti.wakchaure@nagarro.com
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\damyanti.wakchaure@nagarro.com
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "c1b422c2-5815-4d54-9aa4-59bc5afb1c6d"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\damyanti.wakchaure@nagarro.com
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20230427T070529Z

@@ -102,6 +102,7 @@
   bottom: 14px;
   color: black;
   border: 0.5px solid black;
+  min-width: 180px;
 }
 
 .joinButton:hover {
@@ -112,6 +113,7 @@
   position: relative;
   bottom: 14px;
   color: red;
+  min-width: 180px;
   border: 0.5px solid black;
 }
 
@@ -245,10 +247,10 @@
 .editGroupBannerBtn {
   margin-bottom: 40px;
   margin-right: 10px;
-  border: 1px solid black;
+  border: 1px solid #47d7ac;
   padding: 6px;
   border-radius: 5px;
-  color: black;
+  color: #47d7ac;
   background: transparent;
 }
 /* .groupPageLogo {
@@ -257,8 +259,15 @@
 .buttonGroup {
   position: relative;
   top: 16px;
+  right: 10px;
   row-gap: 48px;
 }
+.groupLeftSection {
+  position: relative;
+  bottom: 16px;
+  left: 40px;
+}
+
 @media only screen and (max-width: 640px) {
   .groupHeaderWrapper {
     height: 16vh;

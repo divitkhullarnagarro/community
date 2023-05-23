@@ -15,11 +15,11 @@ import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';
 import loginCss from '../assets/login.module.css';
 import darkTheme from '../assets/darkTheme.module.css';
-import Spinner from 'react-bootstrap/Spinner';
 import getUserCall from 'src/API/getUserCall';
 import { encryptString } from '../assets/helpers/EncryptDecrypt';
 import ThemeSwitcher from './ThemeSwitcher';
 import { validateEmail } from 'assets/helpers/validations';
+import DotLoader from './DotLoader';
 // import star from '../assets/images/star.png';
 
 type LoginProps = ComponentProps & {
@@ -72,18 +72,18 @@ type DataSource = {
 const Login = (props: LoginProps): JSX.Element => {
   const targetItems = props?.fields?.data?.datasource;
   const router = useRouter();
-  const { setIsLoggedIn, setUserToken, setObjectId, setUserObject, darkMode } = {
+  const { setIsLoggedIn, setUserToken, setObjectId, setUserObject, userToken, darkMode } = {
     ...useContext(WebContext),
   };
 
-  let [email, setEmail] = useState('');
-  let [emailValidationMessage, setEmailValidationMessage] = useState('');
-  let [password, setPassword] = useState('');
-  let [passwordValidationMessage, setPasswordValidationMessage] = useState('');
-  let [emailError, setEmailError] = useState(false);
-  let [passwodError, setPasswordError] = useState(false);
-  let [ifUnAuthorised, setIfUnauthorised] = useState(false);
-  let [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [email, setEmail] = useState('');
+  const [emailValidationMessage, setEmailValidationMessage] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordValidationMessage, setPasswordValidationMessage] = useState('');
+  const [emailError, setEmailError] = useState(false);
+  const [passwodError, setPasswordError] = useState(false);
+  const [ifUnAuthorised, setIfUnauthorised] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   function setEmailValue(val: any) {
     if (val === '') {
@@ -135,26 +135,26 @@ const Login = (props: LoginProps): JSX.Element => {
     }
     setIsLoggingIn(true);
     if (email !== '' && password !== '') {
-      let response = await loginUserCall(email, password);
+      const response = await loginUserCall(email, password);
       if (response?.status == 200 && setIsLoggedIn != undefined && setUserToken != undefined) {
         setIsLoggedIn(true);
-        let encTok = await encryptString(response?.data?.data?.access_token);
-        let encObjId = await encryptString(email);
+        const encTok = await encryptString(response?.data?.data?.access_token);
+        const encObjId = await encryptString(email);
         setUserToken(response?.data?.data?.access_token);
         if (typeof localStorage !== 'undefined') {
           localStorage.setItem('UserToken', encTok);
           localStorage.setItem('ObjectId', encObjId);
         }
         if (setObjectId) setObjectId(email);
-        let getUserResp = await getUserCall(response?.data?.data?.access_token, email);
+        const getUserResp = await getUserCall(response?.data?.data?.access_token, email);
         if (setUserObject) setUserObject(getUserResp?.data?.data);
         if (getUserResp?.data?.success == true) {
-          let encUserObj = encryptString(JSON.stringify(getUserResp?.data?.data));
+          const encUserObj = encryptString(JSON.stringify(getUserResp?.data?.data));
           localStorage.setItem('UserObject', encUserObj);
         }
         if (typeof localStorage !== 'undefined' && typeof document !== 'undefined') {
           document.cookie = `UserToken=${encTok};path=/;`;
-          let routeToUrl = getRouteToUrlFromCookie();
+          const routeToUrl = getRouteToUrlFromCookie();
           if (routeToUrl !== '' && routeToUrl != null) {
             router.push(decodeURIComponent(routeToUrl));
           } else router.push('/');
@@ -364,13 +364,34 @@ const Login = (props: LoginProps): JSX.Element => {
               <button
                 type="submit"
                 className={loginCss.formButton}
+                style={
+                  userToken
+                    ? { background: '#47D7AC' }
+                    : ifUnAuthorised
+                    ? { background: '#f22929' }
+                    : {}
+                }
                 disabled={emailError || passwodError}
               >
                 {isLoggingIn ? (
-                  <span style={{ display: 'flex', padding: '10px', justifyContent: 'center' }}>
-                    {' '}
-                    <Spinner style={{ width: '15px', height: '15px' }} animation="border" />{' '}
-                  </span>
+                  <div>
+                    <div className={loginCss.loginLoaderWrapper}>
+                      {userToken ? (
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/16/1055/1055183.png"
+                          alt="Login Success"
+                          className={loginCss.loginLoaderImage}
+                        />
+                      ) : (
+                        <>
+                          <span>Logging you in</span>
+                          <span style={{ transform: 'scale(0.75)' }}>
+                            <DotLoader dotColor="#ffffff" />
+                          </span>
+                        </>
+                      )}
+                    </div>
+                  </div>
                 ) : (
                   <Text
                     field={
@@ -444,11 +465,11 @@ const Login = (props: LoginProps): JSX.Element => {
           </div>
         </div>
         {/* <div className="screen__background">
-            <span className="screen__background__shape screen__background__shape4"></span>
-            <span className="screen__background__shape screen__background__shape3"></span>
-            <span className="screen__background__shape screen__background__shape2"></span>
-            <span className="screen__background__shape screen__background__shape1"></span>
-          </div> */}
+          <span className="screen__background__shape screen__background__shape4"></span>
+          <span className="screen__background__shape screen__background__shape3"></span>
+          <span className="screen__background__shape screen__background__shape2"></span>
+          <span className="screen__background__shape screen__background__shape1"></span>
+        </div> */}
       </div>
     </>
   );

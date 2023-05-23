@@ -22,13 +22,17 @@ Languages:
       Hint: __Created by
       Value: |
         sitecore\nishant.tiwari@nagarro.com
+    - ID: "870046d4-f00b-49c0-b979-18be7fe9968f"
+      Hint: Image
+      Value: |
+        <link linktype="external" url="https://th.bing.com/th/id/OIP.zPaWJzUBQwbXDjhCtCtI1gHaE8?pid=ImgDet&amp;rs=1" />
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "728612fc-4a3e-47ee-80e3-2aac5f75f7a4"
+      Value: "20c7d02a-2863-4adb-90e7-e10e9fe7ec03"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\nishant.tiwari@nagarro.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20230419T065703Z
+      Value: 20230503T105640Z
