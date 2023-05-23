@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { Text } from '@sitecore-jss/sitecore-jss-nextjs';
 
 const UserWorkExperience = (props: any) => {
   // handleOpenWorkModal
@@ -43,7 +44,17 @@ const UserWorkExperience = (props: any) => {
         )}
         <div className="addNewItem">
           <Button onClick={props.addNewWorkDetail}>
-            <span>Add Work</span>
+            <span>
+              <Text
+                field={
+                  props?.labels?.addWorkBtn?.jsonValue
+                    ? props?.labels?.addWorkBtn?.jsonValue
+                    : {
+                        value: 'Add Work',
+                      }
+                }
+              />
+            </span>
           </Button>
         </div>
       </div>

@@ -3,6 +3,8 @@ import WebContext from 'src/Context/WebContext';
 import styles from '../assets/searchNews.module.css';
 // import eventImg from '../assets/images/event.png';
 import darkModeCss from '../assets/darkTheme.module.css';
+import config from '../temp/config';
+
 
 // import { modifyHtml } from 'assets/helpers/helperFunctions';
 // import parser from 'html-react-parser';
@@ -24,7 +26,7 @@ const SearchedJournal = (props: any) => {
           ''
         ) : (
           <div className={styles.imgContainer}>
-            <img src={data?.Image} alt="sitecoreEvent" />
+            <img src={config?.sitecoreApiHost + data?.Image} alt="sitecoreEvent" />
           </div>
         )}
         <div className={styles.contentContainer}>
