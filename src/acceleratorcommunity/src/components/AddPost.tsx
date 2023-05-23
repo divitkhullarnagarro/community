@@ -870,29 +870,50 @@ const AddPost = (props: AddPostProps): JSX.Element => {
       return modPost;
     });
     if (!ifLikedAlready) {
-      likePostCall(userToken, id).then((response) => {
-        if (response?.data?.success == true) {
-          const locArr = myAnotherArr;
-          const modPost = locArr.map((post: any) => {
-            if (post.id == id) {
-              post.isLikedByUser = true;
-              if (typeof post?.postMeasures?.likeCount === 'number') {
-                post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+      likePostCall(userToken, id)
+        .then((response) => {
+          if (response?.data?.success == true) {
+            const locArr = myAnotherArr;
+            const modPost = locArr.map((post: any) => {
+              if (post.id == id) {
+                post.isLikedByUser = true;
+                return post;
               } else {
-                post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+                return post;
               }
-              return post;
-            } else {
-              return post;
-            }
-          });
-          setMyAnotherArr(() => {
-            return modPost;
-          });
-        }
-      });
+            });
+            setMyAnotherArr(() => {
+              return modPost;
+            });
+          } else {
+            isLikePostAPIFailed(id);
+          }
+        })
+        .catch(() => {
+          isLikePostAPIFailed(id);
+        });
     }
   }
+
+  const isLikePostAPIFailed = (postId: string) => {
+    const locArr = myAnotherArr;
+    const modPost = locArr.map((post: any) => {
+      if (post?.id == postId) {
+        post.isLikedByUser = false;
+        if (typeof post?.postMeasures?.likeCount === 'number') {
+          post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) - 1;
+        } else {
+          post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) - 1;
+        }
+        return post;
+      } else {
+        return post;
+      }
+    });
+    setMyAnotherArr(() => {
+      return modPost;
+    });
+  };
 
   //Function To Handle Open Comments Tray
   function setOpenComments(id: string, show: boolean) {
