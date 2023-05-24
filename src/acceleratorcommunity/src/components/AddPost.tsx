@@ -3113,8 +3113,6 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   var metaImage: any = {};
   var breakLoop = true;
 
-  console.log('dasasdsdsada', myAnotherArr);
-
   return (
     <>
       {specificPostId && myAnotherArr?.length > 0 ? (
