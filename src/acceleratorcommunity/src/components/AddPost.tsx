@@ -269,7 +269,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
         method: 'GET',
       });
       if (res?.data) {
-        setIsMember(res?.data?.member);
+        setIsMember(!res?.data?.member);
       }
       console.log('groupInfo inside add post', res, res?.data?.member);
     } catch (error) {
@@ -3092,7 +3092,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
         className={`${styles.mainContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}
         style={ifNoMoreData ? {} : { paddingBottom: '300px' }}
       >
-        {!isEditorHidden ? (
+        {!isEditorHidden && !isMember ? (
           <>
             <div
               className={`${styles.addPostWidgetContainer} ${darkMode ? darkModeCss.grey_2 : ''}`}
