@@ -9,8 +9,12 @@ export const addPeersPaginationUrl = `${javaHost}/graph-service/api/v1/graph/pee
 export const editCommentUrl = `${javaHost}/graph-service/api/v1/graph/post/comment`;
 export const voteInPollUrl = `${javaHost}/graph-service/api/v1/graph/post/poll/`;
 export const getMyBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/my-blogs`;
-export const getBookmarkedMyBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/my-blogs`;
-export const getSuggestedBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/bookmarked-blogs`;
+export const getSuggestedBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/suggestion-blogs`;
+export const getBookmarkedMyBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/bookmarked-blogs`;
+export const getBookmarkedEvntsUrl = `${javaHost}/graph-service/api/v1/graph/post/bookmarked-blogs`;
+export const getMyEventsUrl = `${javaHost}/graph-service/search`;
+export const getUpcomingEventsUrl = `${javaHost}/graph-service/search?wildcard=true`;
+
 export const viewProfileLinkUrl = `/viewProfile?id=`;
 export const getUserUrl = `${javaHost}/user-service/api/v1/users/`;
 export const uploadBannerUrl = `${javaHost}/user-service/api/v1/users/upload-profile-picture?banner=Y`;

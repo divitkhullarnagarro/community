@@ -17,7 +17,10 @@ export const modifyHtml = (convertedContent: string) => {
       ) {
         modified =
           modified +
-          `<a target='_blank' style="text-decoration:none;" href='/search?query=${hashtag.replace("#", "")}&type=HASHTAG' class="wysiwyg-mention" data-mention data-value="${hashtag}">` +
+          `<a target='_blank' style="text-decoration:none;" href='/search?query=${hashtag.replace(
+            '#',
+            ''
+          )}&type=HASHTAG' class="wysiwyg-mention" data-mention data-value="${hashtag}">` +
           hashtag +
           '<a>';
         flag = false;
@@ -103,4 +106,90 @@ export const graphqlQueryWrapper = async <T>(query: DocumentNode, dataSource: st
 
   let result = await client1?.query<T>({ query, variables });
   return result;
+};
+
+export const getDateAndtimeForEvent = (timestamp: any) => {
+  const date = new Date(timestamp);
+  const day = date?.getDate();
+  const tempMonth = date?.getMonth();
+  let month = '';
+  if (tempMonth < 10) {
+    month = '0' + tempMonth;
+  } else {
+    month = '' + tempMonth;
+  }
+  const time = date?.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
+  const year = date?.getFullYear();
+  return `${day}-${month}-${year} by ${time}`;
+};
+
+export const getUpcommingEventsFilter = (eventList: any) => {
+  const upcomingEventArray = eventList.filter((ele: any) => {
+    const eventDate = new Date(ele.sourceAsMap.event.eventDate);
+    const today = new Date();
+    if (eventDate?.getTime() > today?.getTime()) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  return upcomingEventArray;
+};
+
+export const getFilteredEvents = (allEventsList: any) => {
+  const mapped = allEventsList?.map((ele: any) => {
+    let description = '';
+    let eventDate = '';
+    let eventType = '';
+    let id = '';
+    let title = '';
+    let isSitecoreEvent = false;
+    let imageUrl = '';
+
+    if (ele?.index == 'accelerator-event') {
+      description = ele?.sourceAsMap?.event?.description;
+      eventDate = ele?.sourceAsMap?.event?.eventDate;
+      eventType = ele?.sourceAsMap?.event?.eventType;
+      title = ele?.sourceAsMap?.event?.title;
+      id = ele?.id;
+    } else {
+      description = ele?.sourceAsMap?.ShortDescription;
+      eventDate = ele?.sourceAsMap?.Date;
+      // eventType = ele.sourceAsMap.event.eventType;
+      title = ele?.sourceAsMap?.Title;
+      id = ele?.id;
+      isSitecoreEvent = true;
+      imageUrl = ele?.sourceAsMap?.Image;
+    }
+    return {
+      sourceAsMap: {
+        event: {
+          description: description,
+          eventDate: eventDate,
+          eventType: eventType,
+          imageUrl: imageUrl,
+          title: title,
+        },
+      },
+      id: id,
+      index: ele?.index,
+      isSitecoreEvent: isSitecoreEvent,
+    };
+  });
+
+  // const upcomingEventArray = mapped.filter((ele: any) => {
+  //   const eventDate = new Date(ele.sourceAsMap.event.eventDate);
+  //   const today = new Date();
+  //   if (eventDate.getTime() > today.getTime()) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // });
+  // console.log('upcoming events filter function', allEventsList, mapped, upcomingEventArray);
+  return mapped;
 };
