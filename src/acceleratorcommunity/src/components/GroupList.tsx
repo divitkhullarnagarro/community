@@ -64,6 +64,7 @@ const GroupList = (props: GroupListProps): JSX.Element => {
         setSkeletonVisible(false);
       }
     } catch (error) {
+      setSkeletonVisible(false);
       console.log('groupListData', error);
     }
   };
