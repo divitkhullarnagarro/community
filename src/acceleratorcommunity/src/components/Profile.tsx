@@ -1,4 +1,4 @@
-import { withSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 import { useState, useContext, useEffect } from 'react';
 import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';
@@ -30,6 +30,7 @@ import BlogListing from './helperComponents/BlogListing';
 import PeerFriendList from './PeerFriendList';
 import BlockedUser from './BlockedUser';
 import ChangePassword from './ChangePassword';
+import { ComponentProps } from 'lib/component-props';
 // import { decryptString } from 'assets/helpers/EncryptDecrypt';
 
 type User = {
@@ -121,9 +122,101 @@ type personalDetails = {
   dob: string | undefined;
 };
 
-const Profile = (props: any): JSX.Element => {
-  console.log('profileProps', props);
-  const { isLoggedIn, userToken, setIsLoggedIn, setUserToken, objectId, setObjectId, darkMode } = {
+type ProfileProps = ComponentProps & {
+  fields: {
+    data: {
+      datasource: {
+        heading: {
+          jsonValue: Field<string>;
+        };
+        blockedUsers: {
+          jsonValue: Field<string>;
+        };
+        blogs: {
+          jsonValue: Field<string>;
+        };
+        contactDetails: {
+          jsonValue: Field<string>;
+        };
+        educationDetails: {
+          jsonValue: Field<string>;
+        };
+        events: {
+          jsonValue: Field<string>;
+        };
+        peers: {
+          jsonValue: Field<string>;
+        };
+        workDetails: {
+          jsonValue: Field<string>;
+        };
+        personalInfo: {
+          jsonValue: Field<string>;
+        };
+        age: {
+          jsonValue: Field<string>;
+        };
+        gender: {
+          jsonValue: Field<string>;
+        };
+        dateOfBirth: {
+          jsonValue: Field<string>;
+        };
+        experience: {
+          jsonValue: Field<string>;
+        };
+        designation: {
+          jsonValue: Field<string>;
+        };
+        profession: {
+          jsonValue: Field<string>;
+        };
+        domain: {
+          jsonValue: Field<string>;
+        };
+        speciality: {
+          jsonValue: Field<string>;
+        };
+        website: {
+          jsonValue: Field<string>;
+        };
+        summary: {
+          jsonValue: Field<string>;
+        };
+        hobby: {
+          jsonValue: Field<string>;
+        };
+        languagesLabel: {
+          jsonValue: Field<string>;
+        };
+        interest: {
+          jsonValue: Field<string>;
+        };
+        email: {
+          jsonValue: Field<string>;
+        };
+        altEmail: {
+          jsonValue: Field<string>;
+        };
+        phoneNumber: {
+          jsonValue: Field<string>;
+        };
+        address: {
+          jsonValue: Field<string>;
+        };
+        blockedUsersList: {
+          jsonValue: Field<string>;
+        };
+        componentHeading: {
+          jsonValue: Field<string>;
+        };
+      };
+    };
+  };
+};
+
+const Profile = (props: ProfileProps): JSX.Element => {
+  const { userToken, objectId, darkMode } = {
     ...useContext(WebContext),
   };
   const [personalInfoDetails, setPersonalInfoDetails] = useState<any>();
@@ -258,32 +351,31 @@ const Profile = (props: any): JSX.Element => {
     setLocationObj({ userResidenceInfo: userLocationState });
   };
 
-  useEffect(() => {
-    if (userToken === '' && objectId === '') {
-      if (
-        typeof localStorage !== 'undefined' &&
-        localStorage.getItem('UserToken') != '' &&
-        localStorage.getItem('ObjectId') != '' &&
-        localStorage.getItem('UserToken') != null
-      ) {
-        let token = localStorage.getItem('UserToken');
-        let userId = localStorage.getItem('ObjectId');
+  // useEffect(() => {
+  //   if (userToken === '' && objectId === '') {
+  //     if (
+  //       typeof localStorage !== 'undefined' &&
+  //       localStorage.getItem('UserToken') != '' &&
+  //       localStorage.getItem('ObjectId') != '' &&
+  //       localStorage.getItem('UserToken') != null
+  //     ) {
+  //       let token = localStorage.getItem('UserToken');
+  //       let userId = localStorage.getItem('ObjectId');
 
-        if (token != null && setUserToken != undefined) {
-          setUserToken(token);
-        }
-        if (userId != null && setObjectId != undefined) {
-          setObjectId(userId);
-        }
-      } else router.push('/login');
-    }
-  }, []);
+  //       if (token != null && setUserToken != undefined) {
+  //         setUserToken(token);
+  //       }
+  //       if (userId != null && setObjectId != undefined) {
+  //         setObjectId(userId);
+  //       }
+  //     } else router.push('/login');
+  //   }
+  // }, []);
 
-  isLoggedIn;
-  setIsLoggedIn;
-  setUserToken;
-  props;
-  userToken;
+  // isLoggedIn;
+  // setIsLoggedIn;
+  // setUserToken;
+  // userToken;
   const submitPersonalInfoDetails = () => {
     console.log('run2', personalInfoDetails);
     if (
@@ -1322,7 +1414,6 @@ const Profile = (props: any): JSX.Element => {
       <div className={`parentContainerForProfile ${darkMode && 'darkMode_bg'}`}>
         <div className={`rightContainerForProfile ${darkMode && 'darkMode_bgChild'}`}>
           <div className="imageContainer">
-            {console.log('profilePictureUrl', tempUserData?.profilePictureUrl)}
             {showImage ? (
               <img
                 className="profilePic"
@@ -1382,7 +1473,15 @@ const Profile = (props: any): JSX.Element => {
               onClick={() => handlePersonalDetails('personal')}
             >
               <Image src={PersonalImg} height={15} width={15} alt="Personal Information" />
-              Personal Information
+              <Text
+                field={
+                  props?.fields?.data?.datasource?.personalInfo?.jsonValue
+                    ? props?.fields?.data?.datasource?.personalInfo?.jsonValue
+                    : {
+                        value: 'Personal Information',
+                      }
+                }
+              />
             </div>
             <div
               className={
@@ -1397,7 +1496,15 @@ const Profile = (props: any): JSX.Element => {
               onClick={() => handlePersonalDetails('contactDetails')}
             >
               <Image src={ContactImg} height={15} width={15} alt="Contact Details" />
-              Contact Details
+              <Text
+                field={
+                  props?.fields?.data?.datasource?.contactDetails?.jsonValue
+                    ? props?.fields?.data?.datasource?.contactDetails?.jsonValue
+                    : {
+                        value: 'Contact Details',
+                      }
+                }
+              />
             </div>
             <div
               className={
@@ -1412,7 +1519,15 @@ const Profile = (props: any): JSX.Element => {
               onClick={() => handlePersonalDetails('educationDetails')}
             >
               <Image src={EducationImg} height={15} width={15} alt="Education Details" />
-              Education Details
+              <Text
+                field={
+                  props?.fields?.data?.datasource?.educationDetails?.jsonValue
+                    ? props?.fields?.data?.datasource?.educationDetails?.jsonValue
+                    : {
+                        value: 'Education Details',
+                      }
+                }
+              />
             </div>
             <div
               className={
@@ -1427,7 +1542,15 @@ const Profile = (props: any): JSX.Element => {
               onClick={() => handlePersonalDetails('work')}
             >
               <Image src={WorkImg} height={15} width={15} alt="Work Details" />
-              Work Details
+              <Text
+                field={
+                  props?.fields?.data?.datasource?.workDetails?.jsonValue
+                    ? props?.fields?.data?.datasource?.workDetails?.jsonValue
+                    : {
+                        value: 'Work Details',
+                      }
+                }
+              />
             </div>
             <div
               className={
@@ -1442,7 +1565,15 @@ const Profile = (props: any): JSX.Element => {
               onClick={() => handlePersonalDetails('events')}
             >
               <Image src={EventsImg} height={15} width={15} alt="Events" />
-              Events
+              <Text
+                field={
+                  props?.fields?.data?.datasource?.events?.jsonValue
+                    ? props?.fields?.data?.datasource?.events?.jsonValue
+                    : {
+                        value: 'Events',
+                      }
+                }
+              />
             </div>
             <div
               className={
@@ -1457,7 +1588,15 @@ const Profile = (props: any): JSX.Element => {
               onClick={() => handlePersonalDetails('blogs')}
             >
               <Image src={BlogsImg} height={15} width={15} alt="Blogs" />
-              Blogs
+              <Text
+                field={
+                  props?.fields?.data?.datasource?.blogs?.jsonValue
+                    ? props?.fields?.data?.datasource?.blogs?.jsonValue
+                    : {
+                        value: 'Blogs',
+                      }
+                }
+              />
             </div>
             <div
               className={
@@ -1472,7 +1611,15 @@ const Profile = (props: any): JSX.Element => {
               onClick={() => handlePersonalDetails('peers')}
             >
               <Image src={PeersImg} height={15} width={15} alt="Peers" />
-              Peers
+              <Text
+                field={
+                  props?.fields?.data?.datasource?.peers?.jsonValue
+                    ? props?.fields?.data?.datasource?.peers?.jsonValue
+                    : {
+                        value: 'Peers',
+                      }
+                }
+              />
             </div>
             <div
               className={
@@ -1487,7 +1634,15 @@ const Profile = (props: any): JSX.Element => {
               onClick={() => handlePersonalDetails('blockedusers')}
             >
               <Image src={UserImg} height={15} width={15} alt="Blocked Users" />
-              Blocked Users
+              <Text
+                field={
+                  props?.fields?.data?.datasource?.blockedUsers?.jsonValue
+                    ? props?.fields?.data?.datasource?.blockedUsers?.jsonValue
+                    : {
+                        value: 'Blocked Users',
+                      }
+                }
+              />
             </div>
             <div
               className={
@@ -1517,7 +1672,15 @@ const Profile = (props: any): JSX.Element => {
         <div className={`leftContainerForProfile ${darkMode && 'darkMode_bgChild'}`}>
           {!(details == 'events' || details == 'blogs') && (
             <div className={`leftContainerForProfileHeadng ${darkMode && 'darkMode_textColor'}`}>
-              Edit Profile
+              <Text
+                field={
+                  props?.fields?.data?.datasource?.componentHeading?.jsonValue
+                    ? props?.fields?.data?.datasource?.componentHeading?.jsonValue
+                    : {
+                        value: ' Edit Profile',
+                      }
+                }
+              />
             </div>
           )}
           <div className={`infoContainerForProfile ${darkMode && 'darkMode_textBg'}`}>
@@ -1577,6 +1740,7 @@ const Profile = (props: any): JSX.Element => {
                     filterLanguage={filterLanguage}
                     handleCloseFormForIntrest={handleCloseFormForIntrest}
                     filterInterest={filterInterest}
+                    labels={props?.fields?.data?.datasource}
                   />
                 )}
               </div>
@@ -1606,6 +1770,7 @@ const Profile = (props: any): JSX.Element => {
                   handleSubmtLocation={handleSubmtLocation}
                   openLocationModalState={openLocationModalState}
                   userResidenceInfo={tempUserData.userResidenceInfo}
+                  labels={props?.fields?.data?.datasource}
                 />
               </div>
             ) : details === 'educationDetails' ? (
@@ -1639,6 +1804,7 @@ const Profile = (props: any): JSX.Element => {
                   showEducationModal={showEducationModal}
                   handleOpenForEducation={handleOpenForEducation}
                   handleCloseForEducation={handleCloseForEducation}
+                  labels={props?.fields?.data?.datasource}
                 />
               </div>
             ) : details === 'work' ? (
@@ -1668,6 +1834,7 @@ const Profile = (props: any): JSX.Element => {
                   editWorkFormData={editWorkFormData}
                   checkboxRef={checkboxRef}
                   userLocationState={userLocationState}
+                  labels={props?.fields?.data?.datasource}
                 />
               </div>
             ) : details === 'events' ? (
@@ -1684,7 +1851,10 @@ const Profile = (props: any): JSX.Element => {
               </div>
             ) : details === 'blockedusers' ? (
               <div className="profileInfo">
-                <BlockedUser showInProfilePage={true} />
+                <BlockedUser
+                  showInProfilePage={true}
+                  heading={props?.fields?.data?.datasource?.blockedUsersList}
+                />
               </div>
             ) : details === 'changepassword' ? (
               <div className="profileInfo">
@@ -1725,4 +1895,4 @@ const Profile = (props: any): JSX.Element => {
   );
 };
 
-export default withSitecoreContext()(Profile);
+export default Profile;

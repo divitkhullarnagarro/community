@@ -1,12 +1,12 @@
 import Axios, { AxiosResponse } from 'axios';
 
 const addArticleCall = async (userToken: string | undefined, postObject: any) => {
-  var data = {
+  var data: any = {
     // id: "post_Id12",
-    blog : {
-      heading : postObject?.heading,
+    blog: {
+      heading: postObject?.heading,
       description: postObject?.description,
-      imageUrl: postObject?.imageUrl
+      imageUrl: postObject?.imageUrl,
     },
     // heading : postObject?.heading,
     // description: postObject?.description,
@@ -20,6 +20,10 @@ const addArticleCall = async (userToken: string | undefined, postObject: any) =>
     createdOn: 23032023,
     updatedOn: 23032023,
   };
+  if (postObject.groupId) {
+    data.groupId = postObject.groupId;
+  }
+
   let addPostURL =
     'https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/post';
   var config = {

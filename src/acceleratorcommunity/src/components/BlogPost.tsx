@@ -144,6 +144,12 @@ const TextEditor = (): JSX.Element => {
       }
     }
   }
+  const params =
+    typeof window !== 'undefined'
+      ? new URLSearchParams(window?.location?.search)
+      : new URLSearchParams('');
+  let groupId = params.get('groupId');
+  console.log('groupId', groupId);
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
@@ -157,6 +163,7 @@ const TextEditor = (): JSX.Element => {
       imageUrl: file[0]?.url ? file[0]?.url : '',
       taggedPeers: addedPeers,
       type: postType,
+      groupId: groupId ? groupId : null,
     }).then((response) => {
       if (response?.data?.data) {
         // Empty Post Values
@@ -165,7 +172,11 @@ const TextEditor = (): JSX.Element => {
         setHeadlineText('');
         setEditorState(() => EditorState.createEmpty());
         setShowLoader(false);
-        router.push('/');
+        if (groupId) {
+          router.push(`/group?groupId=${groupId}`);
+        } else {
+          router.push('/');
+        }
       } else {
         setCreateNewPostError(true);
         setShowLoader(false);

@@ -186,7 +186,7 @@ type BlockUserFields = {
 };
 
 const AddPost = (props: AddPostProps): JSX.Element => {
-  const { userToken, objectId, userObject, darkMode } = {
+  const { userToken, objectId, userObject, darkMode, wantRerender } = {
     ...useContext(WebContext),
   };
 
@@ -253,8 +253,35 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   const [disableAddPoll, setDisableAddPoll] = useState(false);
   const [globalPostType, setGlobalPostType] = useState('TEXT_POST');
   const [isEditorHidden, setIsEditorVisible] = useState(false);
-
+  const [isMember, setIsMember] = useState<any>(false);
+  console.log(isMember);
   const router = useRouter();
+  const params =
+    typeof window !== 'undefined'
+      ? new URLSearchParams(window?.location?.search)
+      : new URLSearchParams('');
+  let objectEmail = params.get('id');
+  let groupId = params.get('groupId') as string;
+  console.log('groupId', groupId);
+
+  const getGroupInfo = async (groupId: string) => {
+    try {
+      const res: any = await AxiosRequest({
+        url: `https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/group/${groupId}`,
+        method: 'GET',
+      });
+      if (res?.data) {
+        setIsMember(res?.data?.member);
+      }
+      console.log('groupInfo inside add post', res, res?.data?.member);
+    } catch (error) {
+      console.log('groupInfo inside add post', error);
+    }
+  };
+
+  useEffect(() => {
+    getGroupInfo(groupId);
+  }, [groupId, wantRerender]);
 
   useEffect(() => {
     props?.params?.withoutEditor ? setIsEditorVisible(true) : '';
@@ -380,11 +407,11 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     setId(idValue);
   }, [router]);
 
-  const params =
-    typeof window !== 'undefined'
-      ? new URLSearchParams(window?.location?.search)
-      : new URLSearchParams('');
-  let objectEmail = params.get('id');
+  // const params =
+  //   typeof window !== 'undefined'
+  //     ? new URLSearchParams(window?.location?.search)
+  //     : new URLSearchParams('');
+  // let objectEmail = params.get('id');
   let specificPostId = params.get('postId');
 
   const [getPostUrl, setGetPostUrl] = useState<string>('');
@@ -397,6 +424,8 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   useEffect(() => {
     setMyAnotherArr([]);
     if (userToken != '' && userToken != undefined) {
+      // const getGroupUrl = `${props?.params?.URL}/group/${groupId}?page=${postPageNum}&size=10`;
+      // console.log('groupId', getGroupUrl);
       AxiosRequest({
         method: 'GET',
         url:
@@ -404,6 +433,8 @@ const AddPost = (props: AddPostProps): JSX.Element => {
             ? `${props?.params?.URL}/user-posts?objectId=${objectEmail}&page=${postPageNum}&size=10`
             : specificPostId && specificPostId != ''
             ? `${props?.params?.URL}/${specificPostId}`
+            : groupId
+            ? `${props?.params?.URL}/group/${groupId}?page=${postPageNum}&size=10`
             : `${props?.params?.URL}?${id ? `id=${id}&` : ''}page=${postPageNum}&size=10`,
       })
         .then((response: any) => {
@@ -437,7 +468,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
         })
         .catch((err: any) => {
           if (err === 'API Call Failed !') {
-            // router.push('/login');
+            router.push('/login');
           }
         });
     }
@@ -782,6 +813,8 @@ const AddPost = (props: AddPostProps): JSX.Element => {
             }&size=10`
           : specificPostId && specificPostId != ''
           ? `${props?.params?.URL}/${specificPostId}`
+          : groupId
+          ? `${props?.params?.URL}/group/${groupId}?page=${postPageNum + 1}&size=10`
           : `${props?.params?.URL}?${id ? `id=${id}&` : ''}page=${postPageNum + 1}&size=10`,
     }).then((response: any) => {
       if (response?.data?.length != 0 && response?.data?.length) {
@@ -860,29 +893,50 @@ const AddPost = (props: AddPostProps): JSX.Element => {
       return modPost;
     });
     if (!ifLikedAlready) {
-      likePostCall(userToken, id).then((response) => {
-        if (response?.data?.success == true) {
-          const locArr = myAnotherArr;
-          const modPost = locArr.map((post: any) => {
-            if (post?.id == id) {
-              post.isLikedByUser = true;
-              if (typeof post?.postMeasures?.likeCount === 'number') {
-                post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+      likePostCall(userToken, id)
+        .then((response) => {
+          if (response?.data?.success == true) {
+            const locArr = myAnotherArr;
+            const modPost = locArr.map((post: any) => {
+              if (post.id == id) {
+                post.isLikedByUser = true;
+                return post;
               } else {
-                post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) + 1;
+                return post;
               }
-              return post;
-            } else {
-              return post;
-            }
-          });
-          setMyAnotherArr(() => {
-            return modPost;
-          });
-        }
-      });
+            });
+            setMyAnotherArr(() => {
+              return modPost;
+            });
+          } else {
+            isLikePostAPIFailed(id);
+          }
+        })
+        .catch(() => {
+          isLikePostAPIFailed(id);
+        });
     }
   }
+
+  const isLikePostAPIFailed = (postId: string) => {
+    const locArr = myAnotherArr;
+    const modPost = locArr.map((post: any) => {
+      if (post?.id == postId) {
+        post.isLikedByUser = false;
+        if (typeof post?.postMeasures?.likeCount === 'number') {
+          post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) - 1;
+        } else {
+          post.postMeasures.likeCount = (post.postMeasures.likeCount ?? 0) - 1;
+        }
+        return post;
+      } else {
+        return post;
+      }
+    });
+    setMyAnotherArr(() => {
+      return modPost;
+    });
+  };
 
   //Function To Handle Open Comments Tray
   function setOpenComments(id: string, show: boolean) {
@@ -2610,6 +2664,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
       type: globalPostType,
       event: eventPost?.event,
       poll: pollPost?.poll,
+      groupId: groupId ? groupId : null,
     }).then((response) => {
       if (response?.data?.data) {
         addLatestCreatedPost(response?.data?.data, uniqId);
@@ -3823,17 +3878,31 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                     }}
                     type="button"
                   >
-                    <Link href="/addblogpost">
-                      <NextImage
-                        field={addBlogIcon}
-                        editable={true}
-                        alt="PostItems"
-                        width={18}
-                        height={18}
-                        style={{ opacity: disableAddDoc ? '0.2' : '1' }}
-                        title="Create a Blog"
-                      />
-                    </Link>
+                    {groupId ? (
+                      <Link href={{ pathname: '/addblogpost', query: { groupId: groupId } }}>
+                        <NextImage
+                          field={addBlogIcon}
+                          editable={true}
+                          alt="PostItems"
+                          width={18}
+                          height={18}
+                          style={{ opacity: disableAddDoc ? '0.2' : '1' }}
+                          title="Create a Blog"
+                        />
+                      </Link>
+                    ) : (
+                      <Link href="/addblogpost">
+                        <NextImage
+                          field={addBlogIcon}
+                          editable={true}
+                          alt="PostItems"
+                          width={18}
+                          height={18}
+                          style={{ opacity: disableAddDoc ? '0.2' : '1' }}
+                          title="Create a Blog"
+                        />
+                      </Link>
+                    )}
                   </button>
                 </div>
                 <div className={styles.errorContainer}>
