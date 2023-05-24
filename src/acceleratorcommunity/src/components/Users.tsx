@@ -552,7 +552,7 @@ const Users = (props: UserProps): JSX.Element => {
     getEmailTemplateBodyHtml(emailTemplates, WarnUserForPostEmailTemplate).then(
       (result: string) => {
         result = replaceUserNamePlaceHolder(result);
-        const postUrl = window.location.origin + '/post?postId=?' + reportedPostItem?.id;
+        const postUrl = window.location.origin + '/post?postId=' + reportedPostItem?.id;
         result = result?.replace('$postid', `<a href=${postUrl}>Reported Post</a>`);
         sendEmailToUser(ReportedPostEmailSubject, reportedPostItem?.createdBy?.objectId, result);
       }
@@ -1212,7 +1212,7 @@ const Users = (props: UserProps): JSX.Element => {
                     >
                       <Dropdown.Item
                         className={styles.dropdownItem}
-                        href={`/post/${item.id}`}
+                        href={`/post?postId=${item.id}`}
                         target="_blank"
                       >
                         <div className={styles.overlayItem}>
