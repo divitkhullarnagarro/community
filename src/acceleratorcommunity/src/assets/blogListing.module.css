@@ -67,6 +67,9 @@
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
 }
+.blogDescription * {
+  font-size: 16px !important;
+}
 .BlogImage img {
   max-width: 300px !important;
   height: auto !important;
@@ -77,7 +80,8 @@
   width: 35%;
   align-items: center;
 }
-.BlogImageLoader > span, .blogCardContentLoader > span {
+.BlogImageLoader > span,
+.blogCardContentLoader > span {
   width: 100%;
 }
 .blogCardContentLoader {
