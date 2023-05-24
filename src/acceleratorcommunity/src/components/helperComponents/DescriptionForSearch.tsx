@@ -27,15 +27,31 @@ function DescriptionForSearch({ description, fromSitecore }: any) {
       {viewMoreVisible && (
         <div className="d-flex justify-content-end me-3">
           {fromSitecore === true ? (
-            <div
-              onClick={toggle}
-              className={darkMode ? style.viewMoreButtonDarkMode : style.viewMoreButton}
-            >
-              {`...See ${toggleState ? 'More' : 'Less'}`}
-            </div>
+            toggleState ? (
+              <div
+                onClick={toggle}
+                className={darkMode ? style.viewMoreButtonDarkMode : style.viewMoreButton}
+              >
+                <div className={darkMode ? style.darkModeBtn : style.btn}>
+                  ... See More
+                </div>
+              </div>
+            ) : (
+              <div
+                onClick={toggle}
+                className={darkMode ? style.viewMoreButtonDarkMode : style.viewMoreButton}
+              >
+                <div className={darkMode ? style.darkModeBtn : style.btn}>
+                  {' '}
+                  ... See Less
+                </div>
+              </div>
+            )
           ) : (
             <div className={darkMode ? style.viewMoreButtonDarkMode : style.viewMoreButton}>
-              ...See More
+              <div  className={darkMode ? style.darkModeBtn : style.btn}>
+                ... See More
+              </div>
             </div>
           )}
         </div>
