@@ -1918,7 +1918,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                             ) : (
                               <p className="commentHeading">{comment?.text}</p>
                             )}
-                            <div
+                            {/* <div
                               onClick={() => getAllupVotesAndDownVotes(comment?.id)}
                               className="upvoteDownvoteContainer"
                             >
@@ -1932,7 +1932,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                               <div className="likecomments">
                                 <img className="likecomments" src={downVote.src} alt="Dislike" />
                               </div>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
 

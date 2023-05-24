@@ -71,10 +71,7 @@ export const getEmailTemplatesGraphqlQuery = () => {
             id
             name
             fields {
-              id
-              name
               value
-              jsonValue
             }
           }
         }

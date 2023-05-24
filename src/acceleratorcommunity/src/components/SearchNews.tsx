@@ -28,7 +28,7 @@ const SearchNews = (props: any) => {
           ''
         ) : (
           <div className={styles.imgContainer}>
-            <img src={config?.sitecoreApiHost + data?.Image} />
+            <img src={config?.sitecoreApiHost + data?.Image} alt="Article Image" />
           </div>
         )}
         <div className={styles.contentContainer}>
@@ -39,7 +39,7 @@ const SearchNews = (props: any) => {
             {data?.Date}
           </div>
           <div className={`${styles.containerDescription}  ${darkMode && darkModeCss.text_light}`}>
-            <DescriptionForSearch description={data?.ShortDescription} />
+            <DescriptionForSearch fromSitecore={true} description={data?.ShortDescription} />
           </div>
         </div>
       </div>

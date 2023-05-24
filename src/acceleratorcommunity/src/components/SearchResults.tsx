@@ -39,7 +39,7 @@ const SearchResults = () => {
   const filter = [
     {
       type: 'ALL',
-      value: 'ALL',
+      value: 'All',
     },
     // {
     //   type: 'GROUP',
@@ -71,11 +71,11 @@ const SearchResults = () => {
     // },
     {
       type: 'CASESTUDY',
-      value: 'CaseStudy',
+      value: 'Case Study',
     },
     {
       type: 'BLOG',
-      value: 'BLOG',
+      value: 'Blog',
     },
     // {
     //   type: 'POLL',

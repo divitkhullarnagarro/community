@@ -20,7 +20,7 @@ const CaseStudySearchContainer = (props: any) => {
         <GenericSkeletonForSearch count={5} />
       ) : props?.searchedData?.length > 0 ? (
         props?.searchedData?.map((data: any) => {
-          return <SearchNews journal={data?.sourceAsMap} />;
+          return <SearchNews  journal={data?.sourceAsMap} />;
         })
       ) : (
         <div className={styles.forNoData}>No Case study found</div>

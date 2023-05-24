@@ -6,7 +6,7 @@ const bookmark = async (
   contentId: string,
   // url:string,
   title: string,
-  comment: string | undefined,
+  // comment: string | undefined,
   userToken: string | undefined
   // , url:string
 ) => {
@@ -15,7 +15,7 @@ const bookmark = async (
     contentId: contentId,
     // url:url,
     title: title,
-    comment: comment
+    // comment: comment
   };
 
   let URL = `https://accelerator-api-management.azure-api.net/user-service/api/v1/bookmarks/save`;
