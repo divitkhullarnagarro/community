@@ -30,20 +30,20 @@ import EventCard from './EventCard';
 import PollCard from './PollCard';
 import ViewPostDescription from './helperComponents/ViewPostDescription';
 import { EventImage } from 'assets/helpers/constants';
+import AxiosRequest from 'src/API/AxiosRequest';
+import ToastNotification from './ToastNotification';
 
 const EmailTemplateFolder = '02989F59-CFEB-4CC9-90FB-C0DA8A7FE7B5';
 const WarnUserEmailTemplate = '16937DB73C124028877AAA49C0BE30CA';
-const WarnUserEmailTemplateBody = 'DD033BE99AD5406699A18F9956ED029F';
 const SuspendUserEmailTemplate = '71C5EDC72EB3474191904768EED4C591';
-const SuspendUserEmailTemplateBody = 'DD033BE99AD5406699A18F9956ED029F';
 const WarnUserForPostEmailTemplate = 'A5A0180DB2824B4694FBDCC305157ED7';
-const WarnUserForPostEmailTemplateBody = 'DD033BE99AD5406699A18F9956ED029F';
 
 type reportPostFields = {
   id: string;
   description: string;
   postType: string;
   createdBy: {
+    objectId: string;
     firstName: string;
     lastName: string;
     profilePictureUrl: string;
@@ -147,6 +147,9 @@ type reportedByUserFields = {
 };
 
 const Users = (props: UserProps): JSX.Element => {
+  const ReportedPostEmailSubject = 'Community Solutions | Reported Post Warning';
+  const WarnUserEmailSubject = 'Community Solutions | Reported User';
+  const SuspendUserAccountEmailSubject = 'Community Solutions | Account Suspension';
   const { userToken, setUserToken, darkMode } = {
     ...useContext(WebContext),
   };
@@ -169,6 +172,12 @@ const Users = (props: UserProps): JSX.Element => {
   >([]);
   const [activeAccordionIndex, setActiveAccordionIndex] = useState<string>();
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [reportedUserItem, setReportedUserItem] = useState<reportUserFields>();
+
+  const [showNotification, setShowNofitication] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string>();
+  const [toastSuccess, setToastSuccess] = useState(false);
+  const [toastError, setToastError] = useState(false);
 
   useEffect(() => {
     if (userToken == '') {
@@ -184,6 +193,12 @@ const Users = (props: UserProps): JSX.Element => {
       } else router.push('/login');
     }
   }, []);
+
+  const resetToastState = () => {
+    setShowNofitication(!showNotification);
+    setToastSuccess(false);
+    setToastError(false);
+  };
 
   const getReportedUserList = async () => {
     setIsDataLoaded(false);
@@ -203,7 +218,6 @@ const Users = (props: UserProps): JSX.Element => {
       setReportedUserReporterDetails([]);
       let response = await getReportedUserReportersDetailsCall(userToken, userId);
       if (response?.success) {
-        console.log('reportUserReportersDetailsResponse', response?.data);
         setReportedUserReporterDetails(response?.data);
       }
     } else {
@@ -321,13 +335,19 @@ const Users = (props: UserProps): JSX.Element => {
                         >
                           <button
                             className={styles.actionButton}
-                            onClick={() => setShowWarnUserPopup(true)}
+                            onClick={() => {
+                              setShowWarnUserPopup(true);
+                              setReportedUserItem(item);
+                            }}
                           >
                             Warning
                           </button>
                           <button
                             className={styles.actionButton}
-                            onClick={() => setShowSuspendUserPopup(true)}
+                            onClick={() => {
+                              setShowSuspendUserPopup(true);
+                              setReportedUserItem(item);
+                            }}
                           >
                             Suspension
                           </button>
@@ -440,7 +460,7 @@ const Users = (props: UserProps): JSX.Element => {
   const [emailTemplates, setEmailTemplates] = useState<emailTemplate[]>([]);
 
   const getEmailTemplates = async () => {
-    if (emailTemplates === undefined || emailTemplates.length === 0) {
+    if (emailTemplates === undefined || emailTemplates?.length === 0) {
       const emailTemplateQuery = getEmailTemplatesGraphqlQuery();
       const dataSource = EmailTemplateFolder;
       const result = await graphqlQueryWrapper<data>(emailTemplateQuery, dataSource);
@@ -451,44 +471,79 @@ const Users = (props: UserProps): JSX.Element => {
     return emailTemplates;
   };
 
+  const sendEmailToUser = (
+    subject: string,
+    userObjectId: string | undefined,
+    emailBody: string | undefined
+  ) => {
+    const data = {
+      subject: subject,
+      toUsers: userObjectId,
+      msgBody: emailBody,
+      html: true,
+    };
+
+    if (userObjectId !== undefined && emailBody !== undefined) {
+      AxiosRequest({
+        method: 'POST',
+        url: `https://accelerator-api-management.azure-api.net/notification-service/api/v1/send-email`,
+        data: data,
+      })
+        .then((response: any) => {
+          if (response?.success) {
+            setShowNofitication(true);
+            setToastSuccess(true);
+            setToastMessage('email sent successfully');
+          }
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
+    }
+  };
+
   const getEmailTemplateBodyHtml = (
     emailTemplates: Promise<emailTemplate[]>,
-    emailTemplate: string,
-    emailTemplateBody: string
+    emailTemplate: string
   ) => {
     return emailTemplates.then((response: emailTemplate[]) => {
       const result = response
-        .filter((item: emailTemplate) => {
+        ?.filter((item: emailTemplate) => {
           return item.id === emailTemplate;
         })
-        .find((item) => item)
-        ?.fields?.filter((item: emailTemplateFields) => {
-          return item.id === emailTemplateBody;
-        })
-        .find((item) => item);
+        ?.find((item) => item)?.fields[0];
       return result?.value;
     });
   };
 
+  const replaceUserNamePlaceHolder = (emailBody: string) => {
+    emailBody = emailBody?.replace(
+      '$username',
+      `${reportedPostItem?.createdBy?.firstName + ' ' + reportedPostItem?.createdBy?.lastName}`
+    );
+
+    return emailBody;
+  };
+
   const onSendWarningToUser = () => {
     const emailTemplates = getEmailTemplates();
-    getEmailTemplateBodyHtml(emailTemplates, WarnUserEmailTemplate, WarnUserEmailTemplateBody).then(
-      (result) => {
-        console.log('warn', result);
-      }
-    );
+    getEmailTemplateBodyHtml(emailTemplates, WarnUserEmailTemplate).then((result: string) => {
+      result = replaceUserNamePlaceHolder(result);
+      sendEmailToUser(WarnUserEmailSubject, reportedUserItem?.reportedUser?.objectId, result);
+    });
 
     setShowWarnUserPopup(false);
   };
 
   const onUserAccountSuspension = () => {
     const emailTemplates = getEmailTemplates();
-    getEmailTemplateBodyHtml(
-      emailTemplates,
-      SuspendUserEmailTemplate,
-      SuspendUserEmailTemplateBody
-    ).then((result) => {
-      console.log('suspend', result);
+    getEmailTemplateBodyHtml(emailTemplates, SuspendUserEmailTemplate).then((result: string) => {
+      result = replaceUserNamePlaceHolder(result);
+      sendEmailToUser(
+        SuspendUserAccountEmailSubject,
+        reportedUserItem?.reportedUser?.objectId,
+        result
+      );
     });
 
     setShowSuspendUserPopup(false);
@@ -496,13 +551,14 @@ const Users = (props: UserProps): JSX.Element => {
 
   const onReportedPostSendWarning = () => {
     const emailTemplates = getEmailTemplates();
-    getEmailTemplateBodyHtml(
-      emailTemplates,
-      WarnUserForPostEmailTemplate,
-      WarnUserForPostEmailTemplateBody
-    ).then((result) => {
-      console.log('warnforpost', result);
-    });
+    getEmailTemplateBodyHtml(emailTemplates, WarnUserForPostEmailTemplate).then(
+      (result: string) => {
+        result = replaceUserNamePlaceHolder(result);
+        const postUrl = window.location.origin + '/post?postId=' + reportedPostItem?.id;
+        result = result?.replace('$postid', `<a href=${postUrl}>Reported Post</a>`);
+        sendEmailToUser(ReportedPostEmailSubject, reportedPostItem?.createdBy?.objectId, result);
+      }
+    );
     setShowWarnUserForPostReportPopUp(false);
   };
 
@@ -657,6 +713,7 @@ const Users = (props: UserProps): JSX.Element => {
 
   const [showReportPopUp, setShowReportPopUp] = useState(false);
   const [reportedPostItem, setReportedPostItem] = useState<reportPostFields>();
+
   const handleClose = () => {
     setShowReportPopUp(false);
   };
@@ -1157,7 +1214,7 @@ const Users = (props: UserProps): JSX.Element => {
                     >
                       <Dropdown.Item
                         className={styles.dropdownItem}
-                        href={`/post/${item.id}`}
+                        href={`/post?postId=${item.id}`}
                         target="_blank"
                       >
                         <div className={styles.overlayItem}>
@@ -1180,7 +1237,10 @@ const Users = (props: UserProps): JSX.Element => {
                       </Dropdown.Item>
                       <Dropdown.Item
                         className={styles.dropdownItem}
-                        onClick={() => setShowWarnUserForPostReportPopUp(true)}
+                        onClick={() => {
+                          setReportedPostItem(item);
+                          setShowWarnUserForPostReportPopUp(true);
+                        }}
                       >
                         <div className={styles.overlayItem}>
                           <div className={styles.dropdownImage}>
@@ -1484,6 +1544,15 @@ const Users = (props: UserProps): JSX.Element => {
           )}
         </div>
       </div>
+      {showNotification && (
+        <ToastNotification
+          showNotification={showNotification}
+          success={toastSuccess}
+          error={toastError}
+          message={toastMessage}
+          handleCallback={resetToastState}
+        />
+      )}
     </div>
   );
 };
