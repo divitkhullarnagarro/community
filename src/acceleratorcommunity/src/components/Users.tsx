@@ -460,7 +460,7 @@ const Users = (props: UserProps): JSX.Element => {
   const [emailTemplates, setEmailTemplates] = useState<emailTemplate[]>([]);
 
   const getEmailTemplates = async () => {
-    if (emailTemplates === undefined || emailTemplates.length === 0) {
+    if (emailTemplates === undefined || emailTemplates?.length === 0) {
       const emailTemplateQuery = getEmailTemplatesGraphqlQuery();
       const dataSource = EmailTemplateFolder;
       const result = await graphqlQueryWrapper<data>(emailTemplateQuery, dataSource);
@@ -483,21 +483,23 @@ const Users = (props: UserProps): JSX.Element => {
       html: true,
     };
 
-    AxiosRequest({
-      method: 'POST',
-      url: `https://accelerator-api-management.azure-api.net/notification-service/api/v1/send-email`,
-      data: data,
-    })
-      .then((response: any) => {
-        if (response?.success) {
-          setShowNofitication(true);
-          setToastSuccess(true);
-          setToastMessage('email sent successfully');
-        }
+    if (userObjectId !== undefined && emailBody !== undefined) {
+      AxiosRequest({
+        method: 'POST',
+        url: `https://accelerator-api-management.azure-api.net/notification-service/api/v1/send-email`,
+        data: data,
       })
-      .catch((err: any) => {
-        console.log(err);
-      });
+        .then((response: any) => {
+          if (response?.success) {
+            setShowNofitication(true);
+            setToastSuccess(true);
+            setToastMessage('email sent successfully');
+          }
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
+    }
   };
 
   const getEmailTemplateBodyHtml = (
@@ -506,16 +508,16 @@ const Users = (props: UserProps): JSX.Element => {
   ) => {
     return emailTemplates.then((response: emailTemplate[]) => {
       const result = response
-        .filter((item: emailTemplate) => {
+        ?.filter((item: emailTemplate) => {
           return item.id === emailTemplate;
         })
-        .find((item) => item)?.fields[0];
+        ?.find((item) => item)?.fields[0];
       return result?.value;
     });
   };
 
   const replaceUserNamePlaceHolder = (emailBody: string) => {
-    emailBody = emailBody.replace(
+    emailBody = emailBody?.replace(
       '$username',
       `${reportedPostItem?.createdBy?.firstName + ' ' + reportedPostItem?.createdBy?.lastName}`
     );
