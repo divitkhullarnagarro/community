@@ -10,6 +10,7 @@ function WebProvider(props: any) {
   const [objectId, setObjectId] = useState('');
   const [userObject, setUserObject] = useState<any>('');
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [wantRerender, setWantRerender] = useState<boolean>(false);
 
   // let router = useRouter();
 
@@ -62,6 +63,8 @@ function WebProvider(props: any) {
         setUserObject,
         darkMode,
         setDarkMode,
+        wantRerender,
+        setWantRerender,
       }}
     >
       {props?.children}

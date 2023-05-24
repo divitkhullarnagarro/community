@@ -39,10 +39,11 @@ const GroupList = (props: GroupListProps): JSX.Element => {
   const [reachedEnd, setReachedEnd] = useState(false);
   const [wantToRerender, setWantToRerender] = useState(false);
 
-  const { darkMode } = { ...useContext(WebContext) };
+  const { darkMode, wantRerender } = { ...useContext(WebContext) };
 
   const getGroupList = async () => {
     try {
+      setReachedEnd(false);
       setSkeletonVisible(true);
       const res: any = await AxiosRequest({
         url: getFirstTenGroupListUrl,
@@ -68,7 +69,7 @@ const GroupList = (props: GroupListProps): JSX.Element => {
   };
   useEffect(() => {
     getGroupList();
-  }, [wantToRerender]);
+  }, [wantToRerender, wantRerender]);
   const getMoreGroups = async (e: any) => {
     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
     if (bottom && !reachedEnd) {
@@ -149,7 +150,13 @@ const GroupList = (props: GroupListProps): JSX.Element => {
                             </div>
                           </Link>
                           <div className={style.groupListDropdown}>
-                            <JoinLeaveGroup ele={ele} />
+                            <JoinLeaveGroup
+                              // ele={{ ...ele }}
+                              // wantRerender={wantRerender}
+                              member={ele.member}
+                              groupName={ele.groupName}
+                              id={ele.id}
+                            />
 
                             {/* <Dropdown className={style.dropdown}>
                               <Dropdown.Toggle

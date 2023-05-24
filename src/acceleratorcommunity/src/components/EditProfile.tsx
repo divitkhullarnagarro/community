@@ -61,7 +61,7 @@ type HeaderProfileProps = ComponentProps & {
 
 const EditProfile = (props: HeaderProfileProps): JSX.Element => {
   // const { userObject, userToken } = {
-  const { userObject } = {
+  const { userObject, setWantRerender, wantRerender } = {
     ...useContext(WebContext),
   };
   //get objectId from URL
@@ -112,6 +112,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
       setLeaveValue(true);
       setJoinValue(false);
       setJoinLeaveLoader(false);
+      setWantRerender && setWantRerender(!wantRerender);
     } else {
       setToastMessage('Failed to join group. Please try again');
       setToastError(true);
@@ -131,6 +132,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
       setJoinValue(true);
       setLeaveValue(false);
       setJoinLeaveLoader(false);
+      setWantRerender && setWantRerender(!wantRerender);
     } else {
       setToastMessage('Failed to Leave group. Please try again');
       setToastError(true);
@@ -326,7 +328,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
     if (isGroupPage) {
     }
     getGroupInfo(groupId);
-  }, [groupId]);
+  }, [groupId, wantRerender]);
 
   // function changeGroupBannerbuttonHandler() {
   //   if (typeof document !== undefined) {
@@ -556,7 +558,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
           </button>
         )}
 
-        {isGroupPage && (
+        {isGroupPage && !(userObject.objectId === groupInfo?.createdBy?.objectId) && (
           <div className={`d-flex flex-column ${styles.buttonGroup}`}>
             {/* {isGroupPage && userObject.objectId === groupInfo?.createdBy?.objectId && (
               <button
