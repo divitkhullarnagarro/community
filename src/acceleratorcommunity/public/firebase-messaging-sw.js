@@ -55,7 +55,7 @@ self.addEventListener('notificationclick', (event) => {
     event?.notification?.data?.message?.type === 'REPLY_ON_COMMENT'
   ) {
     event.waitUntil(
-      clients.openWindow(`/post?postId='${event?.notification?.data?.message?.articleId}`)
+      clients.openWindow(`/post?postId=${event?.notification?.data?.message?.articleId}`)
     );
   } else if (event?.notification?.data?.message?.type === 'FOLLOW_BY_USER') {
     event.waitUntil(
