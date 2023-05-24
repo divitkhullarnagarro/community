@@ -247,10 +247,6 @@ function CreateGroup({
         </Modal.Header>
         <form className="form" onSubmit={(e) => createGroupSubmit(e)}>
           <Modal.Body>
-            <p className="text-danger" style={{ fontSize: '10px' }}>
-              Mandatory Fields *
-            </p>
-
             <div className="form-group">
               <input
                 className="form-control"

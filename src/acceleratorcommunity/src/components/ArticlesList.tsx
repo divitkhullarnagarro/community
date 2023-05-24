@@ -17,6 +17,7 @@ import WebContext from 'src/Context/WebContext';
 import facebook from '../assets/images/facebook.svg';
 import SideBar from './SideBar';
 import SuggestiveSearchCall from 'src/API/SuggestiveApi';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 type ArticlesListProps = ComponentProps & {
   fields: {
@@ -103,7 +104,7 @@ type DataSource = {
 
 const ArticlesList = (props: ArticlesListProps): JSX.Element => {
 
-  const { userToken, objectId} = { ...useContext(WebContext) };
+  const { userToken, objectId, darkMode} = { ...useContext(WebContext) };
 
 
 
@@ -324,11 +325,11 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
         scroll={scroll}
         bookmarkTYpeClicked={bookmarkTYpeClicked}
       /> */}
-        <div>
+        <div className={ArticlesListCss.contentwrapper}>
           {bookmarkLists?.length > 0 ? (
             bookmarkLists?.map((l: any, i: any) => {
               return (
-                <div key={i} className={ArticlesListCss.wrapper}>
+                <div key={i} className={`${ArticlesListCss.wrapper} ${darkMode ? darkModeCss.grey_3 : ''}`}>
                   <div className={ArticlesListCss.leftSection}>
                     <NextImage
                       className={ArticlesListCss.leftSectionImage}
@@ -337,8 +338,8 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                     />
                   </div>
                   <div className={ArticlesListCss.rightSection}>
-                    <div className={ArticlesListCss.title}>{l?.sourceAsMap?.Title}</div>
-                    <div className={ArticlesListCss.cardDescription}>
+                    <div className={`${ArticlesListCss.title} ${darkMode ? darkModeCss.text_green : ''}`}>{l?.sourceAsMap?.Title}</div>
+                    <div className={`${ArticlesListCss.cardDescription} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
                       <p>
                         {l?.sourceAsMap?.ShortDescription}
                         {/* <Link href="/readMorePage">Read More </Link> */}
@@ -356,7 +357,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       })}
                     </div> */}
                     <div className={ArticlesListCss.infoWrapper}>
-                      <div className={ArticlesListCss.infoWrapperTag}>
+                      <div className={`${ArticlesListCss.infoWrapperTag} ${darkMode ? darkModeCss.text_light : ''}`}>
                         <NextImage
                           className={ArticlesListCss.infowrapperImage}
                           field={sourceImage}
@@ -366,7 +367,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                           {l?.sourceAsMap?.AuthorName}{' '}
                         </div>
                       </div>
-                      <div className={ArticlesListCss.infoWrapperTag}>
+                      <div className={`${ArticlesListCss.infoWrapperTag} ${darkMode ? darkModeCss.text_light : ''}`}>
                         <NextImage
                           className={ArticlesListCss.infowrapperImage}
                           field={calendarImage}
@@ -396,6 +397,8 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                           }
                           id="bookamrksImage"
                           editable={true}
+                          width={100}
+                          height={100}
                           title="Add To My Collection"
                         />
                       </button>
@@ -403,7 +406,8 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                         className={ArticlesListCss.button}
                         onClick={() => handleShareClick(l?.sourceAsMap?.Id)}
                       >
-                        <NextImage field={shareImage} editable={true} title="Share" />
+                        <NextImage field={shareImage} editable={true} width={100}
+                          height={100} title="Share" />
                       </button>
                     </div>
 
@@ -482,7 +486,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
               );
             })
           ) : (
-            <div className={ArticlesListCss.emptyBox}>
+            <div className={`${ArticlesListCss.emptyBox} ${darkMode ? darkModeCss.text_light : ''}`}>
               <h2>Oops there is no content available for this filter !</h2>
             </div>
           )}
