@@ -60,7 +60,7 @@
   width: 40%;
 }
 .leftSection > img {
-  width: 80%;
+  width: 100%;
   height: 352px;
 }
 
@@ -155,6 +155,7 @@
   justify-content: space-between;
   margin-left: auto;
   margin-right: 20px;
+  position: relative;
   /* background-color: rgb(197, 17, 229); */
 }
 .button {
@@ -177,34 +178,54 @@
   display: flex;
   background-color: #f7ffff;
   border-radius: 8px;
-  height: 141px;
-  width: 169px;
+  height: auto;
+  width: 180px;
   position: absolute;
-  top: 7rem;
-  right: 3rem;
+  top: 35px;
+  right: 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.25);
+}
+.sharePopup::after {
+  display: inline-block;
+  width: 85%;
+  height: 1px;
+  border-bottom: 1px solid #DFDFDF;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50% );
+  content: '';
+}
+.sharePopup:last-child::after {
+  content: none;
 }
 .sharePopup {
   display: flex;
   flex-direction: row;
   /* background-color: bisque; */
-  width: 150px;
+  width: 100%;
   align-items: center;
-  padding: 4px;
-  margin-left: 4px;
-}
-.sharePopup:hover {
-  background-color: rgb(237 239 245);
-  border-radius: 4px;
+  padding: 10px;
+  margin-left: 0;
+  position: relative;
 }
 .sharePopup a {
   text-decoration: none;
-  color: black;
-  margin-left: 6px;
+  margin-left: 10px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #A5A9AE;
 }
-
+.sharePopupHover:hover {
+  background-color: #fff;
+  overflow: hidden;
+}
+.sharePopupHover::after {
+  border-bottom: 1px solid #313131;
+}
 .targetIcon::after {
   visibility: hidden;
 }
