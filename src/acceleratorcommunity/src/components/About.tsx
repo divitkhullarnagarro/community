@@ -85,7 +85,6 @@ const About = (props: AboutProps): JSX.Element => {
     return () => clearInterval(Interval);
   }, []);
 
-  console.log('FETCHUSER', fetchUser);
   const AboutSkeleton = () => {
     return (
       <div className={styles.aboutContainer}>

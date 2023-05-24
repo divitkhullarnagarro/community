@@ -210,6 +210,24 @@ type ProfileProps = ComponentProps & {
         componentHeading: {
           jsonValue: Field<string>;
         };
+        changePassword: {
+          jsonValue: Field<string>;
+        };
+        formHeading: {
+          jsonValue: Field<string>;
+        };
+        currentPassword: {
+          jsonValue: Field<string>;
+        };
+        newPassword: {
+          jsonValue: Field<string>;
+        };
+        confirmPassword: {
+          jsonValue: Field<string>;
+        };
+        changePasswordBtn: {
+          jsonValue: Field<string>;
+        };
       };
     };
   };
@@ -1657,7 +1675,15 @@ const Profile = (props: ProfileProps): JSX.Element => {
               onClick={() => handlePersonalDetails('changepassword')}
             >
               <Image src={ChangePasswordIcon} height={15} width={15} alt="Blocked Users" />
-              Change Password
+              <Text
+                field={
+                  props?.fields?.data?.datasource?.changePassword?.jsonValue
+                    ? props?.fields?.data?.datasource?.changePassword?.jsonValue
+                    : {
+                        value: 'Change Password',
+                      }
+                }
+              />
             </div>
             {/* <div
               className={
@@ -1858,7 +1884,13 @@ const Profile = (props: ProfileProps): JSX.Element => {
               </div>
             ) : details === 'changepassword' ? (
               <div className="profileInfo">
-                <ChangePassword />
+                <ChangePassword
+                  formHeading={props?.fields?.data?.datasource?.formHeading}
+                  currentPasswordLabel={props?.fields?.data?.datasource?.currentPassword}
+                  newPasswordLabel={props?.fields?.data?.datasource?.newPassword}
+                  confirmPasswordLabel={props?.fields?.data?.datasource?.confirmPassword}
+                  changePasswordBtn={props?.fields?.data?.datasource?.changePasswordBtn}
+                />
               </div>
             ) : (
               <div className="bannerContainerForProfile">

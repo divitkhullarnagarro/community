@@ -93,6 +93,7 @@ import darkModeCss from '../assets/darkTheme.module.css';
 //logging on logrocket
 import LogRocket from 'logrocket';
 import ViewPostDescription from './helperComponents/ViewPostDescription';
+import Head from 'next/head';
 
 export interface EventType {
   targetItems: TargetItem[];
@@ -126,6 +127,7 @@ export interface TitleJSONValue {
 }
 
 type AddPostProps = {
+  data: any;
   fields: {
     data: {
       datasource: {
@@ -405,6 +407,20 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     setId(idValue);
   }, [router]);
 
+  // const params =
+  //   typeof window !== 'undefined'
+  //     ? new URLSearchParams(window?.location?.search)
+  //     : new URLSearchParams('');
+  // let objectEmail = params.get('id');
+  let specificPostId = params.get('postId');
+
+  const [getPostUrl, setGetPostUrl] = useState<string>('');
+  useEffect(() => {
+    if (props?.params?.URL != getPostUrl) {
+      setGetPostUrl(props?.params?.URL);
+    }
+  }, [props]);
+
   useEffect(() => {
     setMyAnotherArr([]);
     if (userToken != '' && userToken != undefined) {
@@ -415,12 +431,13 @@ const AddPost = (props: AddPostProps): JSX.Element => {
         url:
           objectEmail && objectEmail != ''
             ? `${props?.params?.URL}/user-posts?objectId=${objectEmail}&page=${postPageNum}&size=10`
+            : specificPostId && specificPostId != ''
+            ? `${props?.params?.URL}/${specificPostId}`
             : groupId
             ? `${props?.params?.URL}/group/${groupId}?page=${postPageNum}&size=10`
             : `${props?.params?.URL}?${id ? `id=${id}&` : ''}page=${postPageNum}&size=10`,
       })
         .then((response: any) => {
-          console.log('POSTSCREATEDBYUSER', response);
           const newArr = response?.data;
           if (response?.data?.length == 0) {
             setMyAnotherArr([
@@ -430,19 +447,23 @@ const AddPost = (props: AddPostProps): JSX.Element => {
               },
             ]);
           } else {
-            newArr?.map((post: any) => {
-              post.isOpenComment = false;
-              post.comments = [];
-              post.showShare = false;
-              post.isLoadingComments = false;
-              if (post.postMeasures == null || post.postMeasures == 'undefined') {
-                post.postMeasures = {
-                  commentCount: 0,
-                  likeCount: 0,
-                };
-              }
-            });
-            setMyAnotherArr(newArr);
+            if (specificPostId && newArr) {
+              setMyAnotherArr([newArr]);
+            } else {
+              newArr?.map((post: any) => {
+                post.isOpenComment = false;
+                post.comments = [];
+                post.showShare = false;
+                post.isLoadingComments = false;
+                if (post.postMeasures == null || post.postMeasures == 'undefined') {
+                  post.postMeasures = {
+                    commentCount: 0,
+                    likeCount: 0,
+                  };
+                }
+              });
+              setMyAnotherArr(newArr);
+            }
           }
         })
         .catch((err: any) => {
@@ -451,11 +472,11 @@ const AddPost = (props: AddPostProps): JSX.Element => {
           }
         });
     }
-  }, [props]);
+  }, [getPostUrl]);
 
   useEffect(() => {
     if (ifNoMoreData == true) {
-      if (typeof document !== 'undefined') {
+      if (typeof document !== 'undefined' && !specificPostId) {
         element = document?.querySelector('#PostFeedList');
 
         element?.removeEventListener('scroll', HandleScrollEvent);
@@ -653,7 +674,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   };
 
   async function copyTextToClipboard(postId: string) {
-    const postUrl = window.location.origin + '/post/' + postId;
+    const postUrl = window.location.origin + '/post?postId=' + postId;
     if ('clipboard' in navigator) {
       return await navigator.clipboard.writeText(postUrl);
     } else {
@@ -790,6 +811,8 @@ const AddPost = (props: AddPostProps): JSX.Element => {
           ? `${props?.params?.URL}/user-posts?objectId=${objectEmail}&page=${
               postPageNum + 1
             }&size=10`
+          : specificPostId && specificPostId != ''
+          ? `${props?.params?.URL}/${specificPostId}`
           : groupId
           ? `${props?.params?.URL}/group/${groupId}?page=${postPageNum + 1}&size=10`
           : `${props?.params?.URL}?${id ? `id=${id}&` : ''}page=${postPageNum + 1}&size=10`,
@@ -849,7 +872,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     const locArr = myAnotherArr;
     let ifLikedAlready = false;
     const modPost = locArr.map((post: any) => {
-      if (post.id == id) {
+      if (post?.id == id) {
         if (post.isLikedByUser) {
           ifLikedAlready = true;
           return post;
@@ -919,7 +942,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   function setOpenComments(id: string, show: boolean) {
     const locArr = myAnotherArr;
     const modPost = locArr.map((post: any) => {
-      if (post.id == id) {
+      if (post?.id == id) {
         post.isOpenComment = show;
         return post;
       } else {
@@ -934,7 +957,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   function handleShowShare(id: string, val: any) {
     const locArr = myAnotherArr;
     const modPost = locArr.map((post: any) => {
-      if (post.id == id) {
+      if (post?.id == id) {
         post.showShare = val;
 
         return post;
@@ -968,7 +991,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     };
     setMyAnotherArr((prevState: any) => {
       const updatedPosts = prevState.map((post: any) => {
-        if (post.id === id) {
+        if (post?.id === id) {
           const updatedComments = [obj, ...post.comments];
           if (typeof post?.postMeasures?.commentCount === 'number') {
             post.postMeasures.commentCount = (post.postMeasures.commentCount ?? 0) + 1;
@@ -1606,7 +1629,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                     <ViewPostDescription description={post?.blog?.description} />
                   </>
                 ) : (
-                  <ViewPostDescription description={post.description} />
+                  <ViewPostDescription description={post?.description} />
                 )}
               </div>
 
@@ -1641,7 +1664,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                   <button
                     className={styles.commentButton}
                     style={darkMode ? { backgroundColor: 'transparent' } : {}}
-                    onClick={() => setOpenComments(post.id, !post.isOpenComment)}
+                    onClick={() => setOpenComments(post?.id, !post.isOpenComment)}
                     aria-controls="anotherCommentsContainer"
                     aria-expanded={post?.isOpenComment}
                     disabled={post?.isRespPending}
@@ -1681,7 +1704,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                       className={ShowShareCss.dropdownBtn}
                     >
                       <button
-                        onClick={() => handleShowShare(post.id, !post?.showShare)}
+                        onClick={() => handleShowShare(post?.id, !post?.showShare)}
                         className={styles.shareButton}
                         style={darkMode ? { backgroundColor: 'transparent' } : {}}
                         disabled={post?.isRespPending}
@@ -1701,7 +1724,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                           darkMode ? ShowShareCss.darkModeActive : ''
                         }`}
                         target="_blank"
-                        href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post.id}`}
+                        href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/post/${post?.id}&utm_source=whatsapp&utm_medium=social&utm_term=${post?.id}`}
                       >
                         <div className={ShowShareCss.overlayItem}>
                           <div className={ShowShareCss.dropdownImage}>
@@ -1721,7 +1744,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                           darkMode ? ShowShareCss.darkModeActive : ''
                         }`}
                         target="_blank"
-                        href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=twitter&utm_medium=social&utm_term=${post.id}`}
+                        href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post?.id}&utm_source=twitter&utm_medium=social&utm_term=${post?.id}`}
                       >
                         <div className={ShowShareCss.overlayItem}>
                           <div className={ShowShareCss.dropdownImage}>
@@ -1741,7 +1764,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                           darkMode ? ShowShareCss.darkModeActive : ''
                         }`}
                         target="_blank"
-                        href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post.id}`}
+                        href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/post/${post?.id}&utm_source=linkdeIn&utm_medium=social&utm_term=${post?.id}`}
                       >
                         <div className={ShowShareCss.overlayItem}>
                           <div className={ShowShareCss.dropdownImage}>
@@ -1761,7 +1784,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                           darkMode ? ShowShareCss.darkModeActive : ''
                         }`}
                         target="_blank"
-                        href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post.id}&utm_source=facebook&utm_medium=social&utm_term=${post.id}`}
+                        href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/post/${post?.id}&utm_source=facebook&utm_medium=social&utm_term=${post?.id}`}
                       >
                         <div className={ShowShareCss.overlayItem}>
                           <div className={ShowShareCss.dropdownImage}>
@@ -2286,7 +2309,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                         <Spinner animation="border" />
                       ) : (
                         <button
-                          onClick={() => loadComments(post.id)}
+                          onClick={() => loadComments(post?.id)}
                           className="postCommentButton"
                           style={{
                             marginBottom: '16px',
@@ -2337,7 +2360,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   function openCommentReplies(postId: string, commentid: any, open: boolean) {
     const locArr = myAnotherArr;
     locArr.map((post: any) => {
-      if (post.id === postId && post.comments?.length > 0) {
+      if (post?.id === postId && post.comments?.length > 0) {
         post.comments.map((comment: any) => {
           if (comment?.id == commentid) {
             comment.isOpenReply = open;
@@ -2371,7 +2394,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     };
     setMyAnotherArr((prevState: any) => {
       const updatedPosts = prevState.map((post: any) => {
-        if (post.id === postId) {
+        if (post?.id === postId) {
           const updatedComments = post.comments.map((comment: any) => {
             if (comment.id === commentId) {
               const updatedReplies = [replyObj, ...comment.replies];
@@ -2396,7 +2419,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     }
     setMyAnotherArr((prevPosts: any) => {
       return prevPosts.map((post: any) => {
-        if (post.id === postId) {
+        if (post?.id === postId) {
           const updatedComments = post.comments.map((comment: any) => {
             if (comment.id === commentId) {
               const updatedReplies = comment.replies.map((reply: any) => {
@@ -2465,7 +2488,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   function loadingComments(id: any, val: boolean) {
     setMyAnotherArr((prevPosts: any) => {
       return prevPosts.map((post: any) => {
-        if (post.id === id) {
+        if (post?.id === id) {
           return {
             ...post,
             isLoadingComments: val,
@@ -2480,7 +2503,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   function loadingReplies(postId: string, commentId: string, val: boolean) {
     setMyAnotherArr((prevPosts: any) => {
       return prevPosts.map((post: any) => {
-        if (post.id === postId) {
+        if (post?.id === postId) {
           const updatedComments = post.comments.map((comment: any) => {
             if (comment.id === commentId) {
               return {
@@ -2572,7 +2595,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   };
 
   let element: any = '';
-  if (typeof document !== 'undefined') {
+  if (typeof document !== 'undefined' && !specificPostId) {
     element = document?.querySelector('#PostFeedList');
 
     element?.addEventListener('scroll', HandleScrollEvent);
@@ -2667,7 +2690,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
 
   function deletePostById(postId: any) {
     setMyAnotherArr((prevPosts: any) => {
-      return prevPosts.filter((post: any) => post.id !== postId);
+      return prevPosts.filter((post: any) => post?.id !== postId);
     });
   }
 
@@ -3078,19 +3101,58 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     'https://chinchincelebration.com/wp-content/uploads/2019/08/product-launch-events-min.png'
   );
 
-  if (typeof window !== 'undefined')
+  if (typeof window !== 'undefined') {
     window?.addEventListener('scroll', () => {
       const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
       if (scrollTop + clientHeight >= scrollHeight) {
         HandleScrollEvent();
       }
     });
+  }
+
+  var metaImage: any = {};
+  var breakLoop = true;
 
   return (
     <>
+      {specificPostId && myAnotherArr?.length > 0 ? (
+        <Head>
+          {myAnotherArr[0]?.mediaList?.forEach((element: any) => {
+            if (element?.mediaType === 'IMAGE' && breakLoop) {
+              metaImage = element;
+              breakLoop = false;
+            }
+          })}
+          <meta
+            property="og:image"
+            content={
+              myAnotherArr[0]?.postType === 'BLOG_POST'
+                ? myAnotherArr[0]?.blog?.imageUrl
+                : metaImage?.url
+            }
+          />
+          <meta
+            property="og:description"
+            content={
+              myAnotherArr[0]?.postType === 'BLOG_POST'
+                ? myAnotherArr[0]?.blog?.heading
+                : myAnotherArr[0]?.description
+            }
+          />
+          <meta
+            property="og:title"
+            content={myAnotherArr[0]?.createdBy?.firstName.concat(
+              ' ',
+              myAnotherArr[0]?.createdBy?.lastName
+            )}
+          />
+        </Head>
+      ) : (
+        ''
+      )}
       <div
         className={`${styles.mainContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}
-        style={ifNoMoreData ? {} : { paddingBottom: '300px' }}
+        style={ifNoMoreData ? {} : { paddingBottom: '0px' }}
       >
         {!isEditorHidden && !isMember ? (
           <>
