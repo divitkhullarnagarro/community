@@ -410,7 +410,7 @@ const Notification = (props: NotificationProps): JSX.Element => {
           <Dropdown.Menu className={notificationCss.dropdownMoreMenuForNotificationItem}>
             {showViewPostDropdownAction(item) && (
               <Dropdown.Item
-                href={`/post/${notificationContent?.articleId ?? item?.articleId}`}
+                href={`/post?postId=?${notificationContent?.articleId ?? item?.articleId}`}
                 target="_blank"
                 className={notificationCss.dropdownItem}
               >

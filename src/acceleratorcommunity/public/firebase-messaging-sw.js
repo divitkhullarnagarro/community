@@ -54,7 +54,9 @@ self.addEventListener('notificationclick', (event) => {
     event?.notification?.data?.message?.type === 'COMMENT_ON_POST' ||
     event?.notification?.data?.message?.type === 'REPLY_ON_COMMENT'
   ) {
-    event.waitUntil(clients.openWindow(`/post/${event?.notification?.data?.message?.articleId}`));
+    event.waitUntil(
+      clients.openWindow(`/post?postId='${event?.notification?.data?.message?.articleId}`)
+    );
   } else if (event?.notification?.data?.message?.type === 'FOLLOW_BY_USER') {
     event.waitUntil(
       clients.openWindow(`/viewProfile?id=${event?.notification?.data?.message?.articleId}`)
