@@ -28,7 +28,7 @@ const SearchNews = (props: any) => {
           ''
         ) : (
           <div className={styles.imgContainer}>
-            <img src={config?.sitecoreApiHost + data?.Image} />
+            <img src={config?.sitecoreApiHost + data?.Image} alt="Article Image" />
           </div>
         )}
         <div className={styles.contentContainer}>
