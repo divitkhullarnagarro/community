@@ -75,21 +75,15 @@ const About = (props: AboutProps): JSX.Element => {
     if (objectEmail && objectEmail != '')
       AxiosRequest({ url: `${getUserUrl}${objectEmail}`, method: 'GET' }).then((response: any) => {
         setfetchUser(response?.data);
+        setIsDataLoaded(true);
       });
   }, [objectEmail]);
-
-  useEffect(() => {
-    const Interval = setTimeout(() => {
-      setIsDataLoaded(true);
-    }, 2000);
-    return () => clearInterval(Interval);
-  }, []);
 
   console.log('FETCHUSER', fetchUser);
   const AboutSkeleton = () => {
     return (
       <div className={styles.aboutContainer}>
-        <Skeleton className="mb-2" height={30} />
+        <Skeleton type="circle" className="mb-2" height={30} />
         <Accordion defaultActiveKey={['0']} alwaysOpen>
           {aboutContentList.map((index) => {
             return (
