@@ -18,6 +18,9 @@ import facebook from '../assets/images/facebook.svg';
 import SideBar from './SideBar';
 import SuggestiveSearchCall from 'src/API/SuggestiveApi';
 import darkModeCss from '../assets/darkTheme.module.css';
+import config from '../temp/config';
+import ToastNotification from './ToastNotification';
+import BlogListingSkeleton from './skeletons/BlogListingSkeleton';
 
 type ArticlesListProps = ComponentProps & {
   fields: {
@@ -103,8 +106,10 @@ type DataSource = {
 // };
 
 const ArticlesList = (props: ArticlesListProps): JSX.Element => {
-
+  const [Loading, setLoading] = useState<boolean>(false);
   const { userToken, objectId, darkMode} = { ...useContext(WebContext) };
+
+
 
 
 
@@ -120,10 +125,14 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                 response?.data?.data?.totalHits !== undefined &&
                 response?.data?.data?.totalHits?.value > 0
               ) {
-                Buttons(response?.data?.data?.hits)
+                Buttons(response?.data?.data?.hits);
                 setBookmarkLists(response?.data?.data?.hits);
                 setCompleted(response?.data?.data?.hits);
-              } else {
+                setLoading(true);
+              } else if(response?.data?.success === false){
+                setShowNofitication(true);
+                setToastError(true);
+                setToastMessage('Something went wrong');
               }
             }
           }
@@ -134,7 +143,14 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
 
   const [bookmarkTYpeClicked, setbookmarkTYpeClicked] = useState<any>(['all']);
   const [buttons, setButtons] = useState<any>([]);
-
+  const [showNotification, setShowNofitication] = useState(false);
+  const [toastError, setToastError] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string>();
+  const resetToastState = () => {
+    setShowNofitication(!showNotification);
+    setToastError(false);
+    setToastSuccess(false)
+  };
 
   // const timeToDateParsing = (date: any) => {
   //   const isoString = date; // An ISO 8601 string representing August 1, 2022
@@ -142,18 +158,17 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
   //   return dateOnlyString;
   // };
 
-  const Buttons = (Button:any) => {
-    console.log("buttonsbuttonsbuttonsbuttonsbuttonsbuttons",Button)
-    let button : any = []
-    Button.forEach((element:any) => {
-      if(!button.includes(element?.sourceAsMap?.ContentType)){
-        button.push(element?.sourceAsMap?.ContentType)
+  const Buttons = (Button: any) => {
+    console.log('buttonsbuttonsbuttonsbuttonsbuttonsbuttons', Button);
+    let button: any = [];
+    Button.forEach((element: any) => {
+      if (!button.includes(element?.sourceAsMap?.ContentType)) {
+        button.push(element?.sourceAsMap?.ContentType);
       }
     });
-    console.log("=========",button)
-    setButtons(button)
-
-  }
+    console.log('=========', button);
+    setButtons(button);
+  };
 
   const [bookmarkLists, setBookmarkLists] = useState<any>([]);
   const [completeList, setCompleted] = useState<any>([]);
@@ -175,24 +190,29 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
   };
 
   const handleShareClick = (id: any) => {
-    if (shareArticle.includes(id)) {
+    console.log('id', id);
+
+    if (shareArticle?.includes(id)) {
       setShareArticle([]);
     } else {
       setShareArticle(id);
     }
   };
 
+  console.log('shareArticle', shareArticle);
+
   const TodaysDate = () => {
     var currentDate = new Date();
 
     // Step 2: Extract the individual components
-    var year = currentDate.getFullYear();
-    var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
-    var day = ('0' + currentDate.getDate()).slice(-2);
+    // var year = currentDate.getFullYear();
+    // var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+    // var day = ('0' + currentDate.getDate()).slice(-2);
 
     // Step 3: Format the components into the desired format
-    var formattedDate = day + '-' + month + '-' + year;
-    return formattedDate;
+    // var formattedDate = day + '-' + month + '-' + year;
+    currentDate.setHours(0, 0, 0, 0);
+    return currentDate;
   };
 
   const splitDate = (date: string) => {
@@ -211,10 +231,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     const upComing = completeList?.filter((item: any) => {
       const date = splitDate(item?.sourceAsMap?.Date);
       const TodayDate = TodaysDate();
-      return (
-        new Date(date.split('-').reverse().join('-')) <
-        new Date(TodayDate.split('-').reverse().join('-'))
-      );
+      return new Date(date.split('-').reverse().join('-')).getTime() < TodayDate.getTime();
     });
     if (bookmarkTYpeClicked[0] === 'all') {
       setBookmarkLists(upComing);
@@ -227,10 +244,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     const upComing = completeList?.filter((item: any) => {
       const date = splitDate(item?.sourceAsMap?.Date);
       const TodayDate = TodaysDate();
-      return (
-        new Date(date.split('-').reverse().join('-')) ===
-        new Date(TodayDate.split('-').reverse().join('-'))
-      );
+      return new Date(date.split('-').reverse().join('-')).getTime() === TodayDate.getTime();
     });
     if (bookmarkTYpeClicked[0] === 'all') {
       setBookmarkLists(upComing);
@@ -244,10 +258,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     const upComing = completeList?.filter((item: any) => {
       const date = splitDate(item?.sourceAsMap?.Date);
       const TodayDate = TodaysDate();
-      return (
-        new Date(date.split('-').reverse().join('-')) >
-        new Date(TodayDate.split('-').reverse().join('-'))
-      );
+      return new Date(date.split('-').reverse().join('-')).getTime() > TodayDate.getTime();
     });
     if (bookmarkTYpeClicked[0] === 'all') {
       setBookmarkLists(upComing);
@@ -256,25 +267,36 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
       twoFilters(upComing);
     }
   };
+  const [toastSuccess, setToastSuccess] = useState(false);
+
   const bookmarkApi = async (
     userIdTemp: string | undefined,
     contentId: string,
     title: string,
-    comment: string | undefined,
+    // comment: string | undefined,
     userToken: string | undefined
   ) => {
-    let response = await bookmark(userIdTemp, contentId, title, comment, userToken);
-    console.log(response);
+    let response = await bookmark(userIdTemp, contentId, title, userToken);
+    if (response?.success) {
+      setShowNofitication(true);
+      setToastSuccess(true);
+      setToastMessage('Bookmarked successfully');
+    } else {
+      setShowNofitication(true);
+      setToastError(true);
+      setToastMessage('Something went wrong');
+    }
+    console.log('====================', response);
     // url,
   };
-  const [scroll, setScroll] = useState(false);
-  useEffect(() => {
-    window.addEventListener('scroll', () => {
-      if (window !== undefined) {
-        setScroll(window.scrollY > 45);
-      }
-    });
-  }, []);
+  // const [scroll, setScroll] = useState(false);
+  // useEffect(() => {
+  //   window.addEventListener('scroll', () => {
+  //     if (window !== undefined) {
+  //       setScroll(window.scrollY > 45);
+  //     }
+  //   });
+  // }, []);
 
   const handleClick = (name: any) => {
     let data: any[] = [];
@@ -296,10 +318,10 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     contentId: string,
     // url: string,
     title: string,
-    comment: string | undefined
+    // comment: string | undefined
   ) => {
     // setTokenFromLocalStorage();
-    bookmarkApi(userIdTemp, contentId, title, comment, userToken);
+    bookmarkApi(userIdTemp, contentId, title, userToken);
     // , url:string
     // handleClick();
     handleSelectedArticle(contentId);
@@ -310,7 +332,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
         buttonTypes={buttons}
         handleAllClick={handleAllClick}
         handleClick={handleClick}
-        scroll={scroll}
+        // scroll={scroll}
         bookmarkTYpeClicked={bookmarkTYpeClicked}
         nowArticles={nowArticles}
         pastArticle={pastArticle}
@@ -326,19 +348,18 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
         bookmarkTYpeClicked={bookmarkTYpeClicked}
       /> */}
         <div className={ArticlesListCss.contentwrapper}>
-          {bookmarkLists?.length > 0 ? (
+          {Loading?bookmarkLists?.length > 0 ? (
             bookmarkLists?.map((l: any, i: any) => {
               return (
                 <div key={i} className={`${ArticlesListCss.wrapper} ${darkMode ? darkModeCss.grey_3 : ''}`}>
                   <div className={ArticlesListCss.leftSection}>
-                    <NextImage
+                    <img
                       className={ArticlesListCss.leftSectionImage}
-                      field={l?.sourceAsMap?.Image}
-                      editable={true}
+                      src={config?.sitecoreApiHost + l?.sourceAsMap?.Image}
                     />
                   </div>
                   <div className={ArticlesListCss.rightSection}>
-                    <div className={`${ArticlesListCss.title} ${darkMode ? darkModeCss.text_green : ''}`}>{l?.sourceAsMap?.Title}</div>
+                  <div className={`${ArticlesListCss.title} ${darkMode ? darkModeCss.text_green : ''}`}>{l?.sourceAsMap?.Title}</div>
                     <div className={`${ArticlesListCss.cardDescription} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
                       <p>
                         {l?.sourceAsMap?.ShortDescription}
@@ -357,7 +378,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       })}
                     </div> */}
                     <div className={ArticlesListCss.infoWrapper}>
-                      <div className={`${ArticlesListCss.infoWrapperTag} ${darkMode ? darkModeCss.text_light : ''}`}>
+                    <div className={`${ArticlesListCss.infoWrapperTag} ${darkMode ? darkModeCss.text_light : ''}`}>
                         <NextImage
                           className={ArticlesListCss.infowrapperImage}
                           field={sourceImage}
@@ -368,6 +389,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                         </div>
                       </div>
                       <div className={`${ArticlesListCss.infoWrapperTag} ${darkMode ? darkModeCss.text_light : ''}`}>
+
                         <NextImage
                           className={ArticlesListCss.infowrapperImage}
                           field={calendarImage}
@@ -387,13 +409,13 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                             objectId,
                             l?.sourceAsMap?.Id,
                             l?.sourceAsMap?.Title,
-                            l?.sourceAsMap?.ShortDescription
+                            // l?.sourceAsMap?.ShortDescription
                           )
                         }
                       >
                         <NextImage
                           field={
-                            selectedArticle?.includes(l?.id) ? activeBookmarkImage : bookmarkImage
+                            selectedArticle?.includes(l?.sourceAsMap?.Id) ? activeBookmarkImage : bookmarkImage
                           }
                           id="bookamrksImage"
                           editable={true}
@@ -411,41 +433,41 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       </button>
                     </div>
 
-                    {shareArticle.includes(l?.id) && (
-                      <div className={ArticlesListCss.sharePopups}>
-                        <div className={ArticlesListCss.sharePopup}>
-                          <NextImage
-                            className={ArticlesListCss.whatsappImage}
-                            field={whatsapp}
-                            editable={true}
-                            width={25}
-                            height={25}
-                          />
-                          <Link
-                            href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=whatsapp&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
-                          >
-                            <a className={ArticlesListCss.targetIcon} target="_blank">
-                              WhatsApp
-                            </a>
-                          </Link>
-                        </div>
+                      {shareArticle?.includes(l?.sourceAsMap?.Id) && (
+                        <div className={ArticlesListCss.sharePopups}>
+                          <div className={ArticlesListCss.sharePopup}>
+                            <NextImage
+                              className={ArticlesListCss.whatsappImage}
+                              field={whatsapp}
+                              editable={true}
+                              width={25}
+                              height={25}
+                            />
+                            <Link
+                              href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=whatsapp&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
+                            >
+                              <a className={ArticlesListCss.targetIcon} target="_blank">
+                                WhatsApp
+                              </a>
+                            </Link>
+                          </div>
 
-                        <div className={ArticlesListCss.sharePopup}>
-                          <NextImage
-                            className={ArticlesListCss.whatsappImage}
-                            field={twitter}
-                            editable={true}
-                            width={25}
-                            height={25}
-                          />
-                          <Link
-                            href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=twitter&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
-                          >
-                            <a className={ArticlesListCss.targetIcon} target="_blank">
-                              Twitter
-                            </a>
-                          </Link>
-                        </div>
+                          <div className={ArticlesListCss.sharePopup}>
+                            <NextImage
+                              className={ArticlesListCss.whatsappImage}
+                              field={twitter}
+                              editable={true}
+                              width={25}
+                              height={25}
+                            />
+                            <Link
+                              href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=twitter&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
+                            >
+                              <a className={ArticlesListCss.targetIcon} target="_blank">
+                                Twitter
+                              </a>
+                            </Link>
+                          </div>
 
                         <div className={ArticlesListCss.sharePopup}>
                           <NextImage
@@ -489,8 +511,19 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
             <div className={`${ArticlesListCss.emptyBox} ${darkMode ? darkModeCss.text_light : ''}`}>
               <h2>Oops there is no content available for this filter !</h2>
             </div>
+          ): (
+            <BlogListingSkeleton />
           )}
         </div>
+        {showNotification && (
+          <ToastNotification
+            showNotification={showNotification}
+            error={toastError}
+            success={toastSuccess}
+            message={toastMessage}
+            handleCallback={resetToastState}
+          />
+        )}
       </div>
     </div>
   );

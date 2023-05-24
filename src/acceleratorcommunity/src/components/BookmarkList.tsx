@@ -11,6 +11,8 @@ import { sitecoreApiHost } from 'temp/config';
 import { ApolloClient, ApolloLink, InMemoryCache, HttpLink } from 'apollo-boost';
 import SideBar from './SideBar';
 import darkModeCss from '../assets/darkTheme.module.css';
+import BlogListingSkeleton from './skeletons/BlogListingSkeleton';
+
 
 type BookmarkListProps = ComponentProps & {
   fields: {
@@ -107,6 +109,8 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
   const [completeList, setcompleteList] = useState<any>([]);
   const [bookmarkLists, setBookmarkLists] = useState<any>([]);
   const [bookmarkTYpeClicked, setbookmarkTYpeClicked] = useState<any>(['all']);
+  const [showContent, setShowContent] = useState<boolean>(false);
+
   const [buttonTypes, setbuttonTypes] = useState<any>([]);
 
   useEffect(() => {
@@ -158,11 +162,31 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
     setBookmarkLists(completeList);
   };
 
-  const timeToDateParsing = (date: any) => {
-    const isoString = date; // An ISO 8601 string representing August 1, 2022
-    const dateOnlyString = isoString.substring(0, 10); // Extract the date component as a string
-    return dateOnlyString;
-  };
+  // const timeToDateParsing = (date: any) => {
+  //   const isoString = date; // An ISO 8601 string representing August 1, 2022
+  //   const dateOnlyString = isoString.substring(0, 10); // Extract the date component as a string
+  //   return dateOnlyString;
+  // };
+
+  // const splitDate = (date: string) => {
+  //   console.log('date', date);
+  //   var parts = date.split(' ');
+  //   return parts[0];
+  // };
+
+  // const TodaysDate = () => {
+  //   var currentDate = new Date();
+
+  //   // Step 2: Extract the individual components
+  //   // var year = currentDate.getFullYear();
+  //   // var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+  //   // var day = ('0' + currentDate.getDate()).slice(-2);
+
+  //   // Step 3: Format the components into the desired format
+  //   // var formattedDate = day + '-' + month + '-' + year;
+  //   currentDate.setHours(0, 0, 0, 0);
+  //   return currentDate;
+  // };
 
   useEffect(() => {
     if (userToken != '' && userToken != undefined) {
@@ -170,12 +194,18 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
     }
   }, [userToken]);
 
-  useEffect(() => {}, [bookmarkLists]);
+  useEffect(() => {
+    if (bookmarkLists.length > 0) {
+      setShowContent(true);
+    }
+    console.log('ran useeffect', bookmarkLists);
+  }, [bookmarkLists]);
+
   const nowArticles = () => {
     let nowDateArticle = completeList?.filter((item: any) => {
-      let date: any = timeToDateParsing(item?.date?.jsonValue?.value);
-      let datee: any = timeToDateParsing(new Date().toISOString());
-      return Date.parse(date) === Date.parse(datee);
+      const TodayDate = new Date();
+
+      return new Date(item?.date?.jsonValue?.value).toDateString() === TodayDate.toDateString();
     });
     if (bookmarkTYpeClicked[0] === 'all') {
       console.log('bookmarkTYpeClicked', bookmarkTYpeClicked);
@@ -189,9 +219,9 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
 
   const upComingArticle = () => {
     let nowDateArticle = completeList?.filter((item: any) => {
-      let date: any = timeToDateParsing(item?.date?.jsonValue?.value);
-      let datee: any = timeToDateParsing(new Date().toISOString());
-      return Date.parse(date) > Date.parse(datee);
+      const TodayDate = new Date();
+
+      return new Date(item?.date?.jsonValue?.value).toDateString() > TodayDate.toDateString();
     });
     if (bookmarkTYpeClicked[0] === 'all') {
       setBookmarkLists(nowDateArticle);
@@ -203,9 +233,9 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
 
   const pastArticle = () => {
     let nowDateArticle = completeList?.filter((item: any) => {
-      let date: any = timeToDateParsing(item?.date?.jsonValue?.value);
-      let datee: any = timeToDateParsing(new Date().toISOString());
-      return Date.parse(date) < Date.parse(datee);
+      const TodayDate = new Date();
+
+      return new Date(item?.date?.jsonValue?.value).toDateString() < TodayDate.toDateString();
     });
     if (bookmarkTYpeClicked[0] === 'all') {
       setBookmarkLists(nowDateArticle);
@@ -244,6 +274,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
       // arrayList.push(obj)
       setcompleteList(arrayList);
       setBookmarkLists(arrayList);
+    } else if (response?.data?.success === false) {
     }
   };
   return (
@@ -269,11 +300,12 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
       <div className={bookmarkCss.bodyContainer}>
         <div>
           {' '}
+          {console.log('bookmarkListsbookmarkLists', bookmarkLists)}
           <div className={bookmarkCss.listContainers}>
-            {bookmarkLists?.length > 0 ? (
+            {showContent?bookmarkLists?.length > 0 ? (
               bookmarkLists.map((l: any, i: any) => {
                 return (
-                  <div key={i} className={`${bookmarkCss.contentTypeContainers} ${darkMode ? darkModeCss.grey_3 : ''}`}>
+                  <div key={i} className={bookmarkCss.contentTypeContainers}>
                     {/* <div className={bookmarkCss.contentTypeContainer}> */}
                     <div className={bookmarkCss.leftContainer}>
                       {/* <h4>{l?.contentType?.targetItem?.name}</h4> */}
@@ -286,10 +318,12 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                       />
                     </div>
                     <div className={bookmarkCss.rightContainer}>
-                      <div className={`${bookmarkCss.rightContainerHeading} ${darkMode ? darkModeCss.text_green : ''}`}>
+                    <div className={`${bookmarkCss.rightContainerHeading} ${darkMode ? darkModeCss.text_green : ''}`}>
+
                         <h5>{l?.title?.jsonValue?.value}</h5>
                       </div>
                       <div className={`${bookmarkCss.rightContainerDescription} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+
                         {l?.shortDescription?.jsonValue?.value}
                       </div>
                       <div>
@@ -297,6 +331,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                       </div>
                       <div>{l?.author?.jsonValue?.value}</div>
                       <div className={`${bookmarkCss.dates} ${darkMode ? darkModeCss.text_light : ''}`}>
+
                         <NextImage field={calender} editable={true} />
                         {getFormatedDate(l?.date?.jsonValue?.value)}
                       </div>
@@ -309,7 +344,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                             height={30}
                           />
                         </div>
-                        <h5 className='m-0'>{l?.contentType?.targetItem?.name}</h5>
+                        <h5>{l?.contentType?.targetItem?.name}</h5>
                       </div>
                       {/* <div className={bookmarkCss.button}>
                           <button>
@@ -320,8 +355,8 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                             />
                           </button>
                         </div> */}
+                      </div>
                     </div>
-                  </div>
 
                   // </div>
                 );
@@ -330,6 +365,8 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
               <div className={`${bookmarkCss.emptyBox} ${darkMode ? darkModeCss.text_light : ''}`}>
                 <h2>Oops there is no content available for this filter !</h2>
               </div>
+            ): (
+              <BlogListingSkeleton />
             )}
           </div>
         </div>

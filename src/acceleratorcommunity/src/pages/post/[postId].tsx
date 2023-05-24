@@ -848,6 +848,7 @@ export default viewSinglePost;
 export async function getServerSideProps(context: any) {
   const { params } = context;
   const { postId } = params;
+  console.log("-------------------",context)
   let getAllPostURL = `https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/post/${postId}`;
   const value = context?.req?.cookies?.UserToken;
   const token = decryptString(value);

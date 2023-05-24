@@ -7,7 +7,6 @@ import WebContext from 'src/Context/WebContext';
 import DescriptionForSearch from './helperComponents/DescriptionForSearch';
 
 const DocumentContainer = (props: any) => {
-  console.log('videooooooooooooooooooooooooooooooo', props?.events);
   const id = props?.events?.id;
   const { darkMode } = { ...useContext(WebContext) };
 
@@ -20,7 +19,7 @@ const DocumentContainer = (props: any) => {
     }
   }
   return (
-    <a href={`/post/${id}`} className={styles.link} target="_blank">
+    <a href={`/post?postId=${id}`} className={styles.link} target="_blank">
       {props?.fromALL ? (
         <div className={`${styles.typeHeading} ${darkMode && darkModeCss.text_green}`}>
           <div>Doc Post</div>
@@ -69,7 +68,7 @@ const DocumentContainer = (props: any) => {
             </div>
           </div> */}
           <div className={`${styles.content} ${darkMode && darkModeCss.text_light}`}>
-            <DescriptionForSearch description={props?.events?.description} />
+            <DescriptionForSearch fromSitecore={false} description={props?.events?.description} />
             {/* 
             {parser(
               modifyHtml(
