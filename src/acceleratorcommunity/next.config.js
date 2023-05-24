@@ -48,6 +48,9 @@ const nextConfig = {
       'xmc-nagarro1-communityac2a8e-communityace478.sitecorecloud.io',
       'xmc-nagarro1-communityac830d-communityace1c7.sitecorecloud.io',
       'user-images.githubusercontent.com',
+      'higherlogicdownload.s3.amazonaws.com',
+      'live.staticflickr.com',
+      'th.bing.com',
     ],
   },
 

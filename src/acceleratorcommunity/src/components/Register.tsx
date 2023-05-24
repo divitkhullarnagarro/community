@@ -538,6 +538,12 @@ const Register = (props: RegisterProps): JSX.Element => {
               <button
                 className={RegisterCss.formButton}
                 disabled={
+                  firstName === '' ||
+                  lastName === '' ||
+                  email === '' ||
+                  phoneNumber === '' ||
+                  password === '' ||
+                  confirmPassword === '' ||
                   error ||
                   firstNameError ||
                   lastNameError ||

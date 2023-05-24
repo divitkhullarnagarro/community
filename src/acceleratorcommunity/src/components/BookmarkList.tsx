@@ -10,6 +10,7 @@ import { getBookmarkItem } from './Queries';
 import { sitecoreApiHost } from 'temp/config';
 import { ApolloClient, ApolloLink, InMemoryCache, HttpLink } from 'apollo-boost';
 import SideBar from './SideBar';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 type BookmarkListProps = ComponentProps & {
   fields: {
@@ -77,7 +78,7 @@ const client1 = new ApolloClient({
 
 const BookmarkList = (props: BookmarkListProps): JSX.Element => {
   const data = props?.fields?.data?.datasource?.contentType as any;
-  const { setUserToken, userToken } = { ...useContext(WebContext) };
+  const { setUserToken, userToken, darkMode } = { ...useContext(WebContext) };
 
   const getFormatedDate = (stringDate: string) => {
     console.log('stringDate', stringDate);
@@ -258,8 +259,8 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
         flag={true}
       />
 
-      <div className={bookmarkCss.heading}>
-        <div className={bookmarkCss.leftContainerImage}>
+      <div className={`${bookmarkCss.heading} ${darkMode ? darkModeCss.text_light : ''}`}>
+        <div className={`${bookmarkCss.leftContainerImage} ${bookmarkCss.head}`}>
           <NextImage field={ActiveBookmark} editable={true} width={35} height={30} />
         </div>
 
@@ -272,7 +273,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
             {bookmarkLists?.length > 0 ? (
               bookmarkLists.map((l: any, i: any) => {
                 return (
-                  <div key={i} className={bookmarkCss.contentTypeContainers}>
+                  <div key={i} className={`${bookmarkCss.contentTypeContainers} ${darkMode ? darkModeCss.grey_3 : ''}`}>
                     {/* <div className={bookmarkCss.contentTypeContainer}> */}
                     <div className={bookmarkCss.leftContainer}>
                       {/* <h4>{l?.contentType?.targetItem?.name}</h4> */}
@@ -280,22 +281,22 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                         className={bookmarkCss.leftContainerImage}
                         field={l?.image?.jsonValue?.value}
                         editable={true}
-                        width={20}
-                        height={300}
+                        width={100}
+                        height={400}
                       />
                     </div>
                     <div className={bookmarkCss.rightContainer}>
-                      <div className={bookmarkCss.rightContainerHeading}>
+                      <div className={`${bookmarkCss.rightContainerHeading} ${darkMode ? darkModeCss.text_green : ''}`}>
                         <h5>{l?.title?.jsonValue?.value}</h5>
                       </div>
-                      <div className={bookmarkCss.rightContainerDescription}>
+                      <div className={`${bookmarkCss.rightContainerDescription} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
                         {l?.shortDescription?.jsonValue?.value}
                       </div>
                       <div>
                         <p>{l?.id?.jsonValue?.value}</p>
                       </div>
                       <div>{l?.author?.jsonValue?.value}</div>
-                      <div className={bookmarkCss.dates}>
+                      <div className={`${bookmarkCss.dates} ${darkMode ? darkModeCss.text_light : ''}`}>
                         <NextImage field={calender} editable={true} />
                         {getFormatedDate(l?.date?.jsonValue?.value)}
                       </div>
@@ -308,7 +309,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                             height={30}
                           />
                         </div>
-                        <h5>{l?.contentType?.targetItem?.name}</h5>
+                        <h5 className='m-0'>{l?.contentType?.targetItem?.name}</h5>
                       </div>
                       {/* <div className={bookmarkCss.button}>
                           <button>
@@ -326,7 +327,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                 );
               })
             ) : (
-              <div className={bookmarkCss.emptyBox}>
+              <div className={`${bookmarkCss.emptyBox} ${darkMode ? darkModeCss.text_light : ''}`}>
                 <h2>Oops there is no content available for this filter !</h2>
               </div>
             )}
