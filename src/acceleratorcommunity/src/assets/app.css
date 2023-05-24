@@ -10,6 +10,12 @@ html, body, #__next {
 a[target='_blank']:after {
   content: '\1F5D7';
 }
+.main.darkMode_bg {
+  min-height: 100%;
+}
+div:empty, p:empty {
+  margin: 0;
+}
 
 /*
   Hides Sitecore editor markup,
