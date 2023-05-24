@@ -447,7 +447,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
         })
         .catch((err: any) => {
           if (err === 'API Call Failed !') {
-            // router.push('/login');
+            router.push('/login');
           }
         });
     }
@@ -3092,7 +3092,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
         className={`${styles.mainContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}
         style={ifNoMoreData ? {} : { paddingBottom: '300px' }}
       >
-        {!isEditorHidden && isMember ? (
+        {!isEditorHidden ? (
           <>
             <div
               className={`${styles.addPostWidgetContainer} ${darkMode ? darkModeCss.grey_2 : ''}`}

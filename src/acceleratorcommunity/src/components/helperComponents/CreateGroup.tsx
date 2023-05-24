@@ -106,7 +106,7 @@ function CreateGroup({
   const createGroupSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      if (nameValue && descriptionValue && addMemberList?.length > 0) {
+      if (nameValue && descriptionValue) {
         setCreatingGroup(true);
         const res: any = await AxiosRequest({
           url: `${createGroupUrl}`,
@@ -139,15 +139,16 @@ function CreateGroup({
       } else {
         setCreatingGroup(false);
         setToastError(true);
-        setToastMessage(
-          nameValue
-            ? descriptionValue
-              ? addMemberList.length > 0
-                ? ''
-                : 'Please add some member'
-              : 'Description Required'
-            : 'Name Nequired'
-        );
+        setToastMessage('Something Went Wrong. Please Try Again');
+        // setToastMessage(
+        //   nameValue
+        //     ? descriptionValue
+        //       ? addMemberList.length > 0
+        //         ? ''
+        //         : 'Please add some member'
+        //       : 'Description Required'
+        //     : 'Name Nequired'
+        // );
         setShowNofitication(true);
       }
     } catch (error) {
