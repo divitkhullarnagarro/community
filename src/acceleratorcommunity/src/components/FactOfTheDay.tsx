@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Field, ImageField, NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, ImageField, Image, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ComponentProps } from 'lib/component-props';
 import factOfTheDayCss from '../assets/factOfTheDay.module.css';
 import darkModeCss from '../assets/darkTheme.module.css';
@@ -87,22 +87,50 @@ const FactOfTheDay = (props: FactOfTheDayProps): JSX.Element => {
       <>
         <div className={factOfTheDayCss.cardContainer}>
           <div className={`${factOfTheDayCss.cardbody} ${darkMode ? darkModeCss.grey_3 : ''}`}>
-            <NextImage objectFit="cover" field={data?.image?.jsonValue?.value} />
+            <Image objectFit="cover" field={data?.image?.jsonValue} />
             <div className={factOfTheDayCss.cardText}>
               <div
                 className={`${factOfTheDayCss.cardTitle} ${darkMode ? darkModeCss.text_green : ''}`}
               >
-                {data?.title?.jsonValue?.value}
+                <Text
+                  field={
+                    data?.title?.jsonValue
+                      ? data?.title?.jsonValue
+                      : {
+                          value: 'Customer Experience Thoughts',
+                        }
+                  }
+                />
               </div>
               <div
                 className={`${factOfTheDayCss.cardDescription} ${
                   darkMode ? darkModeCss.text_light : ''
                 }`}
               >
-                {data?.description?.jsonValue?.value}
+                <Text
+                  field={
+                    data?.description?.jsonValue
+                      ? data?.description?.jsonValue
+                      : {
+                          value:
+                            'Expectations for quality services across all digital touchpoints have increased dramatically in the past two years. ',
+                        }
+                  }
+                />
               </div>
               {data?.description?.jsonValue?.value.length > 250 && (
-                <div className={factOfTheDayCss.tooltip}>{data?.description?.jsonValue?.value}</div>
+                <div className={factOfTheDayCss.tooltip}>
+                  <Text
+                    field={
+                      data?.description?.jsonValue
+                        ? data?.description?.jsonValue
+                        : {
+                            value:
+                              'Expectations for quality services across all digital touchpoints have increased dramatically in the past two years. ',
+                          }
+                    }
+                  />
+                </div>
               )}
             </div>
           </div>

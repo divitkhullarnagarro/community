@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import WebContext from '../Context/WebContext';
 import styles from '../assets/blockeduser.module.css';
-import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Field, NextImage, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 import { Modal, Spinner } from 'react-bootstrap';
 import moreLogo from '../assets/images/moreLogo.svg';
 // import Email from '../assets/images/EmailIcon.jpg';
@@ -21,6 +21,7 @@ type blockedUserFields = {
 
 type blockedUserProps = {
   showInProfilePage: boolean;
+  heading: { jsonValue: Field<string> };
 };
 
 function BlockedUser(props: blockedUserProps) {
@@ -28,7 +29,7 @@ function BlockedUser(props: blockedUserProps) {
     ...useContext(WebContext),
   };
 
-  const SideNavHeaderLabel = 'Blocked Users List';
+  // const SideNavHeaderLabel = 'Blocked Users List';
   const NoUsersBlockedLabel = "You haven't blocked anyone";
   const FetchingUsersLabel = 'Fetching blocked users...';
   const PreviewUserProfileLabel = 'List of blocked members...';
@@ -337,7 +338,15 @@ function BlockedUser(props: blockedUserProps) {
                   : `${styles.sideNavHeader} ${darkMode ? darkModeCss.text_light : ''}`
               }
             >
-              {SideNavHeaderLabel}
+              <Text
+                field={
+                  props?.heading?.jsonValue
+                    ? props?.heading?.jsonValue
+                    : {
+                        value: 'Blocked Users Lists',
+                      }
+                }
+              />
             </div>
             <hr />
             {blockedUserList?.length == 0 ? (

@@ -256,3 +256,9 @@
   font-weight: 600;
   color: #000e46;
 }
+
+.imgProfileNotification {
+  border-radius: 25px;
+  width: 100%;
+  cursor: pointer;
+}

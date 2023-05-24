@@ -8,8 +8,15 @@ import ToastNotification from './ToastNotification';
 import AxiosRequest from 'src/API/AxiosRequest';
 import { useRouter } from 'next/router';
 import { getValueFromCookie } from 'assets/helpers/helperFunctions';
+import { Text } from '@sitecore-jss/sitecore-jss-nextjs';
 
-const ChangePassword = (): JSX.Element => {
+const ChangePassword = ({
+  formHeading,
+  currentPasswordLabel,
+  newPasswordLabel,
+  confirmPasswordLabel,
+  changePasswordBtn,
+}: any): JSX.Element => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [currentPasswordError, setCurrentPasswordError] = useState(false);
   const [currentPasswordValidationMessage, setCurrentPasswordValidationMessage] = useState('');
@@ -149,11 +156,29 @@ const ChangePassword = (): JSX.Element => {
         className={changepasswordcss.changepassword}
         onSubmit={(e) => onSubmitPasswordHandler(e)}
       >
-        <div className={changepasswordcss.changepasswordHeader}>Change your current password</div>
+        <div className={changepasswordcss.changepasswordHeader}>
+          <Text
+            field={
+              formHeading?.jsonValue
+                ? formHeading?.jsonValue
+                : {
+                    value: 'Change your current password',
+                  }
+            }
+          />
+        </div>
         <div className={changepasswordcss.changepasswordField}>
           <i className={changepasswordcss['login__icon fas fa-user']}></i>
           <label className={`${changepasswordcss.label} ${darkMode && darkTheme.text_light}`}>
-            {'Current Password'}
+            <Text
+              field={
+                currentPasswordLabel?.jsonValue
+                  ? currentPasswordLabel?.jsonValue
+                  : {
+                      value: 'Current Password',
+                    }
+              }
+            />
           </label>
           <input
             onChange={(e) => setCurrentPasswordValue(e.target.value)}
@@ -173,7 +198,15 @@ const ChangePassword = (): JSX.Element => {
         <div className={changepasswordcss.changepasswordField}>
           <i className={changepasswordcss['login__icon fas fa-user']}></i>
           <label className={`${changepasswordcss.label} ${darkMode && darkTheme.text_light}`}>
-            {'New Password'}
+            <Text
+              field={
+                newPasswordLabel?.jsonValue
+                  ? newPasswordLabel?.jsonValue
+                  : {
+                      value: 'New Password',
+                    }
+              }
+            />
           </label>
           <input
             onChange={(e) => setNewPasswordValue(e.target.value)}
@@ -191,7 +224,15 @@ const ChangePassword = (): JSX.Element => {
         <div className={changepasswordcss.changepasswordField}>
           <i className={changepasswordcss['login__icon fas fa-lock']}></i>
           <label className={`${changepasswordcss.label} ${darkMode && darkTheme.text_light}`}>
-            {'Confirm Password'}
+            <Text
+              field={
+                confirmPasswordLabel?.jsonValue
+                  ? confirmPasswordLabel?.jsonValue
+                  : {
+                      value: 'Confirm Password',
+                    }
+              }
+            />
           </label>
           <input
             onChange={(e) => setConfirmPasswordValue(e.target.value)}
@@ -215,7 +256,15 @@ const ChangePassword = (): JSX.Element => {
               <Spinner className={changepasswordcss.spinner} animation="border" />
             </span>
           ) : (
-            'Change Password'
+            <Text
+              field={
+                changePasswordBtn?.jsonValue
+                  ? changePasswordBtn?.jsonValue
+                  : {
+                      value: 'Change Password',
+                    }
+              }
+            />
           )}
           <i className={changepasswordcss['button__icon fas fa-chevron-right']}></i>
         </button>

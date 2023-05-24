@@ -9,8 +9,12 @@ export const addPeersPaginationUrl = `${javaHost}/graph-service/api/v1/graph/pee
 export const editCommentUrl = `${javaHost}/graph-service/api/v1/graph/post/comment`;
 export const voteInPollUrl = `${javaHost}/graph-service/api/v1/graph/post/poll/`;
 export const getMyBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/my-blogs`;
-export const getBookmarkedMyBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/my-blogs`;
-export const getSuggestedBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/bookmarked-blogs`;
+export const getSuggestedBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/suggestion-blogs`;
+export const getBookmarkedMyBlogsUrl = `${javaHost}/graph-service/api/v1/graph/post/bookmarked-blogs`;
+export const getBookmarkedEvntsUrl = `${javaHost}/graph-service/api/v1/graph/post/bookmarked-blogs`;
+export const getMyEventsUrl = `${javaHost}/graph-service/search`;
+export const getUpcomingEventsUrl = `${javaHost}/graph-service/search?wildcard=true`;
+
 export const viewProfileLinkUrl = `/viewProfile?id=`;
 export const getUserUrl = `${javaHost}/user-service/api/v1/users/`;
 export const uploadBannerUrl = `${javaHost}/user-service/api/v1/users/upload-profile-picture?banner=Y`;
@@ -22,6 +26,8 @@ export const getFirstTenMemberListUrl = `${javaHost}/graph-service/api/v1/graph/
 export const getFirstTenGroupListUrl = `${javaHost}/graph-service/api/v1/graph/group?page=0&size=10`;
 export const joinGroupUrl = `${javaHost}/graph-service/api/v1/graph/group/`;
 export const leaveGroupUrl = `${javaHost}/graph-service/api/v1/graph/group/`;
+export const updateGroupUrl = `${javaHost}/graph-service/api/v1/graph/group/`;
+export const createGroupUrl = `${javaHost}/graph-service/api/v1/graph/group`;
 
 export const Algorithm = 'aes-256-cbc';
 export const Key = [

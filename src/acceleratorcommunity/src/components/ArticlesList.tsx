@@ -17,6 +17,7 @@ import WebContext from 'src/Context/WebContext';
 import facebook from '../assets/images/facebook.svg';
 import SideBar from './SideBar';
 import SuggestiveSearchCall from 'src/API/SuggestiveApi';
+import darkModeCss from '../assets/darkTheme.module.css';
 import config from '../temp/config';
 import ToastNotification from './ToastNotification';
 import BlogListingSkeleton from './skeletons/BlogListingSkeleton';
@@ -105,9 +106,13 @@ type DataSource = {
 // };
 
 const ArticlesList = (props: ArticlesListProps): JSX.Element => {
-  const { userToken, objectId } = { ...useContext(WebContext) };
-
   const [Loading, setLoading] = useState<boolean>(false);
+  const { userToken, objectId, darkMode} = { ...useContext(WebContext) };
+
+
+
+
+
 
   useEffect(() => {
     if (userToken !== null && userToken !== undefined && userToken !== '') {
@@ -342,27 +347,26 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
         scroll={scroll}
         bookmarkTYpeClicked={bookmarkTYpeClicked}
       /> */}
-        <div>
-          {Loading ? (
-            bookmarkLists?.length > 0 ? (
-              bookmarkLists?.map((l: any, i: any) => {
-                return (
-                  <div key={i} className={ArticlesListCss.wrapper}>
-                    <div className={ArticlesListCss.leftSection}>
-                      <img
-                        className={ArticlesListCss.leftSectionImage}
-                        src={config?.sitecoreApiHost + l?.sourceAsMap?.Image}
-                      />
+        <div className={ArticlesListCss.contentwrapper}>
+          {Loading?bookmarkLists?.length > 0 ? (
+            bookmarkLists?.map((l: any, i: any) => {
+              return (
+                <div key={i} className={`${ArticlesListCss.wrapper} ${darkMode ? darkModeCss.grey_3 : ''}`}>
+                  <div className={ArticlesListCss.leftSection}>
+                    <img
+                      className={ArticlesListCss.leftSectionImage}
+                      src={config?.sitecoreApiHost + l?.sourceAsMap?.Image}
+                    />
+                  </div>
+                  <div className={ArticlesListCss.rightSection}>
+                  <div className={`${ArticlesListCss.title} ${darkMode ? darkModeCss.text_green : ''}`}>{l?.sourceAsMap?.Title}</div>
+                    <div className={`${ArticlesListCss.cardDescription} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+                      <p>
+                        {l?.sourceAsMap?.ShortDescription}
+                        {/* <Link href="/readMorePage">Read More </Link> */}
+                      </p>
                     </div>
-                    <div className={ArticlesListCss.rightSection}>
-                      <div className={ArticlesListCss.title}>{l?.sourceAsMap?.Title}</div>
-                      <div className={ArticlesListCss.cardDescription}>
-                        <p>
-                          {l?.sourceAsMap?.ShortDescription}
-                          {/* <Link href="/readMorePage">Read More </Link> */}
-                        </p>
-                      </div>
-                      {/* <div className={ArticlesListCss.cardTags}>
+                    {/* <div className={ArticlesListCss.cardTags}>
                       {l?.tags?.targetItems?.map((m: any, j: any) => {
                         return (
                           <div key={j} className={ArticlesListCss.cardTag}>
@@ -373,65 +377,61 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                         );
                       })}
                     </div> */}
-                      <div className={ArticlesListCss.infoWrapper}>
-                        <div className={ArticlesListCss.infoWrapperTag}>
-                          <NextImage
-                            className={ArticlesListCss.infowrapperImage}
-                            field={sourceImage}
-                            editable={true}
-                          />
-                          <div className={ArticlesListCss.infoWrapperTagData}>
-                            {l?.sourceAsMap?.AuthorName}{' '}
-                          </div>
-                        </div>
-                        <div className={ArticlesListCss.infoWrapperTag}>
-                          <NextImage
-                            className={ArticlesListCss.infowrapperImage}
-                            field={calendarImage}
-                            editable={true}
-                          />
-                          <div className={ArticlesListCss.infoWrapperTagData}>
-                            {splitDate(l?.sourceAsMap?.Date)}
-                          </div>
+                    <div className={ArticlesListCss.infoWrapper}>
+                    <div className={`${ArticlesListCss.infoWrapperTag} ${darkMode ? darkModeCss.text_light : ''}`}>
+                        <NextImage
+                          className={ArticlesListCss.infowrapperImage}
+                          field={sourceImage}
+                          editable={true}
+                        />
+                        <div className={ArticlesListCss.infoWrapperTagData}>
+                          {l?.sourceAsMap?.AuthorName}{' '}
                         </div>
                       </div>
+                      <div className={`${ArticlesListCss.infoWrapperTag} ${darkMode ? darkModeCss.text_light : ''}`}>
 
-                      <div className={ArticlesListCss.buttons}>
-                        <button
-                          className={ArticlesListCss.button}
-                          onClick={() =>
-                            submitBookmark(
-                              objectId,
-                              l?.sourceAsMap?.Id,
-                              l?.sourceAsMap?.Title,
-                              // l?.sourceAsMap?.ShortDescription
-                            )
+                        <NextImage
+                          className={ArticlesListCss.infowrapperImage}
+                          field={calendarImage}
+                          editable={true}
+                        />
+                        <div className={ArticlesListCss.infoWrapperTagData}>
+                          {splitDate(l?.sourceAsMap?.Date)}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={ArticlesListCss.buttons}>
+                      <button
+                        className={ArticlesListCss.button}
+                        onClick={() =>
+                          submitBookmark(
+                            objectId,
+                            l?.sourceAsMap?.Id,
+                            l?.sourceAsMap?.Title,
+                            // l?.sourceAsMap?.ShortDescription
+                          )
+                        }
+                      >
+                        <NextImage
+                          field={
+                            selectedArticle?.includes(l?.sourceAsMap?.Id) ? activeBookmarkImage : bookmarkImage
                           }
-                        >
-                          <NextImage
-                            field={
-                              selectedArticle?.includes(l?.sourceAsMap?.Id)
-                                ? activeBookmarkImage
-                                : bookmarkImage
-                            }
-                            id="bookamrksImage"
-                            editable={true}
-                            title="Add To My Collection"
-                          />
-                        </button>
-                        {console.log('khatam karo bhai', l?.sourceAsMap?.Id)}
-                        {console.log(
-                          'shareArticle?.includes(l?.sourceAsMap?.Id)',
-                          shareArticle?.includes(l?.sourceAsMap?.Id)
-                        )}
-
-                        <button
-                          className={ArticlesListCss.button}
-                          onClick={() => handleShareClick(l?.sourceAsMap?.Id)}
-                        >
-                          <NextImage field={shareImage} editable={true} title="Share" />
-                        </button>
-                      </div>
+                          id="bookamrksImage"
+                          editable={true}
+                          width={100}
+                          height={100}
+                          title="Add To My Collection"
+                        />
+                      </button>
+                      <button
+                        className={ArticlesListCss.button}
+                        onClick={() => handleShareClick(l?.sourceAsMap?.Id)}
+                      >
+                        <NextImage field={shareImage} editable={true} width={100}
+                          height={100} title="Share" />
+                      </button>
+                    </div>
 
                       {shareArticle?.includes(l?.sourceAsMap?.Id) && (
                         <div className={ArticlesListCss.sharePopups}>
@@ -443,8 +443,6 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                               width={25}
                               height={25}
                             />
-
-                            {console.log('============', l?.sourceAsMap)}
                             <Link
                               href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=whatsapp&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
                             >
@@ -471,50 +469,49 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                             </Link>
                           </div>
 
-                          <div className={ArticlesListCss.sharePopup}>
-                            <NextImage
-                              className={ArticlesListCss.whatsappImage}
-                              field={linkedin}
-                              editable={true}
-                              width={25}
-                              height={25}
-                            />
-                            <Link
-                              href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=linkedIn&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
-                            >
-                              <a className={ArticlesListCss.targetIcon} target="_blank">
-                                LinkedIn
-                              </a>
-                            </Link>
-                          </div>
-                          <div className={ArticlesListCss.sharePopup}>
-                            <NextImage
-                              className={ArticlesListCss.whatsappImage}
-                              field={facebook}
-                              editable={true}
-                              width={25}
-                              height={25}
-                            />
-                            <Link
-                              href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=facebook&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
-                            >
-                              <a className={ArticlesListCss.targetIcon} target="_blank">
-                                Facebook
-                              </a>
-                            </Link>
-                          </div>
+                        <div className={ArticlesListCss.sharePopup}>
+                          <NextImage
+                            className={ArticlesListCss.whatsappImage}
+                            field={linkedin}
+                            editable={true}
+                            width={25}
+                            height={25}
+                          />
+                          <Link
+                            href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=linkedIn&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
+                          >
+                            <a className={ArticlesListCss.targetIcon} target="_blank">
+                              LinkedIn
+                            </a>
+                          </Link>
                         </div>
-                      )}
-                    </div>
+                        <div className={ArticlesListCss.sharePopup}>
+                          <NextImage
+                            className={ArticlesListCss.whatsappImage}
+                            field={facebook}
+                            editable={true}
+                            width={25}
+                            height={25}
+                          />
+                          <Link
+                            href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=facebook&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
+                          >
+                            <a className={ArticlesListCss.targetIcon} target="_blank">
+                              Facebook
+                            </a>
+                          </Link>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                );
-              })
-            ) : (
-              <div className={ArticlesListCss.emptyBox}>
-                <h2>Oops there is no content available for this filter !</h2>
-              </div>
-            )
+                </div>
+              );
+            })
           ) : (
+            <div className={`${ArticlesListCss.emptyBox} ${darkMode ? darkModeCss.text_light : ''}`}>
+              <h2>Oops there is no content available for this filter !</h2>
+            </div>
+          ): (
             <BlogListingSkeleton />
           )}
         </div>

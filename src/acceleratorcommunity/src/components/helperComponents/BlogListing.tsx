@@ -67,8 +67,8 @@ function BlogListing() {
   }, [activeTab]);
 
   const router = useRouter();
-  const navigateToEventPage = (event: string) => {
-    router.push(`/event/${event}`);
+  const navigateToEventPage = (id: string) => {
+    router.push(`/post?postId=${id}`);
   };
   console.log('ertyuirwerty', blogList);
   return (
@@ -92,7 +92,10 @@ function BlogListing() {
           {blogList.length > 0 ? (
             <div className={style.blogList}>
               {blogList.map((ele, i) => (
-                <div key={i} className={`${style.blogCard} ${darkMode && darkTheme.darkMode_textBg}`}>
+                <div
+                  key={i}
+                  className={`${style.blogCard} ${darkMode && darkTheme.darkMode_textBg}`}
+                >
                   <div className={style.BlogImage}>
                     <Image
                       style={{ cursor: 'pointer' }}
@@ -111,17 +114,24 @@ function BlogListing() {
                           ? ele.imageUrl
                           : 'https://wwwsitecorecom.azureedge.net/-/media/sitecoresite/images/home/blog/content/sitecore-dx-2023-europe-shows-brands-how-to-get-on-a-composable-path/dx23-europe_blog-hero.jpg?md=20230425T191825Z?mw=716&mh=465&hash=DDF8137DC1F93BF9DA09D5213D6EC547'
                       }
-                      onClick={() => navigateToEventPage(ele.heading)}
+                      onClick={() => navigateToEventPage(ele.id)}
                     />
                   </div>
                   <div>
                     <div className={style.blogCardContent}>
-                      <div className={`${style.blogHeading} ${darkMode && darkTheme.text_green}`} title={ele.heading}>
-                        {ele.heading.length <= 30
+                      <div
+                        className={`${style.blogHeading} ${darkMode && darkTheme.text_green}`}
+                        title={ele.heading}
+                      >
+                        {ele.heading.length <= 70
                           ? ele.heading
-                          : ele.heading.substring(0, 30) + '...'}
+                          : ele.heading.substring(0, 70) + '...'}
                       </div>
-                      <div className={`${style.blogDescription} ${darkMode && darkTheme.text_light}`}>{parser(ele.description)}</div>
+                      <div
+                        className={`${style.blogDescription} ${darkMode && darkTheme.text_light}`}
+                      >
+                        {parser(ele.description)}
+                      </div>
                     </div>
                   </div>
                 </div>

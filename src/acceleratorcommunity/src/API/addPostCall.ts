@@ -2,7 +2,7 @@ import Axios, { AxiosResponse } from 'axios';
 import LogRocket from 'logrocket';
 
 const addPostCall = async (userToken: string | undefined, postObject: any) => {
-  var data = {
+  var data: any = {
     // id: "post_Id12",
     description: postObject?.description,
     mediaList: postObject?.mediaList,
@@ -15,6 +15,9 @@ const addPostCall = async (userToken: string | undefined, postObject: any) => {
     createdOn: 23032023,
     updatedOn: 23032023,
   };
+  if (postObject?.groupId) {
+    data.groupId = postObject.groupId;
+  }
   let addPostURL =
     'https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/post';
   var config = {
