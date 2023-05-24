@@ -25,11 +25,12 @@
   /* width: 20rem; */
   width: 40%;
 }
-
-.leftSection img {
-  border-bottom-left-radius: 14px;
-  border-top-left-radius: 14px;
+.leftSection > img {
+  width: 80%;
+  height: 352px;
 }
+
+
 .rightSection {
   display: flex;
   flex-direction: column;

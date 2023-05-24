@@ -39,7 +39,7 @@ const SearchNews = (props: any) => {
             {data?.Date}
           </div>
           <div className={`${styles.containerDescription}  ${darkMode && darkModeCss.text_light}`}>
-            <DescriptionForSearch description={data?.ShortDescription} />
+            <DescriptionForSearch fromSitecore={true} description={data?.ShortDescription} />
           </div>
         </div>
       </div>

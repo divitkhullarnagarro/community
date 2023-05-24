@@ -11,7 +11,7 @@ const ImageConatiner = (props: any) => {
   const { darkMode } = { ...useContext(WebContext) };
 
   return (
-    <a href={`/post/${id}`} className={styles.link} target="_blank">
+    <a href={`/post?postId=${id}`} className={styles.link} target="_blank">
       {props?.fromALL ? (
         <div className={`${styles.typeHeading} ${darkMode && darkModeCss.text_green}`}>Post</div>
       ) : (
@@ -22,7 +22,7 @@ const ImageConatiner = (props: any) => {
           {props?.fromALL ? '' : <img src={props?.events?.mediaInfoList[0]?.url} alt="eventImg" />}
           <div className={styles.content}>
             <div className={`${styles.eventDescription} ${darkMode && darkModeCss.text_light}`}>
-              <DescriptionForSearch description={props?.events?.description} />
+              <DescriptionForSearch fromSitecore={false} description={props?.events?.description} />
 
               {/* {parser(
                 modifyHtml(

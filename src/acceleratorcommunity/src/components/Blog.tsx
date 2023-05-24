@@ -10,7 +10,7 @@ const Blog = (props: any) => {
   const { darkMode } = { ...useContext(WebContext) };
 
   return (
-    <a href={`/post/${props?.id}`} className={styles.link} target="_blank">
+    <a href={`/post?postId=${props?.id}`} className={styles.link} target="_blank">
       {props?.fromALL ? <div className={`${styles.typeHeading} ${darkMode && darkModeCss.text_green}`}>Blog</div> : ''}
       <div className={`${styles.parentContainer} ${darkMode && darkModeCss.grey_1}`}>
         <div className={styles.imgAndContentContainer}>
@@ -26,7 +26,7 @@ const Blog = (props: any) => {
               )}
             </div>
             <div className={`${styles.eventDescription} ${darkMode && darkModeCss.text_light}`}>
-              <DescriptionForSearch  description={props?.blog?.description}/>
+              <DescriptionForSearch fromSitecore={false} description={props?.blog?.description}/>
               {/* {parser(
                 modifyHtml(
                   props?.blog?.description.length > 2000 ? (
