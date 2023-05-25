@@ -222,7 +222,7 @@
   display: contents;
   height: 100%;
   /* background-color: pink; */
-  width: 835px;
+  width: 100%;
   /* overflow-x: auto;
   overflow-y: auto; */
   display: grid;
@@ -254,7 +254,7 @@
   font-size: 15px;
   height: 20rem;
   width: 100%;
-}
+} 
 /* media queries */
 @media screen and (max-width: 600px) {
   .bodyContainer {
