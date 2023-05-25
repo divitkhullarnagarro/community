@@ -430,79 +430,80 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       >
                         <NextImage field={shareImage} editable={true} width={100}
                           height={100} title="Share" />
+                          {shareArticle?.includes(l?.sourceAsMap?.Id) && (
+                            <div className={`${ArticlesListCss.sharePopups} ${darkMode ? darkModeCss.grey_1 : ''}`}>
+                              <div className={`${ArticlesListCss.sharePopup} ${darkMode ? ArticlesListCss.sharePopupHover : ''}`}>
+                                <NextImage
+                                  className={ArticlesListCss.whatsappImage}
+                                  field={whatsapp}
+                                  editable={true}
+                                  width={25}
+                                  height={25}
+                                />
+                                <Link
+                                  href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=whatsapp&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
+                                >
+                                  <a className={ArticlesListCss.targetIcon} target="_blank">
+                                    WhatsApp
+                                  </a>
+                                </Link>
+                              </div>
+
+                              <div className={`${ArticlesListCss.sharePopup} ${darkMode ? ArticlesListCss.sharePopupHover : ''}`}>
+                                <NextImage
+                                  className={ArticlesListCss.whatsappImage}
+                                  field={twitter}
+                                  editable={true}
+                                  width={25}
+                                  height={25}
+                                />
+                                <Link
+                                  href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=twitter&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
+                                >
+                                  <a className={ArticlesListCss.targetIcon} target="_blank">
+                                    Twitter
+                                  </a>
+                                </Link>
+                              </div>
+
+                            <div className={`${ArticlesListCss.sharePopup} ${darkMode ? ArticlesListCss.sharePopupHover : ''}`}>
+                              <NextImage
+                                className={ArticlesListCss.whatsappImage}
+                                field={linkedin}
+                                editable={true}
+                                width={25}
+                                height={25}
+                              />
+                              <Link
+                                href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=linkedIn&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
+                              >
+                                <a className={ArticlesListCss.targetIcon} target="_blank">
+                                  LinkedIn
+                                </a>
+                              </Link>
+                            </div>
+                            <div className={`${ArticlesListCss.sharePopup} ${darkMode ? ArticlesListCss.sharePopupHover : ''}`}>
+                              <NextImage
+                                className={ArticlesListCss.whatsappImage}
+                                field={facebook}
+                                editable={true}
+                                width={25}
+                                height={25}
+                              />
+                              <Link
+                                href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=facebook&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
+                              >
+                                <a className={ArticlesListCss.targetIcon} target="_blank">
+                                  Facebook
+                                </a>
+                              </Link>
+                            </div>
+                            </div>
+                          )}
                       </button>
                     </div>
 
-                      {shareArticle?.includes(l?.sourceAsMap?.Id) && (
-                        <div className={ArticlesListCss.sharePopups}>
-                          <div className={ArticlesListCss.sharePopup}>
-                            <NextImage
-                              className={ArticlesListCss.whatsappImage}
-                              field={whatsapp}
-                              editable={true}
-                              width={25}
-                              height={25}
-                            />
-                            <Link
-                              href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=whatsapp&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
-                            >
-                              <a className={ArticlesListCss.targetIcon} target="_blank">
-                                WhatsApp
-                              </a>
-                            </Link>
-                          </div>
-
-                          <div className={ArticlesListCss.sharePopup}>
-                            <NextImage
-                              className={ArticlesListCss.whatsappImage}
-                              field={twitter}
-                              editable={true}
-                              width={25}
-                              height={25}
-                            />
-                            <Link
-                              href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=twitter&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
-                            >
-                              <a className={ArticlesListCss.targetIcon} target="_blank">
-                                Twitter
-                              </a>
-                            </Link>
-                          </div>
-
-                        <div className={ArticlesListCss.sharePopup}>
-                          <NextImage
-                            className={ArticlesListCss.whatsappImage}
-                            field={linkedin}
-                            editable={true}
-                            width={25}
-                            height={25}
-                          />
-                          <Link
-                            href={`${props?.fields?.data?.datasource?.linkedIn?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=linkedIn&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
-                          >
-                            <a className={ArticlesListCss.targetIcon} target="_blank">
-                              LinkedIn
-                            </a>
-                          </Link>
-                        </div>
-                        <div className={ArticlesListCss.sharePopup}>
-                          <NextImage
-                            className={ArticlesListCss.whatsappImage}
-                            field={facebook}
-                            editable={true}
-                            width={25}
-                            height={25}
-                          />
-                          <Link
-                            href={`${props?.fields?.data?.datasource?.facebook?.jsonValue?.value}?u=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=facebook&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
-                          >
-                            <a className={ArticlesListCss.targetIcon} target="_blank">
-                              Facebook
-                            </a>
-                          </Link>
-                        </div>
-                      </div>
-                    )}
+                      
                   </div>
                 </div>
               );
