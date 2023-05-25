@@ -130,11 +130,7 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
   return (
     <div className={userProfileCss.userProfileContainer}>
       <Dropdown>
-        <Dropdown.Toggle
-          variant="secondary"
-          id="dropdown-basic"
-          className={userProfileCss.userProfileDropdownBtn}
-        >
+        <Dropdown.Toggle variant="secondary" className={userProfileCss.userProfileDropdownBtn}>
           <img
             src={
               userObject?.profilePictureUrl

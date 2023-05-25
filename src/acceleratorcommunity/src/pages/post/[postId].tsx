@@ -510,11 +510,7 @@ function viewSinglePost(props: any) {
               <div className={specificPostCss.actionContainer}>
                 <button className={specificPostCss.dropDownBtn}>
                   <Dropdown>
-                    <Dropdown.Toggle
-                      variant="secondary"
-                      id="dropdown-basic"
-                      className={styles.dropdownBtn}
-                    >
+                    <Dropdown.Toggle variant="secondary" className={styles.dropdownBtn}>
                       <button
                         onClick={() => {
                           setReportPostId(props?.data?.data?.id);

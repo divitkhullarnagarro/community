@@ -11,7 +11,6 @@ type FollowUnfollowButtonProps = {
 };
 
 const FollowUnfollowButton = (props: FollowUnfollowButtonProps): JSX.Element => {
-  console.log('FollowUnfollowButtonProps', props);
   const { isLoggedIn, userToken, setUserToken } = { ...useContext(WebContext) };
   console.log(isLoggedIn);
 
@@ -61,7 +60,6 @@ const FollowUnfollowButton = (props: FollowUnfollowButtonProps): JSX.Element => 
   const onFollow = async (e: any) => {
     e.preventDefault();
     setTokenFromLocalStorage();
-    console.log("ppppppppppppp",props?.userName)
     let response = await followCall(props?.userName, userToken);
     if (response?.success) {
       changeText(props?.buttonText ?? 'Following');

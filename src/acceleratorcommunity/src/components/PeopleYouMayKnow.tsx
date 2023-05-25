@@ -104,6 +104,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
                 <div key={item?.objectId} className={styles.item}>
                   <Link href={`${viewProfileLinkUrl}${item.objectId}`} passHref={true}>
                     <img
+                      alt="UserProfileImage"
                       className={styles.img}
                       src={item?.profilePictureUrl ? item?.profilePictureUrl : Profile.src}
                       // editable={true}
