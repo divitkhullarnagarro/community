@@ -109,7 +109,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
   const [completeList, setcompleteList] = useState<any>([]);
   const [bookmarkLists, setBookmarkLists] = useState<any>([]);
   const [bookmarkTYpeClicked, setbookmarkTYpeClicked] = useState<any>(['all']);
-  const [showContent, setShowContent] = useState<boolean>(false);
+  const [Loading, setLoading] = useState<boolean>(false);
 
   const [buttonTypes, setbuttonTypes] = useState<any>([]);
 
@@ -196,7 +196,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
 
   useEffect(() => {
     if (bookmarkLists.length > 0) {
-      setShowContent(true);
+      setLoading(false);
     }
     console.log('ran useeffect', bookmarkLists);
   }, [bookmarkLists]);
@@ -302,7 +302,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
           {' '}
           {console.log('bookmarkListsbookmarkLists', bookmarkLists)}
 
-          {showContent ? (
+          {Loading ? (
             <div className={`${darkMode ? darkModeCss.grey_3 : ''}`}>
               <BlogListingSkeleton />
             </div>
