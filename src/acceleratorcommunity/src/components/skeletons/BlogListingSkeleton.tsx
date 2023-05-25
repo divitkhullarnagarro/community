@@ -21,18 +21,20 @@ function BlogListingSkeleton() {
           </div>
         </div> */}
       {/* <div className={style.blogListcontent}> */}
-      <div className={style.blogList}>
-        {blogList.map(() => (
-          <div className={`${style.blogCard} ${style.blogCardLoader}`}>
-            <div className={style.BlogImageLoader}>
-              <Skeleton height={200} style={{ cursor: 'pointer' }}/>
+      <div className={style.blogLoader}>
+        <div className={style.blogList}>
+          {blogList.map(() => (
+            <div className={`${style.blogCard} ${style.blogCardLoader}`}>
+              <div className={style.BlogImageLoader}>
+                <Skeleton height={200} style={{ cursor: 'pointer' }}/>
+              </div>
+              <div className={style.blogCardContentLoader}>
+                <Skeleton height={20} width={'100%'} className={style.blogHeading} />
+                <Skeleton height={20} width={'100%'} className={style.blogDescription} />
+              </div>
             </div>
-            <div className={style.blogCardContentLoader}>
-              <Skeleton height={20} width={'100%'} className={style.blogHeading} />
-              <Skeleton height={20} width={'100%'} className={style.blogDescription} />
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
       {/* </div> */}
       {/* </div> */}

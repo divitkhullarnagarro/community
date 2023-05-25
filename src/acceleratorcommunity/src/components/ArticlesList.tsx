@@ -106,13 +106,8 @@ type DataSource = {
 // };
 
 const ArticlesList = (props: ArticlesListProps): JSX.Element => {
-  const [Loading, setLoading] = useState<boolean>(false);
-  const { userToken, objectId, darkMode} = { ...useContext(WebContext) };
-
-
-
-
-
+  const [Loading, setLoading] = useState<boolean>(true);
+  const { userToken, objectId, darkMode } = { ...useContext(WebContext) };
 
   useEffect(() => {
     if (userToken !== null && userToken !== undefined && userToken !== '') {
@@ -128,18 +123,20 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                 Buttons(response?.data?.data?.hits);
                 setBookmarkLists(response?.data?.data?.hits);
                 setCompleted(response?.data?.data?.hits);
-                setLoading(true);
-              } else if(response?.data?.success === false){
-                setShowNofitication(true);
-                setToastError(true);
-                setToastMessage('Something went wrong');
               }
             }
+            setLoading(false);
+          } else if (response?.data?.success === false) {
+            setShowNofitication(true);
+            setToastError(true);
+            setToastMessage('Something went wrong');
           }
         }
       );
     }
   }, [userToken]);
+
+  
 
   const [bookmarkTYpeClicked, setbookmarkTYpeClicked] = useState<any>(['all']);
   const [buttons, setButtons] = useState<any>([]);
@@ -149,7 +146,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
   const resetToastState = () => {
     setShowNofitication(!showNotification);
     setToastError(false);
-    setToastSuccess(false)
+    setToastSuccess(false);
   };
 
   // const timeToDateParsing = (date: any) => {
@@ -317,7 +314,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     userIdTemp: string | undefined,
     contentId: string,
     // url: string,
-    title: string,
+    title: string
     // comment: string | undefined
   ) => {
     // setTokenFromLocalStorage();
@@ -347,11 +344,18 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
         scroll={scroll}
         bookmarkTYpeClicked={bookmarkTYpeClicked}
       /> */}
-        <div className={ArticlesListCss.contentwrapper}>
-          {Loading?bookmarkLists?.length > 0 ? (
-            bookmarkLists?.map((l: any, i: any) => {
+        {Loading ? (
+          <div className={`${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <BlogListingSkeleton />
+          </div>
+        ) : bookmarkLists?.length > 0 ? (
+          <div className={ArticlesListCss.contentwrapper}>
+            {bookmarkLists?.map((l: any, i: any) => {
               return (
-                <div key={i} className={`${ArticlesListCss.wrapper} ${darkMode ? darkModeCss.grey_3 : ''}`}>
+                <div
+                  key={i}
+                  className={`${ArticlesListCss.wrapper} ${darkMode ? darkModeCss.grey_3 : ''}`}
+                >
                   <div className={ArticlesListCss.leftSection}>
                     <img
                       className={ArticlesListCss.leftSectionImage}
@@ -359,8 +363,18 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                     />
                   </div>
                   <div className={ArticlesListCss.rightSection}>
-                  <div className={`${ArticlesListCss.title} ${darkMode ? darkModeCss.text_green : ''}`}>{l?.sourceAsMap?.Title}</div>
-                    <div className={`${ArticlesListCss.cardDescription} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+                    <div
+                      className={`${ArticlesListCss.title} ${
+                        darkMode ? darkModeCss.text_green : ''
+                      }`}
+                    >
+                      {l?.sourceAsMap?.Title}
+                    </div>
+                    <div
+                      className={`${ArticlesListCss.cardDescription} ${
+                        darkMode ? darkModeCss.test_grey_4 : ''
+                      }`}
+                    >
                       <p>
                         {l?.sourceAsMap?.ShortDescription}
                         {/* <Link href="/readMorePage">Read More </Link> */}
@@ -378,7 +392,11 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                       })}
                     </div> */}
                     <div className={ArticlesListCss.infoWrapper}>
-                    <div className={`${ArticlesListCss.infoWrapperTag} ${darkMode ? darkModeCss.text_light : ''}`}>
+                      <div
+                        className={`${ArticlesListCss.infoWrapperTag} ${
+                          darkMode ? darkModeCss.text_light : ''
+                        }`}
+                      >
                         <NextImage
                           className={ArticlesListCss.infowrapperImage}
                           field={sourceImage}
@@ -388,8 +406,11 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                           {l?.sourceAsMap?.AuthorName}{' '}
                         </div>
                       </div>
-                      <div className={`${ArticlesListCss.infoWrapperTag} ${darkMode ? darkModeCss.text_light : ''}`}>
-
+                      <div
+                        className={`${ArticlesListCss.infoWrapperTag} ${
+                          darkMode ? darkModeCss.text_light : ''
+                        }`}
+                      >
                         <NextImage
                           className={ArticlesListCss.infowrapperImage}
                           field={calendarImage}
@@ -408,14 +429,16 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                           submitBookmark(
                             objectId,
                             l?.sourceAsMap?.Id,
-                            l?.sourceAsMap?.Title,
+                            l?.sourceAsMap?.Title
                             // l?.sourceAsMap?.ShortDescription
                           )
                         }
                       >
                         <NextImage
                           field={
-                            selectedArticle?.includes(l?.sourceAsMap?.Id) ? activeBookmarkImage : bookmarkImage
+                            selectedArticle?.includes(l?.sourceAsMap?.Id)
+                              ? activeBookmarkImage
+                              : bookmarkImage
                           }
                           id="bookamrksImage"
                           editable={true}
@@ -507,15 +530,13 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                   </div>
                 </div>
               );
-            })
-          ) : (
-            <div className={`${ArticlesListCss.emptyBox} ${darkMode ? darkModeCss.text_light : ''}`}>
-              <h2>Oops there is no content available for this filter !</h2>
-            </div>
-          ): (
-            <BlogListingSkeleton />
-          )}
-        </div>
+            })}
+          </div>
+        ) : (
+          <div className={`${ArticlesListCss.emptyBox} ${darkMode ? darkModeCss.text_light : ''}`}>
+            <h2>Oops there is no content available for this filter !</h2>
+          </div>
+        )}
         {showNotification && (
           <ToastNotification
             showNotification={showNotification}
