@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import WebContext from '../Context/WebContext';
 import styles from '../assets/blockeduser.module.css';
 import { Field, NextImage, Text } from '@sitecore-jss/sitecore-jss-nextjs';
-import { Modal, Spinner } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import moreLogo from '../assets/images/moreLogo.svg';
 // import Email from '../assets/images/EmailIcon.jpg';
 import { useRouter } from 'next/router';
@@ -14,6 +14,7 @@ import Image from 'next/image';
 import unBlockLogo from '../assets/images/UnblockUser.svg';
 import darkModeCss from '../assets/darkTheme.module.css';
 import Profile from '../assets/images/ProfilePic.jpeg';
+import DotLoader from './DotLoader';
 
 type blockedUserFields = {
   firstName: string;
@@ -134,12 +135,7 @@ function BlockedUser(props: blockedUserProps) {
                 Cancel
               </button>
               <button className={styles.unBlockConfirm} onClick={() => onUserUnblocked()}>
-                Confirm
-                {showSpinner ? (
-                  <Spinner style={{ marginLeft: '5px', width: '20px', height: '20px' }} />
-                ) : (
-                  <></>
-                )}
+                {showSpinner ? <DotLoader dotColor="#ffffff" /> : <>Confirm</>}
               </button>
             </Modal.Footer>
           </div>
