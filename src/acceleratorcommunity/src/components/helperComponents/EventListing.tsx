@@ -10,7 +10,7 @@ import {
   getUpcomingEventsUrl,
 } from 'assets/helpers/constants';
 import WebContext from '../../Context/WebContext';
-import Image from 'next/image';
+// import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import AxiosRequest from 'src/API/AxiosRequest';
@@ -148,7 +148,7 @@ const EventListing = (): JSX.Element => {
                   key={i}
                   className={`${style.eventCard} ${darkMode && darkTheme.darkMode_textBg}`}
                 >
-                  <Image
+                  <img
                     style={{ cursor: 'pointer' }}
                     src={
                       EventImage[ele?.sourceAsMap?.event?.eventType]
@@ -160,9 +160,9 @@ const EventListing = (): JSX.Element => {
                     alt={ele?.sourceAsMap?.event?.title}
                     height={180}
                     width={280}
-                    placeholder="blur"
+                    // placeholder="blur"
                     //   blurDataURL={placeholderImg.src}
-                    blurDataURL={'placeholderImg.src'}
+                    // blurDataURL={'placeholderImg.src'}
                     onClick={() => navigateToEventPage(ele?.id, ele?.isSitecoreEvent)}
                   />
                   <div className={style.eventCardContent}>
