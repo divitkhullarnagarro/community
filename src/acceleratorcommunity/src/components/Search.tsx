@@ -193,7 +193,12 @@ const Search = (props: SearchProps): JSX.Element => {
       <div className={searchCss.container}>
         <div className={searchCss.searchBox}>
           <form className={searchCss.searchForm}>
-            <button type="submit" className={searchCss.searchBtn} onClick={handleSearch}>
+            <button
+              type="submit"
+              className={searchCss.searchBtn}
+              onClick={handleSearch}
+              aria-label="search"
+            >
               <NextImage
                 className={searchCss.img}
                 field={props?.fields?.data?.datasource?.image?.jsonValue?.value}

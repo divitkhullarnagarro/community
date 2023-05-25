@@ -21,7 +21,7 @@ const SearchGroupResult = () => {
           <div className={styles.memberCount}>2000 members </div>
         </div>
         <Dropdown>
-          <Dropdown.Toggle variant="secondary" id="dropdown-basic" className={styles.dropdownBtn}>
+          <Dropdown.Toggle variant="secondary" className={styles.dropdownBtn}>
             <button className={styles.btn}>
               <img
                 className="postMoreOptionsImage"

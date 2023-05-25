@@ -11,7 +11,6 @@ const followCall = async (userName: string| undefined, userToken : string | unde
     };
     const response = await Axios.post<any, AxiosResponse<any>>(URL, null, config)
         .then((response: any) => {
-            console.log("followUnfollow", response);
             return response?.data;
         })
         .catch((error: any) => {
@@ -36,7 +35,6 @@ export const UnfollowCall = async (userName: string| undefined, userToken : stri
         };
         const response = await Axios.post<any, AxiosResponse<any>>(URL, null, config)
             .then((response: any) => {
-                console.log("followUnfollow", response);
                 return response;
             })
             .catch((error: any) => {

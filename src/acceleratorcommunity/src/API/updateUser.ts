@@ -11,7 +11,6 @@ const updateUuserCall = async (token: string | undefined
         },
         data: data
     };
-    console.log("dataaaaaaaaaaaaaa", data)
     const response = await Axios.put<any, AxiosResponse<any>>(getUserURL, data, config)
         .then((response: any) => {
             console.log("response", response)

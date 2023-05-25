@@ -6,7 +6,6 @@ import {
 import Axios, { AxiosResponse } from 'axios';
 
 const allPeersCall = async (userToken: string | undefined) => {
-  console.log('getAllPears token in call', `Bearer ${userToken}`);
   var config = {
     headers: {
       Authorization: `Bearer ${userToken}`,
@@ -15,7 +14,6 @@ const allPeersCall = async (userToken: string | undefined) => {
   };
   try {
     const response = await Axios.get<any, AxiosResponse<any>>(addAllPeersUrl, config);
-    console.log('getAllPears response', response);
     return response;
   } catch (e) {
     if (typeof e === 'string') {
