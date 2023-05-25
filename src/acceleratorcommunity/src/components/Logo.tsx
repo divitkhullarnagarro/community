@@ -12,6 +12,7 @@ const Logo = (props: LogoInterface): JSX.Element => {
     <div className={LogoStyles.container}>
       <Link href={`${logoURL?.jsonValue?.value?.href}`} passHref={true}>
         <Image
+          alt="CommunitySolutionsLogo"
           style={{ cursor: 'pointer' }}
           src={image?.jsonValue?.value?.src ? image?.jsonValue?.value?.src : logo}
           // editable={true}

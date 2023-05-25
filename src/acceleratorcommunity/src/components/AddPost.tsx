@@ -1401,11 +1401,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                 </div>
                 <div className="postHeaderRight">
                   <Dropdown>
-                    <Dropdown.Toggle
-                      variant="secondary"
-                      id="dropdown-basic"
-                      className={styles.dropdownBtn}
-                    >
+                    <Dropdown.Toggle variant="secondary" className={styles.dropdownBtn}>
                       <button
                         onClick={() => {
                           setReportPostId(post?.id);
@@ -1698,11 +1694,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
 
                 <div className={styles.shareContainer}>
                   <Dropdown style={{ alignItems: 'center', display: 'flex' }}>
-                    <Dropdown.Toggle
-                      variant="secondary"
-                      id="dropdown-basic"
-                      className={ShowShareCss.dropdownBtn}
-                    >
+                    <Dropdown.Toggle variant="secondary" className={ShowShareCss.dropdownBtn}>
                       <button
                         onClick={() => handleShowShare(post?.id, !post?.showShare)}
                         className={styles.shareButton}
@@ -3627,7 +3619,6 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                             <Dropdown className="eventTypeDropdown">
                               <Dropdown.Toggle
                                 variant="secondary"
-                                id="dropdown-basic"
                                 style={{
                                   width: '100%',
                                 }}
