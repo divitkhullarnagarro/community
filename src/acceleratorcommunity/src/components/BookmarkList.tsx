@@ -305,7 +305,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
             {showContent?bookmarkLists?.length > 0 ? (
               bookmarkLists.map((l: any, i: any) => {
                 return (
-                  <div key={i} className={bookmarkCss.contentTypeContainers}>
+                  <div key={i} className={`${bookmarkCss.contentTypeContainers} ${darkMode ? darkModeCss.grey_3 : ''}`}>
                     {/* <div className={bookmarkCss.contentTypeContainer}> */}
                     <div className={bookmarkCss.leftContainer}>
                       {/* <h4>{l?.contentType?.targetItem?.name}</h4> */}
