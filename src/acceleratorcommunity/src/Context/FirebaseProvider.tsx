@@ -84,7 +84,7 @@ const FirebaseProvider = (props: any) => {
         .then((registration) => {
           if (registration) {
             registerServiceWorker();
-            console.log('Service worker is registered and active');
+            // console.log('Service worker is registered and active');
           } else {
             registerServiceWorker();
           }
@@ -102,7 +102,8 @@ const FirebaseProvider = (props: any) => {
           scope: '/',
         })
         .then(function (registration) {
-          console.log('Registration successful, scope is:', registration.scope);
+          // console.log('Registration successful, scope is:', registration.scope);
+          registration;
         })
         .catch(function (err) {
           console.log('Service worker registration failed, error:', err);
@@ -116,7 +117,7 @@ const FirebaseProvider = (props: any) => {
         const messaging = getMessaging(firebaseInstance);
         if (messaging !== undefined) {
           const isTokenDeleted = await deleteToken(messaging);
-          console.log('tokenDeleted', isTokenDeleted);
+          // console.log('tokenDeleted', isTokenDeleted);
           return isTokenDeleted;
         }
       } catch (error) {
