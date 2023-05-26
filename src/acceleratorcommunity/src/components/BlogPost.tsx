@@ -10,7 +10,7 @@ import { toolbar } from 'assets/helpers/constants';
 import { EditorState, convertToRaw } from 'draft-js';
 import { EditorProps } from 'react-draft-wysiwyg';
 import dynamic from 'next/dynamic';
-import allPeersCall from 'src/API/getPeers';
+// import allPeersCall from 'src/API/getPeers';
 import Button from 'react-bootstrap/Button';
 import addArticleCall from '../API/addArticleCall';
 import { useRouter } from 'next/router';
@@ -19,7 +19,7 @@ import imagelogo from '../assets/images/imagelogo.svg';
 import DotLoader from './DotLoader';
 const TextEditor = (): JSX.Element => {
   const router = useRouter();
-  const { userToken } = {
+  const { userToken, allPeersList } = {
     ...useContext(WebContext),
   };
   let [postText, setPostText] = useState('');
@@ -49,22 +49,24 @@ const TextEditor = (): JSX.Element => {
   //   });
   // }, [editorState]);
 
-  const getAllPears = async () => {
-    const res = await allPeersCall(userToken);
-    const data = res.data.data;
-    const userData = data.map((ele: any) => {
-      return {
-        text: ele.firstName + ' ' + ele.lastName,
-        value: ele.firstName + ' ' + ele.lastName,
-        url: '/profile/' + ele.objectId,
-        objectId: ele.objectId,
-      };
-    });
+  const getAllPears = () => {
+    // const res = await allPeersCall(userToken);
+    // const data = res.data.data;
+    const userData =
+      allPeersList &&
+      allPeersList.map((ele: any) => {
+        return {
+          text: ele.firstName + ' ' + ele.lastName,
+          value: ele.firstName + ' ' + ele.lastName,
+          url: '/profile/' + ele.objectId,
+          objectId: ele.objectId,
+        };
+      });
     setMentionUserData(userData);
   };
   useEffect(() => {
     getAllPears();
-  }, []);
+  }, [allPeersList]);
 
   useEffect(() => {
     const rawEditorContent = convertToRaw(editorState.getCurrentContent());
