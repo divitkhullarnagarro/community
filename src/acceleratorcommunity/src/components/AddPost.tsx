@@ -32,7 +32,7 @@ import downVote from '../assets/images/dislikeIcon.svg';
 import CreateModalPopup from './helperComponents/CreateModalPopup';
 import AxiosRequest from 'src/API/AxiosRequest';
 import {
-  addAllPeersUrl,
+  // addAllPeersUrl,
   editCommentUrl,
   viewProfileLinkUrl,
   voteInPollUrl,
@@ -186,7 +186,7 @@ type BlockUserFields = {
 };
 
 const AddPost = (props: AddPostProps): JSX.Element => {
-  const { userToken, objectId, userObject, darkMode, wantRerender } = {
+  const { userToken, objectId, userObject, darkMode, wantRerender, allPeersList } = {
     ...useContext(WebContext),
   };
 
@@ -280,7 +280,10 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   };
 
   useEffect(() => {
-    getGroupInfo(groupId);
+    groupId = params.get('groupId') as string;
+    if (groupId) {
+      getGroupInfo(groupId);
+    }
   }, [groupId, wantRerender]);
 
   useEffect(() => {
@@ -331,7 +334,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
       setGlobalPostType('TEXT_POST');
     }
   }, [videoLink, file, docs, eventPost, pollPost]);
-
+  // console.log('allpeerlist', allPeersList);
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const [addedPeers, setAddedPeers] = useState<string[]>([] as string[]);
   const [mentionUserData, setMentionUserData] = useState<
@@ -343,22 +346,24 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   >([] as { text: string; value: string; url: string }[]);
   // const currentCount = editorState.getCurrentContent().getPlainText().length;
 
-  const getAllPears = async () => {
-    const res: any = await AxiosRequest({ url: addAllPeersUrl, method: 'GET' });
-    const data = res?.data;
-    const userData = data?.map((ele: any) => {
-      return {
-        text: ele?.firstName + ' ' + ele?.lastName,
-        value: ele?.firstName + ' ' + ele?.lastName,
-        url: `${viewProfileLinkUrl}${ele?.objectId}`,
-        objectId: ele?.objectId,
-      };
-    });
+  const getAllPears = () => {
+    // const res: any = await AxiosRequest({ url: addAllPeersUrl, method: 'GET' });
+    // const data = res?.data;
+    const userData =
+      allPeersList &&
+      allPeersList?.map((ele: any) => {
+        return {
+          text: ele?.firstName + ' ' + ele?.lastName,
+          value: ele?.firstName + ' ' + ele?.lastName,
+          url: `${viewProfileLinkUrl}${ele?.objectId}`,
+          objectId: ele?.objectId,
+        };
+      });
     setMentionUserData(userData);
   };
   useEffect(() => {
     getAllPears();
-  }, []);
+  }, [allPeersList]);
 
   useEffect(() => {
     const rawEditorContent = convertToRaw(editorState.getCurrentContent());
@@ -472,7 +477,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
           }
         });
     }
-  }, [getPostUrl]);
+  }, [getPostUrl, wantRerender, groupId]);
 
   useEffect(() => {
     if (ifNoMoreData == true) {

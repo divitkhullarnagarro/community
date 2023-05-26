@@ -34,7 +34,7 @@ type peerFriendFields = {
 
 const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
   const [peerFriendList, setPeerFriendList] = useState<peerFriendFields[]>([]);
-  const { userToken, darkMode } = { ...useContext(WebContext) };
+  const { userToken, darkMode, setAllPeersList } = { ...useContext(WebContext) };
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isWidgetView] = useState(props?.params?.IsWidgetView === '1');
   const skeletonDummyArr = [1, 2, 3, 4, 5, 6];
@@ -45,6 +45,7 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
     if (response?.data) {
       setIsDataLoaded(true);
       setPeerFriendList(response?.data?.data);
+      setAllPeersList && setAllPeersList(response?.data?.data);
     }
   };
 

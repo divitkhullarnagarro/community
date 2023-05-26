@@ -15,6 +15,8 @@ type contextType = {
   setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
   wantRerender: boolean;
   setWantRerender: React.Dispatch<React.SetStateAction<boolean>>;
+  allPeersList: any;
+  setAllPeersList: React.Dispatch<React.SetStateAction<any>>;
 };
 const WebContext = React.createContext<contextType | null | undefined>(null);
 
