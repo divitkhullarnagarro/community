@@ -47,7 +47,7 @@ self.addEventListener('push', (event) => {
 });
 
 self.addEventListener('notificationclick', (event) => {
-  console.log('notificationclick', event);
+  // console.log('notificationclick', event);
   event.notification.close();
   if (
     event?.notification?.data?.message?.type === 'LIKE_ON_POST' ||

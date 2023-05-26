@@ -11,8 +11,8 @@ type FollowUnfollowButtonProps = {
 };
 
 const FollowUnfollowButton = (props: FollowUnfollowButtonProps): JSX.Element => {
-  const { isLoggedIn, userToken, setUserToken } = { ...useContext(WebContext) };
-  console.log(isLoggedIn);
+  const { userToken, setUserToken } = { ...useContext(WebContext) };
+  // console.log(isLoggedIn);
 
   // state variables
   const [showForm1, setShowForm] = useState(false);

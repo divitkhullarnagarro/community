@@ -7,7 +7,7 @@ import SideSearchFilter from './sideSearchFilter';
 import { SearchSkeletonForEvents } from './skeletons/SearchSkeleton';
 
 const EventSearchContainer = (props: any) => {
-  console.log('llqlalalalalalalaa', props);
+  // console.log('llqlalalalalalalaa', props);
   useEffect(() => {
     setEvents(props?.searchedData);
   }, [props?.searchedData]);
@@ -44,7 +44,7 @@ const EventSearchContainer = (props: any) => {
     setSearchedFilterState(e);
   };
 
-  console.log('EventsEventsEventsEventsEventsEventsEventsEventsEvents', Events);
+  // console.log('EventsEventsEventsEventsEventsEventsEventsEventsEvents', Events);
 
   const filterdData = (e: any) => {
     e.preventDefault();
@@ -91,7 +91,7 @@ const EventSearchContainer = (props: any) => {
       var today = new Date();
       today.setHours(0, 0, 0, 0);
       let upcomingDateEvents = props?.searchedData?.filter((item: any) => {
-        console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', item?.sourceAsMap?.event?.eventDate);
+        // console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', item?.sourceAsMap?.event?.eventDate);
         return item?.index === 'accelerator-event' || item?.index === 'accelerator-sitecore-event'
           ? new Date(item?.sourceAsMap?.event?.eventDate) > today
           : convetSitecoreDateToMicroservicesType(item?.sourceAsMap?.Date, event);

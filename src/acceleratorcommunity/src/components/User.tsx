@@ -7,7 +7,7 @@ import { Button, Modal } from 'react-bootstrap';
 import style from '../assets/events.module.css';
 
 const User = (props: any) => {
-  console.log('users', props);
+  // console.log('users', props);
   const { userToken, setUserToken, objectId } = { ...useContext(WebContext) };
 
   const [followButtonText, setButtonText] = useState(props?.buttonText ?? 'Follow');

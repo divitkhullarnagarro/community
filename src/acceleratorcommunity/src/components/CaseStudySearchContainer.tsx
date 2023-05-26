@@ -6,7 +6,7 @@ import darkModeCss from '../assets/darkTheme.module.css';
 import WebContext from 'src/Context/WebContext';
 
 const CaseStudySearchContainer = (props: any) => {
-  console.log('====================', props);
+  // console.log('====================', props);
   const { darkMode } = {
     ...useContext(WebContext),
   };
@@ -20,7 +20,7 @@ const CaseStudySearchContainer = (props: any) => {
         <GenericSkeletonForSearch count={5} />
       ) : props?.searchedData?.length > 0 ? (
         props?.searchedData?.map((data: any) => {
-          return <SearchNews  journal={data?.sourceAsMap} />;
+          return <SearchNews journal={data?.sourceAsMap} />;
         })
       ) : (
         <div className={styles.forNoData}>No Case study found</div>

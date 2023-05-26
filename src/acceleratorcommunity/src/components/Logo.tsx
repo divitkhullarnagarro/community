@@ -6,7 +6,7 @@ import logo from '../assets/images/CommunityLogo.svg';
 import LogoStyles from '../assets/logo.module.css';
 
 const Logo = (props: LogoInterface): JSX.Element => {
-  console.log('logoProps', props.fields.data.datasource);
+  // console.log('logoProps', props.fields.data.datasource);
   const { image, logoURL } = props?.fields?.data?.datasource;
   return (
     <div className={LogoStyles.container}>

@@ -11,7 +11,7 @@ const Event = (props: any) => {
   } else {
     data = props?.events;
   }
-  console.log("+++++++++++++++++++++++++++++++", props);
+  // console.log("+++++++++++++++++++++++++++++++", props);
   const id = props?.events?.id;
   const splitDateOnly = (date: any) => {
     const dateOnly = date?.split('T')[0];

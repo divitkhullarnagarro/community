@@ -77,6 +77,6 @@ export default function styleMarginPadding(props: ComponentProps) {
     };
   }
 
-  console.log('margin', styleDiv);
+  // console.log('margin', styleDiv);
   return styleDiv;
 }

@@ -7,7 +7,7 @@ import { SearchSkeletonForUser } from './skeletons/SearchSkeleton';
 import style from '../assets/searchFilterContainer.module.css';
 
 const SearchUserContainer = (props: any) => {
-  console.log("props?.searchedData",props)
+  // console.log("props?.searchedData",props)
   const { darkMode } = {
     ...useContext(WebContext),
   };
@@ -24,7 +24,9 @@ const SearchUserContainer = (props: any) => {
                 return data?.index === 'accelerator-user' ? <User user={data?.sourceAsMap} /> : '';
               })
             ) : (
-              <div className={`${style.forNoData} ${darkMode && darkModeCss.text_light}`}>No User Found</div>
+              <div className={`${style.forNoData} ${darkMode && darkModeCss.text_light}`}>
+                No User Found
+              </div>
             )}
           </>
         )}
