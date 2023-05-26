@@ -1,8 +1,7 @@
 import Axios, { AxiosResponse } from 'axios';
 
-
 const bookmark = async (
-  objectId:string|undefined,
+  objectId: string | undefined,
   contentId: string,
   // url:string,
   title: string,
@@ -27,9 +26,9 @@ const bookmark = async (
     },
     data: data,
   };
-  const response = await Axios.post<any, AxiosResponse<any>>(URL,data, config)
+  const response = await Axios.post<any, AxiosResponse<any>>(URL, data, config)
     .then((response: any) => {
-      console.log('Added to you Collection', response);
+      // console.log('Added to you Collection', response);
       return response?.data;
     })
     .catch((error: any) => {

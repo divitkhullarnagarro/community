@@ -16,11 +16,11 @@ const allPeersCall = async (userToken: string | undefined) => {
     const response = await Axios.get<any, AxiosResponse<any>>(addAllPeersUrl, config);
     return response;
   } catch (e) {
-    if (typeof e === 'string') {
-      console.log('getAllPears', e.toUpperCase());
-    } else if (e instanceof Error) {
-      console.log('getAllPears', e.message);
-    }
+    // if (typeof e === 'string') {
+    //   console.log('getAllPears', e.toUpperCase());
+    // } else if (e instanceof Error) {
+    //   console.log('getAllPears', e.message);
+    // }
     return {
       data: { data: [] },
     };

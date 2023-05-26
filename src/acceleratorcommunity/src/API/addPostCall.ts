@@ -38,10 +38,10 @@ const addPostCall = async (userToken: string | undefined, postObject: any) => {
         userId: 'USER_ID',
         pageName: 'MyPage',
       });
-      Axios.post<any, AxiosResponse<any>>('/api/loggerApi', { error: error }).then((res) => {
-        console.log('res', res);
-      });
-      console.error(error);
+      // Axios.post<any, AxiosResponse<any>>('/api/loggerApi', { error: error }).then((res) => {
+      //   console.log('res', res);
+      // });
+      // console.error(error);
     });
   return response;
 };

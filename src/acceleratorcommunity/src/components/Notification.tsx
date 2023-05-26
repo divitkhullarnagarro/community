@@ -128,7 +128,8 @@ const Notification = (props: NotificationProps): JSX.Element => {
       url: `https://accelerator-api-management.azure-api.net/graph-service/api/v1/map-uuid?uuid=${fcm_token}`,
     })
       .then((response: any) => {
-        console.log('APIResponseFCM', response);
+        // console.log('APIResponseFCM', response);
+        response;
       })
       .catch((err: any) => {
         console.log(err);
