@@ -136,8 +136,6 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     }
   }, [userToken]);
 
-  
-
   const [bookmarkTYpeClicked, setbookmarkTYpeClicked] = useState<any>(['all']);
   const [buttons, setButtons] = useState<any>([]);
   const [showNotification, setShowNofitication] = useState(false);
@@ -156,14 +154,14 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
   // };
 
   const Buttons = (Button: any) => {
-    console.log('buttonsbuttonsbuttonsbuttonsbuttonsbuttons', Button);
+    // console.log('buttonsbuttonsbuttonsbuttonsbuttonsbuttons', Button);
     let button: any = [];
     Button.forEach((element: any) => {
       if (!button.includes(element?.sourceAsMap?.ContentType)) {
         button.push(element?.sourceAsMap?.ContentType);
       }
     });
-    console.log('=========', button);
+    // console.log('=========', button);
     setButtons(button);
   };
 
@@ -187,7 +185,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
   };
 
   const handleShareClick = (id: any) => {
-    console.log('id', id);
+    // console.log('id', id);
 
     if (shareArticle?.includes(id)) {
       setShareArticle([]);
@@ -196,7 +194,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
     }
   };
 
-  console.log('shareArticle', shareArticle);
+  // console.log('shareArticle', shareArticle);
 
   const TodaysDate = () => {
     var currentDate = new Date();
@@ -283,7 +281,7 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
       setToastError(true);
       setToastMessage('Something went wrong');
     }
-    console.log('====================', response);
+    // console.log('====================', response);
     // url,
   };
   // const [scroll, setScroll] = useState(false);
@@ -451,45 +449,66 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                         className={ArticlesListCss.button}
                         onClick={() => handleShareClick(l?.sourceAsMap?.Id)}
                       >
-                        <NextImage field={shareImage} editable={true} width={100}
-                          height={100} title="Share" />
-                          {shareArticle?.includes(l?.sourceAsMap?.Id) && (
-                            <div className={`${ArticlesListCss.sharePopups} ${darkMode ? darkModeCss.grey_1 : ''}`}>
-                              <div className={`${ArticlesListCss.sharePopup} ${darkMode ? ArticlesListCss.sharePopupHover : ''}`}>
-                                <NextImage
-                                  className={ArticlesListCss.whatsappImage}
-                                  field={whatsapp}
-                                  editable={true}
-                                  width={25}
-                                  height={25}
-                                />
-                                <Link
-                                  href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=whatsapp&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
-                                >
-                                  <a className={ArticlesListCss.targetIcon} target="_blank">
-                                    WhatsApp
-                                  </a>
-                                </Link>
-                              </div>
+                        <NextImage
+                          field={shareImage}
+                          editable={true}
+                          width={100}
+                          height={100}
+                          title="Share"
+                        />
+                        {shareArticle?.includes(l?.sourceAsMap?.Id) && (
+                          <div
+                            className={`${ArticlesListCss.sharePopups} ${
+                              darkMode ? darkModeCss.grey_1 : ''
+                            }`}
+                          >
+                            <div
+                              className={`${ArticlesListCss.sharePopup} ${
+                                darkMode ? ArticlesListCss.sharePopupHover : ''
+                              }`}
+                            >
+                              <NextImage
+                                className={ArticlesListCss.whatsappImage}
+                                field={whatsapp}
+                                editable={true}
+                                width={25}
+                                height={25}
+                              />
+                              <Link
+                                href={`${props?.fields?.data?.datasource?.whatsApp?.jsonValue?.value}${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=whatsapp&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
+                              >
+                                <a className={ArticlesListCss.targetIcon} target="_blank">
+                                  WhatsApp
+                                </a>
+                              </Link>
+                            </div>
 
-                              <div className={`${ArticlesListCss.sharePopup} ${darkMode ? ArticlesListCss.sharePopupHover : ''}`}>
-                                <NextImage
-                                  className={ArticlesListCss.whatsappImage}
-                                  field={twitter}
-                                  editable={true}
-                                  width={25}
-                                  height={25}
-                                />
-                                <Link
-                                  href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=twitter&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
-                                >
-                                  <a className={ArticlesListCss.targetIcon} target="_blank">
-                                    Twitter
-                                  </a>
-                                </Link>
-                              </div>
+                            <div
+                              className={`${ArticlesListCss.sharePopup} ${
+                                darkMode ? ArticlesListCss.sharePopupHover : ''
+                              }`}
+                            >
+                              <NextImage
+                                className={ArticlesListCss.whatsappImage}
+                                field={twitter}
+                                editable={true}
+                                width={25}
+                                height={25}
+                              />
+                              <Link
+                                href={`${props?.fields?.data?.datasource?.twitter?.jsonValue?.value}?url=${process.env.PUBLIC_URL}/news/${l?.sourceAsMap?.Id}&utm_source=twitter&utm_medium=social&utm_term=${l?.sourceAsMap?.Id}`}
+                              >
+                                <a className={ArticlesListCss.targetIcon} target="_blank">
+                                  Twitter
+                                </a>
+                              </Link>
+                            </div>
 
-                            <div className={`${ArticlesListCss.sharePopup} ${darkMode ? ArticlesListCss.sharePopupHover : ''}`}>
+                            <div
+                              className={`${ArticlesListCss.sharePopup} ${
+                                darkMode ? ArticlesListCss.sharePopupHover : ''
+                              }`}
+                            >
                               <NextImage
                                 className={ArticlesListCss.whatsappImage}
                                 field={linkedin}
@@ -505,7 +524,11 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                                 </a>
                               </Link>
                             </div>
-                            <div className={`${ArticlesListCss.sharePopup} ${darkMode ? ArticlesListCss.sharePopupHover : ''}`}>
+                            <div
+                              className={`${ArticlesListCss.sharePopup} ${
+                                darkMode ? ArticlesListCss.sharePopupHover : ''
+                              }`}
+                            >
                               <NextImage
                                 className={ArticlesListCss.whatsappImage}
                                 field={facebook}
@@ -521,12 +544,10 @@ const ArticlesList = (props: ArticlesListProps): JSX.Element => {
                                 </a>
                               </Link>
                             </div>
-                            </div>
-                          )}
+                          </div>
+                        )}
                       </button>
                     </div>
-
-                      
                   </div>
                 </div>
               );

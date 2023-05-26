@@ -4,12 +4,10 @@ import CheckedImage from '../assets/images/PollCheckedCiricle.svg';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 
 function PollCard(props: any) {
-
-
-  console.log("========================================",props)
+  // console.log("========================================",props)
   function calculatePercentage(value: any, totalValue: any) {
     const percentage = (value / totalValue) * 100;
-    console.log('PERCENTAGE', percentage);
+    // console.log('PERCENTAGE', percentage);
     if (isNaN(percentage)) {
       return 0;
     } else {

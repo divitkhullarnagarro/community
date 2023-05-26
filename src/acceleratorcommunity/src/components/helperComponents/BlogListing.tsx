@@ -70,7 +70,7 @@ function BlogListing() {
   const navigateToEventPage = (id: string) => {
     router.push(`/post?postId=${id}`);
   };
-  console.log('ertyuirwerty', blogList);
+  // console.log('ertyuirwerty', blogList);
   return (
     <>
       <div className={style.blogListingPage}>

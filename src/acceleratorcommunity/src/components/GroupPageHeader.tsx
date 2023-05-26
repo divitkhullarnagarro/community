@@ -13,7 +13,8 @@ type GroupPageHeaderProps = ComponentProps & {
 };
 
 const GroupPageHeader = (props: GroupPageHeaderProps): JSX.Element => {
-  console.log('Group Page Header', props);
+  // console.log('Group Page Header', props);
+  props;
   const [joinValue, setJoinValue] = useState(true);
   const [leaveValue, setLeaveValue] = useState(false);
 

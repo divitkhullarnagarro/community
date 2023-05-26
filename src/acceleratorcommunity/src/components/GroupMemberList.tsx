@@ -39,9 +39,9 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
   const [skeletonVisible, setSkeletonVisible] = useState(true);
   const [reachedEnd, setReachedEnd] = useState(false);
 
-  console.log(props);
+  // console.log(props);
   const router = useRouter();
-  console.log('groupMemberquery', router.query.groupId);
+  // console.log('groupMemberquery', router.query.groupId);
   const params =
     typeof window !== 'undefined'
       ? new URLSearchParams(window?.location?.search)
@@ -95,9 +95,9 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
           setShowSeeMoreButton(false);
           setLoadingMore(false);
         }
-        console.log('groupMemberData', res.data);
+        // console.log('groupMemberData', res.data);
       } catch (error) {
-        console.log('groupMemberData', error);
+        console.log(error);
         setLoadingMore(false);
       }
     }

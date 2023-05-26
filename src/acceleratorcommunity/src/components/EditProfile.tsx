@@ -119,7 +119,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
       setShowNofitication(true);
       setJoinLeaveLoader(false);
     }
-    console.log('joinGroupCall', res);
+    // console.log('joinGroupCall', res);
   };
 
   const onLeaveButtonClick = async () => {
@@ -319,7 +319,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
         setJoinValue(!res?.data?.member);
         setLeaveValue(res.data.member);
       }
-      console.log('groupInfo', res);
+      // console.log('groupInfo', res);
     } catch (error) {}
   };
 

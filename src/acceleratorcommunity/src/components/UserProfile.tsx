@@ -30,7 +30,7 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
   const { deleteTokenFromFirebase, getFcmTokenFromLocalStorage } = {
     ...useContext(FirebaseContext),
   };
-  console.log('profile', props);
+  // console.log('profile', props);
   const router = useRouter();
 
   const [showLogoutPopUp, setLogoutPopUp] = useState(false);
@@ -93,7 +93,8 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
       url: `https://accelerator-api-management.azure-api.net/graph-service/api/v1/unmap-uuid?uuid=${fcm_token}`,
     })
       .then((response: any) => {
-        console.log('APIResponseFCM', response);
+        // console.log('APIResponseFCM', response);
+        response;
       })
       .catch((err: any) => {
         console.log(err);

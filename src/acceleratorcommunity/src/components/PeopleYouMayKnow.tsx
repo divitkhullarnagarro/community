@@ -48,7 +48,7 @@ type peopleYouMayKnowFields = {
 };
 
 const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
-  console.log('people you may know', props);
+  // console.log('people you may know', props);
   // const router = useRouter();
   const { LinkLabel, IsFullList } = props?.params;
   const [peopleYouMayKnowList, setPeopleYouMayKnowList] = useState<peopleYouMayKnowFields[]>([]);
@@ -57,7 +57,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   const [isFullPage] = useState(IsFullList === '1');
   const getPeopleYouMayKnowList = async (userToken: string | undefined) => {
     let response = await peopleYouMayKnowCall(userToken);
-    console.log('peopleYouMayKnowList', response);
+    // console.log('peopleYouMayKnowList', response);
     if (response?.data?.success) {
       setIsDataLoaded(true);
       setPeopleYouMayKnowList(response?.data?.data);
