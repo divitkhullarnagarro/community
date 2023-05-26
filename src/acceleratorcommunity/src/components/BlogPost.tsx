@@ -41,13 +41,13 @@ const TextEditor = (): JSX.Element => {
     }[]
   >([] as { text: string; value: string; url: string }[]);
 
-  useEffect(() => {
-    const rawEditorContent = convertToRaw(editorState.getCurrentContent());
-    const entityMap = rawEditorContent.entityMap;
-    Object.values(entityMap).map((entity) => {
-      console.log('mention user', entity.data.value, rawEditorContent, entityMap, entity);
-    });
-  }, [editorState]);
+  // useEffect(() => {
+  //   const rawEditorContent = convertToRaw(editorState.getCurrentContent());
+  //   const entityMap = rawEditorContent.entityMap;
+  //   Object.values(entityMap).map((entity) => {
+  //     console.log('mention user', entity.data.value, rawEditorContent, entityMap, entity);
+  //   });
+  // }, [editorState]);
 
   const getAllPears = async () => {
     const res = await allPeersCall(userToken);
@@ -107,7 +107,7 @@ const TextEditor = (): JSX.Element => {
     const files = e.target.files;
     var reader = URL?.createObjectURL(files[0]);
     // var url = reader.readAsDataURL;
-    console.log(reader, 'filearrayurl');
+    // console.log(reader, 'filearrayurl');
     setPreview1(reader);
     const fileArray: any = [];
     for (let i = 0; i < files.length; i++) {
@@ -116,7 +116,7 @@ const TextEditor = (): JSX.Element => {
       if (!resp?.data) break;
       fileArray.push({ id: uniqueId, url: resp?.data, mediaType: 'IMAGE', mediaSequence: 0 });
     }
-    console.log(files, 'filearray1');
+    // console.log(files, 'filearray1');
     if (fileArray.length === files.length) {
       setFile(fileArray);
       setPreviewState(true);
@@ -149,13 +149,13 @@ const TextEditor = (): JSX.Element => {
       ? new URLSearchParams(window?.location?.search)
       : new URLSearchParams('');
   let groupId = params.get('groupId');
-  console.log('groupId', groupId);
+  // console.log('groupId', groupId);
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
     let postType = 'BLOG_POST';
     setShowLoader(true);
-    console.log(headlineText, postText, file[0]?.url, addedPeers, 'abc');
+    // console.log(headlineText, postText, file[0]?.url, addedPeers, 'abc');
 
     addArticleCall(userToken, {
       heading: headlineText,
@@ -248,7 +248,7 @@ const TextEditor = (): JSX.Element => {
                         ></img>
                       </button>
                       <img className={styles.previewImageCls} src={preview1} alt={img?.id}></img>
-                      {console.log(img.url, 'imageuel')}
+                      {/* {console.log(img.url, 'imageuel')} */}
                     </div>
                   );
                 })}

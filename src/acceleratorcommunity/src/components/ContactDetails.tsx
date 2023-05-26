@@ -250,7 +250,7 @@ const ContactDetails = (props: any): JSX.Element => {
                   &nbsp;:
                 </span>
                 <div className="fieldValue">
-                  {console.log('+++++++++++++++++++++', props.userResidenceInfo)}
+                  {/* {console.log('+++++++++++++++++++++', props.userResidenceInfo)} */}
                   {props.userResidenceInfo?.map((data: any) => {
                     return (
                       <>

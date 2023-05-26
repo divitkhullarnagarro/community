@@ -13,7 +13,6 @@ import SideBar from './SideBar';
 import darkModeCss from '../assets/darkTheme.module.css';
 import BlogListingSkeleton from './skeletons/BlogListingSkeleton';
 
-
 type BookmarkListProps = ComponentProps & {
   fields: {
     data: {
@@ -83,7 +82,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
   const { setUserToken, userToken, darkMode } = { ...useContext(WebContext) };
 
   const getFormatedDate = (stringDate: string) => {
-    console.log('stringDate', stringDate);
+    // console.log('stringDate', stringDate);
     let formattedDate = Date.now().toString();
 
     if (stringDate !== undefined) {
@@ -198,7 +197,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
     if (bookmarkLists.length > 0) {
       setLoading(false);
     }
-    console.log('ran useeffect', bookmarkLists);
+    // console.log('ran useeffect', bookmarkLists);
   }, [bookmarkLists]);
 
   const nowArticles = () => {
@@ -208,7 +207,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
       return new Date(item?.date?.jsonValue?.value).toDateString() === TodayDate.toDateString();
     });
     if (bookmarkTYpeClicked[0] === 'all') {
-      console.log('bookmarkTYpeClicked', bookmarkTYpeClicked);
+      // console.log('bookmarkTYpeClicked', bookmarkTYpeClicked);
 
       setBookmarkLists(nowDateArticle);
     } else {
@@ -249,7 +248,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
     let doubleFilter = nowDateArticle?.filter((item: any) => {
       return item?.contentType?.targetItem?.name === bookmarkTYpeClicked;
     });
-    console.log(doubleFilter);
+    // console.log(doubleFilter);
     setBookmarkLists(doubleFilter);
   };
 
@@ -266,7 +265,7 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
         };
         client1.query({ query, variables }).then((result: any) => {
           if (result?.data?.datasource !== null) {
-            console.log('result?.data?.datasource', result?.data?.datasource);
+            // console.log('result?.data?.datasource', result?.data?.datasource);
             arrayList.push(result?.data?.datasource);
           }
         });
@@ -300,58 +299,69 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
       <div className={bookmarkCss.bodyContainer}>
         <div>
           {' '}
-          {console.log('bookmarkListsbookmarkLists', bookmarkLists)}
-
+          {/* {console.log('bookmarkListsbookmarkLists', bookmarkLists)} */}
           {Loading ? (
             <div className={`${darkMode ? darkModeCss.grey_3 : ''}`}>
               <BlogListingSkeleton />
             </div>
-            ) : bookmarkLists?.length > 0 ? (
-              <div className={bookmarkCss.listContainers}>
-                {bookmarkLists?.map((l: any, i: any) => {
-                  return (
-                    <div key={i} className={`${bookmarkCss.contentTypeContainers} ${darkMode ? darkModeCss.grey_3 : ''}`}>
-                      {/* <div className={bookmarkCss.contentTypeContainer}> */}
-                      <div className={bookmarkCss.leftContainer}>
-                        {/* <h4>{l?.contentType?.targetItem?.name}</h4> */}
-                        <NextImage
-                          className={bookmarkCss.leftContainerImage}
-                          field={l?.image?.jsonValue?.value}
-                          editable={true}
-                          width={100}
-                          height={400}
-                        />
+          ) : bookmarkLists?.length > 0 ? (
+            <div className={bookmarkCss.listContainers}>
+              {bookmarkLists?.map((l: any, i: any) => {
+                return (
+                  <div
+                    key={i}
+                    className={`${bookmarkCss.contentTypeContainers} ${
+                      darkMode ? darkModeCss.grey_3 : ''
+                    }`}
+                  >
+                    {/* <div className={bookmarkCss.contentTypeContainer}> */}
+                    <div className={bookmarkCss.leftContainer}>
+                      {/* <h4>{l?.contentType?.targetItem?.name}</h4> */}
+                      <NextImage
+                        className={bookmarkCss.leftContainerImage}
+                        field={l?.image?.jsonValue?.value}
+                        editable={true}
+                        width={100}
+                        height={400}
+                      />
+                    </div>
+                    <div className={bookmarkCss.rightContainer}>
+                      <div
+                        className={`${bookmarkCss.rightContainerHeading} ${
+                          darkMode ? darkModeCss.text_green : ''
+                        }`}
+                      >
+                        <h5>{l?.title?.jsonValue?.value}</h5>
                       </div>
-                      <div className={bookmarkCss.rightContainer}>
-                      <div className={`${bookmarkCss.rightContainerHeading} ${darkMode ? darkModeCss.text_green : ''}`}>
-  
-                          <h5>{l?.title?.jsonValue?.value}</h5>
+                      <div
+                        className={`${bookmarkCss.rightContainerDescription} ${
+                          darkMode ? darkModeCss.test_grey_4 : ''
+                        }`}
+                      >
+                        {l?.shortDescription?.jsonValue?.value}
+                      </div>
+                      <div>
+                        <p>{l?.id?.jsonValue?.value}</p>
+                      </div>
+                      <div>{l?.author?.jsonValue?.value}</div>
+                      <div
+                        className={`${bookmarkCss.dates} ${darkMode ? darkModeCss.text_light : ''}`}
+                      >
+                        <NextImage field={calender} editable={true} />
+                        {getFormatedDate(l?.date?.jsonValue?.value)}
+                      </div>
+                      <div className={bookmarkCss.tags}>
+                        <div className={bookmarkCss.leftContainerImage}>
+                          <NextImage
+                            field={ActiveBookmark}
+                            editable={true}
+                            width={35}
+                            height={30}
+                          />
                         </div>
-                        <div className={`${bookmarkCss.rightContainerDescription} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
-  
-                          {l?.shortDescription?.jsonValue?.value}
-                        </div>
-                        <div>
-                          <p>{l?.id?.jsonValue?.value}</p>
-                        </div>
-                        <div>{l?.author?.jsonValue?.value}</div>
-                        <div className={`${bookmarkCss.dates} ${darkMode ? darkModeCss.text_light : ''}`}>
-  
-                          <NextImage field={calender} editable={true} />
-                          {getFormatedDate(l?.date?.jsonValue?.value)}
-                        </div>
-                        <div className={bookmarkCss.tags}>
-                          <div className={bookmarkCss.leftContainerImage}>
-                            <NextImage
-                              field={ActiveBookmark}
-                              editable={true}
-                              width={35}
-                              height={30}
-                            />
-                          </div>
-                          <h5>{l?.contentType?.targetItem?.name}</h5>
-                        </div>
-                        {/* <div className={bookmarkCss.button}>
+                        <h5>{l?.contentType?.targetItem?.name}</h5>
+                      </div>
+                      {/* <div className={bookmarkCss.button}>
                             <button>
                               <NextImage
                                 className={bookmarkCss.leftContainerImage}
@@ -360,22 +370,22 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                               />
                             </button>
                           </div> */}
-                        </div>
-                      </div>
-  
-                    // </div>
-                  );
-                })}
-              </div>
-            ): (
-              <div className={`${bookmarkCss.emptyBox} ${darkMode ? darkModeCss.text_light : ''}`}>
-                <h2>Oops there is no content available for this filter !</h2>
-              </div>
-            )}
-          </div>
+                    </div>
+                  </div>
+
+                  // </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className={`${bookmarkCss.emptyBox} ${darkMode ? darkModeCss.text_light : ''}`}>
+              <h2>Oops there is no content available for this filter !</h2>
+            </div>
+          )}
         </div>
-        {/* <div className={scroll ? bookmarkCss.filterContainerTop : bookmarkCss.filterConatiner}> */}
       </div>
+      {/* <div className={scroll ? bookmarkCss.filterContainerTop : bookmarkCss.filterConatiner}> */}
+    </div>
   );
 };
 

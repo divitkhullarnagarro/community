@@ -41,7 +41,7 @@ function JoinLeaveGroup({ groupName, member, id }: any) {
       setToastMessage('Failed to join Group');
       setShowNofitication(true);
     }
-    console.log('joinGroupCall', res);
+    // console.log('joinGroupCall', res);
   };
   const resetToastState = () => {
     setShowNofitication(!showNotification);

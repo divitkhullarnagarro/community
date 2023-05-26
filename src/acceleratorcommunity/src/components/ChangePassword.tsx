@@ -138,7 +138,7 @@ const ChangePassword = ({
               }
             })
             .catch((err: any) => {
-              console.log('PasswordErr', err);
+              console.log(err);
             });
         } catch (err: any) {
           setToastError(true);

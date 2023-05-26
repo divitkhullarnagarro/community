@@ -254,7 +254,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   const [globalPostType, setGlobalPostType] = useState('TEXT_POST');
   const [isEditorHidden, setIsEditorVisible] = useState(false);
   const [isMember, setIsMember] = useState<any>(false);
-  console.log(isMember);
+  // console.log(isMember);
   const router = useRouter();
   const params =
     typeof window !== 'undefined'
@@ -262,7 +262,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
       : new URLSearchParams('');
   let objectEmail = params.get('id');
   let groupId = params.get('groupId') as string;
-  console.log('groupId', groupId);
+  // console.log('groupId', groupId);
 
   const getGroupInfo = async (groupId: string) => {
     try {
@@ -273,9 +273,9 @@ const AddPost = (props: AddPostProps): JSX.Element => {
       if (res?.data) {
         setIsMember(!res?.data?.member);
       }
-      console.log('groupInfo inside add post', res, res?.data?.member);
+      // console.log('groupInfo inside add post', res, res?.data?.member);
     } catch (error) {
-      console.log('groupInfo inside add post', error);
+      console.log(error);
     }
   };
 
@@ -365,7 +365,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     const entityMap = rawEditorContent.entityMap;
     const addedPeerList = new Set<string>();
     Object.values(entityMap).map((entity) => {
-      console.log('enitity value', entity?.data?.url?.substring(16, entity?.data?.url?.length));
+      // console.log('enitity value', entity?.data?.url?.substring(16, entity?.data?.url?.length));
       if (entity?.data?.url?.substring(0, 16) === '/viewProfile?id=') {
         addedPeerList.add(entity?.data?.url?.substring(16, entity?.data?.url?.length));
       }
@@ -549,7 +549,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                         type="radio"
                         name="radioGroup"
                         value={item}
-                        onChange={(e) => handleSelectChange(e)}
+                        // onChange={(e) => handleSelectChange(e)}
                         defaultChecked={index == 0 ? true : false}
                         aria-label="radio 1"
                       ></Form.Check>
@@ -705,9 +705,9 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     setShowReportPopUp(false);
   };
 
-  const handleSelectChange = (event: any) => {
-    console.log(event);
-  };
+  // const handleSelectChange = (event: any) => {
+  //   console.log(event);
+  // };
 
   const ReportPostPopup = () => {
     const reportTypeList = Object.values(ReportPostOptionsTypeLabel);
@@ -742,7 +742,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                         type="radio"
                         name="radioGroup"
                         value={item}
-                        onChange={(e) => handleSelectChange(e)}
+                        // onChange={(e) => handleSelectChange(e)}
                         defaultChecked={index == 0 ? true : false}
                         aria-label="radio 1"
                       ></Form.Check>
@@ -1038,7 +1038,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
       getAllDownVotesCall(userToken, comeendId),
     ])
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setAllUpVotes(response[0]?.data?.data);
         setAllDownVote(response[1]?.data?.data);
         setModalForData(true);

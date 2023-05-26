@@ -10,24 +10,19 @@ type ArticleBannerProps = ComponentProps & {
 };
 type ContextItem = {
   banner: {
-    jsonValue:{
+    jsonValue: {
       value: ImageField;
     };
   };
 };
 const ArticleBanner = (props: ArticleBannerProps): JSX.Element => {
-  console.log("banner", props)
+  // console.log("banner", props)
   const { contextItem } = props?.fields?.data;
   return (
-    <div className='stories-banner'>
-      <NextImage
-        field={contextItem?.banner?.jsonValue?.value}
-        editable={true}
-        height="500px"
-      />
+    <div className="stories-banner">
+      <NextImage field={contextItem?.banner?.jsonValue?.value} editable={true} height="500px" />
     </div>
-  )
-
+  );
 };
 
 export default ArticleBanner;

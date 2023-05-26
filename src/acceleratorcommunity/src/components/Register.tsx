@@ -258,9 +258,9 @@ const Register = (props: RegisterProps): JSX.Element => {
           // }, 2000);
           setIsSigningUp(false);
         }
-        console.log('Register Response', resp);
+        // console.log('Register Response', resp);
       } catch (err: any) {
-        console.log(err);
+        // console.log(err);
         setToastError(true);
         setToastMessage(err?.message ?? 'Something went wrong');
         setShowNofitication(true);
@@ -269,7 +269,7 @@ const Register = (props: RegisterProps): JSX.Element => {
     }
   };
 
-  console.log(targetItems);
+  // console.log(targetItems);
   const resetToastState = () => {
     setShowNofitication(!showNotification);
     setToastSuccess(false);

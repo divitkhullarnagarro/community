@@ -17,13 +17,10 @@ type DataSource = {
 
 const Image = (props: ImageProps): JSX.Element => {
   const { datasource } = props?.fields?.data;
-  console.log('Image', props);
+  // console.log('Image', props);
   return (
     <div className="image">
-      <NextImage
-        field={datasource?.image?.jsonValue?.value}
-        editable={true}
-      />
+      <NextImage field={datasource?.image?.jsonValue?.value} editable={true} />
     </div>
   );
 };

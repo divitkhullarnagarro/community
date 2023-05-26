@@ -30,7 +30,7 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
   const { deleteTokenFromFirebase, getFcmTokenFromLocalStorage } = {
     ...useContext(FirebaseContext),
   };
-  console.log('profile', props);
+  // console.log('profile', props);
   const router = useRouter();
 
   const [showLogoutPopUp, setLogoutPopUp] = useState(false);

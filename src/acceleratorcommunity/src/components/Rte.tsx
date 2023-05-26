@@ -22,7 +22,7 @@ type RteProps = ComponentProps & {
 };
 
 const Rte = (props: RteProps): JSX.Element => {
-  console.log('Rte', props);
+  // console.log('Rte', props);
   const { datasource } = props.fields.data;
   return (
     <div>

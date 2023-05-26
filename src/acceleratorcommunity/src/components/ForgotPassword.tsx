@@ -126,10 +126,9 @@ type ForgotPasswordProps = ComponentProps & {
 
 const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
   const datasource = props?.fields?.data?.datasource;
-  props; //delete Me
-  console.log('props', props);
+  // console.log('props', props);
   const router = useRouter();
-  const { setIsLoggedIn, setUserToken, userToken, darkMode } = { ...useContext(WebContext) };
+  const { darkMode } = { ...useContext(WebContext) };
 
   const [email, setEmail] = useState('');
   const [accountError, setAccountError] = useState(false);
@@ -267,8 +266,8 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
       }
     }
   };
-  console.log('userToken', userToken, setUserToken, setIsLoggedIn);
-  console.log('Props forgot password', props);
+  // console.log('userToken', userToken, setUserToken, setIsLoggedIn);
+  // console.log('Props forgot password', props);
   //{---------------Logout Start--------------}
   // do not delete it
   // const handleLogout = async (event: any) => {
