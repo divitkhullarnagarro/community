@@ -200,11 +200,16 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
       try {
         setIsUpdatingPassword(true);
         const res = await sendOtpCall(email);
-        if (res?.data?.errorCode != 404) {
+        // console.log('responseinside forgotpassword', res);
+        if (res?.data?.success) {
           setOtpFieldVisible(true);
           setIsUpdatingPassword(false);
         } else {
+          // setToastError(true);
+          // setToastMessage(res?.data?.errorMessages[0]);
+          // setShowNofitication(true);
           setAccountError(true);
+          setIsUpdatingPassword(false);
         }
       } catch (err: any) {
         console.log(err);
@@ -218,7 +223,11 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
           setPasswordPage(true);
           setIsUpdatingPassword(false);
         } else {
+          // setToastError(true);
+          // setToastMessage(res?.data?.errorMessages[0]);
+          // setShowNofitication(true);
           setOtpError(true);
+          setIsUpdatingPassword(false);
         }
       } catch (err: any) {
         console.log(err);
@@ -235,14 +244,19 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
     } else {
       try {
         const res = await updatePasswordCall(email, password);
+        // console.log('responseinside forgotpassword', res);
         if (!res?.data?.errorCode) {
           setIsUpdatingPassword(false);
           // alert('password Updated Successfully');
-          router.push('/login');
           setToastSuccess(true);
-          setToastMessage('User Registered Successfully');
+          setToastMessage('Password Updated Successfully');
           setShowNofitication(true);
+          router.push('/login');
         } else {
+          setToastError(true);
+          setToastMessage(res?.data?.errorMessages[0]);
+          setShowNofitication(true);
+          // setOtpError(true);
           setIsUpdatingPassword(false);
           setSomethingWentWrongError(true);
         }
@@ -266,34 +280,7 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
       }
     }
   };
-  // console.log('userToken', userToken, setUserToken, setIsLoggedIn);
-  // console.log('Props forgot password', props);
-  //{---------------Logout Start--------------}
-  // do not delete it
-  // const handleLogout = async (event: any) => {
-  //   console.log('handleLogout event', event);
-  //   var config = {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   };
-  //   const res = await Axios.post<
-  //     any,
-  //     AxiosResponse<{ success: boolean; data: string; code: number; errors: any }>
-  //   >(LogoutUrl, { accessToken: '', refreshToken: '' }, config);
-  //   if (
-  //     res?.data?.code == 200 &&
-  //     res?.data?.success == true &&
-  //     setUserToken != undefined &&
-  //     setIsLoggedIn != undefined
-  //   ) {
-  //     setUserToken('');
-  //     setIsLoggedIn(false);
-  //     alert('Logged Out Successfully');
-  //     router.push('/login');
-  //   }
-  // };
-  //{---------------Logout End----------------}
+
   const resetToastState = () => {
     setShowNofitication(!showNotification);
     setToastSuccess(false);

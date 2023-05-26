@@ -247,20 +247,23 @@ const Register = (props: RegisterProps): JSX.Element => {
       password === confirmPassword
     ) {
       try {
-        let resp = await registerUserCall(userData);
+        let resp: any = await registerUserCall(userData);
         if (resp?.data?.success == true) {
           // setIsRegistered(true);
           setToastSuccess(true);
           setToastMessage('User Registered Successfully');
           setShowNofitication(true);
-          // setTimeout(() => {
           router.push('/login');
-          // }, 2000);
+          setIsSigningUp(false);
+        } else {
+          // console.log('responseDataError', resp?.data?.errorMessages[0]);
+          setToastError(true);
+          setToastMessage(resp?.data?.errorMessages[0]);
+          setShowNofitication(true);
           setIsSigningUp(false);
         }
-        // console.log('Register Response', resp);
+        // console.log('Register Response resp', resp);
       } catch (err: any) {
-        // console.log(err);
         setToastError(true);
         setToastMessage(err?.message ?? 'Something went wrong');
         setShowNofitication(true);
@@ -269,7 +272,6 @@ const Register = (props: RegisterProps): JSX.Element => {
     }
   };
 
-  // console.log(targetItems);
   const resetToastState = () => {
     setShowNofitication(!showNotification);
     setToastSuccess(false);

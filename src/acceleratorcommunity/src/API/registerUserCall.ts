@@ -1,7 +1,6 @@
 import Axios from 'axios';
 
 const registerUserCall = async (registerData: any) => {
-
   var data = {
     firstName: registerData.firstName,
     lastName: registerData.lastName,
@@ -10,7 +9,7 @@ const registerUserCall = async (registerData: any) => {
     speciality: 'USER',
     isEmployeeIDVerifiedByEmailOTP: 'N',
     role: 'USER',
-    password: registerData.password
+    password: registerData.password,
   };
   let regURL = 'https://accelerator-api-management.azure-api.net/user-service/api/v1/users';
   var config = {
@@ -25,7 +24,8 @@ const registerUserCall = async (registerData: any) => {
       return response;
     })
     .catch((error: any) => {
-      console.error(error);
+      console.error('gottheerror', error.response);
+      return error.response;
     });
   return response;
 };
