@@ -477,7 +477,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
           }
         });
     }
-  }, [getPostUrl, wantRerender, groupId]);
+  }, [getPostUrl, groupId]);
 
   useEffect(() => {
     if (ifNoMoreData == true) {
