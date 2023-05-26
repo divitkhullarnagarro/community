@@ -334,7 +334,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
       setGlobalPostType('TEXT_POST');
     }
   }, [videoLink, file, docs, eventPost, pollPost]);
-  console.log('allpeerlist', allPeersList);
+  // console.log('allpeerlist', allPeersList);
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const [addedPeers, setAddedPeers] = useState<string[]>([] as string[]);
   const [mentionUserData, setMentionUserData] = useState<
