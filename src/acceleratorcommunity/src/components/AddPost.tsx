@@ -3126,6 +3126,15 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   var metaImage: any = {};
   var breakLoop = true;
 
+  // console.log('editor state value', `P${editorState.getCurrentContent().getPlainText()}P`);
+  let shouldDisablePostCreation = true;
+  const str = editorState.getCurrentContent().getPlainText();
+  if (str.trim()) {
+    shouldDisablePostCreation = false;
+  } else {
+    shouldDisablePostCreation = true;
+  }
+
   return (
     <>
       {specificPostId && myAnotherArr?.length > 0 ? (
@@ -3200,9 +3209,17 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                               <Editor
                                 editorState={editorState}
                                 onEditorStateChange={(e) => onEditorStateChangeHandler(e)}
-                                wrapperClassName="wrapper-class"
-                                editorClassName="editor-class"
-                                toolbarClassName="toolbar-class"
+                                wrapperClassName={`wrapper-class ${
+                                  darkMode ? darkModeCss.grey_2 : ''
+                                }`}
+                                editorClassName={`editor-class ${
+                                  darkMode ? darkModeCss.grey_3 : ''
+                                } ${darkMode ? darkModeCss.text_light : ''} ${
+                                  darkMode ? styles.darkEditorClass : ''
+                                }`}
+                                toolbarClassName={`toolbar-class ${
+                                  darkMode ? darkModeCss.grey_3 : ''
+                                }`}
                                 editorStyle={{
                                   height: '200px',
                                   padding: '0px 10px',
@@ -3918,7 +3935,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                 <div className={styles.errorContainer}>
                   <Button
                     className={styles.publishButton}
-                    disabled={editorState.getCurrentContent().getPlainText() ? false : true}
+                    disabled={shouldDisablePostCreation}
                     variant="secondary"
                     style={{
                       backgroundColor: editorState.getCurrentContent().getPlainText()
