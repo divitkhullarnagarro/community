@@ -2723,7 +2723,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     for (let i = 0; i < files.length; i++) {
       const temp = files[i];
       const resp = await UploadFilesToServer(temp, 'IMAGE');
-      console.log('responseinsidecall', resp);
+      // console.log('responseinsidecall', resp);
       if (resp?.data?.success || !resp?.data?.errorCode) {
         const uniqueId = generateUniqueId();
         fileArray.push({
@@ -2734,7 +2734,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
         });
       } else {
         setToastError(true);
-        debugger;
+
         setToastMessage(
           resp?.data?.errorMessages[0]
             ? resp?.data?.errorMessages[0]
