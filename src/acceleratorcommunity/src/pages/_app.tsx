@@ -27,6 +27,7 @@ import '../assets/richTextEditor.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import SocketProvider from 'src/Context/SocketProvider';
 import FirebaseProvider from 'src/Context/FirebaseProvider';
+import GenericNotificationProvider from 'src/Context/GenericNotificationProvider';
 
 NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
 
@@ -45,7 +46,9 @@ function App({ Component, pageProps }: AppProps<SitecorePageProps>): JSX.Element
       <SocketProvider>
         <FirebaseProvider>
           <WebProvider>
-            <Component {...rest} />
+            <GenericNotificationProvider>
+              <Component {...rest} />
+            </GenericNotificationProvider>
           </WebProvider>
         </FirebaseProvider>
       </SocketProvider>
