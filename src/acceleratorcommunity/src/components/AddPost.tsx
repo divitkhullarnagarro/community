@@ -2713,9 +2713,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   }
 
   async function UploadFilesToServer(file: any, type: string) {
-    return await uploadFilesCall(userToken, file, type).then((response) => {
-      return response?.data;
-    });
+    return await uploadFilesCall(userToken, file, type);
   }
 
   //Function To Handle Load Image Files
@@ -2725,9 +2723,27 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     for (let i = 0; i < files.length; i++) {
       const temp = files[i];
       const resp = await UploadFilesToServer(temp, 'IMAGE');
-      if (!resp?.data) break;
-      const uniqueId = generateUniqueId();
-      fileArray.push({ id: uniqueId, url: resp?.data, mediaType: 'IMAGE', mediaSequence: 0 });
+      console.log('responseinsidecall', resp);
+      if (resp?.data?.success || !resp?.data?.errorCode) {
+        const uniqueId = generateUniqueId();
+        fileArray.push({
+          id: uniqueId,
+          url: resp?.data?.data,
+          mediaType: 'IMAGE',
+          mediaSequence: 0,
+        });
+      } else {
+        setToastError(true);
+        debugger;
+        setToastMessage(
+          resp?.data?.errorMessages[0]
+            ? resp?.data?.errorMessages[0]
+            : 'Something Went Wrong. Please Try Again'
+        );
+
+        setShowNofitication(true);
+        break;
+      }
     }
     if (fileArray.length === files.length) {
       setFile(fileArray);

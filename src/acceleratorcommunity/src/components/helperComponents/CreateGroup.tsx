@@ -12,6 +12,7 @@ import WebContext from 'src/Context/WebContext';
 import ToastNotification from './../ToastNotification';
 // import Image from 'next/image';
 import { Spinner } from 'react-bootstrap';
+import { spaceRemover } from 'assets/helpers/helperFunctions';
 
 function CreateGroup({
   createGroupVisibel,
@@ -43,6 +44,19 @@ function CreateGroup({
   const [showNotification, setShowNofitication] = useState(false);
   const [toastError, setToastError] = useState(false);
   const [creatingGroup, setCreatingGroup] = useState(false);
+
+  const handleNameChange = (value: string) => {
+    const updatedValue = spaceRemover(value);
+    if (updatedValue.length < 50) {
+      setNameValue(updatedValue);
+    }
+  };
+  const handleDescriptionChange = (value: string) => {
+    const updatedValue = spaceRemover(value);
+    if (updatedValue.length <= 150) {
+      setDescriptionValue(updatedValue);
+    }
+  };
 
   const getPeersbyName = async (name: string) => {
     const res: any = await AxiosRequest({
@@ -271,7 +285,7 @@ function CreateGroup({
                 value={nameValue}
                 style={{ marginBottom: '10px', height: '46px' }}
                 placeholder="Name"
-                onChange={(e) => setNameValue(e.target.value)}
+                onChange={(e) => handleNameChange(e.target.value)}
                 required
               />
             </div>
@@ -283,9 +297,10 @@ function CreateGroup({
                 value={descriptionValue}
                 style={{ height: '200px' }}
                 placeholder="Description"
-                onChange={(e) => setDescriptionValue(e.target.value)}
+                onChange={(e) => handleDescriptionChange(e.target.value)}
                 required
               ></textarea>
+              <span>Max Limit:{descriptionValue.length}/150</span>
             </div>
 
             <div className="form-group">
