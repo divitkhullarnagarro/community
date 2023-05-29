@@ -444,31 +444,36 @@ const AddPost = (props: AddPostProps): JSX.Element => {
       })
         .then((response: any) => {
           const newArr = response?.data;
-          if (response?.data?.length == 0) {
-            setMyAnotherArr([
-              {
-                postType: 'ERRORPOST',
-                description: 'No Posts Available !',
-              },
-            ]);
-          } else {
-            if (specificPostId && newArr) {
-              setMyAnotherArr([newArr]);
+          // console.log('asdfgasdgh', response);
+          if (response?.success) {
+            if (response?.data?.length == 0) {
+              setMyAnotherArr([
+                {
+                  postType: 'ERRORPOST',
+                  description: 'No Posts Available !',
+                },
+              ]);
             } else {
-              newArr?.map((post: any) => {
-                post.isOpenComment = false;
-                post.comments = [];
-                post.showShare = false;
-                post.isLoadingComments = false;
-                if (post.postMeasures == null || post.postMeasures == 'undefined') {
-                  post.postMeasures = {
-                    commentCount: 0,
-                    likeCount: 0,
-                  };
-                }
-              });
-              setMyAnotherArr(newArr);
+              if (specificPostId && newArr) {
+                setMyAnotherArr([newArr]);
+              } else {
+                newArr?.map((post: any) => {
+                  post.isOpenComment = false;
+                  post.comments = [];
+                  post.showShare = false;
+                  post.isLoadingComments = false;
+                  if (post.postMeasures == null || post.postMeasures == 'undefined') {
+                    post.postMeasures = {
+                      commentCount: 0,
+                      likeCount: 0,
+                    };
+                  }
+                });
+                setMyAnotherArr(newArr);
+              }
             }
+          } else {
+            router.push('/login');
           }
         })
         .catch((err: any) => {
