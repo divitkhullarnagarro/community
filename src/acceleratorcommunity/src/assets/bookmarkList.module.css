@@ -17,6 +17,7 @@
   display: flex;
   justify-content: center;
   color: #000e46;
+  margin-top: 30px;
 }
 
 .contentTypeContainers {
@@ -30,13 +31,42 @@
   overflow-x: auto;
   overflow-y: auto;
   margin-bottom: 2%;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
 
   /* background-color: pink; */
   /* margin-left: 50px; */
 }
+.contentTypeContainers::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.contentTypeContainers::-webkit-scrollbar-track {
+  border-radius: 2px;
+  background-color: white;
+  height: 1px;
+}
+.contentTypeContainers::-webkit-scrollbar-track:horizontal {
+  border-radius: 2px;
+  background-color: white;
+  height: 1px;
+}
+.contentTypeContainers::-webkit-scrollbar-thumb {
+  /* background-image: url('./../assets/images/arrow.png'); */
+  background-position: center top;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 50px;
+  background-color: grey;
+}
+.contentTypeContainers::-webkit-scrollbar-thumb:horizontal {
+  /* background-image: url('./../assets/images/arrowx.png'); */
+  background-position: center left;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 10px;
+}
 .contentTypeContainers:hover {
-  background-color: rgb(242, 240, 240);
-  border-radius: 0.375rem;
+  /* background-color: rgb(242, 240, 240);
+  border-radius: 0.375rem; */
 }
 .contentTypeContainer {
   width: 95%;
@@ -82,7 +112,7 @@
 }
 .tags {
   display: flex;
-  width: 50%;
+  width: 100%;
   justify-content: center;
   background-color: #dde4f6;
   border-radius: 20px;
@@ -95,6 +125,10 @@
   font-size: small;
   font-weight: 600;
   margin-top: 5%;
+}
+.tags h5 {
+  font-size: 16px;
+  margin: 0;
 }
 .button {
   display: flex;
@@ -118,7 +152,7 @@
 .bodyContainer {
   /* width: 900px; */
   /* display: flex; */
-  width: 95%;
+  width: 100%;
   justify-content: space-between;
   gap: 20px;
   /* background: red; */
@@ -188,9 +222,14 @@
   display: contents;
   height: 100%;
   /* background-color: pink; */
-  width: 835px;
+  width: 100%;
   /* overflow-x: auto;
   overflow-y: auto; */
+  display: grid;
+  grid-gap: 25px;
+  gap: 25px;
+  margin-top: 30px;
+  grid-template-columns: calc(50% - 13px) calc(50% - 13px);
 }
 
 .filterContainer {
@@ -203,7 +242,10 @@
   width: 10%;
 }
 .leftContainerImage {
-  margin-top: -2px;
+  margin-top: 4px;
+}
+.head {
+  margin: 0;
 }
 .emptyBox {
   display: flex;
@@ -212,7 +254,7 @@
   font-size: 15px;
   height: 20rem;
   width: 100%;
-}
+} 
 /* media queries */
 @media screen and (max-width: 600px) {
   .bodyContainer {

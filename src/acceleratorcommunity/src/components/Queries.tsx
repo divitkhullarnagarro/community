@@ -42,7 +42,7 @@ export const getBookmarkItem = () => {
       }
     }
   `;
-  console.log('query', query);
+  // console.log('query', query);
   return query;
 };
 
@@ -71,10 +71,7 @@ export const getEmailTemplatesGraphqlQuery = () => {
             id
             name
             fields {
-              id
-              name
               value
-              jsonValue
             }
           }
         }

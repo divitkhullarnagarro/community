@@ -80,9 +80,9 @@ const UserWorkExperience = (props: any) => {
             </Form.Group>
             <span>
               {props.errorState?.orgName ? <span className="error">Field is required</span> : ' '}
-              {console.log('fromuserexperiencecomponent', props.errorState?.orgName)}
+              {/* {console.log('fromuserexperiencecomponent', props.errorState?.orgName)} */}
             </span>
-            {console.log('props.editUserData?.orgName', props?.placeOfPractice)}
+            {/* {console.log('props.editUserData?.orgName', props?.placeOfPractice)} */}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Designation</Form.Label>
               <Form.Control

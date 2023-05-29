@@ -29,7 +29,7 @@ type GroupListProps = ComponentProps & {
 };
 
 const GroupList = (props: GroupListProps): JSX.Element => {
-  console.log(props);
+  // console.log(props);
   const [createGroupVisibel, setCreateGroupVisibel] = useState(false);
   const [groupListData, setGroupListData] = useState<any>([]);
   const [pageNumber, setPageNumber] = useState(2);
@@ -59,13 +59,13 @@ const GroupList = (props: GroupListProps): JSX.Element => {
         } else {
           setShowSeeMoreButton(false);
         }
-        console.log('groupListData', res.data);
+        // console.log('groupListData', res.data);
       } else {
         setSkeletonVisible(false);
       }
     } catch (error) {
       setSkeletonVisible(false);
-      console.log('groupListData', error);
+      console.log(error);
     }
   };
   useEffect(() => {
@@ -89,9 +89,9 @@ const GroupList = (props: GroupListProps): JSX.Element => {
           setShowSeeMoreButton(false);
           setLoadingMore(false);
         }
-        console.log('groupListData', res.data);
+        // console.log('groupListData', res.data);
       } catch (error) {
-        console.log('groupListData', error);
+        console.log(error);
         setLoadingMore(false);
       }
     }

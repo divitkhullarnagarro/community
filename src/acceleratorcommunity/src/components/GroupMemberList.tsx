@@ -28,7 +28,7 @@ type GroupMembersListProps = ComponentProps & {
 };
 
 const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
-  const { darkMode } = {
+  const { darkMode, wantRerender } = {
     ...useContext(WebContext),
   };
 
@@ -39,11 +39,9 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
   const [skeletonVisible, setSkeletonVisible] = useState(true);
   const [reachedEnd, setReachedEnd] = useState(false);
 
-  // const counter = useRef(0);
-
-  console.log(props);
+  // console.log(props);
   const router = useRouter();
-  console.log('groupMemberquery', router.query.groupId);
+  // console.log('groupMemberquery', router.query.groupId);
   const params =
     typeof window !== 'undefined'
       ? new URLSearchParams(window?.location?.search)
@@ -58,7 +56,6 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
         method: 'GET',
       });
       if (res.data) {
-        // debugger;
         setSkeletonVisible(false);
         setMemberList(res.data);
         if (res.hasMorePage) {
@@ -78,12 +75,9 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
     }
   };
   useEffect(() => {
-    // setTimeout(() => {
     getMemberList();
-    // }, 5000);
-  }, [groupId]);
+  }, [groupId, wantRerender]);
   const getMoreMembers = async (e: any) => {
-    // counter.current = 1;
     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
     if (bottom && !reachedEnd) {
       setLoadingMore(true);
@@ -101,9 +95,9 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
           setShowSeeMoreButton(false);
           setLoadingMore(false);
         }
-        console.log('groupMemberData', res.data);
+        // console.log('groupMemberData', res.data);
       } catch (error) {
-        console.log('groupMemberData', error);
+        console.log(error);
         setLoadingMore(false);
       }
     }

@@ -1,8 +1,6 @@
 import Axios, { AxiosResponse } from "axios";
 
 const reportUserCall = async (reportUserId : string | undefined, reportReason : string,  userToken : string | undefined    ) => {
-        
-    console.log(reportUserId, reportReason, userToken);
     let URL = `https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/report-user`
     var data = {
         reportedObjectId:reportUserId,
@@ -19,7 +17,6 @@ const reportUserCall = async (reportUserId : string | undefined, reportReason : 
     };
     const response = await Axios.post<any, AxiosResponse<any>>(URL, data, config)
         .then((response: any) => {
-            console.log("reportUserAPIResponse", response);
             return response?.data;
         })
         .catch((error: any) => {
@@ -59,7 +56,6 @@ export const getReportedUserReportersDetailsCall = async (userToken : string | u
     };
     const response = await Axios.get<any, AxiosResponse<any>>(URL, config)
         .then((response: any) => {
-            console.log("reportUserReportersDetailsResponse", response);
             return response?.data;
         })
         .catch((error: any) => {

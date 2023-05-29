@@ -7,7 +7,6 @@ import WebContext from 'src/Context/WebContext';
 import SearchedJournal from './SearchedJournal';
 
 const JournalSearchContainer = (props: any) => {
-  console.log('====================', props);
   const { darkMode } = {
     ...useContext(WebContext),
   };

@@ -14,7 +14,7 @@ type SideNavProps = ComponentProps & {
 };
 
 const SideNav = (props: SideNavProps): JSX.Element => {
-  console.log('SideNav', props);
+  props;
   const navItems = [
     { label: ' Home', path: '/', targetSegment: null, imgSrc: Home },
     { label: ' News', path: '/news', targetSegment: 'news', imgSrc: News },

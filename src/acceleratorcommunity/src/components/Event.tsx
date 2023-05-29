@@ -11,7 +11,7 @@ const Event = (props: any) => {
   } else {
     data = props?.events;
   }
-  console.log("+++++++++++++++++++++++++++++++", props);
+  // console.log("+++++++++++++++++++++++++++++++", props);
   const id = props?.events?.id;
   const splitDateOnly = (date: any) => {
     const dateOnly = date?.split('T')[0];
@@ -34,7 +34,7 @@ const Event = (props: any) => {
 
   return props?.events?.event !== undefined ? (
     <>
-      <a href={`/post/${id}`} className={styles.link} target="_blank">
+      <a href={`/post?postId=${id}`} className={styles.link} target="_blank">
         {props?.fromALL ? (
           <div className={`${styles.typeHeading} ${darkMode && darkModeCss.text_green}`}>Event</div>
         ) : (
@@ -53,7 +53,7 @@ const Event = (props: any) => {
                 </div>
               </div>
               <div className={`${styles.eventDescription} ${darkMode && darkModeCss.text_light}`}>
-                <DescriptionForSearch description={data?.description} />
+                <DescriptionForSearch fromSitecore={false} description={data?.description} />
 
                 {/* {data?.description.length > 300 ? (
                 <div>

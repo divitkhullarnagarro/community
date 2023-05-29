@@ -10,7 +10,7 @@ import { useContext, useEffect, useState } from 'react';
 import style from './../../assets/blogListing.module.css';
 import darkTheme from './../../assets/darkTheme.module.css';
 // import event from './../../assets/images/event.svg';
-import { Blog } from './../../assets/helpers/types';
+// import { Blog } from './../../assets/helpers/types';
 import AxiosRequest from 'src/API/AxiosRequest';
 import { AxiosResponse } from 'axios';
 import BlogListingSkeleton from 'components/skeletons/BlogListingSkeleton';
@@ -20,7 +20,7 @@ const tablist = ['My Blogs', 'Suggested Blogs', 'Bookmarked Blogs'];
 function BlogListing() {
   const { darkMode } = { ...useContext(WebContext) };
   const [activeTab, setActiveTab] = useState('My Blogs');
-  const [blogList, setBlogList] = useState<Blog>([] as Blog);
+  const [blogList, setBlogList] = useState<any>([]);
   const [skeletonVisible, setSkeletonVisible] = useState(true);
   const getMyBlogs = async () => {
     const data: AxiosResponse<any> = await AxiosRequest({
@@ -28,8 +28,8 @@ function BlogListing() {
       url: getMyBlogsUrl,
     });
 
-    const myblogData = data.data.map((ele: any) => ele.blog);
-    setBlogList(myblogData);
+    // const myblogData = data.data.map((ele: any) => ele.blog);
+    setBlogList(data?.data);
     setSkeletonVisible(false);
   };
   const getSuggestedBlogs = async () => {
@@ -37,8 +37,8 @@ function BlogListing() {
       method: 'GET',
       url: getSuggestedBlogsUrl,
     });
-    const suggesteBblogData = data.data.map((ele: any) => ele.blog);
-    setBlogList(suggesteBblogData);
+    // const suggesteBblogData = data.data.map((ele: any) => ele.blog);
+    setBlogList(data?.data);
     setSkeletonVisible(false);
   };
   const getBookmarkedMyBlogs = async () => {
@@ -46,8 +46,8 @@ function BlogListing() {
       method: 'GET',
       url: getBookmarkedMyBlogsUrl,
     });
-    const bookmarkedBlogData = data.data.map((ele: any) => ele.blog);
-    setBlogList(bookmarkedBlogData);
+    // const bookmarkedBlogData = data.data.map((ele: any) => ele.blog);
+    setBlogList(data?.data);
     setSkeletonVisible(false);
   };
   useEffect(() => {
@@ -67,10 +67,10 @@ function BlogListing() {
   }, [activeTab]);
 
   const router = useRouter();
-  const navigateToEventPage = (event: string) => {
-    router.push(`/event/${event}`);
+  const navigateToEventPage = (id: string) => {
+    router.push(`/post?postId=${id}`);
   };
-  console.log('ertyuirwerty', blogList);
+  // console.log('ertyuirwerty', blogList);
   return (
     <>
       <div className={style.blogListingPage}>
@@ -91,37 +91,47 @@ function BlogListing() {
         <div className={`${style.blogListcontent} ${darkMode && darkTheme.darkMode_bgChild}`}>
           {blogList.length > 0 ? (
             <div className={style.blogList}>
-              {blogList.map((ele, i) => (
-                <div key={i} className={`${style.blogCard} ${darkMode && darkTheme.darkMode_textBg}`}>
+              {blogList.map((ele: any, i: number) => (
+                <div
+                  key={i}
+                  className={`${style.blogCard} ${darkMode && darkTheme.darkMode_textBg}`}
+                >
                   <div className={style.BlogImage}>
                     <Image
                       style={{ cursor: 'pointer' }}
                       src={
-                        ele.imageUrl
-                          ? ele.imageUrl
+                        ele?.blog?.imageUrl
+                          ? ele?.blog?.imageUrl
                           : 'https://wwwsitecorecom.azureedge.net/-/media/sitecoresite/images/home/blog/content/sitecore-dx-2023-europe-shows-brands-how-to-get-on-a-composable-path/dx23-europe_blog-hero.jpg?md=20230425T191825Z?mw=716&mh=465&hash=DDF8137DC1F93BF9DA09D5213D6EC547'
                       }
-                      alt={ele.heading}
+                      alt={ele?.blog?.heading}
                       height={200}
                       width={300}
                       placeholder="blur"
                       //   blurDataURL={placeholderImg.src}
                       blurDataURL={
-                        ele.imageUrl
-                          ? ele.imageUrl
+                        ele?.blog?.imageUrl
+                          ? ele?.blog?.imageUrl
                           : 'https://wwwsitecorecom.azureedge.net/-/media/sitecoresite/images/home/blog/content/sitecore-dx-2023-europe-shows-brands-how-to-get-on-a-composable-path/dx23-europe_blog-hero.jpg?md=20230425T191825Z?mw=716&mh=465&hash=DDF8137DC1F93BF9DA09D5213D6EC547'
                       }
-                      onClick={() => navigateToEventPage(ele.heading)}
+                      onClick={() => navigateToEventPage(ele.id)}
                     />
                   </div>
                   <div>
                     <div className={style.blogCardContent}>
-                      <div className={`${style.blogHeading} ${darkMode && darkTheme.text_green}`} title={ele.heading}>
-                        {ele.heading.length <= 30
-                          ? ele.heading
-                          : ele.heading.substring(0, 30) + '...'}
+                      <div
+                        className={`${style.blogHeading} ${darkMode && darkTheme.text_green}`}
+                        title={ele?.blog?.heading}
+                      >
+                        {ele?.blog?.heading.length <= 70
+                          ? ele?.blog?.heading
+                          : ele?.blog?.heading.substring(0, 70) + '...'}
                       </div>
-                      <div className={`${style.blogDescription} ${darkMode && darkTheme.text_light}`}>{parser(ele.description)}</div>
+                      <div
+                        className={`${style.blogDescription} ${darkMode && darkTheme.text_light}`}
+                      >
+                        {parser(ele?.blog?.description)}
+                      </div>
                     </div>
                   </div>
                 </div>

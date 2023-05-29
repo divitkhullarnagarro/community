@@ -32,7 +32,7 @@ import downVote from '../assets/images/dislikeIcon.svg';
 import CreateModalPopup from './helperComponents/CreateModalPopup';
 import AxiosRequest from 'src/API/AxiosRequest';
 import {
-  addAllPeersUrl,
+  // addAllPeersUrl,
   editCommentUrl,
   viewProfileLinkUrl,
   voteInPollUrl,
@@ -186,7 +186,7 @@ type BlockUserFields = {
 };
 
 const AddPost = (props: AddPostProps): JSX.Element => {
-  const { userToken, objectId, userObject, darkMode, wantRerender } = {
+  const { userToken, objectId, userObject, darkMode, wantRerender, allPeersList } = {
     ...useContext(WebContext),
   };
 
@@ -254,7 +254,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   const [globalPostType, setGlobalPostType] = useState('TEXT_POST');
   const [isEditorHidden, setIsEditorVisible] = useState(false);
   const [isMember, setIsMember] = useState<any>(false);
-  console.log(isMember);
+  // console.log(isMember);
   const router = useRouter();
   const params =
     typeof window !== 'undefined'
@@ -262,7 +262,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
       : new URLSearchParams('');
   let objectEmail = params.get('id');
   let groupId = params.get('groupId') as string;
-  console.log('groupId', groupId);
+  // console.log('groupId', groupId);
 
   const getGroupInfo = async (groupId: string) => {
     try {
@@ -271,16 +271,19 @@ const AddPost = (props: AddPostProps): JSX.Element => {
         method: 'GET',
       });
       if (res?.data) {
-        setIsMember(res?.data?.member);
+        setIsMember(!res?.data?.member);
       }
-      console.log('groupInfo inside add post', res, res?.data?.member);
+      // console.log('groupInfo inside add post', res, res?.data?.member);
     } catch (error) {
-      console.log('groupInfo inside add post', error);
+      console.log(error);
     }
   };
 
   useEffect(() => {
-    getGroupInfo(groupId);
+    groupId = params.get('groupId') as string;
+    if (groupId) {
+      getGroupInfo(groupId);
+    }
   }, [groupId, wantRerender]);
 
   useEffect(() => {
@@ -331,7 +334,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
       setGlobalPostType('TEXT_POST');
     }
   }, [videoLink, file, docs, eventPost, pollPost]);
-
+  // console.log('allpeerlist', allPeersList);
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const [addedPeers, setAddedPeers] = useState<string[]>([] as string[]);
   const [mentionUserData, setMentionUserData] = useState<
@@ -343,29 +346,31 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   >([] as { text: string; value: string; url: string }[]);
   // const currentCount = editorState.getCurrentContent().getPlainText().length;
 
-  const getAllPears = async () => {
-    const res: any = await AxiosRequest({ url: addAllPeersUrl, method: 'GET' });
-    const data = res?.data;
-    const userData = data?.map((ele: any) => {
-      return {
-        text: ele?.firstName + ' ' + ele?.lastName,
-        value: ele?.firstName + ' ' + ele?.lastName,
-        url: `${viewProfileLinkUrl}${ele?.objectId}`,
-        objectId: ele?.objectId,
-      };
-    });
+  const getAllPears = () => {
+    // const res: any = await AxiosRequest({ url: addAllPeersUrl, method: 'GET' });
+    // const data = res?.data;
+    const userData =
+      allPeersList &&
+      allPeersList?.map((ele: any) => {
+        return {
+          text: ele?.firstName + ' ' + ele?.lastName,
+          value: ele?.firstName + ' ' + ele?.lastName,
+          url: `${viewProfileLinkUrl}${ele?.objectId}`,
+          objectId: ele?.objectId,
+        };
+      });
     setMentionUserData(userData);
   };
   useEffect(() => {
     getAllPears();
-  }, []);
+  }, [allPeersList]);
 
   useEffect(() => {
     const rawEditorContent = convertToRaw(editorState.getCurrentContent());
     const entityMap = rawEditorContent.entityMap;
     const addedPeerList = new Set<string>();
     Object.values(entityMap).map((entity) => {
-      console.log('enitity value', entity?.data?.url?.substring(16, entity?.data?.url?.length));
+      // console.log('enitity value', entity?.data?.url?.substring(16, entity?.data?.url?.length));
       if (entity?.data?.url?.substring(0, 16) === '/viewProfile?id=') {
         addedPeerList.add(entity?.data?.url?.substring(16, entity?.data?.url?.length));
       }
@@ -472,7 +477,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
           }
         });
     }
-  }, [getPostUrl]);
+  }, [getPostUrl, wantRerender, groupId]);
 
   useEffect(() => {
     if (ifNoMoreData == true) {
@@ -549,7 +554,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                         type="radio"
                         name="radioGroup"
                         value={item}
-                        onChange={(e) => handleSelectChange(e)}
+                        // onChange={(e) => handleSelectChange(e)}
                         defaultChecked={index == 0 ? true : false}
                         aria-label="radio 1"
                       ></Form.Check>
@@ -705,9 +710,9 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     setShowReportPopUp(false);
   };
 
-  const handleSelectChange = (event: any) => {
-    console.log(event);
-  };
+  // const handleSelectChange = (event: any) => {
+  //   console.log(event);
+  // };
 
   const ReportPostPopup = () => {
     const reportTypeList = Object.values(ReportPostOptionsTypeLabel);
@@ -742,7 +747,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                         type="radio"
                         name="radioGroup"
                         value={item}
-                        onChange={(e) => handleSelectChange(e)}
+                        // onChange={(e) => handleSelectChange(e)}
                         defaultChecked={index == 0 ? true : false}
                         aria-label="radio 1"
                       ></Form.Check>
@@ -1038,7 +1043,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
       getAllDownVotesCall(userToken, comeendId),
     ])
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setAllUpVotes(response[0]?.data?.data);
         setAllDownVote(response[1]?.data?.data);
         setModalForData(true);
@@ -1401,11 +1406,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                 </div>
                 <div className="postHeaderRight">
                   <Dropdown>
-                    <Dropdown.Toggle
-                      variant="secondary"
-                      id="dropdown-basic"
-                      className={styles.dropdownBtn}
-                    >
+                    <Dropdown.Toggle variant="secondary" className={styles.dropdownBtn}>
                       <button
                         onClick={() => {
                           setReportPostId(post?.id);
@@ -1698,11 +1699,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
 
                 <div className={styles.shareContainer}>
                   <Dropdown style={{ alignItems: 'center', display: 'flex' }}>
-                    <Dropdown.Toggle
-                      variant="secondary"
-                      id="dropdown-basic"
-                      className={ShowShareCss.dropdownBtn}
-                    >
+                    <Dropdown.Toggle variant="secondary" className={ShowShareCss.dropdownBtn}>
                       <button
                         onClick={() => handleShowShare(post?.id, !post?.showShare)}
                         className={styles.shareButton}
@@ -1918,7 +1915,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                             ) : (
                               <p className="commentHeading">{comment?.text}</p>
                             )}
-                            <div
+                            {/* <div
                               onClick={() => getAllupVotesAndDownVotes(comment?.id)}
                               className="upvoteDownvoteContainer"
                             >
@@ -1932,7 +1929,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                               <div className="likecomments">
                                 <img className="likecomments" src={downVote.src} alt="Dislike" />
                               </div>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
 
@@ -3154,7 +3151,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
         className={`${styles.mainContainer} ${darkMode ? darkModeCss.grey_3 : ''}`}
         style={ifNoMoreData ? {} : { paddingBottom: '0px' }}
       >
-        {!isEditorHidden ? (
+        {!isEditorHidden && !isMember ? (
           <>
             <div
               className={`${styles.addPostWidgetContainer} ${darkMode ? darkModeCss.grey_2 : ''}`}
@@ -3627,7 +3624,6 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                             <Dropdown className="eventTypeDropdown">
                               <Dropdown.Toggle
                                 variant="secondary"
-                                id="dropdown-basic"
                                 style={{
                                   width: '100%',
                                 }}

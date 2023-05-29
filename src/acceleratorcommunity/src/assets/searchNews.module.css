@@ -17,22 +17,24 @@
 
 .container {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   border-bottom: 1px solid #ced0d4;
   padding-bottom: 15px;
   margin-bottom: 10px;
   gap: 20px;
+  padding: 10px;
 }
-.imgContainer{
+.imgContainer {
   width: 30%;
 }
 .imgContainer > img {
   width: 100%;
   height: 150px;
 }
-.contentContainer{
-    display: flex;
-    flex-direction: column;
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 .containerHeading {
   color: #091329;
@@ -42,13 +44,12 @@
   font-size: 16px;
   margin-bottom: 5px;
 }
-.containerTime{
+.containerTime {
   font-family: 'Equip-Regular';
   font-weight: 300;
   font-size: 14px;
-  color: #82888F;
+  color: #82888f;
   margin-bottom: 15px;
-
 }
 .containerDescription {
   color: #091329;
@@ -65,5 +66,4 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
-
 }

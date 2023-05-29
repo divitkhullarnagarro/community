@@ -62,7 +62,7 @@ type DataSource = {
 
 const Grid = (props: GridProps): JSX.Element => {
   const { datasource } = props?.fields?.data;
-  console.log('grid', props);
+  // console.log('grid', props);
   return (
     <div className="gridcontainer">
       <div

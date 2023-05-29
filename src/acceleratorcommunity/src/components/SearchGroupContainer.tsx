@@ -6,12 +6,12 @@ import styles from '../assets/searchFilterContainer.module.css';
 import darkModeCss from '../assets/darkTheme.module.css';
 
 const SearchGroupContainer = (props: any) => {
-  console.log(props?.searchedData)
+  // console.log(props?.searchedData)
+  props;
   const { darkMode } = {
     ...useContext(WebContext),
   };
   return (
-    
     <div className={styles.generalcontainer}>
       {/* {props?.success ? (
         <SearchSkeleton count={5} />
@@ -20,8 +20,10 @@ const SearchGroupContainer = (props: any) => {
           return <SearchGroupResult />;
         }):"No Group Found"
       )} */}
-      
-   <div className={`${styles.forNoData} ${darkMode && darkModeCss.text_light}`}>No Groups Found</div>
+
+      <div className={`${styles.forNoData} ${darkMode && darkModeCss.text_light}`}>
+        No Groups Found
+      </div>
     </div>
   );
 };

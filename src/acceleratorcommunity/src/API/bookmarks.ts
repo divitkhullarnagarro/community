@@ -1,12 +1,11 @@
 import Axios, { AxiosResponse } from 'axios';
 
-
 const bookmark = async (
-  objectId:string|undefined,
+  objectId: string | undefined,
   contentId: string,
   // url:string,
   title: string,
-  comment: string | undefined,
+  // comment: string | undefined,
   userToken: string | undefined
   // , url:string
 ) => {
@@ -15,7 +14,7 @@ const bookmark = async (
     contentId: contentId,
     // url:url,
     title: title,
-    comment: comment
+    // comment: comment
   };
 
   let URL = `https://accelerator-api-management.azure-api.net/user-service/api/v1/bookmarks/save`;
@@ -27,9 +26,9 @@ const bookmark = async (
     },
     data: data,
   };
-  const response = await Axios.post<any, AxiosResponse<any>>(URL,data, config)
+  const response = await Axios.post<any, AxiosResponse<any>>(URL, data, config)
     .then((response: any) => {
-      console.log('Added to you Collection', response);
+      // console.log('Added to you Collection', response);
       return response?.data;
     })
     .catch((error: any) => {

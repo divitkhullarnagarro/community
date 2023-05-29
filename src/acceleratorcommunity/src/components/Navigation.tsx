@@ -20,7 +20,8 @@ type NavigationProps = ComponentProps & {
 const name = 'FrontEndTeam';
 
 const Navigation = (props: NavigationProps): JSX.Element => {
-  console.log('Navigation', props);
+  // console.log('Navigation', props);
+  props;
   return (
     <nav className={Navigationcss.navbar}>
       <div className={Navigationcss.search_form}>

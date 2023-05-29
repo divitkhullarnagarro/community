@@ -46,13 +46,13 @@ type BlockUserFields = {
 };
 
 function viewSinglePost(props: any) {
-  console.log('mudatatatata', props);
+  // console.log('mudatatatata', props);
   const { userToken, objectId, userObject, setUserToken } = {
     ...useContext(WebContext),
   };
 
   const router = useRouter();
-  console.log(router);
+  // console.log(router);
 
   //DeleteMe
   userToken;
@@ -367,9 +367,9 @@ function viewSinglePost(props: any) {
     setShowReportPopUp(false);
   };
 
-  const handleSelectChange = (event: any) => {
-    console.log(event);
-  };
+  // const handleSelectChange = (event: any) => {
+  //   console.log(event);
+  // };
 
   const onPostReported = async () => {
     setShowSpinner(true);
@@ -428,7 +428,7 @@ function viewSinglePost(props: any) {
                         type="radio"
                         name="radioGroup"
                         value={item}
-                        onChange={(e) => handleSelectChange(e)}
+                        // onChange={(e) => handleSelectChange(e)}
                         defaultChecked={index == 0 ? true : false}
                         aria-label="radio 1"
                       ></Form.Check>
@@ -510,11 +510,7 @@ function viewSinglePost(props: any) {
               <div className={specificPostCss.actionContainer}>
                 <button className={specificPostCss.dropDownBtn}>
                   <Dropdown>
-                    <Dropdown.Toggle
-                      variant="secondary"
-                      id="dropdown-basic"
-                      className={styles.dropdownBtn}
-                    >
+                    <Dropdown.Toggle variant="secondary" className={styles.dropdownBtn}>
                       <button
                         onClick={() => {
                           setReportPostId(props?.data?.data?.id);
@@ -848,6 +844,7 @@ export default viewSinglePost;
 export async function getServerSideProps(context: any) {
   const { params } = context;
   const { postId } = params;
+  // console.log("-------------------",context)
   let getAllPostURL = `https://accelerator-api-management.azure-api.net/graph-service/api/v1/graph/post/${postId}`;
   const value = context?.req?.cookies?.UserToken;
   const token = decryptString(value);

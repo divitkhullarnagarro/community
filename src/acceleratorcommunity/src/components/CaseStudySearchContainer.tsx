@@ -6,7 +6,7 @@ import darkModeCss from '../assets/darkTheme.module.css';
 import WebContext from 'src/Context/WebContext';
 
 const CaseStudySearchContainer = (props: any) => {
-  console.log('====================', props);
+  // console.log('====================', props);
   const { darkMode } = {
     ...useContext(WebContext),
   };

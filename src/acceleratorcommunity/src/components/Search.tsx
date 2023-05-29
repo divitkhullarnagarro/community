@@ -29,7 +29,7 @@ type SearchProps = ComponentProps & {
 };
 
 const Search = (props: SearchProps): JSX.Element => {
-  console.log('Search', props);
+  // console.log('Search', props);
   const router = useRouter();
   const [searchText, setSearchText] = useState<any>('');
   const [Text, setText] = useState<any>('');
@@ -114,7 +114,7 @@ const Search = (props: SearchProps): JSX.Element => {
   const containsHtml = (string: any) => {
     var sanitizedQuery = string.replace(/<[^>]+>/g, '');
     if (sanitizedQuery !== string) {
-      console.log('contains html');
+      // console.log('contains html');
       return true;
     }
     return false;
@@ -186,14 +186,19 @@ const Search = (props: SearchProps): JSX.Element => {
     setToastError(false);
   };
 
-  console.log('searchedData', searchedData);
+  // console.log('searchedData', searchedData);
   const { darkMode } = { ...useContext(WebContext) };
   return (
     <>
       <div className={searchCss.container}>
         <div className={searchCss.searchBox}>
           <form className={searchCss.searchForm}>
-            <button type="submit" className={searchCss.searchBtn} onClick={handleSearch}>
+            <button
+              type="submit"
+              className={searchCss.searchBtn}
+              onClick={handleSearch}
+              aria-label="search"
+            >
               <NextImage
                 className={searchCss.img}
                 field={props?.fields?.data?.datasource?.image?.jsonValue?.value}
@@ -202,7 +207,7 @@ const Search = (props: SearchProps): JSX.Element => {
                 width={15}
               />
             </button>
-            {console.log('searchText', searchText)}
+            {/* {console.log('searchText', searchText)} */}
             <input
               type="text"
               value={searchText === undefined ? '' : searchText}

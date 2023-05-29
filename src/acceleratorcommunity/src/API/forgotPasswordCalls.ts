@@ -10,7 +10,6 @@ const sendOtpCall = async (email: string) => {
     },
   };
   const response = await Axios.get<any, AxiosResponse<any>>(URL, config);
-  console.log('response', response);
   return response;
 };
 export default sendOtpCall;
@@ -23,7 +22,6 @@ export const validateOtpCall = async (email: string, otp: string) => {
     },
   };
   const response = await Axios.get<any, AxiosResponse<any>>(URL, config);
-  console.log('response', response);
   return response;
 };
 export const updatePasswordCall = async (email: string, password: string) => {
@@ -38,6 +36,5 @@ export const updatePasswordCall = async (email: string, password: string) => {
     },
   };
   const response = await Axios.put<any, AxiosResponse<any>>(updatePasswordUrl, data, config);
-  console.log('response', response);
   return response;
 };

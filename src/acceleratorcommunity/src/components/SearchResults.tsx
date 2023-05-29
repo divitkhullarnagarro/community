@@ -39,7 +39,7 @@ const SearchResults = () => {
   const filter = [
     {
       type: 'ALL',
-      value: 'ALL',
+      value: 'All',
     },
     // {
     //   type: 'GROUP',
@@ -71,11 +71,11 @@ const SearchResults = () => {
     // },
     {
       type: 'CASESTUDY',
-      value: 'CaseStudy',
+      value: 'Case Study',
     },
     {
       type: 'BLOG',
-      value: 'BLOG',
+      value: 'Blog',
     },
     // {
     //   type: 'POLL',
@@ -355,8 +355,8 @@ const SearchResults = () => {
         <ThemeSwitcher />
       </div>
       <div className={styles.wrapper}>
-      <div className={styles.pageHeadingContainer}>
-        {/* <div className={styles.pageHeading}>
+        <div className={styles.pageHeadingContainer}>
+          {/* <div className={styles.pageHeading}>
           <form>
             <input
               type="text"
@@ -368,47 +368,47 @@ const SearchResults = () => {
             <input onClick={onSearch} type="submit" hidden />
           </form>
         </div> */}
-      </div>
-      {console.log(
+        </div>
+        {/* {console.log(
         '=====================================>>>>>>>>>>>>>>>>>>>>>>>>>>>',
         searchedData
-      )}
-      <SearchFlters activeState={activeState} filter={filter} handleClick={handleClick} />
-      {activeState === 'ALL' ? (
-        <SearchALLConatiner query={query} success={success} searchedData={searchedData} />
-      ) : activeState === 'GROUP' ? (
-        <SearchGroupContainer query={query} searchedData={searchedData} success={success} />
-      ) : activeState === 'USER' ? (
-        <SearchUserContainer query={query} searchedData={searchedData} success={success} />
-      ) : activeState === 'EVENT' ? (
-        <EventSearchContainer query={query} searchedData={searchedData} success={success} />
-      ) : activeState === 'NEWS' ? (
-        <NewSearchContainer searchedData={searchedData} success={success} />
-      ) : activeState === 'JOURNAL' ? (
-        <JournalSearchContainer searchedData={searchedData} query={query} success={success} />
-      ) : activeState === 'CASESTUDY' ? (
-        <CaseStudySearchContainer query={query} searchedData={searchedData} success={success} />
-      ) : activeState === 'HASHTAG' ? (
-        <HashtagContainer query={query} success={success} searchedData={searchedData} />
-      ) : activeState === 'BLOG' ? (
-        <BlogContainer success={success} query={query} searchedData={searchedData} />
-      ) : activeState === 'POLL' ? (
-        ''
-      ) : (
-        // <PollConatiner success={success} searchedData={searchedData} />
+      )} */}
+        <SearchFlters activeState={activeState} filter={filter} handleClick={handleClick} />
+        {activeState === 'ALL' ? (
+          <SearchALLConatiner query={query} success={success} searchedData={searchedData} />
+        ) : activeState === 'GROUP' ? (
+          <SearchGroupContainer query={query} searchedData={searchedData} success={success} />
+        ) : activeState === 'USER' ? (
+          <SearchUserContainer query={query} searchedData={searchedData} success={success} />
+        ) : activeState === 'EVENT' ? (
+          <EventSearchContainer query={query} searchedData={searchedData} success={success} />
+        ) : activeState === 'NEWS' ? (
+          <NewSearchContainer searchedData={searchedData} success={success} />
+        ) : activeState === 'JOURNAL' ? (
+          <JournalSearchContainer searchedData={searchedData} query={query} success={success} />
+        ) : activeState === 'CASESTUDY' ? (
+          <CaseStudySearchContainer query={query} searchedData={searchedData} success={success} />
+        ) : activeState === 'HASHTAG' ? (
+          <HashtagContainer query={query} success={success} searchedData={searchedData} />
+        ) : activeState === 'BLOG' ? (
+          <BlogContainer success={success} query={query} searchedData={searchedData} />
+        ) : activeState === 'POLL' ? (
+          ''
+        ) : (
+          // <PollConatiner success={success} searchedData={searchedData} />
 
           ''
         )}
-      {showNotification && (
-        <ToastNotification
-          showNotification={showNotification}
-          success={toastSuccess}
-          error={toastError}
-          message={toastMessage}
-          handleCallback={resetToastState}
-        />
-      )}
-    </div>
+        {showNotification && (
+          <ToastNotification
+            showNotification={showNotification}
+            success={toastSuccess}
+            error={toastError}
+            message={toastMessage}
+            handleCallback={resetToastState}
+          />
+        )}
+      </div>
     </div>
   );
 };

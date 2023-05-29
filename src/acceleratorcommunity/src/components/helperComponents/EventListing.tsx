@@ -1,13 +1,16 @@
 import {
-  getMyBlogsUrl,
-  getSuggestedBlogsUrl,
-  getBookmarkedMyBlogsUrl,
-  demoBookmarkedEventList,
-  demoMyEventList,
-  demoSuggestedEventList,
+  // getMyBlogsUrl,
+  // getSuggestedBlogsUrl,
+  // getBookmarkedMyBlogsUrl,
+  // demoBookmarkedEventList,
+  // demoMyEventList,
+  // demoSuggestedEventList,
+  getMyEventsUrl,
+  EventImage,
+  getUpcomingEventsUrl,
 } from 'assets/helpers/constants';
 import WebContext from '../../Context/WebContext';
-import Image from 'next/image';
+// import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import AxiosRequest from 'src/API/AxiosRequest';
@@ -15,47 +18,84 @@ import { AxiosResponse } from 'axios';
 import style from './../../assets/eventListing.module.css';
 import darkTheme from './../../assets/darkTheme.module.css';
 import event from './../../assets/images/event.svg';
-import interestedLogo from './../../assets/images/interestedLogo.svg';
+// import interestedLogo from './../../assets/images/interestedLogo.svg';
 // import placeholderImg from './../../assets/images/placeholderImg.png';
 import { Event } from './../../assets/helpers/types';
 import EventListingSkeleton from 'components/skeletons/EventListingSkeleton';
+import {
+  getDateAndtimeForEvent,
+  getFilteredEvents,
+  getUpcommingEventsFilter,
+} from 'assets/helpers/helperFunctions';
 const tablist = ['My Events', 'Upcoming Events', 'Bookmarked Events'];
 
 const EventListing = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState('My Events');
   const [eventList, setEventList] = useState<Event>([] as Event);
-  const { darkMode } = { ...useContext(WebContext) };
+  const { darkMode, userObject } = { ...useContext(WebContext) };
   const [skeletonVisible, setSkeletonVisible] = useState(true);
   const getMyEvent = async () => {
-    const data: AxiosResponse<any> = await AxiosRequest({
-      method: 'GET',
-      url: getMyBlogsUrl,
-    });
+    try {
+      const data: AxiosResponse<any> = await AxiosRequest({
+        method: 'POST',
+        url: getMyEventsUrl,
+        data: {
+          filters: ['createdBy.objectId'],
+          text: userObject.objectId,
+          type: 'EVENT',
+        },
+      });
 
-    const myblogData = data.data.map((ele: any) => ele.blog);
-    console.log(myblogData);
-    setEventList(demoMyEventList);
-    setSkeletonVisible(false);
+      // console.log('my event list', data.data.hits);
+      setEventList(data.data.hits);
+      setSkeletonVisible(false);
+    } catch (error) {
+      console.log(error);
+      setSkeletonVisible(false);
+    }
   };
   const getUpcomingEvents = async () => {
-    const data: AxiosResponse<any> = await AxiosRequest({
-      method: 'GET',
-      url: getSuggestedBlogsUrl,
-    });
-    const suggesteBblogData = data.data.map((ele: any) => ele.blog);
-    console.log(suggesteBblogData);
-    setEventList(demoSuggestedEventList);
-    setSkeletonVisible(false);
+    try {
+      const data: AxiosResponse<any> = await AxiosRequest({
+        method: 'POST',
+        url: getUpcomingEventsUrl,
+        data: {
+          filters: ['createdBy.objectId', 'description', 'Title'],
+          text: '*',
+          type: 'EVENT',
+        },
+      });
+
+      const filtered = getFilteredEvents(data.data.hits);
+      // console.log('upcoming events filtered', filtered);
+      const upcoming = getUpcommingEventsFilter(filtered);
+      // console.log('upcoming events upcoming', upcoming);
+
+      setEventList(upcoming);
+      setSkeletonVisible(false);
+    } catch (error) {
+      console.log(error);
+      setSkeletonVisible(false);
+    }
   };
   const getBookmarkedEvents = async () => {
-    const data: AxiosResponse<any> = await AxiosRequest({
-      method: 'GET',
-      url: getBookmarkedMyBlogsUrl,
-    });
-    const bookmarkedBlogData = data.data.map((ele: any) => ele.blog);
-    console.log(bookmarkedBlogData);
-    setEventList(demoBookmarkedEventList);
-    setSkeletonVisible(false);
+    try {
+      const data: AxiosResponse<any> = await AxiosRequest({
+        method: 'POST',
+        url: getMyEventsUrl,
+        data: {
+          filters: ['createdBy.objectId'],
+          text: userObject.objectId,
+          type: 'EVENT',
+        },
+      });
+
+      setEventList(data.data.hits);
+      setSkeletonVisible(false);
+    } catch (error) {
+      console.log(error);
+      setSkeletonVisible(false);
+    }
   };
 
   useEffect(() => {
@@ -74,12 +114,14 @@ const EventListing = (): JSX.Element => {
     }
   }, [activeTab]);
 
-  const onInterestedButtonClick = () => {
-    alert('Subscribe button clicked');
-  };
+  // const onInterestedButtonClick = () => {
+  //   alert('Subscribe button clicked');
+  // };
   const router = useRouter();
-  const navigateToEventPage = (event: string) => {
-    router.push(`/event/${event}`);
+  const navigateToEventPage = (id: string, isSitecoreEvent: any) => {
+    if (!isSitecoreEvent) {
+      router.push(`/post?postId=${id}`);
+    }
   };
   return (
     <>
@@ -101,18 +143,27 @@ const EventListing = (): JSX.Element => {
         <div className={`${style.eventListcontent} ${darkMode && darkTheme.darkMode_bgChild}`}>
           {eventList.length > 0 ? (
             <div className={style.eventList}>
-              {eventList.map((ele, i) => (
-                <div key={i} className={`${style.eventCard} ${darkMode && darkTheme.darkMode_textBg}`}>
-                  <Image
+              {eventList.map((ele: any, i) => (
+                <div
+                  key={i}
+                  className={`${style.eventCard} ${darkMode && darkTheme.darkMode_textBg}`}
+                >
+                  <img
                     style={{ cursor: 'pointer' }}
-                    src={ele.img ? ele.img : event.src}
-                    alt={ele.name}
+                    src={
+                      EventImage[ele?.sourceAsMap?.event?.eventType]
+                        ? EventImage[ele?.sourceAsMap?.event?.eventType]
+                        : ele?.sourceAsMap?.event?.imageUrl
+                        ? ele?.sourceAsMap?.event?.imageUrl
+                        : event.src
+                    }
+                    alt={ele?.sourceAsMap?.event?.title}
                     height={180}
                     width={280}
-                    placeholder="blur"
+                    // placeholder="blur"
                     //   blurDataURL={placeholderImg.src}
-                    blurDataURL={'placeholderImg.src'}
-                    onClick={() => navigateToEventPage(ele.name)}
+                    // blurDataURL={'placeholderImg.src'}
+                    onClick={() => navigateToEventPage(ele?.id, ele?.isSitecoreEvent)}
                   />
                   <div className={style.eventCardContent}>
                     <div
@@ -120,21 +171,33 @@ const EventListing = (): JSX.Element => {
                     //   onClick={() => navigateToEventPage(ele.name)}
                     >
                       <div className={`${style.eventTime} ${darkMode && darkTheme.text_green}`}>
-                        {ele.date} BY {ele.time}
+                        {getDateAndtimeForEvent(ele?.sourceAsMap?.event?.eventDate)}
                       </div>
-                      <div className={`${style.eventName} ${darkMode && darkTheme.text_green}`} title={ele.name}>
-                        {ele?.name?.length < 22 ? ele?.name : ele?.name?.substring(0, 22) + '...'}
+                      <div
+                        className={`${style.eventName} ${darkMode && darkTheme.text_green}`}
+                        title={ele?.sourceAsMap?.event?.title}
+                      >
+                        {ele?.sourceAsMap?.event?.title?.length < 22
+                          ? ele?.sourceAsMap?.event?.title
+                          : ele?.sourceAsMap?.event?.title?.substring(0, 22) + '...'}
                       </div>
-                      <div className={`${style.eventLocation} ${darkMode && darkTheme.text_light}`}>{ele.location}</div>
-                      <div className={`${style.eventInterested} ${darkMode && darkTheme.text_light}`} title={ele.description}>
-                        {ele?.description?.length < 35
-                          ? ele?.description
-                          : ele?.description?.substring(0, 35) + '...'}
+                      <div className={`${style.eventLocation} ${darkMode && darkTheme.text_light}`}>
+                        {ele?.sourceAsMap?.event?.eventType
+                          ? ele?.sourceAsMap?.event?.eventType
+                          : 'Sitecore Event'}
+                      </div>
+                      <div
+                        className={`${style.eventInterested} ${darkMode && darkTheme.text_light}`}
+                        title={ele?.sourceAsMap?.event?.description}
+                      >
+                        {ele?.sourceAsMap?.event?.description?.length < 35
+                          ? ele?.sourceAsMap?.event?.description
+                          : ele?.sourceAsMap?.event?.description?.substring(0, 35) + '...'}
                       </div>
                     </div>
-                    <button className={style.interestedButton} onClick={onInterestedButtonClick}>
+                    {/* <button className={style.interestedButton} onClick={onInterestedButtonClick}>
                       <Image src={interestedLogo} /> Subscribe
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               ))}

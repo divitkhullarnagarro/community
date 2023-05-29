@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import WebContext from '../Context/WebContext';
 import styles from '../assets/blockeduser.module.css';
 import { Field, NextImage, Text } from '@sitecore-jss/sitecore-jss-nextjs';
-import { Modal, Spinner } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import moreLogo from '../assets/images/moreLogo.svg';
 // import Email from '../assets/images/EmailIcon.jpg';
 import { useRouter } from 'next/router';
@@ -13,10 +13,14 @@ import ToastNotification from './ToastNotification';
 import Image from 'next/image';
 import unBlockLogo from '../assets/images/UnblockUser.svg';
 import darkModeCss from '../assets/darkTheme.module.css';
+import Profile from '../assets/images/ProfilePic.jpeg';
+import DotLoader from './DotLoader';
+
 type blockedUserFields = {
   firstName: string;
   lastName: string;
   objectId: string;
+  profilePictureUrl: string;
 };
 
 type blockedUserProps = {
@@ -131,12 +135,7 @@ function BlockedUser(props: blockedUserProps) {
                 Cancel
               </button>
               <button className={styles.unBlockConfirm} onClick={() => onUserUnblocked()}>
-                Confirm
-                {showSpinner ? (
-                  <Spinner style={{ marginLeft: '5px', width: '20px', height: '20px' }} />
-                ) : (
-                  <></>
-                )}
+                {showSpinner ? <DotLoader dotColor="#ffffff" /> : <>Confirm</>}
               </button>
             </Modal.Footer>
           </div>
@@ -169,6 +168,10 @@ function BlockedUser(props: blockedUserProps) {
     // setShowPreviewImage(true);
   };
 
+  function returnUserImage(e: any) {
+    e.target.src = Profile.src;
+  }
+
   const BlockedUserRow = (user: blockedUserFields) => {
     return (
       <>
@@ -177,9 +180,12 @@ function BlockedUser(props: blockedUserProps) {
             {/* <Button className={styles.buttonRow} onClick={() => getBlockedUserProfile(user)}> */}
             <div className={styles.leftContainer}>
               <img
+                src={user?.profilePictureUrl ? user?.profilePictureUrl : Profile.src}
                 className={styles.blockedUserImage}
-                src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                 alt="User-Pic"
+                onError={(e) => {
+                  returnUserImage(e);
+                }}
               ></img>
 
               <div className={styles.blockedUserName}>{`${user.firstName} ${user.lastName}`}</div>

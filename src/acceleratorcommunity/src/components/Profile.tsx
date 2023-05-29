@@ -395,7 +395,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
   // setUserToken;
   // userToken;
   const submitPersonalInfoDetails = () => {
-    console.log('run2', personalInfoDetails);
+    // console.log('run2', personalInfoDetails);
     if (
       errorState?.firstName === false &&
       errorState?.lastName === false &&
@@ -439,7 +439,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
     setEducationModal(false);
   };
   const editWorkFormData = (val: any) => {
-    console.log('editWorkFormData', val);
+    // console.log('editWorkFormData', val);
     const data = tempUserData.placeOfPractice?.filter((data: any) => {
       return data?.wid === val;
     });
@@ -477,7 +477,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
   const [placeOfPracticeDetails, setPlaceOfPracticeDetails] = useState<arrayOfPlaceOfPratice>();
   useEffect(() => {
     if (placeOfPracticeDetails !== undefined) {
-      console.log('placeOfPracticeDetails', placeOfPracticeDetails);
+      // console.log('placeOfPracticeDetails', placeOfPracticeDetails);
       submitWork();
     }
   }, [placeOfPracticeDetails]);
@@ -631,7 +631,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
   }, [educationDetails]);
 
   const submitEducation = () => {
-    console.log('education');
+    // console.log('education');
     if (
       errorState.instituteName === false &&
       errorState.standard === false &&
@@ -904,7 +904,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
   };
   const addInterest = (e: any) => {
     e.preventDefault();
-    console.log('editUserData.interests', editUserData.interests);
+    // console.log('editUserData.interests', editUserData.interests);
     if (
       !userInterests?.includes(editUserData.interests) &&
       editUserData.interests !== undefined &&
@@ -921,9 +921,9 @@ const Profile = (props: ProfileProps): JSX.Element => {
   const submitForm1 = (e: any) => {
     e.preventDefault();
     if (!errorState.firstName && !errorState.lastName) {
-      console.log('editUserData', editUserData);
+      // console.log('editUserData', editUserData);
       let tempArray = { ...editUserData };
-      console.log('tempArray', tempArray);
+      // console.log('tempArray', tempArray);
       updateUuserCall(userToken, objectId, tempArray).then((response) => {
         if (response) {
           if (response?.data?.success) {
@@ -970,7 +970,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
       language: language,
     };
 
-    console.log('languages', tempArray);
+    // console.log('languages', tempArray);
     updateUuserCall(userToken, objectId, tempArray).then((response) => {
       if (response) {
         if (response?.data?.success) {
@@ -1020,7 +1020,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
       interests: userInterests,
     };
 
-    console.log('languages', tempArray);
+    // console.log('languages', tempArray);
     updateUuserCall(userToken, objectId, tempArray).then((response) => {
       if (response) {
         if (response?.data?.success) {
@@ -1047,8 +1047,8 @@ const Profile = (props: ProfileProps): JSX.Element => {
         alternateEmail: editUserData?.alternateEmail,
         phoneNumber: editUserData?.phoneNumber,
       };
-      let tempArray = { ...editUserData };
-      console.log('editvalues', tempArray);
+      // let tempArray = { ...editUserData };
+      // console.log('editvalues', tempArray);
       updateUuserCall(userToken, objectId, obj).then((response) => {
         if (response) {
           if (response?.data?.success) {
@@ -1268,10 +1268,10 @@ const Profile = (props: ProfileProps): JSX.Element => {
 
   const getUser = () => {
     getUserCall(userToken, objectId).then((response: any) => {
-      console.log(
-        'response?.data?.data?.profilePictureUrl',
-        response?.data?.data?.profilePictureUrl
-      );
+      // console.log(
+      //   'response?.data?.data?.profilePictureUrl',
+      //   response?.data?.data?.profilePictureUrl
+      // );
       setTempUserData({
         firstName: response?.data?.data?.firstName,
         lastName: response?.data?.data?.lastName,
@@ -1417,7 +1417,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
       });
     }
 
-    console.log('valueofe', image?.preview);
+    // console.log('valueofe', image?.preview);
   };
 
   if (tempUserData?.middleName !== undefined) {
