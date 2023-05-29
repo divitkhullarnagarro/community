@@ -193,3 +193,11 @@ export const getFilteredEvents = (allEventsList: any) => {
   // console.log('upcoming events filter function', allEventsList, mapped, upcomingEventArray);
   return mapped;
 };
+
+export const spaceRemover = (value: string) => {
+  let temp = '';
+  if (value.trim().length > 0) {
+    temp = value;
+  }
+  return temp;
+};

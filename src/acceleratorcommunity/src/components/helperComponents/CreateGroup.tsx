@@ -12,6 +12,7 @@ import WebContext from 'src/Context/WebContext';
 import ToastNotification from './../ToastNotification';
 // import Image from 'next/image';
 import { Spinner } from 'react-bootstrap';
+import { spaceRemover } from 'assets/helpers/helperFunctions';
 
 function CreateGroup({
   createGroupVisibel,
@@ -44,13 +45,37 @@ function CreateGroup({
   const [toastError, setToastError] = useState(false);
   const [creatingGroup, setCreatingGroup] = useState(false);
 
+  const handleNameChange = (value: string) => {
+    const updatedValue = spaceRemover(value);
+    if (updatedValue.length < 50) {
+      setNameValue(updatedValue);
+    }
+  };
+  const handleDescriptionChange = (value: string) => {
+    const updatedValue = spaceRemover(value);
+    if (updatedValue.length <= 150) {
+      setDescriptionValue(updatedValue);
+    }
+  };
+
   const getPeersbyName = async (name: string) => {
     const res: any = await AxiosRequest({
       url: `${addPeersBySearchUrl}${name}`,
       method: 'GET',
     });
-    // console.log(res);
-    setmembersSuggestionsList(res.data);
+    if (!res?.errorCode || res?.success) {
+      // console.log('asdfgasdfg', res);
+      setmembersSuggestionsList(res.data);
+    } else {
+      setToastError(true);
+      setToastMessage(
+        res?.data?.errorMessages[0]
+          ? res?.data?.errorMessages[0]
+          : 'Something Went Wrong. Please Try Again'
+      );
+
+      setShowNofitication(true);
+    }
   };
 
   const handleAddMemberChange = async (e: any) => {
@@ -100,7 +125,18 @@ function CreateGroup({
       url: `${addPeersPaginationUrl}page=0&size=10`,
       method: 'GET',
     });
-    setmembersSuggestionsList(res.data);
+    if (!res?.errorCode || res?.success) {
+      setmembersSuggestionsList(res.data);
+    } else {
+      setToastError(true);
+      setToastMessage(
+        res?.data?.errorMessages[0]
+          ? res?.data?.errorMessages[0]
+          : 'Something Went Wrong. Please Try Again'
+      );
+
+      setShowNofitication(true);
+    }
   };
 
   const createGroupSubmit = async (e: any) => {
@@ -121,11 +157,15 @@ function CreateGroup({
             createdOn: null,
           },
         });
-        if (res?.success) {
+        if (res?.success || !res?.errorCode) {
           setCreatingGroup(false);
           setWantToRerender(!wantToRerender);
           setToastSuccess(true);
-          setToastMessage('Group Created Successfully');
+          setToastMessage(
+            res?.data?.errorMessages[0]
+              ? res?.data?.errorMessages[0]
+              : 'Something Went Wrong. Please Try Again'
+          );
           setShowNofitication(true);
           // console.log('createGroupdata', res);
           setAddMemberList([]);
@@ -140,15 +180,7 @@ function CreateGroup({
         setCreatingGroup(false);
         setToastError(true);
         setToastMessage('Something Went Wrong. Please Try Again');
-        // setToastMessage(
-        //   nameValue
-        //     ? descriptionValue
-        //       ? addMemberList.length > 0
-        //         ? ''
-        //         : 'Please add some member'
-        //       : 'Description Required'
-        //     : 'Name Nequired'
-        // );
+
         setShowNofitication(true);
       }
     } catch (error) {
@@ -253,7 +285,7 @@ function CreateGroup({
                 value={nameValue}
                 style={{ marginBottom: '10px', height: '46px' }}
                 placeholder="Name"
-                onChange={(e) => setNameValue(e.target.value)}
+                onChange={(e) => handleNameChange(e.target.value)}
                 required
               />
             </div>
@@ -265,9 +297,10 @@ function CreateGroup({
                 value={descriptionValue}
                 style={{ height: '200px' }}
                 placeholder="Description"
-                onChange={(e) => setDescriptionValue(e.target.value)}
+                onChange={(e) => handleDescriptionChange(e.target.value)}
                 required
               ></textarea>
+              <span>Max Limit:{descriptionValue.length}/150</span>
             </div>
 
             <div className="form-group">

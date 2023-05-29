@@ -83,6 +83,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
   const [followingList, setFollowingList] = useState<any>([]);
   const [followerFollowingSwitch, setFollowerFollowingSwitch] = useState(false);
   const [isfetchchingFollowerlist, setisfetchchingFollowerlist] = useState(false);
+  const [isfetchchingFollowinglist, setisfetchchingFollowinglist] = useState(false);
   const [followersPageNo, setFollowersPageNo] = useState(0);
   const [followingPageNo, setFollowingPageNo] = useState(0);
   const [showNotification, setShowNofitication] = useState(false);
@@ -119,7 +120,6 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
       setShowNofitication(true);
       setJoinLeaveLoader(false);
     }
-    // console.log('joinGroupCall', res);
   };
 
   const onLeaveButtonClick = async () => {
@@ -157,34 +157,43 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
     setFollowersList([]);
   }
 
-  async function getFollowersFollowing() {
+  async function getFollowersFollowing(key: string) {
     if (objectEmail && objectEmail != '') {
-      await AxiosRequest({
-        url: `${getFollowersUrl}?objectId=${objectEmail}&page=${followersPageNo}&size=10`,
-        method: 'GET',
-      }).then((response: any) => {
-        setFollowersList((prev: any) => {
-          return [...prev, ...response?.data];
-        });
-      });
-
-      await AxiosRequest({
-        url: `${getFollowingUrl}?objectId=${objectEmail}&page=${followingPageNo}&size=10`,
-        method: 'GET',
-      }).then((response: any) => {
-        setFollowingList((prev: any) => {
-          return [...prev, ...response?.data];
-        });
-      });
-      setisfetchchingFollowerlist(false);
+      key === 'followers'
+        ? await AxiosRequest({
+            url: `${getFollowersUrl}?objectId=${objectEmail}&page=${followersPageNo}&size=10`,
+            method: 'GET',
+          }).then((response: any) => {
+            setFollowersList((prev: any) => {
+              return [...prev, ...response?.data];
+            });
+            setisfetchchingFollowerlist(false);
+            response?.data?.length < 10 ? setNoMoreFollowers(true) : '';
+          })
+        : await AxiosRequest({
+            url: `${getFollowingUrl}?objectId=${objectEmail}&page=${followingPageNo}&size=10`,
+            method: 'GET',
+          }).then((response: any) => {
+            setFollowingList((prev: any) => {
+              return [...prev, ...response?.data];
+            });
+            setisfetchchingFollowinglist(false);
+            response?.data?.length < 10 ? setNoMoreFollowing(true) : '';
+          });
     }
   }
 
   function openFollowerFollowingPopup(key: string) {
-    setisfetchchingFollowerlist(true);
     setShow(true);
-    getFollowersFollowing();
-    key === 'followers' ? setFollowerFollowingSwitch(true) : setFollowerFollowingSwitch(false);
+    if (key === 'followers' && followersList.length === 0) {
+      setisfetchchingFollowerlist(true);
+      setFollowerFollowingSwitch(true);
+      getFollowersFollowing(key);
+    } else if (followingList.length === 0) {
+      setisfetchchingFollowinglist(true);
+      setFollowerFollowingSwitch(false);
+      getFollowersFollowing(key);
+    }
   }
 
   useEffect(() => {
@@ -193,7 +202,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
 
   function clickmebuttonHandler() {
     if (typeof document !== undefined) {
-      const buttEle = document.getElementById('clickmebutton');
+      const buttEle = document.getElementById('changeBannerButton');
       buttEle?.click();
     }
   }
@@ -269,6 +278,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
             setFollowersPageNo((prev) => {
               return prev + 1;
             });
+            response?.data?.length < 10 ? setNoMoreFollowers(true) : '';
           } else {
             setNoMoreFollowers(true);
           }
@@ -285,6 +295,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
             setFollowingPageNo((prev) => {
               return prev + 1;
             });
+            response?.data?.length < 10 ? setNoMoreFollowing(true) : '';
           } else {
             setNoMoreFollowing(true);
           }
@@ -319,7 +330,6 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
         setJoinValue(!res?.data?.member);
         setLeaveValue(res.data.member);
       }
-      // console.log('groupInfo', res);
     } catch (error) {}
   };
 
@@ -447,7 +457,13 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
               </div>
             ) : (
               <div className={styles.name}>
-                {userObject ? `${fetchUser?.firstName} ${fetchUser?.lastName}` : 'John Doe'}
+                {userObject ? (
+                  <span>
+                    {fetchUser?.firstName} &nbsp; {fetchUser?.lastName}
+                  </span>
+                ) : (
+                  'John Doe'
+                )}
               </div>
             )}
 
@@ -646,7 +662,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
             type="file"
             placeholder="Post Text"
             accept="image/*"
-            id="clickmebutton"
+            id="changeBannerButton"
           />
         </Form.Group>
       </Form>
@@ -690,7 +706,10 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                     ? styles.popupButtonActiveState
                     : styles.popupButtonInActiveState
                 }
-                onClick={() => setFollowerFollowingSwitch(true)}
+                onClick={() => {
+                  setFollowerFollowingSwitch(true);
+                  openFollowerFollowingPopup('followers');
+                }}
                 style={{ marginRight: '15px' }}
               >
                 <Text
@@ -709,7 +728,10 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                     ? styles.popupButtonInActiveState
                     : styles.popupButtonActiveState
                 }
-                onClick={() => setFollowerFollowingSwitch(false)}
+                onClick={() => {
+                  setFollowerFollowingSwitch(false);
+                  openFollowerFollowingPopup('following');
+                }}
               >
                 <Text
                   field={
@@ -813,7 +835,7 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
                     )}
                   </div>
                 )
-              ) : isfetchchingFollowerlist ? (
+              ) : isfetchchingFollowinglist ? (
                 <div style={{ position: 'relative', top: '50%' }}>
                   <DotLoader />
                 </div>

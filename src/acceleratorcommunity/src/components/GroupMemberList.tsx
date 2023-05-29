@@ -141,8 +141,8 @@ const GroupMemberList = (props: GroupMembersListProps): JSX.Element => {
                     } ${darkMode && darkTheme.grey_2}`}
                   >
                     <Image
-                      // src={ele.profilePictureUrl ? ele.profilePictureUrl : groupLogo.src}
-                      src={groupLogo}
+                      src={ele.profilePictureUrl ? ele.profilePictureUrl : groupLogo.src}
+                      // src={groupLogo}
                       alt={ele.name}
                       className={style.groupMemberListLogo}
                       height={50}

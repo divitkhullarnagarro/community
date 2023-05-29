@@ -39,11 +39,11 @@ async function AxiosRequest<T>(config: RequestConfig): Promise<T> {
     // console.log('errorincall', response);
     return response.data;
   } catch (error: any) {
-    // console.log('errorincall', error);
+    // console.log(error);
     return error.response;
   }
 
-  //   return Promise.reject('API Call Failed !');
+  return Promise.reject('API Call Failed !');
 }
 
 export default AxiosRequest;
