@@ -34,11 +34,11 @@ const uploadFilesCall = async (
     // .catch((error: any) => {
     //   return error.response;
     // });
-    console.log('errorincall', response);
+    // console.log('errorincall', response);
 
     return response;
   } catch (error: any) {
-    console.log('errorincall', error.response);
+    // console.log('errorincall', error.response);
     return error.response;
   }
 };
