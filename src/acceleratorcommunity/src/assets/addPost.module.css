@@ -303,6 +303,10 @@
   position: relative;
 }
 
+.darkEditorClass :global(.rdw-suggestion-dropdown) {
+  color: black !important;
+}
+
 @media only screen and (max-width: 768px) {
   .mainContainer {
     margin-top: 5px;
