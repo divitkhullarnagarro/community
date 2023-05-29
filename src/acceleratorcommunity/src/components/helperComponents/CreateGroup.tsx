@@ -49,8 +49,19 @@ function CreateGroup({
       url: `${addPeersBySearchUrl}${name}`,
       method: 'GET',
     });
-    // console.log(res);
-    setmembersSuggestionsList(res.data);
+    if (!res?.errorCode || res?.success) {
+      // console.log('asdfgasdfg', res);
+      setmembersSuggestionsList(res.data);
+    } else {
+      setToastError(true);
+      setToastMessage(
+        res?.data?.errorMessages[0]
+          ? res?.data?.errorMessages[0]
+          : 'Something Went Wrong. Please Try Again'
+      );
+
+      setShowNofitication(true);
+    }
   };
 
   const handleAddMemberChange = async (e: any) => {
@@ -100,7 +111,18 @@ function CreateGroup({
       url: `${addPeersPaginationUrl}page=0&size=10`,
       method: 'GET',
     });
-    setmembersSuggestionsList(res.data);
+    if (!res?.errorCode || res?.success) {
+      setmembersSuggestionsList(res.data);
+    } else {
+      setToastError(true);
+      setToastMessage(
+        res?.data?.errorMessages[0]
+          ? res?.data?.errorMessages[0]
+          : 'Something Went Wrong. Please Try Again'
+      );
+
+      setShowNofitication(true);
+    }
   };
 
   const createGroupSubmit = async (e: any) => {
@@ -121,11 +143,15 @@ function CreateGroup({
             createdOn: null,
           },
         });
-        if (res?.success) {
+        if (res?.success || !res?.errorCode) {
           setCreatingGroup(false);
           setWantToRerender(!wantToRerender);
           setToastSuccess(true);
-          setToastMessage('Group Created Successfully');
+          setToastMessage(
+            res?.data?.errorMessages[0]
+              ? res?.data?.errorMessages[0]
+              : 'Something Went Wrong. Please Try Again'
+          );
           setShowNofitication(true);
           // console.log('createGroupdata', res);
           setAddMemberList([]);
@@ -140,15 +166,7 @@ function CreateGroup({
         setCreatingGroup(false);
         setToastError(true);
         setToastMessage('Something Went Wrong. Please Try Again');
-        // setToastMessage(
-        //   nameValue
-        //     ? descriptionValue
-        //       ? addMemberList.length > 0
-        //         ? ''
-        //         : 'Please add some member'
-        //       : 'Description Required'
-        //     : 'Name Nequired'
-        // );
+
         setShowNofitication(true);
       }
     } catch (error) {

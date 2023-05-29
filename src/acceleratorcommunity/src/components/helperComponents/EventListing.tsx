@@ -141,7 +141,7 @@ const EventListing = (): JSX.Element => {
           </div>
         </div>
         <div className={`${style.eventListcontent} ${darkMode && darkTheme.darkMode_bgChild}`}>
-          {eventList.length > 0 ? (
+          {eventList?.length > 0 ? (
             <div className={style.eventList}>
               {eventList.map((ele: any, i) => (
                 <div

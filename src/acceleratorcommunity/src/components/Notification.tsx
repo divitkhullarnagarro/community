@@ -142,11 +142,22 @@ const Notification = (props: NotificationProps): JSX.Element => {
       url: `https://accelerator-api-management.azure-api.net/notification-service/api/v1/get-notification`,
     })
       .then((response: any) => {
-        setNotificationList(response?.data);
-        setNotificationAllList(response?.data);
-        response?.data?.forEach((item: any) => {
-          getProfileImage(item?.sourceAuthorId);
-        });
+        console.log('asdfsdfsdf', response);
+        if (!response?.errorCode || response?.success) {
+          setNotificationList(response?.data);
+          setNotificationAllList(response?.data);
+          response?.data?.forEach((item: any) => {
+            getProfileImage(item?.sourceAuthorId);
+          });
+        } else {
+          // setToastError(true);
+          // setToastMessage(
+          //   res?.data?.errorMessages[0]
+          //     ? res?.data?.errorMessages[0]
+          //     : 'Something Went Wrong. Please Try Again'
+          // );
+          // setShowNofitication(true);
+        }
       })
       .catch((err: any) => {
         console.log(err);
