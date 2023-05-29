@@ -36,10 +36,10 @@ async function AxiosRequest<T>(config: RequestConfig): Promise<T> {
       data,
       params,
     });
-    console.log('errorincall', response);
+    // console.log('errorincall', response);
     return response.data;
   } catch (error: any) {
-    console.log('errorincall', error);
+    // console.log('errorincall', error);
     return error.response;
   }
 
