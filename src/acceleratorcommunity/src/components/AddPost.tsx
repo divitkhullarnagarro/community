@@ -3200,7 +3200,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                     <Collapse in={showForm1}>
                       <div
                         className="AddPostEditorContainer"
-                        style={{ maxWidth: '100%' }}
+                        style={{ width: '95%' }}
                         id="showAddPostEditorContainer"
                       >
                         <div className={styles.addTextEditor}>

@@ -151,7 +151,7 @@
 .addPostField {
   display: flex;
   align-items: start;
-  gap: 12px;
+  gap: 14px;
 }
 
 .addPostButton {
