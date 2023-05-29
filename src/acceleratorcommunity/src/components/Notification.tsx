@@ -142,7 +142,7 @@ const Notification = (props: NotificationProps): JSX.Element => {
       url: `https://accelerator-api-management.azure-api.net/notification-service/api/v1/get-notification`,
     })
       .then((response: any) => {
-        console.log('asdfsdfsdf', response);
+        // console.log('asdfsdfsdf', response);
         if (!response?.errorCode || response?.success) {
           setNotificationList(response?.data);
           setNotificationAllList(response?.data);
