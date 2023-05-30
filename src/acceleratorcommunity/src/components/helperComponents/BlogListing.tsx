@@ -12,43 +12,71 @@ import darkTheme from './../../assets/darkTheme.module.css';
 // import event from './../../assets/images/event.svg';
 // import { Blog } from './../../assets/helpers/types';
 import AxiosRequest from 'src/API/AxiosRequest';
-import { AxiosResponse } from 'axios';
+// import { AxiosResponse } from 'axios';
 import BlogListingSkeleton from 'components/skeletons/BlogListingSkeleton';
 import parser from 'html-react-parser';
+import GenericNotificationContext from 'src/Context/GenericNotificationContext';
 const tablist = ['My Blogs', 'Suggested Blogs', 'Bookmarked Blogs'];
 
 function BlogListing() {
   const { darkMode } = { ...useContext(WebContext) };
+  const { setError, setMessage, setShowNotification } = {
+    ...useContext(GenericNotificationContext),
+  };
   const [activeTab, setActiveTab] = useState('My Blogs');
   const [blogList, setBlogList] = useState<any>([]);
   const [skeletonVisible, setSkeletonVisible] = useState(true);
   const getMyBlogs = async () => {
-    const data: AxiosResponse<any> = await AxiosRequest({
+    const res: any = await AxiosRequest({
       method: 'GET',
       url: getMyBlogsUrl,
     });
-
+    console.log('BlogListingdata', res);
     // const myblogData = data.data.map((ele: any) => ele.blog);
-    setBlogList(data?.data);
-    setSkeletonVisible(false);
+    if (res?.success) {
+      setBlogList(res?.data);
+      setSkeletonVisible(false);
+    } else {
+      setError(true);
+      setMessage(res?.errorMessages?.[0] ? res?.errorMessages?.[0] : 'Something Went Wrong');
+      setShowNotification(true);
+      setSkeletonVisible(false);
+    }
   };
+
   const getSuggestedBlogs = async () => {
-    const data: AxiosResponse<any> = await AxiosRequest({
+    const res: any = await AxiosRequest({
       method: 'GET',
       url: getSuggestedBlogsUrl,
     });
     // const suggesteBblogData = data.data.map((ele: any) => ele.blog);
-    setBlogList(data?.data);
-    setSkeletonVisible(false);
+
+    if (res?.success) {
+      setBlogList(res?.data);
+      setSkeletonVisible(false);
+    } else {
+      setError(true);
+      setMessage(res?.errorMessages?.[0] ? res?.errorMessages?.[0] : 'Something Went Wrong');
+      setShowNotification(true);
+      setSkeletonVisible(false);
+    }
   };
   const getBookmarkedMyBlogs = async () => {
-    const data: AxiosResponse<any> = await AxiosRequest({
+    const res: any = await AxiosRequest({
       method: 'GET',
       url: getBookmarkedMyBlogsUrl,
     });
     // const bookmarkedBlogData = data.data.map((ele: any) => ele.blog);
-    setBlogList(data?.data);
-    setSkeletonVisible(false);
+
+    if (res?.success) {
+      setBlogList(res?.data);
+      setSkeletonVisible(false);
+    } else {
+      setError(true);
+      setMessage(res?.errorMessages?.[0] ? res?.errorMessages?.[0] : 'Something Went Wrong');
+      setShowNotification(true);
+      setSkeletonVisible(false);
+    }
   };
   useEffect(() => {
     if (activeTab == 'My Blogs') {

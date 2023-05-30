@@ -118,7 +118,12 @@ const TextEditor = (): JSX.Element => {
       let resp = await UploadFilesToServer(files[i], 'IMAGE');
       if (resp?.data?.success) {
         let uniqueId = generateUniqueId();
-        fileArray.push({ id: uniqueId, url: resp?.data, mediaType: 'IMAGE', mediaSequence: 0 });
+        fileArray.push({
+          id: uniqueId,
+          url: resp?.data?.data,
+          mediaType: 'IMAGE',
+          mediaSequence: 0,
+        });
       } else {
         setError(true);
         setMessage(
