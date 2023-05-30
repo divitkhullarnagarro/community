@@ -12,10 +12,9 @@ import ThemeSwitcher from './ThemeSwitcher';
 import darkTheme from '../assets/darkTheme.module.css';
 import WebContext from '../Context/WebContext';
 import Spinner from 'react-bootstrap/Spinner';
-import ToastNotification from './ToastNotification';
+import GenericNotificationContext from 'src/Context/GenericNotificationContext';
 type RegisterProps = ComponentProps & {
   fields: {
-    // heading: Field<string>;
     data: {
       datasource: DataSource;
     };
@@ -92,6 +91,9 @@ const Register = (props: RegisterProps): JSX.Element => {
   const { darkMode } = {
     ...useContext(WebContext),
   };
+  const { setError, setMessage, setShowNotification, setSuccess } = {
+    ...useContext(GenericNotificationContext),
+  };
   props;
   let [firstName, setFirstName] = useState('');
   let [lastName, setLastName] = useState('');
@@ -114,10 +116,6 @@ const Register = (props: RegisterProps): JSX.Element => {
   // let [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
   let [isSigningUp, setIsSigningUp] = useState(false);
-  const [toastSuccess, setToastSuccess] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string>();
-  const [showNotification, setShowNofitication] = useState(false);
-  const [toastError, setToastError] = useState(false);
 
   const targetItems = props?.fields?.data?.datasource;
   function setFirstNameValue(val: any) {
@@ -249,34 +247,32 @@ const Register = (props: RegisterProps): JSX.Element => {
       try {
         let resp: any = await registerUserCall(userData);
         if (resp?.data?.success == true) {
-          // setIsRegistered(true);
-          setToastSuccess(true);
-          setToastMessage('User Registered Successfully');
-          setShowNofitication(true);
+          setSuccess(true);
+          setMessage('User Registered Successfully');
+          setShowNotification(true);
+
           router.push('/login');
           setIsSigningUp(false);
         } else {
-          // console.log('responseDataError', resp?.data?.errorMessages[0]);
-          setToastError(true);
-          setToastMessage(resp?.data?.errorMessages[0]);
-          setShowNofitication(true);
+          setError(true);
+          setMessage(
+            resp?.data?.errorMessages?.[0]
+              ? resp?.data?.errorMessages?.[0]
+              : 'Something Went Wrong. Please Try Again'
+          );
+          setShowNotification(true);
+
           setIsSigningUp(false);
         }
-        // console.log('Register Response resp', resp);
       } catch (err: any) {
-        setToastError(true);
-        setToastMessage(err?.message ?? 'Something went wrong');
-        setShowNofitication(true);
+        setError(true);
+        setMessage(err?.message ?? 'Something went wrong');
+        setShowNotification(true);
         setIsSigningUp(false);
       }
     }
   };
 
-  const resetToastState = () => {
-    setShowNofitication(!showNotification);
-    setToastSuccess(false);
-    setToastError(false);
-  };
   return (
     <>
       <div className={RegisterCss.ThemeSwitcher}>
@@ -612,15 +608,6 @@ const Register = (props: RegisterProps): JSX.Element => {
             </div>
           </div>
         </div>
-        {showNotification && (
-          <ToastNotification
-            showNotification={showNotification}
-            success={toastSuccess}
-            error={toastError}
-            message={toastMessage}
-            handleCallback={resetToastState}
-          />
-        )}
       </div>
     </>
   );

@@ -143,7 +143,7 @@ const Notification = (props: NotificationProps): JSX.Element => {
     })
       .then((response: any) => {
         // console.log('asdfsdfsdf', response);
-        if (!response?.errorCode || response?.success) {
+        if (response?.success) {
           setNotificationList(response?.data);
           setNotificationAllList(response?.data);
           response?.data?.forEach((item: any) => {
