@@ -148,7 +148,9 @@ const GroupList = (props: GroupListProps): JSX.Element => {
                                   darkMode ? darkModeCss.text_light : ''
                                 }`}
                               >
-                                {ele.groupName}
+                                {ele.groupName.length < 30
+                                  ? ele.groupName
+                                  : ele.groupName.substring(0, 30) + '...'}
                               </h5>
                             </div>
                           </Link>
