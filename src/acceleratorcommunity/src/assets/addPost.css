@@ -118,6 +118,9 @@
   color: #0d6efd !important;
 }
 
+.darkModeDescription {
+  color: #b8b8b8 !important;
+}
 .darkModeDescription * {
   color: #b8b8b8 !important;
 }
