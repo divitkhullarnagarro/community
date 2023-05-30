@@ -5,7 +5,12 @@ import Link from 'next/link';
 import registerUserCall from '../API/registerUserCall';
 import { useRouter } from 'next/router';
 import RegisterCss from '../assets/register.module.css';
-import { validateEmail, validatePassword, numberOnly } from 'assets/helpers/validations';
+import {
+  validateEmail,
+  validatePassword,
+  alphabateAndSpaceChecker,
+  validatePhoneNumber,
+} from 'assets/helpers/validations';
 // import starImage from '../assets/images/star.png';
 // import imageNotFound from '../assets/images/imageNot.png';
 import ThemeSwitcher from './ThemeSwitcher';
@@ -13,6 +18,7 @@ import darkTheme from '../assets/darkTheme.module.css';
 import WebContext from '../Context/WebContext';
 import Spinner from 'react-bootstrap/Spinner';
 import GenericNotificationContext from 'src/Context/GenericNotificationContext';
+import { spaceRemover } from 'assets/helpers/helperFunctions';
 type RegisterProps = ComponentProps & {
   fields: {
     data: {
@@ -109,7 +115,10 @@ const Register = (props: RegisterProps): JSX.Element => {
   const router = useRouter();
 
   let [firstNameError, setFirstNameError] = useState(false);
+  let [firstNameErrorMessage, setFirstNameErrorMessage] = useState('');
   let [lastNameError, setLastNameError] = useState(false);
+  let [lastNameErrorMessage, setLastNameErrorMessage] = useState('');
+
   let [emailError, setEmailError] = useState(false);
   let [phoneError, setPhoneError] = useState(false);
   let [passwordError, setPasswordError] = useState(false);
@@ -118,26 +127,30 @@ const Register = (props: RegisterProps): JSX.Element => {
   let [isSigningUp, setIsSigningUp] = useState(false);
 
   const targetItems = props?.fields?.data?.datasource;
+  console.log('targetItems', targetItems);
   function setFirstNameValue(val: any) {
-    setFirstName(val);
-    if (val === '') {
+    const updatedValue = spaceRemover(val);
+    setFirstName(updatedValue);
+    const isError = alphabateAndSpaceChecker(
+      updatedValue,
+      targetItems?.firstNameLabel?.jsonValue?.value
+    );
+    if (isError.error) {
       setFirstNameError(true);
+      setFirstNameErrorMessage(isError.errorMessage);
     } else {
       setFirstNameError(false);
     }
   }
 
   function setPhoneNumberValue(val: any) {
-    setPhoneNumber(val);
-    if (val === '') {
-      setPhoneError(true);
-      setPhoneValidationMessage(`${targetItems?.phoneNoLabel?.jsonValue?.value} is mandatory`);
-    } else {
-      if (!numberOnly(val)) {
+    if (val.length <= 10) {
+      setPhoneNumber(val);
+
+      const isError = validatePhoneNumber(val, targetItems?.phoneNoLabel?.jsonValue?.value);
+      if (isError.error) {
         setPhoneError(true);
-        setPhoneValidationMessage(
-          `${targetItems?.phoneNoLabel?.jsonValue?.value} can have digits only`
-        );
+        setPhoneValidationMessage(isError.errorMessage);
       } else {
         setPhoneError(false);
       }
@@ -145,9 +158,15 @@ const Register = (props: RegisterProps): JSX.Element => {
   }
 
   function setLastNameValue(val: any) {
-    setLastName(val);
-    if (val === '') {
+    const updatedValue = spaceRemover(val);
+    setLastName(updatedValue);
+    const isError = alphabateAndSpaceChecker(
+      updatedValue,
+      targetItems?.lastNameLabel?.jsonValue?.value
+    );
+    if (isError.error) {
       setLastNameError(true);
+      setLastNameErrorMessage(isError.errorMessage);
     } else {
       setLastNameError(false);
     }
@@ -219,10 +238,12 @@ const Register = (props: RegisterProps): JSX.Element => {
 
     if (firstName === '') {
       setFirstNameError(true);
+      setFirstNameErrorMessage('Name is Required');
     }
 
     if (lastName === '') {
       setLastNameError(true);
+      setLastNameErrorMessage('Last Name is Required');
     }
     if (email === '') {
       setEmailError(true);
@@ -396,7 +417,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   ''
                 ) : (
                   <span className={RegisterCss.passwordMismatchWarning}>
-                    * {targetItems.firstNameLabel.jsonValue.value} is mandatory
+                    * {firstNameErrorMessage}
                   </span>
                 )}
               </div>
@@ -422,7 +443,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   ''
                 ) : (
                   <span className={RegisterCss.passwordMismatchWarning}>
-                    * {targetItems.lastNameLabel.jsonValue.value} is mandatory
+                    * {lastNameErrorMessage}
                   </span>
                 )}
               </div>
@@ -465,7 +486,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   />
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   onChange={(e) => setPhoneNumberValue(e?.target?.value)}
                   value={phoneNumber}
                   className={RegisterCss.loginInput}
