@@ -109,13 +109,13 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
       url: `${joinGroupUrl}${groupId}/join`,
       method: 'PUT',
     });
-    if (res.success) {
+    if (res?.success) {
       setLeaveValue(true);
       setJoinValue(false);
       setJoinLeaveLoader(false);
       setWantRerender && setWantRerender(!wantRerender);
     } else {
-      setToastMessage('Failed to join group. Please try again');
+      setToastMessage(res?.errorMessages?.[0] ? res?.errorMessages?.[0] : 'Something Went Wrong');
       setToastError(true);
       setShowNofitication(true);
       setJoinLeaveLoader(false);
@@ -128,13 +128,13 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
       url: `${leaveGroupUrl}${groupId}/leave`,
       method: 'PUT',
     });
-    if (res.success) {
+    if (res?.success) {
       setJoinValue(true);
       setLeaveValue(false);
       setJoinLeaveLoader(false);
       setWantRerender && setWantRerender(!wantRerender);
     } else {
-      setToastMessage('Failed to Leave group. Please try again');
+      setToastMessage(res?.errorMessages?.[0] ? res?.errorMessages?.[0] : 'Something Went Wrong');
       setToastError(true);
       setShowNofitication(true);
       setJoinLeaveLoader(false);
