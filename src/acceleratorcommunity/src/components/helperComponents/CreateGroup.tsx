@@ -63,14 +63,15 @@ function CreateGroup({
       url: `${addPeersBySearchUrl}${name}`,
       method: 'GET',
     });
-    if (!res?.errorCode || res?.success) {
+    if (res?.success) {
       // console.log('asdfgasdfg', res);
       setmembersSuggestionsList(res.data);
     } else {
+      // console.log('responsecreateGroup', res);
       setToastError(true);
       setToastMessage(
-        res?.data?.errorMessages[0]
-          ? res?.data?.errorMessages[0]
+        res?.data?.errorMessages?.[0]
+          ? res?.data?.errorMessages?.[0]
           : 'Something Went Wrong. Please Try Again'
       );
 
@@ -125,13 +126,13 @@ function CreateGroup({
       url: `${addPeersPaginationUrl}page=0&size=10`,
       method: 'GET',
     });
-    if (!res?.errorCode || res?.success) {
+    if (res?.success) {
       setmembersSuggestionsList(res.data);
     } else {
       setToastError(true);
       setToastMessage(
-        res?.data?.errorMessages[0]
-          ? res?.data?.errorMessages[0]
+        res?.data?.errorMessages?.[0]
+          ? res?.data?.errorMessages?.[0]
           : 'Something Went Wrong. Please Try Again'
       );
 
@@ -162,12 +163,11 @@ function CreateGroup({
           setWantToRerender(!wantToRerender);
           setToastSuccess(true);
           setToastMessage(
-            res?.data?.errorMessages[0]
-              ? res?.data?.errorMessages[0]
+            res?.data?.errorMessages?.[0]
+              ? res?.data?.errorMessages?.[0]
               : 'Something Went Wrong. Please Try Again'
           );
           setShowNofitication(true);
-          // console.log('createGroupdata', res);
           setAddMemberList([]);
           setAddMemberValue('');
           setDescriptionValue('');
@@ -216,12 +216,10 @@ function CreateGroup({
         setShowNofitication(true);
         setDisableButton(false);
       }
-      // console.log('createGroupimageupload', res);
     } catch (error: any) {
       setToastError(true);
       setToastMessage(error?.message ?? 'Something went wrong');
       setShowNofitication(true);
-      // console.log('createGroupimageupload', error);
       setDisableButton(false);
     }
   };
@@ -240,12 +238,10 @@ function CreateGroup({
         setShowNofitication(true);
         setDisableButton(false);
       }
-      console.log('createGroupimageupload', res);
     } catch (error: any) {
       setToastError(true);
       setToastMessage(error?.message ?? 'Something went wrong');
       setShowNofitication(true);
-      // console.log('createGroupimageupload', error);
       setDisableButton(false);
     }
   };
@@ -264,7 +260,6 @@ function CreateGroup({
     setImageUrl('');
     setBannerImageURL('');
   };
-  // console.log('userObject', userObject);
   return (
     <div className={style.createGroup}>
       <Modal

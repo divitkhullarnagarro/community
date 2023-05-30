@@ -335,9 +335,9 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
 
   useEffect(() => {
     const isGroupPage = props?.params?.IsGroupList == '1' ? true : false;
-    if (isGroupPage) {
+    if (isGroupPage && groupId) {
+      getGroupInfo(groupId);
     }
-    getGroupInfo(groupId);
   }, [groupId, wantRerender]);
 
   // function changeGroupBannerbuttonHandler() {
