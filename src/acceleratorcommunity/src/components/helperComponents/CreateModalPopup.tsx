@@ -1,6 +1,7 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import React, { Dispatch, SetStateAction, useContext } from 'react';
+import WebContext from 'src/Context/WebContext';
+import { CloseButton, Modal, Button } from 'react-bootstrap';
+import darkModeCss from '../../assets/darkTheme.module.css';
 
 type ComponentProps = {
   popUpVisiable: boolean;
@@ -23,18 +24,28 @@ function CreateModalPopup({
   disabled,
   id,
 }: ComponentProps) {
+  const { darkMode } = {
+    ...useContext(WebContext),
+  };
   return (
     <>
-      <Modal show={popUpVisiable} onHide={() => setPopUpVisiable(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>{title}</Modal.Title>
+      <Modal show={popUpVisiable} onHide={() => setPopUpVisiable(false)} className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}>
+        <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+          <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>{title}</Modal.Title>
+          <CloseButton
+            variant="default"
+            className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+            onClick={() => setPopUpVisiable(false)}
+          ></CloseButton>
         </Modal.Header>
-        <Modal.Body>{typeof body == 'string' ? body : body()}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setPopUpVisiable(false)}>
+        <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>{typeof body == 'string' ? body : body()}</Modal.Body>
+        <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+          <Button className='footerBtnCancel'
+                variant="default" onClick={() => setPopUpVisiable(false)}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => buttonClickHandler(id)} disabled={disabled}>
+          <Button className='footerBtnDefault'
+                variant="secondary" onClick={() => buttonClickHandler(id)} disabled={disabled}>
             {buttonName}
           </Button>
         </Modal.Footer>
