@@ -13,6 +13,7 @@ import { getValueFromCookie } from 'assets/helpers/helperFunctions';
 import Link from 'next/link';
 import FirebaseContext from 'src/Context/FirebaseContext';
 import AxiosRequest from 'src/API/AxiosRequest';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 type UserProfileProps = ComponentProps & {
   fields: {
@@ -30,6 +31,9 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
   const { deleteTokenFromFirebase, getFcmTokenFromLocalStorage } = {
     ...useContext(FirebaseContext),
   };
+  const { darkMode } = {
+    ...useContext(WebContext),
+  };
   // console.log('profile', props);
   const router = useRouter();
 
@@ -39,7 +43,7 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
     return (
       <>
         <Modal
-          className={userProfileCss.logoutModalContent}
+          className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}
           show={showLogoutPopUp}
           onHide={() => setLogoutPopUp(false)}
           backdrop="static"
@@ -48,22 +52,22 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
           scrollable={true}
         >
           <div>
-            <Modal.Header className={userProfileCss.logoutModalHeader}>
-              <Modal.Title className={userProfileCss.logoutModalTitle}>{'Logout'}</Modal.Title>
+            <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+              <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>{'Logout'}</Modal.Title>
               <CloseButton
                 variant="default"
-                className={userProfileCss.logoutModalClose}
+                className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
                 onClick={() => {
                   setLogoutPopUp(false);
                 }}
               ></CloseButton>
             </Modal.Header>
-            <Modal.Body>
-              <div className={userProfileCss.logoutModalBody}>{`Do you want to logout ?`}</div>
+            <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+              <div className='modalBody'>{`Do you want to logout ?`}</div>
             </Modal.Body>
-            <Modal.Footer>
+            <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
               <Button
-                className={userProfileCss.footerBtnCancel}
+                className='footerBtnCancel'
                 variant="default"
                 onClick={() => {
                   setLogoutPopUp(false);
@@ -72,7 +76,7 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
                 Cancel
               </Button>
               <Button
-                className={userProfileCss.footerBtnDefault}
+                className='footerBtnDefault'
                 variant="secondary"
                 onClick={() => {
                   logOutUser();

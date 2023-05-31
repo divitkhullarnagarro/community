@@ -10,8 +10,9 @@ import style from '../../assets/createGroup.module.css';
 import uploadFilesCall from 'src/API/uploadFilesCall';
 import WebContext from 'src/Context/WebContext';
 import ToastNotification from './../ToastNotification';
+import darkModeCss from '../../assets/darkTheme.module.css';
 // import Image from 'next/image';
-import { Spinner } from 'react-bootstrap';
+import { Spinner, CloseButton, Button } from 'react-bootstrap';
 import { spaceRemover } from 'assets/helpers/helperFunctions';
 
 function CreateGroup({
@@ -25,7 +26,7 @@ function CreateGroup({
   setWantToRerender: any;
   wantToRerender: any;
 }) {
-  const { userToken, userObject } = {
+  const { userToken, userObject, darkMode } = {
     ...useContext(WebContext),
   };
 
@@ -265,15 +266,21 @@ function CreateGroup({
     <div className={style.createGroup}>
       <Modal
         show={createGroupVisibel}
+        className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}
         onHide={() => {
           setCreateGroupVisibel(false);
           clearAllFields();
         }}
       >
-        <Modal.Header closeButton>
-          <Modal.Title className={style.modalTitle}>Create Group</Modal.Title>
+        <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+          <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>Create Group</Modal.Title>
+          <CloseButton
+            variant="default"
+            className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+            onClick={() => setCreateGroupVisibel(false)}
+          ></CloseButton>
         </Modal.Header>
-        <form className="form" onSubmit={(e) => createGroupSubmit(e)}>
+        <form className={`form ${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`} onSubmit={(e) => createGroupSubmit(e)}>
           <Modal.Body>
             <div className="form-group">
               <input
@@ -396,20 +403,21 @@ function CreateGroup({
             {/* {bannerImageURL && <Image src={bannerImageURL} height={300} width={600} />} */}
           </Modal.Body>
           <Modal.Footer>
-            <button
+            <Button
               type="button"
-              className={style.closeButton}
+              variant="default"
+              className='footerBtnCancel'
               onClick={() => setCreateGroupVisibel(false)}
             >
               Close
-            </button>
-            <button type="submit" className={style.saveButton} disabled={disableButton}>
+            </Button>
+            <Button type="submit" className='footerBtnDefault' disabled={disableButton} variant="secondary">
               {creatingGroup ? (
                 <Spinner style={{ width: '15px', height: '15px' }} animation="border" />
               ) : (
                 'Save'
               )}
-            </button>
+            </Button>
           </Modal.Footer>
         </form>
       </Modal>
