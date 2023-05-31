@@ -14,7 +14,7 @@ import WebContext from '../../Context/WebContext';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import AxiosRequest from 'src/API/AxiosRequest';
-import { AxiosResponse } from 'axios';
+// import { AxiosResponse } from 'axios';
 import style from './../../assets/eventListing.module.css';
 import darkTheme from './../../assets/darkTheme.module.css';
 import event from './../../assets/images/event.svg';
@@ -27,16 +27,20 @@ import {
   getFilteredEvents,
   getUpcommingEventsFilter,
 } from 'assets/helpers/helperFunctions';
+import GenericNotificationContext from 'src/Context/GenericNotificationContext';
 const tablist = ['My Events', 'Upcoming Events', 'Bookmarked Events'];
 
 const EventListing = (): JSX.Element => {
+  const { setError, setMessage, setShowNotification } = {
+    ...useContext(GenericNotificationContext),
+  };
   const [activeTab, setActiveTab] = useState('My Events');
   const [eventList, setEventList] = useState<Event>([] as Event);
   const { darkMode, userObject } = { ...useContext(WebContext) };
   const [skeletonVisible, setSkeletonVisible] = useState(true);
   const getMyEvent = async () => {
     try {
-      const data: AxiosResponse<any> = await AxiosRequest({
+      const res: any = await AxiosRequest({
         method: 'POST',
         url: getMyEventsUrl,
         data: {
@@ -47,8 +51,16 @@ const EventListing = (): JSX.Element => {
       });
 
       // console.log('my event list', data.data.hits);
-      setEventList(data.data.hits);
-      setSkeletonVisible(false);
+
+      if (res?.success) {
+        setEventList(res.data.hits);
+        setSkeletonVisible(false);
+      } else {
+        setError(true);
+        setMessage(res?.errorMessages?.[0] ? res?.errorMessages?.[0] : 'Something Went Wrong');
+        setShowNotification(true);
+        setSkeletonVisible(false);
+      }
     } catch (error) {
       console.log(error);
       setSkeletonVisible(false);
@@ -56,7 +68,7 @@ const EventListing = (): JSX.Element => {
   };
   const getUpcomingEvents = async () => {
     try {
-      const data: AxiosResponse<any> = await AxiosRequest({
+      const res: any = await AxiosRequest({
         method: 'POST',
         url: getUpcomingEventsUrl,
         data: {
@@ -66,13 +78,20 @@ const EventListing = (): JSX.Element => {
         },
       });
 
-      const filtered = getFilteredEvents(data.data.hits);
-      // console.log('upcoming events filtered', filtered);
-      const upcoming = getUpcommingEventsFilter(filtered);
-      // console.log('upcoming events upcoming', upcoming);
+      if (res?.success) {
+        const filtered = getFilteredEvents(res.data.hits);
+        // console.log('upcoming events filtered', filtered);
+        const upcoming = getUpcommingEventsFilter(filtered);
+        // console.log('upcoming events upcoming', upcoming);
 
-      setEventList(upcoming);
-      setSkeletonVisible(false);
+        setEventList(upcoming);
+        setSkeletonVisible(false);
+      } else {
+        setError(true);
+        setMessage(res?.errorMessages?.[0] ? res?.errorMessages?.[0] : 'Something Went Wrong');
+        setShowNotification(true);
+        setSkeletonVisible(false);
+      }
     } catch (error) {
       console.log(error);
       setSkeletonVisible(false);
@@ -80,7 +99,7 @@ const EventListing = (): JSX.Element => {
   };
   const getBookmarkedEvents = async () => {
     try {
-      const data: AxiosResponse<any> = await AxiosRequest({
+      const res: any = await AxiosRequest({
         method: 'POST',
         url: getMyEventsUrl,
         data: {
@@ -90,8 +109,15 @@ const EventListing = (): JSX.Element => {
         },
       });
 
-      setEventList(data.data.hits);
-      setSkeletonVisible(false);
+      if (res?.success) {
+        setEventList(res.data.hits);
+        setSkeletonVisible(false);
+      } else {
+        setError(true);
+        setMessage(res?.errorMessages?.[0] ? res?.errorMessages?.[0] : 'Something Went Wrong');
+        setShowNotification(true);
+        setSkeletonVisible(false);
+      }
     } catch (error) {
       console.log(error);
       setSkeletonVisible(false);
@@ -141,7 +167,7 @@ const EventListing = (): JSX.Element => {
           </div>
         </div>
         <div className={`${style.eventListcontent} ${darkMode && darkTheme.darkMode_bgChild}`}>
-          {eventList.length > 0 ? (
+          {eventList?.length > 0 ? (
             <div className={style.eventList}>
               {eventList.map((ele: any, i) => (
                 <div

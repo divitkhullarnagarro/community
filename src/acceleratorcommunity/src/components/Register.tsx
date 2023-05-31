@@ -5,17 +5,22 @@ import Link from 'next/link';
 import registerUserCall from '../API/registerUserCall';
 import { useRouter } from 'next/router';
 import RegisterCss from '../assets/register.module.css';
-import { validateEmail, validatePassword, numberOnly } from 'assets/helpers/validations';
+import {
+  validateEmail,
+  validatePassword,
+  alphabateAndSpaceChecker,
+  validatePhoneNumber,
+} from 'assets/helpers/validations';
 // import starImage from '../assets/images/star.png';
 // import imageNotFound from '../assets/images/imageNot.png';
 import ThemeSwitcher from './ThemeSwitcher';
 import darkTheme from '../assets/darkTheme.module.css';
 import WebContext from '../Context/WebContext';
 import Spinner from 'react-bootstrap/Spinner';
-import ToastNotification from './ToastNotification';
+import GenericNotificationContext from 'src/Context/GenericNotificationContext';
+import { spaceRemover } from 'assets/helpers/helperFunctions';
 type RegisterProps = ComponentProps & {
   fields: {
-    // heading: Field<string>;
     data: {
       datasource: DataSource;
     };
@@ -92,6 +97,9 @@ const Register = (props: RegisterProps): JSX.Element => {
   const { darkMode } = {
     ...useContext(WebContext),
   };
+  const { setError, setMessage, setShowNotification, setSuccess } = {
+    ...useContext(GenericNotificationContext),
+  };
   props;
   let [firstName, setFirstName] = useState('');
   let [lastName, setLastName] = useState('');
@@ -107,39 +115,42 @@ const Register = (props: RegisterProps): JSX.Element => {
   const router = useRouter();
 
   let [firstNameError, setFirstNameError] = useState(false);
+  let [firstNameErrorMessage, setFirstNameErrorMessage] = useState('');
   let [lastNameError, setLastNameError] = useState(false);
+  let [lastNameErrorMessage, setLastNameErrorMessage] = useState('');
+
   let [emailError, setEmailError] = useState(false);
   let [phoneError, setPhoneError] = useState(false);
   let [passwordError, setPasswordError] = useState(false);
   // let [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
   let [isSigningUp, setIsSigningUp] = useState(false);
-  const [toastSuccess, setToastSuccess] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string>();
-  const [showNotification, setShowNofitication] = useState(false);
-  const [toastError, setToastError] = useState(false);
 
   const targetItems = props?.fields?.data?.datasource;
+  console.log('targetItems', targetItems);
   function setFirstNameValue(val: any) {
-    setFirstName(val);
-    if (val === '') {
+    const updatedValue = spaceRemover(val);
+    setFirstName(updatedValue);
+    const isError = alphabateAndSpaceChecker(
+      updatedValue,
+      targetItems?.firstNameLabel?.jsonValue?.value
+    );
+    if (isError.error) {
       setFirstNameError(true);
+      setFirstNameErrorMessage(isError.errorMessage);
     } else {
       setFirstNameError(false);
     }
   }
 
   function setPhoneNumberValue(val: any) {
-    setPhoneNumber(val);
-    if (val === '') {
-      setPhoneError(true);
-      setPhoneValidationMessage(`${targetItems?.phoneNoLabel?.jsonValue?.value} is mandatory`);
-    } else {
-      if (!numberOnly(val)) {
+    if (val.length <= 10) {
+      setPhoneNumber(val);
+
+      const isError = validatePhoneNumber(val, targetItems?.phoneNoLabel?.jsonValue?.value);
+      if (isError.error) {
         setPhoneError(true);
-        setPhoneValidationMessage(
-          `${targetItems?.phoneNoLabel?.jsonValue?.value} can have digits only`
-        );
+        setPhoneValidationMessage(isError.errorMessage);
       } else {
         setPhoneError(false);
       }
@@ -147,9 +158,15 @@ const Register = (props: RegisterProps): JSX.Element => {
   }
 
   function setLastNameValue(val: any) {
-    setLastName(val);
-    if (val === '') {
+    const updatedValue = spaceRemover(val);
+    setLastName(updatedValue);
+    const isError = alphabateAndSpaceChecker(
+      updatedValue,
+      targetItems?.lastNameLabel?.jsonValue?.value
+    );
+    if (isError.error) {
       setLastNameError(true);
+      setLastNameErrorMessage(isError.errorMessage);
     } else {
       setLastNameError(false);
     }
@@ -221,10 +238,12 @@ const Register = (props: RegisterProps): JSX.Element => {
 
     if (firstName === '') {
       setFirstNameError(true);
+      setFirstNameErrorMessage('Name is Required');
     }
 
     if (lastName === '') {
       setLastNameError(true);
+      setLastNameErrorMessage('Last Name is Required');
     }
     if (email === '') {
       setEmailError(true);
@@ -249,34 +268,32 @@ const Register = (props: RegisterProps): JSX.Element => {
       try {
         let resp: any = await registerUserCall(userData);
         if (resp?.data?.success == true) {
-          // setIsRegistered(true);
-          setToastSuccess(true);
-          setToastMessage('User Registered Successfully');
-          setShowNofitication(true);
+          setSuccess(true);
+          setMessage('User Registered Successfully');
+          setShowNotification(true);
+
           router.push('/login');
           setIsSigningUp(false);
         } else {
-          // console.log('responseDataError', resp?.data?.errorMessages[0]);
-          setToastError(true);
-          setToastMessage(resp?.data?.errorMessages[0]);
-          setShowNofitication(true);
+          setError(true);
+          setMessage(
+            resp?.data?.errorMessages?.[0]
+              ? resp?.data?.errorMessages?.[0]
+              : 'Something Went Wrong. Please Try Again'
+          );
+          setShowNotification(true);
+
           setIsSigningUp(false);
         }
-        // console.log('Register Response resp', resp);
       } catch (err: any) {
-        setToastError(true);
-        setToastMessage(err?.message ?? 'Something went wrong');
-        setShowNofitication(true);
+        setError(true);
+        setMessage(err?.message ?? 'Something went wrong');
+        setShowNotification(true);
         setIsSigningUp(false);
       }
     }
   };
 
-  const resetToastState = () => {
-    setShowNofitication(!showNotification);
-    setToastSuccess(false);
-    setToastError(false);
-  };
   return (
     <>
       <div className={RegisterCss.ThemeSwitcher}>
@@ -400,7 +417,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   ''
                 ) : (
                   <span className={RegisterCss.passwordMismatchWarning}>
-                    * {targetItems.firstNameLabel.jsonValue.value} is mandatory
+                    * {firstNameErrorMessage}
                   </span>
                 )}
               </div>
@@ -426,7 +443,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   ''
                 ) : (
                   <span className={RegisterCss.passwordMismatchWarning}>
-                    * {targetItems.lastNameLabel.jsonValue.value} is mandatory
+                    * {lastNameErrorMessage}
                   </span>
                 )}
               </div>
@@ -469,7 +486,7 @@ const Register = (props: RegisterProps): JSX.Element => {
                   />
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   onChange={(e) => setPhoneNumberValue(e?.target?.value)}
                   value={phoneNumber}
                   className={RegisterCss.loginInput}
@@ -612,15 +629,6 @@ const Register = (props: RegisterProps): JSX.Element => {
             </div>
           </div>
         </div>
-        {showNotification && (
-          <ToastNotification
-            showNotification={showNotification}
-            success={toastSuccess}
-            error={toastError}
-            message={toastMessage}
-            handleCallback={resetToastState}
-          />
-        )}
       </div>
     </>
   );

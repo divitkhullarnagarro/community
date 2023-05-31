@@ -151,7 +151,7 @@
 .addPostField {
   display: flex;
   align-items: start;
-  gap: 10px;
+  gap: 14px;
 }
 
 .addPostButton {
@@ -301,6 +301,10 @@
   align-items: center;
   gap: 5px;
   position: relative;
+}
+
+.darkEditorClass :global(.rdw-suggestion-dropdown) {
+  color: black !important;
 }
 
 @media only screen and (max-width: 768px) {

@@ -209,3 +209,10 @@ export const containsHtml = (string: any) => {
   }
   return false;
 };
+export const spaceRemover = (value: string) => {
+  let temp = '';
+  if (value.trim().length > 0) {
+    temp = value;
+  }
+  return temp;
+};

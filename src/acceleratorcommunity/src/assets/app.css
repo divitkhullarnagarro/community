@@ -1,10 +1,17 @@
 body {
   font-family: 'Equip-Regular', sans-serif;
 }
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Equip-Medium', sans-serif;
 }
-html, body, #__next {
+html,
+body,
+#__next {
   height: 100%;
 }
 a[target='_blank']:after {
@@ -13,7 +20,8 @@ a[target='_blank']:after {
 .main.darkMode_bg {
   min-height: 100%;
 }
-div:empty, p:empty {
+div:empty,
+p:empty {
   margin: 0;
 }
 
@@ -55,4 +63,12 @@ div:empty, p:empty {
   right: 5px !important;
   filter: invert(1);
   z-index: 2;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
 }

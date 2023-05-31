@@ -22,7 +22,7 @@
 .viewMoreButton::after {
   display: none;
 }
-.viewMoreButtonDarkMode * {
+.viewMoreButtonDarkMode {
   cursor: pointer;
   color: rgba(225, 225, 225, 0.6);
   font-family: 'Equip-Regular';
@@ -30,21 +30,20 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
-  color: #000000;
+  /* color: #000000; */
 }
 .viewMoreButton:hover,
 .viewMoreButtonDarkMode:hover {
-  color: blue;
+  color: #47d7ac;
 }
 .hideContent {
   overflow: hidden;
   height: 2em;
 }
 
-.btn{
+.btn {
   color: black;
 }
-.darkModeBtn{
+.darkModeBtn {
   color: white;
-
 }

@@ -89,6 +89,7 @@ import reportUserCall from 'src/API/reportUserCall';
 import { useRouter } from 'next/router';
 import AddPostSkeleton from './skeletons/AddPostSkeleton';
 import darkModeCss from '../assets/darkTheme.module.css';
+import GenericNotificationContext from 'src/Context/GenericNotificationContext';
 
 //logging on logrocket
 import LogRocket from 'logrocket';
@@ -188,6 +189,10 @@ type BlockUserFields = {
 const AddPost = (props: AddPostProps): JSX.Element => {
   const { userToken, objectId, userObject, darkMode, wantRerender, allPeersList } = {
     ...useContext(WebContext),
+  };
+
+  const { setMessage, setShowNotification, setError } = {
+    ...useContext(GenericNotificationContext),
   };
 
   //theme changes
@@ -444,31 +449,36 @@ const AddPost = (props: AddPostProps): JSX.Element => {
       })
         .then((response: any) => {
           const newArr = response?.data;
-          if (response?.data?.length == 0) {
-            setMyAnotherArr([
-              {
-                postType: 'ERRORPOST',
-                description: 'No Posts Available !',
-              },
-            ]);
-          } else {
-            if (specificPostId && newArr) {
-              setMyAnotherArr([newArr]);
+          // console.log('asdfgasdgh', response);
+          if (response?.success) {
+            if (response?.data?.length == 0) {
+              setMyAnotherArr([
+                {
+                  postType: 'ERRORPOST',
+                  description: 'No Posts Available !',
+                },
+              ]);
             } else {
-              newArr?.map((post: any) => {
-                post.isOpenComment = false;
-                post.comments = [];
-                post.showShare = false;
-                post.isLoadingComments = false;
-                if (post.postMeasures == null || post.postMeasures == 'undefined') {
-                  post.postMeasures = {
-                    commentCount: 0,
-                    likeCount: 0,
-                  };
-                }
-              });
-              setMyAnotherArr(newArr);
+              if (specificPostId && newArr) {
+                setMyAnotherArr([newArr]);
+              } else {
+                newArr?.map((post: any) => {
+                  post.isOpenComment = false;
+                  post.comments = [];
+                  post.showShare = false;
+                  post.isLoadingComments = false;
+                  if (post.postMeasures == null || post.postMeasures == 'undefined') {
+                    post.postMeasures = {
+                      commentCount: 0,
+                      likeCount: 0,
+                    };
+                  }
+                });
+                setMyAnotherArr(newArr);
+              }
             }
+          } else {
+            router.push('/login');
           }
         })
         .catch((err: any) => {
@@ -975,12 +985,26 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     });
   }
 
+  //Function to check false comments and replies
+  function falseCommentsCheck(str: string) {
+    const regex = /^[a-zA-Z0-9 ]*$/;
+    const containsOnlySpaces = /^\s*$/;
+    if (containsOnlySpaces.test(str)) return true;
+    return !regex.test(str);
+  }
+
   //Function To Handle Post Comments
   async function postComments(id: string, e: any) {
     e.preventDefault();
 
     const commStr = e.target[0].value;
     e.currentTarget.reset();
+    if (falseCommentsCheck(commStr)) {
+      setMessage('Invalid Comment Format');
+      setError(true);
+      setShowNotification(true);
+      return;
+    }
     const uniqId = generateUniqueId();
     const timestamp = new Date().getTime();
     const obj = {
@@ -1224,6 +1248,12 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   async function editReply(event: any, postId: any, commentId: any, replyId: any) {
     event.preventDefault();
     const editReply = event?.target[0].value;
+    if (falseCommentsCheck(editReply)) {
+      setMessage('Invalid Reply Format');
+      setError(true);
+      setShowNotification(true);
+      return;
+    }
     replyEditOn(postId, commentId, replyId, false);
     updateReply(postId, commentId, replyId, editReply);
     await AxiosRequest({
@@ -1294,6 +1324,12 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   async function editComment(event: any, postId: any, commentId: any) {
     event.preventDefault();
     const editComm = event?.target[0].value;
+    if (falseCommentsCheck(editComm)) {
+      setMessage('Invalid Comment Format');
+      setError(true);
+      setShowNotification(true);
+      return;
+    }
     commentEditOn(postId, commentId, false);
     updateComment(postId, commentId, editComm);
     await AxiosRequest({
@@ -2376,6 +2412,12 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     e.preventDefault();
     const commentString = e.target[0].value;
     e.currentTarget.reset();
+    if (falseCommentsCheck(commentString)) {
+      setMessage('Invalid Reply Format');
+      setError(true);
+      setShowNotification(true);
+      return;
+    }
 
     const uniqId = generateUniqueId();
     const timestamp = new Date().getTime();
@@ -2713,9 +2755,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   }
 
   async function UploadFilesToServer(file: any, type: string) {
-    return await uploadFilesCall(userToken, file, type).then((response) => {
-      return response?.data;
-    });
+    return await uploadFilesCall(userToken, file, type);
   }
 
   //Function To Handle Load Image Files
@@ -2725,9 +2765,27 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     for (let i = 0; i < files.length; i++) {
       const temp = files[i];
       const resp = await UploadFilesToServer(temp, 'IMAGE');
-      if (!resp?.data) break;
-      const uniqueId = generateUniqueId();
-      fileArray.push({ id: uniqueId, url: resp?.data, mediaType: 'IMAGE', mediaSequence: 0 });
+      // console.log('responseinsidecall', resp);
+      if (resp?.data?.success || !resp?.data?.errorCode) {
+        const uniqueId = generateUniqueId();
+        fileArray.push({
+          id: uniqueId,
+          url: resp?.data?.data,
+          mediaType: 'IMAGE',
+          mediaSequence: 0,
+        });
+      } else {
+        setToastError(true);
+
+        setToastMessage(
+          resp?.data?.errorMessages[0]
+            ? resp?.data?.errorMessages[0]
+            : 'Something Went Wrong. Please Try Again'
+        );
+
+        setShowNofitication(true);
+        break;
+      }
     }
     if (fileArray.length === files.length) {
       setFile(fileArray);
@@ -2933,9 +2991,35 @@ const AddPost = (props: AddPostProps): JSX.Element => {
   // const hours = String(now.getHours()).padStart(2, '0');
   // const minutes = String(now.getMinutes()).padStart(2, '0');
   const minDate = `${year}-${month}-${day}`;
+  const [eventName, setEventName] = useState('');
+  const [eventDescription, setEventDescription] = useState('');
 
   function emptyEvent() {
     setEventPost('');
+  }
+
+  function CheckForEmptyString(val: string, prev: string) {
+    const regex = /^[a-zA-Z0-9 ]*$/;
+    val = prev.length > 0 ? val : val.trim();
+    val = val.replace(/^\s+/, '');
+    if (regex.test(val))
+      if (val?.length > 0) {
+        return val;
+      } else if (val?.length === 0 && prev?.length != 0) {
+        return val;
+      }
+    return prev;
+  }
+
+  function OnChangeEventValues(event: any, eventValue: boolean) {
+    let val = event?.target?.value;
+    eventValue
+      ? setEventName((prev: any) => {
+          return CheckForEmptyString(val, prev);
+        })
+      : setEventDescription((prev: any) => {
+          return CheckForEmptyString(val, prev);
+        });
   }
 
   function submitEventForm(event: any) {
@@ -2946,10 +3030,10 @@ const AddPost = (props: AddPostProps): JSX.Element => {
       setToastMessage('Please Select Event Type !');
       return;
     }
-    const title = event.target[1].value;
+    const title = eventName;
     const date = event.target[2].value;
     const time = event.target[3].value;
-    const description = event.target[5].value;
+    const description = eventDescription;
 
     setEventPost({
       event: {
@@ -2961,6 +3045,8 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     });
     setShowEvent(false);
     event.currentTarget?.reset();
+    setEventDescription('');
+    setEventName('');
     setEventType('Select Event Type');
   }
 
@@ -3054,7 +3140,10 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     setPollFormOptions((prevOptions: any) => {
       return prevOptions.map((option: any) => {
         if (option.id === id) {
-          return { ...option, optionText: e.target.value };
+          return {
+            ...option,
+            optionText: CheckForEmptyString(e?.target?.value, option?.optionText),
+          };
         } else {
           return option;
         }
@@ -3064,7 +3153,9 @@ const AddPost = (props: AddPostProps): JSX.Element => {
 
   function updatePollQuestion(e: any) {
     e.preventDefault();
-    setPollQuestion(e.target.value);
+    setPollQuestion((prev) => {
+      return CheckForEmptyString(e.target.value, prev);
+    });
   }
 
   function emptyPollPost() {
@@ -3109,6 +3200,15 @@ const AddPost = (props: AddPostProps): JSX.Element => {
 
   var metaImage: any = {};
   var breakLoop = true;
+
+  // console.log('editor state value', `P${editorState.getCurrentContent().getPlainText()}P`);
+  let shouldDisablePostCreation = true;
+  const str = editorState.getCurrentContent().getPlainText();
+  if (str.trim()) {
+    shouldDisablePostCreation = false;
+  } else {
+    shouldDisablePostCreation = true;
+  }
 
   return (
     <>
@@ -3175,7 +3275,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                     <Collapse in={showForm1}>
                       <div
                         className="AddPostEditorContainer"
-                        style={{ maxWidth: '100%' }}
+                        style={{ width: '95%' }}
                         id="showAddPostEditorContainer"
                       >
                         <div className={styles.addTextEditor}>
@@ -3184,9 +3284,17 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                               <Editor
                                 editorState={editorState}
                                 onEditorStateChange={(e) => onEditorStateChangeHandler(e)}
-                                wrapperClassName="wrapper-class"
-                                editorClassName="editor-class"
-                                toolbarClassName="toolbar-class"
+                                wrapperClassName={`wrapper-class ${
+                                  darkMode ? darkModeCss.grey_2 : ''
+                                }`}
+                                editorClassName={`editor-class ${
+                                  darkMode ? darkModeCss.grey_3 : ''
+                                } ${darkMode ? darkModeCss.text_light : ''} ${
+                                  darkMode ? styles.darkEditorClass : ''
+                                }`}
+                                toolbarClassName={`toolbar-class ${
+                                  darkMode ? darkModeCss.grey_3 : ''
+                                }`}
                                 editorStyle={{
                                   height: '200px',
                                   padding: '0px 10px',
@@ -3594,6 +3702,8 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                               className={styles.AddEventModalEventName}
                               style={{ fontSize: '18px', color: 'black', fontWeight: '800px' }}
                               required
+                              onChange={(e) => OnChangeEventValues(e, true)}
+                              value={eventName}
                               type="text"
                               placeholder="Event Name"
                             />
@@ -3668,6 +3778,8 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                               required
                               as="textarea"
                               rows={2}
+                              value={eventDescription}
+                              onChange={(e) => OnChangeEventValues(e, false)}
                               placeholder="Description"
                               style={{ resize: 'none' }}
                             />
@@ -3902,7 +4014,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                 <div className={styles.errorContainer}>
                   <Button
                     className={styles.publishButton}
-                    disabled={editorState.getCurrentContent().getPlainText() ? false : true}
+                    disabled={shouldDisablePostCreation}
                     variant="secondary"
                     style={{
                       backgroundColor: editorState.getCurrentContent().getPlainText()

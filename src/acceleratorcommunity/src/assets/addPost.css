@@ -100,6 +100,7 @@
   font-size: 14px;
   line-height: 32px;
   color: #091329;
+  overflow-wrap: break-word;
 }
 
 .postDescription a[target='_blank']:after {
@@ -112,10 +113,14 @@
   font-size: 14px !important;
   background: transparent !important;
 }
+
 .postDescription a[data-mention] {
   color: #0d6efd !important;
 }
 
+.darkModeDescription {
+  color: #b8b8b8 !important;
+}
 .darkModeDescription * {
   color: #b8b8b8 !important;
 }

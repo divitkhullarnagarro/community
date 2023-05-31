@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 import { ComponentProps } from 'lib/component-props';
+// import dynamic from 'next/dynamic';
 import CreateGroup from './helperComponents/CreateGroup';
+// const CreateGroup = dynamic(() => import('./helperComponents/CreateGroup'));
 import style from '../assets/groupList.module.css';
 import darkModeCss from '../assets/darkTheme.module.css';
 import WebContext from 'src/Context/WebContext';
@@ -146,7 +148,9 @@ const GroupList = (props: GroupListProps): JSX.Element => {
                                   darkMode ? darkModeCss.text_light : ''
                                 }`}
                               >
-                                {ele.groupName}
+                                {ele.groupName.length < 30
+                                  ? ele.groupName
+                                  : ele.groupName.substring(0, 30) + '...'}
                               </h5>
                             </div>
                           </Link>

@@ -254,7 +254,9 @@ const ForgotPassword = (props: ForgotPasswordProps): JSX.Element => {
           router.push('/login');
         } else {
           setToastError(true);
-          setToastMessage(res?.data?.errorMessages[0]);
+          setToastMessage(
+            res?.data?.errorMessages?.[0] ? res?.data?.errorMessages?.[0] : 'Something went wrong.'
+          );
           setShowNofitication(true);
           // setOtpError(true);
           setIsUpdatingPassword(false);

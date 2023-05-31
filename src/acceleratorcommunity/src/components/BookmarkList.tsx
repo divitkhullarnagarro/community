@@ -12,6 +12,7 @@ import { ApolloClient, ApolloLink, InMemoryCache, HttpLink } from 'apollo-boost'
 import SideBar from './SideBar';
 import darkModeCss from '../assets/darkTheme.module.css';
 import BlogListingSkeleton from './skeletons/BlogListingSkeleton';
+import parser from 'html-react-parser';
 
 type BookmarkListProps = ComponentProps & {
   fields: {
@@ -338,7 +339,8 @@ const BookmarkList = (props: BookmarkListProps): JSX.Element => {
                           darkMode ? darkModeCss.test_grey_4 : ''
                         }`}
                       >
-                        {l?.shortDescription?.jsonValue?.value}
+                        {l?.shortDescription?.jsonValue?.value &&
+                          parser(l?.shortDescription?.jsonValue?.value)}
                       </div>
                       <div>
                         <p>{l?.id?.jsonValue?.value}</p>

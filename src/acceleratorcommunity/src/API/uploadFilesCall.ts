@@ -26,14 +26,21 @@ const uploadFilesCall = async (
       percentCompleted;
     },
   };
-  const response = await Axios.post<any, AxiosResponse<any>>(uploadFileURL, formData, config)
-    .then((response: any) => {
-      return response;
-    })
-    .catch((error: any) => {
-      console.error(error);
-    });
-  return response;
+  try {
+    const response = await Axios.post<any, AxiosResponse<any>>(uploadFileURL, formData, config);
+    // .then((response: any) => {
+    //   return response;
+    // })
+    // .catch((error: any) => {
+    //   return error.response;
+    // });
+    // console.log('errorincall', response);
+
+    return response;
+  } catch (error: any) {
+    // console.log('errorincall', error.response);
+    return error.response;
+  }
 };
 
 export default uploadFilesCall;

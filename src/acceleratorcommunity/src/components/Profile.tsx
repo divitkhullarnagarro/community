@@ -3,7 +3,6 @@ import { useState, useContext, useEffect } from 'react';
 import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';
 import updateUuserCall from 'src/API/updateUser';
-import ToastNotification from './ToastNotification';
 import CameraImg from '../assets/images/camera1.png';
 import PersonalImg from '../assets/images/personalInformation.png';
 import ContactImg from '../assets/images/contactDetails.png';
@@ -33,6 +32,7 @@ import { ComponentProps } from 'lib/component-props';
 import AxiosRequest from 'src/API/AxiosRequest';
 import { getUserUrl, updateUser } from '../assets/helpers/constants';
 import { checkNumber, containsHtml } from '../assets/helpers/helperFunctions';
+import GenericNotificationContext from 'src/Context/GenericNotificationContext';
 
 // import { decryptString } from 'assets/helpers/EncryptDecrypt';
 
@@ -241,6 +241,10 @@ const Profile = (props: ProfileProps): JSX.Element => {
     ...useContext(WebContext),
   };
 
+  const { setMessage, setShowNotification, setError, setSuccess } = {
+    ...useContext(GenericNotificationContext),
+  };
+
   const containsOnlySpaces = (string: any) => {
     if (string.trim() !== '' || string === '') {
       setPlaceOfPractice({ ...placeOfPractice, orgName: string });
@@ -255,6 +259,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
 
   const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
   const regexForCheckingSpecialCharacter = /^[a-zA-Z0-9 ]*$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const [errorState, setErrorState] = useState<any>({
     firstName: false,
@@ -294,6 +299,8 @@ const Profile = (props: ProfileProps): JSX.Element => {
     eduPincodeLength: false,
     urlError: false,
     websiteUrlError: false,
+    validEmail: false,
+    validAltEmail: false,
   });
 
   // =================================================================================== Personal Information =======================================================================================
@@ -334,26 +341,26 @@ const Profile = (props: ProfileProps): JSX.Element => {
         url: `${updateUser}${objectId}`,
         method: 'PUT',
       }).then((response: any) => {
-        console.log('response?.data?', response);
         if (response?.success === true) {
           getUser();
           setStateValue(true);
-          setToastSuccess(true);
-          setToastMessage('Data updated successfully');
+          setMessage('Data updated successfully');
+          setSuccess(true);
           handleClose1();
-        } else if (response?.success === false) {
-          setToastError(true);
+        } else if (response?.data?.success === false) {
+          setError(true);
           if (
             response?.data?.errorMessages[0] === null ||
             response?.data?.errorMessages[0] === ' ' ||
             response?.data?.errorMessages[0] === undefined
           ) {
-            setToastMessage('Something went wrong');
+            setMessage('Something went wrong');
           } else {
-            setToastMessage(response?.data?.errorMessages[0]);
+            setMessage(response?.data?.errorMessages[0]);
           }
         }
-        setShowNofitication(true);
+
+        setShowNotification(true);
       });
     }
   };
@@ -663,21 +670,21 @@ const Profile = (props: ProfileProps): JSX.Element => {
               // setTempUserData(tempArray);
               getUser();
               setStateValue(true);
-              setToastSuccess(true);
-              setToastMessage('Data updated successfully');
+              setSuccess(true);
+              setMessage('Data updated successfully');
             } else if (response?.success === false) {
-              setToastError(true);
+              setError(true);
               if (
                 response?.data?.errorMessages[0] === null ||
                 response?.data?.errorMessages[0] === ' ' ||
                 response?.data?.errorMessages[0] === undefined
               ) {
-                setToastMessage('Something went wrong');
+                setMessage('Something went wrong');
               } else {
-                setToastMessage(response?.data?.errorMessages[0]);
+                setMessage(response?.data?.errorMessages[0]);
               }
             }
-            setShowNofitication(true);
+            setShowNotification(true);
           }
         });
       }
@@ -801,11 +808,11 @@ const Profile = (props: ProfileProps): JSX.Element => {
   };
   function setEmailValue(val: any) {
     if (val === '') {
-      setErrorState({ ...errorState, lastName: true });
+      setErrorState({ ...errorState, email: true });
       setEditUserData({ ...editUserData, email: val });
     } else {
       const finalValue = val.trimStart();
-      setErrorState({ ...errorState, lastName: false });
+      setErrorState({ ...errorState, email: false });
       setEditUserData({ ...editUserData, email: finalValue });
     }
   }
@@ -822,6 +829,11 @@ const Profile = (props: ProfileProps): JSX.Element => {
     }
   }
   function setAltEmailValue(val: any) {
+    if (emailRegex.test(val)) {
+      setErrorState({ ...errorState, validAltEmail: true });
+    } else {
+      setErrorState({ ...errorState, validAltEmail: false });
+    }
     if (val === editUserData?.email) {
       setErrorState({ ...errorState, alternateEmail: true });
       setEditUserData({ ...editUserData, alternateEmail: val });
@@ -922,13 +934,13 @@ const Profile = (props: ProfileProps): JSX.Element => {
             getUser();
             // setTempUserData(tempArray);
             setStateValue(true);
-            setToastSuccess(true);
-            setToastMessage('Data updated successfully');
+            setSuccess(true);
+            setMessage('Data updated successfully');
           } else {
-            setToastError(true);
-            setToastMessage('Something went wrong');
+            setError(true);
+            setMessage('Something went wrong');
           }
-          setShowNofitication(true);
+          setShowNotification(true);
         }
       });
     } else if (
@@ -1167,13 +1179,13 @@ const Profile = (props: ProfileProps): JSX.Element => {
           if (response?.data?.success) {
             getUser();
             setStateValue(true);
-            setToastSuccess(true);
-            setToastMessage('Data updated successfully');
+            setSuccess(true);
+            setMessage('Data updated successfully');
           } else {
-            setToastError(true);
-            setToastMessage('Something went wrong');
+            setError(true);
+            setMessage('Something went wrong');
           }
-          setShowNofitication(true);
+          setShowNotification(true);
         }
       });
     }
@@ -1456,10 +1468,6 @@ const Profile = (props: ProfileProps): JSX.Element => {
 
   const [showForm3, setShowForm3] = useState(false);
   const [showStateValue, setStateValue] = useState(true);
-  const [showNotification, setShowNofitication] = useState(false);
-  const [toastSuccess, setToastSuccess] = useState(false);
-  const [toastError, setToastError] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string>();
   const [details, setDetails] = useState<any>(queryParamShowTab ?? 'personal');
   const [language, setLanguage] = useState<any>([]);
   const [hobby, setHobby] = useState<any>([]);
@@ -1532,13 +1540,13 @@ const Profile = (props: ProfileProps): JSX.Element => {
           if (response?.data?.success) {
             setTempUserData(tempArray);
             setStateValue(true);
-            setToastSuccess(true);
-            setToastMessage('Data updated successfully');
+            setSuccess(true);
+            setMessage('Data updated successfully');
           } else {
-            setToastError(true);
-            setToastMessage('Something went wrong');
+            setError(true);
+            setMessage('Something went wrong');
           }
-          setShowNofitication(true);
+          setShowNotification(true);
         }
       });
       setShowForm1(false);
@@ -1557,19 +1565,19 @@ const Profile = (props: ProfileProps): JSX.Element => {
           if (response?.success === true) {
             getUser();
             setStateValue(true);
-            setToastSuccess(true);
+            setSuccess(true);
           } else if (response?.data?.success === false) {
             if (
               response?.data?.errorMessages !== null &&
               response?.data?.errorMessages !== undefined
             ) {
-              setToastMessage(response?.data?.errorMessages[0]);
+              setMessage(response?.data?.errorMessages[0]);
             } else {
-              setToastMessage('Something went wrong');
+              setMessage('Something went wrong');
             }
-            setToastError(true);
+            setError(true);
           }
-          setShowNofitication(true);
+          setShowNotification(true);
         }
       });
       setShowForm2(false);
@@ -1590,21 +1598,21 @@ const Profile = (props: ProfileProps): JSX.Element => {
         if (response?.success) {
           getUser();
           setStateValue(true);
-          setToastSuccess(true);
-          setToastMessage('Data updated successfully');
+          setSuccess(true);
+          setMessage('Data updated successfully');
           handleCloseLanguageForm();
         } else if (response?.data?.success === false) {
           if (
             response?.data?.errorMessages !== null &&
             response?.data?.errorMessages !== undefined
           ) {
-            setToastMessage(response?.data?.errorMessages[0]);
+            setMessage(response?.data?.errorMessages[0]);
           } else {
-            setToastMessage('Something went wrong');
+            setMessage('Something went wrong');
           }
-          setToastError(true);
+          setError(true);
         }
-        setShowNofitication(true);
+        setShowNotification(true);
       }
     });
   };
@@ -1622,21 +1630,21 @@ const Profile = (props: ProfileProps): JSX.Element => {
         if (response?.success) {
           getUser();
           setStateValue(true);
-          setToastSuccess(true);
-          setToastMessage('Data updated successfully');
+          setSuccess(true);
+          setMessage('Data updated successfully');
           handleCloseFormForHobby();
         } else if (response?.data?.success === false) {
           if (
             response?.data?.errorMessages !== null &&
             response?.data?.errorMessages !== undefined
           ) {
-            setToastMessage(response?.data?.errorMessages[0]);
+            setMessage(response?.data?.errorMessages[0]);
           } else {
-            setToastMessage('Something went wrong');
+            setMessage('Something went wrong');
           }
-          setToastError(true);
+          setError(true);
         }
-        setShowNofitication(true);
+        setShowNotification(true);
       }
     });
   };
@@ -1655,26 +1663,29 @@ const Profile = (props: ProfileProps): JSX.Element => {
         if (response?.success) {
           getUser();
           setStateValue(true);
-          setToastSuccess(true);
-          setToastMessage('Data updated successfully');
+          setSuccess(true);
+          setMessage('Data updated successfully');
         } else if (response?.data?.success === false) {
           if (
             response?.data?.errorMessages !== null &&
             response?.data?.errorMessages !== undefined
           ) {
-            setToastMessage(response?.data?.errorMessages[0]);
+            setMessage(response?.data?.errorMessages[0]);
           } else {
-            setToastMessage('Something went wrong');
+            setMessage('Something went wrong');
           }
-          setToastError(true);
+          setError(true);
         }
-        setShowNofitication(true);
+        setShowNotification(true);
       }
     });
     setIntrestForm(false);
   };
 
   const submitForm3 = () => {
+    if (editUserData?.email === editUserData?.alternateEmail) {
+      setErrorState({ ...errorState, alternateEmail: true });
+    }
     if (
       !errorState.phoneNumber &&
       !errorState.dob &&
@@ -1695,20 +1706,20 @@ const Profile = (props: ProfileProps): JSX.Element => {
           if (response?.success) {
             getUser();
             setStateValue(true);
-            setToastSuccess(true);
-            setToastMessage('Data updated successfully');
+            setSuccess(true);
+            setMessage('Data updated successfully');
           } else if (response?.data?.success === false) {
             if (
               response?.data?.errorMessages !== null &&
               response?.data?.errorMessages !== undefined
             ) {
-              setToastMessage(response?.data?.errorMessages[0]);
+              setMessage(response?.data?.errorMessages[0]);
             } else {
-              setToastMessage('Something went wrong');
+              setMessage('Something went wrong');
             }
-            setToastError(true);
+            setError(true);
           }
-          setShowNofitication(true);
+          setShowNotification(true);
         }
       });
       setShowForm3(false);
@@ -1759,11 +1770,6 @@ const Profile = (props: ProfileProps): JSX.Element => {
     }
   }, [personalInfo?.dob]);
 
-  const resetToastState = () => {
-    setShowNofitication(!showNotification);
-    setToastSuccess(false);
-    setToastError(false);
-  };
   useEffect(() => {
     if (
       userToken !== undefined &&
@@ -1782,114 +1788,124 @@ const Profile = (props: ProfileProps): JSX.Element => {
       url: `${getUserUrl}${objectId}`,
       method: 'GET',
     }).then((response: any) => {
-      setTempUserData({
-        firstName: response?.data?.firstName,
-        lastName: response?.data?.lastName,
-        profession: response?.data?.profession,
-        yearsOfExperience: response?.data?.yearsOfExperience,
-        designation: response?.data?.designation,
-        domain: response?.data?.domain,
-        summary: response?.data?.summary,
-        role: response?.data?.role,
-        email: response?.data?.email,
-        phoneNumber: response?.data?.phoneNo,
-        alternateEmail: response?.data?.alternateEmail,
-        dob: response?.data?.dob,
-        speciality: response?.data?.speciality,
-        middleName: response?.data?.middleName,
-        country: response?.data?.userResidenceInfo?.country,
-        cityt: response?.data?.userResidenceInfo?.city,
-        websiteOptions: response?.data?.websiteOptions,
-        interests: response?.data?.interests,
-        hobby: response?.data?.hobby,
-        language: response?.data?.language,
-        skills: response?.data?.skills,
-        workDetails: response?.data?.workDetails,
-        school: response?.data?.school,
-        degree: response?.data?.degree,
-        fieldOfStudy: response?.data?.fieldOfStudy,
-        bannerImgUrl: response?.data?.bannerImgUrl,
-        qualifications: response?.data?.qualifications,
-        gender: response?.data?.gender,
-        age: response?.data?.age,
-        profilePictureUrl: response?.data?.profilePictureUrl,
-        userResidenceInfo: response?.data?.userResidenceInfo,
-        placeOfPractice: response?.data?.placeOfPractice,
-        areaOfExpertise: response?.data?.areaOfExpertise,
-        websiteUrl: response?.data?.websiteUrl,
-        Address: response?.data?.userResidenceInfo?.address,
-        State: response?.data?.userResidenceInfo?.state,
-        ResidingFrom: response?.data?.userResidenceInfo?.residingFrom,
-        LeftAt: response?.data?.userResidenceInfo?.leftAt,
-      });
-      setPersonalInfo({
-        firstName: response?.data?.firstName,
-        lastName: response?.data?.lastName,
-        middleName: response?.data?.middleName,
-        areaOfExpertise: response?.data?.areaOfExpertise,
-        yearsOfExperience: response?.data?.yearsOfExperience,
-        designation: response?.data?.designation,
-        role: response?.data?.role,
-        speciality: response?.data?.speciality,
-        domain: response?.data?.domain,
-        age: response?.data?.age,
-        gender: response?.data?.gender,
-        websiteUrl: response?.data?.websiteUrl,
-        dob: response?.data?.dob,
-      });
-      setUserLocationState(response?.data?.userResidenceInfo);
-      if (response?.data?.hobby === undefined) {
-        setHobby([]);
-      } else {
-        setHobby(response?.data?.hobby);
+      if (response?.success) {
+        setTempUserData({
+          firstName: response?.data?.firstName,
+          lastName: response?.data?.lastName,
+          profession: response?.data?.profession,
+          yearsOfExperience: response?.data?.yearsOfExperience,
+          designation: response?.data?.designation,
+          domain: response?.data?.domain,
+          summary: response?.data?.summary,
+          role: response?.data?.role,
+          email: response?.data?.email,
+          phoneNumber: response?.data?.phoneNo,
+          alternateEmail: response?.data?.alternateEmail,
+          dob: response?.data?.dob,
+          speciality: response?.data?.speciality,
+          middleName: response?.data?.middleName,
+          country: response?.data?.userResidenceInfo?.country,
+          cityt: response?.data?.userResidenceInfo?.city,
+          websiteOptions: response?.data?.websiteOptions,
+          interests: response?.data?.interests,
+          hobby: response?.data?.hobby,
+          language: response?.data?.language,
+          skills: response?.data?.skills,
+          workDetails: response?.data?.workDetails,
+          school: response?.data?.school,
+          degree: response?.data?.degree,
+          fieldOfStudy: response?.data?.fieldOfStudy,
+          bannerImgUrl: response?.data?.bannerImgUrl,
+          qualifications: response?.data?.qualifications,
+          gender: response?.data?.gender,
+          age: response?.data?.age,
+          profilePictureUrl: response?.data?.profilePictureUrl,
+          userResidenceInfo: response?.data?.userResidenceInfo,
+          placeOfPractice: response?.data?.placeOfPractice,
+          areaOfExpertise: response?.data?.areaOfExpertise,
+          websiteUrl: response?.data?.websiteUrl,
+          Address: response?.data?.userResidenceInfo?.address,
+          State: response?.data?.userResidenceInfo?.state,
+          ResidingFrom: response?.data?.userResidenceInfo?.residingFrom,
+          LeftAt: response?.data?.userResidenceInfo?.leftAt,
+        });
+        setPersonalInfo({
+          firstName: response?.data?.firstName,
+          lastName: response?.data?.lastName,
+          middleName: response?.data?.middleName,
+          areaOfExpertise: response?.data?.areaOfExpertise,
+          yearsOfExperience: response?.data?.yearsOfExperience,
+          designation: response?.data?.designation,
+          role: response?.data?.role,
+          speciality: response?.data?.speciality,
+          domain: response?.data?.domain,
+          age: response?.data?.age,
+          gender: response?.data?.gender,
+          websiteUrl: response?.data?.websiteUrl,
+          dob: response?.data?.dob,
+        });
+        setUserLocationState(response?.data?.userResidenceInfo);
+        if (response?.data?.hobby === undefined) {
+          setHobby([]);
+        } else {
+          setHobby(response?.data?.hobby);
+        }
+        if (response?.data?.language === undefined) {
+          setLanguage([]);
+        } else {
+          setLanguage(response?.data?.language);
+        }
+        if (response?.data?.interests === undefined) {
+          setUserInterests([]);
+        } else {
+          setUserInterests(response?.data?.interests);
+        }
+        setEditUserData({
+          firstName: response?.data?.firstName,
+          lastName: response?.data?.lastName,
+          profession: response?.data?.profession,
+          yearsOfExperience: response?.data?.yearsOfExperience,
+          designation: response?.data?.designation,
+          domain: response?.data?.domain,
+          summary: response?.data?.summary,
+          role: response?.data?.role,
+          email: response?.data?.email,
+          phoneNumber: response?.data?.phoneNo,
+          alternateEmail: response?.data?.alternateEmail,
+          dob: response?.data?.dob,
+          speciality: response?.data?.speciality,
+          middleName: response?.data?.middleName,
+          country: response?.data?.userResidenceInfo?.country,
+          cityt: response?.data?.userResidenceInfo?.city,
+          Address: response?.data?.userResidenceInfo?.address,
+          State: response?.data?.userResidenceInfo?.state,
+          ResidingFrom: response?.data?.userResidenceInfo?.residingFrom,
+          LeftAt: response?.data?.userResidenceInfo?.leftAt,
+          websiteOptions: response?.data?.websiteOptions,
+          skills: response?.data?.skills,
+          workDetails: response?.data?.workDetails,
+          school: response?.data?.school,
+          degree: response?.data?.degree,
+          fieldOfStudy: response?.data?.fieldOfStudy,
+          bannerImgUrl: response?.data?.bannerImgUrl,
+          qualifications: response?.data?.qualifications,
+          gender: response?.data?.gender,
+          age: response?.data?.age,
+          profilePictureUrl: response?.profilePictureUrl,
+          userResidenceInfo: response?.data?.userResidenceInfo,
+          placeOfPractice: response?.data?.placeOfPractice,
+          areaOfExpertise: response?.data?.areaOfExpertise,
+          websiteUrl: response?.data?.websiteUrl,
+        });
+      } else if (response?.data?.success === false) {
+        if (response?.data?.errorMessages !== null && response?.data?.errorMessages !== undefined) {
+          setMessage(response?.data?.errorMessages[0]);
+        } else {
+          setMessage('Something went wrong');
+        }
+        setError(true);
+        setShowNotification(true);
       }
-      if (response?.data?.language === undefined) {
-        setLanguage([]);
-      } else {
-        setLanguage(response?.data?.language);
-      }
-      if (response?.data?.interests === undefined) {
-        setUserInterests([]);
-      } else {
-        setUserInterests(response?.data?.interests);
-      }
-      setEditUserData({
-        firstName: response?.data?.firstName,
-        lastName: response?.data?.lastName,
-        profession: response?.data?.profession,
-        yearsOfExperience: response?.data?.yearsOfExperience,
-        designation: response?.data?.designation,
-        domain: response?.data?.domain,
-        summary: response?.data?.summary,
-        role: response?.data?.role,
-        email: response?.data?.email,
-        phoneNumber: response?.data?.phoneNo,
-        alternateEmail: response?.data?.alternateEmail,
-        dob: response?.data?.dob,
-        speciality: response?.data?.speciality,
-        middleName: response?.data?.middleName,
-        country: response?.data?.userResidenceInfo?.country,
-        cityt: response?.data?.userResidenceInfo?.city,
-        Address: response?.data?.userResidenceInfo?.address,
-        State: response?.data?.userResidenceInfo?.state,
-        ResidingFrom: response?.data?.userResidenceInfo?.residingFrom,
-        LeftAt: response?.data?.userResidenceInfo?.leftAt,
-        websiteOptions: response?.data?.websiteOptions,
-        skills: response?.data?.skills,
-        workDetails: response?.data?.workDetails,
-        school: response?.data?.school,
-        degree: response?.data?.degree,
-        fieldOfStudy: response?.data?.fieldOfStudy,
-        bannerImgUrl: response?.data?.bannerImgUrl,
-        qualifications: response?.data?.qualifications,
-        gender: response?.data?.gender,
-        age: response?.data?.age,
-        profilePictureUrl: response?.profilePictureUrl,
-        userResidenceInfo: response?.data?.userResidenceInfo,
-        placeOfPractice: response?.data?.placeOfPractice,
-        areaOfExpertise: response?.data?.areaOfExpertise,
-        websiteUrl: response?.data?.websiteUrl,
-      });
     });
   };
 
@@ -1909,15 +1925,15 @@ const Profile = (props: ProfileProps): JSX.Element => {
           if (setUserObject !== undefined) {
             setUserObject({ ...userObject, profilePictureUrl: URL?.createObjectURL(files[0]) });
           }
-          setToastMessage('Image Updated successfully');
-          setToastSuccess(true);
+          setMessage('Image Updated successfully');
+          setSuccess(true);
           setShowImage(true);
         } else {
-          setToastMessage('Something Went Wrong');
-          setToastError(true);
+          setMessage('Something Went Wrong');
+          setError(true);
           setShowImage(false);
         }
-        setShowNofitication(true);
+        setShowNotification(true);
       });
     }
   };
@@ -2406,15 +2422,6 @@ const Profile = (props: ProfileProps): JSX.Element => {
           </div>
         </div>
       </div>
-      {showNotification && (
-        <ToastNotification
-          showNotification={showNotification}
-          success={toastSuccess}
-          error={toastError}
-          message={toastMessage}
-          handleCallback={resetToastState}
-        />
-      )}
     </>
   );
 };
