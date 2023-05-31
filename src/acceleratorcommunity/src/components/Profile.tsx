@@ -858,7 +858,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
     setPlaceOfPractice({ ...data[0] });
     handleOpenWorkModal();
   };
-  // Place of Practice
+  //======================================================================Place of Practice==========================================================================================
 
   const [placeOfPractice, setPlaceOfPractice] = useState<PlaceOfPractice>({
     city: '',
@@ -897,14 +897,17 @@ const Profile = (props: ProfileProps): JSX.Element => {
     if (
       placeOfPractice?.joiningDate !== undefined &&
       placeOfPractice?.joiningDate !== '' &&
-      placeOfPractice?.joiningDate !== null
+      placeOfPractice?.joiningDate !== null &&
+      placeOfPractice?.leavingDate !== null &&
+      placeOfPractice?.leavingDate !== undefined &&
+      placeOfPractice?.leavingDate !== ''
     ) {
-      setPlaceOfPractice({ ...placeOfPractice, leavingDate: placeOfPractice?.joiningDate });
-      const year = placeOfPractice?.joiningDate?.split('-')[0];
-      setPlaceOfPractice({ ...placeOfPractice, joiningYear: year });
+      if (new Date(placeOfPractice?.leavingDate) < new Date(placeOfPractice?.joiningDate)) {
+        console.log('hello');
+        setPlaceOfPractice({ ...placeOfPractice, leavingDate: placeOfPractice?.joiningDate });
+      }
     }
   }, [placeOfPractice?.joiningDate]);
-
   useEffect(() => {
     if (
       checkboxRef?.current?.checked !== undefined &&
@@ -916,6 +919,14 @@ const Profile = (props: ProfileProps): JSX.Element => {
   }, [checkboxRef?.current?.checked]);
 
   const submitWork = () => {
+    const year = placeOfPractice?.joiningDate?.split('-')[0];
+    if (
+      placeOfPracticeDetails?.userWorkDetails[0]?.joiningYear !== undefined &&
+      placeOfPracticeDetails?.userWorkDetails[0]?.joiningYear !== null
+    ) {
+      placeOfPracticeDetails.userWorkDetails[0].joiningYear = year;
+    }
+
     if (
       errorState?.orgName === false &&
       errorState?.empId === false &&
@@ -955,18 +966,20 @@ const Profile = (props: ProfileProps): JSX.Element => {
   };
 
   const setOrgName = (val: string) => {
-    const regex = /\d/;
-    if (!containsHtml(val)) {
-      if (val.trim() !== '' || val === '') {
-        if (regexForCheckingSpecialCharacter.test(val)) {
-          if (!regex.test(val)) {
-            if (val === '') {
-              setErrorState({ ...errorState, orgName: true });
-              setPlaceOfPractice({ ...placeOfPractice, orgName: val });
-            } else {
-              const finalValue = val.trimStart();
-              setErrorState({ ...errorState, orgName: false });
-              setPlaceOfPractice({ ...placeOfPractice, orgName: finalValue });
+    if (val?.length <= 50) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, orgName: true });
+                setPlaceOfPractice({ ...placeOfPractice, orgName: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, orgName: false });
+                setPlaceOfPractice({ ...placeOfPractice, orgName: finalValue });
+              }
             }
           }
         }
@@ -975,18 +988,20 @@ const Profile = (props: ProfileProps): JSX.Element => {
   };
 
   const setCityOfWork = (val: string) => {
-    const regex = /\d/;
-    if (!containsHtml(val)) {
-      if (val.trim() !== '' || val === '') {
-        if (regexForCheckingSpecialCharacter.test(val)) {
-          if (!regex.test(val)) {
-            if (val === '') {
-              setErrorState({ ...errorState, city: true });
-              setPlaceOfPractice({ ...placeOfPractice, city: val });
-            } else {
-              const finalValue = val.trimStart();
-              setErrorState({ ...errorState, city: false });
-              setPlaceOfPractice({ ...placeOfPractice, city: finalValue });
+    if (val?.length <= 30) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, city: true });
+                setPlaceOfPractice({ ...placeOfPractice, city: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, city: false });
+                setPlaceOfPractice({ ...placeOfPractice, city: finalValue });
+              }
             }
           }
         }
@@ -995,18 +1010,20 @@ const Profile = (props: ProfileProps): JSX.Element => {
   };
 
   const setCountryOfWork = (val: string) => {
-    const regex = /\d/;
-    if (!containsHtml(val)) {
-      if (val.trim() !== '' || val === '') {
-        if (regexForCheckingSpecialCharacter.test(val)) {
-          if (!regex.test(val)) {
-            if (val === '') {
-              setErrorState({ ...errorState, country: true });
-              setPlaceOfPractice({ ...placeOfPractice, country: val });
-            } else {
-              const finalValue = val.trimStart();
-              setErrorState({ ...errorState, country: false });
-              setPlaceOfPractice({ ...placeOfPractice, country: finalValue });
+    if (val?.length <= 30) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, country: true });
+                setPlaceOfPractice({ ...placeOfPractice, country: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, country: false });
+                setPlaceOfPractice({ ...placeOfPractice, country: finalValue });
+              }
             }
           }
         }
@@ -1015,18 +1032,20 @@ const Profile = (props: ProfileProps): JSX.Element => {
   };
 
   const setDesignation = (val: string) => {
-    const regex = /\d/;
-    if (!containsHtml(val)) {
-      if (val.trim() !== '' || val === '') {
-        if (regexForCheckingSpecialCharacter.test(val)) {
-          if (!regex.test(val)) {
-            if (val === '') {
-              setErrorState({ ...errorState, designation: true });
-              setPlaceOfPractice({ ...placeOfPractice, designation: val });
-            } else {
-              const finalValue = val.trimStart();
-              setErrorState({ ...errorState, designation: false });
-              setPlaceOfPractice({ ...placeOfPractice, designation: finalValue });
+    if (val?.length <= 30) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, designation: true });
+                setPlaceOfPractice({ ...placeOfPractice, designation: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, designation: false });
+                setPlaceOfPractice({ ...placeOfPractice, designation: finalValue });
+              }
             }
           }
         }
@@ -1035,18 +1054,20 @@ const Profile = (props: ProfileProps): JSX.Element => {
   };
 
   const setStateForWork = (val: string) => {
-    const regex = /\d/;
-    if (!containsHtml(val)) {
-      if (val.trim() !== '' || val === '') {
-        if (regexForCheckingSpecialCharacter.test(val)) {
-          if (!regex.test(val)) {
-            if (val === '') {
-              // setErrorState({ ...errorState, designation: true });
-              setPlaceOfPractice({ ...placeOfPractice, state: val });
-            } else {
-              const finalValue = val.trimStart();
-              // setErrorState({ ...errorState, designation: false });
-              setPlaceOfPractice({ ...placeOfPractice, state: finalValue });
+    if (val?.length <= 50) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                // setErrorState({ ...errorState, designation: true });
+                setPlaceOfPractice({ ...placeOfPractice, state: val });
+              } else {
+                const finalValue = val.trimStart();
+                // setErrorState({ ...errorState, designation: false });
+                setPlaceOfPractice({ ...placeOfPractice, state: finalValue });
+              }
             }
           }
         }
@@ -1061,7 +1082,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
     }
   };
   const setSocialUrl = (val: string) => {
-    if (urlRegex.test(val)) {
+    if (urlRegex.test(val) || val === '') {
       setPlaceOfPractice({ ...placeOfPractice, socialUrl: val });
       setErrorState({ ...errorState, urlError: false });
     } else {
@@ -1082,14 +1103,16 @@ const Profile = (props: ProfileProps): JSX.Element => {
     setPlaceOfPractice({ ...placeOfPractice, presentlyWorkingHere: checkboxRef?.current?.checked });
   };
   const setEmployeeId = (val: string) => {
-    if (regexForCheckingSpecialCharacter.test(val)) {
-      if (val === '') {
-        setErrorState({ ...errorState, empId: true });
-        setPlaceOfPractice({ ...placeOfPractice, employeeId: val });
-      } else {
-        setErrorState({ ...errorState, empId: false });
+    if (val?.length <= 20) {
+      if (regexForCheckingSpecialCharacter.test(val)) {
+        if (val === '') {
+          setErrorState({ ...errorState, empId: true });
+          setPlaceOfPractice({ ...placeOfPractice, employeeId: val });
+        } else {
+          setErrorState({ ...errorState, empId: false });
 
-        setPlaceOfPractice({ ...placeOfPractice, employeeId: val });
+          setPlaceOfPractice({ ...placeOfPractice, employeeId: val });
+        }
       }
     }
   };

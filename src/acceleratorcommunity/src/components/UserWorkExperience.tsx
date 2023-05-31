@@ -159,7 +159,6 @@ const UserWorkExperience = (props: any) => {
                 autoFocus
               />
             </Form.Group>
-            {console.log('placeOfPractice', props.specificPlaceOfWork)}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Still Working here</Form.Label>
               <Form.Check
