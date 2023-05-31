@@ -64,19 +64,19 @@ function CreateGroup({
       method: 'GET',
     });
     if (res?.success) {
-      // console.log('asdfgasdfg', res);
       setmembersSuggestionsList(res.data);
-    } else {
-      // console.log('responsecreateGroup', res);
-      setToastError(true);
-      setToastMessage(
-        res?.data?.errorMessages?.[0]
-          ? res?.data?.errorMessages?.[0]
-          : 'Something Went Wrong. Please Try Again'
-      );
-
-      setShowNofitication(true);
     }
+    // else {
+    //   // console.log('responsecreateGroup', res);
+    //   setToastError(true);
+    //   setToastMessage(
+    //     res?.data?.errorMessages?.[0]
+    //       ? res?.data?.errorMessages?.[0]
+    //       : 'Something Went Wrong. Please Try Again'
+    //   );
+
+    //   setShowNofitication(true);
+    // }
   };
 
   const handleAddMemberChange = async (e: any) => {
@@ -96,7 +96,6 @@ function CreateGroup({
       }
     });
     if (filteredValueAddedMember?.length > 0) {
-      // console.log('filtered', filteredValueAddedMember, e.target.value, addMemberList);
       setDuplicateMemberError(true);
     } else {
       setDuplicateMemberError(false);
@@ -158,15 +157,11 @@ function CreateGroup({
             createdOn: null,
           },
         });
-        if (res?.success || !res?.errorCode) {
+        if (res?.success) {
           setCreatingGroup(false);
           setWantToRerender(!wantToRerender);
           setToastSuccess(true);
-          setToastMessage(
-            res?.data?.errorMessages?.[0]
-              ? res?.data?.errorMessages?.[0]
-              : 'Something Went Wrong. Please Try Again'
-          );
+          setToastMessage('Group Created Successfully');
           setShowNofitication(true);
           setAddMemberList([]);
           setAddMemberValue('');
@@ -175,13 +170,18 @@ function CreateGroup({
           setCreateGroupVisibel(false);
           setImageUrl('');
           setBannerImageURL('');
+        } else {
+          setToastError(true);
+          setToastMessage(
+            res?.data?.errorMessages?.[0]
+              ? res?.data?.errorMessages?.[0]
+              : 'Something Went Wrong. Please Try Again'
+          );
+
+          setShowNofitication(true);
         }
       } else {
         setCreatingGroup(false);
-        setToastError(true);
-        setToastMessage('Something Went Wrong. Please Try Again');
-
-        setShowNofitication(true);
       }
     } catch (error) {
       setCreatingGroup(false);
