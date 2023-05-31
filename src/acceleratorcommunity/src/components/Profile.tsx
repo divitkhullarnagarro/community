@@ -31,7 +31,7 @@ import ChangePassword from './ChangePassword';
 import { ComponentProps } from 'lib/component-props';
 import AxiosRequest from 'src/API/AxiosRequest';
 import { getUserUrl, updateUser } from '../assets/helpers/constants';
-import { checkNumber, containsHtml } from '../assets/helpers/helperFunctions';
+import { containsHtml } from '../assets/helpers/helperFunctions';
 import GenericNotificationContext from 'src/Context/GenericNotificationContext';
 
 // import { decryptString } from 'assets/helpers/EncryptDecrypt';
@@ -290,17 +290,12 @@ const Profile = (props: ProfileProps): JSX.Element => {
     standard: false,
     empId: false,
     eduCity: false,
-    eduCityNumber: false,
     eduState: false,
-    eduStateNumber: false,
     eduCountry: false,
-    eduCountryNumber: false,
     eduPincode: false,
     eduPincodeLength: false,
     urlError: false,
     websiteUrlError: false,
-    validEmail: false,
-    validAltEmail: false,
   });
 
   // =================================================================================== Personal Information =======================================================================================
@@ -1127,8 +1122,8 @@ const Profile = (props: ProfileProps): JSX.Element => {
   const submitWorkModal = () => {
     setPlaceOfPracticeDetails({ userWorkDetails: [placeOfPractice] });
   };
-  //Education
 
+  // =====================================================================================Education==================================================================================
   const [education, setEducation] = useState<educationDetails>({
     city: '',
     country: '',
@@ -1155,9 +1150,14 @@ const Profile = (props: ProfileProps): JSX.Element => {
     if (
       education?.startDate !== '' &&
       education?.startDate !== null &&
-      education?.startDate !== undefined
+      education?.startDate !== undefined &&
+      education?.endDate !== '' &&
+      education?.endDate !== null &&
+      education?.endDate !== undefined
     ) {
-      setEducation({ ...education, endDate: education?.startDate });
+      if (new Date(education?.startDate) > new Date(education?.endDate)) {
+        setEducation({ ...education, endDate: education?.startDate });
+      }
     }
   }, [education?.startDate]);
 
@@ -1168,8 +1168,9 @@ const Profile = (props: ProfileProps): JSX.Element => {
       errorState.grade === false &&
       errorState.eduCity === false &&
       errorState.eduState === false &&
-      errorState.eduCounty === false &&
+      errorState.eduCountry === false &&
       errorState.eduPincode === false &&
+      errorState.eduPincodeLength === false &&
       educationDetails?.usersQualification[0].grade !== '' &&
       educationDetails?.usersQualification[0].standard !== ' ' &&
       educationDetails?.usersQualification[0].instituteName !== ''
@@ -1197,64 +1198,66 @@ const Profile = (props: ProfileProps): JSX.Element => {
   };
 
   const setInstituteName = (val: string) => {
-    if (regexForCheckingSpecialCharacter.test(val)) {
+    if (val?.length <= 50) {
+      const regex = /\d/;
       if (!containsHtml(val)) {
-        if (val === '') {
-          setErrorState({ ...errorState, instituteNameNumber: false, instituteName: true });
-          setEducation({ ...education, instituteName: val });
-        } else if (val !== '' && containsOnlySpaces(val) && checkNumber(val) === false) {
-          setErrorState({ ...errorState, instituteNameNumber: false, instituteName: false });
-          setEducation({ ...education, instituteName: val });
-        } else if (!containsOnlySpaces(val)) {
-          setErrorState({ ...errorState, instituteNameNumber: false, instituteName: true });
-          setEducation({ ...education, instituteName: val });
-        } else if (checkNumber(val)) {
-          setErrorState({ ...errorState, instituteName: false, instituteNameNumber: true });
-          setEducation({ ...education, instituteName: val });
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, instituteName: true });
+                setEducation({ ...education, instituteName: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, instituteName: false });
+                setEducation({ ...education, instituteName: finalValue });
+              }
+            }
+          }
         }
       }
     }
   };
 
   const setCityOfEducation = (val: string) => {
-    if (regexForCheckingSpecialCharacter.test(val)) {
+    if (val?.length <= 50) {
+      const regex = /\d/;
       if (!containsHtml(val)) {
-        if (val === '') {
-          setErrorState({ ...errorState, eduCityNumber: false, eduCity: true });
-          setEducation({ ...education, city: val });
-        } else if (val !== '' && containsOnlySpaces(val) && checkNumber(val) === false) {
-          setErrorState({ ...errorState, eduCityNumber: false, eduCity: false });
-          setEducation({ ...education, city: val });
-        } else if (!containsOnlySpaces(val)) {
-          setErrorState({ ...errorState, eduCityNumber: false, eduCity: true });
-          setEducation({ ...education, city: val });
-        } else if (checkNumber(val)) {
-          setErrorState({ ...errorState, eduCity: false, eduCityNumber: true });
-          setEducation({ ...education, city: val });
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, eduCity: true });
+                setEducation({ ...education, city: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, eduCity: false });
+                setEducation({ ...education, city: finalValue });
+              }
+            }
+          }
         }
       }
     }
   };
 
   const setCountryOfEducation = (val: any) => {
-    if (regexForCheckingSpecialCharacter.test(val)) {
+    if (val?.length <= 50) {
+      const regex = /\d/;
       if (!containsHtml(val)) {
-        if (val === '') {
-          console.log('val', val);
-          setErrorState({ ...errorState, eduCountryNumber: false, eduCountry: true });
-          setEducation({ ...education, country: val });
-        } else if (val !== '' && containsOnlySpaces(val) && checkNumber(val) === false) {
-          console.log('val0', val);
-          setErrorState({ ...errorState, eduCountryNumber: false, eduCountry: false });
-          setEducation({ ...education, country: val });
-        } else if (!containsOnlySpaces(val)) {
-          console.log('val1', val);
-          setErrorState({ ...errorState, eduCountryNumber: false, eduCountry: true });
-          setEducation({ ...education, country: val });
-        } else if (checkNumber(val)) {
-          console.log('val2', val);
-          setErrorState({ ...errorState, eduCountry: false, eduCountryNumber: true });
-          setEducation({ ...education, country: val });
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, eduCountry: true });
+                setEducation({ ...education, country: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, eduCountry: false });
+                setEducation({ ...education, country: finalValue });
+              }
+            }
+          }
         }
       }
     }
@@ -1274,7 +1277,10 @@ const Profile = (props: ProfileProps): JSX.Element => {
     }
   };
   const setPercentage = (val: number) => {
-    setEducation({ ...education, percentage: val });
+    const numberString = val.toString();
+    if (numberString?.length <= 3) {
+      setEducation({ ...education, percentage: val });
+    }
   };
   const setPincode = (val: string) => {
     if (val?.length <= 6) {
@@ -1294,7 +1300,18 @@ const Profile = (props: ProfileProps): JSX.Element => {
     }
   };
   const setRemarks = (val: string) => {
-    setEducation({ ...education, remarks: val });
+    if (val?.length <= 50) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              setEducation({ ...education, remarks: val });
+            }
+          }
+        }
+      }
+    }
   };
   const setStandard = (val: string) => {
     if (val === '') {
@@ -1310,24 +1327,22 @@ const Profile = (props: ProfileProps): JSX.Element => {
     setEducation({ ...education, startDate: val });
   };
   const setStateOfEducation = (val: string) => {
-    if (regexForCheckingSpecialCharacter.test(val)) {
+    if (val?.length <= 50) {
+      const regex = /\d/;
       if (!containsHtml(val)) {
-        if (val === '') {
-          console.log('val', val);
-          setErrorState({ ...errorState, eduStateNumber: false, eduState: true });
-          setEducation({ ...education, state: val });
-        } else if (val !== '' && containsOnlySpaces(val) && checkNumber(val) === false) {
-          console.log('val0', val);
-          setErrorState({ ...errorState, eduStateNumber: false, eduState: false });
-          setEducation({ ...education, state: val });
-        } else if (!containsOnlySpaces(val)) {
-          console.log('val1', val);
-          setErrorState({ ...errorState, eduStateNumber: false, eduState: true });
-          setEducation({ ...education, state: val });
-        } else if (checkNumber(val)) {
-          console.log('val2', val);
-          setErrorState({ ...errorState, eduState: false, eduStateNumber: true });
-          setEducation({ ...education, state: val });
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, eduState: true });
+                setEducation({ ...education, state: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, eduState: false });
+                setEducation({ ...education, state: finalValue });
+              }
+            }
+          }
         }
       }
     }

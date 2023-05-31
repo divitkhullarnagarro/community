@@ -1,8 +1,9 @@
 import { Button, Form, Modal } from 'react-bootstrap';
 import { Text } from '@sitecore-jss/sitecore-jss-nextjs';
 
-const EductionDetails = (props: any): JSX.Element => (
-  <>
+const EductionDetails = (props: any) => {
+
+ return <>
     <div className="EducationContainer">
       {props.qualifications?.length > 0
         ? props.qualifications?.map((data: any, index: number) => {
@@ -23,7 +24,7 @@ const EductionDetails = (props: any): JSX.Element => (
                   <div className="instituteFields">{data?.remarks}</div>
                 </div>
                 <button
-                  className="itemEditBtn"
+                   className="itemEditBtn"
                   onClick={() => props?.editEducationmData(data?.qid)}
                 >
                   <img
@@ -73,11 +74,6 @@ const EductionDetails = (props: any): JSX.Element => (
             />
           </Form.Group>
           {props.errorState?.instituteName ? <span className="error">Field is required</span> : ' '}
-            {props.errorState?.instituteNameNumber ? (
-              <span className="error">Field cannot contain numbers</span>
-            ) : (
-              ' '
-            )}
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>
               Standard<span className="required">*</span>
@@ -118,6 +114,7 @@ const EductionDetails = (props: any): JSX.Element => (
               placeholder="Percentage"
               autoFocus
               min="0"
+              max="100"
             />
           </Form.Group>
           <span>
@@ -197,11 +194,6 @@ const EductionDetails = (props: any): JSX.Element => (
           </Form.Group>
           <span>
             {props.errorState?.eduCity ? <span className="error">Field is required</span> : ' '}
-            {props.errorState?.eduCityNumber ? (
-              <span className="error">Field cannot contain numbers</span>
-            ) : (
-              ' '
-            )}
           </span>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>
@@ -218,11 +210,6 @@ const EductionDetails = (props: any): JSX.Element => (
           </Form.Group>
           <span>
             {props.errorState?.eduState ? <span className="error">Field is required</span> : ' '}
-            {props.errorState?.eduStateNumber ? (
-              <span className="error">Field cannot contain numbers</span>
-            ) : (
-              ' '
-            )}
           </span>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>
@@ -239,11 +226,6 @@ const EductionDetails = (props: any): JSX.Element => (
           </Form.Group>
           <span>
             {props.errorState?.eduCountry ? <span className="error">Field is required</span> : ' '}
-            {props.errorState?.eduCountryNumber ? (
-              <span className="error">Field cannot contain numbers</span>
-            ) : (
-              ' '
-            )}
           </span>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>
@@ -253,18 +235,21 @@ const EductionDetails = (props: any): JSX.Element => (
             <Form.Control
               onChange={(e) => props.setPincode(e.target.value)}
               value={props.specificPlaceOfWork?.pincode}
-              type="number"
+              type="text"
               placeholder="Pincode"
               autoFocus
-              min="0"
-              maxLength={6}
+              min="0" 
             />
           </Form.Group>
           <span>
             {props.errorState?.eduPincode ? <span className="error">Field is required</span> : ' '}
           </span>
           <span>
-            {props.errorState?.eduPincodeLength ? <span className="error">Pincode must be of length 6</span> : ' '}
+            {props.errorState?.eduPincodeLength ? (
+              <span className="error">Pincode must be of length 6</span>
+            ) : (
+              ' '
+            )}
           </span>
         </Form>
       </Modal.Body>
@@ -277,7 +262,7 @@ const EductionDetails = (props: any): JSX.Element => (
         </Button>
       </Modal.Footer>
     </Modal>
-  </>
-);
+  </>;
+};
 
 export default EductionDetails;
