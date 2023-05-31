@@ -1,8 +1,9 @@
 import { Button, Form, Modal } from 'react-bootstrap';
 import { Text } from '@sitecore-jss/sitecore-jss-nextjs';
 
-const EductionDetails = (props: any): JSX.Element => (
-  <>
+const EductionDetails = (props: any) => {
+
+ return <>
     <div className="EducationContainer">
       {props.qualifications?.length > 0
         ? props.qualifications?.map((data: any, index: number) => {
@@ -23,7 +24,7 @@ const EductionDetails = (props: any): JSX.Element => (
                   <div className="instituteFields">{data?.remarks}</div>
                 </div>
                 <button
-                  className="itemEditBtn"
+                   className="itemEditBtn"
                   onClick={() => props?.editEducationmData(data?.qid)}
                 >
                   <img
@@ -72,13 +73,7 @@ const EductionDetails = (props: any): JSX.Element => (
               required
             />
           </Form.Group>
-          <span>
-            {props.errorState?.instituteName ? (
-              <span className="error">Field is required</span>
-            ) : (
-              ' '
-            )}
-          </span>
+          {props.errorState?.instituteName ? <span className="error">Field is required</span> : ' '}
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>
               Standard<span className="required">*</span>
@@ -118,6 +113,8 @@ const EductionDetails = (props: any): JSX.Element => (
               type="number"
               placeholder="Percentage"
               autoFocus
+              min="0"
+              max="100"
             />
           </Form.Group>
           <span>
@@ -179,10 +176,14 @@ const EductionDetails = (props: any): JSX.Element => (
               type="date"
               placeholder="End Date"
               autoFocus
+              min={props?.date?.startDate}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>City</Form.Label>
+            <Form.Label>
+              City
+              <span className="required">*</span>
+            </Form.Label>
             <Form.Control
               onChange={(e) => props.setCityOfEducation(e.target.value)}
               value={props.specificPlaceOfWork?.city}
@@ -191,8 +192,14 @@ const EductionDetails = (props: any): JSX.Element => (
               autoFocus
             />
           </Form.Group>
+          <span>
+            {props.errorState?.eduCity ? <span className="error">Field is required</span> : ' '}
+          </span>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>State</Form.Label>
+            <Form.Label>
+              State
+              <span className="required">*</span>
+            </Form.Label>
             <Form.Control
               onChange={(e) => props.setStateOfEducation(e.target.value)}
               value={props.specificPlaceOfWork?.state}
@@ -201,8 +208,14 @@ const EductionDetails = (props: any): JSX.Element => (
               autoFocus
             />
           </Form.Group>
+          <span>
+            {props.errorState?.eduState ? <span className="error">Field is required</span> : ' '}
+          </span>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Country</Form.Label>
+            <Form.Label>
+              Country
+              <span className="required">*</span>
+            </Form.Label>
             <Form.Control
               onChange={(e) => props.setCountryOfEducation(e.target.value)}
               value={props.specificPlaceOfWork?.country}
@@ -211,16 +224,33 @@ const EductionDetails = (props: any): JSX.Element => (
               autoFocus
             />
           </Form.Group>
+          <span>
+            {props.errorState?.eduCountry ? <span className="error">Field is required</span> : ' '}
+          </span>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Pincode</Form.Label>
+            <Form.Label>
+              Pincode
+              <span className="required">*</span>
+            </Form.Label>
             <Form.Control
               onChange={(e) => props.setPincode(e.target.value)}
               value={props.specificPlaceOfWork?.pincode}
               type="text"
               placeholder="Pincode"
               autoFocus
+              min="0" 
             />
           </Form.Group>
+          <span>
+            {props.errorState?.eduPincode ? <span className="error">Field is required</span> : ' '}
+          </span>
+          <span>
+            {props.errorState?.eduPincodeLength ? (
+              <span className="error">Pincode must be of length 6</span>
+            ) : (
+              ' '
+            )}
+          </span>
         </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -232,7 +262,7 @@ const EductionDetails = (props: any): JSX.Element => (
         </Button>
       </Modal.Footer>
     </Modal>
-  </>
-);
+  </>;
+};
 
 export default EductionDetails;
