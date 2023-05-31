@@ -23,7 +23,7 @@ const UserWorkExperience = (props: any) => {
                   <div className="instituteFields">
                     {work.joiningDate} - {work.joiningYear}
                   </div>
-                  <div className="instituteFields">{work.wid}</div>
+                  {/* <div className="instituteFields">{work.wid}</div> */}
                   <div className="instituteFields">{work.presentlyWorkingHere}</div>
                   <div className="instituteFields">{work.leavingDate}</div>
                   <div className="instituteFields">{work.latitude}</div>
@@ -105,26 +105,28 @@ const UserWorkExperience = (props: any) => {
                 placeholder="Employee ID"
                 autoFocus
               />
-              {props.errorState?.empId ? <span className="error">Field is required</span> : ' '}
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Social Url</Form.Label>
               <Form.Control
                 onChange={(e) => props.setSocialUrl(e.target.value)}
                 value={props.specificPlaceOfWork?.socialUrl}
-                type="text"
                 placeholder="Social Url"
                 autoFocus
+                type="url"
+                pattern="https?://.+"
               />
+              {props.errorState?.urlError ? <span className="error">Url is incorrect</span> : ' '}
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Pincode</Form.Label>
               <Form.Control
                 onChange={(e) => props.setPincodeForWork(e.target.value)}
                 value={props.specificPlaceOfWork?.pincode}
-                type="number"
+                type="text"
                 placeholder="pincode"
                 autoFocus
+                maxLength={6}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -157,11 +159,13 @@ const UserWorkExperience = (props: any) => {
                 autoFocus
               />
             </Form.Group>
+            {console.log('placeOfPractice', props.specificPlaceOfWork)}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Still Working here</Form.Label>
               <Form.Check
                 onChange={(e) => props.setStillWorkingHere(e.target.value)}
-                // value={props.specificPlaceOfWork?.orgName}
+                checked={props.specificPlaceOfWork?.presentlyWorkingHere}
+                // value={props.specificPlaceOfWork?.presentlyWorkingHere}
                 ref={props.checkboxRef}
                 placeholder="Still Working here"
               />
@@ -177,16 +181,6 @@ const UserWorkExperience = (props: any) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>joining Year</Form.Label>
-              <Form.Control
-                onChange={(e) => props.setJoiningYear(e.target.value)}
-                value={props.specificPlaceOfWork?.joiningYear}
-                type="number"
-                placeholder="joining year"
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Leaving Date</Form.Label>
               <Form.Control
                 onChange={(e) => props.setLeavingDate(e.target.value)}
@@ -194,6 +188,8 @@ const UserWorkExperience = (props: any) => {
                 type="date"
                 placeholder="Leaving Date"
                 autoFocus
+                min={props?.placeOfPracticeState?.joiningDate}
+                disabled={props.specificPlaceOfWork?.presentlyWorkingHere}
               />
             </Form.Group>
           </Form>

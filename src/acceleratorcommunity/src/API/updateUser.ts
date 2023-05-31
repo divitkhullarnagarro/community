@@ -20,7 +20,7 @@ const updateUuserCall = async (
       return response;
     })
     .catch((error: any) => {
-      console.error(error);
+      return error
     });
   return response;
 };
