@@ -3312,7 +3312,10 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                                 mention={{
                                   separator: ' ',
                                   trigger: '@',
-                                  suggestions: mentionUserData,
+                                  suggestions:
+                                    mentionUserData && mentionUserData.length > 0
+                                      ? mentionUserData
+                                      : [],
                                 }}
                                 hashtag={{}}
                               />

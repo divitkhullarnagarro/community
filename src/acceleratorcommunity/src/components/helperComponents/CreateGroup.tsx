@@ -48,7 +48,7 @@ function CreateGroup({
 
   const handleNameChange = (value: string) => {
     const updatedValue = spaceRemover(value);
-    if (updatedValue.length < 50) {
+    if (updatedValue.length < 40) {
       setNameValue(updatedValue);
     }
   };
@@ -128,16 +128,17 @@ function CreateGroup({
     });
     if (res?.success) {
       setmembersSuggestionsList(res.data);
-    } else {
-      setToastError(true);
-      setToastMessage(
-        res?.data?.errorMessages?.[0]
-          ? res?.data?.errorMessages?.[0]
-          : 'Something Went Wrong. Please Try Again'
-      );
-
-      setShowNofitication(true);
     }
+    //  else {
+    //   setToastError(true);
+    //   setToastMessage(
+    //     res?.data?.errorMessages?.[0]
+    //       ? res?.data?.errorMessages?.[0]
+    //       : 'Something Went Wrong. Please Try Again'
+    //   );
+
+    //   setShowNofitication(true);
+    // }
   };
 
   const createGroupSubmit = async (e: any) => {

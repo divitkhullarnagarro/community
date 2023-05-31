@@ -405,6 +405,26 @@
   background-color: #242526 !important;
 }
 
+.fullPageNoPeopleSuggestionListHeader {
+  font-size: 20px;
+  font-weight: bold;
+  color: #283895;
+  width: 100%;
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.widgetViewNoPeopleSuggestionListHeader {
+  font-size: 0.8125rem;
+  font-weight: bold;
+  color: #283895;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 @media only screen and (max-width: 1500px) {
   .cardItem {
@@ -437,7 +457,7 @@
     max-height: 30vh;
     overflow: auto;
   }
-  
+
   .cardItem {
     flex-basis: 100%;
   }

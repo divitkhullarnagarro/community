@@ -194,6 +194,21 @@ export const getFilteredEvents = (allEventsList: any) => {
   return mapped;
 };
 
+export const checkNumber = (value: any) => {
+  if (/\d/.test(value)) {
+    return true;
+  }
+  return false
+}
+
+export const containsHtml = (string: any) => {
+  var sanitizedQuery = string.replace(/<[^>]+>/g, '');
+  if (sanitizedQuery !== string) {
+    // console.log('contains html');
+    return true;
+  }
+  return false;
+};
 export const spaceRemover = (value: string) => {
   let temp = '';
   if (value.trim().length > 0) {

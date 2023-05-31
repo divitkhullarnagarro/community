@@ -69,6 +69,11 @@ const ContactDetails = (props: any): JSX.Element => {
                   autoFocus
                 />
               </Form.Group>
+              {props.errorState?.alternateEmail ? (
+                <span className="error">email and alternate email must be different</span>
+              ) : (
+                ' '
+              )}
             </Form>
           </Modal.Body>
           <Modal.Footer>
@@ -83,7 +88,7 @@ const ContactDetails = (props: any): JSX.Element => {
 
         <Modal show={props.openLocationModalState} onHide={props.closeLocationMoadl}>
           <Modal.Header closeButton>
-            <Modal.Title>Contact Details</Modal.Title>
+            <Modal.Title>Address Details</Modal.Title>
           </Modal.Header>
           <Modal.Body className="modalForProfile">
             <Form>
@@ -141,7 +146,7 @@ const ContactDetails = (props: any): JSX.Element => {
               </Form.Group>{' '}
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>
-                  ResidingFrom<span className="required">*</span>
+                  Residing From<span className="required">*</span>
                 </Form.Label>
                 <Form.Control
                   onChange={(e) => props.setResidingFrom(e.target.value)}
@@ -161,9 +166,10 @@ const ContactDetails = (props: any): JSX.Element => {
                 <Form.Control
                   onChange={(e) => props.setLeftAt(e.target.value)}
                   value={props.userLocationState?.leftAt}
-                  type="string"
+                  type="date"
                   placeholder="left At"
                   autoFocus
+                  min={props?.userLocationState?.residingFrom}
                 />
               </Form.Group>
               <span></span>
@@ -250,7 +256,6 @@ const ContactDetails = (props: any): JSX.Element => {
                   &nbsp;:
                 </span>
                 <div className="fieldValue">
-                  {/* {console.log('+++++++++++++++++++++', props.userResidenceInfo)} */}
                   {props.userResidenceInfo?.map((data: any) => {
                     return (
                       <>
@@ -270,7 +275,7 @@ const ContactDetails = (props: any): JSX.Element => {
                     );
                   })}
                 </div>
-                <Button className="profileBtn" onClick={props.openLocationMoadl}>
+                <Button className="profileBtn" onClick={() => props.locationData()}>
                   <img
                     src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
                     alt="edit"
