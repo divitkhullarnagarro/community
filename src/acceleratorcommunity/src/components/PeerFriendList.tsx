@@ -12,6 +12,7 @@ import styles from '../assets/peerfriendlist.module.css';
 import darkModeCss from '../assets/darkTheme.module.css';
 import { Field, NextImage, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 import { viewProfileLinkUrl } from 'assets/helpers/constants';
+import Image from 'next/image';
 
 type PeerFriendListProps = ComponentProps & {
   fields: {
@@ -208,7 +209,7 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
       <Card className={`${styles.cardItem} ${darkMode ? darkModeCss.grey_3 : ''}`}>
         <div className={styles.imageContainer}>
           <Link href={`${viewProfileLinkUrl}${item?.objectId}`} passHref={true}>
-            <img
+            <Image
               className={styles.imgProfile}
               contentEditable={true}
               src={item.profilePictureUrl ? item.profilePictureUrl : Profile.src}
@@ -216,6 +217,8 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
               onError={(e) => {
                 returnUserImage(e);
               }}
+              width={250}
+              height={250}
             />
           </Link>
         </div>
@@ -233,7 +236,7 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
     return (
       <Card key={index} className={styles.cardItem}>
         <div className={styles.imageContainer}>
-          <Skeleton height={260} />
+          <Skeleton height={200} />
         </div>
         <Card.Body>
           <Card.Title className={styles.cardTitle}>

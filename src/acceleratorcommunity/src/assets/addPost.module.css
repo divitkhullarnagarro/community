@@ -306,6 +306,9 @@
 .darkEditorClass :global(.rdw-suggestion-dropdown) {
   color: black !important;
 }
+.darkEditorClass :global(.rdw-mention-link) {
+  background-color: #323436 !important;
+}
 
 @media only screen and (max-width: 768px) {
   .mainContainer {
