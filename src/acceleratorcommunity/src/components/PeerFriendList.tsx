@@ -188,7 +188,9 @@ const PeerFriendList = (props: PeerFriendListProps): JSX.Element => {
                 })
               )}
             </div>
-            {peerFriendList === undefined || numItems >= peerFriendList?.length ? null : (
+            {peerFriendList === undefined ||
+            peerFriendList === null ||
+            numItems >= peerFriendList?.length ? null : (
               <Button className={styles.seeMoreBtn} onClick={() => setNumItems(numItems + 6)}>
                 <div>
                   <span className={styles.seeMoreBtn}>See more</span>
