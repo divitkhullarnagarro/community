@@ -28,6 +28,7 @@ export const joinGroupUrl = `${javaHost}/graph-service/api/v1/graph/group/`;
 export const leaveGroupUrl = `${javaHost}/graph-service/api/v1/graph/group/`;
 export const updateGroupUrl = `${javaHost}/graph-service/api/v1/graph/group/`;
 export const createGroupUrl = `${javaHost}/graph-service/api/v1/graph/group`;
+export const updateUser = `${javaHost}/user-service/api/v1/users/`
 
 export const Algorithm = 'aes-256-cbc';
 export const Key = [

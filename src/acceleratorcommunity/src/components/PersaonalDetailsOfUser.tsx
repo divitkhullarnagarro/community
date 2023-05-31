@@ -98,6 +98,7 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                   type="number"
                   placeholder="Experience"
                   autoFocus
+                  min="0"
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -162,16 +163,6 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Age</Form.Label>
-                <Form.Control
-                  onChange={(e) => props.setAgeValue(e.target.value)}
-                  value={props.personalInfo?.age}
-                  type="number"
-                  placeholder="age"
-                  autoFocus
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>website Url</Form.Label>
                 <Form.Control
                   onChange={(e) => props.setWebSiteUrl(e.target.value)}
@@ -180,6 +171,11 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                   placeholder="websteUrl"
                   autoFocus
                 />
+                {props.errorState?.websiteUrlError ? (
+                  <span className="error">Url is incorrect</span>
+                ) : (
+                  ' '
+                )}
               </Form.Group>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>
@@ -200,7 +196,6 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                   <option value="FEMALE">FEMALE</option>
                   <option value="OTHERS">OTHERS</option>
                 </Form.Control>
-                {/* {console.log('+++++++++++++++++++++++++++', props.errorState?.gender)} */}
                 {props.errorState?.gender ? <span className="error">Field is required</span> : ' '}
                 {props.personalInfo?.gender === undefined ? (
                   <span className="error">Field is required</span>
@@ -288,6 +283,8 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                   onChange={(e) => props.handleAddHobby(e.target.value)}
                   type="text"
                   placeholder="Add a hobby"
+                  value={props.editUserData?.hobby}
+
                 />
                 <button className="addLanguageBtn" onClick={props.addHobby}>
                   Add a Hobby
@@ -339,9 +336,9 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                 <Form.Label>Intrest</Form.Label>
                 <Form.Control
                   onChange={(e) => props.handleIntrest(e.target.value)}
-                  value={props.editUserData?.intrest}
+                  value={props.editUserData?.interests}
                   type="text"
-                  placeholder="All intrest should be comma seperated"
+                  placeholder="Intrest"
                 />
               </Form.Group>
             </Form>

@@ -2,9 +2,7 @@ import { Field, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 import { useState, useContext, useEffect } from 'react';
 import WebContext from '../Context/WebContext';
 import { useRouter } from 'next/router';
-import getUserCall from 'src/API/getUserCall';
 import updateUuserCall from 'src/API/updateUser';
-import ToastNotification from './ToastNotification';
 import CameraImg from '../assets/images/camera1.png';
 import PersonalImg from '../assets/images/personalInformation.png';
 import ContactImg from '../assets/images/contactDetails.png';
@@ -31,6 +29,11 @@ import PeerFriendList from './PeerFriendList';
 import BlockedUser from './BlockedUser';
 import ChangePassword from './ChangePassword';
 import { ComponentProps } from 'lib/component-props';
+import AxiosRequest from 'src/API/AxiosRequest';
+import { getUserUrl, updateUser } from '../assets/helpers/constants';
+import { containsHtml } from '../assets/helpers/helperFunctions';
+import GenericNotificationContext from 'src/Context/GenericNotificationContext';
+
 // import { decryptString } from 'assets/helpers/EncryptDecrypt';
 
 type User = {
@@ -80,11 +83,11 @@ type PlaceOfPractice = {
   designation: string | undefined;
   employeeId: string | undefined;
   joiningDate: string | undefined;
-  joiningYear: number | undefined;
+  joiningYear: string | undefined;
   latitude: string | undefined | null;
   leavingDate: string | undefined;
   orgName: string | undefined;
-  pincode: number | undefined;
+  pincode: string | undefined;
   presentlyWorkingHere: boolean | undefined;
   socialUrl: string | undefined;
   state: string | undefined;
@@ -234,9 +237,69 @@ type ProfileProps = ComponentProps & {
 };
 
 const Profile = (props: ProfileProps): JSX.Element => {
-  const { userToken, objectId, darkMode } = {
+  const { userToken, objectId, darkMode, setUserObject, userObject } = {
     ...useContext(WebContext),
   };
+
+  const { setMessage, setShowNotification, setError, setSuccess } = {
+    ...useContext(GenericNotificationContext),
+  };
+
+  const containsOnlySpaces = (string: any) => {
+    if (string.trim() !== '' || string === '') {
+      setPlaceOfPractice({ ...placeOfPractice, orgName: string });
+    }
+    if (string.length > 0) {
+      const value = string.replace(/\s/g, ''); // Remove whitespace using regex
+      console.log('string.length', value);
+      setPlaceOfPractice({ ...placeOfPractice, orgName: value });
+    }
+    return string?.trim()?.length < 0 || string?.trim()?.length > 0;
+  };
+
+  const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
+  const regexForCheckingSpecialCharacter = /^[a-zA-Z0-9 ]*$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const [errorState, setErrorState] = useState<any>({
+    firstName: false,
+    lastName: false,
+    profession: false,
+    yearsOfExperience: false,
+    designation: false,
+    domain: false,
+    summary: false,
+    role: false,
+    email: false,
+    phoneNumber: false,
+    alternateEmail: false,
+    dob: false,
+    speciality: false,
+    middleName: false,
+    gender: false,
+    instituteName: false,
+    instituteNameNumber: false,
+    orgName: false,
+    residingFrom: false,
+    phoneNoLength: false,
+    city: false,
+    address: false,
+    state: false,
+    country: false,
+    grade: false,
+    standard: false,
+    empId: false,
+    eduCity: false,
+    eduState: false,
+    eduCountry: false,
+    eduPincode: false,
+    eduPincodeLength: false,
+    urlError: false,
+    websiteUrlError: false,
+  });
+
+  // =================================================================================== Personal Information =======================================================================================
+
   const [personalInfoDetails, setPersonalInfoDetails] = useState<any>();
   const router = useRouter();
   const [personalInfo, setPersonalInfo] = useState<personalDetails>({
@@ -255,7 +318,307 @@ const Profile = (props: ProfileProps): JSX.Element => {
     dob: '',
   });
 
-  // ===================================================================================Location=======================================================================================
+  const handleShow1 = () => {
+    setShowForm1(true);
+  };
+
+  const submitPersonalInfoDetails = () => {
+    if (
+      errorState?.firstName === false &&
+      errorState?.lastName === false &&
+      errorState.gender === false &&
+      personalInfo?.gender !== undefined &&
+      errorState?.speciality === false &&
+      errorState?.role === false
+    ) {
+      AxiosRequest({
+        data: personalInfoDetails,
+        url: `${updateUser}${objectId}`,
+        method: 'PUT',
+      }).then((response: any) => {
+        if (response?.success === true) {
+          getUser();
+          setStateValue(true);
+          setMessage('Data updated successfully');
+          setSuccess(true);
+          handleClose1();
+        } else if (response?.data?.success === false) {
+          setError(true);
+          if (
+            response?.data?.errorMessages[0] === null ||
+            response?.data?.errorMessages[0] === ' ' ||
+            response?.data?.errorMessages[0] === undefined
+          ) {
+            setMessage('Something went wrong');
+          } else {
+            setMessage(response?.data?.errorMessages[0]);
+          }
+        }
+
+        setShowNotification(true);
+      });
+    }
+  };
+  useEffect(() => {
+    if (personalInfoDetails !== undefined) {
+      submitPersonalInfoDetails();
+    }
+  }, [personalInfoDetails]);
+  const submitPersonalDetails = () => {
+    setPersonalInfoDetails({ ...personalInfo });
+  };
+
+  function setDobValue(val: any) {
+    if (val === '') {
+      setErrorState({ ...errorState, dob: true });
+      setPersonalInfo({ ...personalInfo, dob: val });
+    } else {
+      setErrorState({ ...errorState, dob: false });
+      setPersonalInfo({ ...personalInfo, dob: val });
+    }
+  }
+
+  function setGender(val: any) {
+    if (val === '') {
+      setErrorState({ ...errorState, gender: true });
+      setPersonalInfo({ ...personalInfo, gender: val });
+    } else if (val === undefined) {
+      setErrorState({ ...errorState, gender: true });
+      setPersonalInfo({ ...personalInfo, gender: val });
+    } else {
+      setErrorState({ ...errorState, gender: false });
+      setPersonalInfo({ ...personalInfo, gender: val });
+    }
+  }
+
+  function setProfessionValue(val: any) {
+    if (val?.length <= 30) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              const finalValue = val.trimStart();
+              setPersonalInfo({ ...personalInfo, areaOfExpertise: finalValue });
+            }
+          }
+        }
+      }
+    }
+  }
+  function setExperienceValue(val: any) {
+    setPersonalInfo({ ...personalInfo, yearsOfExperience: val });
+  }
+  function setDesignationValue(val: any) {
+    if (val?.length <= 50) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              const finalValue = val.trimStart();
+              setPersonalInfo({ ...personalInfo, designation: finalValue });
+            }
+          }
+        }
+      }
+    }
+  }
+  function setRoleValue(val: any) {
+    if (val?.length <= 30) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, role: true });
+                setPersonalInfo({ ...personalInfo, role: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, role: false });
+                setPersonalInfo({ ...personalInfo, role: finalValue });
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  function setDomainValue(val: any) {
+    if (val?.length <= 30) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                // setErrorState({ ...errorState, firstName: true });
+                setPersonalInfo({ ...personalInfo, domain: val });
+              } else {
+                const finalValue = val.trimStart();
+                // setErrorState({ ...errorState, finalValue: false });
+                setPersonalInfo({ ...personalInfo, domain: finalValue });
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function setSummaryValue(val: any) {
+    if (val.trim() !== '' || val === '') {
+      if (val?.length > 200) {
+        setErrorState({ ...errorState, summary: true });
+        setEditUserData({ ...editUserData, summary: val });
+      } else {
+        const finalValue = val.trimStart();
+
+        setErrorState({ ...errorState, summary: false });
+        setEditUserData({ ...editUserData, summary: finalValue });
+      }
+    }
+  }
+
+  function setFirstName(val: any) {
+    if (val?.length <= 10) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, firstName: true });
+                setPersonalInfo({ ...personalInfo, firstName: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, firstName: false });
+                setPersonalInfo({ ...personalInfo, firstName: finalValue });
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  function setMiddleName(val: any) {
+    if (val?.length <= 10) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, middleName: true });
+                setPersonalInfo({ ...personalInfo, middleName: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, middleName: false });
+                setPersonalInfo({ ...personalInfo, middleName: finalValue });
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function setLastName(val: any) {
+    if (val?.length <= 10) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, lastName: true });
+                setPersonalInfo({ ...personalInfo, lastName: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, lastName: false });
+                setPersonalInfo({ ...personalInfo, lastName: finalValue });
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function setSpecialityValue(val: any) {
+    if (val?.length <= 30) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, speciality: true });
+                setPersonalInfo({ ...personalInfo, speciality: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, speciality: false });
+                setPersonalInfo({ ...personalInfo, speciality: finalValue });
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function setWebSiteUrl(val: any) {
+    if (urlRegex.test(val)) {
+      setPersonalInfo({ ...personalInfo, websiteUrl: val });
+      setErrorState({ ...errorState, websiteUrlError: false });
+    } else {
+      setPersonalInfo({ ...personalInfo, websiteUrl: val });
+      setErrorState({ ...errorState, websiteUrlError: true });
+    }
+  }
+
+  const handleAddLanguage = (val: string) => {
+    const regex = /\d/;
+    if (!containsHtml(val)) {
+      if (val.trim() !== '' || val === '') {
+        if (regexForCheckingSpecialCharacter.test(val)) {
+          if (!regex.test(val)) {
+            const finalValue = val.trimStart();
+            setEditUserData({ ...editUserData, language: finalValue });
+          }
+        }
+      }
+    }
+  };
+  const handleAddHobby = (val: string) => {
+    const regex = /\d/;
+    if (!containsHtml(val)) {
+      if (val.trim() !== '' || val === '') {
+        if (regexForCheckingSpecialCharacter.test(val)) {
+          if (!regex.test(val)) {
+            const finalValue = val.trimStart();
+            setEditUserData({ ...editUserData, hobby: finalValue });
+          }
+        }
+      }
+    }
+  };
+  const handleIntrest = (val: string) => {
+    const regex = /\d/;
+    if (!containsHtml(val)) {
+      if (val.trim() !== '' || val === '') {
+        if (regexForCheckingSpecialCharacter.test(val)) {
+          if (!regex.test(val)) {
+            const finalValue = val.trimStart();
+            setEditUserData({ ...editUserData, interests: finalValue });
+          }
+        }
+      }
+    }
+  };
+
+  // =================================================================================== Location =======================================================================================
 
   type userLocationType = {
     city: string | undefined;
@@ -278,8 +641,8 @@ const Profile = (props: ProfileProps): JSX.Element => {
     residingFrom: '',
     leftAt: null,
   });
-  const [showImage, setShowImage] = useState(true);
   const [locationObj, setLocationObj] = useState<userLocationObj>();
+  const [showImage, setShowImage] = useState(true);
 
   const [openLocationModalState, setOpenLocationModalState] = useState(false);
   const checkboxRef = React.useRef<any>(null);
@@ -292,24 +655,50 @@ const Profile = (props: ProfileProps): JSX.Element => {
         errorState?.country === false &&
         errorState?.residingFrom === false
       ) {
-        updateUuserCall(userToken, objectId, locationObj).then((response) => {
+        AxiosRequest({
+          data: locationObj,
+          url: `${updateUser}${objectId}`,
+          method: 'PUT',
+        }).then((response: any) => {
           if (response) {
-            if (response?.data?.success) {
+            if (response?.success === true) {
               // setTempUserData(tempArray);
               getUser();
               setStateValue(true);
-              setToastSuccess(true);
-              setToastMessage('Data updated successfully');
-            } else {
-              setToastError(true);
-              setToastMessage('Something went wrong');
+              setSuccess(true);
+              setMessage('Data updated successfully');
+            } else if (response?.success === false) {
+              setError(true);
+              if (
+                response?.data?.errorMessages[0] === null ||
+                response?.data?.errorMessages[0] === ' ' ||
+                response?.data?.errorMessages[0] === undefined
+              ) {
+                setMessage('Something went wrong');
+              } else {
+                setMessage(response?.data?.errorMessages[0]);
+              }
             }
-            setShowNofitication(true);
+            setShowNotification(true);
           }
         });
       }
     }
   }, [locationObj]);
+  useEffect(() => {
+    if (
+      userLocationState?.residingFrom !== null &&
+      userLocationState?.residingFrom !== undefined &&
+      userLocationState?.residingFrom !== '' &&
+      userLocationState?.leftAt !== null &&
+      userLocationState?.leftAt !== undefined &&
+      userLocationState?.leftAt != ''
+    ) {
+      if (new Date(userLocationState?.leftAt) < new Date(userLocationState?.residingFrom)) {
+        setUserLocationState({ ...userLocationState, leftAt: userLocationState?.residingFrom });
+      }
+    }
+  }, [userLocationState?.residingFrom]);
   const openLocationMoadl = () => {
     setOpenLocationModalState(true);
   };
@@ -317,30 +706,66 @@ const Profile = (props: ProfileProps): JSX.Element => {
     setOpenLocationModalState(false);
   };
   const setCountry = (val: any) => {
-    if (val === '') {
-      setErrorState({ ...errorState, country: true });
-      setUserLocationState({ ...userLocationState, country: val });
-    } else {
-      setErrorState({ ...errorState, country: false });
-      setUserLocationState({ ...userLocationState, country: val });
+    if (val?.length <= 50) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, country: true });
+                setUserLocationState({ ...userLocationState, country: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, country: false });
+                setUserLocationState({ ...userLocationState, country: finalValue });
+              }
+            }
+          }
+        }
+      }
     }
   };
   const setAddress = (val: any) => {
-    if (val === '') {
-      setErrorState({ ...errorState, address: true });
-      setUserLocationState({ ...userLocationState, address: val });
-    } else {
-      setErrorState({ ...errorState, address: false });
-      setUserLocationState({ ...userLocationState, address: val });
+    if (val?.length <= 50) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, address: true });
+                setUserLocationState({ ...userLocationState, address: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, address: false });
+                setUserLocationState({ ...userLocationState, address: finalValue });
+              }
+            }
+          }
+        }
+      }
     }
   };
   const setState = (val: any) => {
-    if (val === '') {
-      setErrorState({ ...errorState, state: true });
-      setUserLocationState({ ...userLocationState, state: val });
-    } else {
-      setErrorState({ ...errorState, state: false });
-      setUserLocationState({ ...userLocationState, state: val });
+    if (val?.length <= 50) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, state: true });
+                setUserLocationState({ ...userLocationState, state: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, state: false });
+                setUserLocationState({ ...userLocationState, state: finalValue });
+              }
+            }
+          }
+        }
+      }
     }
   };
   const setResidingFrom = (val: any) => {
@@ -356,78 +781,65 @@ const Profile = (props: ProfileProps): JSX.Element => {
     setUserLocationState({ ...userLocationState, leftAt: val });
   };
   const setCity = (val: any) => {
-    if (val === '') {
-      setErrorState({ ...errorState, city: true });
-      setUserLocationState({ ...userLocationState, city: val });
-    } else {
-      setErrorState({ ...errorState, city: false });
-      setUserLocationState({ ...userLocationState, city: val });
+    if (val?.length <= 30) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, city: true });
+                setUserLocationState({ ...userLocationState, city: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, city: false });
+                setUserLocationState({ ...userLocationState, city: finalValue });
+              }
+            }
+          }
+        }
+      }
     }
   };
+  function setEmailValue(val: any) {
+    if (val === '') {
+      setErrorState({ ...errorState, email: true });
+      setEditUserData({ ...editUserData, email: val });
+    } else {
+      const finalValue = val.trimStart();
+      setErrorState({ ...errorState, email: false });
+      setEditUserData({ ...editUserData, email: finalValue });
+    }
+  }
+  function setPhoneNoValue(val: any) {
+    if (val === '') {
+      setErrorState({ ...errorState, phoneNumber: true, phoneNoLength: false });
+      setEditUserData({ ...editUserData, phoneNumber: val });
+    } else if (val?.length > 10) {
+      setErrorState({ ...errorState, phoneNumber: false, phoneNoLength: true });
+      setEditUserData({ ...editUserData, phoneNumber: val });
+    } else {
+      setErrorState({ ...errorState, phoneNumber: false, phoneNoLength: false });
+      setEditUserData({ ...editUserData, phoneNumber: val });
+    }
+  }
+  function setAltEmailValue(val: any) {
+    if (emailRegex.test(val)) {
+      setErrorState({ ...errorState, validAltEmail: true });
+    } else {
+      setErrorState({ ...errorState, validAltEmail: false });
+    }
+    if (val === editUserData?.email) {
+      setErrorState({ ...errorState, alternateEmail: true });
+      setEditUserData({ ...editUserData, alternateEmail: val });
+    } else {
+      setErrorState({ ...errorState, alternateEmail: false });
+      setEditUserData({ ...editUserData, alternateEmail: val });
+    }
+  }
   const handleSubmtLocation = (e: any) => {
     e.preventDefault();
     setLocationObj({ userResidenceInfo: userLocationState });
-  };
-
-  // useEffect(() => {
-  //   if (userToken === '' && objectId === '') {
-  //     if (
-  //       typeof localStorage !== 'undefined' &&
-  //       localStorage.getItem('UserToken') != '' &&
-  //       localStorage.getItem('ObjectId') != '' &&
-  //       localStorage.getItem('UserToken') != null
-  //     ) {
-  //       let token = localStorage.getItem('UserToken');
-  //       let userId = localStorage.getItem('ObjectId');
-
-  //       if (token != null && setUserToken != undefined) {
-  //         setUserToken(token);
-  //       }
-  //       if (userId != null && setObjectId != undefined) {
-  //         setObjectId(userId);
-  //       }
-  //     } else router.push('/login');
-  //   }
-  // }, []);
-
-  // isLoggedIn;
-  // setIsLoggedIn;
-  // setUserToken;
-  // userToken;
-  const submitPersonalInfoDetails = () => {
-    // console.log('run2', personalInfoDetails);
-    if (
-      errorState?.firstName === false &&
-      errorState?.lastName === false &&
-      errorState.gender === false &&
-      personalInfo?.gender !== undefined &&
-      errorState?.speciality === false &&
-      errorState?.role === false
-    ) {
-      updateUuserCall(userToken, objectId, personalInfoDetails).then((response) => {
-        if (response) {
-          if (response?.data?.success) {
-            getUser();
-            setStateValue(true);
-            setToastSuccess(true);
-            setToastMessage('Data updated successfully');
-            handleClose1();
-          } else {
-            setToastError(true);
-            setToastMessage('Something went wrong');
-          }
-          setShowNofitication(true);
-        }
-      });
-    }
-  };
-  useEffect(() => {
-    if (personalInfoDetails !== undefined) {
-      submitPersonalInfoDetails();
-    }
-  }, [personalInfoDetails]);
-  const submitPersonalDetails = () => {
-    setPersonalInfoDetails({ ...personalInfo });
   };
 
   const [showEducationModal, setEducationModal] = useState(false);
@@ -446,7 +858,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
     setPlaceOfPractice({ ...data[0] });
     handleOpenWorkModal();
   };
-  // Place of Practice
+  //======================================================================Place of Practice==========================================================================================
 
   const [placeOfPractice, setPlaceOfPractice] = useState<PlaceOfPractice>({
     city: '',
@@ -454,11 +866,11 @@ const Profile = (props: ProfileProps): JSX.Element => {
     designation: '',
     employeeId: '',
     joiningDate: '',
-    joiningYear: 0,
+    joiningYear: '',
     latitude: null,
     leavingDate: '',
     orgName: '',
-    pincode: 0,
+    pincode: '',
     presentlyWorkingHere: false,
     socialUrl: '',
     state: '',
@@ -477,12 +889,44 @@ const Profile = (props: ProfileProps): JSX.Element => {
   const [placeOfPracticeDetails, setPlaceOfPracticeDetails] = useState<arrayOfPlaceOfPratice>();
   useEffect(() => {
     if (placeOfPracticeDetails !== undefined) {
-      // console.log('placeOfPracticeDetails', placeOfPracticeDetails);
       submitWork();
     }
   }, [placeOfPracticeDetails]);
 
+  useEffect(() => {
+    if (
+      placeOfPractice?.joiningDate !== undefined &&
+      placeOfPractice?.joiningDate !== '' &&
+      placeOfPractice?.joiningDate !== null &&
+      placeOfPractice?.leavingDate !== null &&
+      placeOfPractice?.leavingDate !== undefined &&
+      placeOfPractice?.leavingDate !== ''
+    ) {
+      if (new Date(placeOfPractice?.leavingDate) < new Date(placeOfPractice?.joiningDate)) {
+        console.log('hello');
+        setPlaceOfPractice({ ...placeOfPractice, leavingDate: placeOfPractice?.joiningDate });
+      }
+    }
+  }, [placeOfPractice?.joiningDate]);
+  useEffect(() => {
+    if (
+      checkboxRef?.current?.checked !== undefined &&
+      checkboxRef?.current?.checked !== null &&
+      checkboxRef?.current?.checked === true
+    ) {
+      setPlaceOfPractice({ ...placeOfPractice, leavingDate: '' });
+    }
+  }, [checkboxRef?.current?.checked]);
+
   const submitWork = () => {
+    const year = placeOfPractice?.joiningDate?.split('-')[0];
+    if (
+      placeOfPracticeDetails?.userWorkDetails[0]?.joiningYear !== undefined &&
+      placeOfPracticeDetails?.userWorkDetails[0]?.joiningYear !== null
+    ) {
+      placeOfPracticeDetails.userWorkDetails[0].joiningYear = year;
+    }
+
     if (
       errorState?.orgName === false &&
       errorState?.empId === false &&
@@ -496,13 +940,13 @@ const Profile = (props: ProfileProps): JSX.Element => {
             getUser();
             // setTempUserData(tempArray);
             setStateValue(true);
-            setToastSuccess(true);
-            setToastMessage('Data updated successfully');
+            setSuccess(true);
+            setMessage('Data updated successfully');
           } else {
-            setToastError(true);
-            setToastMessage('Something went wrong');
+            setError(true);
+            setMessage('Something went wrong');
           }
-          setShowNofitication(true);
+          setShowNotification(true);
         }
       });
     } else if (
@@ -522,41 +966,132 @@ const Profile = (props: ProfileProps): JSX.Element => {
   };
 
   const setOrgName = (val: string) => {
-    if (val === '') {
-      setErrorState({ ...errorState, orgName: true });
-      setPlaceOfPractice({ ...placeOfPractice, orgName: val });
-    } else {
-      setErrorState({ ...errorState, orgName: false });
-      setPlaceOfPractice({ ...placeOfPractice, orgName: val });
+    if (val?.length <= 50) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, orgName: true });
+                setPlaceOfPractice({ ...placeOfPractice, orgName: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, orgName: false });
+                setPlaceOfPractice({ ...placeOfPractice, orgName: finalValue });
+              }
+            }
+          }
+        }
+      }
     }
   };
 
   const setCityOfWork = (val: string) => {
-    setPlaceOfPractice({ ...placeOfPractice, city: val });
+    if (val?.length <= 30) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, city: true });
+                setPlaceOfPractice({ ...placeOfPractice, city: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, city: false });
+                setPlaceOfPractice({ ...placeOfPractice, city: finalValue });
+              }
+            }
+          }
+        }
+      }
+    }
   };
 
   const setCountryOfWork = (val: string) => {
-    setPlaceOfPractice({ ...placeOfPractice, country: val });
+    if (val?.length <= 30) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, country: true });
+                setPlaceOfPractice({ ...placeOfPractice, country: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, country: false });
+                setPlaceOfPractice({ ...placeOfPractice, country: finalValue });
+              }
+            }
+          }
+        }
+      }
+    }
   };
 
   const setDesignation = (val: string) => {
-    setPlaceOfPractice({ ...placeOfPractice, designation: val });
+    if (val?.length <= 30) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, designation: true });
+                setPlaceOfPractice({ ...placeOfPractice, designation: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, designation: false });
+                setPlaceOfPractice({ ...placeOfPractice, designation: finalValue });
+              }
+            }
+          }
+        }
+      }
+    }
   };
 
   const setStateForWork = (val: string) => {
-    setPlaceOfPractice({ ...placeOfPractice, state: val });
+    if (val?.length <= 50) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                // setErrorState({ ...errorState, designation: true });
+                setPlaceOfPractice({ ...placeOfPractice, state: val });
+              } else {
+                const finalValue = val.trimStart();
+                // setErrorState({ ...errorState, designation: false });
+                setPlaceOfPractice({ ...placeOfPractice, state: finalValue });
+              }
+            }
+          }
+        }
+      }
+    }
   };
-  const setPincodeForWork = (val: number) => {
-    setPlaceOfPractice({ ...placeOfPractice, pincode: val });
+  const setPincodeForWork = (val: string) => {
+    if (regexForCheckingSpecialCharacter.test(val)) {
+      if (val?.length <= 6) {
+        setPlaceOfPractice({ ...placeOfPractice, pincode: val });
+      }
+    }
   };
   const setSocialUrl = (val: string) => {
-    setPlaceOfPractice({ ...placeOfPractice, socialUrl: val });
+    if (urlRegex.test(val) || val === '') {
+      setPlaceOfPractice({ ...placeOfPractice, socialUrl: val });
+      setErrorState({ ...errorState, urlError: false });
+    } else {
+      setPlaceOfPractice({ ...placeOfPractice, socialUrl: val });
+      setErrorState({ ...errorState, urlError: true });
+    }
   };
   const setLeavingDate = (val: string) => {
     setPlaceOfPractice({ ...placeOfPractice, leavingDate: val });
-  };
-  const setJoiningYear = (val: number) => {
-    setPlaceOfPractice({ ...placeOfPractice, joiningYear: val });
   };
   const setJoiningDate = (val: string) => {
     setPlaceOfPractice({ ...placeOfPractice, joiningDate: val });
@@ -568,13 +1103,17 @@ const Profile = (props: ProfileProps): JSX.Element => {
     setPlaceOfPractice({ ...placeOfPractice, presentlyWorkingHere: checkboxRef?.current?.checked });
   };
   const setEmployeeId = (val: string) => {
-    if (val === '') {
-      setErrorState({ ...errorState, empId: true });
-      setPlaceOfPractice({ ...placeOfPractice, employeeId: val });
-    } else {
-      setErrorState({ ...errorState, empId: false });
+    if (val?.length <= 20) {
+      if (regexForCheckingSpecialCharacter.test(val)) {
+        if (val === '') {
+          setErrorState({ ...errorState, empId: true });
+          setPlaceOfPractice({ ...placeOfPractice, employeeId: val });
+        } else {
+          setErrorState({ ...errorState, empId: false });
 
-      setPlaceOfPractice({ ...placeOfPractice, employeeId: val });
+          setPlaceOfPractice({ ...placeOfPractice, employeeId: val });
+        }
+      }
     }
   };
 
@@ -585,11 +1124,11 @@ const Profile = (props: ProfileProps): JSX.Element => {
       designation: '',
       employeeId: '',
       joiningDate: '',
-      joiningYear: 0,
+      joiningYear: '',
       latitude: null,
       leavingDate: '',
       orgName: '',
-      pincode: 0,
+      pincode: '',
       presentlyWorkingHere: false,
       socialUrl: '',
       state: '',
@@ -606,8 +1145,8 @@ const Profile = (props: ProfileProps): JSX.Element => {
   const submitWorkModal = () => {
     setPlaceOfPracticeDetails({ userWorkDetails: [placeOfPractice] });
   };
-  //Education
 
+  // =====================================================================================Education==================================================================================
   const [education, setEducation] = useState<educationDetails>({
     city: '',
     country: '',
@@ -630,12 +1169,31 @@ const Profile = (props: ProfileProps): JSX.Element => {
     }
   }, [educationDetails]);
 
+  useEffect(() => {
+    if (
+      education?.startDate !== '' &&
+      education?.startDate !== null &&
+      education?.startDate !== undefined &&
+      education?.endDate !== '' &&
+      education?.endDate !== null &&
+      education?.endDate !== undefined
+    ) {
+      if (new Date(education?.startDate) > new Date(education?.endDate)) {
+        setEducation({ ...education, endDate: education?.startDate });
+      }
+    }
+  }, [education?.startDate]);
+
   const submitEducation = () => {
-    // console.log('education');
     if (
       errorState.instituteName === false &&
       errorState.standard === false &&
       errorState.grade === false &&
+      errorState.eduCity === false &&
+      errorState.eduState === false &&
+      errorState.eduCountry === false &&
+      errorState.eduPincode === false &&
+      errorState.eduPincodeLength === false &&
       educationDetails?.usersQualification[0].grade !== '' &&
       educationDetails?.usersQualification[0].standard !== ' ' &&
       educationDetails?.usersQualification[0].instituteName !== ''
@@ -644,15 +1202,14 @@ const Profile = (props: ProfileProps): JSX.Element => {
         if (response) {
           if (response?.data?.success) {
             getUser();
-            // setTempUserData(tempArray);
             setStateValue(true);
-            setToastSuccess(true);
-            setToastMessage('Data updated successfully');
+            setSuccess(true);
+            setMessage('Data updated successfully');
           } else {
-            setToastError(true);
-            setToastMessage('Something went wrong');
+            setError(true);
+            setMessage('Something went wrong');
           }
-          setShowNofitication(true);
+          setShowNotification(true);
         }
       });
     }
@@ -664,22 +1221,69 @@ const Profile = (props: ProfileProps): JSX.Element => {
   };
 
   const setInstituteName = (val: string) => {
-    if (val === '') {
-      setErrorState({ ...errorState, instituteName: true });
-      setEducation({ ...education, instituteName: val });
-    } else {
-      setErrorState({ ...errorState, instituteName: false });
-
-      setEducation({ ...education, instituteName: val });
+    if (val?.length <= 50) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, instituteName: true });
+                setEducation({ ...education, instituteName: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, instituteName: false });
+                setEducation({ ...education, instituteName: finalValue });
+              }
+            }
+          }
+        }
+      }
     }
   };
 
   const setCityOfEducation = (val: string) => {
-    setEducation({ ...education, city: val });
+    if (val?.length <= 50) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, eduCity: true });
+                setEducation({ ...education, city: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, eduCity: false });
+                setEducation({ ...education, city: finalValue });
+              }
+            }
+          }
+        }
+      }
+    }
   };
 
-  const setCountryOfEducation = (val: string) => {
-    setEducation({ ...education, country: val });
+  const setCountryOfEducation = (val: any) => {
+    if (val?.length <= 50) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, eduCountry: true });
+                setEducation({ ...education, country: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, eduCountry: false });
+                setEducation({ ...education, country: finalValue });
+              }
+            }
+          }
+        }
+      }
+    }
   };
 
   const setEndDate = (val: string) => {
@@ -696,13 +1300,41 @@ const Profile = (props: ProfileProps): JSX.Element => {
     }
   };
   const setPercentage = (val: number) => {
-    setEducation({ ...education, percentage: val });
+    const numberString = val.toString();
+    if (numberString?.length <= 3) {
+      setEducation({ ...education, percentage: val });
+    }
   };
   const setPincode = (val: string) => {
-    setEducation({ ...education, pincode: val });
+    if (val?.length <= 6) {
+      if (val === '') {
+        setErrorState({ ...errorState, eduPincode: true, eduPincodeLength: false });
+        setEducation({ ...education, pincode: val });
+      } else if (!containsOnlySpaces(val)) {
+        setErrorState({ ...errorState, eduPincodeLength: false, eduPincode: true });
+        setEducation({ ...education, pincode: val });
+      } else if (val?.length < 6) {
+        setErrorState({ ...errorState, eduPincodeLength: true, eduPincode: false });
+        setEducation({ ...education, pincode: val });
+      } else {
+        setErrorState({ ...errorState, eduPincodeLength: false, eduPincode: false });
+        setEducation({ ...education, pincode: val });
+      }
+    }
   };
   const setRemarks = (val: string) => {
-    setEducation({ ...education, remarks: val });
+    if (val?.length <= 50) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              setEducation({ ...education, remarks: val });
+            }
+          }
+        }
+      }
+    }
   };
   const setStandard = (val: string) => {
     if (val === '') {
@@ -718,7 +1350,25 @@ const Profile = (props: ProfileProps): JSX.Element => {
     setEducation({ ...education, startDate: val });
   };
   const setStateOfEducation = (val: string) => {
-    setEducation({ ...education, state: val });
+    if (val?.length <= 50) {
+      const regex = /\d/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setErrorState({ ...errorState, eduState: true });
+                setEducation({ ...education, state: val });
+              } else {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, eduState: false });
+                setEducation({ ...education, state: finalValue });
+              }
+            }
+          }
+        }
+      }
+    }
   };
 
   const [editUserData, setEditUserData] = useState<any>({
@@ -801,35 +1451,6 @@ const Profile = (props: ProfileProps): JSX.Element => {
     userResidenceInfo: {},
   });
 
-  const [errorState, setErrorState] = useState<any>({
-    firstName: false,
-    lastName: false,
-    profession: false,
-    yearsOfExperience: false,
-    designation: false,
-    domain: false,
-    summary: false,
-    role: false,
-    email: false,
-    phoneNumber: false,
-    alternateEmail: false,
-    dob: false,
-    speciality: false,
-    middleName: false,
-    gender: false,
-    instituteName: false,
-    orgName: false,
-    residingFrom: false,
-    phoneNoLength: false,
-    city: false,
-    address: false,
-    state: false,
-    country: false,
-    grade: false,
-    standard: false,
-    empId: false,
-  });
-
   const addEducationDetails = () => {
     setEducation({
       city: '',
@@ -855,8 +1476,22 @@ const Profile = (props: ProfileProps): JSX.Element => {
     });
     setEducation({ ...data[0] });
     handleOpenForEducation();
-    // setEducationDetails({ ...data[0] });
-    // setPlaceOfPracticeDetails({...placeOfPracticeDetails,data})
+    setErrorState({
+      ...errorState,
+      eduCity: false,
+      eduState: false,
+      eduCountry: false,
+      eduCountryNumber: false,
+      eduPincode: false,
+    });
+  };
+
+  const locationData = () => {
+    const data = tempUserData.userResidenceInfo?.filter((data: any) => {
+      return data?.leftAt === null;
+    });
+    setUserLocationState({ ...data[0] });
+    openLocationMoadl();
   };
 
   const queryParamShowTab = router.query?.showTab?.toString();
@@ -871,13 +1506,31 @@ const Profile = (props: ProfileProps): JSX.Element => {
 
   const [showForm3, setShowForm3] = useState(false);
   const [showStateValue, setStateValue] = useState(true);
-  const [showNotification, setShowNofitication] = useState(false);
-  const [toastSuccess, setToastSuccess] = useState(false);
-  const [toastError, setToastError] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string>();
   const [details, setDetails] = useState<any>(queryParamShowTab ?? 'personal');
   const [language, setLanguage] = useState<any>([]);
   const [hobby, setHobby] = useState<any>([]);
+
+  const calculateAge = (dateOfBirth: string): number => {
+    const dob: Date = new Date(dateOfBirth);
+    const now: Date = new Date();
+
+    // Calculate the difference in years
+    let age: number = now.getFullYear() - dob.getFullYear();
+
+    // Check if the current month and day are before the birth month and day
+    if (
+      now.getMonth() < dob.getMonth() ||
+      (now.getMonth() === dob.getMonth() && now.getDate() < dob.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  };
+
+  // const genericRequest = () => {
+
+  // }
 
   const [userInterests, setUserInterests] = useState<any>([]);
 
@@ -899,12 +1552,10 @@ const Profile = (props: ProfileProps): JSX.Element => {
       editUserData.hobby !== ''
     ) {
       setHobby([...hobby, editUserData.hobby]);
-      // setEditUserData({...editUserData,hobby:''})
     }
   };
   const addInterest = (e: any) => {
     e.preventDefault();
-    // console.log('editUserData.interests', editUserData.interests);
     if (
       !userInterests?.includes(editUserData.interests) &&
       editUserData.interests !== undefined &&
@@ -921,21 +1572,19 @@ const Profile = (props: ProfileProps): JSX.Element => {
   const submitForm1 = (e: any) => {
     e.preventDefault();
     if (!errorState.firstName && !errorState.lastName) {
-      // console.log('editUserData', editUserData);
       let tempArray = { ...editUserData };
-      // console.log('tempArray', tempArray);
       updateUuserCall(userToken, objectId, tempArray).then((response) => {
         if (response) {
           if (response?.data?.success) {
             setTempUserData(tempArray);
             setStateValue(true);
-            setToastSuccess(true);
-            setToastMessage('Data updated successfully');
+            setSuccess(true);
+            setMessage('Data updated successfully');
           } else {
-            setToastError(true);
-            setToastMessage('Something went wrong');
+            setError(true);
+            setMessage('Something went wrong');
           }
-          setShowNofitication(true);
+          setShowNotification(true);
         }
       });
       setShowForm1(false);
@@ -945,19 +1594,28 @@ const Profile = (props: ProfileProps): JSX.Element => {
   const submitForm2 = () => {
     if (errorState.summary === false) {
       let tempArray = { ...editUserData };
-      updateUuserCall(userToken, objectId, { summary: tempArray?.summary }).then((response) => {
+      AxiosRequest({
+        data: { summary: tempArray?.summary },
+        url: `${updateUser}${objectId}`,
+        method: 'PUT',
+      }).then((response: any) => {
         if (response) {
-          if (response?.data?.success) {
+          if (response?.success === true) {
             getUser();
-            // setTempUserData(tempArray);
             setStateValue(true);
-            setToastSuccess(true);
-            setToastMessage('Data updated successfully');
-          } else {
-            setToastError(true);
-            setToastMessage('Something went wrong');
+            setSuccess(true);
+          } else if (response?.data?.success === false) {
+            if (
+              response?.data?.errorMessages !== null &&
+              response?.data?.errorMessages !== undefined
+            ) {
+              setMessage(response?.data?.errorMessages[0]);
+            } else {
+              setMessage('Something went wrong');
+            }
+            setError(true);
           }
-          setShowNofitication(true);
+          setShowNotification(true);
         }
       });
       setShowForm2(false);
@@ -966,108 +1624,145 @@ const Profile = (props: ProfileProps): JSX.Element => {
 
   const languageFormData = () => {
     let tempArray = {
-      // ...tempUserData,
       language: language,
     };
 
-    // console.log('languages', tempArray);
-    updateUuserCall(userToken, objectId, tempArray).then((response) => {
+    AxiosRequest({
+      data: tempArray,
+      url: `${updateUser}${objectId}`,
+      method: 'PUT',
+    }).then((response: any) => {
       if (response) {
-        if (response?.data?.success) {
+        if (response?.success) {
           getUser();
-          // setTempUserData(tempArray);
           setStateValue(true);
-          setToastSuccess(true);
-          setToastMessage('Data updated successfully');
+          setSuccess(true);
+          setMessage('Data updated successfully');
           handleCloseLanguageForm();
-        } else {
-          setToastError(true);
-          setToastMessage('Something went wrong');
+        } else if (response?.data?.success === false) {
+          if (
+            response?.data?.errorMessages !== null &&
+            response?.data?.errorMessages !== undefined
+          ) {
+            setMessage(response?.data?.errorMessages[0]);
+          } else {
+            setMessage('Something went wrong');
+          }
+          setError(true);
         }
-        setShowNofitication(true);
+        setShowNotification(true);
       }
     });
-    // setShowForm2(false);
   };
 
   const hobbyFormData = () => {
     let tempArray = {
-      // ...tempUserData,
       hobby: hobby,
     };
-    updateUuserCall(userToken, objectId, tempArray).then((response) => {
+    AxiosRequest({
+      data: tempArray,
+      url: `${updateUser}${objectId}`,
+      method: 'PUT',
+    }).then((response: any) => {
       if (response) {
-        if (response?.data?.success) {
+        if (response?.success) {
           getUser();
-          // setTempUserData(tempArray);
           setStateValue(true);
-          setToastSuccess(true);
-          setToastMessage('Data updated successfully');
+          setSuccess(true);
+          setMessage('Data updated successfully');
           handleCloseFormForHobby();
-        } else {
-          setToastError(true);
-          setToastMessage('Something went wrong');
+        } else if (response?.data?.success === false) {
+          if (
+            response?.data?.errorMessages !== null &&
+            response?.data?.errorMessages !== undefined
+          ) {
+            setMessage(response?.data?.errorMessages[0]);
+          } else {
+            setMessage('Something went wrong');
+          }
+          setError(true);
         }
-        setShowNofitication(true);
+        setShowNotification(true);
       }
     });
-    // setShowForm2(false);
   };
 
   const IntrestFormData = () => {
     let tempArray = {
-      // ...tempUserData,
       interests: userInterests,
     };
 
-    // console.log('languages', tempArray);
-    updateUuserCall(userToken, objectId, tempArray).then((response) => {
+    AxiosRequest({
+      data: tempArray,
+      url: `${updateUser}${objectId}`,
+      method: 'PUT',
+    }).then((response: any) => {
       if (response) {
-        if (response?.data?.success) {
-          // setTempUserData(tempArray);
+        if (response?.success) {
           getUser();
           setStateValue(true);
-          setToastSuccess(true);
-          setToastMessage('Data updated successfully');
-        } else {
-          setToastError(true);
-          setToastMessage('Something went wrong');
+          setSuccess(true);
+          setMessage('Data updated successfully');
+        } else if (response?.data?.success === false) {
+          if (
+            response?.data?.errorMessages !== null &&
+            response?.data?.errorMessages !== undefined
+          ) {
+            setMessage(response?.data?.errorMessages[0]);
+          } else {
+            setMessage('Something went wrong');
+          }
+          setError(true);
         }
-        setShowNofitication(true);
+        setShowNotification(true);
       }
     });
     setIntrestForm(false);
-    // setShowForm2(false);
   };
 
   const submitForm3 = () => {
-    if (!errorState.phoneNumber && !errorState.dob && !errorState.email) {
+    if (editUserData?.email === editUserData?.alternateEmail) {
+      setErrorState({ ...errorState, alternateEmail: true });
+    }
+    if (
+      !errorState.phoneNumber &&
+      !errorState.dob &&
+      !errorState.email &&
+      editUserData?.email !== editUserData?.alternateEmail
+    ) {
       const obj = {
         email: editUserData?.email,
         alternateEmail: editUserData?.alternateEmail,
         phoneNumber: editUserData?.phoneNumber,
       };
-      // let tempArray = { ...editUserData };
-      // console.log('editvalues', tempArray);
-      updateUuserCall(userToken, objectId, obj).then((response) => {
+      AxiosRequest({
+        data: obj,
+        url: `${updateUser}${objectId}`,
+        method: 'PUT',
+      }).then((response: any) => {
         if (response) {
-          if (response?.data?.success) {
+          if (response?.success) {
             getUser();
-            // setTempUserData(tempArray);
             setStateValue(true);
-            setToastSuccess(true);
-            setToastMessage('Data updated successfully');
-          } else {
-            setToastError(true);
-            setToastMessage('Something went wrong');
+            setSuccess(true);
+            setMessage('Data updated successfully');
+          } else if (response?.data?.success === false) {
+            if (
+              response?.data?.errorMessages !== null &&
+              response?.data?.errorMessages !== undefined
+            ) {
+              setMessage(response?.data?.errorMessages[0]);
+            } else {
+              setMessage('Something went wrong');
+            }
+            setError(true);
           }
-          setShowNofitication(true);
+          setShowNotification(true);
         }
       });
       setShowForm3(false);
     }
   };
-  const handleShow1 = () => setShowForm1(true);
 
   const handleCloseForm2 = () => {
     setShowForm2(false);
@@ -1087,17 +1782,6 @@ const Profile = (props: ProfileProps): JSX.Element => {
     setShowForm3(false);
   };
   const handleShowForm3 = () => setShowForm3(true);
-
-  const setAgeValue = (val: any) => {
-    if (val === '') {
-      // setErrorState({ ...errorState, dob: true });
-      setPersonalInfo({ ...personalInfo, age: val });
-    } else {
-      // setErrorState({ ...errorState, dob: false });
-      setPersonalInfo({ ...personalInfo, age: val });
-    }
-  };
-
   const filterHobby = (hob: string) => {
     const data = hobby?.filter((hobb: any) => {
       return hobb !== hob;
@@ -1117,269 +1801,149 @@ const Profile = (props: ProfileProps): JSX.Element => {
     });
     setUserInterests(data);
   };
-  function setPhoneNoValue(val: any) {
-    if (val === '') {
-      setErrorState({ ...errorState, phoneNumber: true, phoneNoLength: false });
-      setEditUserData({ ...editUserData, phoneNumber: val });
-    } else if (val?.length > 10) {
-      setErrorState({ ...errorState, phoneNumber: false, phoneNoLength: true });
-      setEditUserData({ ...editUserData, phoneNumber: val });
-    } else {
-      setErrorState({ ...errorState, phoneNumber: false, phoneNoLength: false });
-      setEditUserData({ ...editUserData, phoneNumber: val });
-    }
-  }
-  function setAltEmailValue(val: any) {
-    if (val === '') {
-      setErrorState({ ...errorState, alternateEmail: true });
-      setEditUserData({ ...editUserData, alternateEmail: val });
-    } else {
-      setErrorState({ ...errorState, alternateEmail: false });
-      setEditUserData({ ...editUserData, alternateEmail: val });
-    }
-  }
 
-  function setDobValue(val: any) {
-    if (val === '') {
-      setErrorState({ ...errorState, dob: true });
-      setPersonalInfo({ ...personalInfo, dob: val });
-    } else {
-      setErrorState({ ...errorState, dob: false });
-      setPersonalInfo({ ...personalInfo, dob: val });
-    }
-  }
-
-  function setGender(val: any) {
-    if (val === '') {
-      setErrorState({ ...errorState, gender: true });
-      setPersonalInfo({ ...personalInfo, gender: val });
-    } else if (val === undefined) {
-      setErrorState({ ...errorState, gender: true });
-      setPersonalInfo({ ...personalInfo, gender: val });
-    } else {
-      setErrorState({ ...errorState, gender: false });
-      setPersonalInfo({ ...personalInfo, gender: val });
-    }
-  }
-
-  function setProfessionValue(val: any) {
-    setPersonalInfo({ ...personalInfo, areaOfExpertise: val });
-  }
-  function setExperienceValue(val: any) {
-    setPersonalInfo({ ...personalInfo, yearsOfExperience: val });
-  }
-  function setDesignationValue(val: any) {
-    setPersonalInfo({ ...personalInfo, designation: val });
-  }
-  function setRoleValue(val: any) {
-    if (val === '') {
-      setErrorState({ ...errorState, role: true });
-      setPersonalInfo({ ...personalInfo, role: val });
-    } else {
-      setErrorState({ ...errorState, role: false });
-      setPersonalInfo({ ...personalInfo, role: val });
-    }
-  }
-  function setDomainValue(val: any) {
-    setPersonalInfo({ ...personalInfo, domain: val });
-  }
-
-  function setSummaryValue(val: any) {
-    if (val?.length > 200) {
-      setErrorState({ ...errorState, summary: true });
-      setEditUserData({ ...editUserData, summary: val });
-    } else {
-      setErrorState({ ...errorState, summary: false });
-      setEditUserData({ ...editUserData, summary: val });
-    }
-  }
-
-  function setFirstName(val: any) {
-    if (val === '') {
-      setErrorState({ ...errorState, firstName: true });
-      setPersonalInfo({ ...personalInfo, firstName: val });
-    } else {
-      setErrorState({ ...errorState, firstName: false });
-      setPersonalInfo({ ...personalInfo, firstName: val });
-    }
-  }
-  function setMiddleName(val: any) {
-    if (val === '') {
-      setErrorState({ ...errorState, middleName: true });
-      setPersonalInfo({ ...personalInfo, middleName: val });
-    } else {
-      setErrorState({ ...errorState, middleName: false });
-      setPersonalInfo({ ...personalInfo, middleName: val });
-    }
-  }
-
-  function setLastName(val: any) {
-    if (val === '') {
-      setErrorState({ ...errorState, lastName: true });
-      setPersonalInfo({ ...personalInfo, lastName: val });
-    } else {
-      setErrorState({ ...errorState, lastName: false });
-      setPersonalInfo({ ...personalInfo, lastName: val });
-    }
-  }
-
-  function setEmailValue(val: any) {
-    if (val === '') {
-      setErrorState({ ...errorState, email: true });
-      setEditUserData({ ...editUserData, email: val });
-    } else {
-      setErrorState({ ...errorState, email: false });
-      setEditUserData({ ...editUserData, email: val });
-    }
-  }
-  function setSpecialityValue(val: any) {
-    if (val === '') {
-      setErrorState({ ...errorState, speciality: true });
-      setPersonalInfo({ ...personalInfo, speciality: val });
-    } else {
-      setErrorState({ ...errorState, speciality: false });
-      setPersonalInfo({ ...personalInfo, speciality: val });
-    }
-  }
-
-  function setWebSiteUrl(val: any) {
-    setPersonalInfo({ ...personalInfo, websiteUrl: val });
-  }
-
-  const handleAddLanguage = (val: string) => {
-    setEditUserData({ ...editUserData, language: val });
-  };
-  const handleAddHobby = (val: string) => {
-    setEditUserData({ ...editUserData, hobby: val });
-  };
-  const handleIntrest = (val: string) => {
-    setEditUserData({ ...editUserData, interests: val });
-  };
-  const resetToastState = () => {
-    setShowNofitication(!showNotification);
-    setToastSuccess(false);
-    setToastError(false);
-  };
   useEffect(() => {
-    if (userToken !== undefined && objectId !== undefined) {
+    if (personalInfo?.dob !== null && personalInfo?.dob !== '' && personalInfo?.dob !== undefined) {
+      setPersonalInfo({ ...personalInfo, age: calculateAge(personalInfo?.dob) });
+    }
+  }, [personalInfo?.dob]);
+
+  useEffect(() => {
+    if (
+      userToken !== undefined &&
+      objectId !== undefined &&
+      userToken !== null &&
+      objectId !== null &&
+      userToken !== '' &&
+      objectId !== ''
+    ) {
       getUser();
     }
   }, [userToken, objectId]);
 
   const getUser = () => {
-    getUserCall(userToken, objectId).then((response: any) => {
-      // console.log(
-      //   'response?.data?.data?.profilePictureUrl',
-      //   response?.data?.data?.profilePictureUrl
-      // );
-      setTempUserData({
-        firstName: response?.data?.data?.firstName,
-        lastName: response?.data?.data?.lastName,
-        profession: response?.data?.data?.profession,
-        yearsOfExperience: response?.data?.data?.yearsOfExperience,
-        designation: response?.data?.data?.designation,
-        domain: response?.data?.data?.domain,
-        summary: response?.data?.data?.summary,
-        role: response?.data?.data?.role,
-        email: response?.data?.data?.email,
-        phoneNumber: response?.data?.data?.phoneNo,
-        alternateEmail: response?.data?.data?.alternateEmail,
-        dob: response?.data?.data?.dob,
-        speciality: response?.data?.data?.speciality,
-        middleName: response?.data?.data?.middleName,
-        country: response?.data?.data?.userResidenceInfo?.country,
-        cityt: response?.data?.data?.userResidenceInfo?.city,
-        websiteOptions: response?.data?.data?.websiteOptions,
-        interests: response?.data?.data?.interests,
-        hobby: response?.data?.data?.hobby,
-        language: response?.data?.data?.language,
-        skills: response?.data?.data?.skills,
-        workDetails: response?.data?.data?.workDetails,
-        school: response?.data?.data?.school,
-        degree: response?.data?.data?.degree,
-        fieldOfStudy: response?.data?.data?.fieldOfStudy,
-        bannerImgUrl: response?.data?.data?.bannerImgUrl,
-        qualifications: response?.data?.data?.qualifications,
-        gender: response?.data?.data?.gender,
-        age: response?.data?.data?.age,
-        profilePictureUrl: response?.data?.data?.profilePictureUrl,
-        userResidenceInfo: response?.data?.data?.userResidenceInfo,
-        placeOfPractice: response?.data?.data?.placeOfPractice,
-        areaOfExpertise: response?.data?.data?.areaOfExpertise,
-        websiteUrl: response?.data?.data?.websiteUrl,
-        Address: response?.data?.data?.userResidenceInfo?.address,
-        State: response?.data?.data?.userResidenceInfo?.state,
-        ResidingFrom: response?.data?.data?.userResidenceInfo?.residingFrom,
-        LeftAt: response?.data?.data?.userResidenceInfo?.leftAt,
-      });
-      setPersonalInfo({
-        firstName: response?.data?.data?.firstName,
-        lastName: response?.data?.data?.lastName,
-        middleName: response?.data?.data?.middleName,
-        areaOfExpertise: response?.data?.data?.areaOfExpertise,
-        yearsOfExperience: response?.data?.data?.yearsOfExperience,
-        designation: response?.data?.data?.designation,
-        role: response?.data?.data?.role,
-        speciality: response?.data?.data?.speciality,
-        domain: response?.data?.data?.domain,
-        age: response?.data?.data?.age,
-        gender: response?.data?.data?.gender,
-        websiteUrl: response?.data?.data?.websiteUrl,
-        dob: response?.data?.data?.dob,
-      });
-      setUserLocationState(response?.data?.data?.userResidenceInfo);
-      if (response?.data?.data?.hobby === undefined) {
-        setHobby([]);
-      } else {
-        setHobby(response?.data?.data?.hobby);
+    AxiosRequest({
+      url: `${getUserUrl}${objectId}`,
+      method: 'GET',
+    }).then((response: any) => {
+      if (response?.success) {
+        setTempUserData({
+          firstName: response?.data?.firstName,
+          lastName: response?.data?.lastName,
+          profession: response?.data?.profession,
+          yearsOfExperience: response?.data?.yearsOfExperience,
+          designation: response?.data?.designation,
+          domain: response?.data?.domain,
+          summary: response?.data?.summary,
+          role: response?.data?.role,
+          email: response?.data?.email,
+          phoneNumber: response?.data?.phoneNo,
+          alternateEmail: response?.data?.alternateEmail,
+          dob: response?.data?.dob,
+          speciality: response?.data?.speciality,
+          middleName: response?.data?.middleName,
+          country: response?.data?.userResidenceInfo?.country,
+          cityt: response?.data?.userResidenceInfo?.city,
+          websiteOptions: response?.data?.websiteOptions,
+          interests: response?.data?.interests,
+          hobby: response?.data?.hobby,
+          language: response?.data?.language,
+          skills: response?.data?.skills,
+          workDetails: response?.data?.workDetails,
+          school: response?.data?.school,
+          degree: response?.data?.degree,
+          fieldOfStudy: response?.data?.fieldOfStudy,
+          bannerImgUrl: response?.data?.bannerImgUrl,
+          qualifications: response?.data?.qualifications,
+          gender: response?.data?.gender,
+          age: response?.data?.age,
+          profilePictureUrl: response?.data?.profilePictureUrl,
+          userResidenceInfo: response?.data?.userResidenceInfo,
+          placeOfPractice: response?.data?.placeOfPractice,
+          areaOfExpertise: response?.data?.areaOfExpertise,
+          websiteUrl: response?.data?.websiteUrl,
+          Address: response?.data?.userResidenceInfo?.address,
+          State: response?.data?.userResidenceInfo?.state,
+          ResidingFrom: response?.data?.userResidenceInfo?.residingFrom,
+          LeftAt: response?.data?.userResidenceInfo?.leftAt,
+        });
+        setPersonalInfo({
+          firstName: response?.data?.firstName,
+          lastName: response?.data?.lastName,
+          middleName: response?.data?.middleName,
+          areaOfExpertise: response?.data?.areaOfExpertise,
+          yearsOfExperience: response?.data?.yearsOfExperience,
+          designation: response?.data?.designation,
+          role: response?.data?.role,
+          speciality: response?.data?.speciality,
+          domain: response?.data?.domain,
+          age: response?.data?.age,
+          gender: response?.data?.gender,
+          websiteUrl: response?.data?.websiteUrl,
+          dob: response?.data?.dob,
+        });
+        setUserLocationState(response?.data?.userResidenceInfo);
+        if (response?.data?.hobby === undefined) {
+          setHobby([]);
+        } else {
+          setHobby(response?.data?.hobby);
+        }
+        if (response?.data?.language === undefined) {
+          setLanguage([]);
+        } else {
+          setLanguage(response?.data?.language);
+        }
+        if (response?.data?.interests === undefined) {
+          setUserInterests([]);
+        } else {
+          setUserInterests(response?.data?.interests);
+        }
+        setEditUserData({
+          firstName: response?.data?.firstName,
+          lastName: response?.data?.lastName,
+          profession: response?.data?.profession,
+          yearsOfExperience: response?.data?.yearsOfExperience,
+          designation: response?.data?.designation,
+          domain: response?.data?.domain,
+          summary: response?.data?.summary,
+          role: response?.data?.role,
+          email: response?.data?.email,
+          phoneNumber: response?.data?.phoneNo,
+          alternateEmail: response?.data?.alternateEmail,
+          dob: response?.data?.dob,
+          speciality: response?.data?.speciality,
+          middleName: response?.data?.middleName,
+          country: response?.data?.userResidenceInfo?.country,
+          cityt: response?.data?.userResidenceInfo?.city,
+          Address: response?.data?.userResidenceInfo?.address,
+          State: response?.data?.userResidenceInfo?.state,
+          ResidingFrom: response?.data?.userResidenceInfo?.residingFrom,
+          LeftAt: response?.data?.userResidenceInfo?.leftAt,
+          websiteOptions: response?.data?.websiteOptions,
+          skills: response?.data?.skills,
+          workDetails: response?.data?.workDetails,
+          school: response?.data?.school,
+          degree: response?.data?.degree,
+          fieldOfStudy: response?.data?.fieldOfStudy,
+          bannerImgUrl: response?.data?.bannerImgUrl,
+          qualifications: response?.data?.qualifications,
+          gender: response?.data?.gender,
+          age: response?.data?.age,
+          profilePictureUrl: response?.profilePictureUrl,
+          userResidenceInfo: response?.data?.userResidenceInfo,
+          placeOfPractice: response?.data?.placeOfPractice,
+          areaOfExpertise: response?.data?.areaOfExpertise,
+          websiteUrl: response?.data?.websiteUrl,
+        });
+      } else if (response?.data?.success === false) {
+        if (response?.data?.errorMessages !== null && response?.data?.errorMessages !== undefined) {
+          setMessage(response?.data?.errorMessages[0]);
+        } else {
+          setMessage('Something went wrong');
+        }
+        setError(true);
+        setShowNotification(true);
       }
-      if (response?.data?.data?.language === undefined) {
-        setLanguage([]);
-      } else {
-        setLanguage(response?.data?.data?.language);
-      }
-      if (response?.data?.data?.interests === undefined) {
-        setUserInterests([]);
-      } else {
-        setUserInterests(response?.data?.data?.interests);
-      }
-      setEditUserData({
-        firstName: response?.data?.data?.firstName,
-        lastName: response?.data?.data?.lastName,
-        profession: response?.data?.data?.profession,
-        yearsOfExperience: response?.data?.data?.yearsOfExperience,
-        designation: response?.data?.data?.designation,
-        domain: response?.data?.data?.domain,
-        summary: response?.data?.data?.summary,
-        role: response?.data?.data?.role,
-        email: response?.data?.data?.email,
-        phoneNumber: response?.data?.data?.phoneNo,
-        alternateEmail: response?.data?.data?.alternateEmail,
-        dob: response?.data?.data?.dob,
-        speciality: response?.data?.data?.speciality,
-        middleName: response?.data?.data?.middleName,
-        country: response?.data?.data?.userResidenceInfo?.country,
-        cityt: response?.data?.data?.userResidenceInfo?.city,
-        Address: response?.data?.data?.userResidenceInfo?.address,
-        State: response?.data?.data?.userResidenceInfo?.state,
-        ResidingFrom: response?.data?.data?.userResidenceInfo?.residingFrom,
-        LeftAt: response?.data?.data?.userResidenceInfo?.leftAt,
-        websiteOptions: response?.data?.data?.websiteOptions,
-        skills: response?.data?.data?.skills,
-        workDetails: response?.data?.data?.workDetails,
-        school: response?.data?.data?.school,
-        degree: response?.data?.data?.degree,
-        fieldOfStudy: response?.data?.data?.fieldOfStudy,
-        bannerImgUrl: response?.data?.data?.bannerImgUrl,
-        qualifications: response?.data?.data?.qualifications,
-        gender: response?.data?.data?.gender,
-        age: response?.data?.data?.age,
-        profilePictureUrl: response?.data?.data?.profilePictureUrl,
-        userResidenceInfo: response?.data?.data?.userResidenceInfo,
-        placeOfPractice: response?.data?.data?.placeOfPractice,
-        areaOfExpertise: response?.data?.data?.areaOfExpertise,
-        websiteUrl: response?.data?.data?.websiteUrl,
-      });
     });
   };
 
@@ -1396,15 +1960,18 @@ const Profile = (props: ProfileProps): JSX.Element => {
           setImage({
             preview: URL?.createObjectURL(files[0]),
           });
-          setToastMessage('Image Updated successfully');
-          setToastSuccess(true);
+          if (setUserObject !== undefined) {
+            setUserObject({ ...userObject, profilePictureUrl: URL?.createObjectURL(files[0]) });
+          }
+          setMessage('Image Updated successfully');
+          setSuccess(true);
           setShowImage(true);
         } else {
-          setToastMessage('Something Went Wrong');
-          setToastError(true);
+          setMessage('Something Went Wrong');
+          setError(true);
           setShowImage(false);
         }
-        setShowNofitication(true);
+        setShowNotification(true);
       });
     }
   };
@@ -1416,8 +1983,6 @@ const Profile = (props: ProfileProps): JSX.Element => {
         preview: URL?.createObjectURL(files[0]),
       });
     }
-
-    // console.log('valueofe', image?.preview);
   };
 
   if (tempUserData?.middleName !== undefined) {
@@ -1463,20 +2028,6 @@ const Profile = (props: ProfileProps): JSX.Element => {
               </span>
             </div>
           </div>
-          {/* <div className="postStatsContainerForProfile">
-            <div className="postContainerForProfile">
-              <div>205</div>
-              <div className="postText">Posts</div>
-            </div>
-            <div className="postContainerForProfile">
-              <div>10</div>
-              <div className="postText">Messages</div>
-            </div>{' '}
-            <div className="postContainerForProfileLast">
-              <div>97</div>
-              <div className="postText">Followers</div>
-            </div>
-          </div> */}
           <div className="detailsContainer">
             <div
               className={
@@ -1685,14 +2236,6 @@ const Profile = (props: ProfileProps): JSX.Element => {
                 }
               />
             </div>
-            {/* <div
-              className={
-                details === 'banner' ? 'personalDetails personalDetailsActive' : 'personalDetails'
-              }
-              onClick={() => handlePersonalDetails('banner')}
-            >
-              Banner
-            </div> */}
           </div>
         </div>
         <div className={`leftContainerForProfile ${darkMode && 'darkMode_bgChild'}`}>
@@ -1735,7 +2278,6 @@ const Profile = (props: ProfileProps): JSX.Element => {
                     showForm1={showForm1}
                     errorState={errorState}
                     setGender={setGender}
-                    setAgeValue={setAgeValue}
                     handleShow1={handleShow1}
                     handleCloseForm2={handleCloseForm2}
                     handleShowForm2={handleShowForm2}
@@ -1797,6 +2339,8 @@ const Profile = (props: ProfileProps): JSX.Element => {
                   openLocationModalState={openLocationModalState}
                   userResidenceInfo={tempUserData.userResidenceInfo}
                   labels={props?.fields?.data?.datasource}
+                  locationData={locationData}
+                  userLocationState={userLocationState}
                 />
               </div>
             ) : details === 'educationDetails' ? (
@@ -1831,6 +2375,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
                   handleOpenForEducation={handleOpenForEducation}
                   handleCloseForEducation={handleCloseForEducation}
                   labels={props?.fields?.data?.datasource}
+                  date={education}
                 />
               </div>
             ) : details === 'work' ? (
@@ -1855,12 +2400,13 @@ const Profile = (props: ProfileProps): JSX.Element => {
                   setStillWorkingHere={setStillWorkingHere}
                   setLatitude={setLatitude}
                   setJoiningDate={setJoiningDate}
-                  setJoiningYear={setJoiningYear}
+                  // setJoiningYear={setJoiningYear}
                   setLeavingDate={setLeavingDate}
                   editWorkFormData={editWorkFormData}
                   checkboxRef={checkboxRef}
                   userLocationState={userLocationState}
                   labels={props?.fields?.data?.datasource}
+                  placeOfPracticeState={placeOfPractice}
                 />
               </div>
             ) : details === 'events' ? (
@@ -1914,15 +2460,6 @@ const Profile = (props: ProfileProps): JSX.Element => {
           </div>
         </div>
       </div>
-      {showNotification && (
-        <ToastNotification
-          showNotification={showNotification}
-          success={toastSuccess}
-          error={toastError}
-          message={toastMessage}
-          handleCallback={resetToastState}
-        />
-      )}
     </>
   );
 };
