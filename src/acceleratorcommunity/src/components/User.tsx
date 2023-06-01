@@ -3,12 +3,13 @@ import styles from '../assets/searchUser.module.css';
 // import darkModeCss from '../assets/darkTheme.module.css';
 import { useContext, useState } from 'react';
 import WebContext from 'src/Context/WebContext';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, CloseButton } from 'react-bootstrap';
 import style from '../assets/events.module.css';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 const User = (props: any) => {
   // console.log('users', props);
-  const { userToken, setUserToken, objectId } = { ...useContext(WebContext) };
+  const { userToken, setUserToken, objectId, darkMode } = { ...useContext(WebContext) };
 
   const [followButtonText, setButtonText] = useState(props?.buttonText ?? 'Follow');
   const [showForm1, setShowForm] = useState(false);
@@ -33,16 +34,23 @@ const User = (props: any) => {
   const modalConfirmationDialog = () => {
     return (
       <>
-        <Modal show={showForm1} onHide={handleClose1}>
-          <Modal.Header closeButton>
-            <Modal.Title>Unfollow Confirmation</Modal.Title>
+        <Modal show={showForm1} onHide={handleClose1} className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}>
+          <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>Unfollow Confirmation</Modal.Title>
+            <CloseButton
+              variant="default"
+              className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+              onClick={handleClose1}
+            ></CloseButton>
           </Modal.Header>
-          <Modal.Body>Are you sure you want to unfollow this person?</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose1}>
+          <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>Are you sure you want to unfollow this person?</Modal.Body>
+          <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <Button className='footerBtnCancel'
+                variant="default" onClick={handleClose1}>
               Cancel
             </Button>
-            <Button className={styles.btnClass} onClick={(e) => onUnfollow(e)}>
+            <Button className='footerBtnDefault'
+                variant="secondary" onClick={(e) => onUnfollow(e)}>
               Unfollow
               {/* {showSpinner ? <Spinner style={{ marginLeft: '10px', height: '30px' }} /> : <></>} */}
             </Button>
