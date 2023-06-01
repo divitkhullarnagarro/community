@@ -12,7 +12,8 @@ function WebProvider(props: any) {
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [wantRerender, setWantRerender] = useState<boolean>(false);
   const [allPeersList, setAllPeersList] = useState<any>([]);
-
+  const [userNotificationList, setUserNotificationList] = useState<any>([]);
+  const [isFirebaseTokenMapped, setIsFirebaseTokenMapped] = useState<boolean>(false);
   // let router = useRouter();
 
   useEffect(() => {
@@ -68,6 +69,10 @@ function WebProvider(props: any) {
         setWantRerender,
         allPeersList,
         setAllPeersList,
+        userNotificationList,
+        setUserNotificationList,
+        isFirebaseTokenMapped,
+        setIsFirebaseTokenMapped,
       }}
     >
       {props?.children}

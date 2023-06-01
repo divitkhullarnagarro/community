@@ -262,3 +262,7 @@
   width: 100%;
   cursor: pointer;
 }
+
+.text_bold {
+  font-weight: bold;
+}
