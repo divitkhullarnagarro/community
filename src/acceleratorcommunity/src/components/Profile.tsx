@@ -840,7 +840,6 @@ const Profile = (props: ProfileProps): JSX.Element => {
     setEducationModal(false);
   };
   const editWorkFormData = (val: any) => {
-    // console.log('editWorkFormData', val);
     const data = tempUserData.placeOfPractice?.filter((data: any) => {
       return data?.wid === val;
     });
@@ -892,7 +891,6 @@ const Profile = (props: ProfileProps): JSX.Element => {
       placeOfPractice?.leavingDate !== ''
     ) {
       if (new Date(placeOfPractice?.leavingDate) < new Date(placeOfPractice?.joiningDate)) {
-        console.log('hello');
         setPlaceOfPractice({ ...placeOfPractice, leavingDate: placeOfPractice?.joiningDate });
       }
     }
