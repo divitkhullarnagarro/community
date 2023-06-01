@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 import WebContext from '../Context/WebContext';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Form, Modal, CloseButton } from 'react-bootstrap';
 import { Text } from '@sitecore-jss/sitecore-jss-nextjs';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 const ContactDetails = (props: any): JSX.Element => {
   const { darkMode } = { ...useContext(WebContext) };
@@ -18,11 +19,16 @@ const ContactDetails = (props: any): JSX.Element => {
         </Button>
       </div>
       <div>
-        <Modal show={props.showForm3} onHide={props.handleCloseForm3}>
-          <Modal.Header closeButton>
-            <Modal.Title>Contact Details</Modal.Title>
+        <Modal show={props.showForm3} onHide={props.handleCloseForm3} className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}>
+          <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>Contact Details</Modal.Title>
+            <CloseButton
+              variant="default"
+              className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+              onClick={props.handleCloseForm3}
+            ></CloseButton>
           </Modal.Header>
-          <Modal.Body className="modalForProfile">
+          <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
             <Form>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Phone No.</Form.Label>
@@ -76,21 +82,28 @@ const ContactDetails = (props: any): JSX.Element => {
               )}
             </Form>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={props.handleCloseForm3}>
+          <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <Button className='footerBtnCancel'
+                variant="default" onClick={props.handleCloseForm3}>
               Close
             </Button>
-            <Button variant="primary" onClick={props.submitForm3}>
+            <Button className='footerBtnDefault'
+                variant="secondary" onClick={props.submitForm3}>
               Save Changes
             </Button>
           </Modal.Footer>
         </Modal>
 
-        <Modal show={props.openLocationModalState} onHide={props.closeLocationMoadl}>
-          <Modal.Header closeButton>
-            <Modal.Title>Address Details</Modal.Title>
+        <Modal show={props.openLocationModalState} onHide={props.closeLocationMoadl} className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}>
+          <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>Address Details</Modal.Title>
+            <CloseButton
+              variant="default"
+              className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+              onClick={props.closeLocationMoadl}
+            ></CloseButton>
           </Modal.Header>
-          <Modal.Body className="modalForProfile">
+          <Modal.Body className={`modalForProfile ${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
             <Form>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>
@@ -175,11 +188,13 @@ const ContactDetails = (props: any): JSX.Element => {
               <span></span>
             </Form>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={props.closeLocationMoadl}>
+          <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <Button className='footerBtnCancel'
+                variant="default" onClick={props.closeLocationMoadl}>
               Close
             </Button>
-            <Button variant="primary" onClick={props.handleSubmtLocation}>
+            <Button className='footerBtnDefault'
+                variant="secondary" onClick={props.handleSubmtLocation}>
               Save Changes
             </Button>
           </Modal.Footer>

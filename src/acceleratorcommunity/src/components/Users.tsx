@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { ComponentProps } from 'lib/component-props';
 import WebContext from 'src/Context/WebContext';
 import styles from '../assets/users.module.css';
-import { Accordion, Button, Modal } from 'react-bootstrap';
+import { Accordion, Button, Modal, CloseButton } from 'react-bootstrap';
 import Flag from '../assets/images/flag-icon.svg';
 import { Dropdown } from 'react-bootstrap';
 import { getAllReportPostCall, getReportedPostReportersDetailsCall } from 'src/API/reportPostCall';
@@ -566,7 +566,7 @@ const Users = (props: UserProps): JSX.Element => {
   const WarnUserPopUp = () => {
     return (
       <Modal
-        className={styles.reportPostModalContent}
+        className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}
         show={showWarnUserPopup}
         backdrop="static"
         keyboard={false}
@@ -575,24 +575,29 @@ const Users = (props: UserProps): JSX.Element => {
         scrollable={true}
       >
         <div className={styles.popupContent}>
-          <Modal.Header closeButton className={styles.reportPostModalHeader}>
-            <Modal.Title>{'Warn user'}</Modal.Title>
+          <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>{'Warn user'}</Modal.Title>
+            <CloseButton
+              variant="default"
+              className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+              onClick={() => setShowWarnUserPopup(false)}
+            ></CloseButton>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
             <div
               className={styles.reportPostModalBody}
             >{`Do you want to send email warning to the user ?`}</div>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
             <Button
-              className={styles.footerBtnCancel}
+              className='footerBtnCancel'
               variant="default"
               onClick={() => setShowWarnUserPopup(false)}
             >
               Cancel
             </Button>
             <Button
-              className={styles.footerBtn}
+              className='footerBtnDefault'
               variant="secondary"
               onClick={() => onSendWarningToUser()}
             >
@@ -608,33 +613,38 @@ const Users = (props: UserProps): JSX.Element => {
   const SuspendUserPopup = () => {
     return (
       <Modal
-        className={styles.reportPostModalContent}
         show={showSuspendUserPopup}
         backdrop="static"
         keyboard={false}
         onHide={() => setShowSuspendUserPopup(false)}
         centered
         scrollable={true}
+        className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}
       >
         <div className={styles.popupContent}>
-          <Modal.Header closeButton className={styles.reportPostModalHeader}>
-            <Modal.Title>{'Suspend user account'}</Modal.Title>
+          <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>{'Suspend user account'}</Modal.Title>
+            <CloseButton
+              variant="default"
+              className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+              onClick={() => setShowSuspendUserPopup(false)}
+            ></CloseButton>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
             <div
               className={styles.reportPostModalBody}
             >{`Do you want to suspend user's account ?`}</div>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
             <Button
-              className={styles.footerBtnCancel}
+              className='footerBtnCancel'
               variant="default"
               onClick={() => setShowSuspendUserPopup(false)}
             >
               Cancel
             </Button>
             <Button
-              className={styles.footerBtn}
+              className='footerBtnDefault'
               variant="secondary"
               onClick={() => onUserAccountSuspension()}
             >
@@ -650,7 +660,7 @@ const Users = (props: UserProps): JSX.Element => {
   const WarnUserForPostReportPopUp = () => {
     return (
       <Modal
-        className={styles.reportPostModalContent}
+      className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}
         show={showWarnUserForPostReportPopUp}
         backdrop="static"
         keyboard={false}
@@ -659,24 +669,29 @@ const Users = (props: UserProps): JSX.Element => {
         scrollable={true}
       >
         <div className={styles.popupContent}>
-          <Modal.Header closeButton className={styles.reportPostModalHeader}>
-            <Modal.Title>{'Warn user'}</Modal.Title>
+          <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>{'Warn user'}</Modal.Title>
+            <CloseButton
+              variant="default"
+              className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+              onClick={() => setShowWarnUserForPostReportPopUp(false)}
+            ></CloseButton>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
             <div
               className={styles.reportPostModalBody}
             >{`Do you want to send email warning to the user ?`}</div>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
             <Button
-              className={styles.footerBtnCancel}
+              className='footerBtnCancel'
               variant="default"
               onClick={() => setShowWarnUserForPostReportPopUp(false)}
             >
               Cancel
             </Button>
             <Button
-              className={styles.footerBtn}
+              className='footerBtnDefault'
               variant="secondary"
               onClick={() => onReportedPostSendWarning()}
             >
@@ -722,7 +737,7 @@ const Users = (props: UserProps): JSX.Element => {
     return (
       <>
         <Modal
-          className={styles.reportPostModalContent}
+          className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}
           show={showReportPopUp}
           backdrop="static"
           keyboard={false}
@@ -744,14 +759,19 @@ const Users = (props: UserProps): JSX.Element => {
                     : { height: '550px', display: 'flex', flexDirection: 'column' }
                 }
               >
-                <Modal.Header closeButton className={styles.reportPostModalHeader}>
+                <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
                   <Modal.Title
-                    className={`${styles.reportTitle} ${darkMode ? darkModeCss.text_green : ''}`}
+                    className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}
                   >
                     {'Reported Post'}
                   </Modal.Title>
+                  <CloseButton
+                    variant="default"
+                    className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+                    onClick={() => setShowWarnUserPopup(false)}
+                  ></CloseButton>
                 </Modal.Header>
-                <Modal.Body className={styles.reportBody}>
+                <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
                   <div className={styles.reportPostModal}>
                     <div className={styles.reportPostHeading}>
                       <div className={styles.reportPostHeaderLeft}>
@@ -842,7 +862,7 @@ const Users = (props: UserProps): JSX.Element => {
                     </div>
                   </div>
                 </Modal.Body>
-                <Modal.Footer className={styles.reportPostModalFooter}>
+                <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
                   {showSpinner ? (
                     <>
                       <div className={`${darkMode ? darkModeCss.text_light : ''}`}>
@@ -924,14 +944,19 @@ const Users = (props: UserProps): JSX.Element => {
                     : { height: '600px', display: 'flex', flexDirection: 'column' }
                 }
               >
-                <Modal.Header closeButton className={styles.reportPostModalHeader}>
+                <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
                   <Modal.Title
-                    className={`${styles.reportTitle} ${darkMode ? darkModeCss.text_green : ''}`}
+                    className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}
                   >
                     {'Reported Post'}
                   </Modal.Title>
+                  <CloseButton
+                    variant="default"
+                    className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+                    onClick={() => setShowWarnUserPopup(false)}
+                  ></CloseButton>
                 </Modal.Header>
-                <Modal.Body className={styles.reportBody}>
+                <Modal.Body className={`${styles.reportBody} ${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
                   <div className={styles.reportPostModal}>
                     <div className={styles.reportPostHeading}>
                       <div className={styles.reportPostHeaderLeft}>
@@ -1060,7 +1085,7 @@ const Users = (props: UserProps): JSX.Element => {
                     )}
                   </div>
                 </Modal.Body>
-                <Modal.Footer className={styles.reportPostModalFooter}>
+                <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
                   {showSpinner ? (
                     <>
                       <div className={`${darkMode ? darkModeCss.text_light : ''}`}>

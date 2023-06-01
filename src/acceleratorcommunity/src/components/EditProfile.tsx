@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { useState, useContext, useEffect } from 'react';
 import WebContext from '../Context/WebContext';
 import AxiosRequest from 'src/API/AxiosRequest';
+import darkModeCss from '../assets/darkTheme.module.css';
 import {
   getFollowersUrl,
   getFollowingUrl,
@@ -16,7 +17,7 @@ import {
   // updateGroupUrl,
   uploadBannerUrl,
 } from 'assets/helpers/constants';
-import { Form, Modal } from 'react-bootstrap';
+import { Form, Modal, CloseButton } from 'react-bootstrap';
 import DotLoader from './DotLoader';
 import ToastNotification from './ToastNotification';
 import groupIcon from '../assets/images/groupLogo1.jpg';
@@ -61,7 +62,7 @@ type HeaderProfileProps = ComponentProps & {
 
 const EditProfile = (props: HeaderProfileProps): JSX.Element => {
   // const { userObject, userToken } = {
-  const { userObject, setWantRerender, wantRerender } = {
+  const { userObject, setWantRerender, wantRerender, darkMode } = {
     ...useContext(WebContext),
   };
   //get objectId from URL
@@ -679,13 +680,13 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
         </Form.Group>
       </Form> */}
       <Modal
-        className={styles.followersPopup}
+        className={`modalContent ${styles.followersPopup} ${darkMode ? darkModeCss.darkModeModal : ''}`}
         size={'lg'}
         show={show}
         onHide={() => setShow(false)}
       >
-        <Modal.Header closeButton>
-          <Modal.Title>
+        <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+          <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>
             <Text
               field={
                 props?.fields?.data?.datasource?.popupHeading?.jsonValue
@@ -696,8 +697,15 @@ const EditProfile = (props: HeaderProfileProps): JSX.Element => {
               }
             />
           </Modal.Title>
+          <CloseButton
+            variant="default"
+            className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+            onClick={() => {
+              setFollowerFollowingSwitch(false);
+            }}
+          ></CloseButton>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
           <div className={styles.popupMainContainer}>
             <div className={styles.popupButtonContainer}>
               <button

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import WebContext from '../Context/WebContext';
 import styles from '../assets/blockeduser.module.css';
 import { Field, NextImage, Text } from '@sitecore-jss/sitecore-jss-nextjs';
-import { Modal } from 'react-bootstrap';
+import { Modal, CloseButton, Button } from 'react-bootstrap';
 import moreLogo from '../assets/images/moreLogo.svg';
 // import Email from '../assets/images/EmailIcon.jpg';
 import { useRouter } from 'next/router';
@@ -99,7 +99,7 @@ function BlockedUser(props: blockedUserProps) {
     return (
       <>
         <Modal
-          className={styles.blockedUserModalContent}
+          className={`modalContent ${styles.blockedUserModalContent} ${darkMode ? darkModeCss.darkModeModal : ''}`}
           show={showBlockUserPopUp}
           onHide={() => setShowBlockUserPopUp(false)}
           backdrop="static"
@@ -107,38 +107,45 @@ function BlockedUser(props: blockedUserProps) {
           centered
           scrollable={true}
         >
-          <div>
-            <Modal.Header closeButton>
-              <Modal.Title className={styles.blockedUserModalHeader}>{'Unblock User'}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div className={styles.unblockUserName}>
-                <strong>{` ${blockedUserDetails?.firstName} ${blockedUserDetails?.lastName} `}</strong>
-                will be able to :
-                <ul>
-                  {UnblockingUserEffectListLabel.map((item) => {
-                    return <li>{item}</li>;
-                  })}
-                </ul>
-              </div>
-              <div className={styles.unblockUserContition}>
-                If you have read the conditions and are okay with it, Proceed with :
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
-              <button
-                className={styles.unblockCancelBtn}
-                onClick={() => {
-                  setShowBlockUserPopUp(false);
-                }}
-              >
-                Cancel
-              </button>
-              <button className={styles.unBlockConfirm} onClick={() => onUserUnblocked()}>
-                {showSpinner ? <DotLoader dotColor="#ffffff" /> : <>Confirm</>}
-              </button>
-            </Modal.Footer>
-          </div>
+          <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>{'Unblock User'}</Modal.Title>
+            <CloseButton
+              variant="default"
+              className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+              onClick={() => {
+                setShowBlockUserPopUp(false);
+              }}
+            ></CloseButton>
+          </Modal.Header>
+          <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <div className={styles.unblockUserName}>
+              <strong>{` ${blockedUserDetails?.firstName} ${blockedUserDetails?.lastName} `}</strong>
+              will be able to :
+              <ul>
+                {UnblockingUserEffectListLabel.map((item) => {
+                  return <li>{item}</li>;
+                })}
+              </ul>
+            </div>
+            <div className={styles.unblockUserContition}>
+              If you have read the conditions and are okay with it, Proceed with :
+            </div>
+          </Modal.Body>
+          <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <Button
+              className='footerBtnCancel'
+              variant="default"
+              onClick={() => {
+                setShowBlockUserPopUp(false);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button className='footerBtnDefault'
+                variant="secondary" onClick={() => onUserUnblocked()}>
+              {showSpinner ? <DotLoader dotColor="#ffffff" /> : <>Confirm</>}
+            </Button>
+          </Modal.Footer>
         </Modal>
       </>
     );
