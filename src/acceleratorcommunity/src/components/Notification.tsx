@@ -9,13 +9,11 @@ import { Button, Dropdown } from 'react-bootstrap';
 import ToastNotification from './ToastNotification';
 import NotificationLike from '../assets/images/NotificationLike.png';
 import NotificationComment from '../assets/images/comment1.png';
-import NotificationOpen from '../assets/images/NotificationOpen.png';
 import ThemeSwitcher from './ThemeSwitcher';
 import FirebaseContext from 'src/Context/FirebaseContext';
 import AxiosRequest from 'src/API/AxiosRequest';
 import { calculateTimeDifference } from 'assets/helpers/helperFunctions';
 import darkModeCss from '../assets/darkTheme.module.css';
-import MarkAsRead from '../assets/images/MarkAsRead.png';
 import Profile from '../assets/images/ProfilePic.jpeg';
 
 const NotificationType = {
@@ -72,7 +70,14 @@ type UserProfilePicMapping = {
 
 const Notification = (props: NotificationProps): JSX.Element => {
   const { datasource } = props?.fields?.data;
-  const { objectId, darkMode } = {
+  const {
+    objectId,
+    darkMode,
+    userNotificationList,
+    setUserNotificationList,
+    isFirebaseTokenMapped,
+    setIsFirebaseTokenMapped,
+  } = {
     ...useContext(WebContext),
   };
 
@@ -123,64 +128,92 @@ const Notification = (props: NotificationProps): JSX.Element => {
   };
 
   const mapFirebaseTokenToCurrentUser = (fcm_token: string) => {
-    AxiosRequest({
-      method: 'POST',
-      url: `https://accelerator-api-management.azure-api.net/graph-service/api/v1/map-uuid?uuid=${fcm_token}`,
-    })
-      .then((response: any) => {
-        // console.log('APIResponseFCM', response);
-        response;
+    if (!isFirebaseTokenMapped) {
+      AxiosRequest({
+        method: 'POST',
+        url: `https://accelerator-api-management.azure-api.net/graph-service/api/v1/map-uuid?uuid=${fcm_token}`,
       })
-      .catch((err: any) => {
-        console.log(err);
-      });
+        .then((response: any) => {
+          if (response?.success) {
+            if (setIsFirebaseTokenMapped !== undefined) {
+              setIsFirebaseTokenMapped(true);
+            }
+          }
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
+    }
   };
 
   const getNotificationList = () => {
-    AxiosRequest({
-      method: 'GET',
-      url: `https://accelerator-api-management.azure-api.net/notification-service/api/v1/get-notification`,
-    })
-      .then((response: any) => {
-        // console.log('asdfsdfsdf', response);
-        if (response?.success) {
-          setNotificationList(response?.data);
-          setNotificationAllList(response?.data);
-          response?.data?.forEach((item: any) => {
-            getProfileImage(item?.sourceAuthorId);
-          });
-        } else {
-          // setToastError(true);
-          // setToastMessage(
-          //   res?.data?.errorMessages[0]
-          //     ? res?.data?.errorMessages[0]
-          //     : 'Something Went Wrong. Please Try Again'
-          // );
-          // setShowNofitication(true);
-        }
+    if (
+      userNotificationList === null ||
+      userNotificationList === undefined ||
+      userNotificationList?.length === 0
+    ) {
+      AxiosRequest({
+        method: 'GET',
+        url: `https://accelerator-api-management.azure-api.net/notification-service/api/v1/get-notification`,
       })
-      .catch((err: any) => {
-        console.log(err);
-      });
+        .then((response: any) => {
+          if (response) {
+            if (setUserNotificationList !== undefined) setUserNotificationList(response?.data);
+            setNotificationList(response?.data);
+            setNotificationAllList(response?.data);
+            response?.data?.forEach((item: any) => {
+              getProfileImage(item?.sourceAuthorId);
+            });
+          } else {
+            // setToastError(true);
+            // setToastMessage(
+            //   res?.data?.errorMessages[0]
+            //     ? res?.data?.errorMessages[0]
+            //     : 'Something Went Wrong. Please Try Again'
+            // );
+            // setShowNofitication(true);
+          }
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
+    } else {
+      setNotificationList(userNotificationList);
+      setNotificationAllList(userNotificationList);
+    }
   };
 
-  const markNotificationAsRead = (notificationId: string | undefined) => {
-    AxiosRequest({
-      method: 'PUT',
-      url: `https://accelerator-api-management.azure-api.net/notification-service/api/v1/viewed-notification?id=${notificationId}`,
-    })
-      .then((response: any) => {
-        if (response?.success) {
-          setNotificationAllList((notificationAllList) =>
-            notificationAllList.map((item: NotificationType) =>
-              item?.id === notificationId ? { ...item, read: true } : item
-            )
-          );
-        }
+  const markNotificationAsRead = (item: NotificationType) => {
+    if (item && item?.id !== undefined && !item?.read) {
+      AxiosRequest({
+        method: 'PUT',
+        url: `https://accelerator-api-management.azure-api.net/notification-service/api/v1/viewed-notification?id=${item?.id}`,
       })
-      .catch((err: any) => {
-        console.log(err);
-      });
+        .then((response: any) => {
+          if (response?.success) {
+            setNotificationAllList((notificationAllList) =>
+              notificationAllList.map((notificationItem: NotificationType) =>
+                notificationItem?.id === item?.id
+                  ? { ...notificationItem, read: true }
+                  : notificationItem
+              )
+            );
+
+            if (setUserNotificationList != undefined) {
+              setUserNotificationList((notificationAllList: any) =>
+                notificationAllList.map((notificationItem: NotificationType) =>
+                  notificationItem?.id === item?.id
+                    ? { ...notificationItem, read: true }
+                    : notificationItem
+                )
+              );
+            }
+          }
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
@@ -195,9 +228,11 @@ const Notification = (props: NotificationProps): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    setNotificationCount(
-      notificationList.filter((item) => !item.read)?.length + realTimeNotificationList?.length
-    );
+    if (notificationList !== undefined && notificationList?.length > 0) {
+      setNotificationCount(
+        notificationList?.filter((item) => !item.read)?.length + realTimeNotificationList?.length
+      );
+    }
   }, [notificationList, realTimeNotificationList]);
 
   useEffect(() => {
@@ -334,6 +369,20 @@ const Notification = (props: NotificationProps): JSX.Element => {
     return false;
   };
 
+  const getDestinationUrlForNotificationItem = (item: NotificationType) => {
+    let destinationUrl = '';
+    const notificationContent: NotificationContentType = JSON.parse(
+      item?.notificationContent ?? '{}'
+    );
+    if (showViewPostDropdownAction(item)) {
+      destinationUrl = `/post?postId=${notificationContent?.articleId ?? item?.articleId}`;
+    } else if (showViewUserProfileDropdownAction(item)) {
+      destinationUrl = `/viewProfile?id=${notificationContent?.articleId ?? item?.articleId}`;
+    }
+
+    return destinationUrl;
+  };
+
   function returnUserImage(e: any) {
     e.target.src = Profile.src;
   }
@@ -348,7 +397,12 @@ const Notification = (props: NotificationProps): JSX.Element => {
       ?.find((tempItemSelect: any) => tempItemSelect);
     return (
       <div style={{ display: 'flex' }}>
-        <Dropdown.Item className={notificationCss.dropdownItem}>
+        <Dropdown.Item
+          href={getDestinationUrlForNotificationItem(item)}
+          target="_blank"
+          className={notificationCss.dropdownItem}
+          onClick={() => markNotificationAsRead(item)}
+        >
           <div className={notificationCss.notificationItem}>
             <div className={notificationCss.notificationIconContainer}>
               <img
@@ -378,10 +432,14 @@ const Notification = (props: NotificationProps): JSX.Element => {
                 ></NextImage>
               </div>
             </div>
-            <div className={notificationCss.notificationMessage}>
+            <div
+              className={`${notificationCss.notificationMessage} ${
+                !item?.read ? notificationCss.text_bold : ''
+              } `}
+            >
               <div
                 className={`${notificationCss.notificationAuthor} ${
-                  darkMode ? darkModeCss.text_light : ''
+                  darkMode ? (!item?.read ? darkModeCss.text_green : darkModeCss.text_light) : ''
                 }`}
               >
                 {item?.message ?? notificationContent?.message}
@@ -401,81 +459,6 @@ const Notification = (props: NotificationProps): JSX.Element => {
             </div>
           </div>
         </Dropdown.Item>
-        <Dropdown>
-          <Dropdown.Toggle variant="secondary" className={notificationCss.notificationMoreOptions}>
-            <button
-              style={{
-                border: 'none',
-                backgroundColor: 'transparent',
-                padding: '0',
-                marginRight: '5px',
-              }}
-            >
-              <img
-                className="postMoreOptionsImage"
-                src="https://cdn-icons-png.flaticon.com/512/463/463292.png"
-                alt="pan"
-              />
-            </button>
-          </Dropdown.Toggle>
-
-          <Dropdown.Menu className={notificationCss.dropdownMoreMenuForNotificationItem}>
-            {showViewPostDropdownAction(item) && (
-              <Dropdown.Item
-                href={`/post?postId=${notificationContent?.articleId ?? item?.articleId}`}
-                target="_blank"
-                className={notificationCss.dropdownItem}
-              >
-                <div>
-                  <NextImage
-                    field={NotificationOpen}
-                    editable={true}
-                    width={16}
-                    height={16}
-                    title="Notification"
-                  ></NextImage>
-                  <span className={notificationCss.dropdownMenuOptionsLabel}>View post</span>
-                </div>
-              </Dropdown.Item>
-            )}
-            {showViewUserProfileDropdownAction(item) && (
-              <Dropdown.Item
-                href={`/viewProfile?id=${notificationContent?.articleId ?? item?.articleId}`}
-                target="_blank"
-                className={notificationCss.dropdownItem}
-              >
-                <div>
-                  <NextImage
-                    field={NotificationOpen}
-                    editable={true}
-                    width={16}
-                    height={16}
-                    title="Notification"
-                  ></NextImage>
-                  <span className={notificationCss.dropdownMenuOptionsLabel}>View Profile</span>
-                </div>
-              </Dropdown.Item>
-            )}
-            {item?.id !== undefined && !item?.read && (
-              <Dropdown.Item
-                onClick={() => markNotificationAsRead(item?.id)}
-                target="_blank"
-                className={notificationCss.dropdownItem}
-              >
-                <div>
-                  <NextImage
-                    field={MarkAsRead}
-                    editable={true}
-                    width={15}
-                    height={15}
-                    title="Notification"
-                  ></NextImage>
-                  <span className={notificationCss.dropdownMenuOptionsLabel}>Mark as read</span>
-                </div>
-              </Dropdown.Item>
-            )}
-          </Dropdown.Menu>
-        </Dropdown>
       </div>
     );
   };
