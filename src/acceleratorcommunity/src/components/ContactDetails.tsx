@@ -255,8 +255,10 @@ const ContactDetails = (props: any): JSX.Element => {
                   />
                   &nbsp;:
                 </span>
+                {console.log("props?.userResidenceInfo",props?.userResidenceInfo)}
+                
                 <div className="fieldValue">
-                  {props.userResidenceInfo?.map((data: any) => {
+                  {props?.userResidenceInfo?.map((data: any) => {
                     return (
                       <>
                         {data?.leftAt === null ? (

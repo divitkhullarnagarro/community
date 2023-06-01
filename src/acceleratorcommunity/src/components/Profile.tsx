@@ -74,7 +74,7 @@ type User = {
   placeOfPractice: PlaceOfPractice[];
   profilePictureUrl: string | undefined;
   websiteUrl: string | undefined;
-  userResidenceInfo: any;
+  userResidenceInfo: any[];
 };
 
 type PlaceOfPractice = {
@@ -100,7 +100,7 @@ type educationDetails = {
   endDate: string | undefined;
   grade: string | undefined;
   instituteName: string | undefined;
-  percentage: number | undefined;
+  percentage: string | undefined;
   pincode: string | undefined;
   remarks: string | undefined;
   standard: string | undefined;
@@ -245,18 +245,6 @@ const Profile = (props: ProfileProps): JSX.Element => {
     ...useContext(GenericNotificationContext),
   };
 
-  const containsOnlySpaces = (string: any) => {
-    if (string.trim() !== '' || string === '') {
-      setPlaceOfPractice({ ...placeOfPractice, orgName: string });
-    }
-    if (string.length > 0) {
-      const value = string.replace(/\s/g, ''); // Remove whitespace using regex
-      console.log('string.length', value);
-      setPlaceOfPractice({ ...placeOfPractice, orgName: value });
-    }
-    return string?.trim()?.length < 0 || string?.trim()?.length > 0;
-  };
-
   const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
   const regexForCheckingSpecialCharacter = /^[a-zA-Z0-9 ]*$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -279,6 +267,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
     gender: false,
     instituteName: false,
     instituteNameNumber: false,
+    workPinCodeLength: false,
     orgName: false,
     residingFrom: false,
     phoneNoLength: false,
@@ -932,7 +921,8 @@ const Profile = (props: ProfileProps): JSX.Element => {
       errorState?.empId === false &&
       placeOfPracticeDetails?.userWorkDetails[0].orgName !== '' &&
       placeOfPracticeDetails?.userWorkDetails[0].employeeId !== '' &&
-      placeOfPracticeDetails !== undefined
+      placeOfPracticeDetails !== undefined &&
+      errorState?.workPinCodeLength === false
     ) {
       updateUuserCall(userToken, objectId, placeOfPracticeDetails).then((response) => {
         if (response) {
@@ -1075,9 +1065,29 @@ const Profile = (props: ProfileProps): JSX.Element => {
     }
   };
   const setPincodeForWork = (val: string) => {
-    if (regexForCheckingSpecialCharacter.test(val)) {
-      if (val?.length <= 6) {
-        setPlaceOfPractice({ ...placeOfPractice, pincode: val });
+    if (val?.length <= 6) {
+      const regex = /[A-Za-z]/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val?.length < 6) {
+                if (val === '') {
+                  setErrorState({ ...errorState, workPinCodeLength: false });
+                  setPlaceOfPractice({ ...placeOfPractice, pincode: val });
+                } else {
+                  const finalValue = val.trimStart();
+                  setErrorState({ ...errorState, workPinCodeLength: true });
+                  setPlaceOfPractice({ ...placeOfPractice, pincode: finalValue });
+                }
+              } else if (val?.length === 6) {
+                const finalValue = val.trimStart();
+                setErrorState({ ...errorState, workPinCodeLength: false });
+                setPlaceOfPractice({ ...placeOfPractice, pincode: finalValue });
+              }
+            }
+          }
+        }
       }
     }
   };
@@ -1153,7 +1163,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
     endDate: '',
     grade: '',
     instituteName: '',
-    percentage: 0,
+    percentage: '',
     pincode: '',
     remarks: '',
     standard: '',
@@ -1299,26 +1309,50 @@ const Profile = (props: ProfileProps): JSX.Element => {
       setEducation({ ...education, grade: val });
     }
   };
-  const setPercentage = (val: number) => {
-    const numberString = val.toString();
-    if (numberString?.length <= 3) {
-      setEducation({ ...education, percentage: val });
+  const setPercentage = (val: string) => {
+    if (val?.length <= 3) {
+      const regex = /[A-Za-z]/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val === '') {
+                setEducation({ ...education, percentage: val });
+              } else {
+                const finalValue = val.trimStart();
+                setEducation({ ...education, percentage: finalValue });
+              }
+            }
+          }
+        }
+      }
     }
   };
   const setPincode = (val: string) => {
     if (val?.length <= 6) {
-      if (val === '') {
-        setErrorState({ ...errorState, eduPincode: true, eduPincodeLength: false });
-        setEducation({ ...education, pincode: val });
-      } else if (!containsOnlySpaces(val)) {
-        setErrorState({ ...errorState, eduPincodeLength: false, eduPincode: true });
-        setEducation({ ...education, pincode: val });
-      } else if (val?.length < 6) {
-        setErrorState({ ...errorState, eduPincodeLength: true, eduPincode: false });
-        setEducation({ ...education, pincode: val });
-      } else {
-        setErrorState({ ...errorState, eduPincodeLength: false, eduPincode: false });
-        setEducation({ ...education, pincode: val });
+      const regex = /[A-Za-z]/;
+      if (!containsHtml(val)) {
+        if (val.trim() !== '' || val === '') {
+          if (regexForCheckingSpecialCharacter.test(val)) {
+            if (!regex.test(val)) {
+              if (val?.length < 6) {
+                if (val === '') {
+                  setErrorState({ ...errorState, eduPincode: true, eduPincodeLength: false });
+                  setEducation({ ...education, pincode: val });
+                } else {
+                  const finalValue = val.trimStart();
+                  setErrorState({ ...errorState, eduPincode: false, eduPincodeLength: true });
+                  setEducation({ ...education, pincode: finalValue });
+                }
+              } else if (val?.length === 6) {
+                const finalValue = val.trimStart();
+
+                setErrorState({ ...errorState, eduPincode: false, eduPincodeLength: false });
+                setEducation({ ...education, pincode: finalValue });
+              }
+            }
+          }
+        }
       }
     }
   };
@@ -1448,7 +1482,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
     placeOfPractice: [],
     areaOfExpertise: '',
     websiteUrl: '',
-    userResidenceInfo: {},
+    userResidenceInfo: [],
   });
 
   const addEducationDetails = () => {
@@ -1458,7 +1492,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
       endDate: '',
       grade: '',
       instituteName: '',
-      percentage: 0,
+      percentage: '',
       pincode: '',
       remarks: '',
       standard: '',
@@ -1490,7 +1524,9 @@ const Profile = (props: ProfileProps): JSX.Element => {
     const data = tempUserData.userResidenceInfo?.filter((data: any) => {
       return data?.leftAt === null;
     });
-    setUserLocationState({ ...data[0] });
+    if (data !== undefined && data !== null) {
+      setUserLocationState({ ...data[0] });
+    }
     openLocationMoadl();
   };
 
@@ -1787,6 +1823,7 @@ const Profile = (props: ProfileProps): JSX.Element => {
       return hobb !== hob;
     });
     setHobby(data);
+    // setShowForm3(true);
   };
 
   const filterLanguage = (lag: string) => {

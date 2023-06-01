@@ -7,6 +7,21 @@ const UserWorkExperience = (props: any) => {
 
   return (
     <div className="workContainer">
+      <div className="addNewItem">
+        <Button onClick={props.addNewWorkDetail}>
+          <span>
+            <Text
+              field={
+                props?.labels?.addWorkBtn?.jsonValue
+                  ? props?.labels?.addWorkBtn?.jsonValue
+                  : {
+                      value: 'Add Work',
+                    }
+              }
+            />
+          </span>
+        </Button>
+      </div>
       <div>
         {props?.placeOfPractice?.length > 0 ? (
           props?.placeOfPractice.map((work: any, index: number) => {
@@ -40,23 +55,10 @@ const UserWorkExperience = (props: any) => {
             );
           })
         ) : (
-          <></>
+          <div className="noDetailsParent">
+            <div className="noDetails">You do not have any work details added yet.</div>
+          </div>
         )}
-        <div className="addNewItem">
-          <Button onClick={props.addNewWorkDetail}>
-            <span>
-              <Text
-                field={
-                  props?.labels?.addWorkBtn?.jsonValue
-                    ? props?.labels?.addWorkBtn?.jsonValue
-                    : {
-                        value: 'Add Work',
-                      }
-                }
-              />
-            </span>
-          </Button>
-        </div>
       </div>
 
       <Modal show={props.openWorkModal} onHide={props.handleCloseWorkModal}>
@@ -128,6 +130,13 @@ const UserWorkExperience = (props: any) => {
                 autoFocus
                 maxLength={6}
               />
+              <span>
+                {props.errorState?.workPinCodeLength ? (
+                  <span className="error">Pincode must be of length 6</span>
+                ) : (
+                  ' '
+                )}
+              </span>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>City</Form.Label>

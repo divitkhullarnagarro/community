@@ -4,6 +4,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { Text } from '@sitecore-jss/sitecore-jss-nextjs';
 
 const PersaonalDetailsOfUser = (props: any): JSX.Element => {
+  var today = new Date().toISOString().split('T')[0];
   const { darkMode } = { ...useContext(WebContext) };
   return (
     <>
@@ -143,6 +144,7 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                   type="date"
                   placeholder="Dob"
                   autoFocus
+                  max={today}
                 />
                 {props.errorState?.dob ? <span className="error">Field is required</span> : ' '}
               </Form.Group>
