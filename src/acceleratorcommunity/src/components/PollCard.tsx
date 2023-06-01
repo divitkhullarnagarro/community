@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import pollCard from '../assets/pollCard.module.css';
 import CheckedImage from '../assets/images/PollCheckedCiricle.svg';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
+import WebContext from 'src/Context/WebContext';
+import darktheme from './../assets/darkTheme.module.css';
 
 function PollCard(props: any) {
+  const { darkMode } = { ...useContext(WebContext) };
   // console.log("========================================",props)
   function calculatePercentage(value: any, totalValue: any) {
     const percentage = (value / totalValue) * 100;
@@ -22,7 +25,9 @@ function PollCard(props: any) {
   return (
     <div className={pollCard.pollCardContainer}>
       <div className={pollCard.pollheading}>{/* <h2>Poll</h2> */}</div>
-      <h3 className={pollCard.pollQuestion}>{props.pollPost?.poll?.pollQuestion}</h3>
+      <h3 className={`${pollCard.pollQuestion} ${darkMode && darktheme.text_light}`}>
+        {props.pollPost?.poll?.pollQuestion}
+      </h3>
       <div className={pollCard.polloptions}>
         {props.pollPost?.poll?.pollOptions?.map((option: any, index: any) => {
           return (
@@ -100,7 +105,7 @@ function PollCard(props: any) {
                   </div>
                 </div>
               </button>
-              <span className={pollCard.voteCount}>
+              <span className={`${pollCard.voteCount} ${darkMode && darktheme.text_light}`}>
                 <span>{option?.responseCount ? option?.responseCount : '0'}</span> Votes
               </span>
             </div>
