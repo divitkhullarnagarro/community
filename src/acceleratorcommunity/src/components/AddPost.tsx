@@ -2,7 +2,7 @@ import { Field, NextImage, Text } from '@sitecore-jss/sitecore-jss-nextjs';
 import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import WebContext from '../Context/WebContext';
-import Button from 'react-bootstrap/Button';
+import { Button, CloseButton } from 'react-bootstrap';
 import Collapse from 'react-bootstrap/Collapse';
 import likePostCall from '../API/likePostCall';
 // import getAllPostsCall from '../API/getAllPostsCall';
@@ -536,7 +536,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     return (
       <>
         <Modal
-          className={styles.reportPostModalContent}
+          className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}
           show={showReportUserPopUp}
           onHide={() => setShowReportUserPopUp(false)}
           backdrop="static"
@@ -544,53 +544,57 @@ const AddPost = (props: AddPostProps): JSX.Element => {
           centered
           scrollable={true}
         >
-          <div>
-            <Modal.Header closeButton>
-              <Modal.Title className={styles.reportPostModalHeader}>
-                {props?.fields?.data?.datasource?.reportPostTitle?.jsonValue?.value ?? 'Report'}
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div className={styles.reportPostModalBody}>
-                {props?.fields?.data?.datasource?.reportPostHeader?.jsonValue?.value ??
-                  'Why are you reporting?'}
-              </div>
-              <Form ref={formRef} style={{ fontSize: '15px', margin: '5px' }}>
-                {reportTypeList.map((item, index) => {
-                  return (
-                    <div key={index} className={styles.reportItem}>
-                      {item}
-                      <Form.Check
-                        type="radio"
-                        name="radioGroup"
-                        value={item}
-                        // onChange={(e) => handleSelectChange(e)}
-                        defaultChecked={index == 0 ? true : false}
-                        aria-label="radio 1"
-                      ></Form.Check>
-                    </div>
-                  );
-                })}
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button
-                className={styles.footerBtnCancel}
-                variant="default"
-                onClick={() => setShowReportUserPopUp(false)}
-              >
-                Cancel
-              </Button>
-              <Button className={styles.footerBtn} variant="secondary" onClick={onUserReported}>
-                Report
-                {showSpinner ? (
-                  <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
-                ) : (
-                  <></>
-                )}
-              </Button>
-            </Modal.Footer>
-          </div>
+          <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>
+              {props?.fields?.data?.datasource?.reportPostTitle?.jsonValue?.value ?? 'Report'}
+            </Modal.Title>
+            <CloseButton
+              variant="default"
+              className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+              onClick={() => setShowReportUserPopUp(false)}
+            ></CloseButton>
+          </Modal.Header>
+          <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <div className={styles.reportPostModalBody}>
+              {props?.fields?.data?.datasource?.reportPostHeader?.jsonValue?.value ??
+                'Why are you reporting?'}
+            </div>
+            <Form ref={formRef} style={{ fontSize: '15px', margin: '5px' }}>
+              {reportTypeList.map((item, index) => {
+                return (
+                  <div key={index} className={styles.reportItem}>
+                    {item}
+                    <Form.Check
+                      type="radio"
+                      name="radioGroup"
+                      value={item}
+                      // onChange={(e) => handleSelectChange(e)}
+                      defaultChecked={index == 0 ? true : false}
+                      aria-label="radio 1"
+                    ></Form.Check>
+                  </div>
+                );
+              })}
+            </Form>
+          </Modal.Body>
+          <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <Button
+              className='footerBtnCancel'
+              variant="default"
+              onClick={() => setShowReportUserPopUp(false)}
+            >
+              Cancel
+            </Button>
+            <Button className='footerBtnDefault'
+              variant="secondary" onClick={onUserReported}>
+              Report
+              {showSpinner ? (
+                <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
+              ) : (
+                <></>
+              )}
+            </Button>
+          </Modal.Footer>
         </Modal>
       </>
     );
@@ -646,7 +650,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     return (
       <>
         <Modal
-          className={styles.reportPostModalContent}
+          className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}
           show={showBlockUserPopUp}
           onHide={() => setShowBlockUserPopUp(false)}
           backdrop="static"
@@ -654,35 +658,41 @@ const AddPost = (props: AddPostProps): JSX.Element => {
           centered
           scrollable={true}
         >
-          <div>
-            <Modal.Header closeButton>
-              <Modal.Title className={styles.reportPostModalHeader}>{'Block User'}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div
-                className={styles.blockuserModalBody}
-              >{`Do you want to block ${selectedBlockUserItem?.firstName} ${selectedBlockUserItem?.lastName} ?`}</div>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button
-                className={styles.footerBtnCancel}
-                variant="default"
-                onClick={() => {
-                  setShowBlockUserPopUp(false);
-                }}
-              >
-                Cancel
-              </Button>
-              <Button className={styles.footerBtn} variant="secondary" onClick={onUserBlocked}>
-                Block
-                {showSpinner ? (
-                  <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
-                ) : (
-                  <></>
-                )}
-              </Button>
-            </Modal.Footer>
-          </div>
+          <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>{'Block User'}</Modal.Title>
+            <CloseButton
+              variant="default"
+              className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+              onClick={() => {
+                setShowBlockUserPopUp(false);
+              }}
+            ></CloseButton>
+          </Modal.Header>
+          <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <div
+              className={styles.blockuserModalBody}
+            >{`Do you want to block ${selectedBlockUserItem?.firstName} ${selectedBlockUserItem?.lastName} ?`}</div>
+          </Modal.Body>
+          <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <Button
+              className='footerBtnCancel'
+              variant="default"
+              onClick={() => {
+                setShowBlockUserPopUp(false);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button className='footerBtnDefault'
+              variant="secondary" onClick={onUserBlocked}>
+              Block
+              {showSpinner ? (
+                <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
+              ) : (
+                <></>
+              )}
+            </Button>
+          </Modal.Footer>
         </Modal>
       </>
     );
@@ -729,7 +739,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
     return (
       <>
         <Modal
-          className={styles.reportPostModalContent}
+          className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}
           show={showReportPopUp}
           onHide={handleClose}
           backdrop="static"
@@ -737,49 +747,54 @@ const AddPost = (props: AddPostProps): JSX.Element => {
           centered
           scrollable={true}
         >
-          <div>
-            <Modal.Header closeButton>
-              <Modal.Title className={styles.reportPostModalHeader}>
-                {props?.fields?.data?.datasource?.reportPostTitle?.jsonValue?.value ?? 'Report'}
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div className={styles.reportPostModalBody}>
-                {props?.fields?.data?.datasource?.reportPostHeader?.jsonValue?.value ??
-                  'Why are you reporting this?'}
-              </div>
-              <Form ref={formRef} style={{ fontSize: '15px', margin: '5px' }}>
-                {reportTypeList.map((item, index) => {
-                  return (
-                    <div key={index} className={styles.reportItem}>
-                      {item}
-                      <Form.Check
-                        type="radio"
-                        name="radioGroup"
-                        value={item}
-                        // onChange={(e) => handleSelectChange(e)}
-                        defaultChecked={index == 0 ? true : false}
-                        aria-label="radio 1"
-                      ></Form.Check>
-                    </div>
-                  );
-                })}
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button className={styles.footerBtnCancel} variant="default" onClick={handleClose}>
-                Cancel
-              </Button>
-              <Button className={styles.footerBtn} variant="secondary" onClick={onPostReported}>
-                Report
-                {showSpinner ? (
-                  <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
-                ) : (
-                  <></>
-                )}
-              </Button>
-            </Modal.Footer>
-          </div>
+          <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>
+              {props?.fields?.data?.datasource?.reportPostTitle?.jsonValue?.value ?? 'Report'}
+            </Modal.Title>
+            <CloseButton
+              variant="default"
+              className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+              onClick={handleClose}
+            ></CloseButton>
+          </Modal.Header>
+          <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <div className={styles.reportPostModalBody}>
+              {props?.fields?.data?.datasource?.reportPostHeader?.jsonValue?.value ??
+                'Why are you reporting this?'}
+            </div>
+            <Form ref={formRef} style={{ fontSize: '15px', margin: '5px' }}>
+              {reportTypeList.map((item, index) => {
+                return (
+                  <div key={index} className={styles.reportItem}>
+                    {item}
+                    <Form.Check
+                      type="radio"
+                      name="radioGroup"
+                      value={item}
+                      // onChange={(e) => handleSelectChange(e)}
+                      defaultChecked={index == 0 ? true : false}
+                      aria-label="radio 1"
+                    ></Form.Check>
+                  </div>
+                );
+              })}
+            </Form>
+          </Modal.Body>
+          <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <Button className='footerBtnCancel'
+              variant="default" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button className='footerBtnDefault'
+              variant="secondary" onClick={onPostReported}>
+              Report
+              {showSpinner ? (
+                <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
+              ) : (
+                <></>
+              )}
+            </Button>
+          </Modal.Footer>
         </Modal>
       </>
     );
@@ -2922,12 +2937,17 @@ const AddPost = (props: AddPostProps): JSX.Element => {
         centered
         animation={true}
         scrollable={true}
-        className={addPostCss.modal}
+        className={`modalContent ${addPostCss.modal} ${darkMode ? darkModeCss.darkModeModal : ''}`}
       >
-        <Modal.Header closeButton>
-          <Modal.Title style={{ color: '#283895' }}>Reactions</Modal.Title>
+        <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+          <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`} style={{ color: '#283895' }}>Reactions</Modal.Title>
+          <CloseButton
+            variant="default"
+            className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+            onClick={closeModal}
+          ></CloseButton>
         </Modal.Header>
-        <Modal.Body className={addPostCss.modalBody}>
+        <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
           <div className={addPostCss.btnConatiner}>
             {/* <button
                 onClick={handleAll}
@@ -2937,14 +2957,14 @@ const AddPost = (props: AddPostProps): JSX.Element => {
               </button> */}
             <button
               onClick={handleUp}
-              className={addPostCss.filterBtn}
+              className={`${addPostCss.filterBtn} ${darkMode ? darkModeCss.text_light : ''}`}
               style={{ color: '#000E46' }}
             >
               Up
             </button>
             <button
               onClick={handleDown}
-              className={addPostCss.filterBtn}
+              className={`${addPostCss.filterBtn} ${darkMode ? darkModeCss.text_light : ''}`}
               style={{ color: '#000E46' }}
             >
               Down
@@ -2978,8 +2998,9 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                 );
               })}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="" onClick={closeModal} className="closeButton">
+        <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+          <Button className='footerBtnCancel'
+                variant="default" onClick={closeModal}>
             Close
           </Button>
         </Modal.Footer>
@@ -3661,7 +3682,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                     />
                   </button>
                   <Modal
-                    className={styles.AddEventModalContent}
+                  className={`modalContent ${styles.AddEventModalContent} ${darkMode ? darkModeCss.darkModeModal : ''}`}
                     show={showEvent}
                     onHide={() => setShowEvent(false)}
                     backdrop="static"
@@ -3674,15 +3695,23 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                   >
                     <div className={styles.eventPostContainer}>
                       <Form onSubmit={(e: any) => submitEventForm(e)} style={{ fontSize: '14px' }}>
-                        <Modal.Header closeButton>
-                          <Modal.Title className={styles.AddEventModalHeader}>
+                        <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+                        <Modal.Title className={`modalTitle ${styles.AddEventModalHeader} ${darkMode ? darkModeCss.text_green : ''}`}>
                             Create Event Post
                           </Modal.Title>
+                          <CloseButton
+                            variant="default"
+                            className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+                            onClick={() => {
+                              setShowEvent(false);
+                              setEventType('Select Event Type');
+                            }}
+                          ></CloseButton>
                         </Modal.Header>
                         <div className={styles.AddEventModalBody}>
                           <img width="100%" src={eventImage} alt="Event Image" />
                         </div>
-                        <Modal.Body>
+                        <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
                           <div className={styles.AddEventModalProfile}>
                             <div className={styles.AddEventModalProfilePic}>
                               <img
@@ -3791,10 +3820,10 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                             />
                           </Form.Group>
                         </Modal.Body>
-                        <Modal.Footer>
+                        <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
                           <Button
-                            className={styles.eventModalCancel}
-                            variant="secondary"
+                            className='footerBtnCancel'
+                            variant="default"
                             onClick={() => {
                               setShowEvent(false);
                               setEventType('Select Event Type');
@@ -3803,7 +3832,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                             Cancel
                           </Button>
                           <Button
-                            className={styles.eventModalAddToPost}
+                            className='footerBtnDefault'
                             variant="secondary"
                             type="submit"
                             // onClick={onPostReported}
@@ -3846,18 +3875,26 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                       clearPollForm();
                     }}
                     size="lg"
+                    className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}
                   >
                     <div className={addPostCss.addPollFormContainer}>
                       <Form
                         onSubmit={(e: any) => submitPollForm(e)}
                         style={{ fontSize: '15px', margin: '5px' }}
                       >
-                        <Modal.Header closeButton>
-                          <Modal.Title className={styles.AddEventModalHeader}>
+                        <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+                          <Modal.Title className={`modalTitle ${styles.AddEventModalHeader} ${darkMode ? darkModeCss.text_green : ''}`}>
                             Create Poll
                           </Modal.Title>
+                          <CloseButton
+                            variant="default"
+                            className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+                            onClick={() => {
+                              clearPollForm();
+                            }}
+                          ></CloseButton>
                         </Modal.Header>
-                        <Modal.Body>
+                        <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
                           <div className={styles.AddEventModalProfile}>
                             <div className={styles.AddEventModalProfilePic}>
                               <img
@@ -3962,10 +3999,10 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                             </button> */}
                           </div>
                         </Modal.Body>
-                        <Modal.Footer>
+                        <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
                           <Button
-                            className={styles.eventModalCancel}
-                            variant="secondary"
+                            className='footerBtnCancel'
+                            variant="default"
                             onClick={() => {
                               clearPollForm();
                             }}
@@ -3973,7 +4010,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                             Clear
                           </Button>
                           <Button
-                            className={styles.eventModalAddToPost}
+                            className='footerBtnDefault'
                             variant="secondary"
                             type="submit"
                           >

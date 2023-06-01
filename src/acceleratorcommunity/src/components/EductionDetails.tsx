@@ -1,7 +1,13 @@
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Form, Modal, CloseButton } from 'react-bootstrap';
 import { Text } from '@sitecore-jss/sitecore-jss-nextjs';
+import WebContext from '../Context/WebContext';
+import React, { useContext } from 'react';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 const EductionDetails = (props: any) => {
+  const { darkMode } = {
+    ...useContext(WebContext),
+  };
   return (
     <>
       <div className="EducationContainer">
@@ -58,11 +64,16 @@ const EductionDetails = (props: any) => {
         )}
       </div>
 
-      <Modal show={props.showEducationModal} onHide={props.handleCloseForEducation}>
-        <Modal.Header closeButton>
-          <Modal.Title>Education Information</Modal.Title>
+      <Modal show={props.showEducationModal} onHide={props.handleCloseForEducation} className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}>
+        <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+          <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>Education Information</Modal.Title>
+          <CloseButton
+            variant="default"
+            className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+            onClick={props.handleCloseForEducation}
+          ></CloseButton>
         </Modal.Header>
-        <Modal.Body className="modalForProfile">
+        <Modal.Body className={`modalForProfile ${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
           <Form onSubmit={props.submitForm1}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>
@@ -267,11 +278,13 @@ const EductionDetails = (props: any) => {
             </span>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={props.handleCloseForEducation}>
+        <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+          <Button className='footerBtnCancel'
+                variant="default" onClick={props.handleCloseForEducation}>
             Close
           </Button>
-          <Button variant="primary" onClick={props.handleSaveEduaction}>
+          <Button className='footerBtnDefault'
+                variant="secondary" onClick={props.handleSaveEduaction}>
             Save Changes
           </Button>
         </Modal.Footer>

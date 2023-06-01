@@ -22,7 +22,7 @@ import parser from 'html-react-parser';
 
 // import { Form } from 'react-bootstrap';
 import Head from 'next/head';
-import { Button, Dropdown, Form, Modal, Spinner } from 'react-bootstrap';
+import { Button, Dropdown, Form, Modal, Spinner, CloseButton } from 'react-bootstrap';
 import { NextImage } from '@sitecore-jss/sitecore-jss-nextjs';
 import copylink from '../../assets/images/copylink.svg';
 import ToastNotification from 'components/ToastNotification';
@@ -34,6 +34,7 @@ import EventCard from 'components/EventCard';
 import PollCard from 'components/PollCard';
 import { voteInPollUrl } from 'assets/helpers/constants';
 import AxiosRequest from 'src/API/AxiosRequest';
+import darkModeCss from '../../assets/darkTheme.module.css';
 
 // import {calculateTimeDifference} from
 
@@ -47,7 +48,7 @@ type BlockUserFields = {
 
 function viewSinglePost(props: any) {
   // console.log('mudatatatata', props);
-  const { userToken, objectId, userObject, setUserToken } = {
+  const { userToken, objectId, userObject, setUserToken, darkMode } = {
     ...useContext(WebContext),
   };
 
@@ -320,7 +321,7 @@ function viewSinglePost(props: any) {
     return (
       <>
         <Modal
-          className={styles.reportPostModalContent}
+          className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}
           show={showBlockUserPopUp}
           onHide={() => setShowBlockUserPopUp(false)}
           backdrop="static"
@@ -329,25 +330,33 @@ function viewSinglePost(props: any) {
           scrollable={true}
         >
           <div>
-            <Modal.Header closeButton>
-              <Modal.Title className={styles.reportPostModalHeader}>{'Block User'}</Modal.Title>
+            <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+              <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>{'Block User'}</Modal.Title>
+              <CloseButton
+                variant="default"
+                className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+                onClick={() => {
+                  setShowBlockUserPopUp(false);
+                }}
+              ></CloseButton>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
               <div
                 className={styles.reportPostModalBody}
               >{`Do you want to block ${selectedBlockUserItem?.firstName} ${selectedBlockUserItem?.lastName} ?`}</div>
             </Modal.Body>
-            <Modal.Footer>
+            <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
               <Button
-                className={styles.footerBtn}
-                variant="secondary"
+                className='footerBtnCancel'
+                variant="default"
                 onClick={() => {
                   setShowBlockUserPopUp(false);
                 }}
               >
                 Cancel
               </Button>
-              <Button className={styles.footerBtn} variant="secondary" onClick={onUserBlocked}>
+              <Button className='footerBtnDefault'
+                variant="secondary" onClick={onUserBlocked}>
                 Block
                 {showSpinner ? (
                   <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />
@@ -400,7 +409,7 @@ function viewSinglePost(props: any) {
     return (
       <>
         <Modal
-          className={styles.reportPostModalContent}
+          className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}
           show={showReportPopUp}
           onHide={handleClose}
           backdrop="static"
@@ -409,12 +418,17 @@ function viewSinglePost(props: any) {
           scrollable={true}
         >
           <div>
-            <Modal.Header closeButton>
-              <Modal.Title className={styles.reportPostModalHeader}>
+            <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+              <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>
                 {props?.fields?.data?.datasource?.reportPostTitle?.jsonValue?.value ?? 'Report'}
               </Modal.Title>
+              <CloseButton
+                variant="default"
+                className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+                onClick={handleClose}
+              ></CloseButton>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
               <div className={styles.reportPostModalBody}>
                 {props?.fields?.data?.datasource?.reportPostHeader?.jsonValue?.value ??
                   'Why are you reporting this?'}
@@ -437,11 +451,13 @@ function viewSinglePost(props: any) {
                 })}
               </Form>
             </Modal.Body>
-            <Modal.Footer>
-              <Button className={styles.footerBtn} variant="secondary" onClick={handleClose}>
+            <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+              <Button className='footerBtnCancel'
+                variant="default" onClick={handleClose}>
                 Cancel
               </Button>
-              <Button className={styles.footerBtn} variant="secondary" onClick={onPostReported}>
+              <Button className='footerBtnDefault'
+                variant="secondary" onClick={onPostReported}>
                 Report
                 {showSpinner ? (
                   <Spinner style={{ marginLeft: '5px', width: '30px', height: '30px' }} />

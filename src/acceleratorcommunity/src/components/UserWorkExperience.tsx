@@ -1,10 +1,14 @@
-import React from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { Button, Form, Modal, CloseButton } from 'react-bootstrap';
 import { Text } from '@sitecore-jss/sitecore-jss-nextjs';
+import WebContext from '../Context/WebContext';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 const UserWorkExperience = (props: any) => {
   // handleOpenWorkModal
-
+  const { darkMode } = {
+    ...useContext(WebContext),
+  };
   return (
     <div className="workContainer">
       <div className="addNewItem">
@@ -61,11 +65,16 @@ const UserWorkExperience = (props: any) => {
         )}
       </div>
 
-      <Modal show={props.openWorkModal} onHide={props.handleCloseWorkModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Work Information</Modal.Title>
+      <Modal show={props.openWorkModal} onHide={props.handleCloseWorkModal} className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}>
+        <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+          <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>Work Information</Modal.Title>
+            <CloseButton
+              variant="default"
+              className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+              onClick={props.handleCloseWorkModal}
+            ></CloseButton>
         </Modal.Header>
-        <Modal.Body className="modalForProfile">
+        <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
           <Form onSubmit={props.submitForm1}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>
@@ -200,11 +209,13 @@ const UserWorkExperience = (props: any) => {
             </Form.Group>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={props.handleCloseWorkModal}>
+        <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+          <Button className='footerBtnCancel'
+                variant="default" onClick={props.handleCloseWorkModal}>
             Close
           </Button>
-          <Button variant="primary" onClick={props.submitWorkModal}>
+          <Button className='footerBtnDefault'
+                variant="secondary" onClick={props.submitWorkModal}>
             Save Changes
           </Button>
         </Modal.Footer>
