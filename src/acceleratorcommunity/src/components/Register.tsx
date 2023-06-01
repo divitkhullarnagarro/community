@@ -128,18 +128,21 @@ const Register = (props: RegisterProps): JSX.Element => {
 
   const targetItems = props?.fields?.data?.datasource;
   console.log('targetItems', targetItems);
+
   function setFirstNameValue(val: any) {
-    const updatedValue = spaceRemover(val);
-    setFirstName(updatedValue);
-    const isError = alphabateAndSpaceChecker(
-      updatedValue,
-      targetItems?.firstNameLabel?.jsonValue?.value
-    );
-    if (isError.error) {
-      setFirstNameError(true);
-      setFirstNameErrorMessage(isError.errorMessage);
-    } else {
-      setFirstNameError(false);
+    if (val.length <= 25) {
+      const updatedValue = spaceRemover(val);
+      setFirstName(updatedValue);
+      const isError = alphabateAndSpaceChecker(
+        updatedValue,
+        targetItems?.firstNameLabel?.jsonValue?.value
+      );
+      if (isError.error) {
+        setFirstNameError(true);
+        setFirstNameErrorMessage(isError.errorMessage);
+      } else {
+        setFirstNameError(false);
+      }
     }
   }
 
@@ -158,17 +161,19 @@ const Register = (props: RegisterProps): JSX.Element => {
   }
 
   function setLastNameValue(val: any) {
-    const updatedValue = spaceRemover(val);
-    setLastName(updatedValue);
-    const isError = alphabateAndSpaceChecker(
-      updatedValue,
-      targetItems?.lastNameLabel?.jsonValue?.value
-    );
-    if (isError.error) {
-      setLastNameError(true);
-      setLastNameErrorMessage(isError.errorMessage);
-    } else {
-      setLastNameError(false);
+    if (val.length <= 25) {
+      const updatedValue = spaceRemover(val);
+      setLastName(updatedValue);
+      const isError = alphabateAndSpaceChecker(
+        updatedValue,
+        targetItems?.lastNameLabel?.jsonValue?.value
+      );
+      if (isError.error) {
+        setLastNameError(true);
+        setLastNameErrorMessage(isError.errorMessage);
+      } else {
+        setLastNameError(false);
+      }
     }
   }
 

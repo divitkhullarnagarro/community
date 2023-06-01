@@ -1998,13 +1998,16 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                               }
                               aria-controls="repliesContainer"
                               aria-expanded={comment?.isOpenReply}
-                              className="commentReply"
+                              className={`commentReply ${darkMode ? 'darkMode_textColor' : ''}`}
                               disabled={comment?.isRespPending}
                               style={comment?.isRespPending ? { opacity: 0.5 } : {}}
                             >
                               Reply
                             </button>
-                            <span className="commentPostDate" style={{ fontSize: '12px' }}>
+                            <span
+                              className={`commentPostDate ${darkMode ? 'darkMode_textColor' : ''}`}
+                              style={{ fontSize: '12px' }}
+                            >
                               {' '}
                               {calculateTimeDifference(comment?.createdOn)}
                             </span>
@@ -2016,7 +2019,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                                   setDeleteCommentId({ postId: post?.id, commentId: comment?.id });
                                   setShowDeleteCommentPopup(true);
                                 }}
-                                className="commentReply"
+                                className={`commentReply ${darkMode ? 'darkMode_textColor' : ''}`}
                               >
                                 Delete
                               </button>
@@ -2030,7 +2033,7 @@ const AddPost = (props: AddPostProps): JSX.Element => {
                                 onClick={() => {
                                   commentEditOn(post?.id, comment?.id, !comment?.isEditOn);
                                 }}
-                                className="commentReply"
+                                className={`commentReply ${darkMode ? 'darkMode_textColor' : ''}`}
                               >
                                 Edit
                               </button>
