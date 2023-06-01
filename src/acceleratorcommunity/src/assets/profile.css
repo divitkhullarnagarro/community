@@ -245,6 +245,23 @@
 .required {
   color: red;
 }
+.noDetailsParent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+}
+.noDetails {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  width: 80%;
+  /* border: 2px dashed; */
+  border-radius: 14px;
+  margin-top: 20px;
+}
 
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
