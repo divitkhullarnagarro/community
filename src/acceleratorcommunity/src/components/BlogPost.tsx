@@ -206,6 +206,14 @@ const TextEditor = (): JSX.Element => {
     });
   };
 
+  let shouldDisablePostCreation = true;
+  const str = editorState.getCurrentContent().getPlainText();
+  if (str.trim()) {
+    shouldDisablePostCreation = false;
+  } else {
+    shouldDisablePostCreation = true;
+  }
+
   return (
     <div className={styles.container}>
       <div>
@@ -286,13 +294,14 @@ const TextEditor = (): JSX.Element => {
             mention={{
               separator: ' ',
               trigger: '@',
-              suggestions: mentionUserData,
+              suggestions: mentionUserData && mentionUserData.length > 0 ? mentionUserData : [],
             }}
             hashtag={{}}
           />
 
           <Button
             className={`btn btn-lg ${styles.publishButton}`}
+            disabled={shouldDisablePostCreation}
             variant="secondary"
             style={{
               boxShadow: !createNewPostError ? 'none' : '0 4px 8px 0 rgba(255, 0, 0, 0.6)',
