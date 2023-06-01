@@ -56,14 +56,24 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isFullPage] = useState(IsFullList === '1');
   const getPeopleYouMayKnowList = async (userToken: string | undefined) => {
+    setIsDataLoaded(false);
     let response = await peopleYouMayKnowCall(userToken);
-    // console.log('peopleYouMayKnowList', response);
     if (response?.data?.success) {
       setIsDataLoaded(true);
       setPeopleYouMayKnowList(response?.data?.data);
     }
   };
-  const skeletonDummyArr = [1, 2, 3, 4, 5];
+
+  const NoPeopleYouMayKnowLabel = () => {
+    return (
+      <>
+        <div>No new user suggestions are available to follow.</div>
+      </>
+    );
+  };
+
+  const skeletonDummyArr = [1, 2, 3, 4, 5, 6];
+
   const HalfPagePeopleYouMayKnow = () => {
     return (
       <div className={`${styles.wrapper} ${darkMode ? darkModeCss.grey_2 : ''}`}>
@@ -127,7 +137,13 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
               );
             })
           ) : (
-            <></>
+            <div
+              className={`${styles.widgetViewNoPeopleSuggestionListHeader} ${
+                darkMode ? darkModeCss.text_light : ''
+              }`}
+            >
+              <NoPeopleYouMayKnowLabel />
+            </div>
           )}
         </div>
       </div>
@@ -159,6 +175,21 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
           )}
         </div>
       </div>
+    );
+  };
+
+  const FullPagePeopleYouMayKnowSkeleton = (index: any) => {
+    return (
+      <Card key={index} className={styles.cardItem}>
+        <div className={styles.imageContainer}>
+          <Skeleton height={260} />
+        </div>
+        <Card.Body>
+          <Card.Title className={styles.cardTitle}>
+            <Skeleton height={40} />
+          </Card.Title>
+        </Card.Body>
+      </Card>
     );
   };
   // const PeopleYouMayKnowHalfPageItem = (item: peopleYouMayKnowFields) => {
@@ -235,12 +266,24 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
           />
         </h2>
         <div className={styles.newgrid}>
-          {peopleYouMayKnowList?.length > 0 ? (
-            peopleYouMayKnowList.slice(0, numItems).map((item) => {
-              return <PeopleYouMayKnowFullPageItem {...item} />;
-            })
+          {isDataLoaded ? (
+            peopleYouMayKnowList?.length > 0 ? (
+              peopleYouMayKnowList.slice(0, numItems).map((item) => {
+                return <PeopleYouMayKnowFullPageItem {...item} />;
+              })
+            ) : (
+              <div
+                className={`${styles.fullPageNoPeopleSuggestionListHeader} ${
+                  darkMode ? darkModeCss.text_light : ''
+                }`}
+              >
+                <NoPeopleYouMayKnowLabel />
+              </div>
+            )
           ) : (
-            <></>
+            skeletonDummyArr.concat(skeletonDummyArr).map((item: any) => {
+              return <FullPagePeopleYouMayKnowSkeleton {...item} />;
+            })
           )}
         </div>
         {peopleYouMayKnowList === undefined || numItems >= peopleYouMayKnowList?.length ? null : (
@@ -298,7 +341,7 @@ const PeopleYouMayKnow = (props: PeopleYouMayKnowProps): JSX.Element => {
           <div className={`${styles.center} ${darkMode ? styles.listHover : ''}`}>
             <ul>
               <button>
-                <li className={styles.rowItem}>
+                <li className={styles.rowItem} onClick={() => getPeopleYouMayKnowList(userToken)}>
                   <NextImage
                     contentEditable={true}
                     field={people}

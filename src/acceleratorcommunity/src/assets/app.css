@@ -1,10 +1,17 @@
 body {
   font-family: 'Equip-Regular', sans-serif;
 }
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Equip-Medium', sans-serif;
 }
-html, body, #__next {
+html,
+body,
+#__next {
   height: 100%;
 }
 a[target='_blank']:after {
@@ -13,7 +20,8 @@ a[target='_blank']:after {
 .main.darkMode_bg {
   min-height: 100%;
 }
-div:empty, p:empty {
+div:empty,
+p:empty {
   margin: 0;
 }
 
@@ -55,4 +63,88 @@ div:empty, p:empty {
   right: 5px !important;
   filter: invert(1);
   z-index: 2;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+
+.modalHeader {
+  padding: 10px;
+}
+.modalClose {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  opacity: 1;
+  filter: invert(8%) sepia(48%) saturate(4526%) hue-rotate(222deg) brightness(86%) contrast(111%);
+  font-size: 15px;
+}
+.modalTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  font-size: 24px;
+  color: #283895;
+  margin: 0px auto;
+}
+
+.modalBody {
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.footerBtn {
+  font-size: 1.25rem;
+}
+.footerBtnCancel {
+  font-size: 16px;
+  color: #F58C60;
+}
+.footerBtnCancel:hover, .footerBtnCancel:active, .footerBtnCancel:focus-visible {
+  color: #F58C60 !important;
+}
+.footerBtnDefault {
+  background-color: #47D7AC;
+  border-color: #47D7AC;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+.footerBtnDefault:hover, .footerBtnDefault:active, .footerBtnDefault:focus-visible {
+  background-color: #ffffff !important;
+  color: #47D7AC !important;
+  border-color: #47D7AC !important;
+}
+
+@media only screen and (max-width: 640px) {
+
+  .modalContent {
+    overflow-y: auto;
+  }
+
+  .modalTitle {
+    font-size: 1.0625rem;
+  }
+
+  .modalBody {
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.1875rem;
+    font-size: 1rem;
+  }
+
+  .footerBtn {
+    font-size: 1.25rem;
+  }
 }

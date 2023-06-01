@@ -17,10 +17,14 @@ import { useRouter } from 'next/router';
 import uploadFilesCall from 'src/API/uploadFilesCall';
 import imagelogo from '../assets/images/imagelogo.svg';
 import DotLoader from './DotLoader';
+import GenericNotificationContext from 'src/Context/GenericNotificationContext';
 const TextEditor = (): JSX.Element => {
   const router = useRouter();
   const { userToken, allPeersList } = {
     ...useContext(WebContext),
+  };
+  const { setError, setMessage, setShowNotification } = {
+    ...useContext(GenericNotificationContext),
   };
   let [postText, setPostText] = useState('');
   let [headlineText, setHeadlineText] = useState('');
@@ -101,9 +105,7 @@ const TextEditor = (): JSX.Element => {
     uploadMultipleFiles(e);
   }
   async function UploadFilesToServer(file: any, type: string) {
-    return await uploadFilesCall(userToken, file, type).then((response) => {
-      return response?.data;
-    });
+    return await uploadFilesCall(userToken, file, type);
   }
   async function uploadMultipleFiles(e: any) {
     const files = e.target.files;
@@ -114,9 +116,24 @@ const TextEditor = (): JSX.Element => {
     const fileArray: any = [];
     for (let i = 0; i < files.length; i++) {
       let resp = await UploadFilesToServer(files[i], 'IMAGE');
-      let uniqueId = generateUniqueId();
-      if (!resp?.data) break;
-      fileArray.push({ id: uniqueId, url: resp?.data, mediaType: 'IMAGE', mediaSequence: 0 });
+      if (resp?.data?.success) {
+        let uniqueId = generateUniqueId();
+        fileArray.push({
+          id: uniqueId,
+          url: resp?.data?.data,
+          mediaType: 'IMAGE',
+          mediaSequence: 0,
+        });
+      } else {
+        setError(true);
+        setMessage(
+          resp?.data?.errorMessages?.[0]
+            ? resp?.data?.errorMessages?.[0]
+            : 'Something Went Wrong. Please Try Again'
+        );
+        setShowNotification(true);
+        break;
+      }
     }
     // console.log(files, 'filearray1');
     if (fileArray.length === files.length) {
@@ -188,6 +205,14 @@ const TextEditor = (): JSX.Element => {
       }
     });
   };
+
+  let shouldDisablePostCreation = true;
+  const str = editorState.getCurrentContent().getPlainText();
+  if (str.trim()) {
+    shouldDisablePostCreation = false;
+  } else {
+    shouldDisablePostCreation = true;
+  }
 
   return (
     <div className={styles.container}>
@@ -269,13 +294,14 @@ const TextEditor = (): JSX.Element => {
             mention={{
               separator: ' ',
               trigger: '@',
-              suggestions: mentionUserData,
+              suggestions: mentionUserData && mentionUserData.length > 0 ? mentionUserData : [],
             }}
             hashtag={{}}
           />
 
           <Button
             className={`btn btn-lg ${styles.publishButton}`}
+            disabled={shouldDisablePostCreation}
             variant="secondary"
             style={{
               boxShadow: !createNewPostError ? 'none' : '0 4px 8px 0 rgba(255, 0, 0, 0.6)',

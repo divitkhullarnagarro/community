@@ -17,7 +17,40 @@ export const validatePassword = (password: string) => {
   return regex.test(password);
 };
 
-export const numberOnly = (value : string)=> {
+export const numberOnly = (value: string) => {
   const regex = /^\d+$/;
   return regex.test(value);
-}
+};
+
+export const alphabateAndSpaceChecker = (val: any, fieldName: string) => {
+  const temp = { error: false, errorMessage: '' };
+  if (val === '') {
+    temp.error = true;
+    temp.errorMessage = `${fieldName} is Required`;
+  } else if (/^[a-zA-Z ]*$/.test(val)) {
+    temp.error = false;
+    temp.errorMessage = '';
+  } else {
+    temp.error = true;
+    temp.errorMessage = `Enter Valid ${fieldName}`;
+  }
+  return temp;
+};
+
+export const validatePhoneNumber = (val: any, fieldName: string) => {
+  const temp = { error: false, errorMessage: '' };
+  if (val === '') {
+    temp.error = true;
+    temp.errorMessage = `${fieldName} is Required`;
+  } else if (val.length < 10) {
+    temp.error = true;
+    temp.errorMessage = `${fieldName} should have 10 digits`;
+  } else if (!validatePhone(val)) {
+    temp.error = true;
+    temp.errorMessage = `Enter Valid ${fieldName}`;
+  } else {
+    temp.error = false;
+    temp.errorMessage = '';
+  }
+  return temp;
+};

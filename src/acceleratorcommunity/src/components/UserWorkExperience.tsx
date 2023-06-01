@@ -7,6 +7,21 @@ const UserWorkExperience = (props: any) => {
 
   return (
     <div className="workContainer">
+      <div className="addNewItem">
+        <Button onClick={props.addNewWorkDetail}>
+          <span>
+            <Text
+              field={
+                props?.labels?.addWorkBtn?.jsonValue
+                  ? props?.labels?.addWorkBtn?.jsonValue
+                  : {
+                      value: 'Add Work',
+                    }
+              }
+            />
+          </span>
+        </Button>
+      </div>
       <div>
         {props?.placeOfPractice?.length > 0 ? (
           props?.placeOfPractice.map((work: any, index: number) => {
@@ -23,7 +38,7 @@ const UserWorkExperience = (props: any) => {
                   <div className="instituteFields">
                     {work.joiningDate} - {work.joiningYear}
                   </div>
-                  <div className="instituteFields">{work.wid}</div>
+                  {/* <div className="instituteFields">{work.wid}</div> */}
                   <div className="instituteFields">{work.presentlyWorkingHere}</div>
                   <div className="instituteFields">{work.leavingDate}</div>
                   <div className="instituteFields">{work.latitude}</div>
@@ -40,23 +55,10 @@ const UserWorkExperience = (props: any) => {
             );
           })
         ) : (
-          <></>
+          <div className="noDetailsParent">
+            <div className="noDetails">You do not have any work details added yet.</div>
+          </div>
         )}
-        <div className="addNewItem">
-          <Button onClick={props.addNewWorkDetail}>
-            <span>
-              <Text
-                field={
-                  props?.labels?.addWorkBtn?.jsonValue
-                    ? props?.labels?.addWorkBtn?.jsonValue
-                    : {
-                        value: 'Add Work',
-                      }
-                }
-              />
-            </span>
-          </Button>
-        </div>
       </div>
 
       <Modal show={props.openWorkModal} onHide={props.handleCloseWorkModal}>
@@ -80,9 +82,7 @@ const UserWorkExperience = (props: any) => {
             </Form.Group>
             <span>
               {props.errorState?.orgName ? <span className="error">Field is required</span> : ' '}
-              {/* {console.log('fromuserexperiencecomponent', props.errorState?.orgName)} */}
             </span>
-            {/* {console.log('props.editUserData?.orgName', props?.placeOfPractice)} */}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Designation</Form.Label>
               <Form.Control
@@ -105,27 +105,36 @@ const UserWorkExperience = (props: any) => {
                 placeholder="Employee ID"
                 autoFocus
               />
-              {props.errorState?.empId ? <span className="error">Field is required</span> : ' '}
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Social Url</Form.Label>
               <Form.Control
                 onChange={(e) => props.setSocialUrl(e.target.value)}
                 value={props.specificPlaceOfWork?.socialUrl}
-                type="text"
                 placeholder="Social Url"
                 autoFocus
+                type="url"
+                pattern="https?://.+"
               />
+              {props.errorState?.urlError ? <span className="error">Url is incorrect</span> : ' '}
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Pincode</Form.Label>
               <Form.Control
                 onChange={(e) => props.setPincodeForWork(e.target.value)}
                 value={props.specificPlaceOfWork?.pincode}
-                type="number"
+                type="text"
                 placeholder="pincode"
                 autoFocus
+                maxLength={6}
               />
+              <span>
+                {props.errorState?.workPinCodeLength ? (
+                  <span className="error">Pincode must be of length 6</span>
+                ) : (
+                  ' '
+                )}
+              </span>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>City</Form.Label>
@@ -161,7 +170,8 @@ const UserWorkExperience = (props: any) => {
               <Form.Label>Still Working here</Form.Label>
               <Form.Check
                 onChange={(e) => props.setStillWorkingHere(e.target.value)}
-                // value={props.specificPlaceOfWork?.orgName}
+                checked={props.specificPlaceOfWork?.presentlyWorkingHere}
+                // value={props.specificPlaceOfWork?.presentlyWorkingHere}
                 ref={props.checkboxRef}
                 placeholder="Still Working here"
               />
@@ -177,16 +187,6 @@ const UserWorkExperience = (props: any) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>joining Year</Form.Label>
-              <Form.Control
-                onChange={(e) => props.setJoiningYear(e.target.value)}
-                value={props.specificPlaceOfWork?.joiningYear}
-                type="number"
-                placeholder="joining year"
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Leaving Date</Form.Label>
               <Form.Control
                 onChange={(e) => props.setLeavingDate(e.target.value)}
@@ -194,6 +194,8 @@ const UserWorkExperience = (props: any) => {
                 type="date"
                 placeholder="Leaving Date"
                 autoFocus
+                min={props?.placeOfPracticeState?.joiningDate}
+                disabled={props.specificPlaceOfWork?.presentlyWorkingHere}
               />
             </Form.Group>
           </Form>

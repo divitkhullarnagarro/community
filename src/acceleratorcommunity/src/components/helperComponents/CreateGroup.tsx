@@ -10,8 +10,9 @@ import style from '../../assets/createGroup.module.css';
 import uploadFilesCall from 'src/API/uploadFilesCall';
 import WebContext from 'src/Context/WebContext';
 import ToastNotification from './../ToastNotification';
+import darkModeCss from '../../assets/darkTheme.module.css';
 // import Image from 'next/image';
-import { Spinner } from 'react-bootstrap';
+import { Spinner, CloseButton, Button } from 'react-bootstrap';
 import { spaceRemover } from 'assets/helpers/helperFunctions';
 
 function CreateGroup({
@@ -25,7 +26,7 @@ function CreateGroup({
   setWantToRerender: any;
   wantToRerender: any;
 }) {
-  const { userToken, userObject } = {
+  const { userToken, userObject, darkMode } = {
     ...useContext(WebContext),
   };
 
@@ -47,7 +48,7 @@ function CreateGroup({
 
   const handleNameChange = (value: string) => {
     const updatedValue = spaceRemover(value);
-    if (updatedValue.length < 50) {
+    if (updatedValue.length < 40) {
       setNameValue(updatedValue);
     }
   };
@@ -64,19 +65,19 @@ function CreateGroup({
       method: 'GET',
     });
     if (res?.success) {
-      // console.log('asdfgasdfg', res);
       setmembersSuggestionsList(res.data);
-    } else {
-      // console.log('responsecreateGroup', res);
-      setToastError(true);
-      setToastMessage(
-        res?.data?.errorMessages?.[0]
-          ? res?.data?.errorMessages?.[0]
-          : 'Something Went Wrong. Please Try Again'
-      );
-
-      setShowNofitication(true);
     }
+    // else {
+    //   // console.log('responsecreateGroup', res);
+    //   setToastError(true);
+    //   setToastMessage(
+    //     res?.data?.errorMessages?.[0]
+    //       ? res?.data?.errorMessages?.[0]
+    //       : 'Something Went Wrong. Please Try Again'
+    //   );
+
+    //   setShowNofitication(true);
+    // }
   };
 
   const handleAddMemberChange = async (e: any) => {
@@ -96,7 +97,6 @@ function CreateGroup({
       }
     });
     if (filteredValueAddedMember?.length > 0) {
-      // console.log('filtered', filteredValueAddedMember, e.target.value, addMemberList);
       setDuplicateMemberError(true);
     } else {
       setDuplicateMemberError(false);
@@ -128,16 +128,17 @@ function CreateGroup({
     });
     if (res?.success) {
       setmembersSuggestionsList(res.data);
-    } else {
-      setToastError(true);
-      setToastMessage(
-        res?.data?.errorMessages?.[0]
-          ? res?.data?.errorMessages?.[0]
-          : 'Something Went Wrong. Please Try Again'
-      );
-
-      setShowNofitication(true);
     }
+    //  else {
+    //   setToastError(true);
+    //   setToastMessage(
+    //     res?.data?.errorMessages?.[0]
+    //       ? res?.data?.errorMessages?.[0]
+    //       : 'Something Went Wrong. Please Try Again'
+    //   );
+
+    //   setShowNofitication(true);
+    // }
   };
 
   const createGroupSubmit = async (e: any) => {
@@ -158,15 +159,11 @@ function CreateGroup({
             createdOn: null,
           },
         });
-        if (res?.success || !res?.errorCode) {
+        if (res?.success) {
           setCreatingGroup(false);
           setWantToRerender(!wantToRerender);
           setToastSuccess(true);
-          setToastMessage(
-            res?.data?.errorMessages?.[0]
-              ? res?.data?.errorMessages?.[0]
-              : 'Something Went Wrong. Please Try Again'
-          );
+          setToastMessage('Group Created Successfully');
           setShowNofitication(true);
           setAddMemberList([]);
           setAddMemberValue('');
@@ -175,13 +172,18 @@ function CreateGroup({
           setCreateGroupVisibel(false);
           setImageUrl('');
           setBannerImageURL('');
+        } else {
+          setToastError(true);
+          setToastMessage(
+            res?.data?.errorMessages?.[0]
+              ? res?.data?.errorMessages?.[0]
+              : 'Something Went Wrong. Please Try Again'
+          );
+
+          setShowNofitication(true);
         }
       } else {
         setCreatingGroup(false);
-        setToastError(true);
-        setToastMessage('Something Went Wrong. Please Try Again');
-
-        setShowNofitication(true);
       }
     } catch (error) {
       setCreatingGroup(false);
@@ -264,15 +266,21 @@ function CreateGroup({
     <div className={style.createGroup}>
       <Modal
         show={createGroupVisibel}
+        className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}
         onHide={() => {
           setCreateGroupVisibel(false);
           clearAllFields();
         }}
       >
-        <Modal.Header closeButton>
-          <Modal.Title className={style.modalTitle}>Create Group</Modal.Title>
+        <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+          <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>Create Group</Modal.Title>
+          <CloseButton
+            variant="default"
+            className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+            onClick={() => setCreateGroupVisibel(false)}
+          ></CloseButton>
         </Modal.Header>
-        <form className="form" onSubmit={(e) => createGroupSubmit(e)}>
+        <form className={`form ${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`} onSubmit={(e) => createGroupSubmit(e)}>
           <Modal.Body>
             <div className="form-group">
               <input
@@ -395,20 +403,21 @@ function CreateGroup({
             {/* {bannerImageURL && <Image src={bannerImageURL} height={300} width={600} />} */}
           </Modal.Body>
           <Modal.Footer>
-            <button
+            <Button
               type="button"
-              className={style.closeButton}
+              variant="default"
+              className='footerBtnCancel'
               onClick={() => setCreateGroupVisibel(false)}
             >
               Close
-            </button>
-            <button type="submit" className={style.saveButton} disabled={disableButton}>
+            </Button>
+            <Button type="submit" className='footerBtnDefault' disabled={disableButton} variant="secondary">
               {creatingGroup ? (
                 <Spinner style={{ width: '15px', height: '15px' }} animation="border" />
               ) : (
                 'Save'
               )}
-            </button>
+            </Button>
           </Modal.Footer>
         </form>
       </Modal>

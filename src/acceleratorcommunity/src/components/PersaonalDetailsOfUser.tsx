@@ -1,9 +1,11 @@
 import { useContext } from 'react';
 import WebContext from '../Context/WebContext';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Form, Modal, CloseButton } from 'react-bootstrap';
 import { Text } from '@sitecore-jss/sitecore-jss-nextjs';
+import darkModeCss from '../assets/darkTheme.module.css';
 
 const PersaonalDetailsOfUser = (props: any): JSX.Element => {
+  var today = new Date().toISOString().split('T')[0];
   const { darkMode } = { ...useContext(WebContext) };
   return (
     <>
@@ -18,11 +20,16 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
         </Button>
       </div>
       <div>
-        <Modal show={props.showForm1} onHide={props.handleClose1}>
-          <Modal.Header closeButton>
-            <Modal.Title>Personal Information</Modal.Title>
+        <Modal show={props.showForm1} onHide={props.handleClose1} className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}>
+          <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>Personal Information</Modal.Title>
+            <CloseButton
+                variant="default"
+                className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+                onClick={props.handleClose1}
+              ></CloseButton>
           </Modal.Header>
-          <Modal.Body className="modalForProfile">
+          <Modal.Body className={`modalForProfile ${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
             <Form onSubmit={props.submitForm1}>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>
@@ -92,6 +99,7 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                   type="number"
                   placeholder="Experience"
                   autoFocus
+                  min="0"
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -142,6 +150,7 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                   type="date"
                   placeholder="Dob"
                   autoFocus
+                  max={today}
                 />
                 {props.errorState?.dob ? <span className="error">Field is required</span> : ' '}
               </Form.Group>
@@ -156,16 +165,6 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Age</Form.Label>
-                <Form.Control
-                  onChange={(e) => props.setAgeValue(e.target.value)}
-                  value={props.personalInfo?.age}
-                  type="number"
-                  placeholder="age"
-                  autoFocus
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>website Url</Form.Label>
                 <Form.Control
                   onChange={(e) => props.setWebSiteUrl(e.target.value)}
@@ -174,6 +173,11 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                   placeholder="websteUrl"
                   autoFocus
                 />
+                {props.errorState?.websiteUrlError ? (
+                  <span className="error">Url is incorrect</span>
+                ) : (
+                  ' '
+                )}
               </Form.Group>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>
@@ -194,7 +198,6 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                   <option value="FEMALE">FEMALE</option>
                   <option value="OTHERS">OTHERS</option>
                 </Form.Control>
-                {/* {console.log('+++++++++++++++++++++++++++', props.errorState?.gender)} */}
                 {props.errorState?.gender ? <span className="error">Field is required</span> : ' '}
                 {props.personalInfo?.gender === undefined ? (
                   <span className="error">Field is required</span>
@@ -204,21 +207,26 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
               </Form.Group>
             </Form>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={props.handleClose1}>
+          <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <Button variant="default" className='footerBtnCancel' onClick={props.handleClose1}>
               Close
             </Button>
-            <Button variant="primary" onClick={props.submitPersonalDetails}>
+            <Button variant="secondary" className='footerBtnDefault' onClick={props.submitPersonalDetails}>
               Save Changes
             </Button>
           </Modal.Footer>
         </Modal>
 
-        <Modal show={props.languageForm} onHide={props.handleCloseLanguageForm}>
-          <Modal.Header closeButton>
-            <Modal.Title>Language</Modal.Title>
+        <Modal show={props.languageForm} onHide={props.handleCloseLanguageForm} className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}>
+          <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>Language</Modal.Title>
+            <CloseButton
+              variant="default"
+              className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+              onClick={props.handleCloseLanguageForm}
+            ></CloseButton>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
             <Form>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Language</Form.Label>
@@ -251,20 +259,25 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
               </Form.Group>
             </Form>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={props.handleCloseLanguageForm}>
+          <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <Button className='footerBtnCancel' variant="default" onClick={props.handleCloseLanguageForm}>
               Close
             </Button>
-            <Button variant="primary" onClick={props.languageFormData}>
+            <Button className='footerBtnDefault' variant="secondary" onClick={props.languageFormData}>
               Save Changes
             </Button>
           </Modal.Footer>
         </Modal>
-        <Modal show={props.hobbyForm} onHide={props.handleCloseFormForHobby}>
-          <Modal.Header closeButton>
-            <Modal.Title>Hobby</Modal.Title>
+        <Modal show={props.hobbyForm} onHide={props.handleCloseFormForHobby} className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}>
+          <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>Hobby</Modal.Title>
+            <CloseButton
+              variant="default"
+              className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+              onClick={props.handleCloseFormForHobby}
+            ></CloseButton>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
             <Form>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Hobby</Form.Label>
@@ -272,6 +285,8 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                   onChange={(e) => props.handleAddHobby(e.target.value)}
                   type="text"
                   placeholder="Add a hobby"
+                  value={props.editUserData?.hobby}
+
                 />
                 <button className="addLanguageBtn" onClick={props.addHobby}>
                   Add a Hobby
@@ -296,29 +311,36 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
               </Form.Group>
             </Form>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={props.handleCloseFormForHobby}>
+          <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <Button className='footerBtnCancel'
+                variant="default" onClick={props.handleCloseFormForHobby}>
               Close
             </Button>
-            <Button variant="primary" onClick={props.hobbyFormData}>
+            <Button className='footerBtnDefault'
+                variant="secondary" onClick={props.hobbyFormData}>
               Save Changes
             </Button>
           </Modal.Footer>
         </Modal>
 
-        <Modal show={props.intrestForm} onHide={props.handleCloseFormForIntrest}>
-          <Modal.Header closeButton>
-            <Modal.Title>Intrest</Modal.Title>
+        <Modal show={props.intrestForm} onHide={props.handleCloseFormForIntrest} className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}>
+          <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>Interest</Modal.Title>
+            <CloseButton
+              variant="default"
+              className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+              onClick={props.handleCloseFormForIntrest}
+            ></CloseButton>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
             <Form>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Intrest</Form.Label>
                 <Form.Control
                   onChange={(e) => props.handleIntrest(e.target.value)}
-                  value={props.editUserData?.intrest}
+                  value={props.editUserData?.interests}
                   type="text"
-                  placeholder="All intrest should be comma seperated"
+                  placeholder="Intrest"
                 />
               </Form.Group>
             </Form>
@@ -343,21 +365,28 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
                 })}
             </div>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={props.handleCloseFormForIntrest}>
+          <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <Button className='footerBtnCancel'
+                variant="default" onClick={props.handleCloseFormForIntrest}>
               Close
             </Button>
-            <Button variant="primary" onClick={props.IntrestFormData}>
+            <Button className='footerBtnDefault'
+                variant="secondary" onClick={props.IntrestFormData}>
               Save Changes
             </Button>
           </Modal.Footer>
         </Modal>
 
-        <Modal show={props.showForm2} onHide={props.handleCloseForm2}>
-          <Modal.Header closeButton>
-            <Modal.Title>Summary</Modal.Title>
+        <Modal show={props.showForm2} onHide={props.handleCloseForm2} className={`modalContent ${darkMode ? darkModeCss.darkModeModal : ''}`}>
+          <Modal.Header className={`modalHeader ${darkMode ? darkModeCss.grey_3 : ''}`}>
+            <Modal.Title className={`modalTitle ${darkMode ? darkModeCss.text_green : ''}`}>Summary</Modal.Title>
+            <CloseButton
+              variant="default"
+              className={`modalClose ${darkMode ? darkModeCss.invertFilter : ''}`}
+              onClick={props.handleCloseForm2}
+            ></CloseButton>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
             <Form>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Summary</Form.Label>
@@ -375,11 +404,11 @@ const PersaonalDetailsOfUser = (props: any): JSX.Element => {
               </Form.Group>
             </Form>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={props.handleCloseForm2}>
+          <Modal.Footer className={`${darkMode ? darkModeCss.grey_3 : ''} ${darkMode ? darkModeCss.test_grey_4 : ''}`}>
+            <Button className='footerBtnCancel' variant="default" onClick={props.handleCloseForm2}>
               Close
             </Button>
-            <Button variant="primary" onClick={props.submitForm2}>
+            <Button className='footerBtnDefault' variant="secondary" onClick={props.submitForm2}>
               Save Changes
             </Button>
           </Modal.Footer>
